@@ -47,7 +47,7 @@ describe 'Notification' do
           "response_body": "",
           "response_headers": "",
           "sid": "NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications/NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications/NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
     ))
@@ -57,36 +57,6 @@ describe 'Notification' do
                               .notifications('NOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
 
     expect(actual).to_not eq(nil)
-  end
-
-  it "can delete" do
-    @holodeck.mock(Twilio::Response.new(500, ''))
-
-    expect {
-      @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .notifications('NOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
-    }.to raise_exception(Twilio::REST::TwilioError)
-
-    values = {}
-    expect(
-    @holodeck.has_request?(Holodeck::Request.new(
-        method: 'delete',
-        url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Calls/CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Notifications/NOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
-    ))).to eq(true)
-  end
-
-  it "receives delete responses" do
-    @holodeck.mock(Twilio::Response.new(
-        204,
-      nil,
-    ))
-
-    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .notifications('NOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
-
-    expect(actual).to eq(true)
   end
 
   it "can read" do
@@ -111,10 +81,6 @@ describe 'Notification' do
         200,
       %q[
       {
-          "end": 0,
-          "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications.json?PageSize=50&Page=0",
-          "last_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications.json?PageSize=50&Page=0",
-          "next_page_uri": null,
           "notifications": [
               {
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -130,15 +96,16 @@ describe 'Notification' do
                   "request_method": null,
                   "request_url": "",
                   "sid": "NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications/NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications/NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
               }
           ],
-          "num_pages": 1,
           "page": 0,
           "page_size": 50,
           "previous_page_uri": null,
+          "end": 0,
+          "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications.json?PageSize=1&Page=0",
+          "next_page_uri": null,
           "start": 0,
-          "total": 1,
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications.json"
       }
       ]
@@ -156,17 +123,14 @@ describe 'Notification' do
         200,
       %q[
       {
-          "end": 0,
-          "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications.json?PageSize=50&Page=0",
-          "last_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications.json?PageSize=50&Page=0",
-          "next_page_uri": null,
           "notifications": [],
-          "num_pages": 1,
           "page": 0,
           "page_size": 50,
           "previous_page_uri": null,
+          "end": 0,
+          "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications.json?PageSize=1&Page=0",
+          "next_page_uri": null,
           "start": 0,
-          "total": 1,
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications.json"
       }
       ]

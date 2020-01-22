@@ -136,6 +136,9 @@ module Twilio
                   'start_day' => payload['start_day'],
                   'end_day' => payload['end_day'],
                   'job_sid' => payload['job_sid'],
+                  'webhook_url' => payload['webhook_url'],
+                  'webhook_method' => payload['webhook_method'],
+                  'email' => payload['email'],
                   'url' => payload['url'],
               }
 
@@ -189,6 +192,24 @@ module Twilio
             # @return [String] The job_sid returned when the export was created
             def job_sid
               @properties['job_sid']
+            end
+
+            ##
+            # @return [String] The optional webhook url called on completion
+            def webhook_url
+              @properties['webhook_url']
+            end
+
+            ##
+            # @return [String] This is the method used to call the webhook
+            def webhook_method
+              @properties['webhook_method']
+            end
+
+            ##
+            # @return [String] The optional email to send the completion notification to
+            def email
+              @properties['email']
             end
 
             ##

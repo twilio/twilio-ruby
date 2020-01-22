@@ -68,7 +68,7 @@ module Twilio
           ##
           # Initialize the ExportConfigurationContext
           # @param [Version] version Version that contains the resource
-          # @param [String] resource_type The resource_type
+          # @param [String] resource_type The type of communication – Messages, Calls
           # @return [ExportConfigurationContext] ExportConfigurationContext
           def initialize(version, resource_type)
             super(version)
@@ -95,9 +95,13 @@ module Twilio
 
           ##
           # Update the ExportConfigurationInstance
-          # @param [Boolean] enabled The enabled
-          # @param [String] webhook_url The webhook_url
-          # @param [String] webhook_method The webhook_method
+          # @param [Boolean] enabled If true, Twilio will automatically generate every day's
+          #   file when the day is over.
+          # @param [String] webhook_url Stores the URL destination for the method specified
+          #   in webhook_method.
+          # @param [String] webhook_method Sets whether Twilio should call a webhook URL
+          #   when the automatic generation is complete, using GET or POST. The actual
+          #   destination is set in the webhook_url
           # @return [ExportConfigurationInstance] Updated ExportConfigurationInstance
           def update(enabled: :unset, webhook_url: :unset, webhook_method: :unset)
             data = Twilio::Values.of({
@@ -137,7 +141,7 @@ module Twilio
           # Initialize the ExportConfigurationInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] resource_type The resource_type
+          # @param [String] resource_type The type of communication – Messages, Calls
           # @return [ExportConfigurationInstance] ExportConfigurationInstance
           def initialize(version, payload, resource_type: nil)
             super(version)
@@ -168,31 +172,31 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] The enabled
+          # @return [Boolean] Whether files are automatically generated
           def enabled
             @properties['enabled']
           end
 
           ##
-          # @return [String] The webhook_url
+          # @return [String] URL targeted at export
           def webhook_url
             @properties['webhook_url']
           end
 
           ##
-          # @return [String] The webhook_method
+          # @return [String] Whether to GET or POST to the webhook url
           def webhook_method
             @properties['webhook_method']
           end
 
           ##
-          # @return [String] The resource_type
+          # @return [String] The type of communication – Messages, Calls
           def resource_type
             @properties['resource_type']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The URL of this resource.
           def url
             @properties['url']
           end
@@ -206,9 +210,13 @@ module Twilio
 
           ##
           # Update the ExportConfigurationInstance
-          # @param [Boolean] enabled The enabled
-          # @param [String] webhook_url The webhook_url
-          # @param [String] webhook_method The webhook_method
+          # @param [Boolean] enabled If true, Twilio will automatically generate every day's
+          #   file when the day is over.
+          # @param [String] webhook_url Stores the URL destination for the method specified
+          #   in webhook_method.
+          # @param [String] webhook_method Sets whether Twilio should call a webhook URL
+          #   when the automatic generation is complete, using GET or POST. The actual
+          #   destination is set in the webhook_url
           # @return [ExportConfigurationInstance] Updated ExportConfigurationInstance
           def update(enabled: :unset, webhook_url: :unset, webhook_method: :unset)
             context.update(enabled: enabled, webhook_url: webhook_url, webhook_method: webhook_method, )

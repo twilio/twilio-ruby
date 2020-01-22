@@ -140,10 +140,12 @@ module Twilio
           #   `integration_type` is `task`. The default priority is `0`.
           # @param [Boolean] integration_creation_on_message Whether to create a task when
           #   the first message arrives when `integration_type` is `task`. If `false`, the
-          #   task is created with the channel.
+          #   task is created with the channel. **Note** that does not apply when channel type
+          #   is `web`. Setting the value to `true` for channel type `web` will result in
+          #   misconfigured Flex Flow and no tasks will be created.
           # @param [Boolean] long_lived Whether new channels are long-lived.
           # @param [Boolean] janitor_enabled Boolean flag for enabling or disabling the
-          #   Janitor
+          #   Janitor.
           # @param [String] integration_retry_count The number of times to retry the webhook
           #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
           #   the default is 0.
@@ -270,10 +272,12 @@ module Twilio
           #   `integration_type` is `task`. The default priority is `0`.
           # @param [Boolean] integration_creation_on_message Whether to create a task when
           #   the first message arrives when `integration_type` is `task`. If `false`, the
-          #   task is created with the channel.
+          #   task is created with the channel. **Note** that does not apply when channel type
+          #   is `web`. Setting the value to `true` for channel type `web` will result in
+          #   misconfigured Flex Flow and no tasks will be created.
           # @param [Boolean] long_lived Whether new channels created are long-lived.
           # @param [Boolean] janitor_enabled Boolean flag for enabling or disabling the
-          #   Janitor
+          #   Janitor.
           # @param [String] integration_retry_count The number of times to retry the webhook
           #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
           #   the default is 0.
@@ -492,10 +496,12 @@ module Twilio
           #   `integration_type` is `task`. The default priority is `0`.
           # @param [Boolean] integration_creation_on_message Whether to create a task when
           #   the first message arrives when `integration_type` is `task`. If `false`, the
-          #   task is created with the channel.
+          #   task is created with the channel. **Note** that does not apply when channel type
+          #   is `web`. Setting the value to `true` for channel type `web` will result in
+          #   misconfigured Flex Flow and no tasks will be created.
           # @param [Boolean] long_lived Whether new channels created are long-lived.
           # @param [Boolean] janitor_enabled Boolean flag for enabling or disabling the
-          #   Janitor
+          #   Janitor.
           # @param [String] integration_retry_count The number of times to retry the webhook
           #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
           #   the default is 0.

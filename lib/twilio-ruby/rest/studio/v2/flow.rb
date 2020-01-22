@@ -31,14 +31,14 @@ module Twilio
           # @param [String] friendly_name The string that you assigned to describe the Flow.
           # @param [flow.Status] status The status of the Flow. Can be: `draft` or
           #   `published`.
-          # @param [String] definition JSON representation of flow definition.
+          # @param [Hash] definition JSON representation of flow definition.
           # @param [String] commit_message Description on change made in the revision.
           # @return [FlowInstance] Newly created FlowInstance
           def create(friendly_name: nil, status: nil, definition: nil, commit_message: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'Status' => status,
-                'Definition' => definition,
+                'Definition' => Twilio.serialize_object(definition),
                 'CommitMessage' => commit_message,
             })
 
@@ -195,14 +195,14 @@ module Twilio
           # @param [flow.Status] status The status of the Flow. Can be: `draft` or
           #   `published`.
           # @param [String] friendly_name The string that you assigned to describe the Flow.
-          # @param [String] definition JSON representation of flow definition.
+          # @param [Hash] definition JSON representation of flow definition.
           # @param [String] commit_message Description on change made in the revision.
           # @return [FlowInstance] Updated FlowInstance
           def update(status: nil, friendly_name: :unset, definition: :unset, commit_message: :unset)
             data = Twilio::Values.of({
                 'Status' => status,
                 'FriendlyName' => friendly_name,
-                'Definition' => definition,
+                'Definition' => Twilio.serialize_object(definition),
                 'CommitMessage' => commit_message,
             })
 
@@ -398,7 +398,7 @@ module Twilio
           # @param [flow.Status] status The status of the Flow. Can be: `draft` or
           #   `published`.
           # @param [String] friendly_name The string that you assigned to describe the Flow.
-          # @param [String] definition JSON representation of flow definition.
+          # @param [Hash] definition JSON representation of flow definition.
           # @param [String] commit_message Description on change made in the revision.
           # @return [FlowInstance] Updated FlowInstance
           def update(status: nil, friendly_name: :unset, definition: :unset, commit_message: :unset)

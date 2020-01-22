@@ -29,14 +29,14 @@ module Twilio
           # Update the FlowValidateInstance
           # @param [String] friendly_name The friendly_name
           # @param [flow_validate.Status] status The status
-          # @param [String] definition The definition
+          # @param [Hash] definition The definition
           # @param [String] commit_message The commit_message
           # @return [FlowValidateInstance] Updated FlowValidateInstance
           def update(friendly_name: nil, status: nil, definition: nil, commit_message: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'Status' => status,
-                'Definition' => definition,
+                'Definition' => Twilio.serialize_object(definition),
                 'CommitMessage' => commit_message,
             })
 

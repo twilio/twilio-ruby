@@ -41,8 +41,10 @@ module Twilio
           #   use in phone calls. Applies only to TTS languages.
           # @param [Boolean] psd2_enabled Whether to pass PSD2 transaction parameters when
           #   starting a verification.
+          # @param [Boolean] do_not_share_warning_enabled Whether to add a privacy warning
+          #   at the end of an SMS. **Disabled by default and applies only for SMS.**
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset)
+          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -51,6 +53,7 @@ module Twilio
                 'DtmfInputRequired' => dtmf_input_required,
                 'TtsName' => tts_name,
                 'Psd2Enabled' => psd2_enabled,
+                'DoNotShareWarningEnabled' => do_not_share_warning_enabled,
             })
 
             payload = @version.create(
@@ -240,8 +243,10 @@ module Twilio
           #   use in phone calls. Applies only to TTS languages.
           # @param [Boolean] psd2_enabled Whether to pass PSD2 transaction parameters when
           #   starting a verification.
+          # @param [Boolean] do_not_share_warning_enabled Whether to add a privacy warning
+          #   at the end of an SMS. **Disabled by default and applies only for SMS.**
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -250,6 +255,7 @@ module Twilio
                 'DtmfInputRequired' => dtmf_input_required,
                 'TtsName' => tts_name,
                 'Psd2Enabled' => psd2_enabled,
+                'DoNotShareWarningEnabled' => do_not_share_warning_enabled,
             })
 
             payload = @version.update(
@@ -364,6 +370,7 @@ module Twilio
                 'skip_sms_to_landlines' => payload['skip_sms_to_landlines'],
                 'dtmf_input_required' => payload['dtmf_input_required'],
                 'tts_name' => payload['tts_name'],
+                'do_not_share_warning_enabled' => payload['do_not_share_warning_enabled'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -441,6 +448,12 @@ module Twilio
           end
 
           ##
+          # @return [Boolean] Whether to add a privacy warning at the end of an SMS.
+          def do_not_share_warning_enabled
+            @properties['do_not_share_warning_enabled']
+          end
+
+          ##
           # @return [Time] The RFC 2822 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
@@ -495,8 +508,10 @@ module Twilio
           #   use in phone calls. Applies only to TTS languages.
           # @param [Boolean] psd2_enabled Whether to pass PSD2 transaction parameters when
           #   starting a verification.
+          # @param [Boolean] do_not_share_warning_enabled Whether to add a privacy warning
+          #   at the end of an SMS. **Disabled by default and applies only for SMS.**
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset)
             context.update(
                 friendly_name: friendly_name,
                 code_length: code_length,
@@ -505,6 +520,7 @@ module Twilio
                 dtmf_input_required: dtmf_input_required,
                 tts_name: tts_name,
                 psd2_enabled: psd2_enabled,
+                do_not_share_warning_enabled: do_not_share_warning_enabled,
             )
           end
 

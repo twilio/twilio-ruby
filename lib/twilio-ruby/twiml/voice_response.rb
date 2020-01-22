@@ -346,9 +346,10 @@ module Twilio
       # Create a new <Siprec> element
       # name:: Friendly name given to SIPREC
       # connector_name:: Unique name for Connector
+      # track:: Track to be streamed to remote service
       # keyword_args:: additional attributes
-      def siprec(name: nil, connector_name: nil, **keyword_args)
-        siprec = Siprec.new(name: name, connector_name: connector_name, **keyword_args)
+      def siprec(name: nil, connector_name: nil, track: nil, **keyword_args)
+        siprec = Siprec.new(name: name, connector_name: connector_name, track: track, **keyword_args)
 
         yield(siprec) if block_given?
         append(siprec)
@@ -434,9 +435,10 @@ module Twilio
       # Create a new <Siprec> element
       # name:: Friendly name given to SIPREC
       # connector_name:: Unique name for Connector
+      # track:: Track to be streamed to remote service
       # keyword_args:: additional attributes
-      def siprec(name: nil, connector_name: nil, **keyword_args)
-        siprec = Siprec.new(name: name, connector_name: connector_name, **keyword_args)
+      def siprec(name: nil, connector_name: nil, track: nil, **keyword_args)
+        siprec = Siprec.new(name: name, connector_name: connector_name, track: track, **keyword_args)
 
         yield(siprec) if block_given?
         append(siprec)
@@ -979,9 +981,10 @@ module Twilio
       # status_callback_event:: Events to call status callback
       # status_callback:: Status callback URL
       # status_callback_method:: Status callback URL method
+      # byoc:: BYOC trunk SID (Beta)
       # keyword_args:: additional attributes
-      def number(phone_number, send_digits: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
-        append(Number.new(phone_number, send_digits: send_digits, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args))
+      def number(phone_number, send_digits: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, byoc: nil, **keyword_args)
+        append(Number.new(phone_number, send_digits: send_digits, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, byoc: byoc, **keyword_args))
       end
 
       ##

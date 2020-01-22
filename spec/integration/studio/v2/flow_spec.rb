@@ -13,10 +13,14 @@ describe 'Flow' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.studio.v2.flows.create(friendly_name: 'friendly_name', status: 'draft', definition: 'definition')
+      @client.studio.v2.flows.create(friendly_name: 'friendly_name', status: 'draft', definition: {})
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'FriendlyName' => 'friendly_name', 'Status' => 'draft', 'Definition' => 'definition', }
+    values = {
+        'FriendlyName' => 'friendly_name',
+        'Status' => 'draft',
+        'Definition' => Twilio.serialize_object({}),
+    }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -51,7 +55,7 @@ describe 'Flow' do
       ]
     ))
 
-    actual = @client.studio.v2.flows.create(friendly_name: 'friendly_name', status: 'draft', definition: 'definition')
+    actual = @client.studio.v2.flows.create(friendly_name: 'friendly_name', status: 'draft', definition: {})
 
     expect(actual).to_not eq(nil)
   end

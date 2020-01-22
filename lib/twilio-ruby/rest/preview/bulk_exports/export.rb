@@ -86,7 +86,7 @@ module Twilio
           ##
           # Initialize the ExportContext
           # @param [Version] version Version that contains the resource
-          # @param [String] resource_type The resource_type
+          # @param [String] resource_type The type of communication – Messages, Calls
           # @return [ExportContext] ExportContext
           def initialize(version, resource_type)
             super(version)
@@ -161,7 +161,7 @@ module Twilio
           # Initialize the ExportInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] resource_type The resource_type
+          # @param [String] resource_type The type of communication – Messages, Calls
           # @return [ExportInstance] ExportInstance
           def initialize(version, payload, resource_type: nil)
             super(version)
@@ -190,19 +190,19 @@ module Twilio
           end
 
           ##
-          # @return [String] The resource_type
+          # @return [String] The type of communication – Messages, Calls
           def resource_type
             @properties['resource_type']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The URL of this resource.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] Nested resource URLs.
           def links
             @properties['links']
           end

@@ -23,7 +23,6 @@ module Twilio
         @deployed_devices = nil
         @hosted_numbers = nil
         @marketplace = nil
-        @acc_security = nil
         @sync = nil
         @understand = nil
         @wireless = nil
@@ -55,12 +54,6 @@ module Twilio
       end
 
       ##
-      # Version acc_security of preview
-      def acc_security
-        @acc_security ||= AccSecurity.new self
-      end
-
-      ##
       # Version sync of preview
       def sync
         @sync ||= Sync.new self
@@ -85,7 +78,7 @@ module Twilio
       end
 
       ##
-      # @param [String] resource_type The resource_type
+      # @param [String] resource_type The type of communication – Messages, Calls
       # @return [Twilio::REST::Preview::BulkExports::ExportInstance] if resource_type was passed.
       # @return [Twilio::REST::Preview::BulkExports::ExportList]
       def exports(resource_type=:unset)
@@ -93,7 +86,7 @@ module Twilio
       end
 
       ##
-      # @param [String] resource_type The resource_type
+      # @param [String] resource_type The type of communication – Messages, Calls
       # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationInstance] if resource_type was passed.
       # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationList]
       def export_configuration(resource_type=:unset)

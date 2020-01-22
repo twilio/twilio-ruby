@@ -51,4 +51,30 @@ describe 'VerificationCheck' do
 
     expect(actual).to_not eq(nil)
   end
+
+  it "receives email_verification_checks responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "sid": "VEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "to": "recipient@foo.com",
+          "channel": "email",
+          "status": "approved",
+          "valid": true,
+          "amount": null,
+          "payee": null,
+          "date_created": "2020-01-30T20:00:00Z",
+          "date_updated": "2020-01-30T20:00:00Z"
+      }
+      ]
+    ))
+
+    actual = @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .verification_checks.create(code: 'code')
+
+    expect(actual).to_not eq(nil)
+  end
 end

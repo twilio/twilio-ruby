@@ -127,6 +127,9 @@ module Twilio
             # @param [String] machine_detection_silence_timeout The number of milliseconds of
             #   initial silence after which an `unknown` AnsweredBy result will be returned.
             #   Possible Values: 2000-10000. Default: 5000.
+            # @param [String] byoc The SID of a BYOC (Bring Your Own Carrier) trunk to route
+            #   this call with. Note that `byoc` is only meaningful when `to` is a phone number;
+            #   it will otherwise be ignored. (Beta)
             # @param [String] url The absolute URL that returns the TwiML instructions for the
             #   call. We will call this URL using the `method` when the call connects. For more
             #   information, see the [Url
@@ -138,7 +141,7 @@ module Twilio
             # @param [String] application_sid The SID of the Application resource that will
             #   handle the call, if the call will be handled by an application.
             # @return [CallInstance] Newly created CallInstance
-            def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, recording_status_callback_event: :unset, trim: :unset, caller_id: :unset, machine_detection_speech_threshold: :unset, machine_detection_speech_end_threshold: :unset, machine_detection_silence_timeout: :unset, url: :unset, twiml: :unset, application_sid: :unset)
+            def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, recording_status_callback_event: :unset, trim: :unset, caller_id: :unset, machine_detection_speech_threshold: :unset, machine_detection_speech_end_threshold: :unset, machine_detection_silence_timeout: :unset, byoc: :unset, url: :unset, twiml: :unset, application_sid: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -167,6 +170,7 @@ module Twilio
                   'MachineDetectionSpeechThreshold' => machine_detection_speech_threshold,
                   'MachineDetectionSpeechEndThreshold' => machine_detection_speech_end_threshold,
                   'MachineDetectionSilenceTimeout' => machine_detection_silence_timeout,
+                  'Byoc' => byoc,
               })
 
               payload = @version.create(
@@ -412,6 +416,7 @@ module Twilio
               @recordings = nil
               @notifications = nil
               @feedback = nil
+              @payments = nil
             end
 
             ##
@@ -539,6 +544,28 @@ module Twilio
             # @return [FeedbackContext]
             def feedback
               FeedbackContext.new(@version, @solution[:account_sid], @solution[:sid], )
+            end
+
+            ##
+            # Access the payments
+            # @return [PaymentList]
+            # @return [PaymentContext] if sid was passed.
+            def payments(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return PaymentContext.new(@version, @solution[:account_sid], @solution[:sid], sid, )
+              end
+
+              unless @payments
+                @payments = PaymentList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    call_sid: @solution[:sid],
+                )
+              end
+
+              @payments
             end
 
             ##
@@ -842,6 +869,13 @@ module Twilio
             # @return [feedback] feedback
             def feedback
               context.feedback
+            end
+
+            ##
+            # Access the payments
+            # @return [payments] payments
+            def payments
+              context.payments
             end
 
             ##

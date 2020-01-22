@@ -56,8 +56,10 @@ module Twilio
             #   multiple Rate Limit values in each request.
             # @param [Hash] channel_configuration `email` channel configuration in json
             #   format. Must include 'from' and 'from_name'.
+            # @param [String] app_hash Your [App
+            #   Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string) to be included at the end of an SMS. **Only applies for SMS.**
             # @return [VerificationInstance] Newly created VerificationInstance
-            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset)
+            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset, app_hash: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'Channel' => channel,
@@ -69,6 +71,7 @@ module Twilio
                   'Payee' => payee,
                   'RateLimits' => Twilio.serialize_object(rate_limits),
                   'ChannelConfiguration' => Twilio.serialize_object(channel_configuration),
+                  'AppHash' => app_hash,
               })
 
               payload = @version.create(

@@ -1,6 +1,37 @@
 twilio-ruby changelog
 =====================
 
+[2020-01-22] Version 5.31.3
+---------------------------
+**Library - Docs**
+- [PR #492](https://github.com/twilio/twilio-ruby/pull/492): baseline all the templated markdown docs. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Library - Chore**
+- [PR #490](https://github.com/twilio/twilio-ruby/pull/490): add support for Ruby 2.7. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Api**
+- Add payments public APIs
+- Add optional parameter `byoc` to call create request.
+
+**Flex**
+- Updating a Flex Flow `creation_on_message` parameter documentation
+
+**Preview**
+-
+- Removed Verify v2 from preview in favor of its own namespace as GA **(breaking change)**
+
+**Studio**
+- Flow definition type update from string to object
+
+**Verify**
+- Add `AppHash` parameter when creating a Verification.
+- Add `DoNotShareWarningEnabled` parameter to the Service resource.
+
+**Twiml**
+- Add `track` attribute to siprec noun.
+- Add attribute `byoc` to `<Number>`
+
+
 [2020-01-08] Version 5.31.2
 ---------------------------
 **Library - Chore**
