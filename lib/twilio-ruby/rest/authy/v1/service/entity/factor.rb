@@ -34,8 +34,9 @@ module Twilio
               # Retrieve a single page of FactorInstance records from the API.
               # Request is executed immediately.
               # @param [String] binding A unique binding for this Factor that identifies it.
-              #   E.g. a phone number for `sms` factors. Required when creating a new Factor. This
-              #   value is never returned because it can contain customer secrets.
+              #   E.g. a phone number for `sms` factors. It must be a json string with the
+              #   required properties for the given factor type. Required when creating a new
+              #   Factor. This value is never returned because it can contain customer secrets.
               # @param [String] friendly_name The friendly name of this Factor
               # @param [factor.FactorTypes] factor_type The Type of this Factor. One of
               #   `app-push`, `sms`, `totp`, etc.

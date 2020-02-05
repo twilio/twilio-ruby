@@ -30,10 +30,11 @@ module Twilio
             ##
             # Retrieve a single page of VerificationInstance records from the API.
             # Request is executed immediately.
-            # @param [String] to The phone number or email to verify. Phone numbers must be in
-            #   [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+            # @param [String] to The phone number or
+            #   [email](https://www.twilio.com/docs/verify/email) to verify. Phone numbers must
+            #   be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
             # @param [String] channel The verification method to use. Can be:
-            #   [`email`*](#email-channel-availability), `sms` or `call`.
+            #   [`email`](https://www.twilio.com/docs/verify/email), `sms` or `call`.
             # @param [String] custom_message The text of a custom message to use for the
             #   verification.
             # @param [String] send_digits The digits to send after a phone call is answered,
@@ -54,8 +55,9 @@ module Twilio
             #   Limits. Keys should be the unique_name configured while creating you Rate Limit
             #   along with the associated values for each particular request. You may include
             #   multiple Rate Limit values in each request.
-            # @param [Hash] channel_configuration `email` channel configuration in json
-            #   format. Must include 'from' and 'from_name'.
+            # @param [Hash] channel_configuration
+            #   [`email`](https://www.twilio.com/docs/verify/email) channel configuration in
+            #   json format. Must include 'from' and 'from_name'.
             # @param [String] app_hash Your [App
             #   Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string) to be included at the end of an SMS. **Only applies for SMS.**
             # @return [VerificationInstance] Newly created VerificationInstance
@@ -220,6 +222,7 @@ module Twilio
                   'lookup' => payload['lookup'],
                   'amount' => payload['amount'],
                   'payee' => payload['payee'],
+                  'send_code_attempts' => payload['send_code_attempts'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
@@ -299,6 +302,12 @@ module Twilio
             # @return [String] The payee of the associated PSD2 compliant transaction
             def payee
               @properties['payee']
+            end
+
+            ##
+            # @return [Hash] An array of verification attempt objects.
+            def send_code_attempts
+              @properties['send_code_attempts']
             end
 
             ##

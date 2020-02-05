@@ -320,6 +320,7 @@ module Twilio
                   'status' => payload['status'],
                   'url' => payload['url'],
                   'source_channel' => payload['source_channel'],
+                  'dialogue_sid' => payload['dialogue_sid'],
               }
 
               # Context
@@ -414,6 +415,12 @@ module Twilio
             # @return [String] The communication channel from where the end-user input came
             def source_channel
               @properties['source_channel']
+            end
+
+            ##
+            # @return [String] The SID of the [Dialogue](https://www.twilio.com/docs/autopilot/api/dialogue).
+            def dialogue_sid
+              @properties['dialogue_sid']
             end
 
             ##

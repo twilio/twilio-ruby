@@ -70,6 +70,10 @@ module Twilio
             #   guarantee that the message will not be queued after this period. We recommend
             #   that this value be at least 5 seconds.
             # @param [Boolean] force_delivery Reserved
+            # @param [message.ContentRetention] content_retention Determines if the message
+            #   content can be stored or redacted based on privacy settings
+            # @param [message.AddressRetention] address_retention Determines if the address
+            #   can be stored or obfuscated based on privacy settings
             # @param [Boolean] smart_encoded Whether to detect Unicode characters that have a
             #   similar GSM-7 character and replace them. Can be: `true` or `false`.
             # @param [String] persistent_action Rich actions for Channels Messages.
@@ -96,7 +100,7 @@ module Twilio
             #   parameters in the POST request. You can include up to 10 `media_url` parameters
             #   per message. You can send images in an SMS message in only the US and Canada.
             # @return [MessageInstance] Newly created MessageInstance
-            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, force_delivery: :unset, smart_encoded: :unset, persistent_action: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, validity_period: :unset, force_delivery: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, persistent_action: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -109,6 +113,8 @@ module Twilio
                   'ProvideFeedback' => provide_feedback,
                   'ValidityPeriod' => validity_period,
                   'ForceDelivery' => force_delivery,
+                  'ContentRetention' => content_retention,
+                  'AddressRetention' => address_retention,
                   'SmartEncoded' => smart_encoded,
                   'PersistentAction' => Twilio.serialize_list(persistent_action) { |e| e },
               })

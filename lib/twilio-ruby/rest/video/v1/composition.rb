@@ -155,14 +155,15 @@ module Twilio
           #   used as composition sources.
           # @param [Hash] video_layout An object that describes the video layout of the
           #   composition in terms of regions. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info. Please, be aware that either video_layout or audio_sources have to be provided to get a valid creation request
           # @param [String] audio_sources An array of track names from the same group room
           #   to merge into the new composition. Can include zero or more track names. The new
           #   composition includes all audio sources specified in `audio_sources` except for
           #   those specified in `audio_sources_excluded`. The track names in this parameter
           #   can include an asterisk as a wild card character, which will match zero or more
           #   characters in a track name. For example, `student*` includes `student` as well
-          #   as `studentTeam`.
+          #   as `studentTeam`. Please, be aware that either video_layout or audio_sources
+          #   have to be provided to get a valid creation request
           # @param [String] audio_sources_excluded An array of track names to exclude. The
           #   new composition includes all audio sources specified in `audio_sources` except
           #   for those specified in `audio_sources_excluded`. The track names in this
