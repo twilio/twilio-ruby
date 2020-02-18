@@ -116,17 +116,6 @@ Naming/VariableName:
     - 'spec/jwt/client_capability_spec.rb'
     - 'spec/jwt/task_router_spec.rb'
 
-# Offense count: 8
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: braces, no_braces, context_dependent
-Style/BracesAroundHashParameters:
-  Exclude:
-    - 'spec/framework/serialize_spec.rb'
-    - 'spec/jwt/access_token_spec.rb'
-    - 'spec/jwt/client_capability_spec.rb'
-    - 'spec/rack/twilio_webhook_authentication_spec.rb'
-
 # Offense count: 38
 Style/Documentation:
   Enabled: false
