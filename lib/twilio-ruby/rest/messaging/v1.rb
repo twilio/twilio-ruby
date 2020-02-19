@@ -16,8 +16,6 @@ module Twilio
           super
           @version = 'v1'
           @services = nil
-          @sessions = nil
-          @webhooks = nil
         end
 
         ##
@@ -32,26 +30,6 @@ module Twilio
           else
             ServiceContext.new(self, sid)
           end
-        end
-
-        ##
-        # @param [String] sid The SID of the Session resource to fetch.
-        # @return [Twilio::REST::Messaging::V1::SessionContext] if sid was passed.
-        # @return [Twilio::REST::Messaging::V1::SessionList]
-        def sessions(sid=:unset)
-          if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @sessions ||= SessionList.new self
-          else
-            SessionContext.new(self, sid)
-          end
-        end
-
-        ##
-        # @return [Twilio::REST::Messaging::V1::WebhookContext]
-        def webhooks
-          @webhooks ||= WebhookContext.new self
         end
 
         ##

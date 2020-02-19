@@ -143,6 +143,8 @@ module Twilio
                     'activity_statistics' => payload['activity_statistics'],
                     'longest_task_waiting_age' => payload['longest_task_waiting_age'].to_i,
                     'longest_task_waiting_sid' => payload['longest_task_waiting_sid'],
+                    'longest_relative_task_age_in_queue' => payload['longest_relative_task_age_in_queue'].to_i,
+                    'longest_relative_task_sid_in_queue' => payload['longest_relative_task_sid_in_queue'],
                     'task_queue_sid' => payload['task_queue_sid'],
                     'tasks_by_priority' => payload['tasks_by_priority'],
                     'tasks_by_status' => payload['tasks_by_status'],
@@ -195,6 +197,18 @@ module Twilio
               # @return [String] The SID of the longest waiting Task
               def longest_task_waiting_sid
                 @properties['longest_task_waiting_sid']
+              end
+
+              ##
+              # @return [String] The relative age in the TaskQueue for the longest waiting Task.
+              def longest_relative_task_age_in_queue
+                @properties['longest_relative_task_age_in_queue']
+              end
+
+              ##
+              # @return [String] The SID of the Task waiting in the TaskQueue the longest.
+              def longest_relative_task_sid_in_queue
+                @properties['longest_relative_task_sid_in_queue']
               end
 
               ##

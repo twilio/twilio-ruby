@@ -188,6 +188,8 @@ module Twilio
 
             # Dependents
             @revisions = nil
+            @test_users = nil
+            @executions = nil
           end
 
           ##
@@ -256,6 +258,32 @@ module Twilio
           end
 
           ##
+          # Access the test_users
+          # @return [FlowTestUserList]
+          # @return [FlowTestUserContext]
+          def test_users
+            FlowTestUserContext.new(@version, @solution[:sid], )
+          end
+
+          ##
+          # Access the executions
+          # @return [ExecutionList]
+          # @return [ExecutionContext] if sid was passed.
+          def executions(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return ExecutionContext.new(@version, @solution[:sid], sid, )
+            end
+
+            unless @executions
+              @executions = ExecutionList.new(@version, flow_sid: @solution[:sid], )
+            end
+
+            @executions
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -295,6 +323,7 @@ module Twilio
                 'errors' => payload['errors'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                'webhook_url' => payload['webhook_url'],
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -382,6 +411,12 @@ module Twilio
           end
 
           ##
+          # @return [String] The webhook_url
+          def webhook_url
+            @properties['webhook_url']
+          end
+
+          ##
           # @return [String] The absolute URL of the resource
           def url
             @properties['url']
@@ -429,6 +464,20 @@ module Twilio
           # @return [revisions] revisions
           def revisions
             context.revisions
+          end
+
+          ##
+          # Access the test_users
+          # @return [test_users] test_users
+          def test_users
+            context.test_users
+          end
+
+          ##
+          # Access the executions
+          # @return [executions] executions
+          def executions
+            context.executions
           end
 
           ##

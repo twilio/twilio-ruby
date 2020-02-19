@@ -127,6 +127,15 @@ module Twilio
             # @param [String] machine_detection_silence_timeout The number of milliseconds of
             #   initial silence after which an `unknown` AnsweredBy result will be returned.
             #   Possible Values: 2000-10000. Default: 5000.
+            # @param [String] async_amd Select whether to perform answering machine detection
+            #   in the background. Default, blocks the execution of the call until Answering
+            #   Machine Detection is completed. Can be: `true` or `false`.
+            # @param [String] async_amd_status_callback The URL that we should call using the
+            #   `async_amd_status_callback_method` to notify customer application whether the
+            #   call was answered by human, machine or fax.
+            # @param [String] async_amd_status_callback_method The HTTP method we should use
+            #   when calling the `async_amd_status_callback` URL. Can be: `GET` or `POST` and
+            #   the default is `POST`.
             # @param [String] byoc The SID of a BYOC (Bring Your Own Carrier) trunk to route
             #   this call with. Note that `byoc` is only meaningful when `to` is a phone number;
             #   it will otherwise be ignored. (Beta)
@@ -141,7 +150,7 @@ module Twilio
             # @param [String] application_sid The SID of the Application resource that will
             #   handle the call, if the call will be handled by an application.
             # @return [CallInstance] Newly created CallInstance
-            def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, recording_status_callback_event: :unset, trim: :unset, caller_id: :unset, machine_detection_speech_threshold: :unset, machine_detection_speech_end_threshold: :unset, machine_detection_silence_timeout: :unset, byoc: :unset, url: :unset, twiml: :unset, application_sid: :unset)
+            def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, recording_status_callback_event: :unset, trim: :unset, caller_id: :unset, machine_detection_speech_threshold: :unset, machine_detection_speech_end_threshold: :unset, machine_detection_silence_timeout: :unset, async_amd: :unset, async_amd_status_callback: :unset, async_amd_status_callback_method: :unset, byoc: :unset, url: :unset, twiml: :unset, application_sid: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -170,6 +179,9 @@ module Twilio
                   'MachineDetectionSpeechThreshold' => machine_detection_speech_threshold,
                   'MachineDetectionSpeechEndThreshold' => machine_detection_speech_end_threshold,
                   'MachineDetectionSilenceTimeout' => machine_detection_silence_timeout,
+                  'AsyncAmd' => async_amd,
+                  'AsyncAmdStatusCallback' => async_amd_status_callback,
+                  'AsyncAmdStatusCallbackMethod' => async_amd_status_callback_method,
                   'Byoc' => byoc,
               })
 
@@ -622,7 +634,9 @@ module Twilio
                   'subresource_uris' => payload['subresource_uris'],
                   'to' => payload['to'],
                   'to_formatted' => payload['to_formatted'],
+                  'trunk_sid' => payload['trunk_sid'],
                   'uri' => payload['uri'],
+                  'queue_time' => payload['queue_time'],
               }
 
               # Context
@@ -786,9 +800,21 @@ module Twilio
             end
 
             ##
+            # @return [String] The (optional) unique identifier of the trunk resource that was used for this call.
+            def trunk_sid
+              @properties['trunk_sid']
+            end
+
+            ##
             # @return [String] The URI of this resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
+            end
+
+            ##
+            # @return [String] The wait time in milliseconds before the call is placed.
+            def queue_time
+              @properties['queue_time']
             end
 
             ##

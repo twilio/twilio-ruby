@@ -170,6 +170,7 @@ module Twilio
                     'task_queue_sid' => payload['task_queue_sid'],
                     'wait_duration_until_accepted' => payload['wait_duration_until_accepted'],
                     'wait_duration_until_canceled' => payload['wait_duration_until_canceled'],
+                    'wait_duration_in_queue_until_accepted' => payload['wait_duration_in_queue_until_accepted'],
                     'tasks_canceled' => payload['tasks_canceled'].to_i,
                     'tasks_completed' => payload['tasks_completed'].to_i,
                     'tasks_deleted' => payload['tasks_deleted'].to_i,
@@ -281,6 +282,12 @@ module Twilio
               # @return [Hash] The wait duration statistics for Tasks canceled while in the TaskQueue
               def wait_duration_until_canceled
                 @properties['wait_duration_until_canceled']
+              end
+
+              ##
+              # @return [Hash] The relative wait duration statistics for Tasks accepted while in the TaskQueue
+              def wait_duration_in_queue_until_accepted
+                @properties['wait_duration_in_queue_until_accepted']
               end
 
               ##

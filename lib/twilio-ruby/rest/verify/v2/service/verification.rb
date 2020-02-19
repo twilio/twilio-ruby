@@ -52,14 +52,15 @@ module Twilio
             # @param [String] payee The payee of the associated PSD2 compliant transaction.
             #   Requires the PSD2 Service flag enabled.
             # @param [Hash] rate_limits The custom key-value pairs of Programmable Rate
-            #   Limits. Keys should be the unique_name configured while creating you Rate Limit
-            #   along with the associated values for each particular request. You may include
-            #   multiple Rate Limit values in each request.
+            #   Limits. Keys correspond to `unique_name` fields defined when [creating your Rate
+            #   Limit](https://www.twilio.com/docs/verify/api/service-rate-limits). Associated
+            #   value pairs represent values in the request that you are rate limiting on. You
+            #   may include multiple Rate Limit values in each request.
             # @param [Hash] channel_configuration
             #   [`email`](https://www.twilio.com/docs/verify/email) channel configuration in
             #   json format. Must include 'from' and 'from_name'.
             # @param [String] app_hash Your [App
-            #   Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string) to be included at the end of an SMS. **Only applies for SMS.**
+            #   Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string) to be appended at the end of your verification SMS body. Applies only to SMS. Example SMS body: `<#> Your AppName verification code is: 1234 He42w354ol9`.
             # @return [VerificationInstance] Newly created VerificationInstance
             def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset, app_hash: :unset)
               data = Twilio::Values.of({

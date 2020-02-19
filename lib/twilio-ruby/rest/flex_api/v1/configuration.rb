@@ -163,6 +163,7 @@ module Twilio
                 'chat_service_instance_sid' => payload['chat_service_instance_sid'],
                 'ui_language' => payload['ui_language'],
                 'ui_attributes' => payload['ui_attributes'],
+                'ui_dependencies' => payload['ui_dependencies'],
                 'ui_version' => payload['ui_version'],
                 'service_version' => payload['service_version'],
                 'call_recording_enabled' => payload['call_recording_enabled'],
@@ -303,6 +304,12 @@ module Twilio
           # @return [Hash] The object that describes Flex UI characteristics and settings
           def ui_attributes
             @properties['ui_attributes']
+          end
+
+          ##
+          # @return [Hash] The object that defines the NPM packages and versions to be used in Hosted Flex
+          def ui_dependencies
+            @properties['ui_dependencies']
           end
 
           ##

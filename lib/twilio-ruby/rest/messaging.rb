@@ -38,21 +38,6 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The unique string that we created to identify the Session
-      #   resource.
-      # @return [Twilio::REST::Messaging::V1::SessionInstance] if sid was passed.
-      # @return [Twilio::REST::Messaging::V1::SessionList]
-      def sessions(sid=:unset)
-        self.v1.sessions(sid)
-      end
-
-      ##
-      # @return [Twilio::REST::Messaging::V1::WebhookInstance]
-      def webhooks
-        self.v1.webhooks()
-      end
-
-      ##
       # Provide a user friendly representation
       def to_s
         '#<Twilio::REST::Messaging>'

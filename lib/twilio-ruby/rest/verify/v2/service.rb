@@ -41,8 +41,10 @@ module Twilio
           #   use in phone calls. Applies only to TTS languages.
           # @param [Boolean] psd2_enabled Whether to pass PSD2 transaction parameters when
           #   starting a verification.
-          # @param [Boolean] do_not_share_warning_enabled Whether to add a privacy warning
-          #   at the end of an SMS. **Disabled by default and applies only for SMS.**
+          # @param [Boolean] do_not_share_warning_enabled Whether to add a security warning
+          #   at the end of an SMS verification body. Disabled by default and applies only to
+          #   SMS. Example SMS body: `Your AppName verification code is: 1234. Don’t share
+          #   this code with anyone; our employees will never ask for the code`
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset)
             data = Twilio::Values.of({
@@ -448,7 +450,7 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] Whether to add a privacy warning at the end of an SMS.
+          # @return [Boolean] Whether to add a security warning at the end of an SMS.
           def do_not_share_warning_enabled
             @properties['do_not_share_warning_enabled']
           end

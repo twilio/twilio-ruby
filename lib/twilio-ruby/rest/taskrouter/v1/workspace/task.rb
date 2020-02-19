@@ -429,6 +429,7 @@ module Twilio
                   'addons' => payload['addons'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                  'task_queue_entered_date' => Twilio.deserialize_iso8601_datetime(payload['task_queue_entered_date']),
                   'priority' => payload['priority'].to_i,
                   'reason' => payload['reason'],
                   'sid' => payload['sid'],
@@ -467,7 +468,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The number of seconds since the task was created
+            # @return [String] The number of seconds since the Task was created
             def age
               @properties['age']
             end
@@ -503,13 +504,19 @@ module Twilio
             end
 
             ##
+            # @return [Time] The ISO 8601 date and time in GMT when the Task entered the TaskQueue.
+            def task_queue_entered_date
+              @properties['task_queue_entered_date']
+            end
+
+            ##
             # @return [String] Retrieve the list of all Tasks in the Workspace with the specified priority
             def priority
               @properties['priority']
             end
 
             ##
-            # @return [String] The reason the task was canceled or completed
+            # @return [String] The reason the Task was canceled or completed
             def reason
               @properties['reason']
             end
@@ -545,7 +552,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The amount of time in seconds that the task is allowed to live
+            # @return [String] The amount of time in seconds that the Task is allowed to live
             def timeout
               @properties['timeout']
             end
