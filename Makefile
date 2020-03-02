@@ -1,32 +1,23 @@
-.PHONY: githooks test lint-changed lint docs
+.PHONY: githooks install test lint docs docker-build docker-push
 
-CHANGED_RUBY_FILES = $(shell git status --porcelain | grep ".rb" | awk -F ' ' '{print $2}' | tr '\n' ' ')
+githooks:
+	ln -sf ../../githooks/pre-commit .git/hooks/pre-commit
 
 install: githooks
 	bundle install; bundle exec rake install
 
-test-install:
-	bundle install
-
 test: lint
 	bundle exec rake spec
-
-docs:
-	yard doc --output-dir ./doc
 
 lint:
 	rubocop --cache true --parallel
 
-githooks:
-	cp githooks/pre-commit .git/hooks/pre-commit
-	chmod +x .git/hooks/pre-commit
+docs:
+	yard doc --output-dir ./doc
 
 authors:
 	echo "Authors\n=======\n\nA huge thanks to all of our contributors:\n\n" > AUTHORS.md
 	git log --raw | grep "^Author: " | cut -d ' ' -f2- | cut -d '<' -f1 | sed 's/^/- /' | sort | uniq >> AUTHORS.md
-
-gem:
-	bundle exec rake build | sed -e 's/.*pkg/pkg/g' | sed -e "s/\.$$//g" | xargs gem push
 
 API_DEFINITIONS_SHA=$(shell git log --oneline | grep Regenerated | head -n1 | cut -d ' ' -f 5)
 docker-build:
