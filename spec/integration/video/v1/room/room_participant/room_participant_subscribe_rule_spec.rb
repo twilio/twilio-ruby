@@ -75,7 +75,7 @@ describe 'SubscribeRules' do
 
   it "receives update_filters responses" do
     @holodeck.mock(Twilio::Response.new(
-        202,
+        200,
       %q[
       {
           "participant_sid": "PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",

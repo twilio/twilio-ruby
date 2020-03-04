@@ -69,7 +69,7 @@ describe 'Payment' do
 
   it "receives collect_credit_card_number responses" do
     @holodeck.mock(Twilio::Response.new(
-        202,
+        200,
       %q[
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -91,7 +91,7 @@ describe 'Payment' do
 
   it "receives collect_credit_card_expiry_date responses" do
     @holodeck.mock(Twilio::Response.new(
-        202,
+        200,
       %q[
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -113,7 +113,7 @@ describe 'Payment' do
 
   it "receives complete_payment responses" do
     @holodeck.mock(Twilio::Response.new(
-        202,
+        200,
       %q[
       {
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",

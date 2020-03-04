@@ -118,12 +118,15 @@ module Twilio
           #   the Service resource. It can be up to 255 characters long.
           # @param [Boolean] include_credentials Whether to inject Account credentials into
           #   a function invocation context. The default value is `false`.
+          # @param [Boolean] ui_editable Whether the Service's properties and subresources
+          #   can be edited via the UI. The default value is `false`.
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(unique_name: nil, friendly_name: nil, include_credentials: :unset)
+          def create(unique_name: nil, friendly_name: nil, include_credentials: :unset, ui_editable: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'FriendlyName' => friendly_name,
                 'IncludeCredentials' => include_credentials,
+                'UiEditable' => ui_editable,
             })
 
             payload = @version.create(
@@ -223,11 +226,14 @@ module Twilio
           #   a function invocation context.
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the Service resource. It can be up to 255 characters long.
+          # @param [Boolean] ui_editable Whether the Service's properties and subresources
+          #   can be edited via the UI. The default value is `false`.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(include_credentials: :unset, friendly_name: :unset)
+          def update(include_credentials: :unset, friendly_name: :unset, ui_editable: :unset)
             data = Twilio::Values.of({
                 'IncludeCredentials' => include_credentials,
                 'FriendlyName' => friendly_name,
+                'UiEditable' => ui_editable,
             })
 
             payload = @version.update(
@@ -345,6 +351,7 @@ module Twilio
                 'friendly_name' => payload['friendly_name'],
                 'unique_name' => payload['unique_name'],
                 'include_credentials' => payload['include_credentials'],
+                'ui_editable' => payload['ui_editable'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -398,6 +405,12 @@ module Twilio
           end
 
           ##
+          # @return [Boolean] Whether the Service's properties and subresources can be edited via the UI
+          def ui_editable
+            @properties['ui_editable']
+          end
+
+          ##
           # @return [Time] The ISO 8601 date and time in GMT when the Service resource was created
           def date_created
             @properties['date_created']
@@ -441,9 +454,15 @@ module Twilio
           #   a function invocation context.
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the Service resource. It can be up to 255 characters long.
+          # @param [Boolean] ui_editable Whether the Service's properties and subresources
+          #   can be edited via the UI. The default value is `false`.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(include_credentials: :unset, friendly_name: :unset)
-            context.update(include_credentials: include_credentials, friendly_name: friendly_name, )
+          def update(include_credentials: :unset, friendly_name: :unset, ui_editable: :unset)
+            context.update(
+                include_credentials: include_credentials,
+                friendly_name: friendly_name,
+                ui_editable: ui_editable,
+            )
           end
 
           ##

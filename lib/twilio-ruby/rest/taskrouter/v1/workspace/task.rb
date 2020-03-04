@@ -230,7 +230,8 @@ module Twilio
             # @param [String] priority The priority to assign the new task and override the
             #   default. When supplied, the new Task will have this priority unless it matches a
             #   Workflow Target with a Priority set. When not supplied, the new Task will have
-            #   the priority of the matching Workflow Target.
+            #   the priority of the matching Workflow Target. Value can be 0 to 2^31^
+            #   (2,147,483,647).
             # @param [String] task_channel When MultiTasking is enabled, specify the
             #   TaskChannel by passing either its `unique_name` or `sid`. Default value is
             #   `default`.
@@ -342,7 +343,7 @@ module Twilio
             #   value queues the task for deletion and logs the reason.
             # @param [String] priority The Task's new priority value. When supplied, the Task
             #   takes on the specified priority unless it matches a Workflow Target with a
-            #   Priority set.
+            #   Priority set. Value can be 0 to 2^31^ (2,147,483,647).
             # @param [String] task_channel When MultiTasking is enabled, specify the
             #   TaskChannel with the task to update. Can be the TaskChannel's SID or its
             #   `unique_name`, such as `voice`, `sms`, or `default`.
@@ -607,7 +608,7 @@ module Twilio
             #   value queues the task for deletion and logs the reason.
             # @param [String] priority The Task's new priority value. When supplied, the Task
             #   takes on the specified priority unless it matches a Workflow Target with a
-            #   Priority set.
+            #   Priority set. Value can be 0 to 2^31^ (2,147,483,647).
             # @param [String] task_channel When MultiTasking is enabled, specify the
             #   TaskChannel with the task to update. Can be the TaskChannel's SID or its
             #   `unique_name`, such as `voice`, `sms`, or `default`.

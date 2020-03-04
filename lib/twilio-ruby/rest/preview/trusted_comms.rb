@@ -19,7 +19,6 @@ module Twilio
           @businesses = nil
           @cps = nil
           @current_calls = nil
-          @devices = nil
           @phone_calls = nil
         end
 
@@ -54,12 +53,6 @@ module Twilio
         # @return [Twilio::REST::Preview::TrustedComms::CurrentCallContext]
         def current_calls
           @current_calls ||= CurrentCallContext.new self
-        end
-
-        ##
-        # @return [Twilio::REST::Preview::TrustedComms::DeviceContext]
-        def devices
-          @devices ||= DeviceList.new self
         end
 
         ##

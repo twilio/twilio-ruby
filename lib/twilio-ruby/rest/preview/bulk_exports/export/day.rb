@@ -31,6 +31,8 @@ module Twilio
             # Lists DayInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
+            # @param [String] next_token The next_token
+            # @param [String] previous_token The previous_token
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -38,14 +40,21 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(limit: nil, page_size: nil)
-              self.stream(limit: limit, page_size: page_size).entries
+            def list(next_token: :unset, previous_token: :unset, limit: nil, page_size: nil)
+              self.stream(
+                  next_token: next_token,
+                  previous_token: previous_token,
+                  limit: limit,
+                  page_size: page_size
+              ).entries
             end
 
             ##
             # Streams DayInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
+            # @param [String] next_token The next_token
+            # @param [String] previous_token The previous_token
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -53,10 +62,14 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(limit: nil, page_size: nil)
+            def stream(next_token: :unset, previous_token: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(page_size: limits[:page_size], )
+              page = self.page(
+                  next_token: next_token,
+                  previous_token: previous_token,
+                  page_size: limits[:page_size],
+              )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -78,12 +91,16 @@ module Twilio
             ##
             # Retrieve a single page of DayInstance records from the API.
             # Request is executed immediately.
+            # @param [String] next_token The next_token
+            # @param [String] previous_token The previous_token
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of DayInstance
-            def page(page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(next_token: :unset, previous_token: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
+                  'NextToken' => next_token,
+                  'PreviousToken' => previous_token,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
@@ -149,14 +166,64 @@ module Twilio
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          class DayContext < InstanceContext
+            ##
+            # Initialize the DayContext
+            # @param [Version] version Version that contains the resource
+            # @param [String] resource_type The type of communication – Messages, Calls
+            # @param [String] day The ISO 8601 format date of the resources in the file, for a
+            #   UTC day
+            # @return [DayContext] DayContext
+            def initialize(version, resource_type, day)
+              super(version)
+
+              # Path Solution
+              @solution = {resource_type: resource_type, day: day, }
+              @uri = "/Exports/#{@solution[:resource_type]}/Days/#{@solution[:day]}"
+            end
+
+            ##
+            # Fetch a DayInstance
+            # @return [DayInstance] Fetched DayInstance
+            def fetch
+              params = Twilio::Values.of({})
+
+              payload = @version.fetch(
+                  'GET',
+                  @uri,
+                  params,
+              )
+
+              DayInstance.new(@version, payload, resource_type: @solution[:resource_type], day: @solution[:day], )
+            end
+
+            ##
+            # Provide a user friendly representation
+            def to_s
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Preview.BulkExports.DayContext #{context}>"
+            end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Preview.BulkExports.DayContext #{context}>"
+            end
+          end
+
+          ##
+          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
           class DayInstance < InstanceResource
             ##
             # Initialize the DayInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] resource_type The type of communication – Messages, Calls
+            # @param [String] day The ISO 8601 format date of the resources in the file, for a
+            #   UTC day
             # @return [DayInstance] DayInstance
-            def initialize(version, payload, resource_type: nil)
+            def initialize(version, payload, resource_type: nil, day: nil)
               super(version)
 
               # Marshaled Properties
@@ -164,8 +231,25 @@ module Twilio
                   'redirect_to' => payload['redirect_to'],
                   'day' => payload['day'],
                   'size' => payload['size'].to_i,
+                  'create_date' => payload['create_date'],
+                  'friendly_name' => payload['friendly_name'],
                   'resource_type' => payload['resource_type'],
               }
+
+              # Context
+              @instance_context = nil
+              @params = {'resource_type' => resource_type, 'day' => day || @properties['day'], }
+            end
+
+            ##
+            # Generate an instance context for the instance, the context is capable of
+            # performing various actions.  All instance actions are proxied to the context
+            # @return [DayContext] DayContext for this DayInstance
+            def context
+              unless @instance_context
+                @instance_context = DayContext.new(@version, @params['resource_type'], @params['day'], )
+              end
+              @instance_context
             end
 
             ##
@@ -187,21 +271,42 @@ module Twilio
             end
 
             ##
+            # @return [String] The date when resource is created
+            def create_date
+              @properties['create_date']
+            end
+
+            ##
+            # @return [String] The friendly name specified when creating the job
+            def friendly_name
+              @properties['friendly_name']
+            end
+
+            ##
             # @return [String] The type of communication – Messages, Calls
             def resource_type
               @properties['resource_type']
             end
 
             ##
+            # Fetch a DayInstance
+            # @return [DayInstance] Fetched DayInstance
+            def fetch
+              context.fetch
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
-              "<Twilio.Preview.BulkExports.DayInstance>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Preview.BulkExports.DayInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
-              "<Twilio.Preview.BulkExports.DayInstance>"
+              values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Preview.BulkExports.DayInstance #{values}>"
             end
           end
         end

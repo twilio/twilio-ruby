@@ -52,6 +52,7 @@ module Twilio
         @video = nil
         @voice = nil
         @wireless = nil
+        @supersim = nil
       end
 
       ##
@@ -262,6 +263,12 @@ module Twilio
       # Access the Wireless Twilio Domain
       def wireless
         @wireless ||= Wireless.new self
+      end
+
+      ##
+      # Access the Supersim Twilio Domain
+      def supersim
+        @supersim ||= Supersim.new self
       end
 
       ##

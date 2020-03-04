@@ -208,12 +208,6 @@ module Twilio
       end
 
       ##
-      # @return [Twilio::REST::Preview::TrustedComms::DeviceInstance]
-      def devices
-        self.trusted_comms.devices()
-      end
-
-      ##
       # @return [Twilio::REST::Preview::TrustedComms::PhoneCallInstance]
       def phone_calls
         self.trusted_comms.phone_calls()

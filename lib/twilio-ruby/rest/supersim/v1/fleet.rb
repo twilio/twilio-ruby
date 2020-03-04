@@ -8,34 +8,48 @@
 
 module Twilio
   module REST
-    class Authy < Domain
+    class Supersim < Domain
       class V1 < Version
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class ServiceList < ListResource
+        class FleetList < ListResource
           ##
-          # Initialize the ServiceList
+          # Initialize the FleetList
           # @param [Version] version Version that contains the resource
-          # @return [ServiceList] ServiceList
+          # @return [FleetList] FleetList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/Services"
+            @uri = "/Fleets"
           end
 
           ##
-          # Retrieve a single page of ServiceInstance records from the API.
+          # Retrieve a single page of FleetInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
-          # @param [String] push The optional service level push factors configuration. If
-          #   present it must be a json string with the following format:
-          #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"}
-          # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, push: :unset)
-            data = Twilio::Values.of({'FriendlyName' => friendly_name, 'Push' => push, })
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. It can be used in place of the resource's `sid` in the
+          #   URL to address the resource.
+          # @param [Boolean] data_enabled Defines whether SIMs in the Fleet are capable of
+          #   using 2G/3G/4G/LTE/CAT-M/NB-IoT data connectivity
+          # @param [Boolean] commands_enabled Defines whether SIMs in the Fleet are capable
+          #   of sending and receiving Commands via SMS.
+          # @param [String] commands_url The URL that will receive a webhook when a SIM in
+          #   the Fleet originates a machine-to-machine Command. Your server should respond
+          #   with an HTTP status code in the 200 range; any response body will be ignored.
+          # @param [String] commands_method A string representing the HTTP method to use
+          #   when making a request to `commands_url`. Can be one of POST or GET. Defaults to
+          #   POST.
+          # @return [FleetInstance] Newly created FleetInstance
+          def create(unique_name: :unset, data_enabled: :unset, commands_enabled: :unset, commands_url: :unset, commands_method: :unset)
+            data = Twilio::Values.of({
+                'UniqueName' => unique_name,
+                'DataEnabled' => data_enabled,
+                'CommandsEnabled' => commands_enabled,
+                'CommandsUrl' => commands_url,
+                'CommandsMethod' => commands_method,
+            })
 
             payload = @version.create(
                 'POST',
@@ -43,11 +57,11 @@ module Twilio
                 data: data
             )
 
-            ServiceInstance.new(@version, payload, )
+            FleetInstance.new(@version, payload, )
           end
 
           ##
-          # Lists ServiceInstance records from the API as a list.
+          # Lists FleetInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -62,7 +76,7 @@ module Twilio
           end
 
           ##
-          # Streams ServiceInstance records from the API as an Enumerable.
+          # Streams FleetInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -81,7 +95,7 @@ module Twilio
           end
 
           ##
-          # When passed a block, yields ServiceInstance records from the API.
+          # When passed a block, yields FleetInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -95,12 +109,12 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of ServiceInstance records from the API.
+          # Retrieve a single page of FleetInstance records from the API.
           # Request is executed immediately.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of ServiceInstance
+          # @return [Page] Page of FleetInstance
           def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
@@ -112,38 +126,38 @@ module Twilio
                 @uri,
                 params
             )
-            ServicePage.new(@version, response, @solution)
+            FleetPage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of ServiceInstance records from the API.
+          # Retrieve a single page of FleetInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of ServiceInstance
+          # @return [Page] Page of FleetInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            ServicePage.new(@version, response, @solution)
+            FleetPage.new(@version, response, @solution)
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Authy.V1.ServiceList>'
+            '#<Twilio.Supersim.V1.FleetList>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class ServicePage < Page
+        class FleetPage < Page
           ##
-          # Initialize the ServicePage
+          # Initialize the FleetPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [ServicePage] ServicePage
+          # @return [FleetPage] FleetPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -152,49 +166,39 @@ module Twilio
           end
 
           ##
-          # Build an instance of ServiceInstance
+          # Build an instance of FleetInstance
           # @param [Hash] payload Payload response from the API
-          # @return [ServiceInstance] ServiceInstance
+          # @return [FleetInstance] FleetInstance
           def get_instance(payload)
-            ServiceInstance.new(@version, payload, )
+            FleetInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Authy.V1.ServicePage>'
+            '<Twilio.Supersim.V1.FleetPage>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class ServiceContext < InstanceContext
+        class FleetContext < InstanceContext
           ##
-          # Initialize the ServiceContext
+          # Initialize the FleetContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34 character string that uniquely identifies this Service.
-          # @return [ServiceContext] ServiceContext
+          # @param [String] sid The SID of the Fleet resource to fetch.
+          # @return [FleetContext] FleetContext
           def initialize(version, sid)
             super(version)
 
             # Path Solution
             @solution = {sid: sid, }
-            @uri = "/Services/#{@solution[:sid]}"
-
-            # Dependents
-            @entities = nil
+            @uri = "/Fleets/#{@solution[:sid]}"
           end
 
           ##
-          # Deletes the ServiceInstance
-          # @return [Boolean] true if delete succeeds, false otherwise
-          def delete
-            @version.delete('delete', @uri)
-          end
-
-          ##
-          # Fetch a ServiceInstance
-          # @return [ServiceInstance] Fetched ServiceInstance
+          # Fetch a FleetInstance
+          # @return [FleetInstance] Fetched FleetInstance
           def fetch
             params = Twilio::Values.of({})
 
@@ -204,16 +208,17 @@ module Twilio
                 params,
             )
 
-            ServiceInstance.new(@version, payload, sid: @solution[:sid], )
+            FleetInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Update the ServiceInstance
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
-          # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset)
-            data = Twilio::Values.of({'FriendlyName' => friendly_name, })
+          # Update the FleetInstance
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. It can be used in place of the resource's `sid` in the
+          #   URL to address the resource.
+          # @return [FleetInstance] Updated FleetInstance
+          def update(unique_name: :unset)
+            data = Twilio::Values.of({'UniqueName' => unique_name, })
 
             payload = @version.update(
                 'POST',
@@ -221,64 +226,49 @@ module Twilio
                 data: data,
             )
 
-            ServiceInstance.new(@version, payload, sid: @solution[:sid], )
-          end
-
-          ##
-          # Access the entities
-          # @return [EntityList]
-          # @return [EntityContext] if identity was passed.
-          def entities(identity=:unset)
-            raise ArgumentError, 'identity cannot be nil' if identity.nil?
-
-            if identity != :unset
-              return EntityContext.new(@version, @solution[:sid], identity, )
-            end
-
-            unless @entities
-              @entities = EntityList.new(@version, service_sid: @solution[:sid], )
-            end
-
-            @entities
+            FleetInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Authy.V1.ServiceContext #{context}>"
+            "#<Twilio.Supersim.V1.FleetContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Authy.V1.ServiceContext #{context}>"
+            "#<Twilio.Supersim.V1.FleetContext #{context}>"
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class ServiceInstance < InstanceResource
+        class FleetInstance < InstanceResource
           ##
-          # Initialize the ServiceInstance
+          # Initialize the FleetInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34 character string that uniquely identifies this Service.
-          # @return [ServiceInstance] ServiceInstance
+          # @param [String] sid The SID of the Fleet resource to fetch.
+          # @return [FleetInstance] FleetInstance
           def initialize(version, payload, sid: nil)
             super(version)
 
             # Marshaled Properties
             @properties = {
-                'sid' => payload['sid'],
-                'friendly_name' => payload['friendly_name'],
                 'account_sid' => payload['account_sid'],
+                'sid' => payload['sid'],
+                'unique_name' => payload['unique_name'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
-                'links' => payload['links'],
-                'configuration' => payload['configuration'],
+                'data_enabled' => payload['data_enabled'],
+                'data_metering' => payload['data_metering'],
+                'commands_enabled' => payload['commands_enabled'],
+                'commands_url' => payload['commands_url'],
+                'commands_method' => payload['commands_method'],
             }
 
             # Context
@@ -289,104 +279,109 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [ServiceContext] ServiceContext for this ServiceInstance
+          # @return [FleetContext] FleetContext for this FleetInstance
           def context
             unless @instance_context
-              @instance_context = ServiceContext.new(@version, @params['sid'], )
+              @instance_context = FleetContext.new(@version, @params['sid'], )
             end
             @instance_context
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Service.
-          def sid
-            @properties['sid']
-          end
-
-          ##
-          # @return [String] A human readable description of this resource.
-          def friendly_name
-            @properties['friendly_name']
-          end
-
-          ##
-          # @return [String] Account Sid.
+          # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [Time] The date this Service was created
+          # @return [String] The unique string that identifies the resource
+          def sid
+            @properties['sid']
+          end
+
+          ##
+          # @return [String] An application-defined string that uniquely identifies the resource
+          def unique_name
+            @properties['unique_name']
+          end
+
+          ##
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date this Service was updated
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The URL of this resource.
+          # @return [String] The absolute URL of the Fleet resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] Nested resource URLs.
-          def links
-            @properties['links']
+          # @return [Boolean] Defines whether SIMs in the Fleet are capable of using data connectivity
+          def data_enabled
+            @properties['data_enabled']
           end
 
           ##
-          # @return [Hash] The service level configuration of all the factor types.
-          def configuration
-            @properties['configuration']
+          # @return [fleet.DataMetering] The model by which a SIM is metered and billed
+          def data_metering
+            @properties['data_metering']
           end
 
           ##
-          # Deletes the ServiceInstance
-          # @return [Boolean] true if delete succeeds, false otherwise
-          def delete
-            context.delete
+          # @return [Boolean] Defines whether SIMs in the Fleet are capable of sending and receiving Commands via SMS
+          def commands_enabled
+            @properties['commands_enabled']
           end
 
           ##
-          # Fetch a ServiceInstance
-          # @return [ServiceInstance] Fetched ServiceInstance
+          # @return [String] The URL that will receive a webhook when a SIM in the Fleet originates a machine-to-machine Command
+          def commands_url
+            @properties['commands_url']
+          end
+
+          ##
+          # @return [String] A string representing the HTTP method to use when making a request to `commands_url`
+          def commands_method
+            @properties['commands_method']
+          end
+
+          ##
+          # Fetch a FleetInstance
+          # @return [FleetInstance] Fetched FleetInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Update the ServiceInstance
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
-          # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset)
-            context.update(friendly_name: friendly_name, )
-          end
-
-          ##
-          # Access the entities
-          # @return [entities] entities
-          def entities
-            context.entities
+          # Update the FleetInstance
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. It can be used in place of the resource's `sid` in the
+          #   URL to address the resource.
+          # @return [FleetInstance] Updated FleetInstance
+          def update(unique_name: :unset)
+            context.update(unique_name: unique_name, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Authy.V1.ServiceInstance #{values}>"
+            "<Twilio.Supersim.V1.FleetInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Authy.V1.ServiceInstance #{values}>"
+            "<Twilio.Supersim.V1.FleetInstance #{values}>"
           end
         end
       end

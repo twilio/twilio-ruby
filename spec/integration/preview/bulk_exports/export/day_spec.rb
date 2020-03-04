@@ -9,6 +9,38 @@
 require 'spec_helper.rb'
 
 describe 'Day' do
+  it "can fetch" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.preview.bulk_exports.exports('resource_type') \
+                                  .days('day').fetch()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {}
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'get',
+        url: 'https://preview.twilio.com/BulkExports/Exports/resource_type/Days/day',
+    ))).to eq(true)
+  end
+
+  it "receives fetch responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "redirect_to": "https://com.twilio.dev-us1.exports.s3.amazonaws.com/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.preview.bulk_exports.exports('resource_type') \
+                                         .days('day').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can read" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
@@ -25,26 +57,53 @@ describe 'Day' do
     ))).to eq(true)
   end
 
-  it "receives read responses" do
+  it "receives read_empty responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "days": [],
+          "meta": {
+              "page": 0,
+              "page_size": 50,
+              "first_page_url": "https://preview.twilio.com/BulkExports/Exports/Calls/Days?PageSize=50&Page=0",
+              "previous_page_url": null,
+              "url": "https://preview.twilio.com/BulkExports/Exports/Calls/Days?PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "days"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.preview.bulk_exports.exports('resource_type') \
+                                         .days.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives read_full responses" do
     @holodeck.mock(Twilio::Response.new(
         200,
       %q[
       {
           "days": [
               {
-                  "day": "2017-05-01",
-                  "size": 1234,
-                  "resource_type": "Calls"
+                  "day": "2017-04-01",
+                  "size": 100,
+                  "resource_type": "Calls",
+                  "create_date": "2017-04-02",
+                  "friendly_name": "friendly_name"
               }
           ],
           "meta": {
-              "key": "days",
-              "page_size": 50,
-              "url": "https://preview.twilio.com/BulkExports/Exports/Calls/Days?PageSize=50&Page=0",
               "page": 0,
+              "page_size": 50,
               "first_page_url": "https://preview.twilio.com/BulkExports/Exports/Calls/Days?PageSize=50&Page=0",
               "previous_page_url": null,
-              "next_page_url": null
+              "url": "https://preview.twilio.com/BulkExports/Exports/Calls/Days?PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "days"
           }
       }
       ]

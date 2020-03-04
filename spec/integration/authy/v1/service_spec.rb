@@ -35,6 +35,7 @@ describe 'Service' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
+          "configuration": {},
           "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "entities": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities"
@@ -99,6 +100,7 @@ describe 'Service' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
+          "configuration": {},
           "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "entities": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities"
@@ -163,6 +165,7 @@ describe 'Service' do
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "date_created": "2015-07-30T20:00:00Z",
                   "date_updated": "2015-07-30T20:00:00Z",
+                  "configuration": {},
                   "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "links": {
                       "entities": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities"
@@ -212,6 +215,7 @@ describe 'Service' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
+          "configuration": {},
           "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "entities": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities"

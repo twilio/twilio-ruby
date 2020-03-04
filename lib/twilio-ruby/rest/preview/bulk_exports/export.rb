@@ -118,8 +118,14 @@ module Twilio
           ##
           # Access the days
           # @return [DayList]
-          # @return [DayContext]
-          def days
+          # @return [DayContext] if day was passed.
+          def days(day=:unset)
+            raise ArgumentError, 'day cannot be nil' if day.nil?
+
+            if day != :unset
+              return DayContext.new(@version, @solution[:resource_type], day, )
+            end
+
             unless @days
               @days = DayList.new(@version, resource_type: @solution[:resource_type], )
             end

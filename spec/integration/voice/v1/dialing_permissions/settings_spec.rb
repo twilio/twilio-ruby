@@ -60,7 +60,7 @@ describe 'Settings' do
 
   it "receives update responses" do
     @holodeck.mock(Twilio::Response.new(
-        202,
+        200,
       %q[
       {
           "dialing_permissions_inheritance": true,

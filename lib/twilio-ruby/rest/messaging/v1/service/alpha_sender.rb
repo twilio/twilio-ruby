@@ -309,7 +309,7 @@ module Twilio
             end
 
             ##
-            # @return [Hash] An array of values that describe whether the number can receive calls or messages
+            # @return [String] An array of values that describe whether the number can receive calls or messages
             def capabilities
               @properties['capabilities']
             end
