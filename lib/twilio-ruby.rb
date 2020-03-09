@@ -2,7 +2,6 @@
 
 require 'net/http'
 require 'net/https'
-require 'nokogiri'
 require 'cgi'
 require 'openssl'
 require 'base64'
@@ -22,11 +21,6 @@ require 'twilio-ruby/jwt/task_router'
 require 'twilio-ruby/security/request_validator'
 require 'twilio-ruby/util/configuration'
 
-require 'twilio-ruby/twiml/twiml'
-require 'twilio-ruby/twiml/fax_response'
-require 'twilio-ruby/twiml/messaging_response'
-require 'twilio-ruby/twiml/voice_response'
-
 Dir[File.dirname(__FILE__) + '/twilio-ruby/http/**/*.rb'].sort.each do |file|
   require file
 end
@@ -45,6 +39,8 @@ end
 
 module Twilio
   extend SingleForwardable
+
+  autoload :TwiML, File.join(File.dirname(__FILE__), 'twilio-ruby', 'twiml', 'twiml.rb')
 
   def_delegators :configuration, :account_sid, :auth_token, :http_client
 
