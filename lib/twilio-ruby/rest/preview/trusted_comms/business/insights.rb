@@ -27,17 +27,17 @@ module Twilio
               @solution = {business_sid: business_sid}
 
               # Components
-              @success_rate = nil
+              @impressions_rate = nil
             end
 
             ##
-            # Access the success_rate
-            # @return [SuccessRateList]
-            # @return [SuccessRateContext]
-            def success_rate
-              return SuccessRateContext.new(@version, @solution[:business_sid], )
+            # Access the impressions_rate
+            # @return [ImpressionsRateList]
+            # @return [ImpressionsRateContext]
+            def impressions_rate
+              return ImpressionsRateContext.new(@version, @solution[:business_sid], )
 
-              @success_rate ||= SuccessRateList.new(@version, business_sid: @solution[:business_sid], )
+              @impressions_rate ||= ImpressionsRateList.new(@version, business_sid: @solution[:business_sid], )
             end
 
             ##

@@ -40,12 +40,15 @@ module Twilio
               # @param [String] friendly_name The friendly name of this Factor
               # @param [factor.FactorTypes] factor_type The Type of this Factor. One of
               #   `app-push`, `sms`, `totp`, etc.
+              # @param [String] config The config required for this Factor. It must be a json
+              #   string with the required properties for the given factor type
               # @return [FactorInstance] Newly created FactorInstance
-              def create(binding: nil, friendly_name: nil, factor_type: nil)
+              def create(binding: nil, friendly_name: nil, factor_type: nil, config: nil)
                 data = Twilio::Values.of({
                     'Binding' => binding,
                     'FriendlyName' => friendly_name,
                     'FactorType' => factor_type,
+                    'Config' => config,
                 })
 
                 payload = @version.create(
@@ -241,9 +244,16 @@ module Twilio
               # Update the FactorInstance
               # @param [String] auth_payload The optional payload needed to verify the Factor
               #   for the first time. E.g. for a TOTP, the numeric code.
+              # @param [String] friendly_name The new friendly name of this Factor
+              # @param [String] config The new config for this Factor. It must be a json string
+              #   with the required properties for the given factor type
               # @return [FactorInstance] Updated FactorInstance
-              def update(auth_payload: :unset)
-                data = Twilio::Values.of({'AuthPayload' => auth_payload, })
+              def update(auth_payload: :unset, friendly_name: :unset, config: :unset)
+                data = Twilio::Values.of({
+                    'AuthPayload' => auth_payload,
+                    'FriendlyName' => friendly_name,
+                    'Config' => config,
+                })
 
                 payload = @version.update(
                     'POST',
@@ -331,6 +341,7 @@ module Twilio
                     'friendly_name' => payload['friendly_name'],
                     'status' => payload['status'],
                     'factor_type' => payload['factor_type'],
+                    'config' => payload['config'],
                     'url' => payload['url'],
                     'links' => payload['links'],
                 }
@@ -417,6 +428,12 @@ module Twilio
               end
 
               ##
+              # @return [Hash] The config
+              def config
+                @properties['config']
+              end
+
+              ##
               # @return [String] The URL of this resource.
               def url
                 @properties['url']
@@ -446,9 +463,12 @@ module Twilio
               # Update the FactorInstance
               # @param [String] auth_payload The optional payload needed to verify the Factor
               #   for the first time. E.g. for a TOTP, the numeric code.
+              # @param [String] friendly_name The new friendly name of this Factor
+              # @param [String] config The new config for this Factor. It must be a json string
+              #   with the required properties for the given factor type
               # @return [FactorInstance] Updated FactorInstance
-              def update(auth_payload: :unset)
-                context.update(auth_payload: auth_payload, )
+              def update(auth_payload: :unset, friendly_name: :unset, config: :unset)
+                context.update(auth_payload: auth_payload, friendly_name: friendly_name, config: config, )
               end
 
               ##

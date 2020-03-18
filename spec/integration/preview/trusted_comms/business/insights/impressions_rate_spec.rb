@@ -8,21 +8,21 @@
 
 require 'spec_helper.rb'
 
-describe 'SuccessRate' do
+describe 'ImpressionsRate' do
   it "can fetch" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
       @client.preview.trusted_comms.businesses('BXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                    .insights \
-                                   .success_rate().fetch()
+                                   .impressions_rate().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/TrustedComms/Businesses/BXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Insights/SuccessRate',
+        url: 'https://preview.twilio.com/TrustedComms/Businesses/BXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Insights/ImpressionsRate',
     ))).to eq(true)
   end
 
@@ -37,21 +37,20 @@ describe 'SuccessRate' do
           "end": "2015-07-30T21:00:00Z",
           "interval": "minute",
           "reports": {
-              "success_rate": {
+              "impressions_rate": {
                   "timestamp": "2015-07-30T20:00:00",
                   "calls": 1200,
-                  "branded": 800,
-                  "value": 66.67
+                  "impressions": 800
               }
           },
-          "url": "https://preview.twilio.com/TrustedComms/Businesses/BXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Insights/SuccessRate"
+          "url": "https://preview.twilio.com/TrustedComms/Businesses/BXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Insights/ImpressionsRate"
       }
       ]
     ))
 
     actual = @client.preview.trusted_comms.businesses('BXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                           .insights \
-                                          .success_rate().fetch()
+                                          .impressions_rate().fetch()
 
     expect(actual).to_not eq(nil)
   end

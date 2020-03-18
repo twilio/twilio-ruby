@@ -14,13 +14,13 @@ module Twilio
           class InsightsList < ListResource
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class SuccessRateList < ListResource
+            class ImpressionsRateList < ListResource
               ##
-              # Initialize the SuccessRateList
+              # Initialize the ImpressionsRateList
               # @param [Version] version Version that contains the resource
               # @param [String] business_sid A 34 character string that uniquely identifies this
               #   Business.
-              # @return [SuccessRateList] SuccessRateList
+              # @return [ImpressionsRateList] ImpressionsRateList
               def initialize(version, business_sid: nil)
                 super(version)
 
@@ -31,19 +31,19 @@ module Twilio
               ##
               # Provide a user friendly representation
               def to_s
-                '#<Twilio.Preview.TrustedComms.SuccessRateList>'
+                '#<Twilio.Preview.TrustedComms.ImpressionsRateList>'
               end
             end
 
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class SuccessRatePage < Page
+            class ImpressionsRatePage < Page
               ##
-              # Initialize the SuccessRatePage
+              # Initialize the ImpressionsRatePage
               # @param [Version] version Version that contains the resource
               # @param [Response] response Response from the API
               # @param [Hash] solution Path solution for the resource
-              # @return [SuccessRatePage] SuccessRatePage
+              # @return [ImpressionsRatePage] ImpressionsRatePage
               def initialize(version, response, solution)
                 super(version, response)
 
@@ -52,52 +52,52 @@ module Twilio
               end
 
               ##
-              # Build an instance of SuccessRateInstance
+              # Build an instance of ImpressionsRateInstance
               # @param [Hash] payload Payload response from the API
-              # @return [SuccessRateInstance] SuccessRateInstance
+              # @return [ImpressionsRateInstance] ImpressionsRateInstance
               def get_instance(payload)
-                SuccessRateInstance.new(@version, payload, business_sid: @solution[:business_sid], )
+                ImpressionsRateInstance.new(@version, payload, business_sid: @solution[:business_sid], )
               end
 
               ##
               # Provide a user friendly representation
               def to_s
-                '<Twilio.Preview.TrustedComms.SuccessRatePage>'
+                '<Twilio.Preview.TrustedComms.ImpressionsRatePage>'
               end
             end
 
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class SuccessRateContext < InstanceContext
+            class ImpressionsRateContext < InstanceContext
               ##
-              # Initialize the SuccessRateContext
+              # Initialize the ImpressionsRateContext
               # @param [Version] version Version that contains the resource
               # @param [String] business_sid The unique SID identifier of the Business to filter
               #   by.
-              # @return [SuccessRateContext] SuccessRateContext
+              # @return [ImpressionsRateContext] ImpressionsRateContext
               def initialize(version, business_sid)
                 super(version)
 
                 # Path Solution
                 @solution = {business_sid: business_sid, }
-                @uri = "/Businesses/#{@solution[:business_sid]}/Insights/SuccessRate"
+                @uri = "/Businesses/#{@solution[:business_sid]}/Insights/ImpressionsRate"
               end
 
               ##
-              # Fetch a SuccessRateInstance
+              # Fetch a ImpressionsRateInstance
               # @param [String] brand_sid The unique SID identifier of the Brand to filter by.
               # @param [String] branded_channel_sid The unique SID identifier of the Branded
               #   Channel to filter by.
               # @param [String] phone_number_sid The unique SID identifier of the Phone Number
               #   to filter by.
               # @param [String] country The 2-letter ISO 3166 code of the Country to filter by.
-              # @param [Time] start The start date that for this Success Rate, given in ISO 8601
-              #   format. Default value is 30 days ago.
-              # @param [Time] end_ The end date that for this Success Rate, given in ISO 8601
-              #   format. Default value is current timestamp.
-              # @param [success_rate.Intervals] interval The Interval of this Success Rate. One
-              #   of `minute`, `hour`, `day`, `week` or `month`.
-              # @return [SuccessRateInstance] Fetched SuccessRateInstance
+              # @param [Time] start The start date that for this Impressions Rate, given in ISO
+              #   8601 format. Default value is 30 days ago.
+              # @param [Time] end_ The end date that for this Impressions Rate, given in ISO
+              #   8601 format. Default value is current timestamp.
+              # @param [impressions_rate.Intervals] interval The Interval of this Impressions
+              #   Rate. One of `minute`, `hour`, `day`, `week` or `month`.
+              # @return [ImpressionsRateInstance] Fetched ImpressionsRateInstance
               def fetch(brand_sid: :unset, branded_channel_sid: :unset, phone_number_sid: :unset, country: :unset, start: :unset, end_: :unset, interval: :unset)
                 params = Twilio::Values.of({
                     'BrandSid' => brand_sid,
@@ -115,34 +115,34 @@ module Twilio
                     params,
                 )
 
-                SuccessRateInstance.new(@version, payload, business_sid: @solution[:business_sid], )
+                ImpressionsRateInstance.new(@version, payload, business_sid: @solution[:business_sid], )
               end
 
               ##
               # Provide a user friendly representation
               def to_s
                 context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-                "#<Twilio.Preview.TrustedComms.SuccessRateContext #{context}>"
+                "#<Twilio.Preview.TrustedComms.ImpressionsRateContext #{context}>"
               end
 
               ##
               # Provide a detailed, user friendly representation
               def inspect
                 context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-                "#<Twilio.Preview.TrustedComms.SuccessRateContext #{context}>"
+                "#<Twilio.Preview.TrustedComms.ImpressionsRateContext #{context}>"
               end
             end
 
             ##
             # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-            class SuccessRateInstance < InstanceResource
+            class ImpressionsRateInstance < InstanceResource
               ##
-              # Initialize the SuccessRateInstance
+              # Initialize the ImpressionsRateInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] business_sid A 34 character string that uniquely identifies this
               #   Business.
-              # @return [SuccessRateInstance] SuccessRateInstance
+              # @return [ImpressionsRateInstance] ImpressionsRateInstance
               def initialize(version, payload, business_sid: nil)
                 super(version)
 
@@ -165,10 +165,10 @@ module Twilio
               ##
               # Generate an instance context for the instance, the context is capable of
               # performing various actions.  All instance actions are proxied to the context
-              # @return [SuccessRateContext] SuccessRateContext for this SuccessRateInstance
+              # @return [ImpressionsRateContext] ImpressionsRateContext for this ImpressionsRateInstance
               def context
                 unless @instance_context
-                  @instance_context = SuccessRateContext.new(@version, @params['business_sid'], )
+                  @instance_context = ImpressionsRateContext.new(@version, @params['business_sid'], )
                 end
                 @instance_context
               end
@@ -186,25 +186,25 @@ module Twilio
               end
 
               ##
-              # @return [Time] The end date that for this Success Rate.
+              # @return [Time] The end date that for this Impressions Rate.
               def end_
                 @properties['end_']
               end
 
               ##
-              # @return [success_rate.Intervals] The Interval of this Success Rate.
+              # @return [impressions_rate.Intervals] The Interval of this Impressions Rate.
               def interval
                 @properties['interval']
               end
 
               ##
-              # @return [Hash] Values of Success Rate per interval.
+              # @return [Hash] Values of Impressions Rate per interval.
               def reports
                 @properties['reports']
               end
 
               ##
-              # @return [Time] The start date that for this Success Rate.
+              # @return [Time] The start date that for this Impressions Rate.
               def start
                 @properties['start']
               end
@@ -216,20 +216,20 @@ module Twilio
               end
 
               ##
-              # Fetch a SuccessRateInstance
+              # Fetch a ImpressionsRateInstance
               # @param [String] brand_sid The unique SID identifier of the Brand to filter by.
               # @param [String] branded_channel_sid The unique SID identifier of the Branded
               #   Channel to filter by.
               # @param [String] phone_number_sid The unique SID identifier of the Phone Number
               #   to filter by.
               # @param [String] country The 2-letter ISO 3166 code of the Country to filter by.
-              # @param [Time] start The start date that for this Success Rate, given in ISO 8601
-              #   format. Default value is 30 days ago.
-              # @param [Time] end_ The end date that for this Success Rate, given in ISO 8601
-              #   format. Default value is current timestamp.
-              # @param [success_rate.Intervals] interval The Interval of this Success Rate. One
-              #   of `minute`, `hour`, `day`, `week` or `month`.
-              # @return [SuccessRateInstance] Fetched SuccessRateInstance
+              # @param [Time] start The start date that for this Impressions Rate, given in ISO
+              #   8601 format. Default value is 30 days ago.
+              # @param [Time] end_ The end date that for this Impressions Rate, given in ISO
+              #   8601 format. Default value is current timestamp.
+              # @param [impressions_rate.Intervals] interval The Interval of this Impressions
+              #   Rate. One of `minute`, `hour`, `day`, `week` or `month`.
+              # @return [ImpressionsRateInstance] Fetched ImpressionsRateInstance
               def fetch(brand_sid: :unset, branded_channel_sid: :unset, phone_number_sid: :unset, country: :unset, start: :unset, end_: :unset, interval: :unset)
                 context.fetch(
                     brand_sid: brand_sid,
@@ -246,14 +246,14 @@ module Twilio
               # Provide a user friendly representation
               def to_s
                 values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Preview.TrustedComms.SuccessRateInstance #{values}>"
+                "<Twilio.Preview.TrustedComms.ImpressionsRateInstance #{values}>"
               end
 
               ##
               # Provide a detailed, user friendly representation
               def inspect
                 values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                "<Twilio.Preview.TrustedComms.SuccessRateInstance #{values}>"
+                "<Twilio.Preview.TrustedComms.ImpressionsRateInstance #{values}>"
               end
             end
           end
