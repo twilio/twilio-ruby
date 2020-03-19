@@ -84,8 +84,8 @@ module Twilio
           [TASK_ROUTER_BASE_URL, TASK_ROUTER_VERSION, 'Workspaces'].join('/')
         end
 
-        def self.workspace(worskspace_sid)
-          [TASK_ROUTER_BASE_URL, TASK_ROUTER_VERSION, 'Workspaces', worskspace_sid].join('/')
+        def self.workspace(workspace_sid)
+          [TASK_ROUTER_BASE_URL, TASK_ROUTER_VERSION, 'Workspaces', workspace_sid].join('/')
         end
 
         def self.all_workspaces
