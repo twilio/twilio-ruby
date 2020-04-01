@@ -99,15 +99,14 @@ describe 'Deployment' do
     expect {
       @client.serverless.v1.services('ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                            .environments('ZEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                           .deployments.create(build_sid: 'ZBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+                           .deployments.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'BuildSid' => 'ZBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
+    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://serverless.twilio.com/v1/Services/ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Environments/ZEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Deployments',
-        data: values,
     ))).to eq(true)
   end
 
@@ -130,7 +129,7 @@ describe 'Deployment' do
 
     actual = @client.serverless.v1.services('ZSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                   .environments('ZEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                  .deployments.create(build_sid: 'ZBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+                                  .deployments.create()
 
     expect(actual).to_not eq(nil)
   end

@@ -133,8 +133,11 @@ module Twilio
               # @param [Boolean] emergency_calling_enabled Whether emergency calling is enabled
               #   for the domain. If enabled, allows emergency calls on the domain from phone
               #   numbers with validated addresses.
+              # @param [Boolean] secure Whether secure SIP is enabled for the domain. If
+              #   enabled, TLS will be enforced and SRTP will be negotiated on all incoming calls
+              #   to this sip domain.
               # @return [DomainInstance] Newly created DomainInstance
-              def create(domain_name: nil, friendly_name: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, voice_status_callback_url: :unset, voice_status_callback_method: :unset, sip_registration: :unset, emergency_calling_enabled: :unset)
+              def create(domain_name: nil, friendly_name: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, voice_status_callback_url: :unset, voice_status_callback_method: :unset, sip_registration: :unset, emergency_calling_enabled: :unset, secure: :unset)
                 data = Twilio::Values.of({
                     'DomainName' => domain_name,
                     'FriendlyName' => friendly_name,
@@ -146,6 +149,7 @@ module Twilio
                     'VoiceStatusCallbackMethod' => voice_status_callback_method,
                     'SipRegistration' => sip_registration,
                     'EmergencyCallingEnabled' => emergency_calling_enabled,
+                    'Secure' => secure,
                 })
 
                 payload = @version.create(
@@ -254,8 +258,11 @@ module Twilio
               # @param [Boolean] emergency_calling_enabled Whether emergency calling is enabled
               #   for the domain. If enabled, allows emergency calls on the domain from phone
               #   numbers with validated addresses.
+              # @param [Boolean] secure Whether secure SIP is enabled for the domain. If
+              #   enabled, TLS will be enforced and SRTP will be negotiated on all incoming calls
+              #   to this sip domain.
               # @return [DomainInstance] Updated DomainInstance
-              def update(friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset, domain_name: :unset, emergency_calling_enabled: :unset)
+              def update(friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset, domain_name: :unset, emergency_calling_enabled: :unset, secure: :unset)
                 data = Twilio::Values.of({
                     'FriendlyName' => friendly_name,
                     'VoiceFallbackMethod' => voice_fallback_method,
@@ -267,6 +274,7 @@ module Twilio
                     'SipRegistration' => sip_registration,
                     'DomainName' => domain_name,
                     'EmergencyCallingEnabled' => emergency_calling_enabled,
+                    'Secure' => secure,
                 })
 
                 payload = @version.update(
@@ -398,6 +406,7 @@ module Twilio
                     'subresource_uris' => payload['subresource_uris'],
                     'sip_registration' => payload['sip_registration'],
                     'emergency_calling_enabled' => payload['emergency_calling_enabled'],
+                    'secure' => payload['secure'],
                 }
 
                 # Context
@@ -525,6 +534,12 @@ module Twilio
               end
 
               ##
+              # @return [Boolean] Whether secure SIP is enabled for the domain
+              def secure
+                @properties['secure']
+              end
+
+              ##
               # Fetch a DomainInstance
               # @return [DomainInstance] Fetched DomainInstance
               def fetch
@@ -554,8 +569,11 @@ module Twilio
               # @param [Boolean] emergency_calling_enabled Whether emergency calling is enabled
               #   for the domain. If enabled, allows emergency calls on the domain from phone
               #   numbers with validated addresses.
+              # @param [Boolean] secure Whether secure SIP is enabled for the domain. If
+              #   enabled, TLS will be enforced and SRTP will be negotiated on all incoming calls
+              #   to this sip domain.
               # @return [DomainInstance] Updated DomainInstance
-              def update(friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset, domain_name: :unset, emergency_calling_enabled: :unset)
+              def update(friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset, domain_name: :unset, emergency_calling_enabled: :unset, secure: :unset)
                 context.update(
                     friendly_name: friendly_name,
                     voice_fallback_method: voice_fallback_method,
@@ -567,6 +585,7 @@ module Twilio
                     sip_registration: sip_registration,
                     domain_name: domain_name,
                     emergency_calling_enabled: emergency_calling_enabled,
+                    secure: secure,
                 )
               end
 

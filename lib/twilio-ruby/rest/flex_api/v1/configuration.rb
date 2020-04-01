@@ -179,6 +179,8 @@ module Twilio
                 'integrations' => payload['integrations'],
                 'outbound_call_flows' => payload['outbound_call_flows'],
                 'serverless_service_sids' => payload['serverless_service_sids'],
+                'wfm_integrations' => payload['wfm_integrations'],
+                'queue_stats_configuration' => payload['queue_stats_configuration'],
                 'url' => payload['url'],
             }
 
@@ -400,6 +402,18 @@ module Twilio
           # @return [String] The list of serverless service SIDs
           def serverless_service_sids
             @properties['serverless_service_sids']
+          end
+
+          ##
+          # @return [Hash] A list of objects that contain the configurations for the WFM Integrations supported in this configuration
+          def wfm_integrations
+            @properties['wfm_integrations']
+          end
+
+          ##
+          # @return [Hash] Configurable parameters for Queues Statistics
+          def queue_stats_configuration
+            @properties['queue_stats_configuration']
           end
 
           ##

@@ -117,7 +117,7 @@ module Twilio
               # Request is executed immediately.
               # @param [String] build_sid The SID of the build for the deployment.
               # @return [DeploymentInstance] Newly created DeploymentInstance
-              def create(build_sid: nil)
+              def create(build_sid: :unset)
                 data = Twilio::Values.of({'BuildSid' => build_sid, })
 
                 payload = @version.create(

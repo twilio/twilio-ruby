@@ -386,7 +386,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The SID of the assigned to the user
+            # @return [String] The SID of the Role assigned to the user
             def role_sid
               @properties['role_sid']
             end
