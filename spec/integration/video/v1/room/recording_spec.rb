@@ -47,7 +47,7 @@ describe 'RoomRecording' do
           "grouping_sids": {
               "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
           },
-          "media_external_location": "https://my-super-duper-bucket.s3.amazonaws.com/my/path/",
+          "media_external_location": "https://www.twilio.com",
           "encryption_key": "public_key",
           "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "url": "https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings/RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -130,7 +130,7 @@ describe 'RoomRecording' do
                       "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                       "participant_sid": "PAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
                   },
-                  "media_external_location": "https://my-super-duper-bucket.s3.amazonaws.com/my/path/",
+                  "media_external_location": "https://www.twilio.com",
                   "encryption_key": "public_key",
                   "room_sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "url": "https://video.twilio.com/v1/Rooms/RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings/RTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
