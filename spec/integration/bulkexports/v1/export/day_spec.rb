@@ -30,7 +30,7 @@ describe 'Day' do
         200,
       %q[
       {
-          "redirect_to": "https://api.bulkexports.s3.amazonaws.com/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "redirect_to": "https://www.twilio.com"
       }
       ]
     ))
