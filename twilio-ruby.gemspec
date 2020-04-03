@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
                        'building TwiML, and generating Twilio JWT Capability Tokens'
   spec.description   = 'The official library for communicating with the Twilio REST API, '\
                        'building TwiML, and generating Twilio JWT Capability Tokens'
-  spec.homepage      = 'http://github.com/twilio/twilio-ruby'
+  spec.homepage      = 'https://github.com/twilio/twilio-ruby'
   spec.license       = 'MIT'
   spec.metadata      = { 'yard.run' => 'yri' } # use "yard" to build full HTML docs
 
