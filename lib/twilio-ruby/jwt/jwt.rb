@@ -4,10 +4,10 @@ require 'jwt'
 
 module Twilio
   module JWT
-    autoload :TaskRouterCapability, File.join(File.dirname(__FILE__), 'task_router.rb')
-    autoload :ClientCapability, File.join(File.dirname(__FILE__), 'client_capability.rb')
     autoload :AccessToken, File.join(File.dirname(__FILE__), 'access_token.rb')
-
+    autoload :ClientCapability, File.join(File.dirname(__FILE__), 'client_capability.rb')
+    autoload :TaskRouterCapability, File.join(File.dirname(__FILE__), 'task_router.rb')
+    
     class BaseJWT
       # valid_until overrides ttl if specified
       def initialize(secret_key: nil, issuer: nil, subject: nil, nbf: nil, ttl: 3600, valid_until: nil)
