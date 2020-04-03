@@ -13,15 +13,15 @@ describe 'Day' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.bulk_exports.exports('resource_type') \
-                                  .days('day').fetch()
+      @client.bulkexports.v1.exports('resource_type') \
+                            .days('day').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/BulkExports/Exports/resource_type/Days/day',
+        url: 'https://bulkexports.twilio.com/v1/Exports/resource_type/Days/day',
     ))).to eq(true)
   end
 
@@ -35,8 +35,8 @@ describe 'Day' do
       ]
     ))
 
-    actual = @client.preview.bulk_exports.exports('resource_type') \
-                                         .days('day').fetch()
+    actual = @client.bulkexports.v1.exports('resource_type') \
+                                   .days('day').fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -45,15 +45,15 @@ describe 'Day' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.bulk_exports.exports('resource_type') \
-                                  .days.list()
+      @client.bulkexports.v1.exports('resource_type') \
+                            .days.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://preview.twilio.com/BulkExports/Exports/resource_type/Days',
+        url: 'https://bulkexports.twilio.com/v1/Exports/resource_type/Days',
     ))).to eq(true)
   end
 
@@ -66,9 +66,9 @@ describe 'Day' do
           "meta": {
               "page": 0,
               "page_size": 50,
-              "first_page_url": "https://preview.twilio.com/BulkExports/Exports/Calls/Days?PageSize=50&Page=0",
+              "first_page_url": "https://bulkexports.twilio.com/v1/Exports/Calls/Days?PageSize=50&Page=0",
               "previous_page_url": null,
-              "url": "https://preview.twilio.com/BulkExports/Exports/Calls/Days?PageSize=50&Page=0",
+              "url": "https://bulkexports.twilio.com/v1/Exports/Calls/Days?PageSize=50&Page=0",
               "next_page_url": null,
               "key": "days"
           }
@@ -76,8 +76,8 @@ describe 'Day' do
       ]
     ))
 
-    actual = @client.preview.bulk_exports.exports('resource_type') \
-                                         .days.list()
+    actual = @client.bulkexports.v1.exports('resource_type') \
+                                   .days.list()
 
     expect(actual).to_not eq(nil)
   end
@@ -99,9 +99,9 @@ describe 'Day' do
           "meta": {
               "page": 0,
               "page_size": 50,
-              "first_page_url": "https://preview.twilio.com/BulkExports/Exports/Calls/Days?PageSize=50&Page=0",
+              "first_page_url": "https://bulkexports.twilio.com/v1/Exports/Calls/Days?PageSize=50&Page=0",
               "previous_page_url": null,
-              "url": "https://preview.twilio.com/BulkExports/Exports/Calls/Days?PageSize=50&Page=0",
+              "url": "https://bulkexports.twilio.com/v1/Exports/Calls/Days?PageSize=50&Page=0",
               "next_page_url": null,
               "key": "days"
           }
@@ -109,8 +109,8 @@ describe 'Day' do
       ]
     ))
 
-    actual = @client.preview.bulk_exports.exports('resource_type') \
-                                         .days.list()
+    actual = @client.bulkexports.v1.exports('resource_type') \
+                                   .days.list()
 
     expect(actual).to_not eq(nil)
   end

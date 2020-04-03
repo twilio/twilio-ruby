@@ -33,7 +33,7 @@ describe 'CompositionSettings' do
           "friendly_name": "string",
           "aws_credentials_sid": "CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "encryption_key_sid": "CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "aws_s3_url": "https://my-super-duper-bucket.s3.amazonaws.com/my/path/",
+          "aws_s3_url": "https://www.twilio.com",
           "aws_storage_enabled": true,
           "encryption_enabled": true,
           "url": "https://video.twilio.com/v1/CompositionSettings/Default"
@@ -71,7 +71,7 @@ describe 'CompositionSettings' do
           "friendly_name": "friendly_name",
           "aws_credentials_sid": "CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "encryption_key_sid": "CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "aws_s3_url": "https://my-super-duper-bucket.s3.amazonaws.com/my/path/",
+          "aws_s3_url": "https://www.twilio.com",
           "aws_storage_enabled": true,
           "encryption_enabled": true,
           "url": "https://video.twilio.com/v1/CompositionSettings/Default"

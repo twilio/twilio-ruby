@@ -30,7 +30,7 @@ module Twilio
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [sim.Status] status The status of the Sim resources to read. Can be
-          #   `new`, `active`, `deactivated`, `inactive`, or `scheduled`.
+          #   `new`, `active`, `inactive`, or `scheduled`.
           # @param [String] fleet The SID or unique name of the Fleet to which a list of
           #   Sims are assigned.
           # @param [String] iccid The
@@ -53,7 +53,7 @@ module Twilio
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [sim.Status] status The status of the Sim resources to read. Can be
-          #   `new`, `active`, `deactivated`, `inactive`, or `scheduled`.
+          #   `new`, `active`, `inactive`, or `scheduled`.
           # @param [String] fleet The SID or unique name of the Fleet to which a list of
           #   Sims are assigned.
           # @param [String] iccid The
@@ -93,7 +93,7 @@ module Twilio
           # Retrieve a single page of SimInstance records from the API.
           # Request is executed immediately.
           # @param [sim.Status] status The status of the Sim resources to read. Can be
-          #   `new`, `active`, `deactivated`, `inactive`, or `scheduled`.
+          #   `new`, `active`, `inactive`, or `scheduled`.
           # @param [String] fleet The SID or unique name of the Fleet to which a list of
           #   Sims are assigned.
           # @param [String] iccid The
@@ -209,7 +209,7 @@ module Twilio
           #   identifies the resource. It can be used in place of the resource's `sid` in the
           #   URL to address the resource.
           # @param [sim.StatusUpdate] status The new status of the resource. Can be:
-          #   `active`, `deactivated`, or `inactive`. See the [Super SIM Status
+          #   `active` or `inactive`. See the [Super SIM Status
           #   Values](https://www.twilio.com/docs/iot/supersim/api/sim-resource#status-values)
           #   for more info.
           # @param [String] fleet The SID or unique name of the Fleet to which the SIM
@@ -350,7 +350,7 @@ module Twilio
           #   identifies the resource. It can be used in place of the resource's `sid` in the
           #   URL to address the resource.
           # @param [sim.StatusUpdate] status The new status of the resource. Can be:
-          #   `active`, `deactivated`, or `inactive`. See the [Super SIM Status
+          #   `active` or `inactive`. See the [Super SIM Status
           #   Values](https://www.twilio.com/docs/iot/supersim/api/sim-resource#status-values)
           #   for more info.
           # @param [String] fleet The SID or unique name of the Fleet to which the SIM

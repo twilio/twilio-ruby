@@ -53,6 +53,7 @@ module Twilio
         @voice = nil
         @wireless = nil
         @supersim = nil
+        @bulkexports = nil
       end
 
       ##
@@ -269,6 +270,12 @@ module Twilio
       # Access the Supersim Twilio Domain
       def supersim
         @supersim ||= Supersim.new self
+      end
+
+      ##
+      # Access the Bulkexports Twilio Domain
+      def bulkexports
+        @bulkexports ||= Bulkexports.new self
       end
 
       ##

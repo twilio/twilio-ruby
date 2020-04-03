@@ -32,13 +32,13 @@ This library supports the following Ruby implementations:
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 5.31.6'
+gem 'twilio-ruby', '~> 5.33.0'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 5.31.6
+gem install twilio-ruby -v 5.33.0
 ```
 
 To build and install the development branch yourself from the latest source:

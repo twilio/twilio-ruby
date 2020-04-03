@@ -134,6 +134,22 @@ describe 'Configuration' do
                   "config": "{\\"callback\\":\\"twilio.com/cb\\",\\"allowed_methods\\":[\\"GET\\",\\"POST\\"]}"
               }
           ],
+          "wfm_integrations": [
+              {
+                  "name": "teleopti",
+                  "type": "flex_wfm",
+                  "active": true,
+                  "config": "{\\"rta_callback_url\\":\\"https://twilio.com\\",\\"rta_feed_enabled\\": true, \\"historical_feed_enabled\\": true}",
+                  "logo": "logo1",
+                  "author": "somebody1"
+              },
+              {
+                  "name": "teleopti-stage",
+                  "type": "flex_wfm",
+                  "active": false,
+                  "config": "{\\"rta_callback_url\\":\\"https://twilio.com\\",\\"rta_feed_enabled\\": true, \\"historical_feed_enabled\\": true}"
+              }
+          ],
           "outbound_call_flows": {
               "default": {
                   "caller_id": "+12345",
@@ -141,6 +157,40 @@ describe 'Configuration' do
                   "location": "EE",
                   "workflow_sid": "WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
+          },
+          "queue_stats_configuration": {
+              "default": {
+                  "service_level_threshold": 20,
+                  "short_abandoned_threshold": 5,
+                  "reset_timezone": "America/New_York",
+                  "reset_time": "00:00"
+              },
+              "queue_configurations": [
+                  {
+                      "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "reset_timezone": "Europe/Tallinn",
+                      "reset_time": "01:00"
+                  },
+                  {
+                      "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                      "reset_timezone": "Europe/Paris",
+                      "reset_time": "02:00"
+                  }
+              ],
+              "queue_channel_configurations": [
+                  {
+                      "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "channel_sid": "TCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "service_level_threshold": 10,
+                      "short_abandoned_threshold": 10
+                  },
+                  {
+                      "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                      "channel_sid": "TCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                      "service_level_threshold": 30,
+                      "short_abandoned_threshold": 15
+                  }
+              ]
           },
           "serverless_service_sids": [
               "ZSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -281,6 +331,22 @@ describe 'Configuration' do
                   "config": "{\\"callback\\":\\"twilio.com/cb\\",\\"allowed_methods\\":[\\"GET\\",\\"POST\\"]}"
               }
           ],
+          "wfm_integrations": [
+              {
+                  "name": "teleopti",
+                  "type": "flex_wfm",
+                  "active": true,
+                  "config": "{\\"rta_callback_url\\":\\"https://twilio.com\\",\\"rta_feed_enabled\\": true, \\"historical_feed_enabled\\": true}",
+                  "logo": "logo1",
+                  "author": "somebody1"
+              },
+              {
+                  "name": "teleopti-stage",
+                  "type": "flex_wfm",
+                  "active": false,
+                  "config": "{\\"rta_callback_url\\":\\"https://twilio.com\\",\\"rta_feed_enabled\\": true, \\"historical_feed_enabled\\": true}"
+              }
+          ],
           "outbound_call_flows": {
               "default": {
                   "caller_id": "+12345",
@@ -288,6 +354,40 @@ describe 'Configuration' do
                   "location": "EE",
                   "workflow_sid": "WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
+          },
+          "queue_stats_configuration": {
+              "default": {
+                  "service_level_threshold": 20,
+                  "short_abandoned_threshold": 5,
+                  "reset_timezone": "America/New_York",
+                  "reset_time": "00:00"
+              },
+              "queue_configurations": [
+                  {
+                      "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "reset_timezone": "Europe/Tallinn",
+                      "reset_time": "01:00"
+                  },
+                  {
+                      "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                      "reset_timezone": "Europe/Paris",
+                      "reset_time": "02:00"
+                  }
+              ],
+              "queue_channel_configurations": [
+                  {
+                      "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "channel_sid": "TCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "service_level_threshold": 10,
+                      "short_abandoned_threshold": 10
+                  },
+                  {
+                      "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                      "channel_sid": "TCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                      "service_level_threshold": 30,
+                      "short_abandoned_threshold": 15
+                  }
+              ]
           },
           "serverless_service_sids": [
               "ZSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -428,6 +528,22 @@ describe 'Configuration' do
                   "config": "{\\"callback\\":\\"twilio.com/cb\\",\\"allowed_methods\\":[\\"GET\\",\\"POST\\"]}"
               }
           ],
+          "wfm_integrations": [
+              {
+                  "name": "teleopti",
+                  "type": "flex_wfm",
+                  "active": true,
+                  "config": "{\\"rta_callback_url\\":\\"https://twilio.com\\",\\"rta_feed_enabled\\": true, \\"historical_feed_enabled\\": true}",
+                  "logo": "logo1",
+                  "author": "somebody1"
+              },
+              {
+                  "name": "teleopti-stage",
+                  "type": "flex_wfm",
+                  "active": false,
+                  "config": "{\\"rta_callback_url\\":\\"https://twilio.com\\",\\"rta_feed_enabled\\": true, \\"historical_feed_enabled\\": true}"
+              }
+          ],
           "outbound_call_flows": {
               "default": {
                   "caller_id": "+12345",
@@ -435,6 +551,40 @@ describe 'Configuration' do
                   "location": "EE",
                   "workflow_sid": "WWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
+          },
+          "queue_stats_configuration": {
+              "default": {
+                  "service_level_threshold": 20,
+                  "short_abandoned_threshold": 5,
+                  "reset_timezone": "America/New_York",
+                  "reset_time": "00:00"
+              },
+              "queue_configurations": [
+                  {
+                      "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "reset_timezone": "Europe/Tallinn",
+                      "reset_time": "01:00"
+                  },
+                  {
+                      "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                      "reset_timezone": "Europe/Paris",
+                      "reset_time": "02:00"
+                  }
+              ],
+              "queue_channel_configurations": [
+                  {
+                      "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "channel_sid": "TCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "service_level_threshold": 10,
+                      "short_abandoned_threshold": 10
+                  },
+                  {
+                      "queue_sid": "WQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                      "channel_sid": "TCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                      "service_level_threshold": 30,
+                      "short_abandoned_threshold": 15
+                  }
+              ]
           },
           "serverless_service_sids": [
               "ZSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",

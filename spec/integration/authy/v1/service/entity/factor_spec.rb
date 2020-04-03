@@ -15,10 +15,15 @@ describe 'Factor' do
     expect {
       @client.authy.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                       .entities('identity') \
-                      .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'app-push')
+                      .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'app-push', config: 'config')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Binding' => 'binding', 'FriendlyName' => 'friendly_name', 'FactorType' => 'app-push', }
+    values = {
+        'Binding' => 'binding',
+        'FriendlyName' => 'friendly_name',
+        'FactorType' => 'app-push',
+        'Config' => 'config',
+    }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -41,7 +46,13 @@ describe 'Factor' do
           "date_updated": "2015-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
           "status": "unverified",
-          "factor_type": "sms",
+          "factor_type": "push",
+          "config": {
+              "sdk_version": "1.0",
+              "app_id": "com.authy.authy",
+              "notification_platform": "fcm",
+              "notification_token": "test_token"
+          },
           "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "challenges": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges"
@@ -52,7 +63,7 @@ describe 'Factor' do
 
     actual = @client.authy.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .entities('identity') \
-                             .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'app-push')
+                             .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'app-push', config: 'config')
 
     expect(actual).to_not eq(nil)
   end
@@ -118,7 +129,13 @@ describe 'Factor' do
           "date_updated": "2015-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
           "status": "unverified",
-          "factor_type": "sms",
+          "factor_type": "push",
+          "config": {
+              "sdk_version": "1.0",
+              "app_id": "com.authy.authy",
+              "notification_platform": "fcm",
+              "notification_token": "test_token"
+          },
           "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "challenges": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges"
@@ -193,7 +210,13 @@ describe 'Factor' do
                   "date_updated": "2015-07-30T20:00:00Z",
                   "friendly_name": "friendly_name",
                   "status": "unverified",
-                  "factor_type": "sms",
+                  "factor_type": "push",
+                  "config": {
+                      "sdk_version": "1.0",
+                      "app_id": "com.authy.authy",
+                      "notification_platform": "fcm",
+                      "notification_token": "test_token"
+                  },
                   "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "links": {
                       "challenges": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges"
@@ -251,7 +274,13 @@ describe 'Factor' do
           "date_updated": "2015-07-30T20:00:00Z",
           "friendly_name": "friendly_name",
           "status": "verified",
-          "factor_type": "sms",
+          "factor_type": "push",
+          "config": {
+              "sdk_version": "1.0",
+              "app_id": "com.authy.authy",
+              "notification_platform": "fcm",
+              "notification_token": "test_token"
+          },
           "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "challenges": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges"

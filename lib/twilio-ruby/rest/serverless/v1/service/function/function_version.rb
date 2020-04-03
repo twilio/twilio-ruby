@@ -174,6 +174,9 @@ module Twilio
                 # Path Solution
                 @solution = {service_sid: service_sid, function_sid: function_sid, sid: sid, }
                 @uri = "/Services/#{@solution[:service_sid]}/Functions/#{@solution[:function_sid]}/Versions/#{@solution[:sid]}"
+
+                # Dependents
+                @function_version_content = nil
               end
 
               ##
@@ -194,6 +197,19 @@ module Twilio
                     service_sid: @solution[:service_sid],
                     function_sid: @solution[:function_sid],
                     sid: @solution[:sid],
+                )
+              end
+
+              ##
+              # Access the function_version_content
+              # @return [FunctionVersionContentList]
+              # @return [FunctionVersionContentContext]
+              def function_version_content
+                FunctionVersionContentContext.new(
+                    @version,
+                    @solution[:service_sid],
+                    @solution[:function_sid],
+                    @solution[:sid],
                 )
               end
 
@@ -238,6 +254,7 @@ module Twilio
                     'visibility' => payload['visibility'],
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'url' => payload['url'],
+                    'links' => payload['links'],
                 }
 
                 # Context
@@ -314,10 +331,23 @@ module Twilio
               end
 
               ##
+              # @return [String] The links
+              def links
+                @properties['links']
+              end
+
+              ##
               # Fetch a FunctionVersionInstance
               # @return [FunctionVersionInstance] Fetched FunctionVersionInstance
               def fetch
                 context.fetch
+              end
+
+              ##
+              # Access the function_version_content
+              # @return [function_version_content] function_version_content
+              def function_version_content
+                context.function_version_content
               end
 
               ##

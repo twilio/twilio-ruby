@@ -139,6 +139,9 @@ module Twilio
             # @param [String] byoc The SID of a BYOC (Bring Your Own Carrier) trunk to route
             #   this call with. Note that `byoc` is only meaningful when `to` is a phone number;
             #   it will otherwise be ignored. (Beta)
+            # @param [String] call_reason The Reason for the outgoing call. Use call_reason to
+            #   specify the purpose of the call that is presented on the called party's phone.
+            #   (Beta).
             # @param [String] url The absolute URL that returns the TwiML instructions for the
             #   call. We will call this URL using the `method` when the call connects. For more
             #   information, see the [Url
@@ -150,7 +153,7 @@ module Twilio
             # @param [String] application_sid The SID of the Application resource that will
             #   handle the call, if the call will be handled by an application.
             # @return [CallInstance] Newly created CallInstance
-            def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, recording_status_callback_event: :unset, trim: :unset, caller_id: :unset, machine_detection_speech_threshold: :unset, machine_detection_speech_end_threshold: :unset, machine_detection_silence_timeout: :unset, async_amd: :unset, async_amd_status_callback: :unset, async_amd_status_callback_method: :unset, byoc: :unset, url: :unset, twiml: :unset, application_sid: :unset)
+            def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, recording_status_callback_event: :unset, trim: :unset, caller_id: :unset, machine_detection_speech_threshold: :unset, machine_detection_speech_end_threshold: :unset, machine_detection_silence_timeout: :unset, async_amd: :unset, async_amd_status_callback: :unset, async_amd_status_callback_method: :unset, byoc: :unset, call_reason: :unset, url: :unset, twiml: :unset, application_sid: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -183,6 +186,7 @@ module Twilio
                   'AsyncAmdStatusCallback' => async_amd_status_callback,
                   'AsyncAmdStatusCallbackMethod' => async_amd_status_callback_method,
                   'Byoc' => byoc,
+                  'CallReason' => call_reason,
               })
 
               payload = @version.create(

@@ -176,6 +176,97 @@ describe 'Challenge' do
     expect(actual).to_not eq(nil)
   end
 
+  it "can read" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.authy.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .entities('identity') \
+                      .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                      .challenges.list()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {}
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'get',
+        url: 'https://authy.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors/YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Challenges',
+    ))).to eq(true)
+  end
+
+  it "receives read_empty responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "challenges": [],
+          "meta": {
+              "page": 0,
+              "page_size": 50,
+              "first_page_url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges?PageSize=50&Page=0",
+              "previous_page_url": null,
+              "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges?PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "challenges"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.authy.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .entities('identity') \
+                             .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .challenges.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives read_full responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "challenges": [
+              {
+                  "sid": "YCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "service_sid": "ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "entity_sid": "YEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "identity": "ff483d1ff591898a9942916050d2ca3f",
+                  "factor_sid": "YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "date_created": "2015-07-30T20:00:00Z",
+                  "date_updated": "2015-07-30T20:00:00Z",
+                  "date_responded": "2015-07-30T20:00:00Z",
+                  "expiration_date": "2015-07-30T20:00:00Z",
+                  "status": "pending",
+                  "responded_reason": "none",
+                  "details": "details",
+                  "hidden_details": "hidden_details",
+                  "factor_type": "sms",
+                  "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges/YCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              }
+          ],
+          "meta": {
+              "page": 0,
+              "page_size": 50,
+              "first_page_url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges?PageSize=50&Page=0",
+              "previous_page_url": null,
+              "url": "https://authy.twilio.com/v1/Services/ISaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges?PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "challenges"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.authy.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .entities('identity') \
+                             .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                             .challenges.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can update" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

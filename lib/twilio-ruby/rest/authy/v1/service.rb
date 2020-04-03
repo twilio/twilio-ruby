@@ -32,7 +32,8 @@ module Twilio
           #   to 64 characters.
           # @param [String] push The optional service level push factors configuration. If
           #   present it must be a json string with the following format:
-          #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"}
+          #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "include_date":
+          #   true}
           # @return [ServiceInstance] Newly created ServiceInstance
           def create(friendly_name: nil, push: :unset)
             data = Twilio::Values.of({'FriendlyName' => friendly_name, 'Push' => push, })
@@ -211,9 +212,13 @@ module Twilio
           # Update the ServiceInstance
           # @param [String] friendly_name A human readable description of this resource, up
           #   to 64 characters.
+          # @param [String] push The optional service level push factors configuration. If
+          #   present it must be a json string with the following format:
+          #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "include_date":
+          #   true}
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset)
-            data = Twilio::Values.of({'FriendlyName' => friendly_name, })
+          def update(friendly_name: :unset, push: :unset)
+            data = Twilio::Values.of({'FriendlyName' => friendly_name, 'Push' => push, })
 
             payload = @version.update(
                 'POST',
@@ -363,9 +368,13 @@ module Twilio
           # Update the ServiceInstance
           # @param [String] friendly_name A human readable description of this resource, up
           #   to 64 characters.
+          # @param [String] push The optional service level push factors configuration. If
+          #   present it must be a json string with the following format:
+          #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "include_date":
+          #   true}
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset)
-            context.update(friendly_name: friendly_name, )
+          def update(friendly_name: :unset, push: :unset)
+            context.update(friendly_name: friendly_name, push: push, )
           end
 
           ##
