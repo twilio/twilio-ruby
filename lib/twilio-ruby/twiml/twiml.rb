@@ -2,6 +2,10 @@ require 'nokogiri'
 
 module Twilio
   module TwiML
+    autoload :FaxResponse, File.join(File.dirname(__FILE__), "fax_response.rb")
+    autoload :MessagingResponse, File.join(File.dirname(__FILE__), "messaging_response.rb")
+    autoload :VoiceResponse, File.join(File.dirname(__FILE__), "voice_response.rb")
+    
     class TwiMLError < StandardError; end
 
     class LeafNode
