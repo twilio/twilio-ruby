@@ -6,7 +6,6 @@ require 'cgi'
 require 'openssl'
 require 'base64'
 require 'forwardable'
-require 'jwt'
 require 'time'
 require 'json'
 
@@ -14,10 +13,6 @@ require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
 require 'rack/twilio_webhook_authentication'
 
 require 'twilio-ruby/util'
-require 'twilio-ruby/jwt/jwt'
-require 'twilio-ruby/jwt/access_token'
-require 'twilio-ruby/jwt/client_capability'
-require 'twilio-ruby/jwt/task_router'
 require 'twilio-ruby/security/request_validator'
 require 'twilio-ruby/util/configuration'
 
@@ -40,6 +35,7 @@ end
 module Twilio
   extend SingleForwardable
 
+  autoload :JWT, File.join(File.dirname(__FILE__), 'twilio-ruby', 'jwt', 'jwt.rb')
   autoload :TwiML, File.join(File.dirname(__FILE__), 'twilio-ruby', 'twiml', 'twiml.rb')
 
   def_delegators :configuration, :account_sid, :auth_token, :http_client
