@@ -1,6 +1,35 @@
 twilio-ruby changelog
 =====================
 
+[2020-04-15] Version 5.33.1
+---------------------------
+**Library - Fix**
+- [PR #506](https://github.com/twilio/twilio-ruby/pull/506): loosen the faraday version requirement. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Library - Chore**
+- [PR #508](https://github.com/twilio/twilio-ruby/pull/508): Refer to https:// homepage in gemspec. Thanks to [@olleolleolle](https://github.com/olleolleolle)!
+- [PR #507](https://github.com/twilio/twilio-ruby/pull/507): Travis: Drop unused "sudo: false" directive. Thanks to [@olleolleolle](https://github.com/olleolleolle)!
+- [PR #498](https://github.com/twilio/twilio-ruby/pull/498): autoload TwiML to save memory on load. Thanks to [@philnash](https://github.com/philnash)!
+- [PR #499](https://github.com/twilio/twilio-ruby/pull/499): autoload JWT classes. Thanks to [@philnash](https://github.com/philnash)!
+- [PR #505](https://github.com/twilio/twilio-ruby/pull/505): remove S3 URLs from test data. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Api**
+- Updated description for property `call_reason` in the call create request
+
+**Contacts**
+- Added Read, Delete All, and Delete by SID docs
+- Initial Release
+
+**Studio**
+- Rename `flow_valid` to `flow_validate`
+- Removed `errors` and `warnings` from flows error response and added new property named `details`
+- Add Update Execution endpoints to v1 and v2 to end execution via API
+- Add new `warnings` attribute v2 flow POST api
+
+**Twiml**
+- Add enhanced attribute to use with `speech_model` for the `Gather` verb
+
+
 [2020-04-01] Version 5.33.0
 ---------------------------
 **Library - Chore**

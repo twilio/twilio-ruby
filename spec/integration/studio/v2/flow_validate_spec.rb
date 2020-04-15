@@ -13,7 +13,7 @@ describe 'FlowValidate' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.studio.v2.flow_valid.update(friendly_name: 'friendly_name', status: 'draft', definition: {})
+      @client.studio.v2.flow_validate.update(friendly_name: 'friendly_name', status: 'draft', definition: {})
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
@@ -39,7 +39,7 @@ describe 'FlowValidate' do
       ]
     ))
 
-    actual = @client.studio.v2.flow_valid.update(friendly_name: 'friendly_name', status: 'draft', definition: {})
+    actual = @client.studio.v2.flow_validate.update(friendly_name: 'friendly_name', status: 'draft', definition: {})
 
     expect(actual).to_not eq(nil)
   end

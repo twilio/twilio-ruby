@@ -246,6 +246,23 @@ module Twilio
             end
 
             ##
+            # Update the ExecutionInstance
+            # @param [execution.Status] status The status of the Execution. Can only be
+            #   `ended`.
+            # @return [ExecutionInstance] Updated ExecutionInstance
+            def update(status: nil)
+              data = Twilio::Values.of({'Status' => status, })
+
+              payload = @version.update(
+                  'POST',
+                  @uri,
+                  data: data,
+              )
+
+              ExecutionInstance.new(@version, payload, flow_sid: @solution[:flow_sid], sid: @solution[:sid], )
+            end
+
+            ##
             # Access the steps
             # @return [ExecutionStepList]
             # @return [ExecutionStepContext] if sid was passed.
@@ -410,6 +427,15 @@ module Twilio
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
+            end
+
+            ##
+            # Update the ExecutionInstance
+            # @param [execution.Status] status The status of the Execution. Can only be
+            #   `ended`.
+            # @return [ExecutionInstance] Updated ExecutionInstance
+            def update(status: nil)
+              context.update(status: status, )
             end
 
             ##

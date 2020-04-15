@@ -168,4 +168,50 @@ describe 'Execution' do
 
     expect(actual).to eq(true)
   end
+
+  it "can update" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.studio.v1.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .executions('FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(status: 'active')
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {'Status' => 'active', }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://studio.twilio.com/v1/Flows/FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Executions/FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        data: values,
+    ))).to eq(true)
+  end
+
+  it "receives update responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "url": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Executions/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sid": "FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "flow_sid": "FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "context": {},
+          "contact_sid": "FCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "contact_channel_address": "+14155555555",
+          "status": "ended",
+          "date_created": "2017-11-06T12:00:00Z",
+          "date_updated": "2017-11-06T12:00:00Z",
+          "links": {
+              "steps": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Executions/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Steps",
+              "execution_context": "https://studio.twilio.com/v1/Flows/FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Executions/FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Context"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.studio.v1.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .executions('FNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(status: 'active')
+
+    expect(actual).to_not eq(nil)
+  end
 end

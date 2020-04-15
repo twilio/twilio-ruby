@@ -17,7 +17,7 @@ module Twilio
             ##
             # Initialize the ExecutionList
             # @param [Version] version Version that contains the resource
-            # @param [String] flow_sid The flow_sid
+            # @param [String] flow_sid The SID of the Flow.
             # @return [ExecutionList] ExecutionList
             def initialize(version, flow_sid: nil)
               super(version)
@@ -31,8 +31,12 @@ module Twilio
             # Lists ExecutionInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [Time] date_created_from The date_created_from
-            # @param [Time] date_created_to The date_created_to
+            # @param [Time] date_created_from Only show Execution resources starting on or
+            #   after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time, given
+            #   as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+            # @param [Time] date_created_to Only show Execution resources starting before this
+            #   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time, given as
+            #   `YYYY-MM-DDThh:mm:ss-hh:mm`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -53,8 +57,12 @@ module Twilio
             # Streams ExecutionInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] date_created_from The date_created_from
-            # @param [Time] date_created_to The date_created_to
+            # @param [Time] date_created_from Only show Execution resources starting on or
+            #   after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time, given
+            #   as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+            # @param [Time] date_created_to Only show Execution resources starting before this
+            #   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time, given as
+            #   `YYYY-MM-DDThh:mm:ss-hh:mm`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -91,8 +99,12 @@ module Twilio
             ##
             # Retrieve a single page of ExecutionInstance records from the API.
             # Request is executed immediately.
-            # @param [Time] date_created_from The date_created_from
-            # @param [Time] date_created_to The date_created_to
+            # @param [Time] date_created_from Only show Execution resources starting on or
+            #   after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time, given
+            #   as `YYYY-MM-DDThh:mm:ss-hh:mm`.
+            # @param [Time] date_created_to Only show Execution resources starting before this
+            #   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time, given as
+            #   `YYYY-MM-DDThh:mm:ss-hh:mm`.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -129,9 +141,17 @@ module Twilio
             ##
             # Retrieve a single page of ExecutionInstance records from the API.
             # Request is executed immediately.
-            # @param [String] to The to
-            # @param [String] from The from
-            # @param [Hash] parameters The parameters
+            # @param [String] to The Contact phone number to start a Studio Flow Execution,
+            #   available as variable `{{contact.channel.address}}`.
+            # @param [String] from The Twilio phone number to send messages or initiate calls
+            #   from during the Flow's Execution. Available as variable
+            #   `{{flow.channel.address}}`.
+            # @param [Hash] parameters JSON data that will be added to the Flow's context and
+            #   that can be accessed as variables inside your Flow. For example, if you pass in
+            #   `Parameters={"name":"Zeke"}`, a widget in your Flow can reference the variable
+            #   `{{flow.data.name}}`, which returns "Zeke". Note: the JSON value must explicitly
+            #   be passed as a string, not as a hash object. Depending on your particular HTTP
+            #   library, you may need to add quotes or URL encode the JSON string.
             # @return [ExecutionInstance] Newly created ExecutionInstance
             def create(to: nil, from: nil, parameters: :unset)
               data = Twilio::Values.of({
@@ -193,8 +213,9 @@ module Twilio
             ##
             # Initialize the ExecutionContext
             # @param [Version] version Version that contains the resource
-            # @param [String] flow_sid The flow_sid
-            # @param [String] sid The sid
+            # @param [String] flow_sid The SID of the Flow with the Execution resource to
+            #   fetch
+            # @param [String] sid The SID of the Execution resource to fetch.
             # @return [ExecutionContext] ExecutionContext
             def initialize(version, flow_sid, sid)
               super(version)
@@ -228,6 +249,23 @@ module Twilio
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               @version.delete('delete', @uri)
+            end
+
+            ##
+            # Update the ExecutionInstance
+            # @param [execution.Status] status The status of the Execution. Can only be
+            #   `ended`.
+            # @return [ExecutionInstance] Updated ExecutionInstance
+            def update(status: nil)
+              data = Twilio::Values.of({'Status' => status, })
+
+              payload = @version.update(
+                  'POST',
+                  @uri,
+                  data: data,
+              )
+
+              ExecutionInstance.new(@version, payload, flow_sid: @solution[:flow_sid], sid: @solution[:sid], )
             end
 
             ##
@@ -282,8 +320,8 @@ module Twilio
             # Initialize the ExecutionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] flow_sid The flow_sid
-            # @param [String] sid The sid
+            # @param [String] flow_sid The SID of the Flow.
+            # @param [String] sid The SID of the Execution resource to fetch.
             # @return [ExecutionInstance] ExecutionInstance
             def initialize(version, payload, flow_sid: nil, sid: nil)
               super(version)
@@ -319,61 +357,61 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] The SID of the Account that created the resource
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The flow_sid
+            # @return [String] The SID of the Flow
             def flow_sid
               @properties['flow_sid']
             end
 
             ##
-            # @return [String] The contact_channel_address
+            # @return [String] The phone number, SIP address or Client identifier that triggered the Execution
             def contact_channel_address
               @properties['contact_channel_address']
             end
 
             ##
-            # @return [Hash] The context
+            # @return [Hash] The current state of the flow
             def context
               @properties['context']
             end
 
             ##
-            # @return [execution.Status] The status
+            # @return [execution.Status] The status of the Execution
             def status
               @properties['status']
             end
 
             ##
-            # @return [Time] The date_created
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date_updated
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The absolute URL of the resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] The links
+            # @return [String] Nested resource URLs
             def links
               @properties['links']
             end
@@ -390,6 +428,15 @@ module Twilio
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
+            end
+
+            ##
+            # Update the ExecutionInstance
+            # @param [execution.Status] status The status of the Execution. Can only be
+            #   `ended`.
+            # @return [ExecutionInstance] Updated ExecutionInstance
+            def update(status: nil)
+              context.update(status: status, )
             end
 
             ##

@@ -46,8 +46,8 @@ module Twilio
 
       ##
       # @return [Twilio::REST::Studio::V2::FlowValidateInstance]
-      def flow_valid
-        self.v2.flow_valid()
+      def flow_validate
+        self.v2.flow_validate()
       end
 
       ##

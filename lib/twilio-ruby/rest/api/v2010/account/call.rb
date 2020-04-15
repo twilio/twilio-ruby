@@ -139,9 +139,9 @@ module Twilio
             # @param [String] byoc The SID of a BYOC (Bring Your Own Carrier) trunk to route
             #   this call with. Note that `byoc` is only meaningful when `to` is a phone number;
             #   it will otherwise be ignored. (Beta)
-            # @param [String] call_reason The Reason for the outgoing call. Use call_reason to
-            #   specify the purpose of the call that is presented on the called party's phone.
-            #   (Beta).
+            # @param [String] call_reason The Reason for the outgoing call. Use it to specify
+            #   the purpose of the call that is presented on the called party's phone. (Branded
+            #   Calls Beta)
             # @param [String] url The absolute URL that returns the TwiML instructions for the
             #   call. We will call this URL using the `method` when the call connects. For more
             #   information, see the [Url

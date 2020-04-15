@@ -16,7 +16,7 @@ module Twilio
           super
           @version = 'v2'
           @flows = nil
-          @flow_valid = nil
+          @flow_validate = nil
         end
 
         ##
@@ -35,8 +35,8 @@ module Twilio
 
         ##
         # @return [Twilio::REST::Studio::V2::FlowValidateContext]
-        def flow_valid
-          @flow_valid ||= FlowValidateList.new self
+        def flow_validate
+          @flow_validate ||= FlowValidateList.new self
         end
 
         ##

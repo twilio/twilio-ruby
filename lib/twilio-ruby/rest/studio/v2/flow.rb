@@ -321,6 +321,7 @@ module Twilio
                 'commit_message' => payload['commit_message'],
                 'valid' => payload['valid'],
                 'errors' => payload['errors'],
+                'warnings' => payload['warnings'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'webhook_url' => payload['webhook_url'],
@@ -396,6 +397,12 @@ module Twilio
           # @return [Hash] List of error in the flow definition
           def errors
             @properties['errors']
+          end
+
+          ##
+          # @return [Hash] List of warnings in the flow definition
+          def warnings
+            @properties['warnings']
           end
 
           ##
