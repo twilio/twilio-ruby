@@ -111,7 +111,7 @@ message_sid = 'SMxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 ```ruby
 begin
   messages = @client.messages.list(limit: 20)
-rescue Twilio::REST::TwilioError => e
+rescue Twilio::REST::RestError => e
   puts e.message
 end
 ```
