@@ -19,7 +19,7 @@ Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'
 
-Style/AmbiguousBlockAssociation:
+Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/**/*'
 
