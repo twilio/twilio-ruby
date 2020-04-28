@@ -80,4 +80,44 @@ describe Twilio::REST::Client do
     @holodeck.mock Twilio::Response.new(504, '')
     expect { @client.validate_ssl_certificate }.to raise_error(Twilio::REST::RestError)
   end
+
+  it 'translates bad request error params' do
+    @domain = MyDomain.new(@client)
+    @version = MyVersion.new(@domain)
+    @error_message = '{
+                        "code": 20001,
+                        "message": "Bad request",
+                        "more_info": "https://www.twilio.com/docs/errors/20001",
+                        "status": 400,
+                        "details": {
+                            "foo":"bar"
+                    }}'
+    @holodeck.mock Twilio::Response.new(400, @error_message)
+    expect {
+      @version.fetch('GET', 'http://foobar.com')
+    }.to raise_error { |error|
+      expect(error).to be_a(Twilio::REST::RestError)
+      expect(error.status_code).to eq(400)
+      expect(error.code).to eq(20_001)
+      expect(error.details).to eq({ 'foo' => 'bar' })
+      expect(error.error_message).to eq('Bad request')
+      expect(error.more_info).to eq('https://www.twilio.com/docs/errors/20001')
+    }
+  end
+
+  class MyVersion < Twilio::REST::Version
+    def initialize(domain)
+      super
+      @version = 'v1'
+    end
+  end
+
+  class MyDomain < Twilio::REST::Domain
+    def initialize(client)
+      super
+      @host = 'twilio.com'
+      @base_url = 'https://twilio.com'
+      @port = 443
+    end
+  end
 end
