@@ -15,6 +15,14 @@ Layout/LineLength:
   Exclude:
     - 'spec/**/*'
 
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/**/*'
+
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
