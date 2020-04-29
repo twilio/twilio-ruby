@@ -1,6 +1,21 @@
 twilio-ruby changelog
 =====================
 
+[2020-04-29] Version 5.34.0
+---------------------------
+**Library - Feature**
+- [PR #511](https://github.com/twilio/twilio-ruby/pull/511): add details to error object. Thanks to [@ashish-s](https://github.com/ashish-s)!
+
+**Preview**
+- Added `Dispatch` version to `preview`
+
+**Studio**
+- Reroute Create Execution for V2 to the V2 downstream
+
+**Supersim**
+- Add Networks resource
+
+
 [2020-04-15] Version 5.33.1
 ---------------------------
 **Library - Fix**

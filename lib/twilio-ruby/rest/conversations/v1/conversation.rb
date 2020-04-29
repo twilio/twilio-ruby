@@ -39,14 +39,17 @@ module Twilio
           #   store any data you wish. The string value must contain structurally valid JSON
           #   if specified.  **Note** that if the attributes are not set "{}" will be
           #   returned.
+          # @param [conversation.State] state Current state of this conversation. Can be
+          #   either `active`, `inactive` or `closed` and defaults to `active`
           # @return [ConversationInstance] Newly created ConversationInstance
-          def create(friendly_name: :unset, date_created: :unset, date_updated: :unset, messaging_service_sid: :unset, attributes: :unset)
+          def create(friendly_name: :unset, date_created: :unset, date_updated: :unset, messaging_service_sid: :unset, attributes: :unset, state: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                 'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                 'MessagingServiceSid' => messaging_service_sid,
                 'Attributes' => attributes,
+                'State' => state,
             })
 
             payload = @version.create(
@@ -213,14 +216,17 @@ module Twilio
           # @param [String] messaging_service_sid The unique id of the [SMS
           #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
           #   to.
+          # @param [conversation.State] state Current state of this conversation. Can be
+          #   either `active`, `inactive` or `closed` and defaults to `active`
           # @return [ConversationInstance] Updated ConversationInstance
-          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset)
+          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                 'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                 'Attributes' => attributes,
                 'MessagingServiceSid' => messaging_service_sid,
+                'State' => state,
             })
 
             payload = @version.update(
@@ -344,6 +350,7 @@ module Twilio
                 'sid' => payload['sid'],
                 'friendly_name' => payload['friendly_name'],
                 'attributes' => payload['attributes'],
+                'state' => payload['state'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -403,6 +410,12 @@ module Twilio
           end
 
           ##
+          # @return [conversation.State] Current state of this conversation.
+          def state
+            @properties['state']
+          end
+
+          ##
           # @return [Time] The date that this resource was created.
           def date_created
             @properties['date_created']
@@ -439,14 +452,17 @@ module Twilio
           # @param [String] messaging_service_sid The unique id of the [SMS
           #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
           #   to.
+          # @param [conversation.State] state Current state of this conversation. Can be
+          #   either `active`, `inactive` or `closed` and defaults to `active`
           # @return [ConversationInstance] Updated ConversationInstance
-          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset)
+          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset)
             context.update(
                 friendly_name: friendly_name,
                 date_created: date_created,
                 date_updated: date_updated,
                 attributes: attributes,
                 messaging_service_sid: messaging_service_sid,
+                state: state,
             )
           end
 

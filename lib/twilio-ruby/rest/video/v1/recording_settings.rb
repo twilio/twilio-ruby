@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Video < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class RecordingSettingsList < ListResource
           ##
           # Initialize the RecordingSettingsList
@@ -31,8 +29,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class RecordingSettingsPage < Page
           ##
           # Initialize the RecordingSettingsPage
@@ -62,8 +58,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class RecordingSettingsContext < InstanceContext
           ##
           # Initialize the RecordingSettingsContext
@@ -143,8 +137,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class RecordingSettingsInstance < InstanceResource
           ##
           # Initialize the RecordingSettingsInstance

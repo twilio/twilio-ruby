@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Video < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class CompositionSettingsList < ListResource
           ##
           # Initialize the CompositionSettingsList
@@ -31,8 +29,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class CompositionSettingsPage < Page
           ##
           # Initialize the CompositionSettingsPage
@@ -62,8 +58,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class CompositionSettingsContext < InstanceContext
           ##
           # Initialize the CompositionSettingsContext
@@ -143,8 +137,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class CompositionSettingsInstance < InstanceResource
           ##
           # Initialize the CompositionSettingsInstance

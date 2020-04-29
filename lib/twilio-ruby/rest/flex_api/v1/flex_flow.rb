@@ -143,9 +143,11 @@ module Twilio
           #   task is created with the channel. **Note** that does not apply when channel type
           #   is `web`. Setting the value to `true` for channel type `web` will result in
           #   misconfigured Flex Flow and no tasks will be created.
-          # @param [Boolean] long_lived Whether new channels are long-lived.
-          # @param [Boolean] janitor_enabled Boolean flag for enabling or disabling the
-          #   Janitor.
+          # @param [Boolean] long_lived When enabled, Flex will keep the chat channel active
+          #   so that it may be used for subsequent interactions with a contact identity.
+          # @param [Boolean] janitor_enabled When enabled, the Messaging Channel Janitor
+          #   will remove active Proxy sessions if the associated Task is deleted outside of
+          #   the Flex UI.
           # @param [String] integration_retry_count The number of times to retry the webhook
           #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
           #   the default is 0.
@@ -275,9 +277,11 @@ module Twilio
           #   task is created with the channel. **Note** that does not apply when channel type
           #   is `web`. Setting the value to `true` for channel type `web` will result in
           #   misconfigured Flex Flow and no tasks will be created.
-          # @param [Boolean] long_lived Whether new channels created are long-lived.
-          # @param [Boolean] janitor_enabled Boolean flag for enabling or disabling the
-          #   Janitor.
+          # @param [Boolean] long_lived When enabled, Flex will keep the chat channel active
+          #   so that it may be used for subsequent interactions with a contact identity.
+          # @param [Boolean] janitor_enabled When enabled, the Messaging Channel Janitor
+          #   will remove active Proxy sessions if the associated Task is deleted outside of
+          #   the Flex UI.
           # @param [String] integration_retry_count The number of times to retry the webhook
           #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
           #   the default is 0.
@@ -445,13 +449,13 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] Whether new channels are long-lived
+          # @return [Boolean] Re-use this chat channel for future interactions with a contact
           def long_lived
             @properties['long_lived']
           end
 
           ##
-          # @return [Boolean] Boolean flag for enabling or disabling the Janitor
+          # @return [Boolean] Remove active Proxy sessions if the corresponding Task is deleted.
           def janitor_enabled
             @properties['janitor_enabled']
           end
@@ -499,9 +503,11 @@ module Twilio
           #   task is created with the channel. **Note** that does not apply when channel type
           #   is `web`. Setting the value to `true` for channel type `web` will result in
           #   misconfigured Flex Flow and no tasks will be created.
-          # @param [Boolean] long_lived Whether new channels created are long-lived.
-          # @param [Boolean] janitor_enabled Boolean flag for enabling or disabling the
-          #   Janitor.
+          # @param [Boolean] long_lived When enabled, Flex will keep the chat channel active
+          #   so that it may be used for subsequent interactions with a contact identity.
+          # @param [Boolean] janitor_enabled When enabled, the Messaging Channel Janitor
+          #   will remove active Proxy sessions if the associated Task is deleted outside of
+          #   the Flex UI.
           # @param [String] integration_retry_count The number of times to retry the webhook
           #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
           #   the default is 0.
