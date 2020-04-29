@@ -7,7 +7,7 @@ require 'twilio-ruby/version'
 Gem::Specification.new do |spec|
   spec.name          = 'twilio-ruby'
   spec.version       = Twilio::VERSION
-  spec.authors	     = ['Twilio API Team']
+  spec.authors       = ['Twilio API Team']
   spec.summary       = 'The official library for communicating with the Twilio REST API, '\
                        'building TwiML, and generating Twilio JWT Capability Tokens'
   spec.description   = 'The official library for communicating with the Twilio REST API, '\
