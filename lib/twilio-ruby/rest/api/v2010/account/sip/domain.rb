@@ -136,8 +136,13 @@ module Twilio
               # @param [Boolean] secure Whether secure SIP is enabled for the domain. If
               #   enabled, TLS will be enforced and SRTP will be negotiated on all incoming calls
               #   to this sip domain.
+              # @param [String] byoc_trunk_sid The SID of the BYOC Trunk(Bring Your Own Carrier)
+              #   resource that the Sip Domain will be associated with.
+              # @param [String] emergency_caller_sid Whether an emergency caller sid is
+              #   configured for the domain. If present, this phone number will be used as the
+              #   callback for the emergency call.
               # @return [DomainInstance] Newly created DomainInstance
-              def create(domain_name: nil, friendly_name: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, voice_status_callback_url: :unset, voice_status_callback_method: :unset, sip_registration: :unset, emergency_calling_enabled: :unset, secure: :unset)
+              def create(domain_name: nil, friendly_name: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, voice_status_callback_url: :unset, voice_status_callback_method: :unset, sip_registration: :unset, emergency_calling_enabled: :unset, secure: :unset, byoc_trunk_sid: :unset, emergency_caller_sid: :unset)
                 data = Twilio::Values.of({
                     'DomainName' => domain_name,
                     'FriendlyName' => friendly_name,
@@ -150,6 +155,8 @@ module Twilio
                     'SipRegistration' => sip_registration,
                     'EmergencyCallingEnabled' => emergency_calling_enabled,
                     'Secure' => secure,
+                    'ByocTrunkSid' => byoc_trunk_sid,
+                    'EmergencyCallerSid' => emergency_caller_sid,
                 })
 
                 payload = @version.create(
@@ -261,8 +268,13 @@ module Twilio
               # @param [Boolean] secure Whether secure SIP is enabled for the domain. If
               #   enabled, TLS will be enforced and SRTP will be negotiated on all incoming calls
               #   to this sip domain.
+              # @param [String] byoc_trunk_sid The SID of the BYOC Trunk(Bring Your Own Carrier)
+              #   resource that the Sip Domain will be associated with.
+              # @param [String] emergency_caller_sid Whether an emergency caller sid is
+              #   configured for the domain. If present, this phone number will be used as the
+              #   callback for the emergency call.
               # @return [DomainInstance] Updated DomainInstance
-              def update(friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset, domain_name: :unset, emergency_calling_enabled: :unset, secure: :unset)
+              def update(friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset, domain_name: :unset, emergency_calling_enabled: :unset, secure: :unset, byoc_trunk_sid: :unset, emergency_caller_sid: :unset)
                 data = Twilio::Values.of({
                     'FriendlyName' => friendly_name,
                     'VoiceFallbackMethod' => voice_fallback_method,
@@ -275,6 +287,8 @@ module Twilio
                     'DomainName' => domain_name,
                     'EmergencyCallingEnabled' => emergency_calling_enabled,
                     'Secure' => secure,
+                    'ByocTrunkSid' => byoc_trunk_sid,
+                    'EmergencyCallerSid' => emergency_caller_sid,
                 })
 
                 payload = @version.update(
@@ -407,6 +421,8 @@ module Twilio
                     'sip_registration' => payload['sip_registration'],
                     'emergency_calling_enabled' => payload['emergency_calling_enabled'],
                     'secure' => payload['secure'],
+                    'byoc_trunk_sid' => payload['byoc_trunk_sid'],
+                    'emergency_caller_sid' => payload['emergency_caller_sid'],
                 }
 
                 # Context
@@ -540,6 +556,18 @@ module Twilio
               end
 
               ##
+              # @return [String] The SID of the BYOC Trunk resource.
+              def byoc_trunk_sid
+                @properties['byoc_trunk_sid']
+              end
+
+              ##
+              # @return [String] Whether an emergency caller sid is configured for the domain.
+              def emergency_caller_sid
+                @properties['emergency_caller_sid']
+              end
+
+              ##
               # Fetch a DomainInstance
               # @return [DomainInstance] Fetched DomainInstance
               def fetch
@@ -572,8 +600,13 @@ module Twilio
               # @param [Boolean] secure Whether secure SIP is enabled for the domain. If
               #   enabled, TLS will be enforced and SRTP will be negotiated on all incoming calls
               #   to this sip domain.
+              # @param [String] byoc_trunk_sid The SID of the BYOC Trunk(Bring Your Own Carrier)
+              #   resource that the Sip Domain will be associated with.
+              # @param [String] emergency_caller_sid Whether an emergency caller sid is
+              #   configured for the domain. If present, this phone number will be used as the
+              #   callback for the emergency call.
               # @return [DomainInstance] Updated DomainInstance
-              def update(friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset, domain_name: :unset, emergency_calling_enabled: :unset, secure: :unset)
+              def update(friendly_name: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_status_callback_method: :unset, voice_status_callback_url: :unset, voice_url: :unset, sip_registration: :unset, domain_name: :unset, emergency_calling_enabled: :unset, secure: :unset, byoc_trunk_sid: :unset, emergency_caller_sid: :unset)
                 context.update(
                     friendly_name: friendly_name,
                     voice_fallback_method: voice_fallback_method,
@@ -586,6 +619,8 @@ module Twilio
                     domain_name: domain_name,
                     emergency_calling_enabled: emergency_calling_enabled,
                     secure: secure,
+                    byoc_trunk_sid: byoc_trunk_sid,
+                    emergency_caller_sid: emergency_caller_sid,
                 )
               end
 

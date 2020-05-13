@@ -38,6 +38,7 @@ describe 'Fleet' do
           "commands_enabled": true,
           "commands_method": "GET",
           "commands_url": "https://google.com",
+          "network_access_profile_sid": "HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "sid": "HFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "url": "https://supersim.twilio.com/v1/Fleets/HFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
@@ -78,6 +79,7 @@ describe 'Fleet' do
           "commands_enabled": true,
           "commands_method": "POST",
           "commands_url": null,
+          "network_access_profile_sid": "HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "sid": "HFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "url": "https://supersim.twilio.com/v1/Fleets/HFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
@@ -111,13 +113,13 @@ describe 'Fleet' do
       {
           "fleets": [],
           "meta": {
-              "first_page_url": "https://supersim.twilio.com/v1/Fleets?PageSize=50&Page=0",
+              "first_page_url": "https://supersim.twilio.com/v1/Fleets?NetworkAccessProfile=HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&PageSize=50&Page=0",
               "key": "fleets",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://supersim.twilio.com/v1/Fleets?PageSize=50&Page=0"
+              "url": "https://supersim.twilio.com/v1/Fleets?NetworkAccessProfile=HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&PageSize=50&Page=0"
           }
       }
       ]
@@ -134,13 +136,13 @@ describe 'Fleet' do
       %q[
       {
           "meta": {
-              "first_page_url": "https://supersim.twilio.com/v1/Fleets?PageSize=50&Page=0",
+              "first_page_url": "https://supersim.twilio.com/v1/Fleets?NetworkAccessProfile=HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&PageSize=50&Page=0",
               "key": "fleets",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://supersim.twilio.com/v1/Fleets?PageSize=50&Page=0"
+              "url": "https://supersim.twilio.com/v1/Fleets?NetworkAccessProfile=HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&PageSize=50&Page=0"
           },
           "fleets": [
               {
@@ -153,6 +155,7 @@ describe 'Fleet' do
                   "commands_enabled": true,
                   "commands_method": "POST",
                   "commands_url": null,
+                  "network_access_profile_sid": "HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "sid": "HFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "url": "https://supersim.twilio.com/v1/Fleets/HFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
@@ -195,6 +198,7 @@ describe 'Fleet' do
           "commands_enabled": true,
           "commands_method": "POST",
           "commands_url": null,
+          "network_access_profile_sid": "HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "sid": "HFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "url": "https://supersim.twilio.com/v1/Fleets/HFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }

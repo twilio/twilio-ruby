@@ -242,6 +242,7 @@ module Twilio
               @uri = "/RegulatoryCompliance/Bundles/#{@solution[:sid]}"
 
               # Dependents
+              @evaluations = nil
               @item_assignments = nil
             end
 
@@ -285,6 +286,24 @@ module Twilio
               )
 
               BundleInstance.new(@version, payload, sid: @solution[:sid], )
+            end
+
+            ##
+            # Access the evaluations
+            # @return [EvaluationList]
+            # @return [EvaluationContext] if sid was passed.
+            def evaluations(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return EvaluationContext.new(@version, @solution[:sid], sid, )
+              end
+
+              unless @evaluations
+                @evaluations = EvaluationList.new(@version, bundle_sid: @solution[:sid], )
+              end
+
+              @evaluations
             end
 
             ##
@@ -452,6 +471,13 @@ module Twilio
                   friendly_name: friendly_name,
                   email: email,
               )
+            end
+
+            ##
+            # Access the evaluations
+            # @return [evaluations] evaluations
+            def evaluations
+              context.evaluations
             end
 
             ##

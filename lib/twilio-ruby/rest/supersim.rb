@@ -47,6 +47,14 @@ module Twilio
       end
 
       ##
+      # @param [String] sid The sid
+      # @return [Twilio::REST::Supersim::V1::NetworkAccessProfileInstance] if sid was passed.
+      # @return [Twilio::REST::Supersim::V1::NetworkAccessProfileList]
+      def network_access_profiles(sid=:unset)
+        self.v1.network_access_profiles(sid)
+      end
+
+      ##
       # @param [String] sid The unique string that identifies the Sim resource.
       # @return [Twilio::REST::Supersim::V1::SimInstance] if sid was passed.
       # @return [Twilio::REST::Supersim::V1::SimList]

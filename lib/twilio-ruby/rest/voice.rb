@@ -29,9 +29,45 @@ module Twilio
       end
 
       ##
+      # @param [String] sid The unique string that that we created to identify the BYOC
+      #   Trunk resource.
+      # @return [Twilio::REST::Voice::V1::ByocTrunkInstance] if sid was passed.
+      # @return [Twilio::REST::Voice::V1::ByocTrunkList]
+      def byoc_trunks(sid=:unset)
+        self.v1.byoc_trunks(sid)
+      end
+
+      ##
+      # @param [String] sid The unique string that we created to identify the Connection
+      #   Policy resource.
+      # @return [Twilio::REST::Voice::V1::ConnectionPolicyInstance] if sid was passed.
+      # @return [Twilio::REST::Voice::V1::ConnectionPolicyList]
+      def connection_policies(sid=:unset)
+        self.v1.connection_policies(sid)
+      end
+
+      ##
       # @return [Twilio::REST::Voice::V1::DialingPermissionsInstance]
       def dialing_permissions
         self.v1.dialing_permissions()
+      end
+
+      ##
+      # @param [String] sid The unique string that we created to identify the IP Record
+      #   resource.
+      # @return [Twilio::REST::Voice::V1::IpRecordInstance] if sid was passed.
+      # @return [Twilio::REST::Voice::V1::IpRecordList]
+      def ip_records(sid=:unset)
+        self.v1.ip_records(sid)
+      end
+
+      ##
+      # @param [String] sid The unique string that we created to identify the IP Record
+      #   resource.
+      # @return [Twilio::REST::Voice::V1::SourceIpMappingInstance] if sid was passed.
+      # @return [Twilio::REST::Voice::V1::SourceIpMappingList]
+      def source_ip_mappings(sid=:unset)
+        self.v1.source_ip_mappings(sid)
       end
 
       ##

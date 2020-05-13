@@ -15,13 +15,77 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @byoc_trunks = nil
+          @connection_policies = nil
           @dialing_permissions = nil
+          @ip_records = nil
+          @source_ip_mappings = nil
+        end
+
+        ##
+        # @param [String] sid The Twilio-provided string that uniquely identifies the BYOC
+        #   Trunk resource to fetch.
+        # @return [Twilio::REST::Voice::V1::ByocTrunkContext] if sid was passed.
+        # @return [Twilio::REST::Voice::V1::ByocTrunkList]
+        def byoc_trunks(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @byoc_trunks ||= ByocTrunkList.new self
+          else
+            ByocTrunkContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The unique string that we created to identify the Connection
+        #   Policy resource to fetch.
+        # @return [Twilio::REST::Voice::V1::ConnectionPolicyContext] if sid was passed.
+        # @return [Twilio::REST::Voice::V1::ConnectionPolicyList]
+        def connection_policies(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @connection_policies ||= ConnectionPolicyList.new self
+          else
+            ConnectionPolicyContext.new(self, sid)
+          end
         end
 
         ##
         # @return [Twilio::REST::Voice::V1::DialingPermissionsContext]
         def dialing_permissions
           @dialing_permissions ||= DialingPermissionsList.new self
+        end
+
+        ##
+        # @param [String] sid The Twilio-provided string that uniquely identifies the IP
+        #   Record resource to fetch.
+        # @return [Twilio::REST::Voice::V1::IpRecordContext] if sid was passed.
+        # @return [Twilio::REST::Voice::V1::IpRecordList]
+        def ip_records(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @ip_records ||= IpRecordList.new self
+          else
+            IpRecordContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The Twilio-provided string that uniquely identifies the IP
+        #   Record resource to fetch.
+        # @return [Twilio::REST::Voice::V1::SourceIpMappingContext] if sid was passed.
+        # @return [Twilio::REST::Voice::V1::SourceIpMappingList]
+        def source_ip_mappings(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @source_ip_mappings ||= SourceIpMappingList.new self
+          else
+            SourceIpMappingContext.new(self, sid)
+          end
         end
 
         ##

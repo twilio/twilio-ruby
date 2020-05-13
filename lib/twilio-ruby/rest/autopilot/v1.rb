@@ -16,6 +16,7 @@ module Twilio
           super
           @version = 'v1'
           @assistants = nil
+          @restore_assistant = nil
         end
 
         ##
@@ -31,6 +32,12 @@ module Twilio
           else
             AssistantContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Autopilot::V1::RestoreAssistantContext]
+        def restore_assistant
+          @restore_assistant ||= RestoreAssistantList.new self
         end
 
         ##

@@ -41,14 +41,18 @@ module Twilio
           # @param [String] commands_method A string representing the HTTP method to use
           #   when making a request to `commands_url`. Can be one of POST or GET. Defaults to
           #   POST.
+          # @param [String] network_access_profile The SID or unique name of the Network
+          #   Access Profile that will control which cellular network operators the Fleet's
+          #   SIMs can connect to
           # @return [FleetInstance] Newly created FleetInstance
-          def create(unique_name: :unset, data_enabled: :unset, commands_enabled: :unset, commands_url: :unset, commands_method: :unset)
+          def create(unique_name: :unset, data_enabled: :unset, commands_enabled: :unset, commands_url: :unset, commands_method: :unset, network_access_profile: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'DataEnabled' => data_enabled,
                 'CommandsEnabled' => commands_enabled,
                 'CommandsUrl' => commands_url,
                 'CommandsMethod' => commands_method,
+                'NetworkAccessProfile' => network_access_profile,
             })
 
             payload = @version.create(
@@ -64,6 +68,9 @@ module Twilio
           # Lists FleetInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
+          # @param [String] network_access_profile The SID or unique name of the Network
+          #   Access Profile that controls which cellular network operators the Fleet's SIMs
+          #   can connect to
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -71,14 +78,21 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(limit: nil, page_size: nil)
-            self.stream(limit: limit, page_size: page_size).entries
+          def list(network_access_profile: :unset, limit: nil, page_size: nil)
+            self.stream(
+                network_access_profile: network_access_profile,
+                limit: limit,
+                page_size: page_size
+            ).entries
           end
 
           ##
           # Streams FleetInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
+          # @param [String] network_access_profile The SID or unique name of the Network
+          #   Access Profile that controls which cellular network operators the Fleet's SIMs
+          #   can connect to
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -86,10 +100,10 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(limit: nil, page_size: nil)
+          def stream(network_access_profile: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(page_size: limits[:page_size], )
+            page = self.page(network_access_profile: network_access_profile, page_size: limits[:page_size], )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -111,12 +125,16 @@ module Twilio
           ##
           # Retrieve a single page of FleetInstance records from the API.
           # Request is executed immediately.
+          # @param [String] network_access_profile The SID or unique name of the Network
+          #   Access Profile that controls which cellular network operators the Fleet's SIMs
+          #   can connect to
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of FleetInstance
-          def page(page_token: :unset, page_number: :unset, page_size: :unset)
+          def page(network_access_profile: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
+                'NetworkAccessProfile' => network_access_profile,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -216,9 +234,15 @@ module Twilio
           # @param [String] unique_name An application-defined string that uniquely
           #   identifies the resource. It can be used in place of the resource's `sid` in the
           #   URL to address the resource.
+          # @param [String] network_access_profile The SID or unique name of the Network
+          #   Access Profile that will control which cellular network operators the Fleet's
+          #   SIMs can connect to
           # @return [FleetInstance] Updated FleetInstance
-          def update(unique_name: :unset)
-            data = Twilio::Values.of({'UniqueName' => unique_name, })
+          def update(unique_name: :unset, network_access_profile: :unset)
+            data = Twilio::Values.of({
+                'UniqueName' => unique_name,
+                'NetworkAccessProfile' => network_access_profile,
+            })
 
             payload = @version.update(
                 'POST',
@@ -269,6 +293,7 @@ module Twilio
                 'commands_enabled' => payload['commands_enabled'],
                 'commands_url' => payload['commands_url'],
                 'commands_method' => payload['commands_method'],
+                'network_access_profile_sid' => payload['network_access_profile_sid'],
             }
 
             # Context
@@ -354,6 +379,12 @@ module Twilio
           end
 
           ##
+          # @return [String] The SID of the Network Access Profile of the Fleet
+          def network_access_profile_sid
+            @properties['network_access_profile_sid']
+          end
+
+          ##
           # Fetch a FleetInstance
           # @return [FleetInstance] Fetched FleetInstance
           def fetch
@@ -365,9 +396,12 @@ module Twilio
           # @param [String] unique_name An application-defined string that uniquely
           #   identifies the resource. It can be used in place of the resource's `sid` in the
           #   URL to address the resource.
+          # @param [String] network_access_profile The SID or unique name of the Network
+          #   Access Profile that will control which cellular network operators the Fleet's
+          #   SIMs can connect to
           # @return [FleetInstance] Updated FleetInstance
-          def update(unique_name: :unset)
-            context.update(unique_name: unique_name, )
+          def update(unique_name: :unset, network_access_profile: :unset)
+            context.update(unique_name: unique_name, network_access_profile: network_access_profile, )
           end
 
           ##

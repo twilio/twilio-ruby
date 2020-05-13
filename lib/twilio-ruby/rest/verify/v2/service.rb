@@ -45,8 +45,11 @@ module Twilio
           #   at the end of an SMS verification body. Disabled by default and applies only to
           #   SMS. Example SMS body: `Your AppName verification code is: 1234. Don’t share
           #   this code with anyone; our employees will never ask for the code`
+          # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
+          #   a custom code instead of a randomly generated one. Not available for all
+          #   customers.
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset)
+          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -56,6 +59,7 @@ module Twilio
                 'TtsName' => tts_name,
                 'Psd2Enabled' => psd2_enabled,
                 'DoNotShareWarningEnabled' => do_not_share_warning_enabled,
+                'CustomCodeEnabled' => custom_code_enabled,
             })
 
             payload = @version.create(
@@ -247,8 +251,11 @@ module Twilio
           #   starting a verification.
           # @param [Boolean] do_not_share_warning_enabled Whether to add a privacy warning
           #   at the end of an SMS. **Disabled by default and applies only for SMS.**
+          # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
+          #   a custom code instead of a randomly generated one. Not available for all
+          #   customers.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -258,6 +265,7 @@ module Twilio
                 'TtsName' => tts_name,
                 'Psd2Enabled' => psd2_enabled,
                 'DoNotShareWarningEnabled' => do_not_share_warning_enabled,
+                'CustomCodeEnabled' => custom_code_enabled,
             })
 
             payload = @version.update(
@@ -373,6 +381,7 @@ module Twilio
                 'dtmf_input_required' => payload['dtmf_input_required'],
                 'tts_name' => payload['tts_name'],
                 'do_not_share_warning_enabled' => payload['do_not_share_warning_enabled'],
+                'custom_code_enabled' => payload['custom_code_enabled'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -456,6 +465,12 @@ module Twilio
           end
 
           ##
+          # @return [Boolean] Whether to allow sending verifications with a custom code.
+          def custom_code_enabled
+            @properties['custom_code_enabled']
+          end
+
+          ##
           # @return [Time] The RFC 2822 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
@@ -512,8 +527,11 @@ module Twilio
           #   starting a verification.
           # @param [Boolean] do_not_share_warning_enabled Whether to add a privacy warning
           #   at the end of an SMS. **Disabled by default and applies only for SMS.**
+          # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
+          #   a custom code instead of a randomly generated one. Not available for all
+          #   customers.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset)
             context.update(
                 friendly_name: friendly_name,
                 code_length: code_length,
@@ -523,6 +541,7 @@ module Twilio
                 tts_name: tts_name,
                 psd2_enabled: psd2_enabled,
                 do_not_share_warning_enabled: do_not_share_warning_enabled,
+                custom_code_enabled: custom_code_enabled,
             )
           end
 

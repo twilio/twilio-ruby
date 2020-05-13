@@ -38,6 +38,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Autopilot::V1::RestoreAssistantInstance]
+      def restore_assistant
+        self.v1.restore_assistant()
+      end
+
+      ##
       # Provide a user friendly representation
       def to_s
         '#<Twilio::REST::Autopilot>'
