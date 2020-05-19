@@ -18,4 +18,16 @@ describe Twilio::Util::Configuration do
     config.http_client = 'someClient'
     expect(config.http_client).to eq('someClient')
   end
+
+  it 'should have a region attribute' do
+    config = Twilio::Util::Configuration.new
+    config.region = 'someRegion'
+    expect(config.region).to eq('someRegion')
+  end
+
+  it 'should have an edge attribute' do
+    config = Twilio::Util::Configuration.new
+    config.edge = 'someEdge'
+    expect(config.edge).to eq('someEdge')
+  end
 end
