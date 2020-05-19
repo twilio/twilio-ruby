@@ -64,6 +64,26 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 @client = Twilio::REST::Client.new account_sid, auth_token
 ```
 
+### Specify a Region and/or Edge
+
+```ruby
+require 'twilio-ruby'
+
+# put your own credentials here
+account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+
+# set up a client to talk to the Twilio REST API over a specific region and edge
+@client = Twilio::REST::Client.new account_sid, auth_token, nil, 'au1', nil, 'sydney'
+
+# you may also specify the region and/or edge after client creation
+@client = Twilio::REST::Client.new account_sid, auth_token
+@client.region = 'au1'
+@client.edge = 'sydney'
+```
+
+This will result in the `hostname` transforming from `api.twilio.com` to `api.sydney.au1.twilio.com`.
+
 ### Make a Call
 
 ```ruby
