@@ -17,11 +17,11 @@ module Twilio
 
       ##
       # Initializes the Twilio Client
-      def initialize(username=nil, password=nil, account_sid=nil, region=nil, http_client=nil, edge=nil)
+      def initialize(username=nil, password=nil, account_sid=nil, region=nil, http_client=nil)
         @username = username || Twilio.account_sid
         @password = password || Twilio.auth_token
         @region = region || Twilio.region
-        @edge = edge || Twilio.edge
+        @edge = Twilio.edge
         @account_sid = account_sid || @username
         @auth_token = @password
         @auth = [@username, @password]
@@ -117,6 +117,7 @@ module Twilio
         if !new_edge.nil? && new_region.nil?
           new_region = @@default_region
         end
+
         parsed_url.host = [product, new_edge, new_region, domain].select {|item| !item.nil?}.join('.')
         parsed_url.to_s
       end

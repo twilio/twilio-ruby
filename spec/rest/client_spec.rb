@@ -70,7 +70,8 @@ describe Twilio::REST::Client do
     end
 
     it 'uses the arguments over global configuration' do
-      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'myRegion', 'myClient', 'myEdge')
+      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'myRegion', 'myClient')
+      @client.edge = 'myEdge'
       expect(@client.account_sid).to eq('myUser')
       expect(@client.auth_token).to eq('myPassword')
       expect(@client.http_client).to eq('myClient')
