@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+[2020-05-20] Version 5.35.0
+---------------------------
+**Library - Feature**
+- [PR #512](https://github.com/twilio/twilio-ruby/pull/512): add regional and edge support. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+
+
 [2020-05-13] Version 5.34.1
 ---------------------------
 **Api**
