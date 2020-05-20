@@ -11,14 +11,17 @@ module Twilio
     ##
     # A client for accessing the Twilio API.
     class Client
-      attr_accessor :http_client, :username, :password, :account_sid, :auth_token, :region
+      @@default_region = 'us1'
+
+      attr_accessor :http_client, :username, :password, :account_sid, :auth_token, :region, :edge
 
       ##
       # Initializes the Twilio Client
       def initialize(username=nil, password=nil, account_sid=nil, region=nil, http_client=nil)
         @username = username || Twilio.account_sid
         @password = password || Twilio.auth_token
-        @region = region
+        @region = region || Twilio.region
+        @edge = Twilio.edge
         @account_sid = account_sid || @username
         @auth_token = @password
         @auth = [@username, @password]
@@ -75,12 +78,7 @@ module Twilio
           headers['Accept'] = 'application/json'
         end
 
-        if !region.nil?
-            head, tail  = uri.split('.', 2)
-            if !tail.start_with?(region)
-                uri = [head, region, tail].join('.')
-            end
-        end
+        uri = build_uri(uri)
 
         @http_client.request(
           host,
@@ -93,6 +91,35 @@ module Twilio
           auth,
           timeout
         )
+      end
+
+      ##
+      # Build the final request uri
+      def build_uri(uri)
+        if @region.nil? and @edge.nil?
+          return uri
+        end
+
+        parsed_url = URI(uri)
+        pieces = parsed_url.host.split('.')
+        product = pieces[0]
+        domain = pieces[-2, 2]
+        new_edge = @edge
+        new_region = @region
+
+        if pieces.length == 4
+          new_region ||= pieces[1]
+        elsif pieces.length == 5
+          new_edge ||= pieces[1]
+          new_region ||= pieces[2]
+        end
+
+        if !new_edge.nil? && new_region.nil?
+          new_region = @@default_region
+        end
+
+        parsed_url.host = [product, new_edge, new_region, domain].select {|item| !item.nil?}.join('.')
+        parsed_url.to_s
       end
 
       ##
