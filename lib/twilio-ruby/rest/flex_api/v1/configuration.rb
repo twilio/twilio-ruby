@@ -161,6 +161,7 @@ module Twilio
                 'runtime_domain' => payload['runtime_domain'],
                 'messaging_service_instance_sid' => payload['messaging_service_instance_sid'],
                 'chat_service_instance_sid' => payload['chat_service_instance_sid'],
+                'flex_service_instance_sid' => payload['flex_service_instance_sid'],
                 'ui_language' => payload['ui_language'],
                 'ui_attributes' => payload['ui_attributes'],
                 'ui_dependencies' => payload['ui_dependencies'],
@@ -294,6 +295,12 @@ module Twilio
           # @return [String] The SID of the chat service this user belongs to
           def chat_service_instance_sid
             @properties['chat_service_instance_sid']
+          end
+
+          ##
+          # @return [String] The SID of the Flex service instance
+          def flex_service_instance_sid
+            @properties['flex_service_instance_sid']
           end
 
           ##

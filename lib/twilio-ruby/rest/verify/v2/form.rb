@@ -8,15 +8,15 @@
 
 module Twilio
   module REST
-    class Preview < Domain
-      class TrustedComms < Version
+    class Verify < Domain
+      class V2 < Version
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class BusinessList < ListResource
+        class FormList < ListResource
           ##
-          # Initialize the BusinessList
+          # Initialize the FormList
           # @param [Version] version Version that contains the resource
-          # @return [BusinessList] BusinessList
+          # @return [FormList] FormList
           def initialize(version)
             super(version)
 
@@ -27,19 +27,19 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Preview.TrustedComms.BusinessList>'
+            '#<Twilio.Verify.V2.FormList>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class BusinessPage < Page
+        class FormPage < Page
           ##
-          # Initialize the BusinessPage
+          # Initialize the FormPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [BusinessPage] BusinessPage
+          # @return [FormPage] FormPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -48,44 +48,40 @@ module Twilio
           end
 
           ##
-          # Build an instance of BusinessInstance
+          # Build an instance of FormInstance
           # @param [Hash] payload Payload response from the API
-          # @return [BusinessInstance] BusinessInstance
+          # @return [FormInstance] FormInstance
           def get_instance(payload)
-            BusinessInstance.new(@version, payload, )
+            FormInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Preview.TrustedComms.BusinessPage>'
+            '<Twilio.Verify.V2.FormPage>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class BusinessContext < InstanceContext
+        class FormContext < InstanceContext
           ##
-          # Initialize the BusinessContext
+          # Initialize the FormContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34 character string that uniquely identifies this
-          #   Business.
-          # @return [BusinessContext] BusinessContext
-          def initialize(version, sid)
+          # @param [form.FormTypes] form_type The Type of this Form. One of `form-app-push`,
+          #   `form-sms` or `form-totp`.
+          # @return [FormContext] FormContext
+          def initialize(version, form_type)
             super(version)
 
             # Path Solution
-            @solution = {sid: sid, }
-            @uri = "/Businesses/#{@solution[:sid]}"
-
-            # Dependents
-            @brands = nil
-            @insights = nil
+            @solution = {form_type: form_type, }
+            @uri = "/Forms/#{@solution[:form_type]}"
           end
 
           ##
-          # Fetch a BusinessInstance
-          # @return [BusinessInstance] Fetched BusinessInstance
+          # Fetch a FormInstance
+          # @return [FormInstance] Fetched FormInstance
           def fetch
             params = Twilio::Values.of({})
 
@@ -95,148 +91,104 @@ module Twilio
                 params,
             )
 
-            BusinessInstance.new(@version, payload, sid: @solution[:sid], )
-          end
-
-          ##
-          # Access the brands
-          # @return [BrandList]
-          # @return [BrandContext] if sid was passed.
-          def brands(sid=:unset)
-            raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-            if sid != :unset
-              return BrandContext.new(@version, @solution[:sid], sid, )
-            end
-
-            unless @brands
-              @brands = BrandList.new(@version, business_sid: @solution[:sid], )
-            end
-
-            @brands
-          end
-
-          ##
-          # Access the insights
-          # @return [InsightsList]
-          # @return [InsightsContext]
-          def insights
-            unless @insights
-              @insights = InsightsList.new(@version, business_sid: @solution[:sid], )
-            end
-
-            @insights
+            FormInstance.new(@version, payload, form_type: @solution[:form_type], )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Preview.TrustedComms.BusinessContext #{context}>"
+            "#<Twilio.Verify.V2.FormContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Preview.TrustedComms.BusinessContext #{context}>"
+            "#<Twilio.Verify.V2.FormContext #{context}>"
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class BusinessInstance < InstanceResource
+        class FormInstance < InstanceResource
           ##
-          # Initialize the BusinessInstance
+          # Initialize the FormInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34 character string that uniquely identifies this
-          #   Business.
-          # @return [BusinessInstance] BusinessInstance
-          def initialize(version, payload, sid: nil)
+          # @param [form.FormTypes] form_type The Type of this Form. One of `form-app-push`,
+          #   `form-sms` or `form-totp`.
+          # @return [FormInstance] FormInstance
+          def initialize(version, payload, form_type: nil)
             super(version)
 
             # Marshaled Properties
             @properties = {
-                'account_sid' => payload['account_sid'],
-                'sid' => payload['sid'],
+                'form_type' => payload['form_type'],
+                'forms' => payload['forms'],
+                'form_meta' => payload['form_meta'],
                 'url' => payload['url'],
-                'links' => payload['links'],
             }
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'], }
+            @params = {'form_type' => form_type || @properties['form_type'], }
           end
 
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [BusinessContext] BusinessContext for this BusinessInstance
+          # @return [FormContext] FormContext for this FormInstance
           def context
             unless @instance_context
-              @instance_context = BusinessContext.new(@version, @params['sid'], )
+              @instance_context = FormContext.new(@version, @params['form_type'], )
             end
             @instance_context
           end
 
           ##
-          # @return [String] Account Sid.
-          def account_sid
-            @properties['account_sid']
+          # @return [form.FormTypes] The Type of this Form
+          def form_type
+            @properties['form_type']
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Business.
-          def sid
-            @properties['sid']
+          # @return [Hash] Object that contains the available forms for this type.
+          def forms
+            @properties['forms']
           end
 
           ##
-          # @return [String] The URL of this resource.
+          # @return [Hash] Additional information for the available forms for this type.
+          def form_meta
+            @properties['form_meta']
+          end
+
+          ##
+          # @return [String] The URL to access the forms for this type.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] Nested resource URLs.
-          def links
-            @properties['links']
-          end
-
-          ##
-          # Fetch a BusinessInstance
-          # @return [BusinessInstance] Fetched BusinessInstance
+          # Fetch a FormInstance
+          # @return [FormInstance] Fetched FormInstance
           def fetch
             context.fetch
-          end
-
-          ##
-          # Access the brands
-          # @return [brands] brands
-          def brands
-            context.brands
-          end
-
-          ##
-          # Access the insights
-          # @return [insights] insights
-          def insights
-            context.insights
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Preview.TrustedComms.BusinessInstance #{values}>"
+            "<Twilio.Verify.V2.FormInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Preview.TrustedComms.BusinessInstance #{values}>"
+            "<Twilio.Verify.V2.FormInstance #{values}>"
           end
         end
       end

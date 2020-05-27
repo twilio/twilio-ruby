@@ -33,6 +33,7 @@ module Twilio
           #   URL to address the resource.
           # @param [Boolean] data_enabled Defines whether SIMs in the Fleet are capable of
           #   using 2G/3G/4G/LTE/CAT-M/NB-IoT data connectivity
+          # @param [String] data_limit The data_limit
           # @param [Boolean] commands_enabled Defines whether SIMs in the Fleet are capable
           #   of sending and receiving Commands via SMS.
           # @param [String] commands_url The URL that will receive a webhook when a SIM in
@@ -45,10 +46,11 @@ module Twilio
           #   Access Profile that will control which cellular network operators the Fleet's
           #   SIMs can connect to
           # @return [FleetInstance] Newly created FleetInstance
-          def create(unique_name: :unset, data_enabled: :unset, commands_enabled: :unset, commands_url: :unset, commands_method: :unset, network_access_profile: :unset)
+          def create(unique_name: :unset, data_enabled: :unset, data_limit: :unset, commands_enabled: :unset, commands_url: :unset, commands_method: :unset, network_access_profile: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'DataEnabled' => data_enabled,
+                'DataLimit' => data_limit,
                 'CommandsEnabled' => commands_enabled,
                 'CommandsUrl' => commands_url,
                 'CommandsMethod' => commands_method,
@@ -289,6 +291,7 @@ module Twilio
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
                 'data_enabled' => payload['data_enabled'],
+                'data_limit' => payload['data_limit'].to_i,
                 'data_metering' => payload['data_metering'],
                 'commands_enabled' => payload['commands_enabled'],
                 'commands_url' => payload['commands_url'],
@@ -352,6 +355,12 @@ module Twilio
           # @return [Boolean] Defines whether SIMs in the Fleet are capable of using data connectivity
           def data_enabled
             @properties['data_enabled']
+          end
+
+          ##
+          # @return [String] The total data usage (download and upload combined) in Megabytes that each Sim resource assigned to the Fleet resource can consume
+          def data_limit
+            @properties['data_limit']
           end
 
           ##

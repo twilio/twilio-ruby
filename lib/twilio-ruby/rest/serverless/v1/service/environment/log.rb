@@ -266,6 +266,7 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'service_sid' => payload['service_sid'],
                     'environment_sid' => payload['environment_sid'],
+                    'build_sid' => payload['build_sid'],
                     'deployment_sid' => payload['deployment_sid'],
                     'function_sid' => payload['function_sid'],
                     'request_sid' => payload['request_sid'],
@@ -322,6 +323,12 @@ module Twilio
               # @return [String] The SID of the environment in which the log occurred
               def environment_sid
                 @properties['environment_sid']
+              end
+
+              ##
+              # @return [String] The SID of the build that corresponds to the log
+              def build_sid
+                @properties['build_sid']
               end
 
               ##

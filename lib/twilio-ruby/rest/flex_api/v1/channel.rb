@@ -117,7 +117,8 @@ module Twilio
           #   of an SMS.
           # @param [String] chat_unique_name The chat channel's unique name.
           # @param [String] pre_engagement_data The pre-engagement data.
-          # @param [String] task_sid The SID of the TaskRouter task.
+          # @param [String] task_sid The SID of the TaskRouter task. Only valid when
+          #   integration type is `task`. `null` for integration types `studio` & `external`
           # @param [String] task_attributes The task attributes to be added for the
           #   TaskRouter Task.
           # @param [Boolean] long_lived Whether to create the channel as long-lived.

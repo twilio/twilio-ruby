@@ -34,7 +34,10 @@ describe 'NetworkAccessProfile' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2020-05-01T20:00:00Z",
           "date_updated": "2020-05-01T20:00:00Z",
-          "url": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "networks": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Networks"
+          }
       }
       ]
     ))
@@ -54,7 +57,10 @@ describe 'NetworkAccessProfile' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2020-05-01T20:00:00Z",
           "date_updated": "2020-05-01T20:00:00Z",
-          "url": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "networks": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Networks"
+          }
       }
       ]
     ))
@@ -89,7 +95,10 @@ describe 'NetworkAccessProfile' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2020-05-01T20:00:00Z",
           "date_updated": "2020-05-01T20:00:00Z",
-          "url": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "networks": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Networks"
+          }
       }
       ]
     ))
@@ -124,7 +133,10 @@ describe 'NetworkAccessProfile' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2020-05-01T20:00:00Z",
           "date_updated": "2020-05-01T20:00:00Z",
-          "url": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "networks": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Networks"
+          }
       }
       ]
     ))
@@ -194,7 +206,10 @@ describe 'NetworkAccessProfile' do
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "date_created": "2020-05-01T20:00:00Z",
                   "date_updated": "2020-05-01T20:00:00Z",
-                  "url": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  "url": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "links": {
+                      "networks": "https://supersim.twilio.com/v1/NetworkAccessProfiles/HAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Networks"
+                  }
               }
           ]
       }

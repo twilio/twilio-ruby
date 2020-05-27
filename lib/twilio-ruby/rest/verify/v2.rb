@@ -15,7 +15,23 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v2'
+          @forms = nil
           @services = nil
+        end
+
+        ##
+        # @param [form.FormTypes] form_type The Type of this Form. One of `form-app-push`,
+        #   `form-sms` or `form-totp`.
+        # @return [Twilio::REST::Verify::V2::FormContext] if form_type was passed.
+        # @return [Twilio::REST::Verify::V2::FormList]
+        def forms(form_type=:unset)
+          if form_type.nil?
+            raise ArgumentError, 'form_type cannot be nil'
+          elsif form_type == :unset
+            @forms ||= FormList.new self
+          else
+            FormContext.new(self, form_type)
+          end
         end
 
         ##

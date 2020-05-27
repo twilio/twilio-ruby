@@ -363,6 +363,8 @@ module Twilio
                   'status' => payload['status'],
                   'uri' => payload['uri'],
                   'subresource_uris' => payload['subresource_uris'],
+                  'reason_conference_ended' => payload['reason_conference_ended'],
+                  'call_sid_ending_conference' => payload['call_sid_ending_conference'],
               }
 
               # Context
@@ -439,6 +441,18 @@ module Twilio
             # @return [String] A list of related resources identified by their relative URIs
             def subresource_uris
               @properties['subresource_uris']
+            end
+
+            ##
+            # @return [conference.ReasonConferenceEnded] The reason why a conference ended.
+            def reason_conference_ended
+              @properties['reason_conference_ended']
+            end
+
+            ##
+            # @return [String] The call SID that caused the conference to end
+            def call_sid_ending_conference
+              @properties['call_sid_ending_conference']
             end
 
             ##

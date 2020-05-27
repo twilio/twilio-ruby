@@ -28,8 +28,11 @@ module Twilio
           ##
           # Retrieve a single page of NetworkAccessProfileInstance records from the API.
           # Request is executed immediately.
-          # @param [String] unique_name The unique_name
-          # @param [String] networks The networks
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. It can be used in place of the resource's `sid` in the
+          #   URL to address the resource.
+          # @param [String] networks List of Network SIDs that this Network Access Profile
+          #   will allow connections to.
           # @return [NetworkAccessProfileInstance] Newly created NetworkAccessProfileInstance
           def create(unique_name: :unset, networks: :unset)
             data = Twilio::Values.of({
@@ -172,7 +175,7 @@ module Twilio
           ##
           # Initialize the NetworkAccessProfileContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid The SID of the Network Access Profile resource to fetch.
           # @return [NetworkAccessProfileContext] NetworkAccessProfileContext
           def initialize(version, sid)
             super(version)
@@ -180,6 +183,9 @@ module Twilio
             # Path Solution
             @solution = {sid: sid, }
             @uri = "/NetworkAccessProfiles/#{@solution[:sid]}"
+
+            # Dependents
+            @networks = nil
           end
 
           ##
@@ -199,7 +205,7 @@ module Twilio
 
           ##
           # Update the NetworkAccessProfileInstance
-          # @param [String] unique_name The unique_name
+          # @param [String] unique_name The new unique name of the Network Access Profile.
           # @return [NetworkAccessProfileInstance] Updated NetworkAccessProfileInstance
           def update(unique_name: :unset)
             data = Twilio::Values.of({'UniqueName' => unique_name, })
@@ -211,6 +217,27 @@ module Twilio
             )
 
             NetworkAccessProfileInstance.new(@version, payload, sid: @solution[:sid], )
+          end
+
+          ##
+          # Access the networks
+          # @return [NetworkAccessProfileNetworkList]
+          # @return [NetworkAccessProfileNetworkContext] if sid was passed.
+          def networks(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return NetworkAccessProfileNetworkContext.new(@version, @solution[:sid], sid, )
+            end
+
+            unless @networks
+              @networks = NetworkAccessProfileNetworkList.new(
+                  @version,
+                  network_access_profile_sid: @solution[:sid],
+              )
+            end
+
+            @networks
           end
 
           ##
@@ -235,7 +262,7 @@ module Twilio
           # Initialize the NetworkAccessProfileInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid The SID of the Network Access Profile resource to fetch.
           # @return [NetworkAccessProfileInstance] NetworkAccessProfileInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -248,6 +275,7 @@ module Twilio
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
+                'links' => payload['links'],
             }
 
             # Context
@@ -267,39 +295,45 @@ module Twilio
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] The unique string that identifies the resource
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] The unique_name
+          # @return [String] An application-defined string that uniquely identifies the resource
           def unique_name
             @properties['unique_name']
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] The SID of the Account that the Network Access Profile belongs to
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The absolute URL of the resource
           def url
             @properties['url']
+          end
+
+          ##
+          # @return [String] The links
+          def links
+            @properties['links']
           end
 
           ##
@@ -311,10 +345,17 @@ module Twilio
 
           ##
           # Update the NetworkAccessProfileInstance
-          # @param [String] unique_name The unique_name
+          # @param [String] unique_name The new unique name of the Network Access Profile.
           # @return [NetworkAccessProfileInstance] Updated NetworkAccessProfileInstance
           def update(unique_name: :unset)
             context.update(unique_name: unique_name, )
+          end
+
+          ##
+          # Access the networks
+          # @return [networks] networks
+          def networks
+            context.networks
           end
 
           ##

@@ -29,6 +29,15 @@ module Twilio
       end
 
       ##
+      # @param [form.FormTypes] form_type The Type of this Form. One of `form-app-push`,
+      #   `form-sms` or `form-totp`.
+      # @return [Twilio::REST::Verify::V2::FormInstance] if form_type was passed.
+      # @return [Twilio::REST::Verify::V2::FormList]
+      def forms(form_type=:unset)
+        self.v2.forms(form_type)
+      end
+
+      ##
       # @param [String] sid The unique string that we created to identify the Service
       #   resource.
       # @return [Twilio::REST::Verify::V2::ServiceInstance] if sid was passed.

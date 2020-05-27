@@ -17,6 +17,7 @@ module Twilio
           @version = 'v1'
           @commands = nil
           @fleets = nil
+          @networks = nil
           @network_access_profiles = nil
           @sims = nil
           @usage_records = nil
@@ -51,7 +52,21 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The sid
+        # @param [String] sid The SID of the Network resource to fetch.
+        # @return [Twilio::REST::Supersim::V1::NetworkContext] if sid was passed.
+        # @return [Twilio::REST::Supersim::V1::NetworkList]
+        def networks(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @networks ||= NetworkList.new self
+          else
+            NetworkContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The SID of the Network Access Profile resource to fetch.
         # @return [Twilio::REST::Supersim::V1::NetworkAccessProfileContext] if sid was passed.
         # @return [Twilio::REST::Supersim::V1::NetworkAccessProfileList]
         def network_access_profiles(sid=:unset)

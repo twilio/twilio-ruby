@@ -614,33 +614,33 @@ module Twilio
 
               # Marshaled Properties
               @properties = {
-                  'account_sid' => payload['account_sid'],
-                  'annotation' => payload['annotation'],
-                  'answered_by' => payload['answered_by'],
-                  'api_version' => payload['api_version'],
-                  'caller_name' => payload['caller_name'],
+                  'sid' => payload['sid'],
                   'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                   'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-                  'direction' => payload['direction'],
-                  'duration' => payload['duration'],
-                  'end_time' => Twilio.deserialize_rfc2822(payload['end_time']),
-                  'forwarded_from' => payload['forwarded_from'],
-                  'from' => payload['from'],
-                  'from_formatted' => payload['from_formatted'],
-                  'group_sid' => payload['group_sid'],
                   'parent_call_sid' => payload['parent_call_sid'],
-                  'phone_number_sid' => payload['phone_number_sid'],
-                  'price' => payload['price'],
-                  'price_unit' => payload['price_unit'],
-                  'sid' => payload['sid'],
-                  'start_time' => Twilio.deserialize_rfc2822(payload['start_time']),
-                  'status' => payload['status'],
-                  'subresource_uris' => payload['subresource_uris'],
+                  'account_sid' => payload['account_sid'],
                   'to' => payload['to'],
                   'to_formatted' => payload['to_formatted'],
+                  'from' => payload['from'],
+                  'from_formatted' => payload['from_formatted'],
+                  'phone_number_sid' => payload['phone_number_sid'],
+                  'status' => payload['status'],
+                  'start_time' => Twilio.deserialize_rfc2822(payload['start_time']),
+                  'end_time' => Twilio.deserialize_rfc2822(payload['end_time']),
+                  'duration' => payload['duration'],
+                  'price' => payload['price'],
+                  'price_unit' => payload['price_unit'],
+                  'direction' => payload['direction'],
+                  'answered_by' => payload['answered_by'],
+                  'annotation' => payload['annotation'],
+                  'api_version' => payload['api_version'],
+                  'forwarded_from' => payload['forwarded_from'],
+                  'group_sid' => payload['group_sid'],
+                  'caller_name' => payload['caller_name'],
+                  'queue_time' => payload['queue_time'],
                   'trunk_sid' => payload['trunk_sid'],
                   'uri' => payload['uri'],
-                  'queue_time' => payload['queue_time'],
+                  'subresource_uris' => payload['subresource_uris'],
               }
 
               # Context
@@ -660,33 +660,9 @@ module Twilio
             end
 
             ##
-            # @return [String] The SID of the Account that created this resource
-            def account_sid
-              @properties['account_sid']
-            end
-
-            ##
-            # @return [String] The annotation provided for the call
-            def annotation
-              @properties['annotation']
-            end
-
-            ##
-            # @return [String] Either `human` or `machine` if this call was initiated with answering machine detection. Empty otherwise.
-            def answered_by
-              @properties['answered_by']
-            end
-
-            ##
-            # @return [String] The API Version used to create the call
-            def api_version
-              @properties['api_version']
-            end
-
-            ##
-            # @return [String] The caller's name if this call was an incoming call to a phone number with caller ID Lookup enabled. Otherwise, empty.
-            def caller_name
-              @properties['caller_name']
+            # @return [String] The unique string that identifies this resource
+            def sid
+              @properties['sid']
             end
 
             ##
@@ -702,93 +678,15 @@ module Twilio
             end
 
             ##
-            # @return [String] A string describing the direction of the call. `inbound` for inbound calls, `outbound-api` for calls initiated via the REST API or `outbound-dial` for calls initiated by a `Dial` verb.
-            def direction
-              @properties['direction']
-            end
-
-            ##
-            # @return [String] The length of the call in seconds.
-            def duration
-              @properties['duration']
-            end
-
-            ##
-            # @return [Time] The end time of the call. Null if the call did not complete successfully.
-            def end_time
-              @properties['end_time']
-            end
-
-            ##
-            # @return [String] The forwarding phone number if this call was an incoming call forwarded from another number (depends on carrier supporting forwarding). Otherwise, empty.
-            def forwarded_from
-              @properties['forwarded_from']
-            end
-
-            ##
-            # @return [String] The phone number, SIP address or Client identifier that made this call. Phone numbers are in E.164 format (e.g., +16175551212). SIP addresses are formatted as `name@company.com`. Client identifiers are formatted `client:name`.
-            def from
-              @properties['from']
-            end
-
-            ##
-            # @return [String] The calling phone number, SIP address, or Client identifier formatted for display.
-            def from_formatted
-              @properties['from_formatted']
-            end
-
-            ##
-            # @return [String] The Group SID associated with this call. If no Group is associated with the call, the field is empty.
-            def group_sid
-              @properties['group_sid']
-            end
-
-            ##
             # @return [String] The SID that identifies the call that created this leg.
             def parent_call_sid
               @properties['parent_call_sid']
             end
 
             ##
-            # @return [String] If the call was inbound, this is the SID of the IncomingPhoneNumber resource that received the call. If the call was outbound, it is the SID of the OutgoingCallerId resource from which the call was placed.
-            def phone_number_sid
-              @properties['phone_number_sid']
-            end
-
-            ##
-            # @return [String] The charge for this call, in the currency associated with the account. Populated after the call is completed. May not be immediately available.
-            def price
-              @properties['price']
-            end
-
-            ##
-            # @return [String] The currency in which `Price` is measured.
-            def price_unit
-              @properties['price_unit']
-            end
-
-            ##
-            # @return [String] The unique string that identifies this resource
-            def sid
-              @properties['sid']
-            end
-
-            ##
-            # @return [Time] The start time of the call. Null if the call has not yet been dialed.
-            def start_time
-              @properties['start_time']
-            end
-
-            ##
-            # @return [call.Status] The status of this call.
-            def status
-              @properties['status']
-            end
-
-            ##
-            # @return [String] A list of related subresources identified by their relative URIs
-            def subresource_uris
-              @properties['subresource_uris']
+            # @return [String] The SID of the Account that created this resource
+            def account_sid
+              @properties['account_sid']
             end
 
             ##
@@ -804,6 +702,108 @@ module Twilio
             end
 
             ##
+            # @return [String] The phone number, SIP address or Client identifier that made this call. Phone numbers are in E.164 format (e.g., +16175551212). SIP addresses are formatted as `name@company.com`. Client identifiers are formatted `client:name`.
+            def from
+              @properties['from']
+            end
+
+            ##
+            # @return [String] The calling phone number, SIP address, or Client identifier formatted for display.
+            def from_formatted
+              @properties['from_formatted']
+            end
+
+            ##
+            # @return [String] If the call was inbound, this is the SID of the IncomingPhoneNumber resource that received the call. If the call was outbound, it is the SID of the OutgoingCallerId resource from which the call was placed.
+            def phone_number_sid
+              @properties['phone_number_sid']
+            end
+
+            ##
+            # @return [call.Status] The status of this call.
+            def status
+              @properties['status']
+            end
+
+            ##
+            # @return [Time] The start time of the call. Null if the call has not yet been dialed.
+            def start_time
+              @properties['start_time']
+            end
+
+            ##
+            # @return [Time] The end time of the call. Null if the call did not complete successfully.
+            def end_time
+              @properties['end_time']
+            end
+
+            ##
+            # @return [String] The length of the call in seconds.
+            def duration
+              @properties['duration']
+            end
+
+            ##
+            # @return [String] The charge for this call, in the currency associated with the account. Populated after the call is completed. May not be immediately available.
+            def price
+              @properties['price']
+            end
+
+            ##
+            # @return [String] The currency in which `Price` is measured.
+            def price_unit
+              @properties['price_unit']
+            end
+
+            ##
+            # @return [String] A string describing the direction of the call. `inbound` for inbound calls, `outbound-api` for calls initiated via the REST API or `outbound-dial` for calls initiated by a `Dial` verb.
+            def direction
+              @properties['direction']
+            end
+
+            ##
+            # @return [String] Either `human` or `machine` if this call was initiated with answering machine detection. Empty otherwise.
+            def answered_by
+              @properties['answered_by']
+            end
+
+            ##
+            # @return [String] The annotation provided for the call
+            def annotation
+              @properties['annotation']
+            end
+
+            ##
+            # @return [String] The API Version used to create the call
+            def api_version
+              @properties['api_version']
+            end
+
+            ##
+            # @return [String] The forwarding phone number if this call was an incoming call forwarded from another number (depends on carrier supporting forwarding). Otherwise, empty.
+            def forwarded_from
+              @properties['forwarded_from']
+            end
+
+            ##
+            # @return [String] The Group SID associated with this call. If no Group is associated with the call, the field is empty.
+            def group_sid
+              @properties['group_sid']
+            end
+
+            ##
+            # @return [String] The caller's name if this call was an incoming call to a phone number with caller ID Lookup enabled. Otherwise, empty.
+            def caller_name
+              @properties['caller_name']
+            end
+
+            ##
+            # @return [String] The wait time in milliseconds before the call is placed.
+            def queue_time
+              @properties['queue_time']
+            end
+
+            ##
             # @return [String] The (optional) unique identifier of the trunk resource that was used for this call.
             def trunk_sid
               @properties['trunk_sid']
@@ -816,9 +816,9 @@ module Twilio
             end
 
             ##
-            # @return [String] The wait time in milliseconds before the call is placed.
-            def queue_time
-              @properties['queue_time']
+            # @return [String] A list of related subresources identified by their relative URIs
+            def subresource_uris
+              @properties['subresource_uris']
             end
 
             ##

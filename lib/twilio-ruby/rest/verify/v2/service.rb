@@ -208,6 +208,7 @@ module Twilio
             @verification_checks = nil
             @rate_limits = nil
             @messaging_configurations = nil
+            @entities = nil
           end
 
           ##
@@ -341,6 +342,24 @@ module Twilio
             end
 
             @messaging_configurations
+          end
+
+          ##
+          # Access the entities
+          # @return [EntityList]
+          # @return [EntityContext] if identity was passed.
+          def entities(identity=:unset)
+            raise ArgumentError, 'identity cannot be nil' if identity.nil?
+
+            if identity != :unset
+              return EntityContext.new(@version, @solution[:sid], identity, )
+            end
+
+            unless @entities
+              @entities = EntityList.new(@version, service_sid: @solution[:sid], )
+            end
+
+            @entities
           end
 
           ##
@@ -571,6 +590,13 @@ module Twilio
           # @return [messaging_configurations] messaging_configurations
           def messaging_configurations
             context.messaging_configurations
+          end
+
+          ##
+          # Access the entities
+          # @return [entities] entities
+          def entities
+            context.entities
           end
 
           ##

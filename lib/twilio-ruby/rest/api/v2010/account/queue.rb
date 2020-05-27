@@ -280,15 +280,15 @@ module Twilio
 
               # Marshaled Properties
               @properties = {
+                  'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
+                  'current_size' => payload['current_size'].to_i,
+                  'friendly_name' => payload['friendly_name'],
+                  'uri' => payload['uri'],
                   'account_sid' => payload['account_sid'],
                   'average_wait_time' => payload['average_wait_time'].to_i,
-                  'current_size' => payload['current_size'].to_i,
-                  'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
-                  'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-                  'friendly_name' => payload['friendly_name'],
-                  'max_size' => payload['max_size'].to_i,
                   'sid' => payload['sid'],
-                  'uri' => payload['uri'],
+                  'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+                  'max_size' => payload['max_size'].to_i,
               }
 
               # Context
@@ -308,6 +308,30 @@ module Twilio
             end
 
             ##
+            # @return [Time] The RFC 2822 date and time in GMT that this resource was last updated
+            def date_updated
+              @properties['date_updated']
+            end
+
+            ##
+            # @return [String] The number of calls currently in the queue.
+            def current_size
+              @properties['current_size']
+            end
+
+            ##
+            # @return [String] A string that you assigned to describe this resource
+            def friendly_name
+              @properties['friendly_name']
+            end
+
+            ##
+            # @return [String] The URI of this resource, relative to `https://api.twilio.com`
+            def uri
+              @properties['uri']
+            end
+
+            ##
             # @return [String] The SID of the Account that created this resource
             def account_sid
               @properties['account_sid']
@@ -320,9 +344,9 @@ module Twilio
             end
 
             ##
-            # @return [String] The number of calls currently in the queue.
-            def current_size
-              @properties['current_size']
+            # @return [String] The unique string that identifies this resource
+            def sid
+              @properties['sid']
             end
 
             ##
@@ -332,33 +356,9 @@ module Twilio
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT that this resource was last updated
-            def date_updated
-              @properties['date_updated']
-            end
-
-            ##
-            # @return [String] A string that you assigned to describe this resource
-            def friendly_name
-              @properties['friendly_name']
-            end
-
-            ##
             # @return [String] The max number of calls allowed in the queue
             def max_size
               @properties['max_size']
-            end
-
-            ##
-            # @return [String] The unique string that identifies this resource
-            def sid
-              @properties['sid']
-            end
-
-            ##
-            # @return [String] The URI of this resource, relative to `https://api.twilio.com`
-            def uri
-              @properties['uri']
             end
 
             ##

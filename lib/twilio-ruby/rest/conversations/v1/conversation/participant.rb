@@ -53,8 +53,11 @@ module Twilio
             # @param [String] messaging_binding_projected_address The address of the Twilio
             #   phone number that is used in Group MMS. Communication mask for the Chat
             #   participant with Identity.
+            # @param [String] role_sid The SID of the
+            #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) to assign to the
+            #   participant.
             # @return [ParticipantInstance] Newly created ParticipantInstance
-            def create(identity: :unset, messaging_binding_address: :unset, messaging_binding_proxy_address: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_binding_projected_address: :unset)
+            def create(identity: :unset, messaging_binding_address: :unset, messaging_binding_proxy_address: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_binding_projected_address: :unset, role_sid: :unset)
               data = Twilio::Values.of({
                   'Identity' => identity,
                   'MessagingBinding.Address' => messaging_binding_address,
@@ -63,6 +66,7 @@ module Twilio
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                   'Attributes' => attributes,
                   'MessagingBinding.ProjectedAddress' => messaging_binding_projected_address,
+                  'RoleSid' => role_sid,
               })
 
               payload = @version.create(
@@ -221,12 +225,16 @@ module Twilio
             #   store any data you wish. The string value must contain structurally valid JSON
             #   if specified.  **Note** that if the attributes are not set "{}" will be
             #   returned.
+            # @param [String] role_sid The SID of the
+            #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) to assign to the
+            #   participant.
             # @return [ParticipantInstance] Updated ParticipantInstance
-            def update(date_created: :unset, date_updated: :unset, attributes: :unset)
+            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset)
               data = Twilio::Values.of({
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                   'Attributes' => attributes,
+                  'RoleSid' => role_sid,
               })
 
               payload = @version.update(
@@ -308,6 +316,7 @@ module Twilio
                   'identity' => payload['identity'],
                   'attributes' => payload['attributes'],
                   'messaging_binding' => payload['messaging_binding'],
+                  'role_sid' => payload['role_sid'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
@@ -366,6 +375,12 @@ module Twilio
             end
 
             ##
+            # @return [String] The SID of the Role to assign to the participant
+            def role_sid
+              @properties['role_sid']
+            end
+
+            ##
             # @return [Time] The date that this resource was created.
             def date_created
               @properties['date_created']
@@ -391,9 +406,17 @@ module Twilio
             #   store any data you wish. The string value must contain structurally valid JSON
             #   if specified.  **Note** that if the attributes are not set "{}" will be
             #   returned.
+            # @param [String] role_sid The SID of the
+            #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) to assign to the
+            #   participant.
             # @return [ParticipantInstance] Updated ParticipantInstance
-            def update(date_created: :unset, date_updated: :unset, attributes: :unset)
-              context.update(date_created: date_created, date_updated: date_updated, attributes: attributes, )
+            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset)
+              context.update(
+                  date_created: date_created,
+                  date_updated: date_updated,
+                  attributes: attributes,
+                  role_sid: role_sid,
+              )
             end
 
             ##

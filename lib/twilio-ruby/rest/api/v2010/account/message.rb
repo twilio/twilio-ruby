@@ -413,26 +413,26 @@ module Twilio
 
               # Marshaled Properties
               @properties = {
-                  'account_sid' => payload['account_sid'],
-                  'api_version' => payload['api_version'],
                   'body' => payload['body'],
-                  'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
-                  'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-                  'date_sent' => Twilio.deserialize_rfc2822(payload['date_sent']),
-                  'direction' => payload['direction'],
-                  'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
-                  'error_message' => payload['error_message'],
-                  'from' => payload['from'],
-                  'messaging_service_sid' => payload['messaging_service_sid'],
-                  'num_media' => payload['num_media'],
                   'num_segments' => payload['num_segments'],
-                  'price' => payload['price'],
-                  'price_unit' => payload['price_unit'],
-                  'sid' => payload['sid'],
-                  'status' => payload['status'],
-                  'subresource_uris' => payload['subresource_uris'],
+                  'direction' => payload['direction'],
+                  'from' => payload['from'],
                   'to' => payload['to'],
+                  'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
+                  'price' => payload['price'],
+                  'error_message' => payload['error_message'],
                   'uri' => payload['uri'],
+                  'account_sid' => payload['account_sid'],
+                  'num_media' => payload['num_media'],
+                  'status' => payload['status'],
+                  'messaging_service_sid' => payload['messaging_service_sid'],
+                  'sid' => payload['sid'],
+                  'date_sent' => Twilio.deserialize_rfc2822(payload['date_sent']),
+                  'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+                  'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
+                  'price_unit' => payload['price_unit'],
+                  'api_version' => payload['api_version'],
+                  'subresource_uris' => payload['subresource_uris'],
               }
 
               # Context
@@ -452,75 +452,9 @@ module Twilio
             end
 
             ##
-            # @return [String] The SID of the Account that created the resource
-            def account_sid
-              @properties['account_sid']
-            end
-
-            ##
-            # @return [String] The API version used to process the message
-            def api_version
-              @properties['api_version']
-            end
-
-            ##
             # @return [String] The message text
             def body
               @properties['body']
-            end
-
-            ##
-            # @return [Time] The RFC 2822 date and time in GMT that the resource was created
-            def date_created
-              @properties['date_created']
-            end
-
-            ##
-            # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
-            def date_updated
-              @properties['date_updated']
-            end
-
-            ##
-            # @return [Time] The RFC 2822 date and time in GMT when the message was sent
-            def date_sent
-              @properties['date_sent']
-            end
-
-            ##
-            # @return [message.Direction] The direction of the message
-            def direction
-              @properties['direction']
-            end
-
-            ##
-            # @return [String] The error code associated with the message
-            def error_code
-              @properties['error_code']
-            end
-
-            ##
-            # @return [String] The description of the error_code
-            def error_message
-              @properties['error_message']
-            end
-
-            ##
-            # @return [String] The phone number that initiated the message
-            def from
-              @properties['from']
-            end
-
-            ##
-            # @return [String] The SID of the Messaging Service used with the message.
-            def messaging_service_sid
-              @properties['messaging_service_sid']
-            end
-
-            ##
-            # @return [String] The number of media files associated with the message
-            def num_media
-              @properties['num_media']
             end
 
             ##
@@ -530,33 +464,15 @@ module Twilio
             end
 
             ##
-            # @return [String] The amount billed for the message
-            def price
-              @properties['price']
+            # @return [message.Direction] The direction of the message
+            def direction
+              @properties['direction']
             end
 
             ##
-            # @return [String] The currency in which price is measured
-            def price_unit
-              @properties['price_unit']
-            end
-
-            ##
-            # @return [String] The unique string that identifies the resource
-            def sid
-              @properties['sid']
-            end
-
-            ##
-            # @return [message.Status] The status of the message
-            def status
-              @properties['status']
-            end
-
-            ##
-            # @return [String] A list of related resources identified by their relative URIs
-            def subresource_uris
-              @properties['subresource_uris']
+            # @return [String] The phone number that initiated the message
+            def from
+              @properties['from']
             end
 
             ##
@@ -566,9 +482,93 @@ module Twilio
             end
 
             ##
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was last updated
+            def date_updated
+              @properties['date_updated']
+            end
+
+            ##
+            # @return [String] The amount billed for the message
+            def price
+              @properties['price']
+            end
+
+            ##
+            # @return [String] The description of the error_code
+            def error_message
+              @properties['error_message']
+            end
+
+            ##
             # @return [String] The URI of the resource, relative to `https://api.twilio.com`
             def uri
               @properties['uri']
+            end
+
+            ##
+            # @return [String] The SID of the Account that created the resource
+            def account_sid
+              @properties['account_sid']
+            end
+
+            ##
+            # @return [String] The number of media files associated with the message
+            def num_media
+              @properties['num_media']
+            end
+
+            ##
+            # @return [message.Status] The status of the message
+            def status
+              @properties['status']
+            end
+
+            ##
+            # @return [String] The SID of the Messaging Service used with the message.
+            def messaging_service_sid
+              @properties['messaging_service_sid']
+            end
+
+            ##
+            # @return [String] The unique string that identifies the resource
+            def sid
+              @properties['sid']
+            end
+
+            ##
+            # @return [Time] The RFC 2822 date and time in GMT when the message was sent
+            def date_sent
+              @properties['date_sent']
+            end
+
+            ##
+            # @return [Time] The RFC 2822 date and time in GMT that the resource was created
+            def date_created
+              @properties['date_created']
+            end
+
+            ##
+            # @return [String] The error code associated with the message
+            def error_code
+              @properties['error_code']
+            end
+
+            ##
+            # @return [String] The currency in which price is measured
+            def price_unit
+              @properties['price_unit']
+            end
+
+            ##
+            # @return [String] The API version used to process the message
+            def api_version
+              @properties['api_version']
+            end
+
+            ##
+            # @return [String] A list of related resources identified by their relative URIs
+            def subresource_uris
+              @properties['subresource_uris']
             end
 
             ##

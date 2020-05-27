@@ -145,9 +145,10 @@ module Twilio
           #   misconfigured Flex Flow and no tasks will be created.
           # @param [Boolean] long_lived When enabled, Flex will keep the chat channel active
           #   so that it may be used for subsequent interactions with a contact identity.
+          #   Defaults to `false`.
           # @param [Boolean] janitor_enabled When enabled, the Messaging Channel Janitor
           #   will remove active Proxy sessions if the associated Task is deleted outside of
-          #   the Flex UI.
+          #   the Flex UI. Defaults to `false`.
           # @param [String] integration_retry_count The number of times to retry the webhook
           #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
           #   the default is 0.
@@ -279,9 +280,10 @@ module Twilio
           #   misconfigured Flex Flow and no tasks will be created.
           # @param [Boolean] long_lived When enabled, Flex will keep the chat channel active
           #   so that it may be used for subsequent interactions with a contact identity.
+          #   Defaults to `false`.
           # @param [Boolean] janitor_enabled When enabled, the Messaging Channel Janitor
           #   will remove active Proxy sessions if the associated Task is deleted outside of
-          #   the Flex UI.
+          #   the Flex UI. Defaults to `false`.
           # @param [String] integration_retry_count The number of times to retry the webhook
           #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
           #   the default is 0.
@@ -505,9 +507,10 @@ module Twilio
           #   misconfigured Flex Flow and no tasks will be created.
           # @param [Boolean] long_lived When enabled, Flex will keep the chat channel active
           #   so that it may be used for subsequent interactions with a contact identity.
+          #   Defaults to `false`.
           # @param [Boolean] janitor_enabled When enabled, the Messaging Channel Janitor
           #   will remove active Proxy sessions if the associated Task is deleted outside of
-          #   the Flex UI.
+          #   the Flex UI. Defaults to `false`.
           # @param [String] integration_retry_count The number of times to retry the webhook
           #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
           #   the default is 0.
