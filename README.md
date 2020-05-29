@@ -66,6 +66,8 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 
 ### Specify a Region and/or Edge
 
+To take advantage of Twilio's [Global Infrastructure](https://www.twilio.com/docs/global-infrastructure), specify the target Region and/or Edge for the client:
+
 ```ruby
 # set up a client to talk to the Twilio REST API over a specific region and edge
 @client = Twilio::REST::Client.new account_sid, auth_token, nil, 'au1'
