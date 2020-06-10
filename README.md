@@ -130,10 +130,12 @@ To use a custom HTTP client with this helper library, please see the [Twilio doc
 ```ruby
 begin
   messages = @client.messages.list(limit: 20)
-rescue Twilio::REST::TwilioError => e
+rescue Twilio::REST::RestError => e
   puts e.message
 end
 ```
+
+For more descriptive exception types, please see the [Twilio documentation](https://www.twilio.com/docs/libraries/ruby/usage-guide#error-handling).
 
 ### Getting Started With Client Capability Tokens
 
