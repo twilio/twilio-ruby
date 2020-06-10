@@ -13,14 +13,15 @@ describe 'Fleet' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.supersim.v1.fleets.create()
+      @client.supersim.v1.fleets.create(network_access_profile: 'HAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    values = {'NetworkAccessProfile' => 'HAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://supersim.twilio.com/v1/Fleets',
+        data: values,
     ))).to eq(true)
   end
 
@@ -46,7 +47,7 @@ describe 'Fleet' do
       ]
     ))
 
-    actual = @client.supersim.v1.fleets.create()
+    actual = @client.supersim.v1.fleets.create(network_access_profile: 'HAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)
   end

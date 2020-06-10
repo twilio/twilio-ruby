@@ -16,6 +16,7 @@ module Twilio
           super
           @version = 'TrustedComms'
           @branded_calls = nil
+          @brands_information = nil
           @businesses = nil
           @cps = nil
           @current_calls = nil
@@ -26,6 +27,12 @@ module Twilio
         # @return [Twilio::REST::Preview::TrustedComms::BrandedCallContext]
         def branded_calls
           @branded_calls ||= BrandedCallList.new self
+        end
+
+        ##
+        # @return [Twilio::REST::Preview::TrustedComms::BrandsInformationContext]
+        def brands_information
+          @brands_information ||= BrandsInformationContext.new self
         end
 
         ##

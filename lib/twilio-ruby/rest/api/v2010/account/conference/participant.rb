@@ -343,8 +343,9 @@ module Twilio
               # @param [String] conference_sid The SID of the conference with the participant to
               #   fetch.
               # @param [String] call_sid The
-              #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID of the resource
-              #   to fetch.
+              #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID or label of the
+              #   participant to fetch. Non URL safe characters in a label must be percent
+              #   encoded, for example, a space character is represented as %20.
               # @return [ParticipantContext] ParticipantContext
               def initialize(version, account_sid, conference_sid, call_sid)
                 super(version)
@@ -475,8 +476,9 @@ module Twilio
               #   Participant resource.
               # @param [String] conference_sid The SID of the conference the participant is in.
               # @param [String] call_sid The
-              #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID of the resource
-              #   to fetch.
+              #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID or label of the
+              #   participant to fetch. Non URL safe characters in a label must be percent
+              #   encoded, for example, a space character is represented as %20.
               # @return [ParticipantInstance] ParticipantInstance
               def initialize(version, payload, account_sid: nil, conference_sid: nil, call_sid: nil)
                 super(version)

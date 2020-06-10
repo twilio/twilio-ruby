@@ -60,8 +60,11 @@ module Twilio
           #   `false` and the default is `true`.
           # @param [String] alexa_skill_id Deprecated.
           # @param [String] default_alexa_notification_protocol_version Deprecated.
+          # @param [String] delivery_callback_url URL to send delivery status callback.
+          # @param [Boolean] delivery_callback_enabled Callback configuration that enables
+          #   delivery callbacks, default false
           # @return [ServiceInstance] Newly created ServiceInstance
-          def create(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset, alexa_skill_id: :unset, default_alexa_notification_protocol_version: :unset)
+          def create(friendly_name: :unset, apn_credential_sid: :unset, gcm_credential_sid: :unset, messaging_service_sid: :unset, facebook_messenger_page_id: :unset, default_apn_notification_protocol_version: :unset, default_gcm_notification_protocol_version: :unset, fcm_credential_sid: :unset, default_fcm_notification_protocol_version: :unset, log_enabled: :unset, alexa_skill_id: :unset, default_alexa_notification_protocol_version: :unset, delivery_callback_url: :unset, delivery_callback_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'ApnCredentialSid' => apn_credential_sid,
@@ -75,6 +78,8 @@ module Twilio
                 'LogEnabled' => log_enabled,
                 'AlexaSkillId' => alexa_skill_id,
                 'DefaultAlexaNotificationProtocolVersion' => default_alexa_notification_protocol_version,
+                'DeliveryCallbackUrl' => delivery_callback_url,
+                'DeliveryCallbackEnabled' => delivery_callback_enabled,
             })
 
             payload = @version.create(
@@ -399,6 +404,8 @@ module Twilio
                 'links' => payload['links'],
                 'alexa_skill_id' => payload['alexa_skill_id'],
                 'default_alexa_notification_protocol_version' => payload['default_alexa_notification_protocol_version'],
+                'delivery_callback_url' => payload['delivery_callback_url'],
+                'delivery_callback_enabled' => payload['delivery_callback_enabled'],
             }
 
             # Context
@@ -523,6 +530,18 @@ module Twilio
           # @return [String] Deprecated
           def default_alexa_notification_protocol_version
             @properties['default_alexa_notification_protocol_version']
+          end
+
+          ##
+          # @return [String] Webhook URL
+          def delivery_callback_url
+            @properties['delivery_callback_url']
+          end
+
+          ##
+          # @return [Boolean] Enable delivery callbacks
+          def delivery_callback_enabled
+            @properties['delivery_callback_enabled']
           end
 
           ##

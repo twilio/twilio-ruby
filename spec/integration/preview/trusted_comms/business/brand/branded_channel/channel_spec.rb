@@ -16,10 +16,10 @@ describe 'Channel' do
       @client.preview.trusted_comms.businesses('BXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                    .brands('BZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                    .branded_channels('BWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                   .channels.create(phone_number_sid: 'PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', phone_number: 'phone_number')
+                                   .channels.create(phone_number_sid: 'PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PhoneNumberSid' => 'PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', 'PhoneNumber' => 'phone_number', }
+    values = {'PhoneNumberSid' => 'PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -47,7 +47,7 @@ describe 'Channel' do
     actual = @client.preview.trusted_comms.businesses('BXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                           .brands('BZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                           .branded_channels('BWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                          .channels.create(phone_number_sid: 'PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', phone_number: 'phone_number')
+                                          .channels.create(phone_number_sid: 'PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)
   end

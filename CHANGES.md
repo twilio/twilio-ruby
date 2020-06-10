@@ -1,6 +1,43 @@
 twilio-ruby changelog
 =====================
 
+[2020-06-10] Version 5.37.0
+---------------------------
+**Library - Docs**
+- [PR #514](https://github.com/twilio/twilio-ruby/pull/514): link to handling exceptions. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+- [PR #513](https://github.com/twilio/twilio-ruby/pull/513): link to custom HTTP client instructions. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+**Api**
+- Added `pstnconnectivity` to `usage_record` API
+
+**Autopilot**
+- Add dialogue_sid param to Query list resource
+
+**Contacts**
+- Added contacts channel create, update, read, delete API definition
+- Added contacts Get API definition
+- Added contacts Update API definition
+- Added contacts Delete API definition
+- Added contacts Search API definition
+- Added AccountSID to CFD CREATE and GET Responses
+- Added contacts location Create, update, read and delete API definitions
+
+**Notify**
+- delivery_callback_url and delivery_callback_enabled added
+
+**Numbers**
+- Add `provisionally-approved` as a Bundle status
+
+**Preview**
+- `BrandsInformation` endpoint now returns a single `BrandsInformation`
+- Deleted phone number required field in the brand phone number endpoint from `kyc-api`
+- Removed insights `preview API` from API Definitions **(breaking change)**
+- Added `BrandsInformation` endpoint to query brands information stored in KYC
+
+**Supersim**
+- Require a Network Access Profile when creating a Fleet **(breaking change)**
+
+
 [2020-05-27] Version 5.36.0
 ---------------------------
 **Api**

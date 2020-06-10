@@ -182,6 +182,7 @@ module Twilio
 
               # Dependents
               @factors = nil
+              @access_tokens = nil
             end
 
             ##
@@ -231,6 +232,22 @@ module Twilio
               end
 
               @factors
+            end
+
+            ##
+            # Access the access_tokens
+            # @return [AccessTokenList]
+            # @return [AccessTokenContext]
+            def access_tokens
+              unless @access_tokens
+                @access_tokens = AccessTokenList.new(
+                    @version,
+                    service_sid: @solution[:service_sid],
+                    identity: @solution[:identity],
+                )
+              end
+
+              @access_tokens
             end
 
             ##
@@ -356,6 +373,13 @@ module Twilio
             # @return [factors] factors
             def factors
               context.factors
+            end
+
+            ##
+            # Access the access_tokens
+            # @return [access_tokens] access_tokens
+            def access_tokens
+              context.access_tokens
             end
 
             ##

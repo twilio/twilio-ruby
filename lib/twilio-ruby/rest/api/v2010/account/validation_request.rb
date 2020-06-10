@@ -117,10 +117,10 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'account_sid' => payload['account_sid'],
-                  'phone_number' => payload['phone_number'],
-                  'friendly_name' => payload['friendly_name'],
-                  'validation_code' => payload['validation_code'].to_i,
                   'call_sid' => payload['call_sid'],
+                  'friendly_name' => payload['friendly_name'],
+                  'phone_number' => payload['phone_number'],
+                  'validation_code' => payload['validation_code'],
               }
             end
 
@@ -131,9 +131,9 @@ module Twilio
             end
 
             ##
-            # @return [String] The phone number to verify in E.164 format
-            def phone_number
-              @properties['phone_number']
+            # @return [String] The SID of the Call the resource is associated with
+            def call_sid
+              @properties['call_sid']
             end
 
             ##
@@ -143,15 +143,15 @@ module Twilio
             end
 
             ##
-            # @return [String] The 6 digit validation code that someone must enter to validate the Caller ID  when `phone_number` is called
-            def validation_code
-              @properties['validation_code']
+            # @return [String] The phone number to verify in E.164 format
+            def phone_number
+              @properties['phone_number']
             end
 
             ##
-            # @return [String] The SID of the Call the resource is associated with
-            def call_sid
-              @properties['call_sid']
+            # @return [String] The 6 digit validation code that someone must enter to validate the Caller ID  when `phone_number` is called
+            def validation_code
+              @properties['validation_code']
             end
 
             ##

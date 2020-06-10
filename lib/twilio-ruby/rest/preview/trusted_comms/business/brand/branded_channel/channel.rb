@@ -41,12 +41,9 @@ module Twilio
                 # Request is executed immediately.
                 # @param [String] phone_number_sid The unique SID identifier of the Phone Number
                 #   of the Phone number to be assigned to the Branded Channel.
-                # @param [String] phone_number The phone number given in [E.164
-                #   format](https://www.twilio.com/docs/glossary/what-e164) to assign to the Branded
-                #   Channel. It must be a Twilio number that from your account.
                 # @return [ChannelInstance] Newly created ChannelInstance
-                def create(phone_number_sid: nil, phone_number: nil)
-                  data = Twilio::Values.of({'PhoneNumberSid' => phone_number_sid, 'PhoneNumber' => phone_number, })
+                def create(phone_number_sid: nil)
+                  data = Twilio::Values.of({'PhoneNumberSid' => phone_number_sid, })
 
                   payload = @version.create(
                       'POST',

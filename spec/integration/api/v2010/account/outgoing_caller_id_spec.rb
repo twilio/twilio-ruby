@@ -30,12 +30,12 @@ describe 'OutgoingCallerId' do
         200,
       %q[
       {
+          "sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "date_created": "Fri, 21 Aug 2009 00:11:24 +0000",
-          "date_updated": "Fri, 21 Aug 2009 00:11:24 +0000",
           "friendly_name": "(415) 867-5309",
           "phone_number": "+141586753096",
-          "sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_created": "Fri, 21 Aug 2009 00:11:24 +0000",
+          "date_updated": "Fri, 21 Aug 2009 00:11:24 +0000",
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
@@ -71,7 +71,7 @@ describe 'OutgoingCallerId' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "Fri, 21 Aug 2009 00:11:24 +0000",
           "date_updated": "Fri, 21 Aug 2009 00:11:24 +0000",
-          "friendly_name": "(415) 867-5309",
+          "friendly_name": "friendly_name",
           "phone_number": "+141586753096",
           "sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
@@ -135,10 +135,8 @@ describe 'OutgoingCallerId' do
       %q[
       {
           "end": 0,
-          "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds.json?Page=0&PageSize=50",
-          "last_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds.json?Page=0&PageSize=50",
+          "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds.json?PageSize=50&Page=0",
           "next_page_uri": null,
-          "num_pages": 1,
           "outgoing_caller_ids": [
               {
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -154,8 +152,7 @@ describe 'OutgoingCallerId' do
           "page_size": 50,
           "previous_page_uri": null,
           "start": 0,
-          "total": 1,
-          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds.json"
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds.json?PageSize=50&Page=0"
       }
       ]
     ))
@@ -172,17 +169,14 @@ describe 'OutgoingCallerId' do
       %q[
       {
           "end": 0,
-          "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds.json?Page=0&PageSize=50",
-          "last_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds.json?Page=0&PageSize=50",
+          "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds.json?PageSize=50&Page=0",
           "next_page_uri": null,
-          "num_pages": 1,
           "outgoing_caller_ids": [],
           "page": 0,
           "page_size": 50,
           "previous_page_uri": null,
           "start": 0,
-          "total": 1,
-          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds.json"
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/OutgoingCallerIds.json?PageSize=50&Page=0"
       }
       ]
     ))

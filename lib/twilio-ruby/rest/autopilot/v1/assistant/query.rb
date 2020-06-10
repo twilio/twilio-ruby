@@ -39,6 +39,8 @@ module Twilio
             #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @param [String] status The status of the resources to read. Can be:
             #   `pending-review`, `reviewed`, or `discarded`
+            # @param [String] dialogue_sid The SID of the
+            #   [Dialogue](https://www.twilio.com/docs/autopilot/api/dialogue).
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -46,11 +48,12 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(language: :unset, model_build: :unset, status: :unset, limit: nil, page_size: nil)
+            def list(language: :unset, model_build: :unset, status: :unset, dialogue_sid: :unset, limit: nil, page_size: nil)
               self.stream(
                   language: language,
                   model_build: model_build,
                   status: status,
+                  dialogue_sid: dialogue_sid,
                   limit: limit,
                   page_size: page_size
               ).entries
@@ -66,6 +69,8 @@ module Twilio
             #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @param [String] status The status of the resources to read. Can be:
             #   `pending-review`, `reviewed`, or `discarded`
+            # @param [String] dialogue_sid The SID of the
+            #   [Dialogue](https://www.twilio.com/docs/autopilot/api/dialogue).
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -73,13 +78,14 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(language: :unset, model_build: :unset, status: :unset, limit: nil, page_size: nil)
+            def stream(language: :unset, model_build: :unset, status: :unset, dialogue_sid: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
                   language: language,
                   model_build: model_build,
                   status: status,
+                  dialogue_sid: dialogue_sid,
                   page_size: limits[:page_size],
               )
 
@@ -109,15 +115,18 @@ module Twilio
             #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @param [String] status The status of the resources to read. Can be:
             #   `pending-review`, `reviewed`, or `discarded`
+            # @param [String] dialogue_sid The SID of the
+            #   [Dialogue](https://www.twilio.com/docs/autopilot/api/dialogue).
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of QueryInstance
-            def page(language: :unset, model_build: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(language: :unset, model_build: :unset, status: :unset, dialogue_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'Language' => language,
                   'ModelBuild' => model_build,
                   'Status' => status,
+                  'DialogueSid' => dialogue_sid,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,

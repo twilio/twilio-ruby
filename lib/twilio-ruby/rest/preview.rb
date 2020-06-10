@@ -187,6 +187,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Preview::TrustedComms::BrandsInformationInstance]
+      def brands_information
+        self.trusted_comms.brands_information()
+      end
+
+      ##
       # @param [String] sid A 34 character string that uniquely identifies this
       #   Business.
       # @return [Twilio::REST::Preview::TrustedComms::BusinessInstance] if sid was passed.
