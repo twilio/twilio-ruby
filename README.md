@@ -193,6 +193,10 @@ This will print the following (except for the whitespace):
 </Response>
 ```
 
+### Using a Custom HTTP Client
+
+To use a custom HTTP client with this helper library, please see the [Twilio documentation](https://www.twilio.com/docs/libraries/ruby/custom-http-clients).
+
 ## Docker Image
 
 The `Dockerfile` present in this repository and its respective `twilio/twilio-ruby` Docker image are currently used by Twilio for testing purposes only.
