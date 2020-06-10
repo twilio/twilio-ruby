@@ -123,7 +123,7 @@ message_sid = 'SMxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 @client.http_client.adapter = :typhoeus
 ```
 
-For using your own custom client, please see the [Twilio documentation](https://www.twilio.com/docs/libraries/ruby/custom-http-clients).
+To use a custom HTTP client with this helper library, please see the [Twilio documentation](https://www.twilio.com/docs/libraries/ruby/custom-http-clients).
 
 ### Handling Errors
 
