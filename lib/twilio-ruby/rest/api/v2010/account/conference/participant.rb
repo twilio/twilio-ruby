@@ -32,10 +32,21 @@ module Twilio
               ##
               # Retrieve a single page of ParticipantInstance records from the API.
               # Request is executed immediately.
-              # @param [String] from The `from` phone number that will dial the new conference
-              #   participant. Can be a phone number or a client id.
-              # @param [String] to The phone number, client id, or sip address to invite to the
-              #   conference. [Custom
+              # @param [String] from The phone number, Client identifier, or username portion of
+              #   SIP address that made this call. Phone numbers are in
+              #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g.,
+              #   +16175551212). Client identifiers are formatted `client:name`. If using a phone
+              #   number, it must be a Twilio number or a Verified [outgoing caller
+              #   id](https://www.twilio.com/docs/voice/api/outgoing-caller-ids) for your account.
+              #   If the `to` parameter is a phone number, `from` must also be a phone number. If
+              #   `to` is sip address, this value of `from` should be a username portion to be
+              #   used to populate the P-Asserted-Identity header that is passed to the SIP
+              #   endpoint.
+              # @param [String] to The phone number, SIP address, or Client identifier that
+              #   received this call. Phone numbers are in
+              #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g.,
+              #   +16175551212). SIP addresses are formatted as `sip:name@company.com`. Client
+              #   identifiers are formatted `client:name`. [Custom
               #   parameters](https://www.twilio.com/docs/voice/api/conference-participant-resource#custom-parameters) may also be specified.
               # @param [String] status_callback The URL we should call using the
               #   `status_callback_method` to send status information to your application.
@@ -45,6 +56,8 @@ module Twilio
               #   generate a call to `status_callback`. Can be: `initiated`, `ringing`,
               #   `answered`, and `completed`. Separate multiple values with a space. The default
               #   value is `completed`.
+              # @param [String] label A label for this participant. If one is supplied, it may
+              #   subsequently be used to fetch, update or delete the participant.
               # @param [String] timeout The number of seconds that we should allow the phone to
               #   ring before assuming there is no answer. Can be an integer between `5` and
               #   `600`, inclusive. The default value is `60`. We always add a 5-second timeout
@@ -128,17 +141,31 @@ module Twilio
               # @param [String] call_sid_to_coach The SID of the participant who is being
               #   `coached`. The participant being coached is the only participant who can hear
               #   the participant who is `coaching`.
+              # @param [String] jitter_buffer_size Jitter buffer size for the connecting
+              #   participant. Twilio will use this setting to apply Jitter Buffer before
+              #   participant's audio is mixed into the conference. Can be: `off`, `small`,
+              #   `medium`, and `large`. Default to `large`.
               # @param [String] byoc The SID of a BYOC (Bring Your Own Carrier) trunk to route
               #   this call with. Note that `byoc` is only meaningful when `to` is a phone number;
               #   it will otherwise be ignored. (Beta)
+              # @param [String] caller_id The phone number, Client identifier, or username
+              #   portion of SIP address that made this call. Phone numbers are in
+              #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g.,
+              #   +16175551212). Client identifiers are formatted `client:name`. If using a phone
+              #   number, it must be a Twilio number or a Verified [outgoing caller
+              #   id](https://www.twilio.com/docs/voice/api/outgoing-caller-ids) for your account.
+              #   If the `to` parameter is a phone number, `callerId` must also be a phone number.
+              #   If `to` is sip address, this value of `callerId` should be a username portion to
+              #   be used to populate the From header that is passed to the SIP endpoint.
               # @return [ParticipantInstance] Newly created ParticipantInstance
-              def create(from: nil, to: nil, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_record: :unset, conference_trim: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, region: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, recording_status_callback_event: :unset, conference_recording_status_callback_event: :unset, coaching: :unset, call_sid_to_coach: :unset, byoc: :unset)
+              def create(from: nil, to: nil, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, label: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_record: :unset, conference_trim: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, region: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, recording_status_callback_event: :unset, conference_recording_status_callback_event: :unset, coaching: :unset, call_sid_to_coach: :unset, jitter_buffer_size: :unset, byoc: :unset, caller_id: :unset)
                 data = Twilio::Values.of({
                     'From' => from,
                     'To' => to,
                     'StatusCallback' => status_callback,
                     'StatusCallbackMethod' => status_callback_method,
                     'StatusCallbackEvent' => Twilio.serialize_list(status_callback_event) { |e| e },
+                    'Label' => label,
                     'Timeout' => timeout,
                     'Record' => record,
                     'Muted' => muted,
@@ -166,7 +193,9 @@ module Twilio
                     'ConferenceRecordingStatusCallbackEvent' => Twilio.serialize_list(conference_recording_status_callback_event) { |e| e },
                     'Coaching' => coaching,
                     'CallSidToCoach' => call_sid_to_coach,
+                    'JitterBufferSize' => jitter_buffer_size,
                     'Byoc' => byoc,
+                    'CallerId' => caller_id,
                 })
 
                 payload = @version.create(
@@ -487,6 +516,7 @@ module Twilio
                 @properties = {
                     'account_sid' => payload['account_sid'],
                     'call_sid' => payload['call_sid'],
+                    'label' => payload['label'],
                     'call_sid_to_coach' => payload['call_sid_to_coach'],
                     'coaching' => payload['coaching'],
                     'conference_sid' => payload['conference_sid'],
@@ -535,6 +565,12 @@ module Twilio
               # @return [String] The SID of the Call the resource is associated with
               def call_sid
                 @properties['call_sid']
+              end
+
+              ##
+              # @return [String] The label of this participant
+              def label
+                @properties['label']
               end
 
               ##

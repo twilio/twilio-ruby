@@ -209,7 +209,6 @@ module Twilio
             @defaults = nil
             @dialogues = nil
             @webhooks = nil
-            @export_assistant = nil
           end
 
           ##
@@ -397,14 +396,6 @@ module Twilio
             end
 
             @webhooks
-          end
-
-          ##
-          # Access the export_assistant
-          # @return [ExportAssistantList]
-          # @return [ExportAssistantContext]
-          def export_assistant
-            ExportAssistantContext.new(@version, @solution[:sid], )
           end
 
           ##
@@ -654,13 +645,6 @@ module Twilio
           # @return [webhooks] webhooks
           def webhooks
             context.webhooks
-          end
-
-          ##
-          # Access the export_assistant
-          # @return [export_assistant] export_assistant
-          def export_assistant
-            context.export_assistant
           end
 
           ##

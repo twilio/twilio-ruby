@@ -38,6 +38,10 @@ describe 'Conversation' do
           "date_created": "2015-12-16T22:18:37Z",
           "date_updated": "2015-12-16T22:18:38Z",
           "state": "inactive",
+          "timers": {
+              "date_inactive": "2015-12-16T22:19:38Z",
+              "date_closed": "2015-12-16T22:28:38Z"
+          },
           "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "participants": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants",
@@ -82,6 +86,10 @@ describe 'Conversation' do
           "date_created": "2015-12-16T22:18:37Z",
           "date_updated": "2015-12-16T22:18:38Z",
           "state": "inactive",
+          "timers": {
+              "date_inactive": "2015-12-16T22:19:38Z",
+              "date_closed": "2015-12-16T22:28:38Z"
+          },
           "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "participants": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants",
@@ -152,6 +160,10 @@ describe 'Conversation' do
           "date_created": "2015-12-16T22:18:37Z",
           "date_updated": "2015-12-16T22:18:38Z",
           "state": "active",
+          "timers": {
+              "date_inactive": "2015-12-16T22:19:38Z",
+              "date_closed": "2015-12-16T22:28:38Z"
+          },
           "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "participants": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants",
@@ -198,6 +210,10 @@ describe 'Conversation' do
                   "date_created": "2015-12-16T22:18:37Z",
                   "date_updated": "2015-12-16T22:18:38Z",
                   "state": "active",
+                  "timers": {
+                      "date_inactive": "2015-12-16T22:19:38Z",
+                      "date_closed": "2015-12-16T22:28:38Z"
+                  },
                   "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "links": {
                       "participants": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants",

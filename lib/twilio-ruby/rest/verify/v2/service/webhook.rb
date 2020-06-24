@@ -8,32 +8,44 @@
 
 module Twilio
   module REST
-    class Authy < Domain
-      class V1 < Version
+    class Verify < Domain
+      class V2 < Version
         class ServiceContext < InstanceContext
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class EntityList < ListResource
+          class WebhookList < ListResource
             ##
-            # Initialize the EntityList
+            # Initialize the WebhookList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The unique SID identifier of the Service.
-            # @return [EntityList] EntityList
+            # @return [WebhookList] WebhookList
             def initialize(version, service_sid: nil)
               super(version)
 
               # Path Solution
               @solution = {service_sid: service_sid}
-              @uri = "/Services/#{@solution[:service_sid]}/Entities"
+              @uri = "/Services/#{@solution[:service_sid]}/Webhooks"
             end
 
             ##
-            # Retrieve a single page of EntityInstance records from the API.
+            # Retrieve a single page of WebhookInstance records from the API.
             # Request is executed immediately.
-            # @param [String] identity Customer unique identity for the Entity of the Service
-            # @return [EntityInstance] Newly created EntityInstance
-            def create(identity: nil)
-              data = Twilio::Values.of({'Identity' => identity, })
+            # @param [String] friendly_name The string that you assigned to describe the
+            #   webhook. **This value should not contain PII.**
+            # @param [String] event_types The array of events that this Webhook is subscribed
+            #   to. Possible event types: `*, factor.deleted, factor.created, factor.verified,
+            #   challenge.approved, challenge.denied`
+            # @param [String] webhook_url The URL associated with this Webhook.
+            # @param [webhook.Status] status The webhook status. Default value is `enabled`.
+            #   One of: `enabled` or `disabled`
+            # @return [WebhookInstance] Newly created WebhookInstance
+            def create(friendly_name: nil, event_types: nil, webhook_url: nil, status: :unset)
+              data = Twilio::Values.of({
+                  'FriendlyName' => friendly_name,
+                  'EventTypes' => Twilio.serialize_list(event_types) { |e| e },
+                  'WebhookUrl' => webhook_url,
+                  'Status' => status,
+              })
 
               payload = @version.create(
                   'POST',
@@ -41,11 +53,11 @@ module Twilio
                   data: data
               )
 
-              EntityInstance.new(@version, payload, service_sid: @solution[:service_sid], )
+              WebhookInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
-            # Lists EntityInstance records from the API as a list.
+            # Lists WebhookInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -60,7 +72,7 @@ module Twilio
             end
 
             ##
-            # Streams EntityInstance records from the API as an Enumerable.
+            # Streams WebhookInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -79,7 +91,7 @@ module Twilio
             end
 
             ##
-            # When passed a block, yields EntityInstance records from the API.
+            # When passed a block, yields WebhookInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             def each
@@ -93,12 +105,12 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of EntityInstance records from the API.
+            # Retrieve a single page of WebhookInstance records from the API.
             # Request is executed immediately.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            # @return [Page] Page of EntityInstance
+            # @return [Page] Page of WebhookInstance
             def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'PageToken' => page_token,
@@ -110,38 +122,38 @@ module Twilio
                   @uri,
                   params
               )
-              EntityPage.new(@version, response, @solution)
+              WebhookPage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of EntityInstance records from the API.
+            # Retrieve a single page of WebhookInstance records from the API.
             # Request is executed immediately.
             # @param [String] target_url API-generated URL for the requested results page
-            # @return [Page] Page of EntityInstance
+            # @return [Page] Page of WebhookInstance
             def get_page(target_url)
               response = @version.domain.request(
                   'GET',
                   target_url
               )
-              EntityPage.new(@version, response, @solution)
+              WebhookPage.new(@version, response, @solution)
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Authy.V1.EntityList>'
+              '#<Twilio.Verify.V2.WebhookList>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class EntityPage < Page
+          class WebhookPage < Page
             ##
-            # Initialize the EntityPage
+            # Initialize the WebhookPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @return [EntityPage] EntityPage
+            # @return [WebhookPage] WebhookPage
             def initialize(version, response, solution)
               super(version, response)
 
@@ -150,50 +162,76 @@ module Twilio
             end
 
             ##
-            # Build an instance of EntityInstance
+            # Build an instance of WebhookInstance
             # @param [Hash] payload Payload response from the API
-            # @return [EntityInstance] EntityInstance
+            # @return [WebhookInstance] WebhookInstance
             def get_instance(payload)
-              EntityInstance.new(@version, payload, service_sid: @solution[:service_sid], )
+              WebhookInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Authy.V1.EntityPage>'
+              '<Twilio.Verify.V2.WebhookPage>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class EntityContext < InstanceContext
+          class WebhookContext < InstanceContext
             ##
-            # Initialize the EntityContext
+            # Initialize the WebhookContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The unique SID identifier of the Service.
-            # @param [String] identity Customer unique identity for the Entity of the Service
-            # @return [EntityContext] EntityContext
-            def initialize(version, service_sid, identity)
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Webhook resource to fetch.
+            # @return [WebhookContext] WebhookContext
+            def initialize(version, service_sid, sid)
               super(version)
 
               # Path Solution
-              @solution = {service_sid: service_sid, identity: identity, }
-              @uri = "/Services/#{@solution[:service_sid]}/Entities/#{@solution[:identity]}"
-
-              # Dependents
-              @factors = nil
+              @solution = {service_sid: service_sid, sid: sid, }
+              @uri = "/Services/#{@solution[:service_sid]}/Webhooks/#{@solution[:sid]}"
             end
 
             ##
-            # Deletes the EntityInstance
+            # Update the WebhookInstance
+            # @param [String] friendly_name The string that you assigned to describe the
+            #   webhook. **This value should not contain PII.**
+            # @param [String] event_types The array of events that this Webhook is subscribed
+            #   to. Possible event types: `*, factor.deleted, factor.created, factor.verified,
+            #   challenge.approved, challenge.denied`
+            # @param [String] webhook_url The URL associated with this Webhook.
+            # @param [webhook.Status] status The webhook status. Default value is `enabled`.
+            #   One of: `enabled` or `disabled`
+            # @return [WebhookInstance] Updated WebhookInstance
+            def update(friendly_name: :unset, event_types: :unset, webhook_url: :unset, status: :unset)
+              data = Twilio::Values.of({
+                  'FriendlyName' => friendly_name,
+                  'EventTypes' => Twilio.serialize_list(event_types) { |e| e },
+                  'WebhookUrl' => webhook_url,
+                  'Status' => status,
+              })
+
+              payload = @version.update(
+                  'POST',
+                  @uri,
+                  data: data,
+              )
+
+              WebhookInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
+            end
+
+            ##
+            # Deletes the WebhookInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               @version.delete('delete', @uri)
             end
 
             ##
-            # Fetch a EntityInstance
-            # @return [EntityInstance] Fetched EntityInstance
+            # Fetch a WebhookInstance
+            # @return [WebhookInstance] Fetched WebhookInstance
             def fetch
               params = Twilio::Values.of({})
 
@@ -203,108 +241,73 @@ module Twilio
                   params,
               )
 
-              EntityInstance.new(
-                  @version,
-                  payload,
-                  service_sid: @solution[:service_sid],
-                  identity: @solution[:identity],
-              )
-            end
-
-            ##
-            # Access the factors
-            # @return [FactorList]
-            # @return [FactorContext] if sid was passed.
-            def factors(sid=:unset)
-              raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-              if sid != :unset
-                return FactorContext.new(@version, @solution[:service_sid], @solution[:identity], sid, )
-              end
-
-              unless @factors
-                @factors = FactorList.new(
-                    @version,
-                    service_sid: @solution[:service_sid],
-                    identity: @solution[:identity],
-                )
-              end
-
-              @factors
+              WebhookInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Authy.V1.EntityContext #{context}>"
+              "#<Twilio.Verify.V2.WebhookContext #{context}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Authy.V1.EntityContext #{context}>"
+              "#<Twilio.Verify.V2.WebhookContext #{context}>"
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class EntityInstance < InstanceResource
+          class WebhookInstance < InstanceResource
             ##
-            # Initialize the EntityInstance
+            # Initialize the WebhookInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The unique SID identifier of the Service.
-            # @param [String] identity Customer unique identity for the Entity of the Service
-            # @return [EntityInstance] EntityInstance
-            def initialize(version, payload, service_sid: nil, identity: nil)
+            # @param [String] sid The Twilio-provided string that uniquely identifies the
+            #   Webhook resource to fetch.
+            # @return [WebhookInstance] WebhookInstance
+            def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
 
               # Marshaled Properties
               @properties = {
                   'sid' => payload['sid'],
-                  'identity' => payload['identity'],
-                  'account_sid' => payload['account_sid'],
                   'service_sid' => payload['service_sid'],
+                  'account_sid' => payload['account_sid'],
+                  'friendly_name' => payload['friendly_name'],
+                  'event_types' => payload['event_types'],
+                  'status' => payload['status'],
+                  'webhook_url' => payload['webhook_url'],
+                  'webhook_method' => payload['webhook_method'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
-                  'links' => payload['links'],
               }
 
               # Context
               @instance_context = nil
-              @params = {'service_sid' => service_sid, 'identity' => identity || @properties['identity'], }
+              @params = {'service_sid' => service_sid, 'sid' => sid || @properties['sid'], }
             end
 
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return [EntityContext] EntityContext for this EntityInstance
+            # @return [WebhookContext] WebhookContext for this WebhookInstance
             def context
               unless @instance_context
-                @instance_context = EntityContext.new(@version, @params['service_sid'], @params['identity'], )
+                @instance_context = WebhookContext.new(@version, @params['service_sid'], @params['sid'], )
               end
               @instance_context
             end
 
             ##
-            # @return [String] A string that uniquely identifies this Entity.
+            # @return [String] The unique string that identifies the resource
             def sid
               @properties['sid']
-            end
-
-            ##
-            # @return [String] Unique identity of the Entity
-            def identity
-              @properties['identity']
-            end
-
-            ##
-            # @return [String] Account Sid.
-            def account_sid
-              @properties['account_sid']
             end
 
             ##
@@ -314,62 +317,105 @@ module Twilio
             end
 
             ##
-            # @return [Time] The date this Entity was created
+            # @return [String] The SID of the Account that created the resource
+            def account_sid
+              @properties['account_sid']
+            end
+
+            ##
+            # @return [String] The string that you assigned to describe the webhook
+            def friendly_name
+              @properties['friendly_name']
+            end
+
+            ##
+            # @return [String] The array of events that this Webhook is subscribed to.
+            def event_types
+              @properties['event_types']
+            end
+
+            ##
+            # @return [webhook.Status] The webhook status
+            def status
+              @properties['status']
+            end
+
+            ##
+            # @return [String] The URL associated with this Webhook.
+            def webhook_url
+              @properties['webhook_url']
+            end
+
+            ##
+            # @return [webhook.Methods] The method used when calling the webhook's URL.
+            def webhook_method
+              @properties['webhook_method']
+            end
+
+            ##
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The date this Entity was updated
+            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The URL of this resource.
+            # @return [String] The absolute URL of the Webhook resource
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] Nested resource URLs.
-            def links
-              @properties['links']
+            # Update the WebhookInstance
+            # @param [String] friendly_name The string that you assigned to describe the
+            #   webhook. **This value should not contain PII.**
+            # @param [String] event_types The array of events that this Webhook is subscribed
+            #   to. Possible event types: `*, factor.deleted, factor.created, factor.verified,
+            #   challenge.approved, challenge.denied`
+            # @param [String] webhook_url The URL associated with this Webhook.
+            # @param [webhook.Status] status The webhook status. Default value is `enabled`.
+            #   One of: `enabled` or `disabled`
+            # @return [WebhookInstance] Updated WebhookInstance
+            def update(friendly_name: :unset, event_types: :unset, webhook_url: :unset, status: :unset)
+              context.update(
+                  friendly_name: friendly_name,
+                  event_types: event_types,
+                  webhook_url: webhook_url,
+                  status: status,
+              )
             end
 
             ##
-            # Deletes the EntityInstance
+            # Deletes the WebhookInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
-            # Fetch a EntityInstance
-            # @return [EntityInstance] Fetched EntityInstance
+            # Fetch a WebhookInstance
+            # @return [WebhookInstance] Fetched WebhookInstance
             def fetch
               context.fetch
-            end
-
-            ##
-            # Access the factors
-            # @return [factors] factors
-            def factors
-              context.factors
             end
 
             ##
             # Provide a user friendly representation
             def to_s
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Authy.V1.EntityInstance #{values}>"
+              "<Twilio.Verify.V2.WebhookInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Authy.V1.EntityInstance #{values}>"
+              "<Twilio.Verify.V2.WebhookInstance #{values}>"
             end
           end
         end

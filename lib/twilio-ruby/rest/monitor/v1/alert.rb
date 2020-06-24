@@ -29,10 +29,10 @@ module Twilio
           # memory before returning.
           # @param [String] log_level Only show alerts for this log-level.  Can be: `error`,
           #   `warning`, `notice`, or `debug`.
-          # @param [Date] start_date Only include alerts that occurred on or after this date
+          # @param [Time] start_date Only include alerts that occurred on or after this date
           #   and time. Specify the date and time in GMT and format as `YYYY-MM-DD` or
           #   `YYYY-MM-DDThh:mm:ssZ`. Queries for alerts older than 30 days are not supported.
-          # @param [Date] end_date Only include alerts that occurred on or before this date
+          # @param [Time] end_date Only include alerts that occurred on or before this date
           #   and time. Specify the date and time in GMT and format as `YYYY-MM-DD` or
           #   `YYYY-MM-DDThh:mm:ssZ`. Queries for alerts older than 30 days are not supported.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -58,10 +58,10 @@ module Twilio
           # is reached.
           # @param [String] log_level Only show alerts for this log-level.  Can be: `error`,
           #   `warning`, `notice`, or `debug`.
-          # @param [Date] start_date Only include alerts that occurred on or after this date
+          # @param [Time] start_date Only include alerts that occurred on or after this date
           #   and time. Specify the date and time in GMT and format as `YYYY-MM-DD` or
           #   `YYYY-MM-DDThh:mm:ssZ`. Queries for alerts older than 30 days are not supported.
-          # @param [Date] end_date Only include alerts that occurred on or before this date
+          # @param [Time] end_date Only include alerts that occurred on or before this date
           #   and time. Specify the date and time in GMT and format as `YYYY-MM-DD` or
           #   `YYYY-MM-DDThh:mm:ssZ`. Queries for alerts older than 30 days are not supported.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -103,10 +103,10 @@ module Twilio
           # Request is executed immediately.
           # @param [String] log_level Only show alerts for this log-level.  Can be: `error`,
           #   `warning`, `notice`, or `debug`.
-          # @param [Date] start_date Only include alerts that occurred on or after this date
+          # @param [Time] start_date Only include alerts that occurred on or after this date
           #   and time. Specify the date and time in GMT and format as `YYYY-MM-DD` or
           #   `YYYY-MM-DDThh:mm:ssZ`. Queries for alerts older than 30 days are not supported.
-          # @param [Date] end_date Only include alerts that occurred on or before this date
+          # @param [Time] end_date Only include alerts that occurred on or before this date
           #   and time. Specify the date and time in GMT and format as `YYYY-MM-DD` or
           #   `YYYY-MM-DDThh:mm:ssZ`. Queries for alerts older than 30 days are not supported.
           # @param [String] page_token PageToken provided by the API
@@ -116,8 +116,8 @@ module Twilio
           def page(log_level: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'LogLevel' => log_level,
-                'StartDate' => Twilio.serialize_iso8601_date(start_date),
-                'EndDate' => Twilio.serialize_iso8601_date(end_date),
+                'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
+                'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,

@@ -41,8 +41,12 @@ module Twilio
           #   returned.
           # @param [conversation.State] state Current state of this conversation. Can be
           #   either `active`, `inactive` or `closed` and defaults to `active`
+          # @param [String] timers_inactive ISO8601 duration when conversation will be
+          #   switched to `inactive` state. Minimum value for this timer is 1 minute.
+          # @param [String] timers_closed ISO8601 duration when conversation will be
+          #   switched to `closed` state. Minimum value for this timer is 10 minutes.
           # @return [ConversationInstance] Newly created ConversationInstance
-          def create(friendly_name: :unset, date_created: :unset, date_updated: :unset, messaging_service_sid: :unset, attributes: :unset, state: :unset)
+          def create(friendly_name: :unset, date_created: :unset, date_updated: :unset, messaging_service_sid: :unset, attributes: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
@@ -50,6 +54,8 @@ module Twilio
                 'MessagingServiceSid' => messaging_service_sid,
                 'Attributes' => attributes,
                 'State' => state,
+                'Timers.Inactive' => timers_inactive,
+                'Timers.Closed' => timers_closed,
             })
 
             payload = @version.create(
@@ -218,8 +224,12 @@ module Twilio
           #   to.
           # @param [conversation.State] state Current state of this conversation. Can be
           #   either `active`, `inactive` or `closed` and defaults to `active`
+          # @param [String] timers_inactive ISO8601 duration when conversation will be
+          #   switched to `inactive` state. Minimum value for this timer is 1 minute.
+          # @param [String] timers_closed ISO8601 duration when conversation will be
+          #   switched to `closed` state. Minimum value for this timer is 10 minutes.
           # @return [ConversationInstance] Updated ConversationInstance
-          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset)
+          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
@@ -227,6 +237,8 @@ module Twilio
                 'Attributes' => attributes,
                 'MessagingServiceSid' => messaging_service_sid,
                 'State' => state,
+                'Timers.Inactive' => timers_inactive,
+                'Timers.Closed' => timers_closed,
             })
 
             payload = @version.update(
@@ -353,6 +365,7 @@ module Twilio
                 'state' => payload['state'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                'timers' => payload['timers'],
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -428,6 +441,12 @@ module Twilio
           end
 
           ##
+          # @return [Hash] Timer date values for this conversation.
+          def timers
+            @properties['timers']
+          end
+
+          ##
           # @return [String] An absolute URL for this conversation.
           def url
             @properties['url']
@@ -454,8 +473,12 @@ module Twilio
           #   to.
           # @param [conversation.State] state Current state of this conversation. Can be
           #   either `active`, `inactive` or `closed` and defaults to `active`
+          # @param [String] timers_inactive ISO8601 duration when conversation will be
+          #   switched to `inactive` state. Minimum value for this timer is 1 minute.
+          # @param [String] timers_closed ISO8601 duration when conversation will be
+          #   switched to `closed` state. Minimum value for this timer is 10 minutes.
           # @return [ConversationInstance] Updated ConversationInstance
-          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset)
+          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset)
             context.update(
                 friendly_name: friendly_name,
                 date_created: date_created,
@@ -463,6 +486,8 @@ module Twilio
                 attributes: attributes,
                 messaging_service_sid: messaging_service_sid,
                 state: state,
+                timers_inactive: timers_inactive,
+                timers_closed: timers_closed,
             )
           end
 

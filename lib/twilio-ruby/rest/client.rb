@@ -30,7 +30,6 @@ module Twilio
         # Domains
         @accounts = nil
         @api = nil
-        @authy = nil
         @autopilot = nil
         @chat = nil
         @conversations = nil
@@ -141,12 +140,6 @@ module Twilio
       # Access the Api Twilio Domain
       def api
         @api ||= Api.new self
-      end
-
-      ##
-      # Access the Authy Twilio Domain
-      def authy
-        @authy ||= Authy.new self
       end
 
       ##
