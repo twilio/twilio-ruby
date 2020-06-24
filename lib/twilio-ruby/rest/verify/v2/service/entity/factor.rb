@@ -31,8 +31,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of FactorInstance records from the API.
-              # Request is executed immediately.
+              # Create the FactorInstance
               # @param [String] binding A unique binding for this Factor that identifies it.
               #   E.g. a phone number for `sms` factors. It must be a json string with the
               #   required properties for the given factor type. Required when creating a new
@@ -42,7 +41,7 @@ module Twilio
               #   `app-push`, `sms`, `totp`, etc.
               # @param [String] config The config required for this Factor. It must be a json
               #   string with the required properties for the given factor type
-              # @return [FactorInstance] Newly created FactorInstance
+              # @return [FactorInstance] Created FactorInstance
               def create(binding: nil, friendly_name: nil, factor_type: nil, config: nil)
                 data = Twilio::Values.of({
                     'Binding' => binding,
@@ -51,11 +50,7 @@ module Twilio
                     'Config' => config,
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 FactorInstance.new(
                     @version,
@@ -126,11 +121,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 FactorPage.new(@version, response, @solution)
               end
 
@@ -213,23 +206,17 @@ module Twilio
               end
 
               ##
-              # Deletes the FactorInstance
+              # Delete the FactorInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
-              # Fetch a FactorInstance
+              # Fetch the FactorInstance
               # @return [FactorInstance] Fetched FactorInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 FactorInstance.new(
                     @version,
@@ -255,11 +242,7 @@ module Twilio
                     'Config' => config,
                 })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 FactorInstance.new(
                     @version,
@@ -446,14 +429,14 @@ module Twilio
               end
 
               ##
-              # Deletes the FactorInstance
+              # Delete the FactorInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete
               end
 
               ##
-              # Fetch a FactorInstance
+              # Fetch the FactorInstance
               # @return [FactorInstance] Fetched FactorInstance
               def fetch
                 context.fetch

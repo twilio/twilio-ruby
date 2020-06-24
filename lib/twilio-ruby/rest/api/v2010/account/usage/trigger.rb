@@ -28,8 +28,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of TriggerInstance records from the API.
-              # Request is executed immediately.
+              # Create the TriggerInstance
               # @param [String] callback_url The URL we should call using `callback_method` when
               #   the trigger fires.
               # @param [String] trigger_value The usage value at which the trigger should fire.
@@ -53,7 +52,7 @@ module Twilio
               #   should fire the trigger.  Can be: `count`, `usage`, or `price` as described in
               #   the [UsageRecords
               #   documentation](https://www.twilio.com/docs/usage/api/usage-record#usage-count-price).  The default is `usage`.
-              # @return [TriggerInstance] Newly created TriggerInstance
+              # @return [TriggerInstance] Created TriggerInstance
               def create(callback_url: nil, trigger_value: nil, usage_category: nil, callback_method: :unset, friendly_name: :unset, recurring: :unset, trigger_by: :unset)
                 data = Twilio::Values.of({
                     'CallbackUrl' => callback_url,
@@ -65,11 +64,7 @@ module Twilio
                     'TriggerBy' => trigger_by,
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 TriggerInstance.new(@version, payload, account_sid: @solution[:account_sid], )
               end
@@ -176,11 +171,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 TriggerPage.new(@version, response, @solution)
               end
 
@@ -252,16 +245,10 @@ module Twilio
               end
 
               ##
-              # Fetch a TriggerInstance
+              # Fetch the TriggerInstance
               # @return [TriggerInstance] Fetched TriggerInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 TriggerInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
               end
@@ -282,20 +269,16 @@ module Twilio
                     'FriendlyName' => friendly_name,
                 })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 TriggerInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
               end
 
               ##
-              # Deletes the TriggerInstance
+              # Delete the TriggerInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -459,7 +442,7 @@ module Twilio
               end
 
               ##
-              # Fetch a TriggerInstance
+              # Fetch the TriggerInstance
               # @return [TriggerInstance] Fetched TriggerInstance
               def fetch
                 context.fetch
@@ -483,7 +466,7 @@ module Twilio
               end
 
               ##
-              # Deletes the TriggerInstance
+              # Delete the TriggerInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

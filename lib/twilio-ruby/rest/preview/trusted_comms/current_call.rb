@@ -78,16 +78,10 @@ module Twilio
           end
 
           ##
-          # Fetch a CurrentCallInstance
+          # Fetch the CurrentCallInstance
           # @return [CurrentCallInstance] Fetched CurrentCallInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             CurrentCallInstance.new(@version, payload, )
           end
@@ -237,7 +231,7 @@ module Twilio
           end
 
           ##
-          # Fetch a CurrentCallInstance
+          # Fetch the CurrentCallInstance
           # @return [CurrentCallInstance] Fetched CurrentCallInstance
           def fetch
             context.fetch

@@ -30,8 +30,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of ParticipantInstance records from the API.
-              # Request is executed immediately.
+              # Create the ParticipantInstance
               # @param [String] from The phone number, Client identifier, or username portion of
               #   SIP address that made this call. Phone numbers are in
               #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g.,
@@ -157,7 +156,7 @@ module Twilio
               #   If the `to` parameter is a phone number, `callerId` must also be a phone number.
               #   If `to` is sip address, this value of `callerId` should be a username portion to
               #   be used to populate the From header that is passed to the SIP endpoint.
-              # @return [ParticipantInstance] Newly created ParticipantInstance
+              # @return [ParticipantInstance] Created ParticipantInstance
               def create(from: nil, to: nil, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, label: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_record: :unset, conference_trim: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, region: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, recording_status_callback_event: :unset, conference_recording_status_callback_event: :unset, coaching: :unset, call_sid_to_coach: :unset, jitter_buffer_size: :unset, byoc: :unset, caller_id: :unset)
                 data = Twilio::Values.of({
                     'From' => from,
@@ -198,11 +197,7 @@ module Twilio
                     'CallerId' => caller_id,
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 ParticipantInstance.new(
                     @version,
@@ -300,11 +295,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 ParticipantPage.new(@version, response, @solution)
               end
 
@@ -385,16 +378,10 @@ module Twilio
               end
 
               ##
-              # Fetch a ParticipantInstance
+              # Fetch the ParticipantInstance
               # @return [ParticipantInstance] Fetched ParticipantInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 ParticipantInstance.new(
                     @version,
@@ -458,11 +445,7 @@ module Twilio
                     'CallSidToCoach' => call_sid_to_coach,
                 })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 ParticipantInstance.new(
                     @version,
@@ -474,10 +457,10 @@ module Twilio
               end
 
               ##
-              # Deletes the ParticipantInstance
+              # Delete the ParticipantInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -640,7 +623,7 @@ module Twilio
               end
 
               ##
-              # Fetch a ParticipantInstance
+              # Fetch the ParticipantInstance
               # @return [ParticipantInstance] Fetched ParticipantInstance
               def fetch
                 context.fetch
@@ -701,7 +684,7 @@ module Twilio
               end
 
               ##
-              # Deletes the ParticipantInstance
+              # Delete the ParticipantInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

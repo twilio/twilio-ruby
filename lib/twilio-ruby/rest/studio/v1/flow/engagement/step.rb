@@ -88,11 +88,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 StepPage.new(@version, response, @solution)
               end
 
@@ -170,16 +168,10 @@ module Twilio
               end
 
               ##
-              # Fetch a StepInstance
+              # Fetch the StepInstance
               # @return [StepInstance] Fetched StepInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 StepInstance.new(
                     @version,
@@ -339,7 +331,7 @@ module Twilio
               end
 
               ##
-              # Fetch a StepInstance
+              # Fetch the StepInstance
               # @return [StepInstance] Fetched StepInstance
               def fetch
                 context.fetch

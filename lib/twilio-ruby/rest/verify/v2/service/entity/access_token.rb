@@ -32,18 +32,13 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of AccessTokenInstance records from the API.
-              # Request is executed immediately.
+              # Create the AccessTokenInstance
               # @param [access_token.FactorTypes] factor_type The Type of this Factor. eg. push
-              # @return [AccessTokenInstance] Newly created AccessTokenInstance
+              # @return [AccessTokenInstance] Created AccessTokenInstance
               def create(factor_type: nil)
                 data = Twilio::Values.of({'FactorType' => factor_type, })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 AccessTokenInstance.new(
                     @version,

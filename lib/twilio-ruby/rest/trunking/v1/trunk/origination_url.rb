@@ -26,8 +26,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of OriginationUrlInstance records from the API.
-            # Request is executed immediately.
+            # Create the OriginationUrlInstance
             # @param [String] weight The value that determines the relative share of the load
             #   the URI should receive compared to other URIs with the same priority. Can be an
             #   integer from 1 to 65535, inclusive, and the default is 10. URLs with higher
@@ -40,7 +39,7 @@ module Twilio
             #   the resource. It can be up to 64 characters long.
             # @param [String] sip_url The SIP address you want Twilio to route your
             #   Origination calls to. This must be a `sip:` schema.
-            # @return [OriginationUrlInstance] Newly created OriginationUrlInstance
+            # @return [OriginationUrlInstance] Created OriginationUrlInstance
             def create(weight: nil, priority: nil, enabled: nil, friendly_name: nil, sip_url: nil)
               data = Twilio::Values.of({
                   'Weight' => weight,
@@ -50,11 +49,7 @@ module Twilio
                   'SipUrl' => sip_url,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               OriginationUrlInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], )
             end
@@ -120,11 +115,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               OriginationUrlPage.new(@version, response, @solution)
             end
 
@@ -195,16 +188,10 @@ module Twilio
             end
 
             ##
-            # Fetch a OriginationUrlInstance
+            # Fetch the OriginationUrlInstance
             # @return [OriginationUrlInstance] Fetched OriginationUrlInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               OriginationUrlInstance.new(
                   @version,
@@ -215,10 +202,10 @@ module Twilio
             end
 
             ##
-            # Deletes the OriginationUrlInstance
+            # Delete the OriginationUrlInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -245,11 +232,7 @@ module Twilio
                   'SipUrl' => sip_url,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               OriginationUrlInstance.new(
                   @version,
@@ -384,14 +367,14 @@ module Twilio
             end
 
             ##
-            # Fetch a OriginationUrlInstance
+            # Fetch the OriginationUrlInstance
             # @return [OriginationUrlInstance] Fetched OriginationUrlInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the OriginationUrlInstance
+            # Delete the OriginationUrlInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

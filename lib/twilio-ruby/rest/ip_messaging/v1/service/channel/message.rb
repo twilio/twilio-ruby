@@ -32,8 +32,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of MessageInstance records from the API.
-              # Request is executed immediately.
+              # Create the MessageInstance
               # @param [String] body The message to send to the channel. Can also be an empty
               #   string or `null`, which sets the value as an empty string. You can send
               #   structured data in the body by serializing it as a string.
@@ -42,15 +41,11 @@ module Twilio
               #   message's author. The default value is `system`.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
-              # @return [MessageInstance] Newly created MessageInstance
+              # @return [MessageInstance] Created MessageInstance
               def create(body: nil, from: :unset, attributes: :unset)
                 data = Twilio::Values.of({'Body' => body, 'From' => from, 'Attributes' => attributes, })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 MessageInstance.new(
                     @version,
@@ -128,11 +123,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 MessagePage.new(@version, response, @solution)
               end
 
@@ -212,16 +205,10 @@ module Twilio
               end
 
               ##
-              # Fetch a MessageInstance
+              # Fetch the MessageInstance
               # @return [MessageInstance] Fetched MessageInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 MessageInstance.new(
                     @version,
@@ -233,10 +220,10 @@ module Twilio
               end
 
               ##
-              # Deletes the MessageInstance
+              # Delete the MessageInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -250,11 +237,7 @@ module Twilio
               def update(body: :unset, attributes: :unset)
                 data = Twilio::Values.of({'Body' => body, 'Attributes' => attributes, })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 MessageInstance.new(
                     @version,
@@ -418,14 +401,14 @@ module Twilio
               end
 
               ##
-              # Fetch a MessageInstance
+              # Fetch the MessageInstance
               # @return [MessageInstance] Fetched MessageInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the MessageInstance
+              # Delete the MessageInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

@@ -30,8 +30,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of SyncStreamInstance records from the API.
-            # Request is executed immediately.
+            # Create the SyncStreamInstance
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the resource. This value must be unique within its Service and it can
             #   be up to 320 characters long. The `unique_name` value can be used as an
@@ -41,15 +40,11 @@ module Twilio
             #   default value is `0`, which means the Stream does not expire. The Stream will be
             #   deleted automatically after it expires, but there can be a delay between the
             #   expiration time and the resources's deletion.
-            # @return [SyncStreamInstance] Newly created SyncStreamInstance
+            # @return [SyncStreamInstance] Created SyncStreamInstance
             def create(unique_name: :unset, ttl: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'Ttl' => ttl, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               SyncStreamInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -115,11 +110,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               SyncStreamPage.new(@version, response, @solution)
             end
 
@@ -197,16 +190,10 @@ module Twilio
             end
 
             ##
-            # Fetch a SyncStreamInstance
+            # Fetch the SyncStreamInstance
             # @return [SyncStreamInstance] Fetched SyncStreamInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               SyncStreamInstance.new(
                   @version,
@@ -217,10 +204,10 @@ module Twilio
             end
 
             ##
-            # Deletes the SyncStreamInstance
+            # Delete the SyncStreamInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -234,11 +221,7 @@ module Twilio
             def update(ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               SyncStreamInstance.new(
                   @version,
@@ -385,14 +368,14 @@ module Twilio
             end
 
             ##
-            # Fetch a SyncStreamInstance
+            # Fetch the SyncStreamInstance
             # @return [SyncStreamInstance] Fetched SyncStreamInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the SyncStreamInstance
+            # Delete the SyncStreamInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

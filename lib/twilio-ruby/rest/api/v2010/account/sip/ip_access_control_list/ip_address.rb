@@ -91,11 +91,9 @@ module Twilio
                       'Page' => page_number,
                       'PageSize' => page_size,
                   })
-                  response = @version.page(
-                      'GET',
-                      @uri,
-                      params
-                  )
+
+                  response = @version.page('GET', @uri, params)
+
                   IpAddressPage.new(@version, response, @solution)
                 end
 
@@ -113,8 +111,7 @@ module Twilio
                 end
 
                 ##
-                # Retrieve a single page of IpAddressInstance records from the API.
-                # Request is executed immediately.
+                # Create the IpAddressInstance
                 # @param [String] friendly_name A human readable descriptive text for this
                 #   resource, up to 64 characters long.
                 # @param [String] ip_address An IP address in dotted decimal notation from which
@@ -123,7 +120,7 @@ module Twilio
                 # @param [String] cidr_prefix_length An integer representing the length of the
                 #   CIDR prefix to use with this IP address when accepting traffic. By default the
                 #   entire IP address is used.
-                # @return [IpAddressInstance] Newly created IpAddressInstance
+                # @return [IpAddressInstance] Created IpAddressInstance
                 def create(friendly_name: nil, ip_address: nil, cidr_prefix_length: :unset)
                   data = Twilio::Values.of({
                       'FriendlyName' => friendly_name,
@@ -131,11 +128,7 @@ module Twilio
                       'CidrPrefixLength' => cidr_prefix_length,
                   })
 
-                  payload = @version.create(
-                      'POST',
-                      @uri,
-                      data: data
-                  )
+                  payload = @version.create('POST', @uri, data: data)
 
                   IpAddressInstance.new(
                       @version,
@@ -211,16 +204,10 @@ module Twilio
                 end
 
                 ##
-                # Fetch a IpAddressInstance
+                # Fetch the IpAddressInstance
                 # @return [IpAddressInstance] Fetched IpAddressInstance
                 def fetch
-                  params = Twilio::Values.of({})
-
-                  payload = @version.fetch(
-                      'GET',
-                      @uri,
-                      params,
-                  )
+                  payload = @version.fetch('GET', @uri)
 
                   IpAddressInstance.new(
                       @version,
@@ -249,11 +236,7 @@ module Twilio
                       'CidrPrefixLength' => cidr_prefix_length,
                   })
 
-                  payload = @version.update(
-                      'POST',
-                      @uri,
-                      data: data,
-                  )
+                  payload = @version.update('POST', @uri, data: data)
 
                   IpAddressInstance.new(
                       @version,
@@ -265,10 +248,10 @@ module Twilio
                 end
 
                 ##
-                # Deletes the IpAddressInstance
+                # Delete the IpAddressInstance
                 # @return [Boolean] true if delete succeeds, false otherwise
                 def delete
-                  @version.delete('delete', @uri)
+                   @version.delete('DELETE', @uri)
                 end
 
                 ##
@@ -394,7 +377,7 @@ module Twilio
                 end
 
                 ##
-                # Fetch a IpAddressInstance
+                # Fetch the IpAddressInstance
                 # @return [IpAddressInstance] Fetched IpAddressInstance
                 def fetch
                   context.fetch
@@ -420,7 +403,7 @@ module Twilio
                 end
 
                 ##
-                # Deletes the IpAddressInstance
+                # Delete the IpAddressInstance
                 # @return [Boolean] true if delete succeeds, false otherwise
                 def delete
                   context.delete

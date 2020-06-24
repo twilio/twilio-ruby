@@ -122,11 +122,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             AlertPage.new(@version, response, @solution)
           end
 
@@ -194,16 +192,10 @@ module Twilio
           end
 
           ##
-          # Fetch a AlertInstance
+          # Fetch the AlertInstance
           # @return [AlertInstance] Fetched AlertInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             AlertInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -387,7 +379,7 @@ module Twilio
           end
 
           ##
-          # Fetch a AlertInstance
+          # Fetch the AlertInstance
           # @return [AlertInstance] Fetched AlertInstance
           def fetch
             context.fetch

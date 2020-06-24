@@ -111,11 +111,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               OutgoingCallerIdPage.new(@version, response, @solution)
             end
 
@@ -187,16 +185,10 @@ module Twilio
             end
 
             ##
-            # Fetch a OutgoingCallerIdInstance
+            # Fetch the OutgoingCallerIdInstance
             # @return [OutgoingCallerIdInstance] Fetched OutgoingCallerIdInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               OutgoingCallerIdInstance.new(
                   @version,
@@ -214,11 +206,7 @@ module Twilio
             def update(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               OutgoingCallerIdInstance.new(
                   @version,
@@ -229,10 +217,10 @@ module Twilio
             end
 
             ##
-            # Deletes the OutgoingCallerIdInstance
+            # Delete the OutgoingCallerIdInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -334,7 +322,7 @@ module Twilio
             end
 
             ##
-            # Fetch a OutgoingCallerIdInstance
+            # Fetch the OutgoingCallerIdInstance
             # @return [OutgoingCallerIdInstance] Fetched OutgoingCallerIdInstance
             def fetch
               context.fetch
@@ -350,7 +338,7 @@ module Twilio
             end
 
             ##
-            # Deletes the OutgoingCallerIdInstance
+            # Delete the OutgoingCallerIdInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

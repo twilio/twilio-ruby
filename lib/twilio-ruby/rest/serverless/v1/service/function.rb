@@ -89,11 +89,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               FunctionPage.new(@version, response, @solution)
             end
 
@@ -111,19 +109,14 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of FunctionInstance records from the API.
-            # Request is executed immediately.
+            # Create the FunctionInstance
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the Function resource. It can be up to 255 characters long.
-            # @return [FunctionInstance] Newly created FunctionInstance
+            # @return [FunctionInstance] Created FunctionInstance
             def create(friendly_name: nil)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               FunctionInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -188,25 +181,19 @@ module Twilio
             end
 
             ##
-            # Fetch a FunctionInstance
+            # Fetch the FunctionInstance
             # @return [FunctionInstance] Fetched FunctionInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               FunctionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the FunctionInstance
+            # Delete the FunctionInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -217,11 +204,7 @@ module Twilio
             def update(friendly_name: nil)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               FunctionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -354,14 +337,14 @@ module Twilio
             end
 
             ##
-            # Fetch a FunctionInstance
+            # Fetch the FunctionInstance
             # @return [FunctionInstance] Fetched FunctionInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the FunctionInstance
+            # Delete the FunctionInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

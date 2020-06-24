@@ -28,18 +28,13 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of EntityInstance records from the API.
-            # Request is executed immediately.
+            # Create the EntityInstance
             # @param [String] identity Customer unique identity for the Entity of the Service
-            # @return [EntityInstance] Newly created EntityInstance
+            # @return [EntityInstance] Created EntityInstance
             def create(identity: nil)
               data = Twilio::Values.of({'Identity' => identity, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               EntityInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -105,11 +100,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               EntityPage.new(@version, response, @solution)
             end
 
@@ -186,23 +179,17 @@ module Twilio
             end
 
             ##
-            # Deletes the EntityInstance
+            # Delete the EntityInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
-            # Fetch a EntityInstance
+            # Fetch the EntityInstance
             # @return [EntityInstance] Fetched EntityInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               EntityInstance.new(
                   @version,
@@ -355,14 +342,14 @@ module Twilio
             end
 
             ##
-            # Deletes the EntityInstance
+            # Delete the EntityInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
-            # Fetch a EntityInstance
+            # Fetch the EntityInstance
             # @return [EntityInstance] Fetched EntityInstance
             def fetch
               context.fetch

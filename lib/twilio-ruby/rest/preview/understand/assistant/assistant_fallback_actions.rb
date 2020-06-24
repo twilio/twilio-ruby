@@ -81,16 +81,10 @@ module Twilio
             end
 
             ##
-            # Fetch a AssistantFallbackActionsInstance
+            # Fetch the AssistantFallbackActionsInstance
             # @return [AssistantFallbackActionsInstance] Fetched AssistantFallbackActionsInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               AssistantFallbackActionsInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
@@ -102,11 +96,7 @@ module Twilio
             def update(fallback_actions: :unset)
               data = Twilio::Values.of({'FallbackActions' => Twilio.serialize_object(fallback_actions), })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               AssistantFallbackActionsInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
@@ -187,7 +177,7 @@ module Twilio
             end
 
             ##
-            # Fetch a AssistantFallbackActionsInstance
+            # Fetch the AssistantFallbackActionsInstance
             # @return [AssistantFallbackActionsInstance] Fetched AssistantFallbackActionsInstance
             def fetch
               context.fetch

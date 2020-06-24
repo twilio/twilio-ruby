@@ -29,8 +29,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of ParticipantInstance records from the API.
-            # Request is executed immediately.
+            # Create the ParticipantInstance
             # @param [String] identity A unique string identifier for the conversation
             #   participant as [Chat User](https://www.twilio.com/docs/chat/rest/user-resource).
             #   This parameter is non-null if (and only if) the participant is using the
@@ -56,7 +55,7 @@ module Twilio
             # @param [String] role_sid The SID of the
             #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) to assign to the
             #   participant.
-            # @return [ParticipantInstance] Newly created ParticipantInstance
+            # @return [ParticipantInstance] Created ParticipantInstance
             def create(identity: :unset, messaging_binding_address: :unset, messaging_binding_proxy_address: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_binding_projected_address: :unset, role_sid: :unset)
               data = Twilio::Values.of({
                   'Identity' => identity,
@@ -69,11 +68,7 @@ module Twilio
                   'RoleSid' => role_sid,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               ParticipantInstance.new(@version, payload, conversation_sid: @solution[:conversation_sid], )
             end
@@ -139,11 +134,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               ParticipantPage.new(@version, response, @solution)
             end
 
@@ -237,11 +230,7 @@ module Twilio
                   'RoleSid' => role_sid,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               ParticipantInstance.new(
                   @version,
@@ -252,23 +241,17 @@ module Twilio
             end
 
             ##
-            # Deletes the ParticipantInstance
+            # Delete the ParticipantInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
-            # Fetch a ParticipantInstance
+            # Fetch the ParticipantInstance
             # @return [ParticipantInstance] Fetched ParticipantInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               ParticipantInstance.new(
                   @version,
@@ -420,14 +403,14 @@ module Twilio
             end
 
             ##
-            # Deletes the ParticipantInstance
+            # Delete the ParticipantInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
-            # Fetch a ParticipantInstance
+            # Fetch the ParticipantInstance
             # @return [ParticipantInstance] Fetched ParticipantInstance
             def fetch
               context.fetch

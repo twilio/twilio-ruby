@@ -136,11 +136,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             CompositionHookPage.new(@version, response, @solution)
           end
 
@@ -158,8 +156,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of CompositionHookInstance records from the API.
-          # Request is executed immediately.
+          # Create the CompositionHookInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource. It can be up to  100 characters long and it must be unique within
           #   the account.
@@ -221,7 +218,7 @@ module Twilio
           #   the room and join later, because those gaps will be removed. See [Specifying
           #   Video
           #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
-          # @return [CompositionHookInstance] Newly created CompositionHookInstance
+          # @return [CompositionHookInstance] Created CompositionHookInstance
           def create(friendly_name: nil, enabled: :unset, video_layout: :unset, audio_sources: :unset, audio_sources_excluded: :unset, resolution: :unset, format: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -236,11 +233,7 @@ module Twilio
                 'Trim' => trim,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             CompositionHookInstance.new(@version, payload, )
           end
@@ -300,25 +293,19 @@ module Twilio
           end
 
           ##
-          # Fetch a CompositionHookInstance
+          # Fetch the CompositionHookInstance
           # @return [CompositionHookInstance] Fetched CompositionHookInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             CompositionHookInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the CompositionHookInstance
+          # Delete the CompositionHookInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -399,11 +386,7 @@ module Twilio
                 'StatusCallbackMethod' => status_callback_method,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             CompositionHookInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -561,14 +544,14 @@ module Twilio
           end
 
           ##
-          # Fetch a CompositionHookInstance
+          # Fetch the CompositionHookInstance
           # @return [CompositionHookInstance] Fetched CompositionHookInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the CompositionHookInstance
+          # Delete the CompositionHookInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

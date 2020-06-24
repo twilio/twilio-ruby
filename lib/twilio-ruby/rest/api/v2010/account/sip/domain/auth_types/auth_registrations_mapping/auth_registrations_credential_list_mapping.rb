@@ -34,19 +34,14 @@ module Twilio
                     end
 
                     ##
-                    # Retrieve a single page of AuthRegistrationsCredentialListMappingInstance records from the API.
-                    # Request is executed immediately.
+                    # Create the AuthRegistrationsCredentialListMappingInstance
                     # @param [String] credential_list_sid The SID of the CredentialList resource to
                     #   map to the SIP domain.
-                    # @return [AuthRegistrationsCredentialListMappingInstance] Newly created AuthRegistrationsCredentialListMappingInstance
+                    # @return [AuthRegistrationsCredentialListMappingInstance] Created AuthRegistrationsCredentialListMappingInstance
                     def create(credential_list_sid: nil)
                       data = Twilio::Values.of({'CredentialListSid' => credential_list_sid, })
 
-                      payload = @version.create(
-                          'POST',
-                          @uri,
-                          data: data
-                      )
+                      payload = @version.create('POST', @uri, data: data)
 
                       AuthRegistrationsCredentialListMappingInstance.new(
                           @version,
@@ -117,11 +112,9 @@ module Twilio
                           'Page' => page_number,
                           'PageSize' => page_size,
                       })
-                      response = @version.page(
-                          'GET',
-                          @uri,
-                          params
-                      )
+
+                      response = @version.page('GET', @uri, params)
+
                       AuthRegistrationsCredentialListMappingPage.new(@version, response, @solution)
                     end
 
@@ -200,16 +193,10 @@ module Twilio
                     end
 
                     ##
-                    # Fetch a AuthRegistrationsCredentialListMappingInstance
+                    # Fetch the AuthRegistrationsCredentialListMappingInstance
                     # @return [AuthRegistrationsCredentialListMappingInstance] Fetched AuthRegistrationsCredentialListMappingInstance
                     def fetch
-                      params = Twilio::Values.of({})
-
-                      payload = @version.fetch(
-                          'GET',
-                          @uri,
-                          params,
-                      )
+                      payload = @version.fetch('GET', @uri)
 
                       AuthRegistrationsCredentialListMappingInstance.new(
                           @version,
@@ -221,10 +208,10 @@ module Twilio
                     end
 
                     ##
-                    # Deletes the AuthRegistrationsCredentialListMappingInstance
+                    # Delete the AuthRegistrationsCredentialListMappingInstance
                     # @return [Boolean] true if delete succeeds, false otherwise
                     def delete
-                      @version.delete('delete', @uri)
+                       @version.delete('DELETE', @uri)
                     end
 
                     ##
@@ -323,14 +310,14 @@ module Twilio
                     end
 
                     ##
-                    # Fetch a AuthRegistrationsCredentialListMappingInstance
+                    # Fetch the AuthRegistrationsCredentialListMappingInstance
                     # @return [AuthRegistrationsCredentialListMappingInstance] Fetched AuthRegistrationsCredentialListMappingInstance
                     def fetch
                       context.fetch
                     end
 
                     ##
-                    # Deletes the AuthRegistrationsCredentialListMappingInstance
+                    # Delete the AuthRegistrationsCredentialListMappingInstance
                     # @return [Boolean] true if delete succeeds, false otherwise
                     def delete
                       context.delete

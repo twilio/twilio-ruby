@@ -89,11 +89,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               BuildPage.new(@version, response, @solution)
             end
 
@@ -111,8 +109,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of BuildInstance records from the API.
-            # Request is executed immediately.
+            # Create the BuildInstance
             # @param [String] asset_versions The list of Asset Version resource SIDs to
             #   include in the build.
             # @param [String] function_versions The list of the Variable resource SIDs to
@@ -120,7 +117,7 @@ module Twilio
             # @param [String] dependencies A list of objects that describe the Dependencies
             #   included in the build. Each object contains the `name` and `version` of the
             #   dependency.
-            # @return [BuildInstance] Newly created BuildInstance
+            # @return [BuildInstance] Created BuildInstance
             def create(asset_versions: :unset, function_versions: :unset, dependencies: :unset)
               data = Twilio::Values.of({
                   'AssetVersions' => Twilio.serialize_list(asset_versions) { |e| e },
@@ -128,11 +125,7 @@ module Twilio
                   'Dependencies' => dependencies,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               BuildInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -194,25 +187,19 @@ module Twilio
             end
 
             ##
-            # Fetch a BuildInstance
+            # Fetch the BuildInstance
             # @return [BuildInstance] Fetched BuildInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               BuildInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the BuildInstance
+            # Delete the BuildInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -335,14 +322,14 @@ module Twilio
             end
 
             ##
-            # Fetch a BuildInstance
+            # Fetch the BuildInstance
             # @return [BuildInstance] Fetched BuildInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the BuildInstance
+            # Delete the BuildInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

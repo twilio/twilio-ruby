@@ -133,11 +133,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 MobilePage.new(@version, response, @solution)
               end
 
@@ -155,8 +153,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of MobileInstance records from the API.
-              # Request is executed immediately.
+              # Create the MobileInstance
               # @param [String] phone_number The phone number to purchase specified in
               #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format.  E.164 phone
               #   numbers consist of a + followed by the country code and subscriber number
@@ -219,7 +216,7 @@ module Twilio
               #   or `voice` and defaults to `voice`.
               # @param [String] bundle_sid The SID of the Bundle resource that you associate
               #   with the phone number. Some regions require a Bundle to meet local Regulations.
-              # @return [MobileInstance] Newly created MobileInstance
+              # @return [MobileInstance] Created MobileInstance
               def create(phone_number: nil, api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, identity_sid: :unset, address_sid: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, voice_receive_mode: :unset, bundle_sid: :unset)
                 data = Twilio::Values.of({
                     'PhoneNumber' => phone_number,
@@ -247,11 +244,7 @@ module Twilio
                     'BundleSid' => bundle_sid,
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 MobileInstance.new(@version, payload, account_sid: @solution[:account_sid], )
               end

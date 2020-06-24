@@ -28,19 +28,14 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of DocumentInstance records from the API.
-            # Request is executed immediately.
+            # Create the DocumentInstance
             # @param [String] unique_name The unique_name
             # @param [Hash] data The data
-            # @return [DocumentInstance] Newly created DocumentInstance
+            # @return [DocumentInstance] Created DocumentInstance
             def create(unique_name: :unset, data: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'Data' => Twilio.serialize_object(data), })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               DocumentInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -106,11 +101,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               DocumentPage.new(@version, response, @solution)
             end
 
@@ -186,25 +179,19 @@ module Twilio
             end
 
             ##
-            # Fetch a DocumentInstance
+            # Fetch the DocumentInstance
             # @return [DocumentInstance] Fetched DocumentInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               DocumentInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the DocumentInstance
+            # Delete the DocumentInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -214,11 +201,7 @@ module Twilio
             def update(data: nil)
               data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               DocumentInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -371,14 +354,14 @@ module Twilio
             end
 
             ##
-            # Fetch a DocumentInstance
+            # Fetch the DocumentInstance
             # @return [DocumentInstance] Fetched DocumentInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the DocumentInstance
+            # Delete the DocumentInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

@@ -90,11 +90,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 WorkerChannelPage.new(@version, response, @solution)
               end
 
@@ -171,16 +169,10 @@ module Twilio
               end
 
               ##
-              # Fetch a WorkerChannelInstance
+              # Fetch the WorkerChannelInstance
               # @return [WorkerChannelInstance] Fetched WorkerChannelInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 WorkerChannelInstance.new(
                     @version,
@@ -204,11 +196,7 @@ module Twilio
               def update(capacity: :unset, available: :unset)
                 data = Twilio::Values.of({'Capacity' => capacity, 'Available' => available, })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 WorkerChannelInstance.new(
                     @version,
@@ -369,7 +357,7 @@ module Twilio
               end
 
               ##
-              # Fetch a WorkerChannelInstance
+              # Fetch the WorkerChannelInstance
               # @return [WorkerChannelInstance] Fetched WorkerChannelInstance
               def fetch
                 context.fetch

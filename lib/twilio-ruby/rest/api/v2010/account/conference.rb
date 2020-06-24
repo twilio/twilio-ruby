@@ -147,11 +147,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               ConferencePage.new(@version, response, @solution)
             end
 
@@ -227,16 +225,10 @@ module Twilio
             end
 
             ##
-            # Fetch a ConferenceInstance
+            # Fetch the ConferenceInstance
             # @return [ConferenceInstance] Fetched ConferenceInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               ConferenceInstance.new(
                   @version,
@@ -264,11 +256,7 @@ module Twilio
                   'AnnounceMethod' => announce_method,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               ConferenceInstance.new(
                   @version,
@@ -456,7 +444,7 @@ module Twilio
             end
 
             ##
-            # Fetch a ConferenceInstance
+            # Fetch the ConferenceInstance
             # @return [ConferenceInstance] Fetched ConferenceInstance
             def fetch
               context.fetch

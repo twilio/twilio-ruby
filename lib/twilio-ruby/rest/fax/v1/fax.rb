@@ -133,11 +133,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             FaxPage.new(@version, response, @solution)
           end
 
@@ -155,8 +153,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of FaxInstance records from the API.
-          # Request is executed immediately.
+          # Create the FaxInstance
           # @param [String] to The phone number to receive the fax in
           #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format or the
           #   recipient's SIP URI.
@@ -186,7 +183,7 @@ module Twilio
           #   `true`.
           # @param [String] ttl How long in minutes from when the fax is initiated that we
           #   should try to send the fax.
-          # @return [FaxInstance] Newly created FaxInstance
+          # @return [FaxInstance] Created FaxInstance
           def create(to: nil, media_url: nil, quality: :unset, status_callback: :unset, from: :unset, sip_auth_username: :unset, sip_auth_password: :unset, store_media: :unset, ttl: :unset)
             data = Twilio::Values.of({
                 'To' => to,
@@ -200,11 +197,7 @@ module Twilio
                 'Ttl' => ttl,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             FaxInstance.new(@version, payload, )
           end
@@ -268,16 +261,10 @@ module Twilio
           end
 
           ##
-          # Fetch a FaxInstance
+          # Fetch the FaxInstance
           # @return [FaxInstance] Fetched FaxInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             FaxInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -292,20 +279,16 @@ module Twilio
           def update(status: :unset)
             data = Twilio::Values.of({'Status' => status, })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             FaxInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the FaxInstance
+          # Delete the FaxInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -501,7 +484,7 @@ module Twilio
           end
 
           ##
-          # Fetch a FaxInstance
+          # Fetch the FaxInstance
           # @return [FaxInstance] Fetched FaxInstance
           def fetch
             context.fetch
@@ -519,7 +502,7 @@ module Twilio
           end
 
           ##
-          # Deletes the FaxInstance
+          # Delete the FaxInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

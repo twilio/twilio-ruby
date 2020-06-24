@@ -84,7 +84,7 @@ module Twilio
               end
 
               ##
-              # Fetch a ImpressionsRateInstance
+              # Fetch the ImpressionsRateInstance
               # @param [String] brand_sid The unique SID identifier of the Brand to filter by.
               # @param [String] branded_channel_sid The unique SID identifier of the Branded
               #   Channel to filter by.
@@ -109,11 +109,7 @@ module Twilio
                     'Interval' => interval,
                 })
 
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri, params)
 
                 ImpressionsRateInstance.new(@version, payload, business_sid: @solution[:business_sid], )
               end
@@ -216,7 +212,7 @@ module Twilio
               end
 
               ##
-              # Fetch a ImpressionsRateInstance
+              # Fetch the ImpressionsRateInstance
               # @param [String] brand_sid The unique SID identifier of the Brand to filter by.
               # @param [String] branded_channel_sid The unique SID identifier of the Branded
               #   Channel to filter by.

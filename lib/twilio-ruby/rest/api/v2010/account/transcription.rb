@@ -88,11 +88,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               TranscriptionPage.new(@version, response, @solution)
             end
 
@@ -164,16 +162,10 @@ module Twilio
             end
 
             ##
-            # Fetch a TranscriptionInstance
+            # Fetch the TranscriptionInstance
             # @return [TranscriptionInstance] Fetched TranscriptionInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               TranscriptionInstance.new(
                   @version,
@@ -184,10 +176,10 @@ module Twilio
             end
 
             ##
-            # Deletes the TranscriptionInstance
+            # Delete the TranscriptionInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -331,14 +323,14 @@ module Twilio
             end
 
             ##
-            # Fetch a TranscriptionInstance
+            # Fetch the TranscriptionInstance
             # @return [TranscriptionInstance] Fetched TranscriptionInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the TranscriptionInstance
+            # Delete the TranscriptionInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

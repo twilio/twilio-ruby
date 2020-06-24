@@ -98,16 +98,10 @@ module Twilio
                 end
 
                 ##
-                # Fetch a FunctionVersionContentInstance
+                # Fetch the FunctionVersionContentInstance
                 # @return [FunctionVersionContentInstance] Fetched FunctionVersionContentInstance
                 def fetch
-                  params = Twilio::Values.of({})
-
-                  payload = @version.fetch(
-                      'GET',
-                      @uri,
-                      params,
-                  )
+                  payload = @version.fetch('GET', @uri)
 
                   FunctionVersionContentInstance.new(
                       @version,
@@ -218,7 +212,7 @@ module Twilio
                 end
 
                 ##
-                # Fetch a FunctionVersionContentInstance
+                # Fetch the FunctionVersionContentInstance
                 # @return [FunctionVersionContentInstance] Fetched FunctionVersionContentInstance
                 def fetch
                   context.fetch

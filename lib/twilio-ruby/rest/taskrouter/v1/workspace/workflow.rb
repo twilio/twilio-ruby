@@ -94,11 +94,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               WorkflowPage.new(@version, response, @solution)
             end
 
@@ -116,8 +114,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of WorkflowInstance records from the API.
-            # Request is executed immediately.
+            # Create the WorkflowInstance
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the Workflow resource. For example, `Inbound Call Workflow` or `2014 Outbound
             #   Campaign`.
@@ -134,7 +131,7 @@ module Twilio
             # @param [String] task_reservation_timeout How long TaskRouter will wait for a
             #   confirmation response from your application after it assigns a Task to a Worker.
             #   Can be up to `86,400` (24 hours) and the default is `120`.
-            # @return [WorkflowInstance] Newly created WorkflowInstance
+            # @return [WorkflowInstance] Created WorkflowInstance
             def create(friendly_name: nil, configuration: nil, assignment_callback_url: :unset, fallback_assignment_callback_url: :unset, task_reservation_timeout: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
@@ -144,11 +141,7 @@ module Twilio
                   'TaskReservationTimeout' => task_reservation_timeout,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               WorkflowInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], )
             end
@@ -211,16 +204,10 @@ module Twilio
             end
 
             ##
-            # Fetch a WorkflowInstance
+            # Fetch the WorkflowInstance
             # @return [WorkflowInstance] Fetched WorkflowInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               WorkflowInstance.new(
                   @version,
@@ -262,11 +249,7 @@ module Twilio
                   'ReEvaluateTasks' => re_evaluate_tasks,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               WorkflowInstance.new(
                   @version,
@@ -277,10 +260,10 @@ module Twilio
             end
 
             ##
-            # Deletes the WorkflowInstance
+            # Delete the WorkflowInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -446,7 +429,7 @@ module Twilio
             end
 
             ##
-            # Fetch a WorkflowInstance
+            # Fetch the WorkflowInstance
             # @return [WorkflowInstance] Fetched WorkflowInstance
             def fetch
               context.fetch
@@ -486,7 +469,7 @@ module Twilio
             end
 
             ##
-            # Deletes the WorkflowInstance
+            # Delete the WorkflowInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

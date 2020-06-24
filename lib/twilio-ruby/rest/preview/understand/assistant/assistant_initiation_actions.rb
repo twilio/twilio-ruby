@@ -81,16 +81,10 @@ module Twilio
             end
 
             ##
-            # Fetch a AssistantInitiationActionsInstance
+            # Fetch the AssistantInitiationActionsInstance
             # @return [AssistantInitiationActionsInstance] Fetched AssistantInitiationActionsInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               AssistantInitiationActionsInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
@@ -102,11 +96,7 @@ module Twilio
             def update(initiation_actions: :unset)
               data = Twilio::Values.of({'InitiationActions' => Twilio.serialize_object(initiation_actions), })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               AssistantInitiationActionsInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
@@ -187,7 +177,7 @@ module Twilio
             end
 
             ##
-            # Fetch a AssistantInitiationActionsInstance
+            # Fetch the AssistantInitiationActionsInstance
             # @return [AssistantInitiationActionsInstance] Fetched AssistantInitiationActionsInstance
             def fetch
               context.fetch

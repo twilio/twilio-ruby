@@ -97,16 +97,10 @@ module Twilio
               end
 
               ##
-              # Fetch a TaskStatisticsInstance
+              # Fetch the TaskStatisticsInstance
               # @return [TaskStatisticsInstance] Fetched TaskStatisticsInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 TaskStatisticsInstance.new(
                     @version,
@@ -215,7 +209,7 @@ module Twilio
               end
 
               ##
-              # Fetch a TaskStatisticsInstance
+              # Fetch the TaskStatisticsInstance
               # @return [TaskStatisticsInstance] Fetched TaskStatisticsInstance
               def fetch
                 context.fetch

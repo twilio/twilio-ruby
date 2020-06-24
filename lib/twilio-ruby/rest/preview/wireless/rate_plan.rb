@@ -86,11 +86,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             RatePlanPage.new(@version, response, @solution)
           end
 
@@ -108,8 +106,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of RatePlanInstance records from the API.
-          # Request is executed immediately.
+          # Create the RatePlanInstance
           # @param [String] unique_name The unique_name
           # @param [String] friendly_name The friendly_name
           # @param [Boolean] data_enabled The data_enabled
@@ -120,7 +117,7 @@ module Twilio
           # @param [Boolean] commands_enabled The commands_enabled
           # @param [Boolean] national_roaming_enabled The national_roaming_enabled
           # @param [String] international_roaming The international_roaming
-          # @return [RatePlanInstance] Newly created RatePlanInstance
+          # @return [RatePlanInstance] Created RatePlanInstance
           def create(unique_name: :unset, friendly_name: :unset, data_enabled: :unset, data_limit: :unset, data_metering: :unset, messaging_enabled: :unset, voice_enabled: :unset, commands_enabled: :unset, national_roaming_enabled: :unset, international_roaming: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
@@ -135,11 +132,7 @@ module Twilio
                 'InternationalRoaming' => Twilio.serialize_list(international_roaming) { |e| e },
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             RatePlanInstance.new(@version, payload, )
           end
@@ -199,16 +192,10 @@ module Twilio
           end
 
           ##
-          # Fetch a RatePlanInstance
+          # Fetch the RatePlanInstance
           # @return [RatePlanInstance] Fetched RatePlanInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             RatePlanInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -221,20 +208,16 @@ module Twilio
           def update(unique_name: :unset, friendly_name: :unset)
             data = Twilio::Values.of({'UniqueName' => unique_name, 'FriendlyName' => friendly_name, })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             RatePlanInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the RatePlanInstance
+          # Delete the RatePlanInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -383,7 +366,7 @@ module Twilio
           end
 
           ##
-          # Fetch a RatePlanInstance
+          # Fetch the RatePlanInstance
           # @return [RatePlanInstance] Fetched RatePlanInstance
           def fetch
             context.fetch
@@ -399,7 +382,7 @@ module Twilio
           end
 
           ##
-          # Deletes the RatePlanInstance
+          # Delete the RatePlanInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

@@ -115,11 +115,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               ExecutionPage.new(@version, response, @solution)
             end
 
@@ -137,8 +135,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of ExecutionInstance records from the API.
-            # Request is executed immediately.
+            # Create the ExecutionInstance
             # @param [String] to The Contact phone number to start a Studio Flow Execution,
             #   available as variable `{{contact.channel.address}}`.
             # @param [String] from The Twilio phone number to send messages or initiate calls
@@ -150,7 +147,7 @@ module Twilio
             #   `{{flow.data.name}}`, which returns "Zeke". Note: the JSON value must explicitly
             #   be passed as a string, not as a hash object. Depending on your particular HTTP
             #   library, you may need to add quotes or URL encode the JSON string.
-            # @return [ExecutionInstance] Newly created ExecutionInstance
+            # @return [ExecutionInstance] Created ExecutionInstance
             def create(to: nil, from: nil, parameters: :unset)
               data = Twilio::Values.of({
                   'To' => to,
@@ -158,11 +155,7 @@ module Twilio
                   'Parameters' => Twilio.serialize_object(parameters),
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               ExecutionInstance.new(@version, payload, flow_sid: @solution[:flow_sid], )
             end
@@ -224,25 +217,19 @@ module Twilio
             end
 
             ##
-            # Fetch a ExecutionInstance
+            # Fetch the ExecutionInstance
             # @return [ExecutionInstance] Fetched ExecutionInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               ExecutionInstance.new(@version, payload, flow_sid: @solution[:flow_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the ExecutionInstance
+            # Delete the ExecutionInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -253,11 +240,7 @@ module Twilio
             def update(status: nil)
               data = Twilio::Values.of({'Status' => status, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               ExecutionInstance.new(@version, payload, flow_sid: @solution[:flow_sid], sid: @solution[:sid], )
             end
@@ -416,14 +399,14 @@ module Twilio
             end
 
             ##
-            # Fetch a ExecutionInstance
+            # Fetch the ExecutionInstance
             # @return [ExecutionInstance] Fetched ExecutionInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the ExecutionInstance
+            # Delete the ExecutionInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

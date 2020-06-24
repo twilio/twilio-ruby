@@ -77,7 +77,7 @@ module Twilio
             end
 
             ##
-            # Fetch a NumberInstance
+            # Fetch the NumberInstance
             # @param [String] origination_number The origination phone number, in
             #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to
             #   fetch the origin-based voice pricing information. E.164 format consists of a +
@@ -86,11 +86,7 @@ module Twilio
             def fetch(origination_number: :unset)
               params = Twilio::Values.of({'OriginationNumber' => origination_number, })
 
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri, params)
 
               NumberInstance.new(@version, payload, destination_number: @solution[:destination_number], )
             end
@@ -200,7 +196,7 @@ module Twilio
             end
 
             ##
-            # Fetch a NumberInstance
+            # Fetch the NumberInstance
             # @param [String] origination_number The origination phone number, in
             #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to
             #   fetch the origin-based voice pricing information. E.164 format consists of a +

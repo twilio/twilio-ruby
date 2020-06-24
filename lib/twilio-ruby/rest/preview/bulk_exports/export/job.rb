@@ -80,25 +80,19 @@ module Twilio
             end
 
             ##
-            # Fetch a JobInstance
+            # Fetch the JobInstance
             # @return [JobInstance] Fetched JobInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               JobInstance.new(@version, payload, job_sid: @solution[:job_sid], )
             end
 
             ##
-            # Deletes the JobInstance
+            # Delete the JobInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -219,14 +213,14 @@ module Twilio
             end
 
             ##
-            # Fetch a JobInstance
+            # Fetch the JobInstance
             # @return [JobInstance] Fetched JobInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the JobInstance
+            # Delete the JobInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

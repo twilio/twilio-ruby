@@ -28,8 +28,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of UserInstance records from the API.
-            # Request is executed immediately.
+            # Create the UserInstance
             # @param [String] identity The `identity` value that uniquely identifies the new
             #   resource's [User](https://www.twilio.com/docs/api/chat/rest/v1/user) within the
             #   [Service](https://www.twilio.com/docs/api/chat/rest/v1/service). This value is
@@ -42,7 +41,7 @@ module Twilio
             #   application-specific data.
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the new resource. This value is often used for display purposes.
-            # @return [UserInstance] Newly created UserInstance
+            # @return [UserInstance] Created UserInstance
             def create(identity: nil, role_sid: :unset, attributes: :unset, friendly_name: :unset)
               data = Twilio::Values.of({
                   'Identity' => identity,
@@ -51,11 +50,7 @@ module Twilio
                   'FriendlyName' => friendly_name,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               UserInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -121,11 +116,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               UserPage.new(@version, response, @solution)
             end
 
@@ -200,25 +193,19 @@ module Twilio
             end
 
             ##
-            # Fetch a UserInstance
+            # Fetch the UserInstance
             # @return [UserInstance] Fetched UserInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               UserInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the UserInstance
+            # Delete the UserInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -237,11 +224,7 @@ module Twilio
                   'FriendlyName' => friendly_name,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               UserInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -410,14 +393,14 @@ module Twilio
             end
 
             ##
-            # Fetch a UserInstance
+            # Fetch the UserInstance
             # @return [UserInstance] Fetched UserInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the UserInstance
+            # Delete the UserInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

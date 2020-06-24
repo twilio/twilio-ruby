@@ -91,11 +91,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 DeploymentPage.new(@version, response, @solution)
               end
 
@@ -113,18 +111,13 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of DeploymentInstance records from the API.
-              # Request is executed immediately.
+              # Create the DeploymentInstance
               # @param [String] build_sid The SID of the build for the deployment.
-              # @return [DeploymentInstance] Newly created DeploymentInstance
+              # @return [DeploymentInstance] Created DeploymentInstance
               def create(build_sid: :unset)
                 data = Twilio::Values.of({'BuildSid' => build_sid, })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 DeploymentInstance.new(
                     @version,
@@ -198,16 +191,10 @@ module Twilio
               end
 
               ##
-              # Fetch a DeploymentInstance
+              # Fetch the DeploymentInstance
               # @return [DeploymentInstance] Fetched DeploymentInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 DeploymentInstance.new(
                     @version,
@@ -334,7 +321,7 @@ module Twilio
               end
 
               ##
-              # Fetch a DeploymentInstance
+              # Fetch the DeploymentInstance
               # @return [DeploymentInstance] Fetched DeploymentInstance
               def fetch
                 context.fetch

@@ -115,11 +115,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             CommandPage.new(@version, response, @solution)
           end
 
@@ -137,8 +135,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of CommandInstance records from the API.
-          # Request is executed immediately.
+          # Create the CommandInstance
           # @param [String] command The command
           # @param [String] device The device
           # @param [String] sim The sim
@@ -146,7 +143,7 @@ module Twilio
           # @param [String] callback_url The callback_url
           # @param [String] command_mode The command_mode
           # @param [String] include_sid The include_sid
-          # @return [CommandInstance] Newly created CommandInstance
+          # @return [CommandInstance] Created CommandInstance
           def create(command: nil, device: :unset, sim: :unset, callback_method: :unset, callback_url: :unset, command_mode: :unset, include_sid: :unset)
             data = Twilio::Values.of({
                 'Command' => command,
@@ -158,11 +155,7 @@ module Twilio
                 'IncludeSid' => include_sid,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             CommandInstance.new(@version, payload, )
           end
@@ -222,16 +215,10 @@ module Twilio
           end
 
           ##
-          # Fetch a CommandInstance
+          # Fetch the CommandInstance
           # @return [CommandInstance] Fetched CommandInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             CommandInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -361,7 +348,7 @@ module Twilio
           end
 
           ##
-          # Fetch a CommandInstance
+          # Fetch the CommandInstance
           # @return [CommandInstance] Fetched CommandInstance
           def fetch
             context.fetch

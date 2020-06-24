@@ -28,18 +28,13 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of SyncListInstance records from the API.
-            # Request is executed immediately.
+            # Create the SyncListInstance
             # @param [String] unique_name The unique_name
-            # @return [SyncListInstance] Newly created SyncListInstance
+            # @return [SyncListInstance] Created SyncListInstance
             def create(unique_name: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -105,11 +100,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               SyncListPage.new(@version, response, @solution)
             end
 
@@ -186,25 +179,19 @@ module Twilio
             end
 
             ##
-            # Fetch a SyncListInstance
+            # Fetch the SyncListInstance
             # @return [SyncListInstance] Fetched SyncListInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the SyncListInstance
+            # Delete the SyncListInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -370,14 +357,14 @@ module Twilio
             end
 
             ##
-            # Fetch a SyncListInstance
+            # Fetch the SyncListInstance
             # @return [SyncListInstance] Fetched SyncListInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the SyncListInstance
+            # Delete the SyncListInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

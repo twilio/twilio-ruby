@@ -26,19 +26,14 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of IpAccessControlListInstance records from the API.
-            # Request is executed immediately.
+            # Create the IpAccessControlListInstance
             # @param [String] ip_access_control_list_sid The SID of the [IP Access Control
             #   List](https://www.twilio.com/docs/voice/sip/api/sip-ipaccesscontrollist-resource) that you want to associate with the trunk.
-            # @return [IpAccessControlListInstance] Newly created IpAccessControlListInstance
+            # @return [IpAccessControlListInstance] Created IpAccessControlListInstance
             def create(ip_access_control_list_sid: nil)
               data = Twilio::Values.of({'IpAccessControlListSid' => ip_access_control_list_sid, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               IpAccessControlListInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], )
             end
@@ -104,11 +99,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               IpAccessControlListPage.new(@version, response, @solution)
             end
 
@@ -179,16 +172,10 @@ module Twilio
             end
 
             ##
-            # Fetch a IpAccessControlListInstance
+            # Fetch the IpAccessControlListInstance
             # @return [IpAccessControlListInstance] Fetched IpAccessControlListInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               IpAccessControlListInstance.new(
                   @version,
@@ -199,10 +186,10 @@ module Twilio
             end
 
             ##
-            # Deletes the IpAccessControlListInstance
+            # Delete the IpAccessControlListInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -302,14 +289,14 @@ module Twilio
             end
 
             ##
-            # Fetch a IpAccessControlListInstance
+            # Fetch the IpAccessControlListInstance
             # @return [IpAccessControlListInstance] Fetched IpAccessControlListInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the IpAccessControlListInstance
+            # Delete the IpAccessControlListInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

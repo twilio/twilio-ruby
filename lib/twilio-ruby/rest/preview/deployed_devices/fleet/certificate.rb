@@ -29,15 +29,14 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of CertificateInstance records from the API.
-            # Request is executed immediately.
+            # Create the CertificateInstance
             # @param [String] certificate_data Provides a URL encoded representation of the
             #   public certificate in PEM format.
             # @param [String] friendly_name Provides a human readable descriptive text for
             #   this Certificate credential, up to 256 characters long.
             # @param [String] device_sid Provides the unique string identifier of an existing
             #   Device to become authenticated with this Certificate credential.
-            # @return [CertificateInstance] Newly created CertificateInstance
+            # @return [CertificateInstance] Created CertificateInstance
             def create(certificate_data: nil, friendly_name: :unset, device_sid: :unset)
               data = Twilio::Values.of({
                   'CertificateData' => certificate_data,
@@ -45,11 +44,7 @@ module Twilio
                   'DeviceSid' => device_sid,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               CertificateInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], )
             end
@@ -122,11 +117,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               CertificatePage.new(@version, response, @solution)
             end
 
@@ -200,25 +193,19 @@ module Twilio
             end
 
             ##
-            # Fetch a CertificateInstance
+            # Fetch the CertificateInstance
             # @return [CertificateInstance] Fetched CertificateInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               CertificateInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the CertificateInstance
+            # Delete the CertificateInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -231,11 +218,7 @@ module Twilio
             def update(friendly_name: :unset, device_sid: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'DeviceSid' => device_sid, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               CertificateInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid], )
             end
@@ -354,14 +337,14 @@ module Twilio
             end
 
             ##
-            # Fetch a CertificateInstance
+            # Fetch the CertificateInstance
             # @return [CertificateInstance] Fetched CertificateInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the CertificateInstance
+            # Delete the CertificateInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

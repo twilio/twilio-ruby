@@ -29,20 +29,15 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of ShortCodeInstance records from the API.
-            # Request is executed immediately.
+            # Create the ShortCodeInstance
             # @param [String] sid The SID of a Twilio
             #   [ShortCode](https://www.twilio.com/docs/sms/api/short-code) resource that
             #   represents the short code you would like to assign to your Proxy Service.
-            # @return [ShortCodeInstance] Newly created ShortCodeInstance
+            # @return [ShortCodeInstance] Created ShortCodeInstance
             def create(sid: nil)
               data = Twilio::Values.of({'Sid' => sid, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               ShortCodeInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -108,11 +103,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               ShortCodePage.new(@version, response, @solution)
             end
 
@@ -188,23 +181,17 @@ module Twilio
             end
 
             ##
-            # Deletes the ShortCodeInstance
+            # Delete the ShortCodeInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
-            # Fetch a ShortCodeInstance
+            # Fetch the ShortCodeInstance
             # @return [ShortCodeInstance] Fetched ShortCodeInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               ShortCodeInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -219,11 +206,7 @@ module Twilio
             def update(is_reserved: :unset)
               data = Twilio::Values.of({'IsReserved' => is_reserved, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               ShortCodeInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -349,14 +332,14 @@ module Twilio
             end
 
             ##
-            # Deletes the ShortCodeInstance
+            # Delete the ShortCodeInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
-            # Fetch a ShortCodeInstance
+            # Fetch the ShortCodeInstance
             # @return [ShortCodeInstance] Fetched ShortCodeInstance
             def fetch
               context.fetch

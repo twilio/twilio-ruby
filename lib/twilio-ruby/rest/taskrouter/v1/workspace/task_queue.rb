@@ -125,11 +125,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               TaskQueuePage.new(@version, response, @solution)
             end
 
@@ -147,8 +145,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of TaskQueueInstance records from the API.
-            # Request is executed immediately.
+            # Create the TaskQueueInstance
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the TaskQueue. For example `Support-Tier 1`, `Sales`, or `Escalation`.
             # @param [String] target_workers A string that describes the Worker selection
@@ -169,7 +166,7 @@ module Twilio
             #   Workers when a task is reserved for them.
             # @param [String] assignment_activity_sid The SID of the Activity to assign
             #   Workers when a task is assigned to them.
-            # @return [TaskQueueInstance] Newly created TaskQueueInstance
+            # @return [TaskQueueInstance] Created TaskQueueInstance
             def create(friendly_name: nil, target_workers: :unset, max_reserved_workers: :unset, task_order: :unset, reservation_activity_sid: :unset, assignment_activity_sid: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
@@ -180,11 +177,7 @@ module Twilio
                   'AssignmentActivitySid' => assignment_activity_sid,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               TaskQueueInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], )
             end
@@ -255,16 +248,10 @@ module Twilio
             end
 
             ##
-            # Fetch a TaskQueueInstance
+            # Fetch the TaskQueueInstance
             # @return [TaskQueueInstance] Fetched TaskQueueInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               TaskQueueInstance.new(
                   @version,
@@ -305,11 +292,7 @@ module Twilio
                   'TaskOrder' => task_order,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               TaskQueueInstance.new(
                   @version,
@@ -320,10 +303,10 @@ module Twilio
             end
 
             ##
-            # Deletes the TaskQueueInstance
+            # Delete the TaskQueueInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -503,7 +486,7 @@ module Twilio
             end
 
             ##
-            # Fetch a TaskQueueInstance
+            # Fetch the TaskQueueInstance
             # @return [TaskQueueInstance] Fetched TaskQueueInstance
             def fetch
               context.fetch
@@ -542,7 +525,7 @@ module Twilio
             end
 
             ##
-            # Deletes the TaskQueueInstance
+            # Delete the TaskQueueInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

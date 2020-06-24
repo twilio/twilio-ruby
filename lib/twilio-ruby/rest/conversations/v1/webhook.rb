@@ -78,16 +78,10 @@ module Twilio
           end
 
           ##
-          # Fetch a WebhookInstance
+          # Fetch the WebhookInstance
           # @return [WebhookInstance] Fetched WebhookInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             WebhookInstance.new(@version, payload, )
           end
@@ -116,11 +110,7 @@ module Twilio
                 'Target' => target,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             WebhookInstance.new(@version, payload, )
           end
@@ -221,7 +211,7 @@ module Twilio
           end
 
           ##
-          # Fetch a WebhookInstance
+          # Fetch the WebhookInstance
           # @return [WebhookInstance] Fetched WebhookInstance
           def fetch
             context.fetch

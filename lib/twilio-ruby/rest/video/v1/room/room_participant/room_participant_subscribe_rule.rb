@@ -31,16 +31,10 @@ module Twilio
               end
 
               ##
-              # Fetch a SubscribeRulesInstance
+              # Fetch the SubscribeRulesInstance
               # @return [SubscribeRulesInstance] Fetched SubscribeRulesInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 SubscribeRulesInstance.new(
                     @version,
@@ -60,11 +54,7 @@ module Twilio
               def update(rules: :unset)
                 data = Twilio::Values.of({'Rules' => Twilio.serialize_object(rules), })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 SubscribeRulesInstance.new(
                     @version,

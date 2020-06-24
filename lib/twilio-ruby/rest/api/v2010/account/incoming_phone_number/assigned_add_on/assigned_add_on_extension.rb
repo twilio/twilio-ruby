@@ -100,11 +100,9 @@ module Twilio
                       'Page' => page_number,
                       'PageSize' => page_size,
                   })
-                  response = @version.page(
-                      'GET',
-                      @uri,
-                      params
-                  )
+
+                  response = @version.page('GET', @uri, params)
+
                   AssignedAddOnExtensionPage.new(@version, response, @solution)
                 end
 
@@ -195,16 +193,10 @@ module Twilio
                 end
 
                 ##
-                # Fetch a AssignedAddOnExtensionInstance
+                # Fetch the AssignedAddOnExtensionInstance
                 # @return [AssignedAddOnExtensionInstance] Fetched AssignedAddOnExtensionInstance
                 def fetch
-                  params = Twilio::Values.of({})
-
-                  payload = @version.fetch(
-                      'GET',
-                      @uri,
-                      params,
-                  )
+                  payload = @version.fetch('GET', @uri)
 
                   AssignedAddOnExtensionInstance.new(
                       @version,
@@ -346,7 +338,7 @@ module Twilio
                 end
 
                 ##
-                # Fetch a AssignedAddOnExtensionInstance
+                # Fetch the AssignedAddOnExtensionInstance
                 # @return [AssignedAddOnExtensionInstance] Fetched AssignedAddOnExtensionInstance
                 def fetch
                   context.fetch

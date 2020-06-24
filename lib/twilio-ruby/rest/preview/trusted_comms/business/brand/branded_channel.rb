@@ -93,16 +93,10 @@ module Twilio
               end
 
               ##
-              # Fetch a BrandedChannelInstance
+              # Fetch the BrandedChannelInstance
               # @return [BrandedChannelInstance] Fetched BrandedChannelInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 BrandedChannelInstance.new(
                     @version,
@@ -231,7 +225,7 @@ module Twilio
               end
 
               ##
-              # Fetch a BrandedChannelInstance
+              # Fetch the BrandedChannelInstance
               # @return [BrandedChannelInstance] Fetched BrandedChannelInstance
               def fetch
                 context.fetch

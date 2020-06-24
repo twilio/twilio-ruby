@@ -28,8 +28,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of WebhookInstance records from the API.
-            # Request is executed immediately.
+            # Create the WebhookInstance
             # @param [String] friendly_name The string that you assigned to describe the
             #   webhook. **This value should not contain PII.**
             # @param [String] event_types The array of events that this Webhook is subscribed
@@ -38,7 +37,7 @@ module Twilio
             # @param [String] webhook_url The URL associated with this Webhook.
             # @param [webhook.Status] status The webhook status. Default value is `enabled`.
             #   One of: `enabled` or `disabled`
-            # @return [WebhookInstance] Newly created WebhookInstance
+            # @return [WebhookInstance] Created WebhookInstance
             def create(friendly_name: nil, event_types: nil, webhook_url: nil, status: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
@@ -47,11 +46,7 @@ module Twilio
                   'Status' => status,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               WebhookInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -117,11 +112,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               WebhookPage.new(@version, response, @solution)
             end
 
@@ -213,33 +206,23 @@ module Twilio
                   'Status' => status,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               WebhookInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the WebhookInstance
+            # Delete the WebhookInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
-            # Fetch a WebhookInstance
+            # Fetch the WebhookInstance
             # @return [WebhookInstance] Fetched WebhookInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               WebhookInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -391,14 +374,14 @@ module Twilio
             end
 
             ##
-            # Deletes the WebhookInstance
+            # Delete the WebhookInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
-            # Fetch a WebhookInstance
+            # Fetch the WebhookInstance
             # @return [WebhookInstance] Fetched WebhookInstance
             def fetch
               context.fetch

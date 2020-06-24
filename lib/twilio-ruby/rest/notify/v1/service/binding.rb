@@ -30,8 +30,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of BindingInstance records from the API.
-            # Request is executed immediately.
+            # Create the BindingInstance
             # @param [String] identity The `identity` value that uniquely identifies the new
             #   resource's [User](https://www.twilio.com/docs/chat/rest/user-resource) within
             #   the [Service](https://www.twilio.com/docs/notify/api/service-resource). Up to 20
@@ -57,7 +56,7 @@ module Twilio
             #   overrides the Credential specified in the Service resource. Applies to only
             #   `apn`, `fcm`, and `gcm` type Bindings.
             # @param [String] endpoint Deprecated.
-            # @return [BindingInstance] Newly created BindingInstance
+            # @return [BindingInstance] Created BindingInstance
             def create(identity: nil, binding_type: nil, address: nil, tag: :unset, notification_protocol_version: :unset, credential_sid: :unset, endpoint: :unset)
               data = Twilio::Values.of({
                   'Identity' => identity,
@@ -69,11 +68,7 @@ module Twilio
                   'Endpoint' => endpoint,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               BindingInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -186,11 +181,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               BindingPage.new(@version, response, @solution)
             end
 
@@ -266,25 +259,19 @@ module Twilio
             end
 
             ##
-            # Fetch a BindingInstance
+            # Fetch the BindingInstance
             # @return [BindingInstance] Fetched BindingInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               BindingInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the BindingInstance
+            # Delete the BindingInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -437,14 +424,14 @@ module Twilio
             end
 
             ##
-            # Fetch a BindingInstance
+            # Fetch the BindingInstance
             # @return [BindingInstance] Fetched BindingInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the BindingInstance
+            # Delete the BindingInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

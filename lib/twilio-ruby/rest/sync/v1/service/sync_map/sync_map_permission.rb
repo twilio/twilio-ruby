@@ -92,11 +92,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 SyncMapPermissionPage.new(@version, response, @solution)
               end
 
@@ -179,16 +177,10 @@ module Twilio
               end
 
               ##
-              # Fetch a SyncMapPermissionInstance
+              # Fetch the SyncMapPermissionInstance
               # @return [SyncMapPermissionInstance] Fetched SyncMapPermissionInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 SyncMapPermissionInstance.new(
                     @version,
@@ -200,10 +192,10 @@ module Twilio
               end
 
               ##
-              # Deletes the SyncMapPermissionInstance
+              # Delete the SyncMapPermissionInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -218,11 +210,7 @@ module Twilio
               def update(read: nil, write: nil, manage: nil)
                 data = Twilio::Values.of({'Read' => read, 'Write' => write, 'Manage' => manage, })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 SyncMapPermissionInstance.new(
                     @version,
@@ -351,14 +339,14 @@ module Twilio
               end
 
               ##
-              # Fetch a SyncMapPermissionInstance
+              # Fetch the SyncMapPermissionInstance
               # @return [SyncMapPermissionInstance] Fetched SyncMapPermissionInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the SyncMapPermissionInstance
+              # Delete the SyncMapPermissionInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

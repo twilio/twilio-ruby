@@ -114,11 +114,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 MediaPage.new(@version, response, @solution)
               end
 
@@ -197,23 +195,17 @@ module Twilio
               end
 
               ##
-              # Deletes the MediaInstance
+              # Delete the MediaInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
-              # Fetch a MediaInstance
+              # Fetch the MediaInstance
               # @return [MediaInstance] Fetched MediaInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 MediaInstance.new(
                     @version,
@@ -334,14 +326,14 @@ module Twilio
               end
 
               ##
-              # Deletes the MediaInstance
+              # Delete the MediaInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete
               end
 
               ##
-              # Fetch a MediaInstance
+              # Fetch the MediaInstance
               # @return [MediaInstance] Fetched MediaInstance
               def fetch
                 context.fetch

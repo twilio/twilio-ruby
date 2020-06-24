@@ -88,11 +88,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               AuthorizedConnectAppPage.new(@version, response, @solution)
             end
 
@@ -163,16 +161,10 @@ module Twilio
             end
 
             ##
-            # Fetch a AuthorizedConnectAppInstance
+            # Fetch the AuthorizedConnectAppInstance
             # @return [AuthorizedConnectAppInstance] Fetched AuthorizedConnectAppInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               AuthorizedConnectAppInstance.new(
                   @version,
@@ -308,7 +300,7 @@ module Twilio
             end
 
             ##
-            # Fetch a AuthorizedConnectAppInstance
+            # Fetch the AuthorizedConnectAppInstance
             # @return [AuthorizedConnectAppInstance] Fetched AuthorizedConnectAppInstance
             def fetch
               context.fetch

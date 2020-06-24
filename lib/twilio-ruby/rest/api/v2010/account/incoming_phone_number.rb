@@ -140,11 +140,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               IncomingPhoneNumberPage.new(@version, response, @solution)
             end
 
@@ -162,8 +160,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of IncomingPhoneNumberInstance records from the API.
-            # Request is executed immediately.
+            # Create the IncomingPhoneNumberInstance
             # @param [String] api_version The API version to use for incoming calls made to
             #   the new phone number. The default is `2010-04-01`.
             # @param [String] friendly_name A descriptive string that you created to describe
@@ -231,7 +228,7 @@ module Twilio
             #   number. Can be any three-digit, US or Canada area code. We will provision an
             #   available phone number within this area code for you. **You must provide an
             #   `area_code` or a `phone_number`.** (US and Canada only).
-            # @return [IncomingPhoneNumberInstance] Newly created IncomingPhoneNumberInstance
+            # @return [IncomingPhoneNumberInstance] Created IncomingPhoneNumberInstance
             def create(api_version: :unset, friendly_name: :unset, sms_application_sid: :unset, sms_fallback_method: :unset, sms_fallback_url: :unset, sms_method: :unset, sms_url: :unset, status_callback: :unset, status_callback_method: :unset, voice_application_sid: :unset, voice_caller_id_lookup: :unset, voice_fallback_method: :unset, voice_fallback_url: :unset, voice_method: :unset, voice_url: :unset, emergency_status: :unset, emergency_address_sid: :unset, trunk_sid: :unset, identity_sid: :unset, address_sid: :unset, voice_receive_mode: :unset, bundle_sid: :unset, phone_number: :unset, area_code: :unset)
               data = Twilio::Values.of({
                   'PhoneNumber' => phone_number,
@@ -260,11 +257,7 @@ module Twilio
                   'BundleSid' => bundle_sid,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               IncomingPhoneNumberInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
@@ -442,11 +435,7 @@ module Twilio
                   'BundleSid' => bundle_sid,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               IncomingPhoneNumberInstance.new(
                   @version,
@@ -457,16 +446,10 @@ module Twilio
             end
 
             ##
-            # Fetch a IncomingPhoneNumberInstance
+            # Fetch the IncomingPhoneNumberInstance
             # @return [IncomingPhoneNumberInstance] Fetched IncomingPhoneNumberInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               IncomingPhoneNumberInstance.new(
                   @version,
@@ -477,10 +460,10 @@ module Twilio
             end
 
             ##
-            # Deletes the IncomingPhoneNumberInstance
+            # Delete the IncomingPhoneNumberInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -865,14 +848,14 @@ module Twilio
             end
 
             ##
-            # Fetch a IncomingPhoneNumberInstance
+            # Fetch the IncomingPhoneNumberInstance
             # @return [IncomingPhoneNumberInstance] Fetched IncomingPhoneNumberInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the IncomingPhoneNumberInstance
+            # Delete the IncomingPhoneNumberInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

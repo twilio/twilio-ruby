@@ -91,11 +91,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 AddOnResultPage.new(@version, response, @solution)
               end
 
@@ -177,16 +175,10 @@ module Twilio
               end
 
               ##
-              # Fetch a AddOnResultInstance
+              # Fetch the AddOnResultInstance
               # @return [AddOnResultInstance] Fetched AddOnResultInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 AddOnResultInstance.new(
                     @version,
@@ -198,10 +190,10 @@ module Twilio
               end
 
               ##
-              # Deletes the AddOnResultInstance
+              # Delete the AddOnResultInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -364,14 +356,14 @@ module Twilio
               end
 
               ##
-              # Fetch a AddOnResultInstance
+              # Fetch the AddOnResultInstance
               # @return [AddOnResultInstance] Fetched AddOnResultInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the AddOnResultInstance
+              # Delete the AddOnResultInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

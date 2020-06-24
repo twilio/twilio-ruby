@@ -33,15 +33,14 @@ module Twilio
                 end
 
                 ##
-                # Retrieve a single page of ChallengeInstance records from the API.
-                # Request is executed immediately.
+                # Create the ChallengeInstance
                 # @param [Time] expiration_date The future date in which this Challenge will
                 #   expire, given in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
                 # @param [String] details Details provided to give context about the Challenge.
                 #   Shown to the end user.
                 # @param [String] hidden_details Details provided to give context about the
                 #   Challenge. Not shown to the end user.
-                # @return [ChallengeInstance] Newly created ChallengeInstance
+                # @return [ChallengeInstance] Created ChallengeInstance
                 def create(expiration_date: :unset, details: :unset, hidden_details: :unset)
                   data = Twilio::Values.of({
                       'ExpirationDate' => Twilio.serialize_iso8601_datetime(expiration_date),
@@ -49,11 +48,7 @@ module Twilio
                       'HiddenDetails' => hidden_details,
                   })
 
-                  payload = @version.create(
-                      'POST',
-                      @uri,
-                      data: data
-                  )
+                  payload = @version.create('POST', @uri, data: data)
 
                   ChallengeInstance.new(
                       @version,
@@ -132,11 +127,9 @@ module Twilio
                       'Page' => page_number,
                       'PageSize' => page_size,
                   })
-                  response = @version.page(
-                      'GET',
-                      @uri,
-                      params
-                  )
+
+                  response = @version.page('GET', @uri, params)
+
                   ChallengePage.new(@version, response, @solution)
                 end
 
@@ -220,23 +213,17 @@ module Twilio
                 end
 
                 ##
-                # Deletes the ChallengeInstance
+                # Delete the ChallengeInstance
                 # @return [Boolean] true if delete succeeds, false otherwise
                 def delete
-                  @version.delete('delete', @uri)
+                   @version.delete('DELETE', @uri)
                 end
 
                 ##
-                # Fetch a ChallengeInstance
+                # Fetch the ChallengeInstance
                 # @return [ChallengeInstance] Fetched ChallengeInstance
                 def fetch
-                  params = Twilio::Values.of({})
-
-                  payload = @version.fetch(
-                      'GET',
-                      @uri,
-                      params,
-                  )
+                  payload = @version.fetch('GET', @uri)
 
                   ChallengeInstance.new(
                       @version,
@@ -256,11 +243,7 @@ module Twilio
                 def update(auth_payload: :unset)
                   data = Twilio::Values.of({'AuthPayload' => auth_payload, })
 
-                  payload = @version.update(
-                      'POST',
-                      @uri,
-                      data: data,
-                  )
+                  payload = @version.update('POST', @uri, data: data)
 
                   ChallengeInstance.new(
                       @version,
@@ -449,14 +432,14 @@ module Twilio
                 end
 
                 ##
-                # Deletes the ChallengeInstance
+                # Delete the ChallengeInstance
                 # @return [Boolean] true if delete succeeds, false otherwise
                 def delete
                   context.delete
                 end
 
                 ##
-                # Fetch a ChallengeInstance
+                # Fetch the ChallengeInstance
                 # @return [ChallengeInstance] Fetched ChallengeInstance
                 def fetch
                   context.fetch

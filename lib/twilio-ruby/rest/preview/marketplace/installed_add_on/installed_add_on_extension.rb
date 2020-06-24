@@ -89,11 +89,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               InstalledAddOnExtensionPage.new(@version, response, @solution)
             end
 
@@ -171,16 +169,10 @@ module Twilio
             end
 
             ##
-            # Fetch a InstalledAddOnExtensionInstance
+            # Fetch the InstalledAddOnExtensionInstance
             # @return [InstalledAddOnExtensionInstance] Fetched InstalledAddOnExtensionInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               InstalledAddOnExtensionInstance.new(
                   @version,
@@ -197,11 +189,7 @@ module Twilio
             def update(enabled: nil)
               data = Twilio::Values.of({'Enabled' => enabled, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               InstalledAddOnExtensionInstance.new(
                   @version,
@@ -314,7 +302,7 @@ module Twilio
             end
 
             ##
-            # Fetch a InstalledAddOnExtensionInstance
+            # Fetch the InstalledAddOnExtensionInstance
             # @return [InstalledAddOnExtensionInstance] Fetched InstalledAddOnExtensionInstance
             def fetch
               context.fetch

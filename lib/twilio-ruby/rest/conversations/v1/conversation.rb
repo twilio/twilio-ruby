@@ -26,8 +26,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of ConversationInstance records from the API.
-          # Request is executed immediately.
+          # Create the ConversationInstance
           # @param [String] friendly_name The human-readable name of this conversation,
           #   limited to 256 characters. Optional.
           # @param [Time] date_created The date that this resource was created.
@@ -45,7 +44,7 @@ module Twilio
           #   switched to `inactive` state. Minimum value for this timer is 1 minute.
           # @param [String] timers_closed ISO8601 duration when conversation will be
           #   switched to `closed` state. Minimum value for this timer is 10 minutes.
-          # @return [ConversationInstance] Newly created ConversationInstance
+          # @return [ConversationInstance] Created ConversationInstance
           def create(friendly_name: :unset, date_created: :unset, date_updated: :unset, messaging_service_sid: :unset, attributes: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -58,11 +57,7 @@ module Twilio
                 'Timers.Closed' => timers_closed,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             ConversationInstance.new(@version, payload, )
           end
@@ -128,11 +123,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             ConversationPage.new(@version, response, @solution)
           end
 
@@ -241,33 +234,23 @@ module Twilio
                 'Timers.Closed' => timers_closed,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             ConversationInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the ConversationInstance
+          # Delete the ConversationInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
-          # Fetch a ConversationInstance
+          # Fetch the ConversationInstance
           # @return [ConversationInstance] Fetched ConversationInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             ConversationInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -492,14 +475,14 @@ module Twilio
           end
 
           ##
-          # Deletes the ConversationInstance
+          # Delete the ConversationInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete
           end
 
           ##
-          # Fetch a ConversationInstance
+          # Fetch the ConversationInstance
           # @return [ConversationInstance] Fetched ConversationInstance
           def fetch
             context.fetch

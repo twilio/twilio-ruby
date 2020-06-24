@@ -91,11 +91,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             FlexFlowPage.new(@version, response, @solution)
           end
 
@@ -113,8 +111,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of FlexFlowInstance records from the API.
-          # Request is executed immediately.
+          # Create the FlexFlowInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the FlexFlow resource.
           # @param [String] chat_service_sid The SID of the chat service.
@@ -152,7 +149,7 @@ module Twilio
           # @param [String] integration_retry_count The number of times to retry the webhook
           #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
           #   the default is 0.
-          # @return [FlexFlowInstance] Newly created FlexFlowInstance
+          # @return [FlexFlowInstance] Created FlexFlowInstance
           def create(friendly_name: nil, chat_service_sid: nil, channel_type: nil, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -174,11 +171,7 @@ module Twilio
                 'Integration.RetryCount' => integration_retry_count,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             FlexFlowInstance.new(@version, payload, )
           end
@@ -234,16 +227,10 @@ module Twilio
           end
 
           ##
-          # Fetch a FlexFlowInstance
+          # Fetch the FlexFlowInstance
           # @return [FlexFlowInstance] Fetched FlexFlowInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             FlexFlowInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -309,20 +296,16 @@ module Twilio
                 'Integration.RetryCount' => integration_retry_count,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             FlexFlowInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the FlexFlowInstance
+          # Delete the FlexFlowInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -469,7 +452,7 @@ module Twilio
           end
 
           ##
-          # Fetch a FlexFlowInstance
+          # Fetch the FlexFlowInstance
           # @return [FlexFlowInstance] Fetched FlexFlowInstance
           def fetch
             context.fetch
@@ -538,7 +521,7 @@ module Twilio
           end
 
           ##
-          # Deletes the FlexFlowInstance
+          # Delete the FlexFlowInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

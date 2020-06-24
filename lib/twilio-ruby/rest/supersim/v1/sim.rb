@@ -113,11 +113,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             SimPage.new(@version, response, @solution)
           end
 
@@ -189,16 +187,10 @@ module Twilio
           end
 
           ##
-          # Fetch a SimInstance
+          # Fetch the SimInstance
           # @return [SimInstance] Fetched SimInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             SimInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -218,11 +210,7 @@ module Twilio
           def update(unique_name: :unset, status: :unset, fleet: :unset)
             data = Twilio::Values.of({'UniqueName' => unique_name, 'Status' => status, 'Fleet' => fleet, })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             SimInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -338,7 +326,7 @@ module Twilio
           end
 
           ##
-          # Fetch a SimInstance
+          # Fetch the SimInstance
           # @return [SimInstance] Fetched SimInstance
           def fetch
             context.fetch

@@ -193,11 +193,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               EventPage.new(@version, response, @solution)
             end
 
@@ -266,16 +264,10 @@ module Twilio
             end
 
             ##
-            # Fetch a EventInstance
+            # Fetch the EventInstance
             # @return [EventInstance] Fetched EventInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               EventInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid], )
             end
@@ -446,7 +438,7 @@ module Twilio
             end
 
             ##
-            # Fetch a EventInstance
+            # Fetch the EventInstance
             # @return [EventInstance] Fetched EventInstance
             def fetch
               context.fetch

@@ -81,17 +81,13 @@ module Twilio
             end
 
             ##
-            # Fetch a CallSummaryInstance
+            # Fetch the CallSummaryInstance
             # @param [call_summary.ProcessingState] processing_state The processing_state
             # @return [CallSummaryInstance] Fetched CallSummaryInstance
             def fetch(processing_state: :unset)
               params = Twilio::Values.of({'ProcessingState' => processing_state, })
 
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri, params)
 
               CallSummaryInstance.new(@version, payload, call_sid: @solution[:call_sid], )
             end
@@ -277,7 +273,7 @@ module Twilio
             end
 
             ##
-            # Fetch a CallSummaryInstance
+            # Fetch the CallSummaryInstance
             # @param [call_summary.ProcessingState] processing_state The processing_state
             # @return [CallSummaryInstance] Fetched CallSummaryInstance
             def fetch(processing_state: :unset)

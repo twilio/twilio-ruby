@@ -29,8 +29,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of DeviceInstance records from the API.
-            # Request is executed immediately.
+            # Create the DeviceInstance
             # @param [String] unique_name Provides a unique and addressable name to be
             #   assigned to this Device, to be used in addition to SID, up to 128 characters
             #   long.
@@ -41,7 +40,7 @@ module Twilio
             # @param [String] deployment_sid Specifies the unique string identifier of the
             #   Deployment group that this Device is going to be associated with.
             # @param [Boolean] enabled The enabled
-            # @return [DeviceInstance] Newly created DeviceInstance
+            # @return [DeviceInstance] Created DeviceInstance
             def create(unique_name: :unset, friendly_name: :unset, identity: :unset, deployment_sid: :unset, enabled: :unset)
               data = Twilio::Values.of({
                   'UniqueName' => unique_name,
@@ -51,11 +50,7 @@ module Twilio
                   'Enabled' => enabled,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               DeviceInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], )
             end
@@ -128,11 +123,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               DevicePage.new(@version, response, @solution)
             end
 
@@ -206,25 +199,19 @@ module Twilio
             end
 
             ##
-            # Fetch a DeviceInstance
+            # Fetch the DeviceInstance
             # @return [DeviceInstance] Fetched DeviceInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               DeviceInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the DeviceInstance
+            # Delete the DeviceInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -245,11 +232,7 @@ module Twilio
                   'Enabled' => enabled,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               DeviceInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid], )
             end
@@ -389,14 +372,14 @@ module Twilio
             end
 
             ##
-            # Fetch a DeviceInstance
+            # Fetch the DeviceInstance
             # @return [DeviceInstance] Fetched DeviceInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the DeviceInstance
+            # Delete the DeviceInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

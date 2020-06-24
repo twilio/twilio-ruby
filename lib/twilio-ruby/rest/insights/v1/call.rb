@@ -84,16 +84,10 @@ module Twilio
           end
 
           ##
-          # Fetch a CallInstance
+          # Fetch the CallInstance
           # @return [CallInstance] Fetched CallInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             CallInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -195,7 +189,7 @@ module Twilio
           end
 
           ##
-          # Fetch a CallInstance
+          # Fetch the CallInstance
           # @return [CallInstance] Fetched CallInstance
           def fetch
             context.fetch

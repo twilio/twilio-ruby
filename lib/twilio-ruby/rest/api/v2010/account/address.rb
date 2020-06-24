@@ -28,8 +28,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of AddressInstance records from the API.
-            # Request is executed immediately.
+            # Create the AddressInstance
             # @param [String] customer_name The name to associate with the new address.
             # @param [String] street The number and street address of the new address.
             # @param [String] city The city of the new address.
@@ -44,7 +43,7 @@ module Twilio
             #   the address. Can be: `true` or `false` and the default is `true`. If empty or
             #   `true`, we will correct the address you provide if necessary. If `false`, we
             #   won't alter the address you provide.
-            # @return [AddressInstance] Newly created AddressInstance
+            # @return [AddressInstance] Created AddressInstance
             def create(customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil, iso_country: nil, friendly_name: :unset, emergency_enabled: :unset, auto_correct_address: :unset)
               data = Twilio::Values.of({
                   'CustomerName' => customer_name,
@@ -58,11 +57,7 @@ module Twilio
                   'AutoCorrectAddress' => auto_correct_address,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               AddressInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
@@ -160,11 +155,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               AddressPage.new(@version, response, @solution)
             end
 
@@ -239,23 +232,17 @@ module Twilio
             end
 
             ##
-            # Deletes the AddressInstance
+            # Delete the AddressInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
-            # Fetch a AddressInstance
+            # Fetch the AddressInstance
             # @return [AddressInstance] Fetched AddressInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               AddressInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
@@ -288,11 +275,7 @@ module Twilio
                   'AutoCorrectAddress' => auto_correct_address,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               AddressInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
@@ -468,14 +451,14 @@ module Twilio
             end
 
             ##
-            # Deletes the AddressInstance
+            # Delete the AddressInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
-            # Fetch a AddressInstance
+            # Fetch the AddressInstance
             # @return [AddressInstance] Fetched AddressInstance
             def fetch
               context.fetch

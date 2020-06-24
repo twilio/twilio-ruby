@@ -27,8 +27,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of ConnectionPolicyTargetInstance records from the API.
-            # Request is executed immediately.
+            # Create the ConnectionPolicyTargetInstance
             # @param [String] target The SIP address you want Twilio to route your calls to.
             #   This must be a `sip:` schema. `sips` is NOT supported.
             # @param [String] friendly_name A descriptive string that you create to describe
@@ -42,7 +41,7 @@ module Twilio
             #   higher values receive more load than those with lower ones with the same
             #   priority.
             # @param [Boolean] enabled Whether the Target is enabled. The default is `true`.
-            # @return [ConnectionPolicyTargetInstance] Newly created ConnectionPolicyTargetInstance
+            # @return [ConnectionPolicyTargetInstance] Created ConnectionPolicyTargetInstance
             def create(target: nil, friendly_name: :unset, priority: :unset, weight: :unset, enabled: :unset)
               data = Twilio::Values.of({
                   'Target' => target,
@@ -52,11 +51,7 @@ module Twilio
                   'Enabled' => enabled,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               ConnectionPolicyTargetInstance.new(
                   @version,
@@ -126,11 +121,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               ConnectionPolicyTargetPage.new(@version, response, @solution)
             end
 
@@ -205,16 +198,10 @@ module Twilio
             end
 
             ##
-            # Fetch a ConnectionPolicyTargetInstance
+            # Fetch the ConnectionPolicyTargetInstance
             # @return [ConnectionPolicyTargetInstance] Fetched ConnectionPolicyTargetInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               ConnectionPolicyTargetInstance.new(
                   @version,
@@ -248,11 +235,7 @@ module Twilio
                   'Enabled' => enabled,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               ConnectionPolicyTargetInstance.new(
                   @version,
@@ -263,10 +246,10 @@ module Twilio
             end
 
             ##
-            # Deletes the ConnectionPolicyTargetInstance
+            # Delete the ConnectionPolicyTargetInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -399,7 +382,7 @@ module Twilio
             end
 
             ##
-            # Fetch a ConnectionPolicyTargetInstance
+            # Fetch the ConnectionPolicyTargetInstance
             # @return [ConnectionPolicyTargetInstance] Fetched ConnectionPolicyTargetInstance
             def fetch
               context.fetch
@@ -431,7 +414,7 @@ module Twilio
             end
 
             ##
-            # Deletes the ConnectionPolicyTargetInstance
+            # Delete the ConnectionPolicyTargetInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

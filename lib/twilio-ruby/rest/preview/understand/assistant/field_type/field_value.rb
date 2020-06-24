@@ -98,11 +98,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 FieldValuePage.new(@version, response, @solution)
               end
 
@@ -120,22 +118,17 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of FieldValueInstance records from the API.
-              # Request is executed immediately.
+              # Create the FieldValueInstance
               # @param [String] language An ISO language-country string of the value.
               # @param [String] value A user-provided string that uniquely identifies this
               #   resource as an alternative to the sid. Unique up to 64 characters long.
               # @param [String] synonym_of A value that indicates this field value is a synonym
               #   of. Empty if the value is not a synonym.
-              # @return [FieldValueInstance] Newly created FieldValueInstance
+              # @return [FieldValueInstance] Created FieldValueInstance
               def create(language: nil, value: nil, synonym_of: :unset)
                 data = Twilio::Values.of({'Language' => language, 'Value' => value, 'SynonymOf' => synonym_of, })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 FieldValueInstance.new(
                     @version,
@@ -207,16 +200,10 @@ module Twilio
               end
 
               ##
-              # Fetch a FieldValueInstance
+              # Fetch the FieldValueInstance
               # @return [FieldValueInstance] Fetched FieldValueInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 FieldValueInstance.new(
                     @version,
@@ -228,10 +215,10 @@ module Twilio
               end
 
               ##
-              # Deletes the FieldValueInstance
+              # Delete the FieldValueInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -364,14 +351,14 @@ module Twilio
               end
 
               ##
-              # Fetch a FieldValueInstance
+              # Fetch the FieldValueInstance
               # @return [FieldValueInstance] Fetched FieldValueInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the FieldValueInstance
+              # Delete the FieldValueInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

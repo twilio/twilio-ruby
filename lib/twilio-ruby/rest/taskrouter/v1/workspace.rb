@@ -91,11 +91,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             WorkspacePage.new(@version, response, @solution)
           end
 
@@ -113,8 +111,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of WorkspaceInstance records from the API.
-          # Request is executed immediately.
+          # Create the WorkspaceInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the Workspace resource. It can be up to 64 characters long. For example:
           #   `Customer Support` or `2014 Election Campaign`.
@@ -144,7 +141,7 @@ module Twilio
           #   prioritize when Workers are receiving Tasks from both types of TaskQueues. Can
           #   be: `LIFO` or `FIFO` and the default is `FIFO`. For more information, see [Queue
           #   Ordering][https://www.twilio.com/docs/taskrouter/queue-ordering-last-first-out-lifo].
-          # @return [WorkspaceInstance] Newly created WorkspaceInstance
+          # @return [WorkspaceInstance] Created WorkspaceInstance
           def create(friendly_name: nil, event_callback_url: :unset, events_filter: :unset, multi_task_enabled: :unset, template: :unset, prioritize_queue_order: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -155,11 +152,7 @@ module Twilio
                 'PrioritizeQueueOrder' => prioritize_queue_order,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             WorkspaceInstance.new(@version, payload, )
           end
@@ -227,16 +220,10 @@ module Twilio
           end
 
           ##
-          # Fetch a WorkspaceInstance
+          # Fetch the WorkspaceInstance
           # @return [WorkspaceInstance] Fetched WorkspaceInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             WorkspaceInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -281,20 +268,16 @@ module Twilio
                 'PrioritizeQueueOrder' => prioritize_queue_order,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             WorkspaceInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the WorkspaceInstance
+          # Delete the WorkspaceInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -598,7 +581,7 @@ module Twilio
           end
 
           ##
-          # Fetch a WorkspaceInstance
+          # Fetch the WorkspaceInstance
           # @return [WorkspaceInstance] Fetched WorkspaceInstance
           def fetch
             context.fetch
@@ -646,7 +629,7 @@ module Twilio
           end
 
           ##
-          # Deletes the WorkspaceInstance
+          # Delete the WorkspaceInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

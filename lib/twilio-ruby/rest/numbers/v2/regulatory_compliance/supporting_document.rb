@@ -25,14 +25,13 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of SupportingDocumentInstance records from the API.
-            # Request is executed immediately.
+            # Create the SupportingDocumentInstance
             # @param [String] friendly_name The string that you assigned to describe the
             #   resource.
             # @param [String] type The type of the Supporting Document.
             # @param [Hash] attributes The set of parameters that are the attributes of the
             #   Supporting Documents resource which are derived Supporting Document Types.
-            # @return [SupportingDocumentInstance] Newly created SupportingDocumentInstance
+            # @return [SupportingDocumentInstance] Created SupportingDocumentInstance
             def create(friendly_name: nil, type: nil, attributes: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
@@ -40,11 +39,7 @@ module Twilio
                   'Attributes' => Twilio.serialize_object(attributes),
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               SupportingDocumentInstance.new(@version, payload, )
             end
@@ -110,11 +105,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               SupportingDocumentPage.new(@version, response, @solution)
             end
 
@@ -183,16 +176,10 @@ module Twilio
             end
 
             ##
-            # Fetch a SupportingDocumentInstance
+            # Fetch the SupportingDocumentInstance
             # @return [SupportingDocumentInstance] Fetched SupportingDocumentInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               SupportingDocumentInstance.new(@version, payload, sid: @solution[:sid], )
             end
@@ -210,11 +197,7 @@ module Twilio
                   'Attributes' => Twilio.serialize_object(attributes),
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               SupportingDocumentInstance.new(@version, payload, sid: @solution[:sid], )
             end
@@ -336,7 +319,7 @@ module Twilio
             end
 
             ##
-            # Fetch a SupportingDocumentInstance
+            # Fetch the SupportingDocumentInstance
             # @return [SupportingDocumentInstance] Fetched SupportingDocumentInstance
             def fetch
               context.fetch

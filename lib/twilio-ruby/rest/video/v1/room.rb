@@ -24,8 +24,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of RoomInstance records from the API.
-          # Request is executed immediately.
+          # Create the RoomInstance
           # @param [Boolean] enable_turn Deprecated. Whether to enable [Twilio's Network
           #   Traversal TURN service](https://www.twilio.com/stun-turn). TURN service is used
           #   when direct peer-to-peer media connections cannot be established due to firewall
@@ -58,7 +57,7 @@ module Twilio
           # @param [String] media_region The region for the media server in Group Rooms.
           #   Can be: one of the [available Media
           #   Regions](https://www.twilio.com/docs/video/ip-address-whitelisting#group-rooms-media-servers). ***This feature is not available in `peer-to-peer` rooms.***
-          # @return [RoomInstance] Newly created RoomInstance
+          # @return [RoomInstance] Created RoomInstance
           def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset)
             data = Twilio::Values.of({
                 'EnableTurn' => enable_turn,
@@ -72,11 +71,7 @@ module Twilio
                 'MediaRegion' => media_region,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             RoomInstance.new(@version, payload, )
           end
@@ -180,11 +175,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             RoomPage.new(@version, response, @solution)
           end
 
@@ -256,16 +249,10 @@ module Twilio
           end
 
           ##
-          # Fetch a RoomInstance
+          # Fetch the RoomInstance
           # @return [RoomInstance] Fetched RoomInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             RoomInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -278,11 +265,7 @@ module Twilio
           def update(status: nil)
             data = Twilio::Values.of({'Status' => status, })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             RoomInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -495,7 +478,7 @@ module Twilio
           end
 
           ##
-          # Fetch a RoomInstance
+          # Fetch the RoomInstance
           # @return [RoomInstance] Fetched RoomInstance
           def fetch
             context.fetch

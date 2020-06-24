@@ -81,16 +81,10 @@ module Twilio
             end
 
             ##
-            # Fetch a FlowTestUserInstance
+            # Fetch the FlowTestUserInstance
             # @return [FlowTestUserInstance] Fetched FlowTestUserInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               FlowTestUserInstance.new(@version, payload, sid: @solution[:sid], )
             end
@@ -102,11 +96,7 @@ module Twilio
             def update(test_users: nil)
               data = Twilio::Values.of({'TestUsers' => Twilio.serialize_list(test_users) { |e| e }, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               FlowTestUserInstance.new(@version, payload, sid: @solution[:sid], )
             end
@@ -180,7 +170,7 @@ module Twilio
             end
 
             ##
-            # Fetch a FlowTestUserInstance
+            # Fetch the FlowTestUserInstance
             # @return [FlowTestUserInstance] Fetched FlowTestUserInstance
             def fetch
               context.fetch

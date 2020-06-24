@@ -87,7 +87,7 @@ module Twilio
               end
 
               ##
-              # Fetch a WorkflowCumulativeStatisticsInstance
+              # Fetch the WorkflowCumulativeStatisticsInstance
               # @param [Time] end_date Only include usage that occurred on or before this date,
               #   specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
               #   date-time.
@@ -116,11 +116,7 @@ module Twilio
                     'SplitByWaitTime' => split_by_wait_time,
                 })
 
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri, params)
 
                 WorkflowCumulativeStatisticsInstance.new(
                     @version,
@@ -337,7 +333,7 @@ module Twilio
               end
 
               ##
-              # Fetch a WorkflowCumulativeStatisticsInstance
+              # Fetch the WorkflowCumulativeStatisticsInstance
               # @param [Time] end_date Only include usage that occurred on or before this date,
               #   specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
               #   date-time.

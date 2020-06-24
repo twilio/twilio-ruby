@@ -132,11 +132,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               RecordingPage.new(@version, response, @solution)
             end
 
@@ -212,25 +210,19 @@ module Twilio
             end
 
             ##
-            # Fetch a RecordingInstance
+            # Fetch the RecordingInstance
             # @return [RecordingInstance] Fetched RecordingInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               RecordingInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the RecordingInstance
+            # Delete the RecordingInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -453,14 +445,14 @@ module Twilio
             end
 
             ##
-            # Fetch a RecordingInstance
+            # Fetch the RecordingInstance
             # @return [RecordingInstance] Fetched RecordingInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the RecordingInstance
+            # Delete the RecordingInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

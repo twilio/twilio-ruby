@@ -101,16 +101,10 @@ module Twilio
           end
 
           ##
-          # Fetch a ExportInstance
+          # Fetch the ExportInstance
           # @return [ExportInstance] Fetched ExportInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             ExportInstance.new(@version, payload, resource_type: @solution[:resource_type], )
           end
@@ -214,7 +208,7 @@ module Twilio
           end
 
           ##
-          # Fetch a ExportInstance
+          # Fetch the ExportInstance
           # @return [ExportInstance] Fetched ExportInstance
           def fetch
             context.fetch

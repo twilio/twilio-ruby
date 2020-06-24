@@ -127,11 +127,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             CompositionPage.new(@version, response, @solution)
           end
 
@@ -149,8 +147,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of CompositionInstance records from the API.
-          # Request is executed immediately.
+          # Create the CompositionInstance
           # @param [String] room_sid The SID of the Group Room with the media tracks to be
           #   used as composition sources.
           # @param [Hash] video_layout An object that describes the video layout of the
@@ -206,7 +203,7 @@ module Twilio
           #   while as well as if all the Participants leave the room and join later, because
           #   those gaps will be removed. See [Specifying Video
           #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
-          # @return [CompositionInstance] Newly created CompositionInstance
+          # @return [CompositionInstance] Created CompositionInstance
           def create(room_sid: nil, video_layout: :unset, audio_sources: :unset, audio_sources_excluded: :unset, resolution: :unset, format: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset)
             data = Twilio::Values.of({
                 'RoomSid' => room_sid,
@@ -220,11 +217,7 @@ module Twilio
                 'Trim' => trim,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             CompositionInstance.new(@version, payload, )
           end
@@ -284,25 +277,19 @@ module Twilio
           end
 
           ##
-          # Fetch a CompositionInstance
+          # Fetch the CompositionInstance
           # @return [CompositionInstance] Fetched CompositionInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             CompositionInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the CompositionInstance
+          # Delete the CompositionInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -479,14 +466,14 @@ module Twilio
           end
 
           ##
-          # Fetch a CompositionInstance
+          # Fetch the CompositionInstance
           # @return [CompositionInstance] Fetched CompositionInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the CompositionInstance
+          # Delete the CompositionInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

@@ -28,17 +28,10 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of EvaluationInstance records from the API.
-              # Request is executed immediately.
-              # @return [EvaluationInstance] Newly created EvaluationInstance
+              # Create the EvaluationInstance
+              # @return [EvaluationInstance] Created EvaluationInstance
               def create
-                data = Twilio::Values.of({})
-
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri)
 
                 EvaluationInstance.new(@version, payload, bundle_sid: @solution[:bundle_sid], )
               end
@@ -104,11 +97,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 EvaluationPage.new(@version, response, @solution)
               end
 
@@ -178,16 +169,10 @@ module Twilio
               end
 
               ##
-              # Fetch a EvaluationInstance
+              # Fetch the EvaluationInstance
               # @return [EvaluationInstance] Fetched EvaluationInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 EvaluationInstance.new(@version, payload, bundle_sid: @solution[:bundle_sid], sid: @solution[:sid], )
               end
@@ -296,7 +281,7 @@ module Twilio
               end
 
               ##
-              # Fetch a EvaluationInstance
+              # Fetch the EvaluationInstance
               # @return [EvaluationInstance] Fetched EvaluationInstance
               def fetch
                 context.fetch

@@ -24,8 +24,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of ByocTrunkInstance records from the API.
-          # Request is executed immediately.
+          # Create the ByocTrunkInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource. It is not unique and can be up to 255 characters long.
           # @param [String] voice_url The URL we should call when the BYOC Trunk receives a
@@ -53,7 +52,7 @@ module Twilio
           #   with a [SIP Domain](https://www.twilio.com/docs/voice/api/sending-sip) to ensure
           #   proper routing. If not configured, the from domain will default to
           #   "sip.twilio.com".
-          # @return [ByocTrunkInstance] Newly created ByocTrunkInstance
+          # @return [ByocTrunkInstance] Created ByocTrunkInstance
           def create(friendly_name: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback_url: :unset, status_callback_method: :unset, cnam_lookup_enabled: :unset, connection_policy_sid: :unset, from_domain_sid: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -68,11 +67,7 @@ module Twilio
                 'FromDomainSid' => from_domain_sid,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             ByocTrunkInstance.new(@version, payload, )
           end
@@ -138,11 +133,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             ByocTrunkPage.new(@version, response, @solution)
           end
 
@@ -211,16 +204,10 @@ module Twilio
           end
 
           ##
-          # Fetch a ByocTrunkInstance
+          # Fetch the ByocTrunkInstance
           # @return [ByocTrunkInstance] Fetched ByocTrunkInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             ByocTrunkInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -268,20 +255,16 @@ module Twilio
                 'FromDomainSid' => from_domain_sid,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             ByocTrunkInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the ByocTrunkInstance
+          # Delete the ByocTrunkInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -436,7 +419,7 @@ module Twilio
           end
 
           ##
-          # Fetch a ByocTrunkInstance
+          # Fetch the ByocTrunkInstance
           # @return [ByocTrunkInstance] Fetched ByocTrunkInstance
           def fetch
             context.fetch
@@ -487,7 +470,7 @@ module Twilio
           end
 
           ##
-          # Deletes the ByocTrunkInstance
+          # Delete the ByocTrunkInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

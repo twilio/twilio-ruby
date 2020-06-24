@@ -28,8 +28,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of RoleInstance records from the API.
-            # Request is executed immediately.
+            # Create the RoleInstance
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the new resource. It can be up to 64 characters long.
             # @param [role.RoleType] type The type of role. Can be: `channel` for
@@ -39,7 +38,7 @@ module Twilio
             #   permission can be granted per parameter. To assign more than one permission,
             #   repeat this parameter for each permission value. The values for this parameter
             #   depend on the role's `type` and are described in the documentation.
-            # @return [RoleInstance] Newly created RoleInstance
+            # @return [RoleInstance] Created RoleInstance
             def create(friendly_name: nil, type: nil, permission: nil)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
@@ -47,11 +46,7 @@ module Twilio
                   'Permission' => Twilio.serialize_list(permission) { |e| e },
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               RoleInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -117,11 +112,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               RolePage.new(@version, response, @solution)
             end
 
@@ -193,25 +186,19 @@ module Twilio
             end
 
             ##
-            # Fetch a RoleInstance
+            # Fetch the RoleInstance
             # @return [RoleInstance] Fetched RoleInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               RoleInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the RoleInstance
+            # Delete the RoleInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -224,11 +211,7 @@ module Twilio
             def update(permission: nil)
               data = Twilio::Values.of({'Permission' => Twilio.serialize_list(permission) { |e| e }, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               RoleInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -346,14 +329,14 @@ module Twilio
             end
 
             ##
-            # Fetch a RoleInstance
+            # Fetch the RoleInstance
             # @return [RoleInstance] Fetched RoleInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the RoleInstance
+            # Delete the RoleInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

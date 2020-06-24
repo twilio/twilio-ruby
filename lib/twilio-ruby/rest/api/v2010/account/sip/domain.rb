@@ -88,11 +88,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 DomainPage.new(@version, response, @solution)
               end
 
@@ -110,8 +108,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of DomainInstance records from the API.
-              # Request is executed immediately.
+              # Create the DomainInstance
               # @param [String] domain_name The unique address you reserve on Twilio to which
               #   you route your SIP traffic. Domain names can contain letters, digits, and "-".
               # @param [String] friendly_name A descriptive string that you created to describe
@@ -141,7 +138,7 @@ module Twilio
               # @param [String] emergency_caller_sid Whether an emergency caller sid is
               #   configured for the domain. If present, this phone number will be used as the
               #   callback for the emergency call.
-              # @return [DomainInstance] Newly created DomainInstance
+              # @return [DomainInstance] Created DomainInstance
               def create(domain_name: nil, friendly_name: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, voice_status_callback_url: :unset, voice_status_callback_method: :unset, sip_registration: :unset, emergency_calling_enabled: :unset, secure: :unset, byoc_trunk_sid: :unset, emergency_caller_sid: :unset)
                 data = Twilio::Values.of({
                     'DomainName' => domain_name,
@@ -159,11 +156,7 @@ module Twilio
                     'EmergencyCallerSid' => emergency_caller_sid,
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 DomainInstance.new(@version, payload, account_sid: @solution[:account_sid], )
               end
@@ -228,16 +221,10 @@ module Twilio
               end
 
               ##
-              # Fetch a DomainInstance
+              # Fetch the DomainInstance
               # @return [DomainInstance] Fetched DomainInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 DomainInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
               end
@@ -291,20 +278,16 @@ module Twilio
                     'EmergencyCallerSid' => emergency_caller_sid,
                 })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 DomainInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
               end
 
               ##
-              # Deletes the DomainInstance
+              # Delete the DomainInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -568,7 +551,7 @@ module Twilio
               end
 
               ##
-              # Fetch a DomainInstance
+              # Fetch the DomainInstance
               # @return [DomainInstance] Fetched DomainInstance
               def fetch
                 context.fetch
@@ -625,7 +608,7 @@ module Twilio
               end
 
               ##
-              # Deletes the DomainInstance
+              # Delete the DomainInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

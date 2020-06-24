@@ -81,16 +81,10 @@ module Twilio
             end
 
             ##
-            # Fetch a StyleSheetInstance
+            # Fetch the StyleSheetInstance
             # @return [StyleSheetInstance] Fetched StyleSheetInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               StyleSheetInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
@@ -102,11 +96,7 @@ module Twilio
             def update(style_sheet: :unset)
               data = Twilio::Values.of({'StyleSheet' => Twilio.serialize_object(style_sheet), })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               StyleSheetInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
@@ -187,7 +177,7 @@ module Twilio
             end
 
             ##
-            # Fetch a StyleSheetInstance
+            # Fetch the StyleSheetInstance
             # @return [StyleSheetInstance] Fetched StyleSheetInstance
             def fetch
               context.fetch

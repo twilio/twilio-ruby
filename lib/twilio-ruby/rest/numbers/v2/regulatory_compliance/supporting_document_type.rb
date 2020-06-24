@@ -85,11 +85,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               SupportingDocumentTypePage.new(@version, response, @solution)
             end
 
@@ -158,16 +156,10 @@ module Twilio
             end
 
             ##
-            # Fetch a SupportingDocumentTypeInstance
+            # Fetch the SupportingDocumentTypeInstance
             # @return [SupportingDocumentTypeInstance] Fetched SupportingDocumentTypeInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               SupportingDocumentTypeInstance.new(@version, payload, sid: @solution[:sid], )
             end
@@ -254,7 +246,7 @@ module Twilio
             end
 
             ##
-            # Fetch a SupportingDocumentTypeInstance
+            # Fetch the SupportingDocumentTypeInstance
             # @return [SupportingDocumentTypeInstance] Fetched SupportingDocumentTypeInstance
             def fetch
               context.fetch

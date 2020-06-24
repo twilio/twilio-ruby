@@ -163,11 +163,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               WorkerPage.new(@version, response, @solution)
             end
 
@@ -185,8 +183,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of WorkerInstance records from the API.
-            # Request is executed immediately.
+            # Create the WorkerInstance
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the new Worker. It can be up to 64 characters long.
             # @param [String] activity_sid The SID of a valid Activity that will describe the
@@ -198,7 +195,7 @@ module Twilio
             #   For example: `{ "email": "Bob@example.com", "phone": "+5095551234" }`. This data
             #   is passed to the `assignment_callback_url` when TaskRouter assigns a Task to the
             #   Worker. Defaults to {}.
-            # @return [WorkerInstance] Newly created WorkerInstance
+            # @return [WorkerInstance] Created WorkerInstance
             def create(friendly_name: nil, activity_sid: :unset, attributes: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
@@ -206,11 +203,7 @@ module Twilio
                   'Attributes' => attributes,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               WorkerInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], )
             end
@@ -284,16 +277,10 @@ module Twilio
             end
 
             ##
-            # Fetch a WorkerInstance
+            # Fetch the WorkerInstance
             # @return [WorkerInstance] Fetched WorkerInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               WorkerInstance.new(
                   @version,
@@ -326,11 +313,7 @@ module Twilio
                   'RejectPendingReservations' => reject_pending_reservations,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               WorkerInstance.new(
                   @version,
@@ -341,10 +324,10 @@ module Twilio
             end
 
             ##
-            # Deletes the WorkerInstance
+            # Delete the WorkerInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -553,7 +536,7 @@ module Twilio
             end
 
             ##
-            # Fetch a WorkerInstance
+            # Fetch the WorkerInstance
             # @return [WorkerInstance] Fetched WorkerInstance
             def fetch
               context.fetch
@@ -584,7 +567,7 @@ module Twilio
             end
 
             ##
-            # Deletes the WorkerInstance
+            # Delete the WorkerInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

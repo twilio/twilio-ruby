@@ -30,8 +30,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of SyncMapInstance records from the API.
-            # Request is executed immediately.
+            # Create the SyncMapInstance
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the resource. It can be used as an alternative to the `sid` in the
             #   URL path to address the resource.
@@ -42,7 +41,7 @@ module Twilio
             #   The default value is `0`, which means the Sync Map does not expire. The Sync Map
             #   will be deleted automatically after it expires, but there can be a delay between
             #   the expiration time and the resources's deletion.
-            # @return [SyncMapInstance] Newly created SyncMapInstance
+            # @return [SyncMapInstance] Created SyncMapInstance
             def create(unique_name: :unset, ttl: :unset, collection_ttl: :unset)
               data = Twilio::Values.of({
                   'UniqueName' => unique_name,
@@ -50,11 +49,7 @@ module Twilio
                   'CollectionTtl' => collection_ttl,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               SyncMapInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -120,11 +115,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               SyncMapPage.new(@version, response, @solution)
             end
 
@@ -203,25 +196,19 @@ module Twilio
             end
 
             ##
-            # Fetch a SyncMapInstance
+            # Fetch the SyncMapInstance
             # @return [SyncMapInstance] Fetched SyncMapInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               SyncMapInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the SyncMapInstance
+            # Delete the SyncMapInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -237,11 +224,7 @@ module Twilio
             def update(ttl: :unset, collection_ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, 'CollectionTtl' => collection_ttl, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               SyncMapInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -418,14 +401,14 @@ module Twilio
             end
 
             ##
-            # Fetch a SyncMapInstance
+            # Fetch the SyncMapInstance
             # @return [SyncMapInstance] Fetched SyncMapInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the SyncMapInstance
+            # Delete the SyncMapInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

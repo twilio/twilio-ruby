@@ -80,16 +80,10 @@ module Twilio
           end
 
           ##
-          # Fetch a FormInstance
+          # Fetch the FormInstance
           # @return [FormInstance] Fetched FormInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             FormInstance.new(@version, payload, form_type: @solution[:form_type], )
           end
@@ -171,7 +165,7 @@ module Twilio
           end
 
           ##
-          # Fetch a FormInstance
+          # Fetch the FormInstance
           # @return [FormInstance] Fetched FormInstance
           def fetch
             context.fetch

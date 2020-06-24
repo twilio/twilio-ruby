@@ -78,16 +78,10 @@ module Twilio
           end
 
           ##
-          # Fetch a CpsInstance
+          # Fetch the CpsInstance
           # @return [CpsInstance] Fetched CpsInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             CpsInstance.new(@version, payload, )
           end
@@ -160,7 +154,7 @@ module Twilio
           end
 
           ##
-          # Fetch a CpsInstance
+          # Fetch the CpsInstance
           # @return [CpsInstance] Fetched CpsInstance
           def fetch
             context.fetch

@@ -85,16 +85,10 @@ module Twilio
             end
 
             ##
-            # Fetch a DefaultsInstance
+            # Fetch the DefaultsInstance
             # @return [DefaultsInstance] Fetched DefaultsInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               DefaultsInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
@@ -107,11 +101,7 @@ module Twilio
             def update(defaults: :unset)
               data = Twilio::Values.of({'Defaults' => Twilio.serialize_object(defaults), })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               DefaultsInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
@@ -194,7 +184,7 @@ module Twilio
             end
 
             ##
-            # Fetch a DefaultsInstance
+            # Fetch the DefaultsInstance
             # @return [DefaultsInstance] Fetched DefaultsInstance
             def fetch
               context.fetch

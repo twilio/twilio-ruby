@@ -26,8 +26,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of PhoneCallInstance records from the API.
-          # Request is executed immediately.
+          # Create the PhoneCallInstance
           # @param [String] from The phone number to use as the caller id, given in [E.164
           #   format](https://www.twilio.com/docs/glossary/what-e164). It must be a Twilio
           #   number that has been set up as a Branded Number in the Business Profile section
@@ -108,7 +107,7 @@ module Twilio
           # @param [String] url Refers to the parameter with the same name when [initiating
           #   a call via Voice
           #   API](https://www.twilio.com/docs/voice/api/call#create-a-call-resource)
-          # @return [PhoneCallInstance] Newly created PhoneCallInstance
+          # @return [PhoneCallInstance] Created PhoneCallInstance
           def create(from: nil, to: nil, reason: :unset, application_sid: :unset, caller_id: :unset, fallback_method: :unset, fallback_url: :unset, machine_detection: :unset, machine_detection_silence_timeout: :unset, machine_detection_speech_end_threshold: :unset, machine_detection_speech_threshold: :unset, machine_detection_timeout: :unset, method: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_event: :unset, recording_status_callback_method: :unset, send_digits: :unset, sip_auth_password: :unset, sip_auth_username: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, timeout: :unset, trim: :unset, url: :unset)
             data = Twilio::Values.of({
                 'From' => from,
@@ -140,11 +139,7 @@ module Twilio
                 'Url' => url,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             PhoneCallInstance.new(@version, payload, )
           end

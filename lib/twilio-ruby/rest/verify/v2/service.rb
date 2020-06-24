@@ -24,8 +24,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of ServiceInstance records from the API.
-          # Request is executed immediately.
+          # Create the ServiceInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the verification service. It can be up to 64 characters long. **This value
           #   should not contain PII.**
@@ -48,7 +47,7 @@ module Twilio
           # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
-          # @return [ServiceInstance] Newly created ServiceInstance
+          # @return [ServiceInstance] Created ServiceInstance
           def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -62,11 +61,7 @@ module Twilio
                 'CustomCodeEnabled' => custom_code_enabled,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             ServiceInstance.new(@version, payload, )
           end
@@ -132,11 +127,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             ServicePage.new(@version, response, @solution)
           end
 
@@ -213,25 +206,19 @@ module Twilio
           end
 
           ##
-          # Fetch a ServiceInstance
+          # Fetch the ServiceInstance
           # @return [ServiceInstance] Fetched ServiceInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             ServiceInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the ServiceInstance
+          # Delete the ServiceInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -270,11 +257,7 @@ module Twilio
                 'CustomCodeEnabled' => custom_code_enabled,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             ServiceInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -533,14 +516,14 @@ module Twilio
           end
 
           ##
-          # Fetch a ServiceInstance
+          # Fetch the ServiceInstance
           # @return [ServiceInstance] Fetched ServiceInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the ServiceInstance
+          # Delete the ServiceInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

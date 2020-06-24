@@ -87,11 +87,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               TaskChannelPage.new(@version, response, @solution)
             end
 
@@ -109,8 +107,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of TaskChannelInstance records from the API.
-            # Request is executed immediately.
+            # Create the TaskChannelInstance
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the TaskChannel. It can be up to 64 characters long.
             # @param [String] unique_name An application-defined string that uniquely
@@ -118,7 +115,7 @@ module Twilio
             # @param [Boolean] channel_optimized_routing Whether the TaskChannel should
             #   prioritize Workers that have been idle. If `true`, Workers that have been idle
             #   the longest are prioritized.
-            # @return [TaskChannelInstance] Newly created TaskChannelInstance
+            # @return [TaskChannelInstance] Created TaskChannelInstance
             def create(friendly_name: nil, unique_name: nil, channel_optimized_routing: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
@@ -126,11 +123,7 @@ module Twilio
                   'ChannelOptimizedRouting' => channel_optimized_routing,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               TaskChannelInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], )
             end
@@ -188,16 +181,10 @@ module Twilio
             end
 
             ##
-            # Fetch a TaskChannelInstance
+            # Fetch the TaskChannelInstance
             # @return [TaskChannelInstance] Fetched TaskChannelInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               TaskChannelInstance.new(
                   @version,
@@ -221,11 +208,7 @@ module Twilio
                   'ChannelOptimizedRouting' => channel_optimized_routing,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               TaskChannelInstance.new(
                   @version,
@@ -236,10 +219,10 @@ module Twilio
             end
 
             ##
-            # Deletes the TaskChannelInstance
+            # Delete the TaskChannelInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -360,7 +343,7 @@ module Twilio
             end
 
             ##
-            # Fetch a TaskChannelInstance
+            # Fetch the TaskChannelInstance
             # @return [TaskChannelInstance] Fetched TaskChannelInstance
             def fetch
               context.fetch
@@ -379,7 +362,7 @@ module Twilio
             end
 
             ##
-            # Deletes the TaskChannelInstance
+            # Delete the TaskChannelInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

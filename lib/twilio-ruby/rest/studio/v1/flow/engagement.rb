@@ -86,11 +86,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               EngagementPage.new(@version, response, @solution)
             end
 
@@ -108,8 +106,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of EngagementInstance records from the API.
-            # Request is executed immediately.
+            # Create the EngagementInstance
             # @param [String] to The Contact phone number to start a Studio Flow Engagement,
             #   available as variable `{{contact.channel.address}}`.
             # @param [String] from The Twilio phone number to send messages or initiate calls
@@ -122,7 +119,7 @@ module Twilio
             #   must explicitly be passed as a string, not as a hash object. Depending on your
             #   particular HTTP library, you may need to add quotes or URL encode your JSON
             #   string.
-            # @return [EngagementInstance] Newly created EngagementInstance
+            # @return [EngagementInstance] Created EngagementInstance
             def create(to: nil, from: nil, parameters: :unset)
               data = Twilio::Values.of({
                   'To' => to,
@@ -130,11 +127,7 @@ module Twilio
                   'Parameters' => Twilio.serialize_object(parameters),
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               EngagementInstance.new(@version, payload, flow_sid: @solution[:flow_sid], )
             end
@@ -195,25 +188,19 @@ module Twilio
             end
 
             ##
-            # Fetch a EngagementInstance
+            # Fetch the EngagementInstance
             # @return [EngagementInstance] Fetched EngagementInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               EngagementInstance.new(@version, payload, flow_sid: @solution[:flow_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the EngagementInstance
+            # Delete the EngagementInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -366,14 +353,14 @@ module Twilio
             end
 
             ##
-            # Fetch a EngagementInstance
+            # Fetch the EngagementInstance
             # @return [EngagementInstance] Fetched EngagementInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the EngagementInstance
+            # Delete the EngagementInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

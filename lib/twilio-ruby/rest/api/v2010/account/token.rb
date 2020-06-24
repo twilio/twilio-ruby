@@ -28,19 +28,14 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of TokenInstance records from the API.
-            # Request is executed immediately.
+            # Create the TokenInstance
             # @param [String] ttl The duration in seconds for which the generated credentials
             #   are valid. The default value is 86400 (24 hours).
-            # @return [TokenInstance] Newly created TokenInstance
+            # @return [TokenInstance] Created TokenInstance
             def create(ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               TokenInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end

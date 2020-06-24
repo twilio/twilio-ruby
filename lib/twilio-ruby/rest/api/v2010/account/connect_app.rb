@@ -88,11 +88,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               ConnectAppPage.new(@version, response, @solution)
             end
 
@@ -164,16 +162,10 @@ module Twilio
             end
 
             ##
-            # Fetch a ConnectAppInstance
+            # Fetch the ConnectAppInstance
             # @return [ConnectAppInstance] Fetched ConnectAppInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               ConnectAppInstance.new(
                   @version,
@@ -213,11 +205,7 @@ module Twilio
                   'Permissions' => Twilio.serialize_list(permissions) { |e| e },
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               ConnectAppInstance.new(
                   @version,
@@ -228,10 +216,10 @@ module Twilio
             end
 
             ##
-            # Deletes the ConnectAppInstance
+            # Delete the ConnectAppInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -361,7 +349,7 @@ module Twilio
             end
 
             ##
-            # Fetch a ConnectAppInstance
+            # Fetch the ConnectAppInstance
             # @return [ConnectAppInstance] Fetched ConnectAppInstance
             def fetch
               context.fetch
@@ -399,7 +387,7 @@ module Twilio
             end
 
             ##
-            # Deletes the ConnectAppInstance
+            # Delete the ConnectAppInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

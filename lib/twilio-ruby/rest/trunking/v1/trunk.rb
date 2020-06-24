@@ -24,8 +24,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of TrunkInstance records from the API.
-          # Request is executed immediately.
+          # Create the TrunkInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource. It can be up to 64 characters long.
           # @param [String] domain_name The unique address you reserve on Twilio to which
@@ -59,7 +58,7 @@ module Twilio
           #   the United States and Canada automatically perform a CNAM Lookup and display
           #   Caller ID data on your phone. See [CNAM
           #   Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
-          # @return [TrunkInstance] Newly created TrunkInstance
+          # @return [TrunkInstance] Created TrunkInstance
           def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -71,11 +70,7 @@ module Twilio
                 'CnamLookupEnabled' => cnam_lookup_enabled,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             TrunkInstance.new(@version, payload, )
           end
@@ -141,11 +136,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             TrunkPage.new(@version, response, @solution)
           end
 
@@ -220,25 +213,19 @@ module Twilio
           end
 
           ##
-          # Fetch a TrunkInstance
+          # Fetch the TrunkInstance
           # @return [TrunkInstance] Fetched TrunkInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             TrunkInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the TrunkInstance
+          # Delete the TrunkInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -286,11 +273,7 @@ module Twilio
                 'CnamLookupEnabled' => cnam_lookup_enabled,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             TrunkInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -519,14 +502,14 @@ module Twilio
           end
 
           ##
-          # Fetch a TrunkInstance
+          # Fetch the TrunkInstance
           # @return [TrunkInstance] Fetched TrunkInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the TrunkInstance
+          # Delete the TrunkInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

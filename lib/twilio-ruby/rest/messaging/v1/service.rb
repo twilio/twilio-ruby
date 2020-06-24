@@ -26,8 +26,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of ServiceInstance records from the API.
-          # Request is executed immediately.
+          # Create the ServiceInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource. It can be up to 64 characters long.
           # @param [String] inbound_request_url The URL we should call using
@@ -62,7 +61,7 @@ module Twilio
           # @param [String] validity_period How long, in seconds, messages sent from the
           #   Service are valid. Can be an integer from `1` to `14,400`.
           # @param [Boolean] synchronous_validation Reserved.
-          # @return [ServiceInstance] Newly created ServiceInstance
+          # @return [ServiceInstance] Created ServiceInstance
           def create(friendly_name: nil, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -81,11 +80,7 @@ module Twilio
                 'SynchronousValidation' => synchronous_validation,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             ServiceInstance.new(@version, payload, )
           end
@@ -151,11 +146,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             ServicePage.new(@version, response, @solution)
           end
 
@@ -286,35 +279,25 @@ module Twilio
                 'SynchronousValidation' => synchronous_validation,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             ServiceInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Fetch a ServiceInstance
+          # Fetch the ServiceInstance
           # @return [ServiceInstance] Fetched ServiceInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             ServiceInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the ServiceInstance
+          # Delete the ServiceInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -615,14 +598,14 @@ module Twilio
           end
 
           ##
-          # Fetch a ServiceInstance
+          # Fetch the ServiceInstance
           # @return [ServiceInstance] Fetched ServiceInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the ServiceInstance
+          # Delete the ServiceInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

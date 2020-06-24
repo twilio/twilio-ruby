@@ -90,11 +90,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               FieldTypePage.new(@version, response, @solution)
             end
 
@@ -112,22 +110,17 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of FieldTypeInstance records from the API.
-            # Request is executed immediately.
+            # Create the FieldTypeInstance
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the new resource. It can be used as an alternative to the `sid` in
             #   the URL path to address the resource. The first 64 characters must be unique.
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the new resource. It is not unique and can be up to 255 characters long.
-            # @return [FieldTypeInstance] Newly created FieldTypeInstance
+            # @return [FieldTypeInstance] Created FieldTypeInstance
             def create(unique_name: nil, friendly_name: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'FriendlyName' => friendly_name, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               FieldTypeInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
@@ -194,16 +187,10 @@ module Twilio
             end
 
             ##
-            # Fetch a FieldTypeInstance
+            # Fetch the FieldTypeInstance
             # @return [FieldTypeInstance] Fetched FieldTypeInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               FieldTypeInstance.new(
                   @version,
@@ -224,11 +211,7 @@ module Twilio
             def update(friendly_name: :unset, unique_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'UniqueName' => unique_name, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               FieldTypeInstance.new(
                   @version,
@@ -239,10 +222,10 @@ module Twilio
             end
 
             ##
-            # Deletes the FieldTypeInstance
+            # Delete the FieldTypeInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -382,7 +365,7 @@ module Twilio
             end
 
             ##
-            # Fetch a FieldTypeInstance
+            # Fetch the FieldTypeInstance
             # @return [FieldTypeInstance] Fetched FieldTypeInstance
             def fetch
               context.fetch
@@ -401,7 +384,7 @@ module Twilio
             end
 
             ##
-            # Deletes the FieldTypeInstance
+            # Delete the FieldTypeInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

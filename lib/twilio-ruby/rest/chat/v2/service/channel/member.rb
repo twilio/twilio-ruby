@@ -32,8 +32,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of MemberInstance records from the API.
-              # Request is executed immediately.
+              # Create the MemberInstance
               # @param [String] identity The `identity` value that uniquely identifies the new
               #   resource's [User](https://www.twilio.com/docs/chat/rest/user-resource) within
               #   the [Service](https://www.twilio.com/docs/chat/rest/service-resource). See
@@ -63,7 +62,7 @@ module Twilio
               #   backup/separate source and where a Member was previously updated.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
-              # @return [MemberInstance] Newly created MemberInstance
+              # @return [MemberInstance] Created MemberInstance
               def create(identity: nil, role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
                 data = Twilio::Values.of({
                     'Identity' => identity,
@@ -75,11 +74,7 @@ module Twilio
                     'Attributes' => attributes,
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 MemberInstance.new(
                     @version,
@@ -163,11 +158,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 MemberPage.new(@version, response, @solution)
               end
 
@@ -248,16 +241,10 @@ module Twilio
               end
 
               ##
-              # Fetch a MemberInstance
+              # Fetch the MemberInstance
               # @return [MemberInstance] Fetched MemberInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 MemberInstance.new(
                     @version,
@@ -269,10 +256,10 @@ module Twilio
               end
 
               ##
-              # Deletes the MemberInstance
+              # Delete the MemberInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -309,11 +296,7 @@ module Twilio
                     'Attributes' => attributes,
                 })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 MemberInstance.new(
                     @version,
@@ -470,14 +453,14 @@ module Twilio
               end
 
               ##
-              # Fetch a MemberInstance
+              # Fetch the MemberInstance
               # @return [MemberInstance] Fetched MemberInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the MemberInstance
+              # Delete the MemberInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

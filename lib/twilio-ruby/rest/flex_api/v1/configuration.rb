@@ -72,34 +72,23 @@ module Twilio
           end
 
           ##
-          # Fetch a ConfigurationInstance
+          # Fetch the ConfigurationInstance
           # @param [String] ui_version The Pinned UI version of the Configuration resource
           #   to fetch.
           # @return [ConfigurationInstance] Fetched ConfigurationInstance
           def fetch(ui_version: :unset)
             params = Twilio::Values.of({'UiVersion' => ui_version, })
 
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri, params)
 
             ConfigurationInstance.new(@version, payload, )
           end
 
           ##
-          # Retrieve a single page of ConfigurationInstance records from the API.
-          # Request is executed immediately.
-          # @return [ConfigurationInstance] Newly created ConfigurationInstance
+          # Create the ConfigurationInstance
+          # @return [ConfigurationInstance] Created ConfigurationInstance
           def create
-            data = Twilio::Values.of({})
-
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri)
 
             ConfigurationInstance.new(@version, payload, )
           end
@@ -108,13 +97,7 @@ module Twilio
           # Update the ConfigurationInstance
           # @return [ConfigurationInstance] Updated ConfigurationInstance
           def update
-            data = Twilio::Values.of({})
-
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri)
 
             ConfigurationInstance.new(@version, payload, )
           end
@@ -430,7 +413,7 @@ module Twilio
           end
 
           ##
-          # Fetch a ConfigurationInstance
+          # Fetch the ConfigurationInstance
           # @param [String] ui_version The Pinned UI version of the Configuration resource
           #   to fetch.
           # @return [ConfigurationInstance] Fetched ConfigurationInstance
@@ -439,9 +422,8 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of ConfigurationInstance records from the API.
-          # Request is executed immediately.
-          # @return [ConfigurationInstance] Newly created ConfigurationInstance
+          # Create the ConfigurationInstance
+          # @return [ConfigurationInstance] Created ConfigurationInstance
           def create
             context.create
           end

@@ -94,11 +94,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 SamplePage.new(@version, response, @solution)
               end
 
@@ -116,15 +114,14 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of SampleInstance records from the API.
-              # Request is executed immediately.
+              # Create the SampleInstance
               # @param [String] language An ISO language-country string of the sample.
               # @param [String] tagged_text The text example of how end-users may express this
               #   task. The sample may contain Field tag blocks.
               # @param [String] source_channel The communication channel the sample was
               #   captured. It can be: *voice*, *sms*, *chat*, *alexa*, *google-assistant*, or
               #   *slack*. If not included the value will be null
-              # @return [SampleInstance] Newly created SampleInstance
+              # @return [SampleInstance] Created SampleInstance
               def create(language: nil, tagged_text: nil, source_channel: :unset)
                 data = Twilio::Values.of({
                     'Language' => language,
@@ -132,11 +129,7 @@ module Twilio
                     'SourceChannel' => source_channel,
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 SampleInstance.new(
                     @version,
@@ -209,16 +202,10 @@ module Twilio
               end
 
               ##
-              # Fetch a SampleInstance
+              # Fetch the SampleInstance
               # @return [SampleInstance] Fetched SampleInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 SampleInstance.new(
                     @version,
@@ -245,11 +232,7 @@ module Twilio
                     'SourceChannel' => source_channel,
                 })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 SampleInstance.new(
                     @version,
@@ -261,10 +244,10 @@ module Twilio
               end
 
               ##
-              # Deletes the SampleInstance
+              # Delete the SampleInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -397,7 +380,7 @@ module Twilio
               end
 
               ##
-              # Fetch a SampleInstance
+              # Fetch the SampleInstance
               # @return [SampleInstance] Fetched SampleInstance
               def fetch
                 context.fetch
@@ -417,7 +400,7 @@ module Twilio
               end
 
               ##
-              # Deletes the SampleInstance
+              # Delete the SampleInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

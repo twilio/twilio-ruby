@@ -75,7 +75,7 @@ module Twilio
             end
 
             ##
-            # Fetch a WorkspaceRealTimeStatisticsInstance
+            # Fetch the WorkspaceRealTimeStatisticsInstance
             # @param [String] task_channel Only calculate real-time statistics on this
             #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
             #   `sms`, or `default`.
@@ -83,11 +83,7 @@ module Twilio
             def fetch(task_channel: :unset)
               params = Twilio::Values.of({'TaskChannel' => task_channel, })
 
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri, params)
 
               WorkspaceRealTimeStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], )
             end
@@ -208,7 +204,7 @@ module Twilio
             end
 
             ##
-            # Fetch a WorkspaceRealTimeStatisticsInstance
+            # Fetch the WorkspaceRealTimeStatisticsInstance
             # @param [String] task_channel Only calculate real-time statistics on this
             #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
             #   `sms`, or `default`.

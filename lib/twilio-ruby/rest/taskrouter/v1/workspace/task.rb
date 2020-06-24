@@ -199,11 +199,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               TaskPage.new(@version, response, @solution)
             end
 
@@ -221,8 +219,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of TaskInstance records from the API.
-            # Request is executed immediately.
+            # Create the TaskInstance
             # @param [String] timeout The amount of time in seconds the new task is allowed to
             #   live. Can be up to a maximum of 2 weeks (1,209,600 seconds). The default value
             #   is 24 hours (86,400 seconds). On timeout, the `task.canceled` event will fire
@@ -242,7 +239,7 @@ module Twilio
             #   new task. This value is passed to the Workflow's `assignment_callback_url` when
             #   the Task is assigned to a Worker. For example: `{ "task_type": "call",
             #   "twilio_call_sid": "CAxxx", "customer_ticket_number": "12345" }`.
-            # @return [TaskInstance] Newly created TaskInstance
+            # @return [TaskInstance] Created TaskInstance
             def create(timeout: :unset, priority: :unset, task_channel: :unset, workflow_sid: :unset, attributes: :unset)
               data = Twilio::Values.of({
                   'Timeout' => timeout,
@@ -252,11 +249,7 @@ module Twilio
                   'Attributes' => attributes,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               TaskInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], )
             end
@@ -316,16 +309,10 @@ module Twilio
             end
 
             ##
-            # Fetch a TaskInstance
+            # Fetch the TaskInstance
             # @return [TaskInstance] Fetched TaskInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               TaskInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid], )
             end
@@ -357,20 +344,16 @@ module Twilio
                   'TaskChannel' => task_channel,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               TaskInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the TaskInstance
+            # Delete the TaskInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -589,7 +572,7 @@ module Twilio
             end
 
             ##
-            # Fetch a TaskInstance
+            # Fetch the TaskInstance
             # @return [TaskInstance] Fetched TaskInstance
             def fetch
               context.fetch
@@ -624,7 +607,7 @@ module Twilio
             end
 
             ##
-            # Deletes the TaskInstance
+            # Delete the TaskInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

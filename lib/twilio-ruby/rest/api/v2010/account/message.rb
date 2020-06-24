@@ -28,8 +28,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of MessageInstance records from the API.
-            # Request is executed immediately.
+            # Create the MessageInstance
             # @param [String] to The destination phone number in
             #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format for SMS/MMS or
             #   [Channel user
@@ -101,7 +100,7 @@ module Twilio
             #   To send more than one image in the message body, provide multiple `media_url`
             #   parameters in the POST request. You can include up to 10 `media_url` parameters
             #   per message. You can send images in an SMS message in only the US and Canada.
-            # @return [MessageInstance] Newly created MessageInstance
+            # @return [MessageInstance] Created MessageInstance
             def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, attempt: :unset, validity_period: :unset, force_delivery: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, persistent_action: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
@@ -122,11 +121,7 @@ module Twilio
                   'PersistentAction' => Twilio.serialize_list(persistent_action) { |e| e },
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               MessageInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
@@ -230,11 +225,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               MessagePage.new(@version, response, @solution)
             end
 
@@ -310,23 +303,17 @@ module Twilio
             end
 
             ##
-            # Deletes the MessageInstance
+            # Delete the MessageInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
-            # Fetch a MessageInstance
+            # Fetch the MessageInstance
             # @return [MessageInstance] Fetched MessageInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               MessageInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
@@ -339,11 +326,7 @@ module Twilio
             def update(body: nil)
               data = Twilio::Values.of({'Body' => body, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               MessageInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
@@ -572,14 +555,14 @@ module Twilio
             end
 
             ##
-            # Deletes the MessageInstance
+            # Delete the MessageInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
-            # Fetch a MessageInstance
+            # Fetch the MessageInstance
             # @return [MessageInstance] Fetched MessageInstance
             def fetch
               context.fetch
