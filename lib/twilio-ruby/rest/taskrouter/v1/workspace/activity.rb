@@ -112,11 +112,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               ActivityPage.new(@version, response, @solution)
             end
 
@@ -134,8 +132,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of ActivityInstance records from the API.
-            # Request is executed immediately.
+            # Create the ActivityInstance
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the Activity resource. It can be up to 64 characters long. These names are used
             #   to calculate and expose statistics about Workers, and provide visibility into
@@ -144,15 +141,11 @@ module Twilio
             # @param [Boolean] available Whether the Worker should be eligible to receive a
             #   Task when it occupies the Activity. A value of `true`, `1`, or `yes` specifies
             #   the Activity is available. All other values specify that it is not.
-            # @return [ActivityInstance] Newly created ActivityInstance
+            # @return [ActivityInstance] Created ActivityInstance
             def create(friendly_name: nil, available: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'Available' => available, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               ActivityInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], )
             end
@@ -210,16 +203,10 @@ module Twilio
             end
 
             ##
-            # Fetch a ActivityInstance
+            # Fetch the ActivityInstance
             # @return [ActivityInstance] Fetched ActivityInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               ActivityInstance.new(
                   @version,
@@ -240,11 +227,7 @@ module Twilio
             def update(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               ActivityInstance.new(
                   @version,
@@ -255,10 +238,10 @@ module Twilio
             end
 
             ##
-            # Deletes the ActivityInstance
+            # Delete the ActivityInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -365,7 +348,7 @@ module Twilio
             end
 
             ##
-            # Fetch a ActivityInstance
+            # Fetch the ActivityInstance
             # @return [ActivityInstance] Fetched ActivityInstance
             def fetch
               context.fetch
@@ -384,7 +367,7 @@ module Twilio
             end
 
             ##
-            # Deletes the ActivityInstance
+            # Delete the ActivityInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

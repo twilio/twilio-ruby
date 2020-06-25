@@ -88,11 +88,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 IpAccessControlListPage.new(@version, response, @solution)
               end
 
@@ -110,19 +108,14 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of IpAccessControlListInstance records from the API.
-              # Request is executed immediately.
+              # Create the IpAccessControlListInstance
               # @param [String] friendly_name A human readable descriptive text that describes
               #   the IpAccessControlList, up to 64 characters long.
-              # @return [IpAccessControlListInstance] Newly created IpAccessControlListInstance
+              # @return [IpAccessControlListInstance] Created IpAccessControlListInstance
               def create(friendly_name: nil)
                 data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 IpAccessControlListInstance.new(@version, payload, account_sid: @solution[:account_sid], )
               end
@@ -185,16 +178,10 @@ module Twilio
               end
 
               ##
-              # Fetch a IpAccessControlListInstance
+              # Fetch the IpAccessControlListInstance
               # @return [IpAccessControlListInstance] Fetched IpAccessControlListInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 IpAccessControlListInstance.new(
                     @version,
@@ -212,11 +199,7 @@ module Twilio
               def update(friendly_name: nil)
                 data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 IpAccessControlListInstance.new(
                     @version,
@@ -227,10 +210,10 @@ module Twilio
               end
 
               ##
-              # Deletes the IpAccessControlListInstance
+              # Delete the IpAccessControlListInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -353,7 +336,7 @@ module Twilio
               end
 
               ##
-              # Fetch a IpAccessControlListInstance
+              # Fetch the IpAccessControlListInstance
               # @return [IpAccessControlListInstance] Fetched IpAccessControlListInstance
               def fetch
                 context.fetch
@@ -369,7 +352,7 @@ module Twilio
               end
 
               ##
-              # Deletes the IpAccessControlListInstance
+              # Delete the IpAccessControlListInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

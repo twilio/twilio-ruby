@@ -124,11 +124,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 LogPage.new(@version, response, @solution)
               end
 
@@ -209,16 +207,10 @@ module Twilio
               end
 
               ##
-              # Fetch a LogInstance
+              # Fetch the LogInstance
               # @return [LogInstance] Fetched LogInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 LogInstance.new(
                     @version,
@@ -374,7 +366,7 @@ module Twilio
               end
 
               ##
-              # Fetch a LogInstance
+              # Fetch the LogInstance
               # @return [LogInstance] Fetched LogInstance
               def fetch
                 context.fetch

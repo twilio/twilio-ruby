@@ -28,8 +28,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of ChannelInstance records from the API.
-            # Request is executed immediately.
+            # Create the ChannelInstance
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the new resource. It can be up to 64 characters long.
             # @param [String] unique_name An application-defined string that uniquely
@@ -52,7 +51,7 @@ module Twilio
             #   backup/separate source  and where a Message was previously updated.
             # @param [String] created_by The `identity` of the User that created the channel.
             #   Default is: `system`.
-            # @return [ChannelInstance] Newly created ChannelInstance
+            # @return [ChannelInstance] Created ChannelInstance
             def create(friendly_name: :unset, unique_name: :unset, attributes: :unset, type: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
@@ -64,11 +63,7 @@ module Twilio
                   'CreatedBy' => created_by,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               ChannelInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -141,11 +136,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               ChannelPage.new(@version, response, @solution)
             end
 
@@ -223,25 +216,19 @@ module Twilio
             end
 
             ##
-            # Fetch a ChannelInstance
+            # Fetch the ChannelInstance
             # @return [ChannelInstance] Fetched ChannelInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               ChannelInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the ChannelInstance
+            # Delete the ChannelInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -275,11 +262,7 @@ module Twilio
                   'CreatedBy' => created_by,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               ChannelInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -520,14 +503,14 @@ module Twilio
             end
 
             ##
-            # Fetch a ChannelInstance
+            # Fetch the ChannelInstance
             # @return [ChannelInstance] Fetched ChannelInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the ChannelInstance
+            # Delete the ChannelInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

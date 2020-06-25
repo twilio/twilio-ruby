@@ -105,11 +105,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               DayPage.new(@version, response, @solution)
             end
 
@@ -183,16 +181,10 @@ module Twilio
             end
 
             ##
-            # Fetch a DayInstance
+            # Fetch the DayInstance
             # @return [DayInstance] Fetched DayInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               DayInstance.new(@version, payload, resource_type: @solution[:resource_type], day: @solution[:day], )
             end
@@ -289,7 +281,7 @@ module Twilio
             end
 
             ##
-            # Fetch a DayInstance
+            # Fetch the DayInstance
             # @return [DayInstance] Fetched DayInstance
             def fetch
               context.fetch

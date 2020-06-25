@@ -87,11 +87,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               AvailablePhoneNumberCountryPage.new(@version, response, @solution)
             end
 
@@ -173,16 +171,10 @@ module Twilio
             end
 
             ##
-            # Fetch a AvailablePhoneNumberCountryInstance
+            # Fetch the AvailablePhoneNumberCountryInstance
             # @return [AvailablePhoneNumberCountryInstance] Fetched AvailablePhoneNumberCountryInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               AvailablePhoneNumberCountryInstance.new(
                   @version,
@@ -396,7 +388,7 @@ module Twilio
             end
 
             ##
-            # Fetch a AvailablePhoneNumberCountryInstance
+            # Fetch the AvailablePhoneNumberCountryInstance
             # @return [AvailablePhoneNumberCountryInstance] Fetched AvailablePhoneNumberCountryInstance
             def fetch
               context.fetch

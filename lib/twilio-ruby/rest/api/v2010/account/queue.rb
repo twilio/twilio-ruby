@@ -88,11 +88,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               QueuePage.new(@version, response, @solution)
             end
 
@@ -110,21 +108,16 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of QueueInstance records from the API.
-            # Request is executed immediately.
+            # Create the QueueInstance
             # @param [String] friendly_name A descriptive string that you created to describe
             #   this resource. It can be up to 64 characters long.
             # @param [String] max_size The maximum number of calls allowed to be in the queue.
             #   The default is 100. The maximum is 5000.
-            # @return [QueueInstance] Newly created QueueInstance
+            # @return [QueueInstance] Created QueueInstance
             def create(friendly_name: nil, max_size: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'MaxSize' => max_size, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               QueueInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
@@ -187,16 +180,10 @@ module Twilio
             end
 
             ##
-            # Fetch a QueueInstance
+            # Fetch the QueueInstance
             # @return [QueueInstance] Fetched QueueInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               QueueInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
@@ -211,20 +198,16 @@ module Twilio
             def update(friendly_name: :unset, max_size: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'MaxSize' => max_size, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               QueueInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the QueueInstance
+            # Delete the QueueInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -362,7 +345,7 @@ module Twilio
             end
 
             ##
-            # Fetch a QueueInstance
+            # Fetch the QueueInstance
             # @return [QueueInstance] Fetched QueueInstance
             def fetch
               context.fetch
@@ -380,7 +363,7 @@ module Twilio
             end
 
             ##
-            # Deletes the QueueInstance
+            # Delete the QueueInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

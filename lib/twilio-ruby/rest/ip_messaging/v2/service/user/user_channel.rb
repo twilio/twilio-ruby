@@ -92,11 +92,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 UserChannelPage.new(@version, response, @solution)
               end
 
@@ -179,16 +177,10 @@ module Twilio
               end
 
               ##
-              # Fetch a UserChannelInstance
+              # Fetch the UserChannelInstance
               # @return [UserChannelInstance] Fetched UserChannelInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 UserChannelInstance.new(
                     @version,
@@ -200,10 +192,10 @@ module Twilio
               end
 
               ##
-              # Deletes the UserChannelInstance
+              # Delete the UserChannelInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -225,11 +217,7 @@ module Twilio
                     'LastConsumptionTimestamp' => Twilio.serialize_iso8601_datetime(last_consumption_timestamp),
                 })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 UserChannelInstance.new(
                     @version,
@@ -381,14 +369,14 @@ module Twilio
               end
 
               ##
-              # Fetch a UserChannelInstance
+              # Fetch the UserChannelInstance
               # @return [UserChannelInstance] Fetched UserChannelInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the UserChannelInstance
+              # Delete the UserChannelInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

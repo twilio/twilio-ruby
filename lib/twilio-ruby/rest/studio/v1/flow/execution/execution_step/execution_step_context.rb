@@ -89,16 +89,10 @@ module Twilio
                 end
 
                 ##
-                # Fetch a ExecutionStepContextInstance
+                # Fetch the ExecutionStepContextInstance
                 # @return [ExecutionStepContextInstance] Fetched ExecutionStepContextInstance
                 def fetch
-                  params = Twilio::Values.of({})
-
-                  payload = @version.fetch(
-                      'GET',
-                      @uri,
-                      params,
-                  )
+                  payload = @version.fetch('GET', @uri)
 
                   ExecutionStepContextInstance.new(
                       @version,
@@ -205,7 +199,7 @@ module Twilio
                 end
 
                 ##
-                # Fetch a ExecutionStepContextInstance
+                # Fetch the ExecutionStepContextInstance
                 # @return [ExecutionStepContextInstance] Fetched ExecutionStepContextInstance
                 def fetch
                   context.fetch

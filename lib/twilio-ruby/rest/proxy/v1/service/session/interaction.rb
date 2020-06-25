@@ -92,11 +92,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 InteractionPage.new(@version, response, @solution)
               end
 
@@ -180,16 +178,10 @@ module Twilio
               end
 
               ##
-              # Fetch a InteractionInstance
+              # Fetch the InteractionInstance
               # @return [InteractionInstance] Fetched InteractionInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 InteractionInstance.new(
                     @version,
@@ -201,10 +193,10 @@ module Twilio
               end
 
               ##
-              # Deletes the InteractionInstance
+              # Delete the InteractionInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -402,14 +394,14 @@ module Twilio
               end
 
               ##
-              # Fetch a InteractionInstance
+              # Fetch the InteractionInstance
               # @return [InteractionInstance] Fetched InteractionInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the InteractionInstance
+              # Delete the InteractionInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

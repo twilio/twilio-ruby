@@ -27,21 +27,16 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of CredentialListInstance records from the API.
-            # Request is executed immediately.
+            # Create the CredentialListInstance
             # @param [String] credential_list_sid The SID of the [Credential
             #   List](https://www.twilio.com/docs/voice/sip/api/sip-credentiallist-resource)
             #   that you want to associate with the trunk. Once associated, we will authenticate
             #   access to the trunk against this list.
-            # @return [CredentialListInstance] Newly created CredentialListInstance
+            # @return [CredentialListInstance] Created CredentialListInstance
             def create(credential_list_sid: nil)
               data = Twilio::Values.of({'CredentialListSid' => credential_list_sid, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               CredentialListInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], )
             end
@@ -107,11 +102,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               CredentialListPage.new(@version, response, @solution)
             end
 
@@ -182,16 +175,10 @@ module Twilio
             end
 
             ##
-            # Fetch a CredentialListInstance
+            # Fetch the CredentialListInstance
             # @return [CredentialListInstance] Fetched CredentialListInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               CredentialListInstance.new(
                   @version,
@@ -202,10 +189,10 @@ module Twilio
             end
 
             ##
-            # Deletes the CredentialListInstance
+            # Delete the CredentialListInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -306,14 +293,14 @@ module Twilio
             end
 
             ##
-            # Fetch a CredentialListInstance
+            # Fetch the CredentialListInstance
             # @return [CredentialListInstance] Fetched CredentialListInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the CredentialListInstance
+            # Delete the CredentialListInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

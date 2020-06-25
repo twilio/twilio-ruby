@@ -25,15 +25,14 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of EndUserInstance records from the API.
-            # Request is executed immediately.
+            # Create the EndUserInstance
             # @param [String] friendly_name The string that you assigned to describe the
             #   resource.
             # @param [end_user.Type] type The type of end user of the Bundle resource - can be
             #   `individual` or `business`.
             # @param [Hash] attributes The set of parameters that are the attributes of the
             #   End User resource which are derived End User Types.
-            # @return [EndUserInstance] Newly created EndUserInstance
+            # @return [EndUserInstance] Created EndUserInstance
             def create(friendly_name: nil, type: nil, attributes: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
@@ -41,11 +40,7 @@ module Twilio
                   'Attributes' => Twilio.serialize_object(attributes),
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               EndUserInstance.new(@version, payload, )
             end
@@ -111,11 +106,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               EndUserPage.new(@version, response, @solution)
             end
 
@@ -184,16 +177,10 @@ module Twilio
             end
 
             ##
-            # Fetch a EndUserInstance
+            # Fetch the EndUserInstance
             # @return [EndUserInstance] Fetched EndUserInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               EndUserInstance.new(@version, payload, sid: @solution[:sid], )
             end
@@ -211,11 +198,7 @@ module Twilio
                   'Attributes' => Twilio.serialize_object(attributes),
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               EndUserInstance.new(@version, payload, sid: @solution[:sid], )
             end
@@ -323,7 +306,7 @@ module Twilio
             end
 
             ##
-            # Fetch a EndUserInstance
+            # Fetch the EndUserInstance
             # @return [EndUserInstance] Fetched EndUserInstance
             def fetch
               context.fetch

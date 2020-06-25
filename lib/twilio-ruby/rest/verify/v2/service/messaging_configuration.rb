@@ -28,8 +28,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of MessagingConfigurationInstance records from the API.
-            # Request is executed immediately.
+            # Create the MessagingConfigurationInstance
             # @param [String] country The
             #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of
             #   the country this configuration will be applied to. If this is a global
@@ -37,15 +36,11 @@ module Twilio
             # @param [String] messaging_service_sid The SID of the [Messaging
             #   Service](https://www.twilio.com/docs/sms/services/api) to be used to send SMS to
             #   the country of this configuration.
-            # @return [MessagingConfigurationInstance] Newly created MessagingConfigurationInstance
+            # @return [MessagingConfigurationInstance] Created MessagingConfigurationInstance
             def create(country: nil, messaging_service_sid: nil)
               data = Twilio::Values.of({'Country' => country, 'MessagingServiceSid' => messaging_service_sid, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               MessagingConfigurationInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -111,11 +106,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               MessagingConfigurationPage.new(@version, response, @solution)
             end
 
@@ -197,11 +190,7 @@ module Twilio
             def update(messaging_service_sid: nil)
               data = Twilio::Values.of({'MessagingServiceSid' => messaging_service_sid, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               MessagingConfigurationInstance.new(
                   @version,
@@ -212,16 +201,10 @@ module Twilio
             end
 
             ##
-            # Fetch a MessagingConfigurationInstance
+            # Fetch the MessagingConfigurationInstance
             # @return [MessagingConfigurationInstance] Fetched MessagingConfigurationInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               MessagingConfigurationInstance.new(
                   @version,
@@ -232,10 +215,10 @@ module Twilio
             end
 
             ##
-            # Deletes the MessagingConfigurationInstance
+            # Delete the MessagingConfigurationInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -353,14 +336,14 @@ module Twilio
             end
 
             ##
-            # Fetch a MessagingConfigurationInstance
+            # Fetch the MessagingConfigurationInstance
             # @return [MessagingConfigurationInstance] Fetched MessagingConfigurationInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the MessagingConfigurationInstance
+            # Delete the MessagingConfigurationInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

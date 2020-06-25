@@ -37,19 +37,14 @@ module Twilio
                 end
 
                 ##
-                # Retrieve a single page of ChannelInstance records from the API.
-                # Request is executed immediately.
+                # Create the ChannelInstance
                 # @param [String] phone_number_sid The unique SID identifier of the Phone Number
                 #   of the Phone number to be assigned to the Branded Channel.
-                # @return [ChannelInstance] Newly created ChannelInstance
+                # @return [ChannelInstance] Created ChannelInstance
                 def create(phone_number_sid: nil)
                   data = Twilio::Values.of({'PhoneNumberSid' => phone_number_sid, })
 
-                  payload = @version.create(
-                      'POST',
-                      @uri,
-                      data: data
-                  )
+                  payload = @version.create('POST', @uri, data: data)
 
                   ChannelInstance.new(
                       @version,

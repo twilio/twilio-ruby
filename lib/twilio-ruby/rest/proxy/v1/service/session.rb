@@ -90,11 +90,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               SessionPage.new(@version, response, @solution)
             end
 
@@ -112,8 +110,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of SessionInstance records from the API.
-            # Request is executed immediately.
+            # Create the SessionInstance
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the resource. This value must be 191 characters or fewer in length
             #   and be unique. **This value should not have PII.**
@@ -130,7 +127,7 @@ module Twilio
             #   on create.
             # @param [Hash] participants The Participant objects to include in the new
             #   session.
-            # @return [SessionInstance] Newly created SessionInstance
+            # @return [SessionInstance] Created SessionInstance
             def create(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
               data = Twilio::Values.of({
                   'UniqueName' => unique_name,
@@ -141,11 +138,7 @@ module Twilio
                   'Participants' => Twilio.serialize_list(participants) { |e| Twilio.serialize_object(e) },
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               SessionInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -213,25 +206,19 @@ module Twilio
             end
 
             ##
-            # Fetch a SessionInstance
+            # Fetch the SessionInstance
             # @return [SessionInstance] Fetched SessionInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               SessionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the SessionInstance
+            # Delete the SessionInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -251,11 +238,7 @@ module Twilio
                   'Status' => status,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               SessionInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -468,14 +451,14 @@ module Twilio
             end
 
             ##
-            # Fetch a SessionInstance
+            # Fetch the SessionInstance
             # @return [SessionInstance] Fetched SessionInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the SessionInstance
+            # Delete the SessionInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

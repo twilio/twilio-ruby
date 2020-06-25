@@ -30,20 +30,15 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of AlphaSenderInstance records from the API.
-            # Request is executed immediately.
+            # Create the AlphaSenderInstance
             # @param [String] alpha_sender The Alphanumeric Sender ID string. Can be up to 11
             #   characters long. Valid characters are A-Z, a-z, 0-9, space, and hyphen `-`. This
             #   value cannot contain only numbers.
-            # @return [AlphaSenderInstance] Newly created AlphaSenderInstance
+            # @return [AlphaSenderInstance] Created AlphaSenderInstance
             def create(alpha_sender: nil)
               data = Twilio::Values.of({'AlphaSender' => alpha_sender, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               AlphaSenderInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -109,11 +104,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               AlphaSenderPage.new(@version, response, @solution)
             end
 
@@ -188,16 +181,10 @@ module Twilio
             end
 
             ##
-            # Fetch a AlphaSenderInstance
+            # Fetch the AlphaSenderInstance
             # @return [AlphaSenderInstance] Fetched AlphaSenderInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               AlphaSenderInstance.new(
                   @version,
@@ -208,10 +195,10 @@ module Twilio
             end
 
             ##
-            # Deletes the AlphaSenderInstance
+            # Delete the AlphaSenderInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -321,14 +308,14 @@ module Twilio
             end
 
             ##
-            # Fetch a AlphaSenderInstance
+            # Fetch the AlphaSenderInstance
             # @return [AlphaSenderInstance] Fetched AlphaSenderInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the AlphaSenderInstance
+            # Delete the AlphaSenderInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

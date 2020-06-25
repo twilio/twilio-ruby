@@ -30,8 +30,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of NotificationInstance records from the API.
-            # Request is executed immediately.
+            # Create the NotificationInstance
             # @param [String] body The notification text. For FCM and GCM, translates to
             #   `data.twi_body`. For APNS, translates to `aps.alert.body`. For SMS, translates
             #   to `body`. SMS requires either this `body` value, or `media_urls` attribute
@@ -118,7 +117,7 @@ module Twilio
             #   tag `all` is available to notify all Bindings in a Service instance. Similarly,
             #   the implicit tags `apn`, `fcm`, `gcm`, `sms` and `facebook-messenger` are
             #   available to notify all Bindings in a specific channel.
-            # @return [NotificationInstance] Newly created NotificationInstance
+            # @return [NotificationInstance] Created NotificationInstance
             def create(body: :unset, priority: :unset, ttl: :unset, title: :unset, sound: :unset, action: :unset, data: :unset, apn: :unset, gcm: :unset, sms: :unset, facebook_messenger: :unset, fcm: :unset, segment: :unset, alexa: :unset, to_binding: :unset, delivery_callback_url: :unset, identity: :unset, tag: :unset)
               data = Twilio::Values.of({
                   'Identity' => Twilio.serialize_list(identity) { |e| e },
@@ -141,11 +140,7 @@ module Twilio
                   'DeliveryCallbackUrl' => delivery_callback_url,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               NotificationInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end

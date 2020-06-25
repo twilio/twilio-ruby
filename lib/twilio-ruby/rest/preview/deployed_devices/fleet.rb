@@ -26,19 +26,14 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of FleetInstance records from the API.
-          # Request is executed immediately.
+          # Create the FleetInstance
           # @param [String] friendly_name Provides a human readable descriptive text for
           #   this Fleet, up to 256 characters long.
-          # @return [FleetInstance] Newly created FleetInstance
+          # @return [FleetInstance] Created FleetInstance
           def create(friendly_name: :unset)
             data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             FleetInstance.new(@version, payload, )
           end
@@ -104,11 +99,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             FleetPage.new(@version, response, @solution)
           end
 
@@ -187,25 +180,19 @@ module Twilio
           end
 
           ##
-          # Fetch a FleetInstance
+          # Fetch the FleetInstance
           # @return [FleetInstance] Fetched FleetInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             FleetInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the FleetInstance
+          # Delete the FleetInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -221,11 +208,7 @@ module Twilio
                 'DefaultDeploymentSid' => default_deployment_sid,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             FleetInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -414,14 +397,14 @@ module Twilio
           end
 
           ##
-          # Fetch a FleetInstance
+          # Fetch the FleetInstance
           # @return [FleetInstance] Fetched FleetInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the FleetInstance
+          # Delete the FleetInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

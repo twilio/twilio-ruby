@@ -33,11 +33,7 @@ module Twilio
           def update(assistant: nil)
             data = Twilio::Values.of({'Assistant' => assistant, })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             RestoreAssistantInstance.new(@version, payload, )
           end

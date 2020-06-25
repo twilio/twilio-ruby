@@ -28,21 +28,16 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of RateLimitInstance records from the API.
-            # Request is executed immediately.
+            # Create the RateLimitInstance
             # @param [String] unique_name Provides a unique and addressable name to be
             #   assigned to this Rate Limit, assigned by the developer, to be optionally used in
             #   addition to SID. **This value should not contain PII.**
             # @param [String] description Description of this Rate Limit
-            # @return [RateLimitInstance] Newly created RateLimitInstance
+            # @return [RateLimitInstance] Created RateLimitInstance
             def create(unique_name: nil, description: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'Description' => description, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               RateLimitInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -108,11 +103,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               RateLimitPage.new(@version, response, @solution)
             end
 
@@ -193,35 +186,25 @@ module Twilio
             def update(description: :unset)
               data = Twilio::Values.of({'Description' => description, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               RateLimitInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Fetch a RateLimitInstance
+            # Fetch the RateLimitInstance
             # @return [RateLimitInstance] Fetched RateLimitInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               RateLimitInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the RateLimitInstance
+            # Delete the RateLimitInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -367,14 +350,14 @@ module Twilio
             end
 
             ##
-            # Fetch a RateLimitInstance
+            # Fetch the RateLimitInstance
             # @return [RateLimitInstance] Fetched RateLimitInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the RateLimitInstance
+            # Delete the RateLimitInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

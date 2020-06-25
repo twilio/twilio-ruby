@@ -88,8 +88,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of FeedbackInstance records from the API.
-              # Request is executed immediately.
+              # Create the FeedbackInstance
               # @param [String] quality_score The call quality expressed as an integer from `1`
               #   to `5` where `1` represents very poor call quality and `5` represents a perfect
               #   call.
@@ -97,18 +96,14 @@ module Twilio
               #   the call. Issues can be: `imperfect-audio`, `dropped-call`,
               #   `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`,
               #   `audio-latency`, `unsolicited-call`, or `one-way-audio`.
-              # @return [FeedbackInstance] Newly created FeedbackInstance
+              # @return [FeedbackInstance] Created FeedbackInstance
               def create(quality_score: nil, issue: :unset)
                 data = Twilio::Values.of({
                     'QualityScore' => quality_score,
                     'Issue' => Twilio.serialize_list(issue) { |e| e },
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 FeedbackInstance.new(
                     @version,
@@ -119,16 +114,10 @@ module Twilio
               end
 
               ##
-              # Fetch a FeedbackInstance
+              # Fetch the FeedbackInstance
               # @return [FeedbackInstance] Fetched FeedbackInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 FeedbackInstance.new(
                     @version,
@@ -154,11 +143,7 @@ module Twilio
                     'Issue' => Twilio.serialize_list(issue) { |e| e },
                 })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 FeedbackInstance.new(
                     @version,
@@ -260,8 +245,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of FeedbackInstance records from the API.
-              # Request is executed immediately.
+              # Create the FeedbackInstance
               # @param [String] quality_score The call quality expressed as an integer from `1`
               #   to `5` where `1` represents very poor call quality and `5` represents a perfect
               #   call.
@@ -269,13 +253,13 @@ module Twilio
               #   the call. Issues can be: `imperfect-audio`, `dropped-call`,
               #   `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`,
               #   `audio-latency`, `unsolicited-call`, or `one-way-audio`.
-              # @return [FeedbackInstance] Newly created FeedbackInstance
+              # @return [FeedbackInstance] Created FeedbackInstance
               def create(quality_score: nil, issue: :unset)
                 context.create(quality_score: quality_score, issue: issue, )
               end
 
               ##
-              # Fetch a FeedbackInstance
+              # Fetch the FeedbackInstance
               # @return [FeedbackInstance] Fetched FeedbackInstance
               def fetch
                 context.fetch

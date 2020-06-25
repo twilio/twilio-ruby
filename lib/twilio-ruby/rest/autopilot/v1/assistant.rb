@@ -86,11 +86,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             AssistantPage.new(@version, response, @solution)
           end
 
@@ -108,8 +106,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of AssistantInstance records from the API.
-          # Request is executed immediately.
+          # Create the AssistantInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the new resource. It is not unique and can be up to 255 characters long.
           # @param [Boolean] log_queries Whether queries should be logged and kept after
@@ -125,7 +122,7 @@ module Twilio
           # @param [Hash] defaults A JSON object that defines the Assistant's [default
           #   tasks](https://www.twilio.com/docs/autopilot/api/assistant/defaults) for various
           #   scenarios, including initiation actions and fallback tasks.
-          # @return [AssistantInstance] Newly created AssistantInstance
+          # @return [AssistantInstance] Created AssistantInstance
           def create(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, style_sheet: :unset, defaults: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -137,11 +134,7 @@ module Twilio
                 'Defaults' => Twilio.serialize_object(defaults),
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             AssistantInstance.new(@version, payload, )
           end
@@ -212,16 +205,10 @@ module Twilio
           end
 
           ##
-          # Fetch a AssistantInstance
+          # Fetch the AssistantInstance
           # @return [AssistantInstance] Fetched AssistantInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             AssistantInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -258,20 +245,16 @@ module Twilio
                 'DevelopmentStage' => development_stage,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             AssistantInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the AssistantInstance
+          # Delete the AssistantInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -545,7 +528,7 @@ module Twilio
           end
 
           ##
-          # Fetch a AssistantInstance
+          # Fetch the AssistantInstance
           # @return [AssistantInstance] Fetched AssistantInstance
           def fetch
             context.fetch
@@ -585,7 +568,7 @@ module Twilio
           end
 
           ##
-          # Deletes the AssistantInstance
+          # Delete the AssistantInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

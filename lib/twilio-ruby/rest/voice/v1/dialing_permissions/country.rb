@@ -158,11 +158,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               CountryPage.new(@version, response, @solution)
             end
 
@@ -239,16 +237,10 @@ module Twilio
             end
 
             ##
-            # Fetch a CountryInstance
+            # Fetch the CountryInstance
             # @return [CountryInstance] Fetched CountryInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               CountryInstance.new(@version, payload, iso_code: @solution[:iso_code], )
             end
@@ -378,7 +370,7 @@ module Twilio
             end
 
             ##
-            # Fetch a CountryInstance
+            # Fetch the CountryInstance
             # @return [CountryInstance] Fetched CountryInstance
             def fetch
               context.fetch

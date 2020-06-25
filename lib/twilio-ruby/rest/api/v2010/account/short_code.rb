@@ -114,11 +114,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               ShortCodePage.new(@version, response, @solution)
             end
 
@@ -190,16 +188,10 @@ module Twilio
             end
 
             ##
-            # Fetch a ShortCodeInstance
+            # Fetch the ShortCodeInstance
             # @return [ShortCodeInstance] Fetched ShortCodeInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               ShortCodeInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
@@ -230,11 +222,7 @@ module Twilio
                   'SmsFallbackMethod' => sms_fallback_method,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               ShortCodeInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
@@ -373,7 +361,7 @@ module Twilio
             end
 
             ##
-            # Fetch a ShortCodeInstance
+            # Fetch the ShortCodeInstance
             # @return [ShortCodeInstance] Fetched ShortCodeInstance
             def fetch
               context.fetch

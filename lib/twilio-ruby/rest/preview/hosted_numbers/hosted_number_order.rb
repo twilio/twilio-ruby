@@ -142,11 +142,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             HostedNumberOrderPage.new(@version, response, @solution)
           end
 
@@ -164,8 +162,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of HostedNumberOrderInstance records from the API.
-          # Request is executed immediately.
+          # Create the HostedNumberOrderInstance
           # @param [String] phone_number The number to host in
           #   [+E.164](https://en.wikipedia.org/wiki/E.164) format
           # @param [Boolean] sms_capability Used to specify that the SMS capability will be
@@ -211,7 +208,7 @@ module Twilio
           # @param [String] verification_document_sid Optional. The unique sid identifier of
           #   the Identity Document that represents the document for verifying ownership of
           #   the number to be hosted. Required when VerificationType is phone-bill.
-          # @return [HostedNumberOrderInstance] Newly created HostedNumberOrderInstance
+          # @return [HostedNumberOrderInstance] Created HostedNumberOrderInstance
           def create(phone_number: nil, sms_capability: nil, account_sid: :unset, friendly_name: :unset, unique_name: :unset, cc_emails: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, status_callback_url: :unset, status_callback_method: :unset, sms_application_sid: :unset, address_sid: :unset, email: :unset, verification_type: :unset, verification_document_sid: :unset)
             data = Twilio::Values.of({
                 'PhoneNumber' => phone_number,
@@ -233,11 +230,7 @@ module Twilio
                 'VerificationDocumentSid' => verification_document_sid,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             HostedNumberOrderInstance.new(@version, payload, )
           end
@@ -298,25 +291,19 @@ module Twilio
           end
 
           ##
-          # Fetch a HostedNumberOrderInstance
+          # Fetch the HostedNumberOrderInstance
           # @return [HostedNumberOrderInstance] Fetched HostedNumberOrderInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             HostedNumberOrderInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the HostedNumberOrderInstance
+          # Delete the HostedNumberOrderInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -359,11 +346,7 @@ module Twilio
                 'CallDelay' => call_delay,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             HostedNumberOrderInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -578,14 +561,14 @@ module Twilio
           end
 
           ##
-          # Fetch a HostedNumberOrderInstance
+          # Fetch the HostedNumberOrderInstance
           # @return [HostedNumberOrderInstance] Fetched HostedNumberOrderInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the HostedNumberOrderInstance
+          # Delete the HostedNumberOrderInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

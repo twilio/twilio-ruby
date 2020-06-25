@@ -125,11 +125,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             CommandPage.new(@version, response, @solution)
           end
 
@@ -147,8 +145,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of CommandInstance records from the API.
-          # Request is executed immediately.
+          # Create the CommandInstance
           # @param [String] command The message body of the Command. Can be plain text in
           #   text mode or a Base64 encoded byte string in binary mode.
           # @param [String] sim The `sid` or `unique_name` of the
@@ -173,7 +170,7 @@ module Twilio
           #   from the recipient. For Commands that request delivery receipt, the Command
           #   state transitions to 'delivered' once the server has received a delivery receipt
           #   from the device. The default value is `true`.
-          # @return [CommandInstance] Newly created CommandInstance
+          # @return [CommandInstance] Created CommandInstance
           def create(command: nil, sim: :unset, callback_method: :unset, callback_url: :unset, command_mode: :unset, include_sid: :unset, delivery_receipt_requested: :unset)
             data = Twilio::Values.of({
                 'Command' => command,
@@ -185,11 +182,7 @@ module Twilio
                 'DeliveryReceiptRequested' => delivery_receipt_requested,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             CommandInstance.new(@version, payload, )
           end
@@ -245,25 +238,19 @@ module Twilio
           end
 
           ##
-          # Fetch a CommandInstance
+          # Fetch the CommandInstance
           # @return [CommandInstance] Fetched CommandInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             CommandInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the CommandInstance
+          # Delete the CommandInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -396,14 +383,14 @@ module Twilio
           end
 
           ##
-          # Fetch a CommandInstance
+          # Fetch the CommandInstance
           # @return [CommandInstance] Fetched CommandInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the CommandInstance
+          # Delete the CommandInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

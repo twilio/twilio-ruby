@@ -33,19 +33,14 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of StreamMessageInstance records from the API.
-              # Request is executed immediately.
+              # Create the StreamMessageInstance
               # @param [Hash] data A JSON string that represents an arbitrary, schema-less
               #   object that makes up the Stream Message body. Can be up to 4KB in length.
-              # @return [StreamMessageInstance] Newly created StreamMessageInstance
+              # @return [StreamMessageInstance] Created StreamMessageInstance
               def create(data: nil)
                 data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 StreamMessageInstance.new(
                     @version,

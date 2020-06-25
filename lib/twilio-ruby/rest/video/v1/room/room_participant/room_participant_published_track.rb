@@ -90,11 +90,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 PublishedTrackPage.new(@version, response, @solution)
               end
 
@@ -172,16 +170,10 @@ module Twilio
               end
 
               ##
-              # Fetch a PublishedTrackInstance
+              # Fetch the PublishedTrackInstance
               # @return [PublishedTrackInstance] Fetched PublishedTrackInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 PublishedTrackInstance.new(
                     @version,
@@ -315,7 +307,7 @@ module Twilio
               end
 
               ##
-              # Fetch a PublishedTrackInstance
+              # Fetch the PublishedTrackInstance
               # @return [PublishedTrackInstance] Fetched PublishedTrackInstance
               def fetch
                 context.fetch

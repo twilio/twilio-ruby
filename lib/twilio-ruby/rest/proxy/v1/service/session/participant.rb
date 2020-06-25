@@ -92,11 +92,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 ParticipantPage.new(@version, response, @solution)
               end
 
@@ -114,8 +112,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of ParticipantInstance records from the API.
-              # Request is executed immediately.
+              # Create the ParticipantInstance
               # @param [String] identifier The phone number of the Participant.
               # @param [String] friendly_name The string that you assigned to describe the
               #   participant. This value must be 255 characters or fewer. **This value should not
@@ -124,7 +121,7 @@ module Twilio
               #   Participant. If not specified, Proxy will select a number from the pool.
               # @param [String] proxy_identifier_sid The SID of the Proxy Identifier to assign
               #   to the Participant.
-              # @return [ParticipantInstance] Newly created ParticipantInstance
+              # @return [ParticipantInstance] Created ParticipantInstance
               def create(identifier: nil, friendly_name: :unset, proxy_identifier: :unset, proxy_identifier_sid: :unset)
                 data = Twilio::Values.of({
                     'Identifier' => identifier,
@@ -133,11 +130,7 @@ module Twilio
                     'ProxyIdentifierSid' => proxy_identifier_sid,
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 ParticipantInstance.new(
                     @version,
@@ -217,16 +210,10 @@ module Twilio
               end
 
               ##
-              # Fetch a ParticipantInstance
+              # Fetch the ParticipantInstance
               # @return [ParticipantInstance] Fetched ParticipantInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 ParticipantInstance.new(
                     @version,
@@ -238,10 +225,10 @@ module Twilio
               end
 
               ##
-              # Deletes the ParticipantInstance
+              # Delete the ParticipantInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -426,14 +413,14 @@ module Twilio
               end
 
               ##
-              # Fetch a ParticipantInstance
+              # Fetch the ParticipantInstance
               # @return [ParticipantInstance] Fetched ParticipantInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the ParticipantInstance
+              # Delete the ParticipantInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

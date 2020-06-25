@@ -89,11 +89,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               NetworkAccessProfileNetworkPage.new(@version, response, @solution)
             end
 
@@ -111,19 +109,14 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of NetworkAccessProfileNetworkInstance records from the API.
-            # Request is executed immediately.
+            # Create the NetworkAccessProfileNetworkInstance
             # @param [String] network The SID of the Network resource to be added to the
             #   Network Access Profile resource.
-            # @return [NetworkAccessProfileNetworkInstance] Newly created NetworkAccessProfileNetworkInstance
+            # @return [NetworkAccessProfileNetworkInstance] Created NetworkAccessProfileNetworkInstance
             def create(network: nil)
               data = Twilio::Values.of({'Network' => network, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               NetworkAccessProfileNetworkInstance.new(
                   @version,
@@ -193,23 +186,17 @@ module Twilio
             end
 
             ##
-            # Deletes the NetworkAccessProfileNetworkInstance
+            # Delete the NetworkAccessProfileNetworkInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
-            # Fetch a NetworkAccessProfileNetworkInstance
+            # Fetch the NetworkAccessProfileNetworkInstance
             # @return [NetworkAccessProfileNetworkInstance] Fetched NetworkAccessProfileNetworkInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               NetworkAccessProfileNetworkInstance.new(
                   @version,
@@ -318,14 +305,14 @@ module Twilio
             end
 
             ##
-            # Deletes the NetworkAccessProfileNetworkInstance
+            # Delete the NetworkAccessProfileNetworkInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
-            # Fetch a NetworkAccessProfileNetworkInstance
+            # Fetch the NetworkAccessProfileNetworkInstance
             # @return [NetworkAccessProfileNetworkInstance] Fetched NetworkAccessProfileNetworkInstance
             def fetch
               context.fetch

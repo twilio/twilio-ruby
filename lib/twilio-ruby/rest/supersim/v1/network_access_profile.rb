@@ -26,25 +26,20 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of NetworkAccessProfileInstance records from the API.
-          # Request is executed immediately.
+          # Create the NetworkAccessProfileInstance
           # @param [String] unique_name An application-defined string that uniquely
           #   identifies the resource. It can be used in place of the resource's `sid` in the
           #   URL to address the resource.
           # @param [String] networks List of Network SIDs that this Network Access Profile
           #   will allow connections to.
-          # @return [NetworkAccessProfileInstance] Newly created NetworkAccessProfileInstance
+          # @return [NetworkAccessProfileInstance] Created NetworkAccessProfileInstance
           def create(unique_name: :unset, networks: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'Networks' => Twilio.serialize_list(networks) { |e| e },
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             NetworkAccessProfileInstance.new(@version, payload, )
           end
@@ -110,11 +105,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             NetworkAccessProfilePage.new(@version, response, @solution)
           end
 
@@ -189,16 +182,10 @@ module Twilio
           end
 
           ##
-          # Fetch a NetworkAccessProfileInstance
+          # Fetch the NetworkAccessProfileInstance
           # @return [NetworkAccessProfileInstance] Fetched NetworkAccessProfileInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             NetworkAccessProfileInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -210,11 +197,7 @@ module Twilio
           def update(unique_name: :unset)
             data = Twilio::Values.of({'UniqueName' => unique_name, })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             NetworkAccessProfileInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -337,7 +320,7 @@ module Twilio
           end
 
           ##
-          # Fetch a NetworkAccessProfileInstance
+          # Fetch the NetworkAccessProfileInstance
           # @return [NetworkAccessProfileInstance] Fetched NetworkAccessProfileInstance
           def fetch
             context.fetch

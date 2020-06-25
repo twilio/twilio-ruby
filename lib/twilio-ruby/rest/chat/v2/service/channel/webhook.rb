@@ -92,11 +92,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 WebhookPage.new(@version, response, @solution)
               end
 
@@ -114,8 +112,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of WebhookInstance records from the API.
-              # Request is executed immediately.
+              # Create the WebhookInstance
               # @param [webhook.Type] type The type of webhook. Can be: `webhook`, `studio`, or
               #   `trigger`.
               # @param [String] configuration_url The URL of the webhook to call using the
@@ -137,7 +134,7 @@ module Twilio
               # @param [String] configuration_retry_count The number of times to retry the
               #   webhook if the first attempt fails. Can be an integer between 0 and 3,
               #   inclusive, and the default is 0.
-              # @return [WebhookInstance] Newly created WebhookInstance
+              # @return [WebhookInstance] Created WebhookInstance
               def create(type: nil, configuration_url: :unset, configuration_method: :unset, configuration_filters: :unset, configuration_triggers: :unset, configuration_flow_sid: :unset, configuration_retry_count: :unset)
                 data = Twilio::Values.of({
                     'Type' => type,
@@ -149,11 +146,7 @@ module Twilio
                     'Configuration.RetryCount' => configuration_retry_count,
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 WebhookInstance.new(
                     @version,
@@ -226,16 +219,10 @@ module Twilio
               end
 
               ##
-              # Fetch a WebhookInstance
+              # Fetch the WebhookInstance
               # @return [WebhookInstance] Fetched WebhookInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 WebhookInstance.new(
                     @version,
@@ -278,11 +265,7 @@ module Twilio
                     'Configuration.RetryCount' => configuration_retry_count,
                 })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 WebhookInstance.new(
                     @version,
@@ -294,10 +277,10 @@ module Twilio
               end
 
               ##
-              # Deletes the WebhookInstance
+              # Delete the WebhookInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -424,7 +407,7 @@ module Twilio
               end
 
               ##
-              # Fetch a WebhookInstance
+              # Fetch the WebhookInstance
               # @return [WebhookInstance] Fetched WebhookInstance
               def fetch
                 context.fetch
@@ -464,7 +447,7 @@ module Twilio
               end
 
               ##
-              # Deletes the WebhookInstance
+              # Delete the WebhookInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

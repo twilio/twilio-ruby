@@ -97,16 +97,10 @@ module Twilio
               end
 
               ##
-              # Fetch a TaskActionsInstance
+              # Fetch the TaskActionsInstance
               # @return [TaskActionsInstance] Fetched TaskActionsInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 TaskActionsInstance.new(
                     @version,
@@ -125,11 +119,7 @@ module Twilio
               def update(actions: :unset)
                 data = Twilio::Values.of({'Actions' => Twilio.serialize_object(actions), })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 TaskActionsInstance.new(
                     @version,
@@ -227,7 +217,7 @@ module Twilio
               end
 
               ##
-              # Fetch a TaskActionsInstance
+              # Fetch the TaskActionsInstance
               # @return [TaskActionsInstance] Fetched TaskActionsInstance
               def fetch
                 context.fetch

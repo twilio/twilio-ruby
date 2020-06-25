@@ -40,11 +40,7 @@ module Twilio
                 'CommitMessage' => commit_message,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             FlowValidateInstance.new(@version, payload, )
           end

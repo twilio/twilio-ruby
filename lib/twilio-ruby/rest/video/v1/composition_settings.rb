@@ -72,23 +72,16 @@ module Twilio
           end
 
           ##
-          # Fetch a CompositionSettingsInstance
+          # Fetch the CompositionSettingsInstance
           # @return [CompositionSettingsInstance] Fetched CompositionSettingsInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             CompositionSettingsInstance.new(@version, payload, )
           end
 
           ##
-          # Retrieve a single page of CompositionSettingsInstance records from the API.
-          # Request is executed immediately.
+          # Create the CompositionSettingsInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource and show to the user in the console
           # @param [String] aws_credentials_sid The SID of the stored Credential resource.
@@ -104,7 +97,7 @@ module Twilio
           #   to the `aws_s3_url`. When `false`, all compositions are stored in our cloud.
           # @param [Boolean] encryption_enabled Whether all compositions should be stored in
           #   an encrypted form. The default is `false`.
-          # @return [CompositionSettingsInstance] Newly created CompositionSettingsInstance
+          # @return [CompositionSettingsInstance] Created CompositionSettingsInstance
           def create(friendly_name: nil, aws_credentials_sid: :unset, encryption_key_sid: :unset, aws_s3_url: :unset, aws_storage_enabled: :unset, encryption_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -115,11 +108,7 @@ module Twilio
                 'EncryptionEnabled' => encryption_enabled,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             CompositionSettingsInstance.new(@version, payload, )
           end
@@ -225,15 +214,14 @@ module Twilio
           end
 
           ##
-          # Fetch a CompositionSettingsInstance
+          # Fetch the CompositionSettingsInstance
           # @return [CompositionSettingsInstance] Fetched CompositionSettingsInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Retrieve a single page of CompositionSettingsInstance records from the API.
-          # Request is executed immediately.
+          # Create the CompositionSettingsInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource and show to the user in the console
           # @param [String] aws_credentials_sid The SID of the stored Credential resource.
@@ -249,7 +237,7 @@ module Twilio
           #   to the `aws_s3_url`. When `false`, all compositions are stored in our cloud.
           # @param [Boolean] encryption_enabled Whether all compositions should be stored in
           #   an encrypted form. The default is `false`.
-          # @return [CompositionSettingsInstance] Newly created CompositionSettingsInstance
+          # @return [CompositionSettingsInstance] Created CompositionSettingsInstance
           def create(friendly_name: nil, aws_credentials_sid: :unset, encryption_key_sid: :unset, aws_s3_url: :unset, aws_storage_enabled: :unset, encryption_enabled: :unset)
             context.create(
                 friendly_name: friendly_name,

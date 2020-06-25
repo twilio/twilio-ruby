@@ -111,11 +111,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               ExportCustomJobPage.new(@version, response, @solution)
             end
 
@@ -133,15 +131,14 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of ExportCustomJobInstance records from the API.
-            # Request is executed immediately.
+            # Create the ExportCustomJobInstance
             # @param [String] friendly_name The friendly_name
             # @param [String] start_day The start_day
             # @param [String] end_day The end_day
             # @param [String] webhook_url The webhook_url
             # @param [String] webhook_method The webhook_method
             # @param [String] email The email
-            # @return [ExportCustomJobInstance] Newly created ExportCustomJobInstance
+            # @return [ExportCustomJobInstance] Created ExportCustomJobInstance
             def create(friendly_name: :unset, start_day: :unset, end_day: :unset, webhook_url: :unset, webhook_method: :unset, email: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
@@ -152,11 +149,7 @@ module Twilio
                   'Email' => email,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               ExportCustomJobInstance.new(@version, payload, resource_type: @solution[:resource_type], )
             end

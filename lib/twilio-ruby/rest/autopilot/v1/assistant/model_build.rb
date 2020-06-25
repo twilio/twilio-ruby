@@ -90,11 +90,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               ModelBuildPage.new(@version, response, @solution)
             end
 
@@ -112,23 +110,18 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of ModelBuildInstance records from the API.
-            # Request is executed immediately.
+            # Create the ModelBuildInstance
             # @param [String] status_callback The URL we should call using a POST method to
             #   send status information to your application.
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the new resource. This value must be a unique string of no more than
             #   64 characters. It can be used as an alternative to the `sid` in the URL path to
             #   address the resource.
-            # @return [ModelBuildInstance] Newly created ModelBuildInstance
+            # @return [ModelBuildInstance] Created ModelBuildInstance
             def create(status_callback: :unset, unique_name: :unset)
               data = Twilio::Values.of({'StatusCallback' => status_callback, 'UniqueName' => unique_name, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               ModelBuildInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
@@ -192,16 +185,10 @@ module Twilio
             end
 
             ##
-            # Fetch a ModelBuildInstance
+            # Fetch the ModelBuildInstance
             # @return [ModelBuildInstance] Fetched ModelBuildInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               ModelBuildInstance.new(
                   @version,
@@ -221,11 +208,7 @@ module Twilio
             def update(unique_name: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               ModelBuildInstance.new(
                   @version,
@@ -236,10 +219,10 @@ module Twilio
             end
 
             ##
-            # Deletes the ModelBuildInstance
+            # Delete the ModelBuildInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -364,7 +347,7 @@ module Twilio
             end
 
             ##
-            # Fetch a ModelBuildInstance
+            # Fetch the ModelBuildInstance
             # @return [ModelBuildInstance] Fetched ModelBuildInstance
             def fetch
               context.fetch
@@ -382,7 +365,7 @@ module Twilio
             end
 
             ##
-            # Deletes the ModelBuildInstance
+            # Delete the ModelBuildInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

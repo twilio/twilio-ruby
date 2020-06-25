@@ -90,11 +90,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 MemberPage.new(@version, response, @solution)
               end
 
@@ -174,16 +172,10 @@ module Twilio
               end
 
               ##
-              # Fetch a MemberInstance
+              # Fetch the MemberInstance
               # @return [MemberInstance] Fetched MemberInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 MemberInstance.new(
                     @version,
@@ -204,11 +196,7 @@ module Twilio
               def update(url: nil, method: :unset)
                 data = Twilio::Values.of({'Url' => url, 'Method' => method, })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 MemberInstance.new(
                     @version,
@@ -322,7 +310,7 @@ module Twilio
               end
 
               ##
-              # Fetch a MemberInstance
+              # Fetch the MemberInstance
               # @return [MemberInstance] Fetched MemberInstance
               def fetch
                 context.fetch

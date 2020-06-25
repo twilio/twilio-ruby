@@ -29,8 +29,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of MessageInstance records from the API.
-            # Request is executed immediately.
+            # Create the MessageInstance
             # @param [String] author The channel specific identifier of the message's author.
             #   Defaults to `system`.
             # @param [String] body The content of the message, can be up to 1,600 characters
@@ -42,7 +41,7 @@ module Twilio
             #   you wish. The string value must contain structurally valid JSON if specified.
             #   **Note** that if the attributes are not set "{}" will be returned.
             # @param [String] media_sid The Media Sid to be attached to the new Message.
-            # @return [MessageInstance] Newly created MessageInstance
+            # @return [MessageInstance] Created MessageInstance
             def create(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, media_sid: :unset)
               data = Twilio::Values.of({
                   'Author' => author,
@@ -53,11 +52,7 @@ module Twilio
                   'MediaSid' => media_sid,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               MessageInstance.new(@version, payload, conversation_sid: @solution[:conversation_sid], )
             end
@@ -123,11 +118,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               MessagePage.new(@version, response, @solution)
             end
 
@@ -223,11 +216,7 @@ module Twilio
                   'Attributes' => attributes,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               MessageInstance.new(
                   @version,
@@ -238,23 +227,17 @@ module Twilio
             end
 
             ##
-            # Deletes the MessageInstance
+            # Delete the MessageInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
-            # Fetch a MessageInstance
+            # Fetch the MessageInstance
             # @return [MessageInstance] Fetched MessageInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               MessageInstance.new(
                   @version,
@@ -422,14 +405,14 @@ module Twilio
             end
 
             ##
-            # Deletes the MessageInstance
+            # Delete the MessageInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
-            # Fetch a MessageInstance
+            # Fetch the MessageInstance
             # @return [MessageInstance] Fetched MessageInstance
             def fetch
               context.fetch

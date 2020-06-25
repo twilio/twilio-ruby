@@ -24,19 +24,14 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of ConnectionPolicyInstance records from the API.
-          # Request is executed immediately.
+          # Create the ConnectionPolicyInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource. It is not unique and can be up to 255 characters long.
-          # @return [ConnectionPolicyInstance] Newly created ConnectionPolicyInstance
+          # @return [ConnectionPolicyInstance] Created ConnectionPolicyInstance
           def create(friendly_name: :unset)
             data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             ConnectionPolicyInstance.new(@version, payload, )
           end
@@ -102,11 +97,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             ConnectionPolicyPage.new(@version, response, @solution)
           end
 
@@ -178,16 +171,10 @@ module Twilio
           end
 
           ##
-          # Fetch a ConnectionPolicyInstance
+          # Fetch the ConnectionPolicyInstance
           # @return [ConnectionPolicyInstance] Fetched ConnectionPolicyInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             ConnectionPolicyInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -200,20 +187,16 @@ module Twilio
           def update(friendly_name: :unset)
             data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             ConnectionPolicyInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the ConnectionPolicyInstance
+          # Delete the ConnectionPolicyInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -330,7 +313,7 @@ module Twilio
           end
 
           ##
-          # Fetch a ConnectionPolicyInstance
+          # Fetch the ConnectionPolicyInstance
           # @return [ConnectionPolicyInstance] Fetched ConnectionPolicyInstance
           def fetch
             context.fetch
@@ -346,7 +329,7 @@ module Twilio
           end
 
           ##
-          # Deletes the ConnectionPolicyInstance
+          # Delete the ConnectionPolicyInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

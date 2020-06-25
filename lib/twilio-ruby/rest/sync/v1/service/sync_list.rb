@@ -30,8 +30,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of SyncListInstance records from the API.
-            # Request is executed immediately.
+            # Create the SyncListInstance
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the resource. This value must be unique within its Service and it can
             #   be up to 320 characters long. The `unique_name` value can be used as an
@@ -43,7 +42,7 @@ module Twilio
             #   (1 year). The default value is `0`, which means the Sync List does not expire.
             #   The Sync List will be deleted automatically after it expires, but there can be a
             #   delay between the expiration time and the resources's deletion.
-            # @return [SyncListInstance] Newly created SyncListInstance
+            # @return [SyncListInstance] Created SyncListInstance
             def create(unique_name: :unset, ttl: :unset, collection_ttl: :unset)
               data = Twilio::Values.of({
                   'UniqueName' => unique_name,
@@ -51,11 +50,7 @@ module Twilio
                   'CollectionTtl' => collection_ttl,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -121,11 +116,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               SyncListPage.new(@version, response, @solution)
             end
 
@@ -204,25 +197,19 @@ module Twilio
             end
 
             ##
-            # Fetch a SyncListInstance
+            # Fetch the SyncListInstance
             # @return [SyncListInstance] Fetched SyncListInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the SyncListInstance
+            # Delete the SyncListInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -238,11 +225,7 @@ module Twilio
             def update(ttl: :unset, collection_ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, 'CollectionTtl' => collection_ttl, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               SyncListInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -419,14 +402,14 @@ module Twilio
             end
 
             ##
-            # Fetch a SyncListInstance
+            # Fetch the SyncListInstance
             # @return [SyncListInstance] Fetched SyncListInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the SyncListInstance
+            # Delete the SyncListInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

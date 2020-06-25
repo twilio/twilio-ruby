@@ -87,11 +87,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               KeyPage.new(@version, response, @solution)
             end
 
@@ -163,16 +161,10 @@ module Twilio
             end
 
             ##
-            # Fetch a KeyInstance
+            # Fetch the KeyInstance
             # @return [KeyInstance] Fetched KeyInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               KeyInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
@@ -185,20 +177,16 @@ module Twilio
             def update(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               KeyInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the KeyInstance
+            # Delete the KeyInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -278,7 +266,7 @@ module Twilio
             end
 
             ##
-            # Fetch a KeyInstance
+            # Fetch the KeyInstance
             # @return [KeyInstance] Fetched KeyInstance
             def fetch
               context.fetch
@@ -294,7 +282,7 @@ module Twilio
             end
 
             ##
-            # Deletes the KeyInstance
+            # Delete the KeyInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

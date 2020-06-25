@@ -94,11 +94,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 FieldPage.new(@version, response, @solution)
               end
 
@@ -116,8 +114,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of FieldInstance records from the API.
-              # Request is executed immediately.
+              # Create the FieldInstance
               # @param [String] field_type The Field Type of the new field. Can be: a [Built-in
               #   Field Type](https://www.twilio.com/docs/autopilot/built-in-field-types), the
               #   `unique_name`, or the `sid` of a custom Field Type.
@@ -125,15 +122,11 @@ module Twilio
               #   identifies the new resource. This value must be a unique string of no more than
               #   64 characters. It can be used as an alternative to the `sid` in the URL path to
               #   address the resource.
-              # @return [FieldInstance] Newly created FieldInstance
+              # @return [FieldInstance] Created FieldInstance
               def create(field_type: nil, unique_name: nil)
                 data = Twilio::Values.of({'FieldType' => field_type, 'UniqueName' => unique_name, })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 FieldInstance.new(
                     @version,
@@ -210,16 +203,10 @@ module Twilio
               end
 
               ##
-              # Fetch a FieldInstance
+              # Fetch the FieldInstance
               # @return [FieldInstance] Fetched FieldInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 FieldInstance.new(
                     @version,
@@ -231,10 +218,10 @@ module Twilio
               end
 
               ##
-              # Deletes the FieldInstance
+              # Delete the FieldInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -364,14 +351,14 @@ module Twilio
               end
 
               ##
-              # Fetch a FieldInstance
+              # Fetch the FieldInstance
               # @return [FieldInstance] Fetched FieldInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the FieldInstance
+              # Delete the FieldInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

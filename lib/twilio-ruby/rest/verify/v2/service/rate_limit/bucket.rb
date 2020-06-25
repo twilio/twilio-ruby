@@ -31,20 +31,15 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of BucketInstance records from the API.
-              # Request is executed immediately.
+              # Create the BucketInstance
               # @param [String] max Maximum number of requests permitted in during the interval.
               # @param [String] interval Number of seconds that the rate limit will be enforced
               #   over.
-              # @return [BucketInstance] Newly created BucketInstance
+              # @return [BucketInstance] Created BucketInstance
               def create(max: nil, interval: nil)
                 data = Twilio::Values.of({'Max' => max, 'Interval' => interval, })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 BucketInstance.new(
                     @version,
@@ -115,11 +110,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 BucketPage.new(@version, response, @solution)
               end
 
@@ -205,11 +198,7 @@ module Twilio
               def update(max: :unset, interval: :unset)
                 data = Twilio::Values.of({'Max' => max, 'Interval' => interval, })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 BucketInstance.new(
                     @version,
@@ -221,16 +210,10 @@ module Twilio
               end
 
               ##
-              # Fetch a BucketInstance
+              # Fetch the BucketInstance
               # @return [BucketInstance] Fetched BucketInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 BucketInstance.new(
                     @version,
@@ -242,10 +225,10 @@ module Twilio
               end
 
               ##
-              # Deletes the BucketInstance
+              # Delete the BucketInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -381,14 +364,14 @@ module Twilio
               end
 
               ##
-              # Fetch a BucketInstance
+              # Fetch the BucketInstance
               # @return [BucketInstance] Fetched BucketInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the BucketInstance
+              # Delete the BucketInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

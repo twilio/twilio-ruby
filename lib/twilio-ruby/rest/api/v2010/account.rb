@@ -24,19 +24,14 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of AccountInstance records from the API.
-          # Request is executed immediately.
+          # Create the AccountInstance
           # @param [String] friendly_name A human readable description of the account to
           #   create, defaults to `SubAccount Created at {YYYY-MM-DD HH:MM meridian}`
-          # @return [AccountInstance] Newly created AccountInstance
+          # @return [AccountInstance] Created AccountInstance
           def create(friendly_name: :unset)
             data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             AccountInstance.new(@version, payload, )
           end
@@ -121,11 +116,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             AccountPage.new(@version, response, @solution)
           end
 
@@ -220,16 +213,10 @@ module Twilio
           end
 
           ##
-          # Fetch a AccountInstance
+          # Fetch the AccountInstance
           # @return [AccountInstance] Fetched AccountInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             AccountInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -245,11 +232,7 @@ module Twilio
           def update(friendly_name: :unset, status: :unset)
             data = Twilio::Values.of({'FriendlyName' => friendly_name, 'Status' => status, })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             AccountInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -764,7 +747,7 @@ module Twilio
           end
 
           ##
-          # Fetch a AccountInstance
+          # Fetch the AccountInstance
           # @return [AccountInstance] Fetched AccountInstance
           def fetch
             context.fetch

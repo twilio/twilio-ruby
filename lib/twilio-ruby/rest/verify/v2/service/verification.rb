@@ -28,8 +28,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of VerificationInstance records from the API.
-            # Request is executed immediately.
+            # Create the VerificationInstance
             # @param [String] to The phone number or
             #   [email](https://www.twilio.com/docs/verify/email) to verify. Phone numbers must
             #   be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
@@ -61,7 +60,7 @@ module Twilio
             #   json format. Must include 'from' and 'from_name'.
             # @param [String] app_hash Your [App
             #   Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string) to be appended at the end of your verification SMS body. Applies only to SMS. Example SMS body: `<#> Your AppName verification code is: 1234 He42w354ol9`.
-            # @return [VerificationInstance] Newly created VerificationInstance
+            # @return [VerificationInstance] Created VerificationInstance
             def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset, app_hash: :unset)
               data = Twilio::Values.of({
                   'To' => to,
@@ -77,11 +76,7 @@ module Twilio
                   'AppHash' => app_hash,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               VerificationInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -148,11 +143,7 @@ module Twilio
             def update(status: nil)
               data = Twilio::Values.of({'Status' => status, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               VerificationInstance.new(
                   @version,
@@ -163,16 +154,10 @@ module Twilio
             end
 
             ##
-            # Fetch a VerificationInstance
+            # Fetch the VerificationInstance
             # @return [VerificationInstance] Fetched VerificationInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               VerificationInstance.new(
                   @version,
@@ -339,7 +324,7 @@ module Twilio
             end
 
             ##
-            # Fetch a VerificationInstance
+            # Fetch the VerificationInstance
             # @return [VerificationInstance] Fetched VerificationInstance
             def fetch
               context.fetch

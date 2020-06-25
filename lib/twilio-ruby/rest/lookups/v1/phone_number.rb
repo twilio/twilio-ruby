@@ -75,7 +75,7 @@ module Twilio
           end
 
           ##
-          # Fetch a PhoneNumberInstance
+          # Fetch the PhoneNumberInstance
           # @param [String] country_code The [ISO country
           #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number to
           #   fetch. This is used to specify the country when the phone number is provided in
@@ -100,13 +100,9 @@ module Twilio
                 'Type' => Twilio.serialize_list(type) { |e| e },
                 'AddOns' => Twilio.serialize_list(add_ons) { |e| e },
             })
-
             params.merge!(Twilio.prefixed_collapsible_map(add_ons_data, 'AddOns'))
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+
+            payload = @version.fetch('GET', @uri, params)
 
             PhoneNumberInstance.new(@version, payload, phone_number: @solution[:phone_number], )
           end
@@ -208,7 +204,7 @@ module Twilio
           end
 
           ##
-          # Fetch a PhoneNumberInstance
+          # Fetch the PhoneNumberInstance
           # @param [String] country_code The [ISO country
           #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number to
           #   fetch. This is used to specify the country when the phone number is provided in

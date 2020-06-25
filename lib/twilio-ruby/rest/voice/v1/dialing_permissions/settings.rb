@@ -79,16 +79,10 @@ module Twilio
             end
 
             ##
-            # Fetch a SettingsInstance
+            # Fetch the SettingsInstance
             # @return [SettingsInstance] Fetched SettingsInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               SettingsInstance.new(@version, payload, )
             end
@@ -101,11 +95,7 @@ module Twilio
             def update(dialing_permissions_inheritance: :unset)
               data = Twilio::Values.of({'DialingPermissionsInheritance' => dialing_permissions_inheritance, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               SettingsInstance.new(@version, payload, )
             end
@@ -171,7 +161,7 @@ module Twilio
             end
 
             ##
-            # Fetch a SettingsInstance
+            # Fetch the SettingsInstance
             # @return [SettingsInstance] Fetched SettingsInstance
             def fetch
               context.fetch

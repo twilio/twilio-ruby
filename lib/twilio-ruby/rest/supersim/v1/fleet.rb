@@ -26,8 +26,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of FleetInstance records from the API.
-          # Request is executed immediately.
+          # Create the FleetInstance
           # @param [String] network_access_profile The SID or unique name of the Network
           #   Access Profile that will control which cellular networks the Fleet's SIMs can
           #   connect to
@@ -49,7 +48,7 @@ module Twilio
           # @param [String] commands_method A string representing the HTTP method to use
           #   when making a request to `commands_url`. Can be one of POST or GET. Defaults to
           #   POST.
-          # @return [FleetInstance] Newly created FleetInstance
+          # @return [FleetInstance] Created FleetInstance
           def create(network_access_profile: nil, unique_name: :unset, data_enabled: :unset, data_limit: :unset, commands_enabled: :unset, commands_url: :unset, commands_method: :unset)
             data = Twilio::Values.of({
                 'NetworkAccessProfile' => network_access_profile,
@@ -61,11 +60,7 @@ module Twilio
                 'CommandsMethod' => commands_method,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             FleetInstance.new(@version, payload, )
           end
@@ -145,11 +140,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             FleetPage.new(@version, response, @solution)
           end
 
@@ -221,16 +214,10 @@ module Twilio
           end
 
           ##
-          # Fetch a FleetInstance
+          # Fetch the FleetInstance
           # @return [FleetInstance] Fetched FleetInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             FleetInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -250,11 +237,7 @@ module Twilio
                 'NetworkAccessProfile' => network_access_profile,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             FleetInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -398,7 +381,7 @@ module Twilio
           end
 
           ##
-          # Fetch a FleetInstance
+          # Fetch the FleetInstance
           # @return [FleetInstance] Fetched FleetInstance
           def fetch
             context.fetch

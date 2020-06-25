@@ -125,11 +125,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               RoomRecordingPage.new(@version, response, @solution)
             end
 
@@ -199,25 +197,19 @@ module Twilio
             end
 
             ##
-            # Fetch a RoomRecordingInstance
+            # Fetch the RoomRecordingInstance
             # @return [RoomRecordingInstance] Fetched RoomRecordingInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               RoomRecordingInstance.new(@version, payload, room_sid: @solution[:room_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the RoomRecordingInstance
+            # Delete the RoomRecordingInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -380,14 +372,14 @@ module Twilio
             end
 
             ##
-            # Fetch a RoomRecordingInstance
+            # Fetch the RoomRecordingInstance
             # @return [RoomRecordingInstance] Fetched RoomRecordingInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the RoomRecordingInstance
+            # Delete the RoomRecordingInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

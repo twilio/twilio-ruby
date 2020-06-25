@@ -86,11 +86,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             ServicePage.new(@version, response, @solution)
           end
 
@@ -108,8 +106,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of ServiceInstance records from the API.
-          # Request is executed immediately.
+          # Create the ServiceInstance
           # @param [String] unique_name An application-defined string that uniquely
           #   identifies the resource. This value must be 191 characters or fewer in length
           #   and be unique. **This value should not have PII.**
@@ -148,7 +145,7 @@ module Twilio
           # @param [String] chat_instance_sid The SID of the Chat Service Instance managed
           #   by Proxy Service. The Chat Service enables Proxy to forward SMS and channel
           #   messages to this chat instance. This is a one-to-one relationship.
-          # @return [ServiceInstance] Newly created ServiceInstance
+          # @return [ServiceInstance] Created ServiceInstance
           def create(unique_name: nil, default_ttl: :unset, callback_url: :unset, geo_match_level: :unset, number_selection_behavior: :unset, intercept_callback_url: :unset, out_of_session_callback_url: :unset, chat_instance_sid: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
@@ -161,11 +158,7 @@ module Twilio
                 'ChatInstanceSid' => chat_instance_sid,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             ServiceInstance.new(@version, payload, )
           end
@@ -231,25 +224,19 @@ module Twilio
           end
 
           ##
-          # Fetch a ServiceInstance
+          # Fetch the ServiceInstance
           # @return [ServiceInstance] Fetched ServiceInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             ServiceInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the ServiceInstance
+          # Delete the ServiceInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -305,11 +292,7 @@ module Twilio
                 'ChatInstanceSid' => chat_instance_sid,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             ServiceInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -515,14 +498,14 @@ module Twilio
           end
 
           ##
-          # Fetch a ServiceInstance
+          # Fetch the ServiceInstance
           # @return [ServiceInstance] Fetched ServiceInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the ServiceInstance
+          # Delete the ServiceInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

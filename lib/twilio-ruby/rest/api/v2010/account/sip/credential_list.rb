@@ -88,11 +88,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 CredentialListPage.new(@version, response, @solution)
               end
 
@@ -110,19 +108,14 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of CredentialListInstance records from the API.
-              # Request is executed immediately.
+              # Create the CredentialListInstance
               # @param [String] friendly_name A human readable descriptive text that describes
               #   the CredentialList, up to 64 characters long.
-              # @return [CredentialListInstance] Newly created CredentialListInstance
+              # @return [CredentialListInstance] Created CredentialListInstance
               def create(friendly_name: nil)
                 data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 CredentialListInstance.new(@version, payload, account_sid: @solution[:account_sid], )
               end
@@ -184,16 +177,10 @@ module Twilio
               end
 
               ##
-              # Fetch a CredentialListInstance
+              # Fetch the CredentialListInstance
               # @return [CredentialListInstance] Fetched CredentialListInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 CredentialListInstance.new(
                     @version,
@@ -211,11 +198,7 @@ module Twilio
               def update(friendly_name: nil)
                 data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 CredentialListInstance.new(
                     @version,
@@ -226,10 +209,10 @@ module Twilio
               end
 
               ##
-              # Deletes the CredentialListInstance
+              # Delete the CredentialListInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -352,7 +335,7 @@ module Twilio
               end
 
               ##
-              # Fetch a CredentialListInstance
+              # Fetch the CredentialListInstance
               # @return [CredentialListInstance] Fetched CredentialListInstance
               def fetch
                 context.fetch
@@ -368,7 +351,7 @@ module Twilio
               end
 
               ##
-              # Deletes the CredentialListInstance
+              # Delete the CredentialListInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

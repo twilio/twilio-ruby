@@ -34,19 +34,14 @@ module Twilio
                     end
 
                     ##
-                    # Retrieve a single page of AuthCallsIpAccessControlListMappingInstance records from the API.
-                    # Request is executed immediately.
+                    # Create the AuthCallsIpAccessControlListMappingInstance
                     # @param [String] ip_access_control_list_sid The SID of the IpAccessControlList
                     #   resource to map to the SIP domain.
-                    # @return [AuthCallsIpAccessControlListMappingInstance] Newly created AuthCallsIpAccessControlListMappingInstance
+                    # @return [AuthCallsIpAccessControlListMappingInstance] Created AuthCallsIpAccessControlListMappingInstance
                     def create(ip_access_control_list_sid: nil)
                       data = Twilio::Values.of({'IpAccessControlListSid' => ip_access_control_list_sid, })
 
-                      payload = @version.create(
-                          'POST',
-                          @uri,
-                          data: data
-                      )
+                      payload = @version.create('POST', @uri, data: data)
 
                       AuthCallsIpAccessControlListMappingInstance.new(
                           @version,
@@ -117,11 +112,9 @@ module Twilio
                           'Page' => page_number,
                           'PageSize' => page_size,
                       })
-                      response = @version.page(
-                          'GET',
-                          @uri,
-                          params
-                      )
+
+                      response = @version.page('GET', @uri, params)
+
                       AuthCallsIpAccessControlListMappingPage.new(@version, response, @solution)
                     end
 
@@ -200,16 +193,10 @@ module Twilio
                     end
 
                     ##
-                    # Fetch a AuthCallsIpAccessControlListMappingInstance
+                    # Fetch the AuthCallsIpAccessControlListMappingInstance
                     # @return [AuthCallsIpAccessControlListMappingInstance] Fetched AuthCallsIpAccessControlListMappingInstance
                     def fetch
-                      params = Twilio::Values.of({})
-
-                      payload = @version.fetch(
-                          'GET',
-                          @uri,
-                          params,
-                      )
+                      payload = @version.fetch('GET', @uri)
 
                       AuthCallsIpAccessControlListMappingInstance.new(
                           @version,
@@ -221,10 +208,10 @@ module Twilio
                     end
 
                     ##
-                    # Deletes the AuthCallsIpAccessControlListMappingInstance
+                    # Delete the AuthCallsIpAccessControlListMappingInstance
                     # @return [Boolean] true if delete succeeds, false otherwise
                     def delete
-                      @version.delete('delete', @uri)
+                       @version.delete('DELETE', @uri)
                     end
 
                     ##
@@ -323,14 +310,14 @@ module Twilio
                     end
 
                     ##
-                    # Fetch a AuthCallsIpAccessControlListMappingInstance
+                    # Fetch the AuthCallsIpAccessControlListMappingInstance
                     # @return [AuthCallsIpAccessControlListMappingInstance] Fetched AuthCallsIpAccessControlListMappingInstance
                     def fetch
                       context.fetch
                     end
 
                     ##
-                    # Deletes the AuthCallsIpAccessControlListMappingInstance
+                    # Delete the AuthCallsIpAccessControlListMappingInstance
                     # @return [Boolean] true if delete succeeds, false otherwise
                     def delete
                       context.delete

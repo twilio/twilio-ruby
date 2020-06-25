@@ -87,7 +87,7 @@ module Twilio
               end
 
               ##
-              # Fetch a TaskQueueCumulativeStatisticsInstance
+              # Fetch the TaskQueueCumulativeStatisticsInstance
               # @param [Time] end_date Only calculate statistics from this date and time and
               #   earlier, specified in GMT as an [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
@@ -112,11 +112,7 @@ module Twilio
                     'SplitByWaitTime' => split_by_wait_time,
                 })
 
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri, params)
 
                 TaskQueueCumulativeStatisticsInstance.new(
                     @version,
@@ -333,7 +329,7 @@ module Twilio
               end
 
               ##
-              # Fetch a TaskQueueCumulativeStatisticsInstance
+              # Fetch the TaskQueueCumulativeStatisticsInstance
               # @param [Time] end_date Only calculate statistics from this date and time and
               #   earlier, specified in GMT as an [ISO
               #   8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.

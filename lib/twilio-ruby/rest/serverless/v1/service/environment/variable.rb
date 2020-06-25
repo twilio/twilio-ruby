@@ -92,11 +92,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 VariablePage.new(@version, response, @solution)
               end
 
@@ -114,21 +112,16 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of VariableInstance records from the API.
-              # Request is executed immediately.
+              # Create the VariableInstance
               # @param [String] key A string by which the Variable resource can be referenced.
               #   Must be less than 128 characters long.
               # @param [String] value A string that contains the actual value of the variable.
               #   Must have less than 450 bytes.
-              # @return [VariableInstance] Newly created VariableInstance
+              # @return [VariableInstance] Created VariableInstance
               def create(key: nil, value: nil)
                 data = Twilio::Values.of({'Key' => key, 'Value' => value, })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 VariableInstance.new(
                     @version,
@@ -202,16 +195,10 @@ module Twilio
               end
 
               ##
-              # Fetch a VariableInstance
+              # Fetch the VariableInstance
               # @return [VariableInstance] Fetched VariableInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 VariableInstance.new(
                     @version,
@@ -232,11 +219,7 @@ module Twilio
               def update(key: :unset, value: :unset)
                 data = Twilio::Values.of({'Key' => key, 'Value' => value, })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 VariableInstance.new(
                     @version,
@@ -248,10 +231,10 @@ module Twilio
               end
 
               ##
-              # Deletes the VariableInstance
+              # Delete the VariableInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -378,7 +361,7 @@ module Twilio
               end
 
               ##
-              # Fetch a VariableInstance
+              # Fetch the VariableInstance
               # @return [VariableInstance] Fetched VariableInstance
               def fetch
                 context.fetch
@@ -396,7 +379,7 @@ module Twilio
               end
 
               ##
-              # Deletes the VariableInstance
+              # Delete the VariableInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

@@ -24,15 +24,14 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of IpRecordInstance records from the API.
-          # Request is executed immediately.
+          # Create the IpRecordInstance
           # @param [String] ip_address An IP address in dotted decimal notation, IPv4 only.
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource. It is not unique and can be up to 255 characters long.
           # @param [String] cidr_prefix_length An integer representing the length of the
           #   [CIDR](https://tools.ietf.org/html/rfc4632) prefix to use with this IP address.
           #   By default the entire IP address is used, which for IPv4 is value 32.
-          # @return [IpRecordInstance] Newly created IpRecordInstance
+          # @return [IpRecordInstance] Created IpRecordInstance
           def create(ip_address: nil, friendly_name: :unset, cidr_prefix_length: :unset)
             data = Twilio::Values.of({
                 'IpAddress' => ip_address,
@@ -40,11 +39,7 @@ module Twilio
                 'CidrPrefixLength' => cidr_prefix_length,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             IpRecordInstance.new(@version, payload, )
           end
@@ -110,11 +105,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             IpRecordPage.new(@version, response, @solution)
           end
 
@@ -183,16 +176,10 @@ module Twilio
           end
 
           ##
-          # Fetch a IpRecordInstance
+          # Fetch the IpRecordInstance
           # @return [IpRecordInstance] Fetched IpRecordInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             IpRecordInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -205,20 +192,16 @@ module Twilio
           def update(friendly_name: :unset)
             data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             IpRecordInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the IpRecordInstance
+          # Delete the IpRecordInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -324,7 +307,7 @@ module Twilio
           end
 
           ##
-          # Fetch a IpRecordInstance
+          # Fetch the IpRecordInstance
           # @return [IpRecordInstance] Fetched IpRecordInstance
           def fetch
             context.fetch
@@ -340,7 +323,7 @@ module Twilio
           end
 
           ##
-          # Deletes the IpRecordInstance
+          # Delete the IpRecordInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

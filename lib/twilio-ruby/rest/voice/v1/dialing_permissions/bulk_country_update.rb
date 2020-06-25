@@ -27,21 +27,16 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of BulkCountryUpdateInstance records from the API.
-            # Request is executed immediately.
+            # Create the BulkCountryUpdateInstance
             # @param [String] update_request URL encoded JSON array of update objects. example
             #   : `[ { "iso_code": "GB", "low_risk_numbers_enabled": "true",
             #   "high_risk_special_numbers_enabled":"true",
             #   "high_risk_tollfraud_numbers_enabled": "false" } ]`
-            # @return [BulkCountryUpdateInstance] Newly created BulkCountryUpdateInstance
+            # @return [BulkCountryUpdateInstance] Created BulkCountryUpdateInstance
             def create(update_request: nil)
               data = Twilio::Values.of({'UpdateRequest' => update_request, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               BulkCountryUpdateInstance.new(@version, payload, )
             end

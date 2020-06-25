@@ -29,8 +29,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of FeedbackSummaryInstance records from the API.
-              # Request is executed immediately.
+              # Create the FeedbackSummaryInstance
               # @param [Date] start_date Only include feedback given on or after this date.
               #   Format is `YYYY-MM-DD` and specified in UTC.
               # @param [Date] end_date Only include feedback given on or before this date.
@@ -42,7 +41,7 @@ module Twilio
               #   summary is complete.
               # @param [String] status_callback_method The HTTP method (`GET` or `POST`) we use
               #   to make the request to the `StatusCallback` URL.
-              # @return [FeedbackSummaryInstance] Newly created FeedbackSummaryInstance
+              # @return [FeedbackSummaryInstance] Created FeedbackSummaryInstance
               def create(start_date: nil, end_date: nil, include_subaccounts: :unset, status_callback: :unset, status_callback_method: :unset)
                 data = Twilio::Values.of({
                     'StartDate' => Twilio.serialize_iso8601_date(start_date),
@@ -52,11 +51,7 @@ module Twilio
                     'StatusCallbackMethod' => status_callback_method,
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 FeedbackSummaryInstance.new(@version, payload, account_sid: @solution[:account_sid], )
               end
@@ -116,16 +111,10 @@ module Twilio
               end
 
               ##
-              # Fetch a FeedbackSummaryInstance
+              # Fetch the FeedbackSummaryInstance
               # @return [FeedbackSummaryInstance] Fetched FeedbackSummaryInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 FeedbackSummaryInstance.new(
                     @version,
@@ -136,10 +125,10 @@ module Twilio
               end
 
               ##
-              # Deletes the FeedbackSummaryInstance
+              # Delete the FeedbackSummaryInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -290,14 +279,14 @@ module Twilio
               end
 
               ##
-              # Fetch a FeedbackSummaryInstance
+              # Fetch the FeedbackSummaryInstance
               # @return [FeedbackSummaryInstance] Fetched FeedbackSummaryInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the FeedbackSummaryInstance
+              # Delete the FeedbackSummaryInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

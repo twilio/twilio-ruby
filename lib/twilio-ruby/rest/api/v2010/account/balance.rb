@@ -26,16 +26,10 @@ module Twilio
             end
 
             ##
-            # Fetch a BalanceInstance
+            # Fetch the BalanceInstance
             # @return [BalanceInstance] Fetched BalanceInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               BalanceInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end

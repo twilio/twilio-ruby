@@ -85,16 +85,10 @@ module Twilio
             end
 
             ##
-            # Fetch a BrandInstance
+            # Fetch the BrandInstance
             # @return [BrandInstance] Fetched BrandInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               BrandInstance.new(@version, payload, business_sid: @solution[:business_sid], sid: @solution[:sid], )
             end
@@ -205,7 +199,7 @@ module Twilio
             end
 
             ##
-            # Fetch a BrandInstance
+            # Fetch the BrandInstance
             # @return [BrandInstance] Fetched BrandInstance
             def fetch
               context.fetch

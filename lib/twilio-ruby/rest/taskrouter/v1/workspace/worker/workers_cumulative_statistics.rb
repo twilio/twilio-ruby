@@ -78,7 +78,7 @@ module Twilio
               end
 
               ##
-              # Fetch a WorkersCumulativeStatisticsInstance
+              # Fetch the WorkersCumulativeStatisticsInstance
               # @param [Time] end_date Only calculate statistics from this date and time and
               #   earlier, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
               # @param [String] minutes Only calculate statistics since this many minutes in the
@@ -98,11 +98,7 @@ module Twilio
                     'TaskChannel' => task_channel,
                 })
 
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri, params)
 
                 WorkersCumulativeStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], )
               end
@@ -238,7 +234,7 @@ module Twilio
               end
 
               ##
-              # Fetch a WorkersCumulativeStatisticsInstance
+              # Fetch the WorkersCumulativeStatisticsInstance
               # @param [Time] end_date Only calculate statistics from this date and time and
               #   earlier, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
               # @param [String] minutes Only calculate statistics since this many minutes in the

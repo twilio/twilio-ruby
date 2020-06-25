@@ -117,11 +117,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               QueryPage.new(@version, response, @solution)
             end
 
@@ -139,8 +137,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of QueryInstance records from the API.
-            # Request is executed immediately.
+            # Create the QueryInstance
             # @param [String] language An ISO language-country string of the sample.
             # @param [String] query A user-provided string that uniquely identifies this
             #   resource as an alternative to the sid. It can be up to 2048 characters long.
@@ -152,7 +149,7 @@ module Twilio
             # @param [String] field Constraints the query to a given Field with an task.
             #   Useful when you know the Field you are expecting. It accepts one field in the
             #   format *task-unique-name-1*:*field-unique-name*
-            # @return [QueryInstance] Newly created QueryInstance
+            # @return [QueryInstance] Created QueryInstance
             def create(language: nil, query: nil, tasks: :unset, model_build: :unset, field: :unset)
               data = Twilio::Values.of({
                   'Language' => language,
@@ -162,11 +159,7 @@ module Twilio
                   'Field' => field,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               QueryInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
@@ -228,16 +221,10 @@ module Twilio
             end
 
             ##
-            # Fetch a QueryInstance
+            # Fetch the QueryInstance
             # @return [QueryInstance] Fetched QueryInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               QueryInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], sid: @solution[:sid], )
             end
@@ -252,20 +239,16 @@ module Twilio
             def update(sample_sid: :unset, status: :unset)
               data = Twilio::Values.of({'SampleSid' => sample_sid, 'Status' => status, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               QueryInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the QueryInstance
+            # Delete the QueryInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -409,7 +392,7 @@ module Twilio
             end
 
             ##
-            # Fetch a QueryInstance
+            # Fetch the QueryInstance
             # @return [QueryInstance] Fetched QueryInstance
             def fetch
               context.fetch
@@ -427,7 +410,7 @@ module Twilio
             end
 
             ##
-            # Deletes the QueryInstance
+            # Delete the QueryInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

@@ -87,11 +87,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               SigningKeyPage.new(@version, response, @solution)
             end
 
@@ -160,16 +158,10 @@ module Twilio
             end
 
             ##
-            # Fetch a SigningKeyInstance
+            # Fetch the SigningKeyInstance
             # @return [SigningKeyInstance] Fetched SigningKeyInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               SigningKeyInstance.new(
                   @version,
@@ -186,11 +178,7 @@ module Twilio
             def update(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               SigningKeyInstance.new(
                   @version,
@@ -201,10 +189,10 @@ module Twilio
             end
 
             ##
-            # Deletes the SigningKeyInstance
+            # Delete the SigningKeyInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -283,7 +271,7 @@ module Twilio
             end
 
             ##
-            # Fetch a SigningKeyInstance
+            # Fetch the SigningKeyInstance
             # @return [SigningKeyInstance] Fetched SigningKeyInstance
             def fetch
               context.fetch
@@ -298,7 +286,7 @@ module Twilio
             end
 
             ##
-            # Deletes the SigningKeyInstance
+            # Delete the SigningKeyInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

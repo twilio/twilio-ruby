@@ -89,11 +89,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               WebhookPage.new(@version, response, @solution)
             end
 
@@ -111,8 +109,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of WebhookInstance records from the API.
-            # Request is executed immediately.
+            # Create the WebhookInstance
             # @param [webhook.Target] target The target of this webhook: `webhook`, `studio`,
             #   `trigger`
             # @param [String] configuration_url The absolute url the webhook request should be
@@ -127,7 +124,7 @@ module Twilio
             #   should be sent to.
             # @param [String] configuration_replay_after The message index for which and it's
             #   successors the webhook will be replayed. Not set by default
-            # @return [WebhookInstance] Newly created WebhookInstance
+            # @return [WebhookInstance] Created WebhookInstance
             def create(target: nil, configuration_url: :unset, configuration_method: :unset, configuration_filters: :unset, configuration_triggers: :unset, configuration_flow_sid: :unset, configuration_replay_after: :unset)
               data = Twilio::Values.of({
                   'Target' => target,
@@ -139,11 +136,7 @@ module Twilio
                   'Configuration.ReplayAfter' => configuration_replay_after,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               WebhookInstance.new(@version, payload, conversation_sid: @solution[:conversation_sid], )
             end
@@ -206,16 +199,10 @@ module Twilio
             end
 
             ##
-            # Fetch a WebhookInstance
+            # Fetch the WebhookInstance
             # @return [WebhookInstance] Fetched WebhookInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               WebhookInstance.new(
                   @version,
@@ -247,11 +234,7 @@ module Twilio
                   'Configuration.FlowSid' => configuration_flow_sid,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               WebhookInstance.new(
                   @version,
@@ -262,10 +245,10 @@ module Twilio
             end
 
             ##
-            # Deletes the WebhookInstance
+            # Delete the WebhookInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -375,7 +358,7 @@ module Twilio
             end
 
             ##
-            # Fetch a WebhookInstance
+            # Fetch the WebhookInstance
             # @return [WebhookInstance] Fetched WebhookInstance
             def fetch
               context.fetch
@@ -405,7 +388,7 @@ module Twilio
             end
 
             ##
-            # Deletes the WebhookInstance
+            # Delete the WebhookInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

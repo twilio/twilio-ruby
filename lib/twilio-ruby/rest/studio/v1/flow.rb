@@ -84,11 +84,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             FlowPage.new(@version, response, @solution)
           end
 
@@ -160,25 +158,19 @@ module Twilio
           end
 
           ##
-          # Fetch a FlowInstance
+          # Fetch the FlowInstance
           # @return [FlowInstance] Fetched FlowInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             FlowInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the FlowInstance
+          # Delete the FlowInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -326,14 +318,14 @@ module Twilio
           end
 
           ##
-          # Fetch a FlowInstance
+          # Fetch the FlowInstance
           # @return [FlowInstance] Fetched FlowInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the FlowInstance
+          # Delete the FlowInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

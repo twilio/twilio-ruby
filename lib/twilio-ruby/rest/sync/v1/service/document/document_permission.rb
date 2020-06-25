@@ -93,11 +93,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 DocumentPermissionPage.new(@version, response, @solution)
               end
 
@@ -181,16 +179,10 @@ module Twilio
               end
 
               ##
-              # Fetch a DocumentPermissionInstance
+              # Fetch the DocumentPermissionInstance
               # @return [DocumentPermissionInstance] Fetched DocumentPermissionInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 DocumentPermissionInstance.new(
                     @version,
@@ -202,10 +194,10 @@ module Twilio
               end
 
               ##
-              # Deletes the DocumentPermissionInstance
+              # Delete the DocumentPermissionInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -220,11 +212,7 @@ module Twilio
               def update(read: nil, write: nil, manage: nil)
                 data = Twilio::Values.of({'Read' => read, 'Write' => write, 'Manage' => manage, })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 DocumentPermissionInstance.new(
                     @version,
@@ -354,14 +342,14 @@ module Twilio
               end
 
               ##
-              # Fetch a DocumentPermissionInstance
+              # Fetch the DocumentPermissionInstance
               # @return [DocumentPermissionInstance] Fetched DocumentPermissionInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the DocumentPermissionInstance
+              # Delete the DocumentPermissionInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

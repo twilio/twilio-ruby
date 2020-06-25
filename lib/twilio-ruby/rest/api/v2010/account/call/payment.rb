@@ -35,8 +35,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of PaymentInstance records from the API.
-              # Request is executed immediately.
+              # Create the PaymentInstance
               # @param [String] idempotency_key A unique token for each payment session that
               #   should be provided to maintain idempotency of the session.
               # @param [String] status_callback The URL we should call using the
@@ -81,7 +80,7 @@ module Twilio
               # @param [String] valid_card_types List of card types accepted with each card
               #   types separated by space. Can be:
               #   `visa`,`nmastercard`,`amex`,`maestro`,`discover`,`optima`,`jcb`,`diners-club`,`enroute`. The default value is `visa mastercard amex`.
-              # @return [PaymentInstance] Newly created PaymentInstance
+              # @return [PaymentInstance] Created PaymentInstance
               def create(idempotency_key: nil, status_callback: nil, bank_account_type: :unset, charge_amount: :unset, currency: :unset, description: :unset, input: :unset, min_postal_code_length: :unset, parameter: :unset, payment_connector: :unset, payment_method: :unset, postal_code: :unset, security_code: :unset, timeout: :unset, token_type: :unset, valid_card_types: :unset)
                 data = Twilio::Values.of({
                     'IdempotencyKey' => idempotency_key,
@@ -102,11 +101,7 @@ module Twilio
                     'ValidCardTypes' => valid_card_types,
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 PaymentInstance.new(
                     @version,
@@ -200,11 +195,7 @@ module Twilio
                     'Status' => status,
                 })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 PaymentInstance.new(
                     @version,

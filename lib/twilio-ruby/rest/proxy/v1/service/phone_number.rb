@@ -29,8 +29,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of PhoneNumberInstance records from the API.
-            # Request is executed immediately.
+            # Create the PhoneNumberInstance
             # @param [String] sid The SID of a Twilio
             #   [IncomingPhoneNumber](https://www.twilio.com/docs/phone-numbers/api/incomingphonenumber-resource) resource that represents the Twilio Number you would like to assign to your Proxy Service.
             # @param [String] phone_number The phone number in
@@ -41,15 +40,11 @@ module Twilio
             #   not be assigned to a participant using proxy pool logic. See [Reserved Phone
             #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
             #   information.
-            # @return [PhoneNumberInstance] Newly created PhoneNumberInstance
+            # @return [PhoneNumberInstance] Created PhoneNumberInstance
             def create(sid: :unset, phone_number: :unset, is_reserved: :unset)
               data = Twilio::Values.of({'Sid' => sid, 'PhoneNumber' => phone_number, 'IsReserved' => is_reserved, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               PhoneNumberInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -115,11 +110,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               PhoneNumberPage.new(@version, response, @solution)
             end
 
@@ -195,23 +188,17 @@ module Twilio
             end
 
             ##
-            # Deletes the PhoneNumberInstance
+            # Delete the PhoneNumberInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
-            # Fetch a PhoneNumberInstance
+            # Fetch the PhoneNumberInstance
             # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               PhoneNumberInstance.new(
                   @version,
@@ -231,11 +218,7 @@ module Twilio
             def update(is_reserved: :unset)
               data = Twilio::Values.of({'IsReserved' => is_reserved, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               PhoneNumberInstance.new(
                   @version,
@@ -380,14 +363,14 @@ module Twilio
             end
 
             ##
-            # Deletes the PhoneNumberInstance
+            # Delete the PhoneNumberInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
-            # Fetch a PhoneNumberInstance
+            # Fetch the PhoneNumberInstance
             # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
             def fetch
               context.fetch

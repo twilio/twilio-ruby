@@ -25,8 +25,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of BundleInstance records from the API.
-            # Request is executed immediately.
+            # Create the BundleInstance
             # @param [String] friendly_name The string that you assigned to describe the
             #   resource.
             # @param [String] email The email address that will receive updates when the
@@ -41,7 +40,7 @@ module Twilio
             #   resource.
             # @param [String] number_type The type of phone number of the Bundle's ownership
             #   request.
-            # @return [BundleInstance] Newly created BundleInstance
+            # @return [BundleInstance] Created BundleInstance
             def create(friendly_name: nil, email: nil, status_callback: :unset, regulation_sid: :unset, iso_country: :unset, end_user_type: :unset, number_type: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
@@ -53,11 +52,7 @@ module Twilio
                   'NumberType' => number_type,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               BundleInstance.new(@version, payload, )
             end
@@ -170,11 +165,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               BundlePage.new(@version, response, @solution)
             end
 
@@ -247,16 +240,10 @@ module Twilio
             end
 
             ##
-            # Fetch a BundleInstance
+            # Fetch the BundleInstance
             # @return [BundleInstance] Fetched BundleInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               BundleInstance.new(@version, payload, sid: @solution[:sid], )
             end
@@ -279,11 +266,7 @@ module Twilio
                   'Email' => email,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               BundleInstance.new(@version, payload, sid: @solution[:sid], )
             end
@@ -448,7 +431,7 @@ module Twilio
             end
 
             ##
-            # Fetch a BundleInstance
+            # Fetch the BundleInstance
             # @return [BundleInstance] Fetched BundleInstance
             def fetch
               context.fetch

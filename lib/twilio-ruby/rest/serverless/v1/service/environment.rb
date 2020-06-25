@@ -89,11 +89,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               EnvironmentPage.new(@version, response, @solution)
             end
 
@@ -111,8 +109,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of EnvironmentInstance records from the API.
-            # Request is executed immediately.
+            # Create the EnvironmentInstance
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the Environment resource. It can be used as an alternative to the
             #   `sid` in the URL path to address the Environment resource. This value must have
@@ -120,15 +117,11 @@ module Twilio
             # @param [String] domain_suffix A URL-friendly name that represents the
             #   environment and forms part of the domain name. Must have fewer than 32
             #   characters.
-            # @return [EnvironmentInstance] Newly created EnvironmentInstance
+            # @return [EnvironmentInstance] Created EnvironmentInstance
             def create(unique_name: nil, domain_suffix: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'DomainSuffix' => domain_suffix, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               EnvironmentInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -195,16 +188,10 @@ module Twilio
             end
 
             ##
-            # Fetch a EnvironmentInstance
+            # Fetch the EnvironmentInstance
             # @return [EnvironmentInstance] Fetched EnvironmentInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               EnvironmentInstance.new(
                   @version,
@@ -215,10 +202,10 @@ module Twilio
             end
 
             ##
-            # Deletes the EnvironmentInstance
+            # Delete the EnvironmentInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -414,14 +401,14 @@ module Twilio
             end
 
             ##
-            # Fetch a EnvironmentInstance
+            # Fetch the EnvironmentInstance
             # @return [EnvironmentInstance] Fetched EnvironmentInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the EnvironmentInstance
+            # Delete the EnvironmentInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

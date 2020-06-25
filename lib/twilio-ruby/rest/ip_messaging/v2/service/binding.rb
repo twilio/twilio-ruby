@@ -122,11 +122,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               BindingPage.new(@version, response, @solution)
             end
 
@@ -197,25 +195,19 @@ module Twilio
             end
 
             ##
-            # Fetch a BindingInstance
+            # Fetch the BindingInstance
             # @return [BindingInstance] Fetched BindingInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               BindingInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the BindingInstance
+            # Delete the BindingInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -351,14 +343,14 @@ module Twilio
             end
 
             ##
-            # Fetch a BindingInstance
+            # Fetch the BindingInstance
             # @return [BindingInstance] Fetched BindingInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the BindingInstance
+            # Delete the BindingInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

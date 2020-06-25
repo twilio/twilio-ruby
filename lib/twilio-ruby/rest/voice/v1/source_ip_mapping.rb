@@ -24,21 +24,16 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of SourceIpMappingInstance records from the API.
-          # Request is executed immediately.
+          # Create the SourceIpMappingInstance
           # @param [String] ip_record_sid The Twilio-provided string that uniquely
           #   identifies the IP Record resource to map from.
           # @param [String] sip_domain_sid The SID of the SIP Domain that the IP Record
           #   should be mapped to.
-          # @return [SourceIpMappingInstance] Newly created SourceIpMappingInstance
+          # @return [SourceIpMappingInstance] Created SourceIpMappingInstance
           def create(ip_record_sid: nil, sip_domain_sid: nil)
             data = Twilio::Values.of({'IpRecordSid' => ip_record_sid, 'SipDomainSid' => sip_domain_sid, })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             SourceIpMappingInstance.new(@version, payload, )
           end
@@ -104,11 +99,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             SourceIpMappingPage.new(@version, response, @solution)
           end
 
@@ -177,16 +170,10 @@ module Twilio
           end
 
           ##
-          # Fetch a SourceIpMappingInstance
+          # Fetch the SourceIpMappingInstance
           # @return [SourceIpMappingInstance] Fetched SourceIpMappingInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             SourceIpMappingInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -199,20 +186,16 @@ module Twilio
           def update(sip_domain_sid: nil)
             data = Twilio::Values.of({'SipDomainSid' => sip_domain_sid, })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             SourceIpMappingInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the SourceIpMappingInstance
+          # Delete the SourceIpMappingInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -304,7 +287,7 @@ module Twilio
           end
 
           ##
-          # Fetch a SourceIpMappingInstance
+          # Fetch the SourceIpMappingInstance
           # @return [SourceIpMappingInstance] Fetched SourceIpMappingInstance
           def fetch
             context.fetch
@@ -320,7 +303,7 @@ module Twilio
           end
 
           ##
-          # Deletes the SourceIpMappingInstance
+          # Delete the SourceIpMappingInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

@@ -106,11 +106,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             AuthorizationDocumentPage.new(@version, response, @solution)
           end
 
@@ -128,8 +126,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of AuthorizationDocumentInstance records from the API.
-          # Request is executed immediately.
+          # Create the AuthorizationDocumentInstance
           # @param [String] hosted_number_order_sids A list of HostedNumberOrder sids that
           #   this AuthorizationDocument will authorize for hosting phone number capabilities
           #   on Twilio's platform.
@@ -143,7 +140,7 @@ module Twilio
           #   authorized to sign the Authorization Document.
           # @param [String] cc_emails Email recipients who will be informed when an
           #   Authorization Document has been sent and signed.
-          # @return [AuthorizationDocumentInstance] Newly created AuthorizationDocumentInstance
+          # @return [AuthorizationDocumentInstance] Created AuthorizationDocumentInstance
           def create(hosted_number_order_sids: nil, address_sid: nil, email: nil, contact_title: nil, contact_phone_number: nil, cc_emails: :unset)
             data = Twilio::Values.of({
                 'HostedNumberOrderSids' => Twilio.serialize_list(hosted_number_order_sids) { |e| e },
@@ -154,11 +151,7 @@ module Twilio
                 'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             AuthorizationDocumentInstance.new(@version, payload, )
           end
@@ -222,16 +215,10 @@ module Twilio
           end
 
           ##
-          # Fetch a AuthorizationDocumentInstance
+          # Fetch the AuthorizationDocumentInstance
           # @return [AuthorizationDocumentInstance] Fetched AuthorizationDocumentInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             AuthorizationDocumentInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -267,11 +254,7 @@ module Twilio
                 'ContactPhoneNumber' => contact_phone_number,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             AuthorizationDocumentInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -403,7 +386,7 @@ module Twilio
           end
 
           ##
-          # Fetch a AuthorizationDocumentInstance
+          # Fetch the AuthorizationDocumentInstance
           # @return [AuthorizationDocumentInstance] Fetched AuthorizationDocumentInstance
           def fetch
             context.fetch

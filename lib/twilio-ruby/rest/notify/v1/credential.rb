@@ -86,11 +86,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             CredentialPage.new(@version, response, @solution)
           end
 
@@ -108,8 +106,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of CredentialInstance records from the API.
-          # Request is executed immediately.
+          # Create the CredentialInstance
           # @param [credential.PushService] type The Credential type. Can be: `gcm`, `fcm`,
           #   or `apn`.
           # @param [String] friendly_name A descriptive string that you create to describe
@@ -127,7 +124,7 @@ module Twilio
           #   Firebase console under Settings / Cloud messaging.
           # @param [String] secret [FCM only] The `Server key` of your project from Firebase
           #   console under Settings / Cloud messaging.
-          # @return [CredentialInstance] Newly created CredentialInstance
+          # @return [CredentialInstance] Created CredentialInstance
           def create(type: nil, friendly_name: :unset, certificate: :unset, private_key: :unset, sandbox: :unset, api_key: :unset, secret: :unset)
             data = Twilio::Values.of({
                 'Type' => type,
@@ -139,11 +136,7 @@ module Twilio
                 'Secret' => secret,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             CredentialInstance.new(@version, payload, )
           end
@@ -204,16 +197,10 @@ module Twilio
           end
 
           ##
-          # Fetch a CredentialInstance
+          # Fetch the CredentialInstance
           # @return [CredentialInstance] Fetched CredentialInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             CredentialInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -246,20 +233,16 @@ module Twilio
                 'Secret' => secret,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             CredentialInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the CredentialInstance
+          # Delete the CredentialInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -367,7 +350,7 @@ module Twilio
           end
 
           ##
-          # Fetch a CredentialInstance
+          # Fetch the CredentialInstance
           # @return [CredentialInstance] Fetched CredentialInstance
           def fetch
             context.fetch
@@ -403,7 +386,7 @@ module Twilio
           end
 
           ##
-          # Deletes the CredentialInstance
+          # Delete the CredentialInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

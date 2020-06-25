@@ -26,14 +26,13 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of FlowInstance records from the API.
-          # Request is executed immediately.
+          # Create the FlowInstance
           # @param [String] friendly_name The string that you assigned to describe the Flow.
           # @param [flow.Status] status The status of the Flow. Can be: `draft` or
           #   `published`.
           # @param [Hash] definition JSON representation of flow definition.
           # @param [String] commit_message Description on change made in the revision.
-          # @return [FlowInstance] Newly created FlowInstance
+          # @return [FlowInstance] Created FlowInstance
           def create(friendly_name: nil, status: nil, definition: nil, commit_message: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -42,11 +41,7 @@ module Twilio
                 'CommitMessage' => commit_message,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             FlowInstance.new(@version, payload, )
           end
@@ -112,11 +107,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             FlowPage.new(@version, response, @solution)
           end
 
@@ -208,35 +201,25 @@ module Twilio
                 'CommitMessage' => commit_message,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             FlowInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Fetch a FlowInstance
+          # Fetch the FlowInstance
           # @return [FlowInstance] Fetched FlowInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             FlowInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the FlowInstance
+          # Delete the FlowInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -453,14 +436,14 @@ module Twilio
           end
 
           ##
-          # Fetch a FlowInstance
+          # Fetch the FlowInstance
           # @return [FlowInstance] Fetched FlowInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the FlowInstance
+          # Delete the FlowInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

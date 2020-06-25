@@ -28,19 +28,14 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of ItemAssignmentInstance records from the API.
-              # Request is executed immediately.
+              # Create the ItemAssignmentInstance
               # @param [String] object_sid The SID of an object bag that holds information of
               #   the different items.
-              # @return [ItemAssignmentInstance] Newly created ItemAssignmentInstance
+              # @return [ItemAssignmentInstance] Created ItemAssignmentInstance
               def create(object_sid: nil)
                 data = Twilio::Values.of({'ObjectSid' => object_sid, })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 ItemAssignmentInstance.new(@version, payload, bundle_sid: @solution[:bundle_sid], )
               end
@@ -106,11 +101,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 ItemAssignmentPage.new(@version, response, @solution)
               end
 
@@ -181,16 +174,10 @@ module Twilio
               end
 
               ##
-              # Fetch a ItemAssignmentInstance
+              # Fetch the ItemAssignmentInstance
               # @return [ItemAssignmentInstance] Fetched ItemAssignmentInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 ItemAssignmentInstance.new(
                     @version,
@@ -201,10 +188,10 @@ module Twilio
               end
 
               ##
-              # Deletes the ItemAssignmentInstance
+              # Delete the ItemAssignmentInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -298,14 +285,14 @@ module Twilio
               end
 
               ##
-              # Fetch a ItemAssignmentInstance
+              # Fetch the ItemAssignmentInstance
               # @return [ItemAssignmentInstance] Fetched ItemAssignmentInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the ItemAssignmentInstance
+              # Delete the ItemAssignmentInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

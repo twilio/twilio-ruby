@@ -84,11 +84,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             WebChannelPage.new(@version, response, @solution)
           end
 
@@ -106,15 +104,14 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of WebChannelInstance records from the API.
-          # Request is executed immediately.
+          # Create the WebChannelInstance
           # @param [String] flex_flow_sid The SID of the FlexFlow.
           # @param [String] identity The chat identity.
           # @param [String] customer_friendly_name The chat participant's friendly name.
           # @param [String] chat_friendly_name The chat channel's friendly name.
           # @param [String] chat_unique_name The chat channel's unique name.
           # @param [String] pre_engagement_data The pre-engagement data.
-          # @return [WebChannelInstance] Newly created WebChannelInstance
+          # @return [WebChannelInstance] Created WebChannelInstance
           def create(flex_flow_sid: nil, identity: nil, customer_friendly_name: nil, chat_friendly_name: nil, chat_unique_name: :unset, pre_engagement_data: :unset)
             data = Twilio::Values.of({
                 'FlexFlowSid' => flex_flow_sid,
@@ -125,11 +122,7 @@ module Twilio
                 'PreEngagementData' => pre_engagement_data,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             WebChannelInstance.new(@version, payload, )
           end
@@ -185,16 +178,10 @@ module Twilio
           end
 
           ##
-          # Fetch a WebChannelInstance
+          # Fetch the WebChannelInstance
           # @return [WebChannelInstance] Fetched WebChannelInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             WebChannelInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -211,20 +198,16 @@ module Twilio
                 'PostEngagementData' => post_engagement_data,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             WebChannelInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the WebChannelInstance
+          # Delete the WebChannelInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -315,7 +298,7 @@ module Twilio
           end
 
           ##
-          # Fetch a WebChannelInstance
+          # Fetch the WebChannelInstance
           # @return [WebChannelInstance] Fetched WebChannelInstance
           def fetch
             context.fetch
@@ -332,7 +315,7 @@ module Twilio
           end
 
           ##
-          # Deletes the WebChannelInstance
+          # Delete the WebChannelInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

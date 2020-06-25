@@ -93,11 +93,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 AssignedAddOnPage.new(@version, response, @solution)
               end
 
@@ -115,19 +113,14 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of AssignedAddOnInstance records from the API.
-              # Request is executed immediately.
+              # Create the AssignedAddOnInstance
               # @param [String] installed_add_on_sid The SID that identifies the Add-on
               #   installation.
-              # @return [AssignedAddOnInstance] Newly created AssignedAddOnInstance
+              # @return [AssignedAddOnInstance] Created AssignedAddOnInstance
               def create(installed_add_on_sid: nil)
                 data = Twilio::Values.of({'InstalledAddOnSid' => installed_add_on_sid, })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 AssignedAddOnInstance.new(
                     @version,
@@ -206,16 +199,10 @@ module Twilio
               end
 
               ##
-              # Fetch a AssignedAddOnInstance
+              # Fetch the AssignedAddOnInstance
               # @return [AssignedAddOnInstance] Fetched AssignedAddOnInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 AssignedAddOnInstance.new(
                     @version,
@@ -227,10 +214,10 @@ module Twilio
               end
 
               ##
-              # Deletes the AssignedAddOnInstance
+              # Delete the AssignedAddOnInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -402,14 +389,14 @@ module Twilio
               end
 
               ##
-              # Fetch a AssignedAddOnInstance
+              # Fetch the AssignedAddOnInstance
               # @return [AssignedAddOnInstance] Fetched AssignedAddOnInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the AssignedAddOnInstance
+              # Delete the AssignedAddOnInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

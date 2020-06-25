@@ -28,8 +28,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of ValidationRequestInstance records from the API.
-            # Request is executed immediately.
+            # Create the ValidationRequestInstance
             # @param [String] phone_number The phone number to verify in
             #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, which consists
             #   of a + followed by the country code and subscriber number.
@@ -46,7 +45,7 @@ module Twilio
             #   process to your application.
             # @param [String] status_callback_method The HTTP method we should use to call
             #   `status_callback`. Can be: `GET` or `POST`, and the default is `POST`.
-            # @return [ValidationRequestInstance] Newly created ValidationRequestInstance
+            # @return [ValidationRequestInstance] Created ValidationRequestInstance
             def create(phone_number: nil, friendly_name: :unset, call_delay: :unset, extension: :unset, status_callback: :unset, status_callback_method: :unset)
               data = Twilio::Values.of({
                   'PhoneNumber' => phone_number,
@@ -57,11 +56,7 @@ module Twilio
                   'StatusCallbackMethod' => status_callback_method,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               ValidationRequestInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end

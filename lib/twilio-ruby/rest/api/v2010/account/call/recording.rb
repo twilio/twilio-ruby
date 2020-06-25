@@ -32,8 +32,7 @@ module Twilio
               end
 
               ##
-              # Retrieve a single page of RecordingInstance records from the API.
-              # Request is executed immediately.
+              # Create the RecordingInstance
               # @param [String] recording_status_callback_event The recording status events on
               #   which we should call the `recording_status_callback` URL. Can be: `in-progress`,
               #   `completed` and `absent` and the default is `completed`. Separate multiple event
@@ -54,7 +53,7 @@ module Twilio
               #   Can be: `mono` or `dual` and the default is `mono`. `mono` records all parties
               #   of the call into one channel. `dual` records each party of a 2-party call into
               #   separate channels.
-              # @return [RecordingInstance] Newly created RecordingInstance
+              # @return [RecordingInstance] Created RecordingInstance
               def create(recording_status_callback_event: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, trim: :unset, recording_channels: :unset)
                 data = Twilio::Values.of({
                     'RecordingStatusCallbackEvent' => Twilio.serialize_list(recording_status_callback_event) { |e| e },
@@ -64,11 +63,7 @@ module Twilio
                     'RecordingChannels' => recording_channels,
                 })
 
-                payload = @version.create(
-                    'POST',
-                    @uri,
-                    data: data
-                )
+                payload = @version.create('POST', @uri, data: data)
 
                 RecordingInstance.new(
                     @version,
@@ -162,11 +157,9 @@ module Twilio
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                response = @version.page(
-                    'GET',
-                    @uri,
-                    params
-                )
+
+                response = @version.page('GET', @uri, params)
+
                 RecordingPage.new(@version, response, @solution)
               end
 
@@ -258,11 +251,7 @@ module Twilio
               def update(status: nil, pause_behavior: :unset)
                 data = Twilio::Values.of({'Status' => status, 'PauseBehavior' => pause_behavior, })
 
-                payload = @version.update(
-                    'POST',
-                    @uri,
-                    data: data,
-                )
+                payload = @version.update('POST', @uri, data: data)
 
                 RecordingInstance.new(
                     @version,
@@ -274,16 +263,10 @@ module Twilio
               end
 
               ##
-              # Fetch a RecordingInstance
+              # Fetch the RecordingInstance
               # @return [RecordingInstance] Fetched RecordingInstance
               def fetch
-                params = Twilio::Values.of({})
-
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri)
 
                 RecordingInstance.new(
                     @version,
@@ -295,10 +278,10 @@ module Twilio
               end
 
               ##
-              # Deletes the RecordingInstance
+              # Delete the RecordingInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
-                @version.delete('delete', @uri)
+                 @version.delete('DELETE', @uri)
               end
 
               ##
@@ -492,14 +475,14 @@ module Twilio
               end
 
               ##
-              # Fetch a RecordingInstance
+              # Fetch the RecordingInstance
               # @return [RecordingInstance] Fetched RecordingInstance
               def fetch
                 context.fetch
               end
 
               ##
-              # Deletes the RecordingInstance
+              # Delete the RecordingInstance
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete
                 context.delete

@@ -87,7 +87,7 @@ module Twilio
               end
 
               ##
-              # Fetch a WorkflowStatisticsInstance
+              # Fetch the WorkflowStatisticsInstance
               # @param [String] minutes Only calculate statistics since this many minutes in the
               #   past. The default 15 minutes. This is helpful for displaying statistics for the
               #   last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
@@ -116,11 +116,7 @@ module Twilio
                     'SplitByWaitTime' => split_by_wait_time,
                 })
 
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri, params)
 
                 WorkflowStatisticsInstance.new(
                     @version,
@@ -225,7 +221,7 @@ module Twilio
               end
 
               ##
-              # Fetch a WorkflowStatisticsInstance
+              # Fetch the WorkflowStatisticsInstance
               # @param [String] minutes Only calculate statistics since this many minutes in the
               #   past. The default 15 minutes. This is helpful for displaying statistics for the
               #   last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.

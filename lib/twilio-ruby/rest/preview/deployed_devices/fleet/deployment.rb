@@ -29,22 +29,17 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of DeploymentInstance records from the API.
-            # Request is executed immediately.
+            # Create the DeploymentInstance
             # @param [String] friendly_name Provides a human readable descriptive text for
             #   this Deployment, up to 256 characters long.
             # @param [String] sync_service_sid Provides the unique string identifier of the
             #   Twilio Sync service instance that will be linked to and accessible by this
             #   Deployment.
-            # @return [DeploymentInstance] Newly created DeploymentInstance
+            # @return [DeploymentInstance] Created DeploymentInstance
             def create(friendly_name: :unset, sync_service_sid: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'SyncServiceSid' => sync_service_sid, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               DeploymentInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], )
             end
@@ -110,11 +105,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               DeploymentPage.new(@version, response, @solution)
             end
 
@@ -188,25 +181,19 @@ module Twilio
             end
 
             ##
-            # Fetch a DeploymentInstance
+            # Fetch the DeploymentInstance
             # @return [DeploymentInstance] Fetched DeploymentInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               DeploymentInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the DeploymentInstance
+            # Delete the DeploymentInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -220,11 +207,7 @@ module Twilio
             def update(friendly_name: :unset, sync_service_sid: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'SyncServiceSid' => sync_service_sid, })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               DeploymentInstance.new(@version, payload, fleet_sid: @solution[:fleet_sid], sid: @solution[:sid], )
             end
@@ -336,14 +319,14 @@ module Twilio
             end
 
             ##
-            # Fetch a DeploymentInstance
+            # Fetch the DeploymentInstance
             # @return [DeploymentInstance] Fetched DeploymentInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the DeploymentInstance
+            # Delete the DeploymentInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

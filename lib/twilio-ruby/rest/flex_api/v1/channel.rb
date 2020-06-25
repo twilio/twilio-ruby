@@ -84,11 +84,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             ChannelPage.new(@version, response, @solution)
           end
 
@@ -106,8 +104,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of ChannelInstance records from the API.
-          # Request is executed immediately.
+          # Create the ChannelInstance
           # @param [String] flex_flow_sid The SID of the FlexFlow.
           # @param [String] identity The `identity` value that uniquely identifies the new
           #   resource's chat User.
@@ -122,7 +119,7 @@ module Twilio
           # @param [String] task_attributes The task attributes to be added for the
           #   TaskRouter Task.
           # @param [Boolean] long_lived Whether to create the channel as long-lived.
-          # @return [ChannelInstance] Newly created ChannelInstance
+          # @return [ChannelInstance] Created ChannelInstance
           def create(flex_flow_sid: nil, identity: nil, chat_user_friendly_name: nil, chat_friendly_name: nil, target: :unset, chat_unique_name: :unset, pre_engagement_data: :unset, task_sid: :unset, task_attributes: :unset, long_lived: :unset)
             data = Twilio::Values.of({
                 'FlexFlowSid' => flex_flow_sid,
@@ -137,11 +134,7 @@ module Twilio
                 'LongLived' => long_lived,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             ChannelInstance.new(@version, payload, )
           end
@@ -197,25 +190,19 @@ module Twilio
           end
 
           ##
-          # Fetch a ChannelInstance
+          # Fetch the ChannelInstance
           # @return [ChannelInstance] Fetched ChannelInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             ChannelInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Deletes the ChannelInstance
+          # Delete the ChannelInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
@@ -320,14 +307,14 @@ module Twilio
           end
 
           ##
-          # Fetch a ChannelInstance
+          # Fetch the ChannelInstance
           # @return [ChannelInstance] Fetched ChannelInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Deletes the ChannelInstance
+          # Delete the ChannelInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete

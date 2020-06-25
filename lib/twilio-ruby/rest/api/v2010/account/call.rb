@@ -31,8 +31,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of CallInstance records from the API.
-            # Request is executed immediately.
+            # Create the CallInstance
             # @param [String] to The phone number, SIP address, or client identifier to call.
             # @param [String] from The phone number or client identifier to use as the caller
             #   id. If using a phone number, it must be a Twilio number or a Verified [outgoing
@@ -152,7 +151,7 @@ module Twilio
             #   `twiml` parameter will be ignored.
             # @param [String] application_sid The SID of the Application resource that will
             #   handle the call, if the call will be handled by an application.
-            # @return [CallInstance] Newly created CallInstance
+            # @return [CallInstance] Created CallInstance
             def create(to: nil, from: nil, method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, status_callback_event: :unset, status_callback_method: :unset, send_digits: :unset, timeout: :unset, record: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, machine_detection: :unset, machine_detection_timeout: :unset, recording_status_callback_event: :unset, trim: :unset, caller_id: :unset, machine_detection_speech_threshold: :unset, machine_detection_speech_end_threshold: :unset, machine_detection_silence_timeout: :unset, async_amd: :unset, async_amd_status_callback: :unset, async_amd_status_callback_method: :unset, byoc: :unset, call_reason: :unset, url: :unset, twiml: :unset, application_sid: :unset)
               data = Twilio::Values.of({
                   'To' => to,
@@ -189,11 +188,7 @@ module Twilio
                   'CallReason' => call_reason,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               CallInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
@@ -339,11 +334,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               CallPage.new(@version, response, @solution)
             end
 
@@ -436,23 +429,17 @@ module Twilio
             end
 
             ##
-            # Deletes the CallInstance
+            # Delete the CallInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
-            # Fetch a CallInstance
+            # Fetch the CallInstance
             # @return [CallInstance] Fetched CallInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               CallInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
@@ -501,11 +488,7 @@ module Twilio
                   'Twiml' => twiml,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               CallInstance.new(@version, payload, account_sid: @solution[:account_sid], sid: @solution[:sid], )
             end
@@ -822,14 +805,14 @@ module Twilio
             end
 
             ##
-            # Deletes the CallInstance
+            # Delete the CallInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
-            # Fetch a CallInstance
+            # Fetch the CallInstance
             # @return [CallInstance] Fetched CallInstance
             def fetch
               context.fetch

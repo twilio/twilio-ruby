@@ -79,16 +79,10 @@ module Twilio
           end
 
           ##
-          # Fetch a ExportConfigurationInstance
+          # Fetch the ExportConfigurationInstance
           # @return [ExportConfigurationInstance] Fetched ExportConfigurationInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             ExportConfigurationInstance.new(@version, payload, resource_type: @solution[:resource_type], )
           end
@@ -110,11 +104,7 @@ module Twilio
                 'WebhookMethod' => webhook_method,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             ExportConfigurationInstance.new(@version, payload, resource_type: @solution[:resource_type], )
           end
@@ -202,7 +192,7 @@ module Twilio
           end
 
           ##
-          # Fetch a ExportConfigurationInstance
+          # Fetch the ExportConfigurationInstance
           # @return [ExportConfigurationInstance] Fetched ExportConfigurationInstance
           def fetch
             context.fetch

@@ -72,23 +72,16 @@ module Twilio
           end
 
           ##
-          # Fetch a RecordingSettingsInstance
+          # Fetch the RecordingSettingsInstance
           # @return [RecordingSettingsInstance] Fetched RecordingSettingsInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             RecordingSettingsInstance.new(@version, payload, )
           end
 
           ##
-          # Retrieve a single page of RecordingSettingsInstance records from the API.
-          # Request is executed immediately.
+          # Create the RecordingSettingsInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource and be shown to users in the console
           # @param [String] aws_credentials_sid The SID of the stored Credential resource.
@@ -104,7 +97,7 @@ module Twilio
           #   the `aws_s3_url`. When `false`, all recordings are stored in our cloud.
           # @param [Boolean] encryption_enabled Whether all recordings should be stored in
           #   an encrypted form. The default is `false`.
-          # @return [RecordingSettingsInstance] Newly created RecordingSettingsInstance
+          # @return [RecordingSettingsInstance] Created RecordingSettingsInstance
           def create(friendly_name: nil, aws_credentials_sid: :unset, encryption_key_sid: :unset, aws_s3_url: :unset, aws_storage_enabled: :unset, encryption_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -115,11 +108,7 @@ module Twilio
                 'EncryptionEnabled' => encryption_enabled,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             RecordingSettingsInstance.new(@version, payload, )
           end
@@ -225,15 +214,14 @@ module Twilio
           end
 
           ##
-          # Fetch a RecordingSettingsInstance
+          # Fetch the RecordingSettingsInstance
           # @return [RecordingSettingsInstance] Fetched RecordingSettingsInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Retrieve a single page of RecordingSettingsInstance records from the API.
-          # Request is executed immediately.
+          # Create the RecordingSettingsInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource and be shown to users in the console
           # @param [String] aws_credentials_sid The SID of the stored Credential resource.
@@ -249,7 +237,7 @@ module Twilio
           #   the `aws_s3_url`. When `false`, all recordings are stored in our cloud.
           # @param [Boolean] encryption_enabled Whether all recordings should be stored in
           #   an encrypted form. The default is `false`.
-          # @return [RecordingSettingsInstance] Newly created RecordingSettingsInstance
+          # @return [RecordingSettingsInstance] Created RecordingSettingsInstance
           def create(friendly_name: nil, aws_credentials_sid: :unset, encryption_key_sid: :unset, aws_s3_url: :unset, aws_storage_enabled: :unset, encryption_enabled: :unset)
             context.create(
                 friendly_name: friendly_name,

@@ -29,19 +29,14 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of PhoneNumberInstance records from the API.
-            # Request is executed immediately.
+            # Create the PhoneNumberInstance
             # @param [String] phone_number_sid The SID of the [Incoming Phone
             #   Number](https://www.twilio.com/docs/phone-numbers/api/incomingphonenumber-resource) that you want to associate with the trunk.
-            # @return [PhoneNumberInstance] Newly created PhoneNumberInstance
+            # @return [PhoneNumberInstance] Created PhoneNumberInstance
             def create(phone_number_sid: nil)
               data = Twilio::Values.of({'PhoneNumberSid' => phone_number_sid, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               PhoneNumberInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], )
             end
@@ -107,11 +102,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               PhoneNumberPage.new(@version, response, @solution)
             end
 
@@ -182,25 +175,19 @@ module Twilio
             end
 
             ##
-            # Fetch a PhoneNumberInstance
+            # Fetch the PhoneNumberInstance
             # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               PhoneNumberInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the PhoneNumberInstance
+            # Delete the PhoneNumberInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -436,14 +423,14 @@ module Twilio
             end
 
             ##
-            # Fetch a PhoneNumberInstance
+            # Fetch the PhoneNumberInstance
             # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
             def fetch
               context.fetch
             end
 
             ##
-            # Deletes the PhoneNumberInstance
+            # Delete the PhoneNumberInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

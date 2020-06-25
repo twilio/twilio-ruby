@@ -27,19 +27,14 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of NewSigningKeyInstance records from the API.
-            # Request is executed immediately.
+            # Create the NewSigningKeyInstance
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the resource. It can be up to 64 characters long.
-            # @return [NewSigningKeyInstance] Newly created NewSigningKeyInstance
+            # @return [NewSigningKeyInstance] Created NewSigningKeyInstance
             def create(friendly_name: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               NewSigningKeyInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end

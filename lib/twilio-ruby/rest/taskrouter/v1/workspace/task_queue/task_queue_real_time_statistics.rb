@@ -87,7 +87,7 @@ module Twilio
               end
 
               ##
-              # Fetch a TaskQueueRealTimeStatisticsInstance
+              # Fetch the TaskQueueRealTimeStatisticsInstance
               # @param [String] task_channel The TaskChannel for which to fetch statistics. Can
               #   be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or
               #   `default`.
@@ -95,11 +95,7 @@ module Twilio
               def fetch(task_channel: :unset)
                 params = Twilio::Values.of({'TaskChannel' => task_channel, })
 
-                payload = @version.fetch(
-                    'GET',
-                    @uri,
-                    params,
-                )
+                payload = @version.fetch('GET', @uri, params)
 
                 TaskQueueRealTimeStatisticsInstance.new(
                     @version,
@@ -260,7 +256,7 @@ module Twilio
               end
 
               ##
-              # Fetch a TaskQueueRealTimeStatisticsInstance
+              # Fetch the TaskQueueRealTimeStatisticsInstance
               # @param [String] task_channel The TaskChannel for which to fetch statistics. Can
               #   be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or
               #   `default`.

@@ -90,11 +90,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               TaskPage.new(@version, response, @solution)
             end
 
@@ -112,8 +110,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of TaskInstance records from the API.
-            # Request is executed immediately.
+            # Create the TaskInstance
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the new resource. It can be used as an alternative to the `sid` in
             #   the URL path to address the resource. This value must be unique and 64
@@ -124,7 +121,7 @@ module Twilio
             #   [actions](https://www.twilio.com/docs/autopilot/actions) that instruct the
             #   Assistant on how to perform the task. It is optional and not unique.
             # @param [String] actions_url The URL from which the Assistant can fetch actions.
-            # @return [TaskInstance] Newly created TaskInstance
+            # @return [TaskInstance] Created TaskInstance
             def create(unique_name: nil, friendly_name: :unset, actions: :unset, actions_url: :unset)
               data = Twilio::Values.of({
                   'UniqueName' => unique_name,
@@ -133,11 +130,7 @@ module Twilio
                   'ActionsUrl' => actions_url,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               TaskInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], )
             end
@@ -207,16 +200,10 @@ module Twilio
             end
 
             ##
-            # Fetch a TaskInstance
+            # Fetch the TaskInstance
             # @return [TaskInstance] Fetched TaskInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               TaskInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], sid: @solution[:sid], )
             end
@@ -242,20 +229,16 @@ module Twilio
                   'ActionsUrl' => actions_url,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               TaskInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid], sid: @solution[:sid], )
             end
 
             ##
-            # Deletes the TaskInstance
+            # Delete the TaskInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -440,7 +423,7 @@ module Twilio
             end
 
             ##
-            # Fetch a TaskInstance
+            # Fetch the TaskInstance
             # @return [TaskInstance] Fetched TaskInstance
             def fetch
               context.fetch
@@ -469,7 +452,7 @@ module Twilio
             end
 
             ##
-            # Deletes the TaskInstance
+            # Delete the TaskInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete

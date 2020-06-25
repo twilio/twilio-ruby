@@ -26,8 +26,7 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of InstalledAddOnInstance records from the API.
-          # Request is executed immediately.
+          # Create the InstalledAddOnInstance
           # @param [String] available_add_on_sid The SID of the AvaliableAddOn to install.
           # @param [Boolean] accept_terms_of_service Whether the Terms of Service were
           #   accepted.
@@ -35,7 +34,7 @@ module Twilio
           #   the new Add-on being installed.
           # @param [String] unique_name An application-defined string that uniquely
           #   identifies the resource. This value must be unique within the Account.
-          # @return [InstalledAddOnInstance] Newly created InstalledAddOnInstance
+          # @return [InstalledAddOnInstance] Created InstalledAddOnInstance
           def create(available_add_on_sid: nil, accept_terms_of_service: nil, configuration: :unset, unique_name: :unset)
             data = Twilio::Values.of({
                 'AvailableAddOnSid' => available_add_on_sid,
@@ -44,11 +43,7 @@ module Twilio
                 'UniqueName' => unique_name,
             })
 
-            payload = @version.create(
-                'POST',
-                @uri,
-                data: data
-            )
+            payload = @version.create('POST', @uri, data: data)
 
             InstalledAddOnInstance.new(@version, payload, )
           end
@@ -114,11 +109,9 @@ module Twilio
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            response = @version.page(
-                'GET',
-                @uri,
-                params
-            )
+
+            response = @version.page('GET', @uri, params)
+
             InstalledAddOnPage.new(@version, response, @solution)
           end
 
@@ -193,23 +186,17 @@ module Twilio
           end
 
           ##
-          # Deletes the InstalledAddOnInstance
+          # Delete the InstalledAddOnInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
-            @version.delete('delete', @uri)
+             @version.delete('DELETE', @uri)
           end
 
           ##
-          # Fetch a InstalledAddOnInstance
+          # Fetch the InstalledAddOnInstance
           # @return [InstalledAddOnInstance] Fetched InstalledAddOnInstance
           def fetch
-            params = Twilio::Values.of({})
-
-            payload = @version.fetch(
-                'GET',
-                @uri,
-                params,
-            )
+            payload = @version.fetch('GET', @uri)
 
             InstalledAddOnInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -228,11 +215,7 @@ module Twilio
                 'UniqueName' => unique_name,
             })
 
-            payload = @version.update(
-                'POST',
-                @uri,
-                data: data,
-            )
+            payload = @version.update('POST', @uri, data: data)
 
             InstalledAddOnInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -373,14 +356,14 @@ module Twilio
           end
 
           ##
-          # Deletes the InstalledAddOnInstance
+          # Delete the InstalledAddOnInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete
           end
 
           ##
-          # Fetch a InstalledAddOnInstance
+          # Fetch the InstalledAddOnInstance
           # @return [InstalledAddOnInstance] Fetched InstalledAddOnInstance
           def fetch
             context.fetch

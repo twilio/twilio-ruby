@@ -35,19 +35,14 @@ module Twilio
                 end
 
                 ##
-                # Retrieve a single page of MessageInteractionInstance records from the API.
-                # Request is executed immediately.
+                # Create the MessageInteractionInstance
                 # @param [String] body The message to send to the participant
                 # @param [String] media_url Reserved. Not currently supported.
-                # @return [MessageInteractionInstance] Newly created MessageInteractionInstance
+                # @return [MessageInteractionInstance] Created MessageInteractionInstance
                 def create(body: :unset, media_url: :unset)
                   data = Twilio::Values.of({'Body' => body, 'MediaUrl' => Twilio.serialize_list(media_url) { |e| e }, })
 
-                  payload = @version.create(
-                      'POST',
-                      @uri,
-                      data: data
-                  )
+                  payload = @version.create('POST', @uri, data: data)
 
                   MessageInteractionInstance.new(
                       @version,
@@ -119,11 +114,9 @@ module Twilio
                       'Page' => page_number,
                       'PageSize' => page_size,
                   })
-                  response = @version.page(
-                      'GET',
-                      @uri,
-                      params
-                  )
+
+                  response = @version.page('GET', @uri, params)
+
                   MessageInteractionPage.new(@version, response, @solution)
                 end
 
@@ -215,16 +208,10 @@ module Twilio
                 end
 
                 ##
-                # Fetch a MessageInteractionInstance
+                # Fetch the MessageInteractionInstance
                 # @return [MessageInteractionInstance] Fetched MessageInteractionInstance
                 def fetch
-                  params = Twilio::Values.of({})
-
-                  payload = @version.fetch(
-                      'GET',
-                      @uri,
-                      params,
-                  )
+                  payload = @version.fetch('GET', @uri)
 
                   MessageInteractionInstance.new(
                       @version,
@@ -442,7 +429,7 @@ module Twilio
                 end
 
                 ##
-                # Fetch a MessageInteractionInstance
+                # Fetch the MessageInteractionInstance
                 # @return [MessageInteractionInstance] Fetched MessageInteractionInstance
                 def fetch
                   context.fetch

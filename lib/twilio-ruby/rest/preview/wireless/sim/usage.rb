@@ -81,18 +81,14 @@ module Twilio
             end
 
             ##
-            # Fetch a UsageInstance
+            # Fetch the UsageInstance
             # @param [String] end_ The end
             # @param [String] start The start
             # @return [UsageInstance] Fetched UsageInstance
             def fetch(end_: :unset, start: :unset)
               params = Twilio::Values.of({'End' => end_, 'Start' => start, })
 
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri, params)
 
               UsageInstance.new(@version, payload, sim_sid: @solution[:sim_sid], )
             end
@@ -208,7 +204,7 @@ module Twilio
             end
 
             ##
-            # Fetch a UsageInstance
+            # Fetch the UsageInstance
             # @param [String] end_ The end
             # @param [String] start The start
             # @return [UsageInstance] Fetched UsageInstance

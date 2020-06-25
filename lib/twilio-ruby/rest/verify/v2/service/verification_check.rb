@@ -28,8 +28,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of VerificationCheckInstance records from the API.
-            # Request is executed immediately.
+            # Create the VerificationCheckInstance
             # @param [String] code The 4-10 character string being verified.
             # @param [String] to The phone number or
             #   [email](https://www.twilio.com/docs/verify/email) to verify. Either this
@@ -42,7 +41,7 @@ module Twilio
             #   Requires the PSD2 Service flag enabled.
             # @param [String] payee The payee of the associated PSD2 compliant transaction.
             #   Requires the PSD2 Service flag enabled.
-            # @return [VerificationCheckInstance] Newly created VerificationCheckInstance
+            # @return [VerificationCheckInstance] Created VerificationCheckInstance
             def create(code: nil, to: :unset, verification_sid: :unset, amount: :unset, payee: :unset)
               data = Twilio::Values.of({
                   'Code' => code,
@@ -52,11 +51,7 @@ module Twilio
                   'Payee' => payee,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               VerificationCheckInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end

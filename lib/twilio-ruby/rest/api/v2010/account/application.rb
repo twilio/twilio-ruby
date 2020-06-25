@@ -28,8 +28,7 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of ApplicationInstance records from the API.
-            # Request is executed immediately.
+            # Create the ApplicationInstance
             # @param [String] api_version The API version to use to start a new TwiML session.
             #   Can be: `2010-04-01` or `2008-08-01`. The default value is the account's default
             #   API version.
@@ -62,7 +61,7 @@ module Twilio
             #   method to send message status information to your application.
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the new application. It can be up to 64 characters long.
-            # @return [ApplicationInstance] Newly created ApplicationInstance
+            # @return [ApplicationInstance] Created ApplicationInstance
             def create(api_version: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, voice_caller_id_lookup: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, sms_status_callback: :unset, message_status_callback: :unset, friendly_name: :unset)
               data = Twilio::Values.of({
                   'ApiVersion' => api_version,
@@ -82,11 +81,7 @@ module Twilio
                   'FriendlyName' => friendly_name,
               })
 
-              payload = @version.create(
-                  'POST',
-                  @uri,
-                  data: data
-              )
+              payload = @version.create('POST', @uri, data: data)
 
               ApplicationInstance.new(@version, payload, account_sid: @solution[:account_sid], )
             end
@@ -159,11 +154,9 @@ module Twilio
                   'Page' => page_number,
                   'PageSize' => page_size,
               })
-              response = @version.page(
-                  'GET',
-                  @uri,
-                  params
-              )
+
+              response = @version.page('GET', @uri, params)
+
               ApplicationPage.new(@version, response, @solution)
             end
 
@@ -235,23 +228,17 @@ module Twilio
             end
 
             ##
-            # Deletes the ApplicationInstance
+            # Delete the ApplicationInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
-              @version.delete('delete', @uri)
+               @version.delete('DELETE', @uri)
             end
 
             ##
-            # Fetch a ApplicationInstance
+            # Fetch the ApplicationInstance
             # @return [ApplicationInstance] Fetched ApplicationInstance
             def fetch
-              params = Twilio::Values.of({})
-
-              payload = @version.fetch(
-                  'GET',
-                  @uri,
-                  params,
-              )
+              payload = @version.fetch('GET', @uri)
 
               ApplicationInstance.new(
                   @version,
@@ -315,11 +302,7 @@ module Twilio
                   'MessageStatusCallback' => message_status_callback,
               })
 
-              payload = @version.update(
-                  'POST',
-                  @uri,
-                  data: data,
-              )
+              payload = @version.update('POST', @uri, data: data)
 
               ApplicationInstance.new(
                   @version,
@@ -519,14 +502,14 @@ module Twilio
             end
 
             ##
-            # Deletes the ApplicationInstance
+            # Delete the ApplicationInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
             end
 
             ##
-            # Fetch a ApplicationInstance
+            # Fetch the ApplicationInstance
             # @return [ApplicationInstance] Fetched ApplicationInstance
             def fetch
               context.fetch
