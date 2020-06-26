@@ -18,6 +18,7 @@ describe 'Role' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -63,6 +64,7 @@ describe 'Role' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -95,6 +97,7 @@ describe 'Role' do
         'Type' => 'channel',
         'Permission' => Twilio.serialize_list(['permission']) { |e| e },
     }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -141,6 +144,7 @@ describe 'Role' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -224,6 +228,7 @@ describe 'Role' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Permission' => Twilio.serialize_list(['permission']) { |e| e }, }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

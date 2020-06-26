@@ -19,6 +19,7 @@ describe 'Recording' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -69,6 +70,7 @@ describe 'Recording' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Status' => 'in-progress', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -120,6 +122,7 @@ describe 'Recording' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -174,6 +177,7 @@ describe 'Recording' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -204,6 +208,7 @@ describe 'Recording' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

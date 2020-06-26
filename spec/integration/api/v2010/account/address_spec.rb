@@ -25,6 +25,7 @@ describe 'Address' do
         'PostalCode' => 'postal_code',
         'IsoCountry' => 'US',
     }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -72,6 +73,7 @@ describe 'Address' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -100,6 +102,7 @@ describe 'Address' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -146,6 +149,7 @@ describe 'Address' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -192,6 +196,7 @@ describe 'Address' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

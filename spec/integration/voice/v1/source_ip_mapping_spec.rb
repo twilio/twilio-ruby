@@ -20,6 +20,7 @@ describe 'SourceIpMapping' do
         'IpRecordSid' => 'ILXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         'SipDomainSid' => 'SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -56,6 +57,7 @@ describe 'SourceIpMapping' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -91,6 +93,7 @@ describe 'SourceIpMapping' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -163,6 +166,7 @@ describe 'SourceIpMapping' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'SipDomainSid' => 'SDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -199,6 +203,7 @@ describe 'SourceIpMapping' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

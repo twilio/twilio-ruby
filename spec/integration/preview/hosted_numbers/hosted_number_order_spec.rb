@@ -17,6 +17,7 @@ describe 'HostedNumberOrder' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -78,6 +79,7 @@ describe 'HostedNumberOrder' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -104,6 +106,7 @@ describe 'HostedNumberOrder' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -165,6 +168,7 @@ describe 'HostedNumberOrder' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -263,6 +267,7 @@ describe 'HostedNumberOrder' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'PhoneNumber' => '+15017122661', 'SmsCapability' => true, }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

@@ -18,6 +18,7 @@ describe 'MessagingConfiguration' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Country' => 'country', 'MessagingServiceSid' => 'MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -57,6 +58,7 @@ describe 'MessagingConfiguration' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'MessagingServiceSid' => 'MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -96,6 +98,7 @@ describe 'MessagingConfiguration' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -134,6 +137,7 @@ describe 'MessagingConfiguration' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -210,6 +214,7 @@ describe 'MessagingConfiguration' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

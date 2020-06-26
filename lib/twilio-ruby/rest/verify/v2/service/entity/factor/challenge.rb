@@ -40,15 +40,17 @@ module Twilio
                 #   Shown to the end user.
                 # @param [String] hidden_details Details provided to give context about the
                 #   Challenge. Not shown to the end user.
+                # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
                 # @return [ChallengeInstance] Created ChallengeInstance
-                def create(expiration_date: :unset, details: :unset, hidden_details: :unset)
+                def create(expiration_date: :unset, details: :unset, hidden_details: :unset, twilio_sandbox_mode: :unset)
                   data = Twilio::Values.of({
                       'ExpirationDate' => Twilio.serialize_iso8601_datetime(expiration_date),
                       'Details' => details,
                       'HiddenDetails' => hidden_details,
                   })
+                  headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
-                  payload = @version.create('POST', @uri, data: data)
+                  payload = @version.create('POST', @uri, data: data, headers: headers)
 
                   ChallengeInstance.new(
                       @version,
@@ -65,6 +67,7 @@ module Twilio
                 # memory before returning.
                 # @param [challenge.ChallengeStatuses] status The Status of the Challenges to
                 #   fetch. One of `pending`, `expired`, `approved` or `denied`.
+                # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
                 # @param [Integer] limit Upper limit for the number of records to return. stream()
                 #    guarantees to never return more than limit.  Default is no limit
                 # @param [Integer] page_size Number of records to fetch per request, when
@@ -72,8 +75,13 @@ module Twilio
                 #    but a limit is defined, stream() will attempt to read the limit with the most
                 #    efficient page size, i.e. min(limit, 1000)
                 # @return [Array] Array of up to limit results
-                def list(status: :unset, limit: nil, page_size: nil)
-                  self.stream(status: status, limit: limit, page_size: page_size).entries
+                def list(status: :unset, twilio_sandbox_mode: :unset, limit: nil, page_size: nil)
+                  self.stream(
+                      status: status,
+                      twilio_sandbox_mode: twilio_sandbox_mode,
+                      limit: limit,
+                      page_size: page_size
+                  ).entries
                 end
 
                 ##
@@ -82,6 +90,7 @@ module Twilio
                 # is reached.
                 # @param [challenge.ChallengeStatuses] status The Status of the Challenges to
                 #   fetch. One of `pending`, `expired`, `approved` or `denied`.
+                # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
                 # @param [Integer] limit Upper limit for the number of records to return. stream()
                 #    guarantees to never return more than limit. Default is no limit.
                 # @param [Integer] page_size Number of records to fetch per request, when
@@ -89,10 +98,14 @@ module Twilio
                 #    but a limit is defined, stream() will attempt to read the limit with the most
                 #    efficient page size, i.e. min(limit, 1000)
                 # @return [Enumerable] Enumerable that will yield up to limit results
-                def stream(status: :unset, limit: nil, page_size: nil)
+                def stream(status: :unset, twilio_sandbox_mode: :unset, limit: nil, page_size: nil)
                   limits = @version.read_limits(limit, page_size)
 
-                  page = self.page(status: status, page_size: limits[:page_size], )
+                  page = self.page(
+                      status: status,
+                      twilio_sandbox_mode: twilio_sandbox_mode,
+                      page_size: limits[:page_size],
+                  )
 
                   @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
                 end
@@ -116,19 +129,21 @@ module Twilio
                 # Request is executed immediately.
                 # @param [challenge.ChallengeStatuses] status The Status of the Challenges to
                 #   fetch. One of `pending`, `expired`, `approved` or `denied`.
+                # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
                 # @param [String] page_token PageToken provided by the API
                 # @param [Integer] page_number Page Number, this value is simply for client state
                 # @param [Integer] page_size Number of records to return, defaults to 50
                 # @return [Page] Page of ChallengeInstance
-                def page(status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                def page(status: :unset, twilio_sandbox_mode: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                   params = Twilio::Values.of({
                       'Status' => status,
                       'PageToken' => page_token,
                       'Page' => page_number,
                       'PageSize' => page_size,
                   })
+                  headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
-                  response = @version.page('GET', @uri, params)
+                  response = @version.page('GET', @uri, params, headers: headers)
 
                   ChallengePage.new(@version, response, @solution)
                 end
@@ -214,16 +229,22 @@ module Twilio
 
                 ##
                 # Delete the ChallengeInstance
+                # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
                 # @return [Boolean] true if delete succeeds, false otherwise
-                def delete
-                   @version.delete('DELETE', @uri)
+                def delete(twilio_sandbox_mode: :unset)
+                  headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
+
+                   @version.delete('DELETE', @uri, headers: headers)
                 end
 
                 ##
                 # Fetch the ChallengeInstance
+                # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
                 # @return [ChallengeInstance] Fetched ChallengeInstance
-                def fetch
-                  payload = @version.fetch('GET', @uri)
+                def fetch(twilio_sandbox_mode: :unset)
+                  headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
+
+                  payload = @version.fetch('GET', @uri, headers: headers)
 
                   ChallengeInstance.new(
                       @version,
@@ -239,11 +260,13 @@ module Twilio
                 # Update the ChallengeInstance
                 # @param [String] auth_payload The optional payload needed to verify the
                 #   Challenge. E.g., a TOTP would use the numeric code.
+                # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
                 # @return [ChallengeInstance] Updated ChallengeInstance
-                def update(auth_payload: :unset)
+                def update(auth_payload: :unset, twilio_sandbox_mode: :unset)
                   data = Twilio::Values.of({'AuthPayload' => auth_payload, })
+                  headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
-                  payload = @version.update('POST', @uri, data: data)
+                  payload = @version.update('POST', @uri, data: data, headers: headers)
 
                   ChallengeInstance.new(
                       @version,
@@ -433,25 +456,28 @@ module Twilio
 
                 ##
                 # Delete the ChallengeInstance
+                # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
                 # @return [Boolean] true if delete succeeds, false otherwise
-                def delete
-                  context.delete
+                def delete(twilio_sandbox_mode: :unset)
+                  context.delete(twilio_sandbox_mode: twilio_sandbox_mode, )
                 end
 
                 ##
                 # Fetch the ChallengeInstance
+                # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
                 # @return [ChallengeInstance] Fetched ChallengeInstance
-                def fetch
-                  context.fetch
+                def fetch(twilio_sandbox_mode: :unset)
+                  context.fetch(twilio_sandbox_mode: twilio_sandbox_mode, )
                 end
 
                 ##
                 # Update the ChallengeInstance
                 # @param [String] auth_payload The optional payload needed to verify the
                 #   Challenge. E.g., a TOTP would use the numeric code.
+                # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
                 # @return [ChallengeInstance] Updated ChallengeInstance
-                def update(auth_payload: :unset)
-                  context.update(auth_payload: auth_payload, )
+                def update(auth_payload: :unset, twilio_sandbox_mode: :unset)
+                  context.update(auth_payload: auth_payload, twilio_sandbox_mode: twilio_sandbox_mode, )
                 end
 
                 ##

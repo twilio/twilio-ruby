@@ -79,9 +79,14 @@ module Twilio
 
           ##
           # Fetch the BrandsInformationInstance
+          # @param [String] if_none_match Standard `If-None-Match` HTTP header. For more
+          #   information visit:
+          #   https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-None-Match.
           # @return [BrandsInformationInstance] Fetched BrandsInformationInstance
-          def fetch
-            payload = @version.fetch('GET', @uri)
+          def fetch(if_none_match: :unset)
+            headers = Twilio::Values.of({'If-None-Match' => if_none_match, })
+
+            payload = @version.fetch('GET', @uri, headers: headers)
 
             BrandsInformationInstance.new(@version, payload, )
           end
@@ -162,9 +167,12 @@ module Twilio
 
           ##
           # Fetch the BrandsInformationInstance
+          # @param [String] if_none_match Standard `If-None-Match` HTTP header. For more
+          #   information visit:
+          #   https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-None-Match.
           # @return [BrandsInformationInstance] Fetched BrandsInformationInstance
-          def fetch
-            context.fetch
+          def fetch(if_none_match: :unset)
+            context.fetch(if_none_match: if_none_match, )
           end
 
           ##

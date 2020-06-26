@@ -14,14 +14,16 @@ describe 'Participant' do
 
     expect {
       @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .participants.create()
+                              .participants.create(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://conversations.twilio.com/v1/Conversations/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Participants',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -112,14 +114,16 @@ describe 'Participant' do
 
     expect {
       @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .participants('MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+                              .participants('MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://conversations.twilio.com/v1/Conversations/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Participants/MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -157,14 +161,16 @@ describe 'Participant' do
 
     expect {
       @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .participants('MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+                              .participants('MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://conversations.twilio.com/v1/Conversations/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Participants/MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -189,6 +195,7 @@ describe 'Participant' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -234,6 +241,7 @@ describe 'Participant' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

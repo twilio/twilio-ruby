@@ -18,6 +18,7 @@ describe 'Verification' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'To' => 'to', 'Channel' => 'channel', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -164,6 +165,7 @@ describe 'Verification' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Status' => 'canceled', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -267,6 +269,7 @@ describe 'Verification' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

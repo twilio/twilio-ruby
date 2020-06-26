@@ -19,6 +19,7 @@ describe 'Message' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -101,14 +102,16 @@ describe 'Message' do
     expect {
       @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                             .messages.create()
+                             .messages.create(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -223,6 +226,7 @@ describe 'Message' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -330,14 +334,16 @@ describe 'Message' do
     expect {
       @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                             .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+                             .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages/IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -360,14 +366,16 @@ describe 'Message' do
     expect {
       @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                              .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                             .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+                             .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages/IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 

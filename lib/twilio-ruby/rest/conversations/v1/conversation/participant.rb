@@ -55,8 +55,10 @@ module Twilio
             # @param [String] role_sid The SID of the
             #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) to assign to the
             #   participant.
+            # @param [participant.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ParticipantInstance] Created ParticipantInstance
-            def create(identity: :unset, messaging_binding_address: :unset, messaging_binding_proxy_address: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_binding_projected_address: :unset, role_sid: :unset)
+            def create(identity: :unset, messaging_binding_address: :unset, messaging_binding_proxy_address: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_binding_projected_address: :unset, role_sid: :unset, x_twilio_webhook_enabled: :unset)
               data = Twilio::Values.of({
                   'Identity' => identity,
                   'MessagingBinding.Address' => messaging_binding_address,
@@ -67,8 +69,9 @@ module Twilio
                   'MessagingBinding.ProjectedAddress' => messaging_binding_projected_address,
                   'RoleSid' => role_sid,
               })
+              headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-              payload = @version.create('POST', @uri, data: data)
+              payload = @version.create('POST', @uri, data: data, headers: headers)
 
               ParticipantInstance.new(@version, payload, conversation_sid: @solution[:conversation_sid], )
             end
@@ -221,16 +224,19 @@ module Twilio
             # @param [String] role_sid The SID of the
             #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) to assign to the
             #   participant.
+            # @param [participant.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ParticipantInstance] Updated ParticipantInstance
-            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset)
+            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, x_twilio_webhook_enabled: :unset)
               data = Twilio::Values.of({
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                   'Attributes' => attributes,
                   'RoleSid' => role_sid,
               })
+              headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-              payload = @version.update('POST', @uri, data: data)
+              payload = @version.update('POST', @uri, data: data, headers: headers)
 
               ParticipantInstance.new(
                   @version,
@@ -242,9 +248,13 @@ module Twilio
 
             ##
             # Delete the ParticipantInstance
+            # @param [participant.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete
-               @version.delete('DELETE', @uri)
+            def delete(x_twilio_webhook_enabled: :unset)
+              headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+
+               @version.delete('DELETE', @uri, headers: headers)
             end
 
             ##
@@ -392,21 +402,26 @@ module Twilio
             # @param [String] role_sid The SID of the
             #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) to assign to the
             #   participant.
+            # @param [participant.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ParticipantInstance] Updated ParticipantInstance
-            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset)
+            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, x_twilio_webhook_enabled: :unset)
               context.update(
                   date_created: date_created,
                   date_updated: date_updated,
                   attributes: attributes,
                   role_sid: role_sid,
+                  x_twilio_webhook_enabled: x_twilio_webhook_enabled,
               )
             end
 
             ##
             # Delete the ParticipantInstance
+            # @param [participant.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete
-              context.delete
+            def delete(x_twilio_webhook_enabled: :unset)
+              context.delete(x_twilio_webhook_enabled: x_twilio_webhook_enabled, )
             end
 
             ##

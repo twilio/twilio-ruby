@@ -14,14 +14,16 @@ describe 'Message' do
 
     expect {
       @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .messages.create()
+                              .messages.create(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://conversations.twilio.com/v1/Conversations/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -91,14 +93,16 @@ describe 'Message' do
 
     expect {
       @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+                              .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://conversations.twilio.com/v1/Conversations/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages/IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -134,14 +138,16 @@ describe 'Message' do
 
     expect {
       @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+                              .messages('IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://conversations.twilio.com/v1/Conversations/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages/IMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -166,6 +172,7 @@ describe 'Message' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -209,6 +216,7 @@ describe 'Message' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

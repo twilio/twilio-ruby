@@ -13,14 +13,16 @@ describe 'BrandsInformation' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.trusted_comms.brands_information().fetch()
+      @client.preview.trusted_comms.brands_information().fetch(if_none_match: 'if_none_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'If-None-Match' => 'if_none_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
         url: 'https://preview.twilio.com/TrustedComms/BrandsInformation',
+        headers: headers,
     ))).to eq(true)
   end
 

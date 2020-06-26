@@ -51,8 +51,10 @@ module Twilio
             #   backup/separate source  and where a Message was previously updated.
             # @param [String] created_by The `identity` of the User that created the channel.
             #   Default is: `system`.
+            # @param [channel.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ChannelInstance] Created ChannelInstance
-            def create(friendly_name: :unset, unique_name: :unset, attributes: :unset, type: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
+            def create(friendly_name: :unset, unique_name: :unset, attributes: :unset, type: :unset, date_created: :unset, date_updated: :unset, created_by: :unset, x_twilio_webhook_enabled: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'UniqueName' => unique_name,
@@ -62,8 +64,9 @@ module Twilio
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                   'CreatedBy' => created_by,
               })
+              headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-              payload = @version.create('POST', @uri, data: data)
+              payload = @version.create('POST', @uri, data: data, headers: headers)
 
               ChannelInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -226,9 +229,13 @@ module Twilio
 
             ##
             # Delete the ChannelInstance
+            # @param [channel.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete
-               @version.delete('DELETE', @uri)
+            def delete(x_twilio_webhook_enabled: :unset)
+              headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+
+               @version.delete('DELETE', @uri, headers: headers)
             end
 
             ##
@@ -251,8 +258,10 @@ module Twilio
             #   as the date it was last updated.
             # @param [String] created_by The `identity` of the User that created the channel.
             #   Default is: `system`.
+            # @param [channel.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ChannelInstance] Updated ChannelInstance
-            def update(friendly_name: :unset, unique_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
+            def update(friendly_name: :unset, unique_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset, x_twilio_webhook_enabled: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'UniqueName' => unique_name,
@@ -261,8 +270,9 @@ module Twilio
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                   'CreatedBy' => created_by,
               })
+              headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-              payload = @version.update('POST', @uri, data: data)
+              payload = @version.update('POST', @uri, data: data, headers: headers)
 
               ChannelInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -511,9 +521,11 @@ module Twilio
 
             ##
             # Delete the ChannelInstance
+            # @param [channel.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete
-              context.delete
+            def delete(x_twilio_webhook_enabled: :unset)
+              context.delete(x_twilio_webhook_enabled: x_twilio_webhook_enabled, )
             end
 
             ##
@@ -536,8 +548,10 @@ module Twilio
             #   as the date it was last updated.
             # @param [String] created_by The `identity` of the User that created the channel.
             #   Default is: `system`.
+            # @param [channel.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ChannelInstance] Updated ChannelInstance
-            def update(friendly_name: :unset, unique_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset)
+            def update(friendly_name: :unset, unique_name: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, created_by: :unset, x_twilio_webhook_enabled: :unset)
               context.update(
                   friendly_name: friendly_name,
                   unique_name: unique_name,
@@ -545,6 +559,7 @@ module Twilio
                   date_created: date_created,
                   date_updated: date_updated,
                   created_by: created_by,
+                  x_twilio_webhook_enabled: x_twilio_webhook_enabled,
               )
             end
 

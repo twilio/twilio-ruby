@@ -18,6 +18,7 @@ describe 'Document' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -59,14 +60,16 @@ describe 'Document' do
 
     expect {
       @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                     .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+                     .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete(if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Documents/ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -91,6 +94,7 @@ describe 'Document' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -136,6 +140,7 @@ describe 'Document' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -215,14 +220,16 @@ describe 'Document' do
 
     expect {
       @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                     .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+                     .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Documents/ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 

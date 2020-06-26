@@ -18,6 +18,7 @@ describe 'Asset' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -59,6 +60,7 @@ describe 'Asset' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -100,6 +102,7 @@ describe 'Asset' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -128,6 +131,7 @@ describe 'Asset' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'FriendlyName' => 'friendly_name', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -170,6 +174,7 @@ describe 'Asset' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'FriendlyName' => 'friendly_name', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

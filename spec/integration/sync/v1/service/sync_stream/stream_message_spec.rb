@@ -19,6 +19,7 @@ describe 'StreamMessage' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Data' => Twilio.serialize_object({}), }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

@@ -13,14 +13,16 @@ describe 'Cps' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.trusted_comms.cps().fetch()
+      @client.preview.trusted_comms.cps().fetch(x_xcnam_sensitive_phone_number: 'x_xcnam_sensitive_phone_number')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Xcnam-Sensitive-Phone-Number' => 'x_xcnam_sensitive_phone_number', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
         url: 'https://preview.twilio.com/TrustedComms/CPS',
+        headers: headers,
     ))).to eq(true)
   end
 

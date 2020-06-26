@@ -18,6 +18,7 @@ describe 'NetworkAccessProfileNetwork' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -73,6 +74,7 @@ describe 'NetworkAccessProfileNetwork' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Network' => 'HWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -116,6 +118,7 @@ describe 'NetworkAccessProfileNetwork' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -144,6 +147,7 @@ describe 'NetworkAccessProfileNetwork' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

@@ -18,6 +18,7 @@ describe 'Engagement' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -59,6 +60,7 @@ describe 'Engagement' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -104,6 +106,7 @@ describe 'Engagement' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'To' => '+15558675310', 'From' => '+15017122661', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -150,6 +153,7 @@ describe 'Engagement' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

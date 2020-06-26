@@ -18,6 +18,7 @@ describe 'EndUser' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'FriendlyName' => 'friendly_name', 'Type' => 'individual', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -60,6 +61,7 @@ describe 'EndUser' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -139,6 +141,7 @@ describe 'EndUser' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -180,6 +183,7 @@ describe 'EndUser' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

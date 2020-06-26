@@ -6,7 +6,7 @@ class Holodeck
   class Request
     attr_reader :method, :url, :auth, :params, :data, :headers, :any
 
-    def initialize(method: nil, url: nil, auth: nil, params: {}, data: {}, headers: nil, any: false)
+    def initialize(method: nil, url: nil, auth: nil, params: {}, data: {}, headers: {}, any: false)
       @method = method
       @url = url
       @auth = auth
@@ -21,14 +21,19 @@ class Holodeck
     end
 
     def ==(other)
-      method.casecmp(other.method.upcase).zero? &&
-        url == other.url &&
-        params == other.params &&
-        data == other.data
+      if method.casecmp(other.method.upcase).zero? &&
+         url == other.url &&
+         params == other.params &&
+         data == other.data
+        other.headers.each do |h, value|
+          return false unless headers[h] == value
+        end
+        true
+      end
     end
 
     def to_s
-      "#<Holodeck::Request method:#{method} url:#{url} params:#{params} data:#{data}>"
+      "#<Holodeck::Request method:#{method} url:#{url} params:#{params} data:#{data} headers:#{headers}>"
     end
   end
 

@@ -41,16 +41,19 @@ module Twilio
             #   application-specific data.
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the new resource. This value is often used for display purposes.
+            # @param [user.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [UserInstance] Created UserInstance
-            def create(identity: nil, role_sid: :unset, attributes: :unset, friendly_name: :unset)
+            def create(identity: nil, role_sid: :unset, attributes: :unset, friendly_name: :unset, x_twilio_webhook_enabled: :unset)
               data = Twilio::Values.of({
                   'Identity' => identity,
                   'RoleSid' => role_sid,
                   'Attributes' => attributes,
                   'FriendlyName' => friendly_name,
               })
+              headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-              payload = @version.create('POST', @uri, data: data)
+              payload = @version.create('POST', @uri, data: data, headers: headers)
 
               UserInstance.new(@version, payload, service_sid: @solution[:service_sid], )
             end
@@ -218,15 +221,18 @@ module Twilio
             #   application-specific data.
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the resource. It is often used for display purposes.
+            # @param [user.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [UserInstance] Updated UserInstance
-            def update(role_sid: :unset, attributes: :unset, friendly_name: :unset)
+            def update(role_sid: :unset, attributes: :unset, friendly_name: :unset, x_twilio_webhook_enabled: :unset)
               data = Twilio::Values.of({
                   'RoleSid' => role_sid,
                   'Attributes' => attributes,
                   'FriendlyName' => friendly_name,
               })
+              headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-              payload = @version.update('POST', @uri, data: data)
+              payload = @version.update('POST', @uri, data: data, headers: headers)
 
               UserInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -445,9 +451,16 @@ module Twilio
             #   application-specific data.
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the resource. It is often used for display purposes.
+            # @param [user.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [UserInstance] Updated UserInstance
-            def update(role_sid: :unset, attributes: :unset, friendly_name: :unset)
-              context.update(role_sid: role_sid, attributes: attributes, friendly_name: friendly_name, )
+            def update(role_sid: :unset, attributes: :unset, friendly_name: :unset, x_twilio_webhook_enabled: :unset)
+              context.update(
+                  role_sid: role_sid,
+                  attributes: attributes,
+                  friendly_name: friendly_name,
+                  x_twilio_webhook_enabled: x_twilio_webhook_enabled,
+              )
             end
 
             ##

@@ -79,9 +79,20 @@ module Twilio
 
           ##
           # Fetch the CurrentCallInstance
+          # @param [String] x_xcnam_sensitive_phone_number_from The originating Phone
+          #   Number, given in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+          #   This phone number should be a Twilio number, otherwise it will return an error
+          #   with HTTP Status Code 400.
+          # @param [String] x_xcnam_sensitive_phone_number_to The terminating Phone Number,
+          #   given in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
           # @return [CurrentCallInstance] Fetched CurrentCallInstance
-          def fetch
-            payload = @version.fetch('GET', @uri)
+          def fetch(x_xcnam_sensitive_phone_number_from: :unset, x_xcnam_sensitive_phone_number_to: :unset)
+            headers = Twilio::Values.of({
+                'X-Xcnam-Sensitive-Phone-Number-From' => x_xcnam_sensitive_phone_number_from,
+                'X-Xcnam-Sensitive-Phone-Number-To' => x_xcnam_sensitive_phone_number_to,
+            })
+
+            payload = @version.fetch('GET', @uri, headers: headers)
 
             CurrentCallInstance.new(@version, payload, )
           end
@@ -232,9 +243,18 @@ module Twilio
 
           ##
           # Fetch the CurrentCallInstance
+          # @param [String] x_xcnam_sensitive_phone_number_from The originating Phone
+          #   Number, given in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+          #   This phone number should be a Twilio number, otherwise it will return an error
+          #   with HTTP Status Code 400.
+          # @param [String] x_xcnam_sensitive_phone_number_to The terminating Phone Number,
+          #   given in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
           # @return [CurrentCallInstance] Fetched CurrentCallInstance
-          def fetch
-            context.fetch
+          def fetch(x_xcnam_sensitive_phone_number_from: :unset, x_xcnam_sensitive_phone_number_to: :unset)
+            context.fetch(
+                x_xcnam_sensitive_phone_number_from: x_xcnam_sensitive_phone_number_from,
+                x_xcnam_sensitive_phone_number_to: x_xcnam_sensitive_phone_number_to,
+            )
           end
 
           ##

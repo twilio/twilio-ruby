@@ -13,14 +13,16 @@ describe 'Conversation' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.conversations.v1.conversations.create()
+      @client.conversations.v1.conversations.create(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://conversations.twilio.com/v1/Conversations',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -61,14 +63,16 @@ describe 'Conversation' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+      @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://conversations.twilio.com/v1/Conversations/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -109,14 +113,16 @@ describe 'Conversation' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+      @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://conversations.twilio.com/v1/Conversations/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -139,6 +145,7 @@ describe 'Conversation' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -187,6 +194,7 @@ describe 'Conversation' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

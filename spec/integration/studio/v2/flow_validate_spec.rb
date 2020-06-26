@@ -21,6 +21,7 @@ describe 'FlowValidate' do
         'Status' => 'draft',
         'Definition' => Twilio.serialize_object({}),
     }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

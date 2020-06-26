@@ -19,6 +19,7 @@ describe 'SyncMapItem' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -58,14 +59,16 @@ describe 'SyncMapItem' do
     expect {
       @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                           .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                          .sync_map_items('key').delete()
+                          .sync_map_items('key').delete(if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Items/key',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -92,6 +95,7 @@ describe 'SyncMapItem' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Key' => 'key', 'Data' => Twilio.serialize_object({}), }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -136,6 +140,7 @@ describe 'SyncMapItem' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -214,15 +219,17 @@ describe 'SyncMapItem' do
     expect {
       @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                           .sync_maps('MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                          .sync_map_items('key').update(data: {})
+                          .sync_map_items('key').update(data: {}, if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Data' => Twilio.serialize_object({}), }
+    headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Maps/MPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Items/key',
         data: values,
+        headers: headers,
     ))).to eq(true)
   end
 

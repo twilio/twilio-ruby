@@ -18,6 +18,7 @@ describe 'Binding' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -67,6 +68,7 @@ describe 'Binding' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -95,6 +97,7 @@ describe 'Binding' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Identity' => 'identity', 'BindingType' => 'apn', 'Address' => 'address', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -145,6 +148,7 @@ describe 'Binding' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

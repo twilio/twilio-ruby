@@ -17,6 +17,7 @@ describe 'FlexFlow' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -100,6 +101,7 @@ describe 'FlexFlow' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -150,6 +152,7 @@ describe 'FlexFlow' do
         'ChatServiceSid' => 'ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         'ChannelType' => 'web',
     }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -197,6 +200,7 @@ describe 'FlexFlow' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -243,6 +247,7 @@ describe 'FlexFlow' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

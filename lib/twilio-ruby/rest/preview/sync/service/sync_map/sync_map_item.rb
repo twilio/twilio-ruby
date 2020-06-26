@@ -217,19 +217,24 @@ module Twilio
 
               ##
               # Delete the SyncMapItemInstance
+              # @param [String] if_match The If-Match HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete
-                 @version.delete('DELETE', @uri)
+              def delete(if_match: :unset)
+                headers = Twilio::Values.of({'If-Match' => if_match, })
+
+                 @version.delete('DELETE', @uri, headers: headers)
               end
 
               ##
               # Update the SyncMapItemInstance
               # @param [Hash] data The data
+              # @param [String] if_match The If-Match HTTP request header
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
-              def update(data: nil)
+              def update(data: nil, if_match: :unset)
                 data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), })
+                headers = Twilio::Values.of({'If-Match' => if_match, })
 
-                payload = @version.update('POST', @uri, data: data)
+                payload = @version.update('POST', @uri, data: data, headers: headers)
 
                 SyncMapItemInstance.new(
                     @version,
@@ -373,17 +378,19 @@ module Twilio
 
               ##
               # Delete the SyncMapItemInstance
+              # @param [String] if_match The If-Match HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete
-                context.delete
+              def delete(if_match: :unset)
+                context.delete(if_match: if_match, )
               end
 
               ##
               # Update the SyncMapItemInstance
               # @param [Hash] data The data
+              # @param [String] if_match The If-Match HTTP request header
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
-              def update(data: nil)
-                context.update(data: data, )
+              def update(data: nil, if_match: :unset)
+                context.update(data: data, if_match: if_match, )
               end
 
               ##

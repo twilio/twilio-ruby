@@ -18,6 +18,7 @@ describe 'Execution' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -59,6 +60,7 @@ describe 'Execution' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -103,6 +105,7 @@ describe 'Execution' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'To' => '+15558675310', 'From' => '+15017122661', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -148,6 +151,7 @@ describe 'Execution' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -176,6 +180,7 @@ describe 'Execution' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Status' => 'active', }
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

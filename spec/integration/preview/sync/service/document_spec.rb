@@ -18,6 +18,7 @@ describe 'Document' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -58,14 +59,16 @@ describe 'Document' do
 
     expect {
       @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                          .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+                          .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete(if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Documents/ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -90,6 +93,7 @@ describe 'Document' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -134,6 +138,7 @@ describe 'Document' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -212,15 +217,17 @@ describe 'Document' do
 
     expect {
       @client.preview.sync.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                          .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(data: {})
+                          .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(data: {}, if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Data' => Twilio.serialize_object({}), }
+    headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://preview.twilio.com/Sync/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Documents/ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         data: values,
+        headers: headers,
     ))).to eq(true)
   end
 

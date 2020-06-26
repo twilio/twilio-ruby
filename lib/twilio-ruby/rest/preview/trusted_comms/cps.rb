@@ -79,9 +79,13 @@ module Twilio
 
           ##
           # Fetch the CpsInstance
+          # @param [String] x_xcnam_sensitive_phone_number Phone number used to retrieve its
+          #   corresponding CPS.
           # @return [CpsInstance] Fetched CpsInstance
-          def fetch
-            payload = @version.fetch('GET', @uri)
+          def fetch(x_xcnam_sensitive_phone_number: :unset)
+            headers = Twilio::Values.of({'X-Xcnam-Sensitive-Phone-Number' => x_xcnam_sensitive_phone_number, })
+
+            payload = @version.fetch('GET', @uri, headers: headers)
 
             CpsInstance.new(@version, payload, )
           end
@@ -155,9 +159,11 @@ module Twilio
 
           ##
           # Fetch the CpsInstance
+          # @param [String] x_xcnam_sensitive_phone_number Phone number used to retrieve its
+          #   corresponding CPS.
           # @return [CpsInstance] Fetched CpsInstance
-          def fetch
-            context.fetch
+          def fetch(x_xcnam_sensitive_phone_number: :unset)
+            context.fetch(x_xcnam_sensitive_phone_number: x_xcnam_sensitive_phone_number, )
           end
 
           ##

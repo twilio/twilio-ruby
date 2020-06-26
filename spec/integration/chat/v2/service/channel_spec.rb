@@ -18,6 +18,7 @@ describe 'Channel' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -65,14 +66,16 @@ describe 'Channel' do
 
     expect {
       @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                     .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+                     .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -93,14 +96,16 @@ describe 'Channel' do
 
     expect {
       @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                     .channels.create()
+                     .channels.create(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -148,6 +153,7 @@ describe 'Channel' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -233,14 +239,16 @@ describe 'Channel' do
 
     expect {
       @client.chat.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                     .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+                     .channels('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels/CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 

@@ -189,19 +189,24 @@ module Twilio
 
             ##
             # Delete the DocumentInstance
+            # @param [String] if_match The If-Match HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete
-               @version.delete('DELETE', @uri)
+            def delete(if_match: :unset)
+              headers = Twilio::Values.of({'If-Match' => if_match, })
+
+               @version.delete('DELETE', @uri, headers: headers)
             end
 
             ##
             # Update the DocumentInstance
             # @param [Hash] data The data
+            # @param [String] if_match The If-Match HTTP request header
             # @return [DocumentInstance] Updated DocumentInstance
-            def update(data: nil)
+            def update(data: nil, if_match: :unset)
               data = Twilio::Values.of({'Data' => Twilio.serialize_object(data), })
+              headers = Twilio::Values.of({'If-Match' => if_match, })
 
-              payload = @version.update('POST', @uri, data: data)
+              payload = @version.update('POST', @uri, data: data, headers: headers)
 
               DocumentInstance.new(@version, payload, service_sid: @solution[:service_sid], sid: @solution[:sid], )
             end
@@ -362,17 +367,19 @@ module Twilio
 
             ##
             # Delete the DocumentInstance
+            # @param [String] if_match The If-Match HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete
-              context.delete
+            def delete(if_match: :unset)
+              context.delete(if_match: if_match, )
             end
 
             ##
             # Update the DocumentInstance
             # @param [Hash] data The data
+            # @param [String] if_match The If-Match HTTP request header
             # @return [DocumentInstance] Updated DocumentInstance
-            def update(data: nil)
-              context.update(data: data, )
+            def update(data: nil, if_match: :unset)
+              context.update(data: data, if_match: if_match, )
             end
 
             ##
