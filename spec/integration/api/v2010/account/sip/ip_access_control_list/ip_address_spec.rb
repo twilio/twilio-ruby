@@ -19,7 +19,6 @@ describe 'IpAddress' do
                        .ip_addresses.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -146,7 +145,6 @@ describe 'IpAddress' do
                        .ip_addresses('IPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -190,7 +188,6 @@ describe 'IpAddress' do
                        .ip_addresses('IPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -234,7 +231,6 @@ describe 'IpAddress' do
                        .ip_addresses('IPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

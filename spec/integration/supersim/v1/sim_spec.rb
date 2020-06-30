@@ -16,7 +16,6 @@ describe 'Sim' do
       @client.supersim.v1.sims('HSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -54,7 +53,6 @@ describe 'Sim' do
       @client.supersim.v1.sims('HSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -161,7 +159,6 @@ describe 'Sim' do
       @client.supersim.v1.sims.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

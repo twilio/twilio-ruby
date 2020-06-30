@@ -16,7 +16,6 @@ describe 'Assistant' do
       @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -66,7 +65,6 @@ describe 'Assistant' do
       @client.preview.understand.assistants.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -153,7 +151,6 @@ describe 'Assistant' do
       @client.preview.understand.assistants.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -203,7 +200,6 @@ describe 'Assistant' do
       @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -253,7 +249,6 @@ describe 'Assistant' do
       @client.preview.understand.assistants('UAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

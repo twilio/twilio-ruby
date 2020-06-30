@@ -17,7 +17,6 @@ describe 'RoomRecording' do
                       .recordings('RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -72,7 +71,6 @@ describe 'RoomRecording' do
                       .recordings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -166,7 +164,6 @@ describe 'RoomRecording' do
                       .recordings('RTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

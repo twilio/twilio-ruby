@@ -17,7 +17,6 @@ describe 'TaskQueue' do
                            .task_queues('WQXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -71,7 +70,6 @@ describe 'TaskQueue' do
                            .task_queues('WQXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -125,7 +123,6 @@ describe 'TaskQueue' do
                            .task_queues.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -272,7 +269,6 @@ describe 'TaskQueue' do
                            .task_queues('WQXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

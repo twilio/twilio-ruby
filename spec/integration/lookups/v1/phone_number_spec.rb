@@ -16,7 +16,6 @@ describe 'PhoneNumber' do
       @client.lookups.v1.phone_numbers('+15017122661').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

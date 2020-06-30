@@ -17,7 +17,6 @@ describe 'User' do
                              .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -65,7 +64,6 @@ describe 'User' do
                              .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -90,15 +88,17 @@ describe 'User' do
 
     expect {
       @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                             .users.create(identity: 'identity')
+                             .users.create(identity: 'identity', x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Identity' => 'identity', }
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users',
         data: values,
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -142,7 +142,6 @@ describe 'User' do
                              .users.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -225,14 +224,15 @@ describe 'User' do
 
     expect {
       @client.ip_messaging.v2.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                             .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+                             .users('USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(x_twilio_webhook_enabled: 'true')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'X-Twilio-Webhook-Enabled' => 'true', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://chat.twilio.com/v2/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Users/USXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 

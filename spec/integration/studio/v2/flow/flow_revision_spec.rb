@@ -17,7 +17,6 @@ describe 'FlowRevision' do
                        .revisions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -73,7 +72,6 @@ describe 'FlowRevision' do
                        .revisions('revision').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

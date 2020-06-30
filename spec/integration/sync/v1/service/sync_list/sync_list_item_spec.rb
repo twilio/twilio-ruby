@@ -18,7 +18,6 @@ describe 'SyncListItem' do
                      .sync_list_items(1).fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -59,14 +58,15 @@ describe 'SyncListItem' do
     expect {
       @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_lists('ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                     .sync_list_items(1).delete()
+                     .sync_list_items(1).delete(if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Lists/ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Items/1',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -137,7 +137,6 @@ describe 'SyncListItem' do
                      .sync_list_items.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -217,14 +216,15 @@ describe 'SyncListItem' do
     expect {
       @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                      .sync_lists('ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                     .sync_list_items(1).update()
+                     .sync_list_items(1).update(if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Lists/ESXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Items/1',
+        headers: headers,
     ))).to eq(true)
   end
 

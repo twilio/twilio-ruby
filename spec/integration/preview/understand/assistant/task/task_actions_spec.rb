@@ -18,7 +18,6 @@ describe 'TaskActions' do
                                 .task_actions().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -56,7 +55,6 @@ describe 'TaskActions' do
                                 .task_actions().update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

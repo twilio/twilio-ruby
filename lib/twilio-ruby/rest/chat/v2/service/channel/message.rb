@@ -54,8 +54,10 @@ module Twilio
               # @param [String] media_sid The SID of the
               #   [Media](https://www.twilio.com/docs/chat/rest/media) to attach to the new
               #   Message.
+              # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
+              #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [MessageInstance] Created MessageInstance
-              def create(from: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset, body: :unset, media_sid: :unset)
+              def create(from: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset, body: :unset, media_sid: :unset, x_twilio_webhook_enabled: :unset)
                 data = Twilio::Values.of({
                     'From' => from,
                     'Attributes' => attributes,
@@ -65,8 +67,9 @@ module Twilio
                     'Body' => body,
                     'MediaSid' => media_sid,
                 })
+                headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-                payload = @version.create('POST', @uri, data: data)
+                payload = @version.create('POST', @uri, data: data, headers: headers)
 
                 MessageInstance.new(
                     @version,
@@ -242,9 +245,13 @@ module Twilio
 
               ##
               # Delete the MessageInstance
+              # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
+              #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete
-                 @version.delete('DELETE', @uri)
+              def delete(x_twilio_webhook_enabled: :unset)
+                headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+
+                 @version.delete('DELETE', @uri, headers: headers)
               end
 
               ##
@@ -267,8 +274,10 @@ module Twilio
               #   updated the Message, if applicable.
               # @param [String] from The [Identity](https://www.twilio.com/docs/chat/identity)
               #   of the message's author.
+              # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
+              #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [MessageInstance] Updated MessageInstance
-              def update(body: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset, from: :unset)
+              def update(body: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset, from: :unset, x_twilio_webhook_enabled: :unset)
                 data = Twilio::Values.of({
                     'Body' => body,
                     'Attributes' => attributes,
@@ -277,8 +286,9 @@ module Twilio
                     'LastUpdatedBy' => last_updated_by,
                     'From' => from,
                 })
+                headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-                payload = @version.update('POST', @uri, data: data)
+                payload = @version.update('POST', @uri, data: data, headers: headers)
 
                 MessageInstance.new(
                     @version,
@@ -470,9 +480,11 @@ module Twilio
 
               ##
               # Delete the MessageInstance
+              # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
+              #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete
-                context.delete
+              def delete(x_twilio_webhook_enabled: :unset)
+                context.delete(x_twilio_webhook_enabled: x_twilio_webhook_enabled, )
               end
 
               ##
@@ -495,8 +507,10 @@ module Twilio
               #   updated the Message, if applicable.
               # @param [String] from The [Identity](https://www.twilio.com/docs/chat/identity)
               #   of the message's author.
+              # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
+              #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [MessageInstance] Updated MessageInstance
-              def update(body: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset, from: :unset)
+              def update(body: :unset, attributes: :unset, date_created: :unset, date_updated: :unset, last_updated_by: :unset, from: :unset, x_twilio_webhook_enabled: :unset)
                 context.update(
                     body: body,
                     attributes: attributes,
@@ -504,6 +518,7 @@ module Twilio
                     date_updated: date_updated,
                     last_updated_by: last_updated_by,
                     from: from,
+                    x_twilio_webhook_enabled: x_twilio_webhook_enabled,
                 )
               end
 

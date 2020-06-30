@@ -18,7 +18,6 @@ describe 'DependentPhoneNumber' do
                        .dependent_phone_numbers.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

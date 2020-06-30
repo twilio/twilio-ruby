@@ -16,7 +16,6 @@ describe 'CompositionHook' do
       @client.video.v1.composition_hooks('HKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -97,7 +96,6 @@ describe 'CompositionHook' do
       @client.video.v1.composition_hooks.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -213,7 +211,6 @@ describe 'CompositionHook' do
       @client.video.v1.composition_hooks('HKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

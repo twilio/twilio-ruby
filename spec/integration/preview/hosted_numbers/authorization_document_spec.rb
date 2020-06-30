@@ -16,7 +16,6 @@ describe 'AuthorizationDocument' do
       @client.preview.hosted_numbers.authorization_documents('PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -59,7 +58,6 @@ describe 'AuthorizationDocument' do
       @client.preview.hosted_numbers.authorization_documents('PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -102,7 +100,6 @@ describe 'AuthorizationDocument' do
       @client.preview.hosted_numbers.authorization_documents.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

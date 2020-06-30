@@ -258,9 +258,12 @@ module Twilio
 
               ##
               # Delete the SyncListItemInstance
+              # @param [String] if_match The If-Match HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete
-                 @version.delete('DELETE', @uri)
+              def delete(if_match: :unset)
+                headers = Twilio::Values.of({'If-Match' => if_match, })
+
+                 @version.delete('DELETE', @uri, headers: headers)
               end
 
               ##
@@ -280,16 +283,18 @@ module Twilio
               #   List does not expire. The Sync List will be deleted automatically after it
               #   expires, but there can be a delay between the expiration time and the
               #   resources's deletion.
+              # @param [String] if_match The If-Match HTTP request header
               # @return [SyncListItemInstance] Updated SyncListItemInstance
-              def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
+              def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset, if_match: :unset)
                 data = Twilio::Values.of({
                     'Data' => Twilio.serialize_object(data),
                     'Ttl' => ttl,
                     'ItemTtl' => item_ttl,
                     'CollectionTtl' => collection_ttl,
                 })
+                headers = Twilio::Values.of({'If-Match' => if_match, })
 
-                payload = @version.update('POST', @uri, data: data)
+                payload = @version.update('POST', @uri, data: data, headers: headers)
 
                 SyncListItemInstance.new(
                     @version,
@@ -446,9 +451,10 @@ module Twilio
 
               ##
               # Delete the SyncListItemInstance
+              # @param [String] if_match The If-Match HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete
-                context.delete
+              def delete(if_match: :unset)
+                context.delete(if_match: if_match, )
               end
 
               ##
@@ -468,9 +474,16 @@ module Twilio
               #   List does not expire. The Sync List will be deleted automatically after it
               #   expires, but there can be a delay between the expiration time and the
               #   resources's deletion.
+              # @param [String] if_match The If-Match HTTP request header
               # @return [SyncListItemInstance] Updated SyncListItemInstance
-              def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
-                context.update(data: data, ttl: ttl, item_ttl: item_ttl, collection_ttl: collection_ttl, )
+              def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset, if_match: :unset)
+                context.update(
+                    data: data,
+                    ttl: ttl,
+                    item_ttl: item_ttl,
+                    collection_ttl: collection_ttl,
+                    if_match: if_match,
+                )
               end
 
               ##

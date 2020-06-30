@@ -95,7 +95,6 @@ describe 'MessagingConfiguration' do
                        .messaging_configurations('country').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -133,7 +132,6 @@ describe 'MessagingConfiguration' do
                        .messaging_configurations.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -209,7 +207,6 @@ describe 'MessagingConfiguration' do
                        .messaging_configurations('country').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

@@ -16,7 +16,6 @@ describe 'UsageRecord' do
       @client.supersim.v1.usage_records.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

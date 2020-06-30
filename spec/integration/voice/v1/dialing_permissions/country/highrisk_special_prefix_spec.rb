@@ -18,7 +18,6 @@ describe 'HighriskSpecialPrefix' do
                       .highrisk_special_prefixes.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

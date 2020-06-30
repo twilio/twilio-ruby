@@ -44,8 +44,10 @@ module Twilio
           #   switched to `inactive` state. Minimum value for this timer is 1 minute.
           # @param [String] timers_closed ISO8601 duration when conversation will be
           #   switched to `closed` state. Minimum value for this timer is 10 minutes.
+          # @param [conversation.WebhookEnabledType] x_twilio_webhook_enabled The
+          #   X-Twilio-Webhook-Enabled HTTP request header
           # @return [ConversationInstance] Created ConversationInstance
-          def create(friendly_name: :unset, date_created: :unset, date_updated: :unset, messaging_service_sid: :unset, attributes: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset)
+          def create(friendly_name: :unset, date_created: :unset, date_updated: :unset, messaging_service_sid: :unset, attributes: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset, x_twilio_webhook_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
@@ -56,8 +58,9 @@ module Twilio
                 'Timers.Inactive' => timers_inactive,
                 'Timers.Closed' => timers_closed,
             })
+            headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-            payload = @version.create('POST', @uri, data: data)
+            payload = @version.create('POST', @uri, data: data, headers: headers)
 
             ConversationInstance.new(@version, payload, )
           end
@@ -221,8 +224,10 @@ module Twilio
           #   switched to `inactive` state. Minimum value for this timer is 1 minute.
           # @param [String] timers_closed ISO8601 duration when conversation will be
           #   switched to `closed` state. Minimum value for this timer is 10 minutes.
+          # @param [conversation.WebhookEnabledType] x_twilio_webhook_enabled The
+          #   X-Twilio-Webhook-Enabled HTTP request header
           # @return [ConversationInstance] Updated ConversationInstance
-          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset)
+          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset, x_twilio_webhook_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
@@ -233,17 +238,22 @@ module Twilio
                 'Timers.Inactive' => timers_inactive,
                 'Timers.Closed' => timers_closed,
             })
+            headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-            payload = @version.update('POST', @uri, data: data)
+            payload = @version.update('POST', @uri, data: data, headers: headers)
 
             ConversationInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
           # Delete the ConversationInstance
+          # @param [conversation.WebhookEnabledType] x_twilio_webhook_enabled The
+          #   X-Twilio-Webhook-Enabled HTTP request header
           # @return [Boolean] true if delete succeeds, false otherwise
-          def delete
-             @version.delete('DELETE', @uri)
+          def delete(x_twilio_webhook_enabled: :unset)
+            headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+
+             @version.delete('DELETE', @uri, headers: headers)
           end
 
           ##
@@ -460,8 +470,10 @@ module Twilio
           #   switched to `inactive` state. Minimum value for this timer is 1 minute.
           # @param [String] timers_closed ISO8601 duration when conversation will be
           #   switched to `closed` state. Minimum value for this timer is 10 minutes.
+          # @param [conversation.WebhookEnabledType] x_twilio_webhook_enabled The
+          #   X-Twilio-Webhook-Enabled HTTP request header
           # @return [ConversationInstance] Updated ConversationInstance
-          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset)
+          def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset, x_twilio_webhook_enabled: :unset)
             context.update(
                 friendly_name: friendly_name,
                 date_created: date_created,
@@ -471,14 +483,17 @@ module Twilio
                 state: state,
                 timers_inactive: timers_inactive,
                 timers_closed: timers_closed,
+                x_twilio_webhook_enabled: x_twilio_webhook_enabled,
             )
           end
 
           ##
           # Delete the ConversationInstance
+          # @param [conversation.WebhookEnabledType] x_twilio_webhook_enabled The
+          #   X-Twilio-Webhook-Enabled HTTP request header
           # @return [Boolean] true if delete succeeds, false otherwise
-          def delete
-            context.delete
+          def delete(x_twilio_webhook_enabled: :unset)
+            context.delete(x_twilio_webhook_enabled: x_twilio_webhook_enabled, )
           end
 
           ##

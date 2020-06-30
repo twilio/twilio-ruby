@@ -16,7 +16,6 @@ describe 'ConnectionPolicy' do
       @client.voice.v1.connection_policies.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -54,7 +53,6 @@ describe 'ConnectionPolicy' do
       @client.voice.v1.connection_policies('NYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -92,7 +90,6 @@ describe 'ConnectionPolicy' do
       @client.voice.v1.connection_policies.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -167,7 +164,6 @@ describe 'ConnectionPolicy' do
       @client.voice.v1.connection_policies('NYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -205,7 +201,6 @@ describe 'ConnectionPolicy' do
       @client.voice.v1.connection_policies('NYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

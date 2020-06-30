@@ -14,15 +14,17 @@ describe 'Entity' do
 
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .entities.create(identity: 'identity')
+                       .entities.create(identity: 'identity', twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Identity' => 'identity', }
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities',
         data: values,
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -57,14 +59,15 @@ describe 'Entity' do
 
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .entities('identity').delete()
+                       .entities('identity').delete(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -85,14 +88,15 @@ describe 'Entity' do
 
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .entities('identity').fetch()
+                       .entities('identity').fetch(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -127,14 +131,15 @@ describe 'Entity' do
 
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .entities.list()
+                       .entities.list(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities',
+        headers: headers,
     ))).to eq(true)
   end
 

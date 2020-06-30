@@ -62,8 +62,10 @@ module Twilio
               #   backup/separate source and where a Member was previously updated.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
+              # @param [member.WebhookEnabledType] x_twilio_webhook_enabled The
+              #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [MemberInstance] Created MemberInstance
-              def create(identity: nil, role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
+              def create(identity: nil, role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, x_twilio_webhook_enabled: :unset)
                 data = Twilio::Values.of({
                     'Identity' => identity,
                     'RoleSid' => role_sid,
@@ -73,8 +75,9 @@ module Twilio
                     'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                     'Attributes' => attributes,
                 })
+                headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-                payload = @version.create('POST', @uri, data: data)
+                payload = @version.create('POST', @uri, data: data, headers: headers)
 
                 MemberInstance.new(
                     @version,
@@ -257,9 +260,13 @@ module Twilio
 
               ##
               # Delete the MemberInstance
+              # @param [member.WebhookEnabledType] x_twilio_webhook_enabled The
+              #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete
-                 @version.delete('DELETE', @uri)
+              def delete(x_twilio_webhook_enabled: :unset)
+                headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+
+                 @version.delete('DELETE', @uri, headers: headers)
               end
 
               ##
@@ -285,8 +292,10 @@ module Twilio
               #   as the date it was last updated.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
+              # @param [member.WebhookEnabledType] x_twilio_webhook_enabled The
+              #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [MemberInstance] Updated MemberInstance
-              def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
+              def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, x_twilio_webhook_enabled: :unset)
                 data = Twilio::Values.of({
                     'RoleSid' => role_sid,
                     'LastConsumedMessageIndex' => last_consumed_message_index,
@@ -295,8 +304,9 @@ module Twilio
                     'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                     'Attributes' => attributes,
                 })
+                headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-                payload = @version.update('POST', @uri, data: data)
+                payload = @version.update('POST', @uri, data: data, headers: headers)
 
                 MemberInstance.new(
                     @version,
@@ -461,9 +471,11 @@ module Twilio
 
               ##
               # Delete the MemberInstance
+              # @param [member.WebhookEnabledType] x_twilio_webhook_enabled The
+              #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete
-                context.delete
+              def delete(x_twilio_webhook_enabled: :unset)
+                context.delete(x_twilio_webhook_enabled: x_twilio_webhook_enabled, )
               end
 
               ##
@@ -489,8 +501,10 @@ module Twilio
               #   as the date it was last updated.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
+              # @param [member.WebhookEnabledType] x_twilio_webhook_enabled The
+              #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [MemberInstance] Updated MemberInstance
-              def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
+              def update(role_sid: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, x_twilio_webhook_enabled: :unset)
                 context.update(
                     role_sid: role_sid,
                     last_consumed_message_index: last_consumed_message_index,
@@ -498,6 +512,7 @@ module Twilio
                     date_created: date_created,
                     date_updated: date_updated,
                     attributes: attributes,
+                    x_twilio_webhook_enabled: x_twilio_webhook_enabled,
                 )
               end
 

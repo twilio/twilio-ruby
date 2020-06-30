@@ -16,7 +16,6 @@ describe 'Webhook' do
       @client.conversations.v1.webhooks().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -55,7 +54,6 @@ describe 'Webhook' do
       @client.conversations.v1.webhooks().update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

@@ -16,7 +16,6 @@ describe 'HostedNumberOrder' do
       @client.preview.hosted_numbers.hosted_number_orders('HRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -77,7 +76,6 @@ describe 'HostedNumberOrder' do
       @client.preview.hosted_numbers.hosted_number_orders('HRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -103,7 +101,6 @@ describe 'HostedNumberOrder' do
       @client.preview.hosted_numbers.hosted_number_orders('HRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -164,7 +161,6 @@ describe 'HostedNumberOrder' do
       @client.preview.hosted_numbers.hosted_number_orders.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

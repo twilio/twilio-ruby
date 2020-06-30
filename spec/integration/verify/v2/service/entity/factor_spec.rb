@@ -15,7 +15,7 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'app-push', config: 'config')
+                       .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'app-push', config: 'config', twilio_sandbox_mode: 'twilio_sandbox_mode', authorization: 'authorization')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
@@ -24,11 +24,13 @@ describe 'Factor' do
         'FactorType' => 'app-push',
         'Config' => 'config',
     }
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', 'Authorization' => 'authorization', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors',
         data: values,
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -74,14 +76,15 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+                       .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors/YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -104,14 +107,15 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+                       .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors/YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -157,14 +161,15 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors.list()
+                       .factors.list(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -249,14 +254,15 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+                       .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors/YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 

@@ -16,7 +16,6 @@ describe 'RatePlan' do
       @client.wireless.v1.rate_plans.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -105,7 +104,6 @@ describe 'RatePlan' do
       @client.wireless.v1.rate_plans('WPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -157,7 +155,6 @@ describe 'RatePlan' do
       @client.wireless.v1.rate_plans.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -209,7 +206,6 @@ describe 'RatePlan' do
       @client.wireless.v1.rate_plans('WPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -261,7 +257,6 @@ describe 'RatePlan' do
       @client.wireless.v1.rate_plans('WPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

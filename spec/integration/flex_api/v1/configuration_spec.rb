@@ -16,7 +16,6 @@ describe 'Configuration' do
       @client.flex_api.v1.configuration().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -214,7 +213,6 @@ describe 'Configuration' do
       @client.flex_api.v1.configuration().create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -412,7 +410,6 @@ describe 'Configuration' do
       @client.flex_api.v1.configuration().update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

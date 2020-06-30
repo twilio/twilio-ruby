@@ -41,8 +41,10 @@ module Twilio
             #   you wish. The string value must contain structurally valid JSON if specified.
             #   **Note** that if the attributes are not set "{}" will be returned.
             # @param [String] media_sid The Media Sid to be attached to the new Message.
+            # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [MessageInstance] Created MessageInstance
-            def create(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, media_sid: :unset)
+            def create(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, media_sid: :unset, x_twilio_webhook_enabled: :unset)
               data = Twilio::Values.of({
                   'Author' => author,
                   'Body' => body,
@@ -51,8 +53,9 @@ module Twilio
                   'Attributes' => attributes,
                   'MediaSid' => media_sid,
               })
+              headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-              payload = @version.create('POST', @uri, data: data)
+              payload = @version.create('POST', @uri, data: data, headers: headers)
 
               MessageInstance.new(@version, payload, conversation_sid: @solution[:conversation_sid], )
             end
@@ -206,8 +209,10 @@ module Twilio
             # @param [String] attributes A string metadata field you can use to store any data
             #   you wish. The string value must contain structurally valid JSON if specified.
             #   **Note** that if the attributes are not set "{}" will be returned.
+            # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [MessageInstance] Updated MessageInstance
-            def update(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
+            def update(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, x_twilio_webhook_enabled: :unset)
               data = Twilio::Values.of({
                   'Author' => author,
                   'Body' => body,
@@ -215,8 +220,9 @@ module Twilio
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                   'Attributes' => attributes,
               })
+              headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-              payload = @version.update('POST', @uri, data: data)
+              payload = @version.update('POST', @uri, data: data, headers: headers)
 
               MessageInstance.new(
                   @version,
@@ -228,9 +234,13 @@ module Twilio
 
             ##
             # Delete the MessageInstance
+            # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete
-               @version.delete('DELETE', @uri)
+            def delete(x_twilio_webhook_enabled: :unset)
+              headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+
+               @version.delete('DELETE', @uri, headers: headers)
             end
 
             ##
@@ -393,22 +403,27 @@ module Twilio
             # @param [String] attributes A string metadata field you can use to store any data
             #   you wish. The string value must contain structurally valid JSON if specified.
             #   **Note** that if the attributes are not set "{}" will be returned.
+            # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [MessageInstance] Updated MessageInstance
-            def update(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset)
+            def update(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, x_twilio_webhook_enabled: :unset)
               context.update(
                   author: author,
                   body: body,
                   date_created: date_created,
                   date_updated: date_updated,
                   attributes: attributes,
+                  x_twilio_webhook_enabled: x_twilio_webhook_enabled,
               )
             end
 
             ##
             # Delete the MessageInstance
+            # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
+            #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete
-              context.delete
+            def delete(x_twilio_webhook_enabled: :unset)
+              context.delete(x_twilio_webhook_enabled: x_twilio_webhook_enabled, )
             end
 
             ##

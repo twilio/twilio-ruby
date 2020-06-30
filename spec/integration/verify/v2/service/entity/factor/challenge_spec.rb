@@ -16,14 +16,15 @@ describe 'Challenge' do
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
                        .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .challenges.create()
+                       .challenges.create(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors/YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Challenges',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -67,14 +68,15 @@ describe 'Challenge' do
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
                        .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .challenges('sid').delete()
+                       .challenges('sid').delete(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors/YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Challenges/sid',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -99,14 +101,15 @@ describe 'Challenge' do
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
                        .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .challenges('sid').fetch()
+                       .challenges('sid').fetch(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors/YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Challenges/sid',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -183,14 +186,15 @@ describe 'Challenge' do
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
                        .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .challenges.list()
+                       .challenges.list(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors/YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Challenges',
+        headers: headers,
     ))).to eq(true)
   end
 
@@ -274,14 +278,15 @@ describe 'Challenge' do
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
                        .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .challenges('sid').update()
+                       .challenges('sid').update(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors/YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Challenges/sid',
+        headers: headers,
     ))).to eq(true)
   end
 

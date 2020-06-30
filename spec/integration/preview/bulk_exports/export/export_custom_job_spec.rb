@@ -17,7 +17,6 @@ describe 'ExportCustomJob' do
                                   .export_custom_jobs.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -95,7 +94,6 @@ describe 'ExportCustomJob' do
                                   .export_custom_jobs.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

@@ -16,7 +16,6 @@ describe 'ExportConfiguration' do
       @client.preview.bulk_exports.export_configuration('resource_type').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -50,7 +49,6 @@ describe 'ExportConfiguration' do
       @client.preview.bulk_exports.export_configuration('resource_type').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

@@ -17,7 +17,6 @@ describe 'AssistantFallbackActions' do
                                 .assistant_fallback_actions().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -52,7 +51,6 @@ describe 'AssistantFallbackActions' do
                                 .assistant_fallback_actions().update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

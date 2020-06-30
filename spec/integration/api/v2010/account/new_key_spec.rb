@@ -17,7 +17,6 @@ describe 'NewKey' do
                        .new_keys.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

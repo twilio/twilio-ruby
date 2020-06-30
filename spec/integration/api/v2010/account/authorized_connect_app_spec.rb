@@ -17,7 +17,6 @@ describe 'AuthorizedConnectApp' do
                        .authorized_connect_apps('CNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -60,7 +59,6 @@ describe 'AuthorizedConnectApp' do
                        .authorized_connect_apps.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

@@ -16,7 +16,6 @@ describe 'Export' do
       @client.preview.bulk_exports.exports('resource_type').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

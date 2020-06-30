@@ -41,16 +41,22 @@ module Twilio
               #   `app-push`, `sms`, `totp`, etc.
               # @param [String] config The config required for this Factor. It must be a json
               #   string with the required properties for the given factor type
+              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
+              # @param [String] authorization The Authorization HTTP request header
               # @return [FactorInstance] Created FactorInstance
-              def create(binding: nil, friendly_name: nil, factor_type: nil, config: nil)
+              def create(binding: nil, friendly_name: nil, factor_type: nil, config: nil, twilio_sandbox_mode: :unset, authorization: :unset)
                 data = Twilio::Values.of({
                     'Binding' => binding,
                     'FriendlyName' => friendly_name,
                     'FactorType' => factor_type,
                     'Config' => config,
                 })
+                headers = Twilio::Values.of({
+                    'Twilio-Sandbox-Mode' => twilio_sandbox_mode,
+                    'Authorization' => authorization,
+                })
 
-                payload = @version.create('POST', @uri, data: data)
+                payload = @version.create('POST', @uri, data: data, headers: headers)
 
                 FactorInstance.new(
                     @version,
@@ -64,6 +70,7 @@ module Twilio
               # Lists FactorInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
+              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -71,14 +78,15 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(limit: nil, page_size: nil)
-                self.stream(limit: limit, page_size: page_size).entries
+              def list(twilio_sandbox_mode: :unset, limit: nil, page_size: nil)
+                self.stream(twilio_sandbox_mode: twilio_sandbox_mode, limit: limit, page_size: page_size).entries
               end
 
               ##
               # Streams FactorInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
+              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -86,10 +94,10 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(limit: nil, page_size: nil)
+              def stream(twilio_sandbox_mode: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(page_size: limits[:page_size], )
+                page = self.page(twilio_sandbox_mode: twilio_sandbox_mode, page_size: limits[:page_size], )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -111,18 +119,20 @@ module Twilio
               ##
               # Retrieve a single page of FactorInstance records from the API.
               # Request is executed immediately.
+              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of FactorInstance
-              def page(page_token: :unset, page_number: :unset, page_size: :unset)
+              def page(twilio_sandbox_mode: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
+                headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
-                response = @version.page('GET', @uri, params)
+                response = @version.page('GET', @uri, params, headers: headers)
 
                 FactorPage.new(@version, response, @solution)
               end
@@ -207,16 +217,22 @@ module Twilio
 
               ##
               # Delete the FactorInstance
+              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete
-                 @version.delete('DELETE', @uri)
+              def delete(twilio_sandbox_mode: :unset)
+                headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
+
+                 @version.delete('DELETE', @uri, headers: headers)
               end
 
               ##
               # Fetch the FactorInstance
+              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [FactorInstance] Fetched FactorInstance
-              def fetch
-                payload = @version.fetch('GET', @uri)
+              def fetch(twilio_sandbox_mode: :unset)
+                headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
+
+                payload = @version.fetch('GET', @uri, headers: headers)
 
                 FactorInstance.new(
                     @version,
@@ -234,15 +250,17 @@ module Twilio
               # @param [String] friendly_name The new friendly name of this Factor
               # @param [String] config The new config for this Factor. It must be a json string
               #   with the required properties for the given factor type
+              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [FactorInstance] Updated FactorInstance
-              def update(auth_payload: :unset, friendly_name: :unset, config: :unset)
+              def update(auth_payload: :unset, friendly_name: :unset, config: :unset, twilio_sandbox_mode: :unset)
                 data = Twilio::Values.of({
                     'AuthPayload' => auth_payload,
                     'FriendlyName' => friendly_name,
                     'Config' => config,
                 })
+                headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
-                payload = @version.update('POST', @uri, data: data)
+                payload = @version.update('POST', @uri, data: data, headers: headers)
 
                 FactorInstance.new(
                     @version,
@@ -430,16 +448,18 @@ module Twilio
 
               ##
               # Delete the FactorInstance
+              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete
-                context.delete
+              def delete(twilio_sandbox_mode: :unset)
+                context.delete(twilio_sandbox_mode: twilio_sandbox_mode, )
               end
 
               ##
               # Fetch the FactorInstance
+              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [FactorInstance] Fetched FactorInstance
-              def fetch
-                context.fetch
+              def fetch(twilio_sandbox_mode: :unset)
+                context.fetch(twilio_sandbox_mode: twilio_sandbox_mode, )
               end
 
               ##
@@ -449,9 +469,15 @@ module Twilio
               # @param [String] friendly_name The new friendly name of this Factor
               # @param [String] config The new config for this Factor. It must be a json string
               #   with the required properties for the given factor type
+              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [FactorInstance] Updated FactorInstance
-              def update(auth_payload: :unset, friendly_name: :unset, config: :unset)
-                context.update(auth_payload: auth_payload, friendly_name: friendly_name, config: config, )
+              def update(auth_payload: :unset, friendly_name: :unset, config: :unset, twilio_sandbox_mode: :unset)
+                context.update(
+                    auth_payload: auth_payload,
+                    friendly_name: friendly_name,
+                    config: config,
+                    twilio_sandbox_mode: twilio_sandbox_mode,
+                )
               end
 
               ##

@@ -57,7 +57,7 @@ module Twilio
         Twilio::REST::RestError.new(header, response)
       end
 
-      def fetch(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
+      def fetch(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(
           method,
           uri,
@@ -93,7 +93,7 @@ module Twilio
         response.body
       end
 
-      def delete(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
+      def delete(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(
           method,
           uri,
@@ -127,7 +127,7 @@ module Twilio
         }
       end
 
-      def page(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
+      def page(method, uri, params = {}, data = {}, headers: {}, auth: nil, timeout: nil)
         request(
           method,
           uri,
