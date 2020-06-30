@@ -17,8 +17,6 @@ describe 'AvailableAddOnExtension' do
                                  .extensions('XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -55,8 +53,6 @@ describe 'AvailableAddOnExtension' do
                                  .extensions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

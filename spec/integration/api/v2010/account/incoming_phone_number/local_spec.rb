@@ -18,8 +18,6 @@ describe 'Local' do
                        .local.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -131,7 +129,6 @@ describe 'Local' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'PhoneNumber' => '+15017122661', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

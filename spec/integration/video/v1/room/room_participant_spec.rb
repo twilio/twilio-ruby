@@ -17,8 +17,6 @@ describe 'Participant' do
                       .participants('PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -65,8 +63,6 @@ describe 'Participant' do
                       .participants.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -151,8 +147,6 @@ describe 'Participant' do
                       .participants('PAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

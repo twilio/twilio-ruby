@@ -18,8 +18,6 @@ describe 'SubscribeRules' do
                       .subscribe_rules.fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -66,8 +64,6 @@ describe 'SubscribeRules' do
                       .subscribe_rules.update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

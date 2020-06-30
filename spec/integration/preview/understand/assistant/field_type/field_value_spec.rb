@@ -18,8 +18,6 @@ describe 'FieldValue' do
                                 .field_values('UCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -62,8 +60,6 @@ describe 'FieldValue' do
                                 .field_values.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -146,7 +142,6 @@ describe 'FieldValue' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Language' => 'language', 'Value' => 'value', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -190,8 +185,6 @@ describe 'FieldValue' do
                                 .field_values('UCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

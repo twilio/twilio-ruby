@@ -16,7 +16,6 @@ describe 'BrandsInformation' do
       @client.preview.trusted_comms.brands_information().fetch(if_none_match: 'if_none_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     headers = {'If-None-Match' => 'if_none_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(

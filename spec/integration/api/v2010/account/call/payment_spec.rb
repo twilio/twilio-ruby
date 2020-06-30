@@ -19,7 +19,6 @@ describe 'Payment' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'IdempotencyKey' => 'idempotency_key', 'StatusCallback' => 'https://example.com', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -60,7 +59,6 @@ describe 'Payment' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'IdempotencyKey' => 'idempotency_key', 'StatusCallback' => 'https://example.com', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

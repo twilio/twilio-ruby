@@ -16,8 +16,6 @@ describe 'Form' do
       @client.verify.v2.forms('form-app-push').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

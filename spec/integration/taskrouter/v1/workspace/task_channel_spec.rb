@@ -17,8 +17,6 @@ describe 'TaskChannel' do
                            .task_channels('TCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -88,8 +86,6 @@ describe 'TaskChannel' do
                            .task_channels.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -170,8 +166,6 @@ describe 'TaskChannel' do
                            .task_channels('TCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -241,8 +235,6 @@ describe 'TaskChannel' do
                            .task_channels('TCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -283,7 +275,6 @@ describe 'TaskChannel' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'FriendlyName' => 'friendly_name', 'UniqueName' => 'unique_name', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

@@ -16,8 +16,6 @@ describe 'ByocTrunk' do
       @client.voice.v1.byoc_trunks.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -61,8 +59,6 @@ describe 'ByocTrunk' do
       @client.voice.v1.byoc_trunks('BYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -106,8 +102,6 @@ describe 'ByocTrunk' do
       @client.voice.v1.byoc_trunks.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -188,8 +182,6 @@ describe 'ByocTrunk' do
       @client.voice.v1.byoc_trunks('BYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -233,8 +225,6 @@ describe 'ByocTrunk' do
       @client.voice.v1.byoc_trunks('BYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

@@ -16,8 +16,6 @@ describe 'Composition' do
       @client.video.v1.compositions('CJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -106,8 +104,6 @@ describe 'Composition' do
       @client.video.v1.compositions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -253,8 +249,6 @@ describe 'Composition' do
       @client.video.v1.compositions('CJXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -281,7 +275,6 @@ describe 'Composition' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'RoomSid' => 'RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

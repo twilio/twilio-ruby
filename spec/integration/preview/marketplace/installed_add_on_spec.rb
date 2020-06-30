@@ -20,7 +20,6 @@ describe 'InstalledAddOn' do
         'AvailableAddOnSid' => 'XBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         'AcceptTermsOfService' => true,
     }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -65,8 +64,6 @@ describe 'InstalledAddOn' do
       @client.preview.marketplace.installed_add_ons('XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -92,8 +89,6 @@ describe 'InstalledAddOn' do
       @client.preview.marketplace.installed_add_ons('XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -137,8 +132,6 @@ describe 'InstalledAddOn' do
       @client.preview.marketplace.installed_add_ons('XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -182,8 +175,6 @@ describe 'InstalledAddOn' do
       @client.preview.marketplace.installed_add_ons.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

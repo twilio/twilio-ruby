@@ -18,7 +18,6 @@ describe 'ShortCode' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'ShortCodeSid' => 'SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -61,8 +60,6 @@ describe 'ShortCode' do
                           .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -90,8 +87,6 @@ describe 'ShortCode' do
                           .short_codes.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -146,8 +141,6 @@ describe 'ShortCode' do
                           .short_codes('SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

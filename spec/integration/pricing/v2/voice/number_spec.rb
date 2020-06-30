@@ -17,8 +17,6 @@ describe 'Number' do
                         .numbers('+15017122661').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

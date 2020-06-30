@@ -16,7 +16,6 @@ describe 'CurrentCall' do
       @client.preview.trusted_comms.current_calls().fetch(x_xcnam_sensitive_phone_number_from: 'x_xcnam_sensitive_phone_number_from', x_xcnam_sensitive_phone_number_to: 'x_xcnam_sensitive_phone_number_to')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     headers = {
         'X-Xcnam-Sensitive-Phone-Number-From' => 'x_xcnam_sensitive_phone_number_from',
         'X-Xcnam-Sensitive-Phone-Number-To' => 'x_xcnam_sensitive_phone_number_to',

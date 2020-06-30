@@ -18,8 +18,6 @@ describe 'SyncListItem' do
                           .sync_list_items(1).fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -62,7 +60,6 @@ describe 'SyncListItem' do
                           .sync_list_items(1).delete(if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -95,7 +92,6 @@ describe 'SyncListItem' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Data' => Twilio.serialize_object({}), }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -139,8 +135,6 @@ describe 'SyncListItem' do
                           .sync_list_items.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

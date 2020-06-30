@@ -17,8 +17,6 @@ describe 'FlowTestUser' do
                        .test_users().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -56,7 +54,6 @@ describe 'FlowTestUser' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'TestUsers' => Twilio.serialize_list(['test_users']) { |e| e }, }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

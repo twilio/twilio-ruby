@@ -19,7 +19,6 @@ describe 'ItemAssignment' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'ObjectSid' => 'ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -59,8 +58,6 @@ describe 'ItemAssignment' do
                         .item_assignments.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -138,8 +135,6 @@ describe 'ItemAssignment' do
                         .item_assignments('BVXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -178,8 +173,6 @@ describe 'ItemAssignment' do
                         .item_assignments('BVXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

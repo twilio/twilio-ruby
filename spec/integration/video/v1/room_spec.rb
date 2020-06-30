@@ -16,8 +16,6 @@ describe 'Room' do
       @client.video.v1.rooms('RMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -69,8 +67,6 @@ describe 'Room' do
       @client.video.v1.rooms.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -122,8 +118,6 @@ describe 'Room' do
       @client.video.v1.rooms.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -213,7 +207,6 @@ describe 'Room' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Status' => 'in-progress', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

@@ -16,7 +16,6 @@ describe 'Cps' do
       @client.preview.trusted_comms.cps().fetch(x_xcnam_sensitive_phone_number: 'x_xcnam_sensitive_phone_number')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     headers = {'X-Xcnam-Sensitive-Phone-Number' => 'x_xcnam_sensitive_phone_number', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(

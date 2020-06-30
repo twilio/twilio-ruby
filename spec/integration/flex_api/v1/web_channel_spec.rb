@@ -16,8 +16,6 @@ describe 'WebChannel' do
       @client.flex_api.v1.web_channel.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -89,8 +87,6 @@ describe 'WebChannel' do
       @client.flex_api.v1.web_channel('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -131,7 +127,6 @@ describe 'WebChannel' do
         'CustomerFriendlyName' => 'customer_friendly_name',
         'ChatFriendlyName' => 'chat_friendly_name',
     }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -167,8 +162,6 @@ describe 'WebChannel' do
       @client.flex_api.v1.web_channel('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -203,8 +196,6 @@ describe 'WebChannel' do
       @client.flex_api.v1.web_channel('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

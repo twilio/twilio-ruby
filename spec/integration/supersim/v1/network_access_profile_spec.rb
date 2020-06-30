@@ -16,8 +16,6 @@ describe 'NetworkAccessProfile' do
       @client.supersim.v1.network_access_profiles.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -78,8 +76,6 @@ describe 'NetworkAccessProfile' do
       @client.supersim.v1.network_access_profiles('HAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -117,8 +113,6 @@ describe 'NetworkAccessProfile' do
       @client.supersim.v1.network_access_profiles('HAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -156,8 +150,6 @@ describe 'NetworkAccessProfile' do
       @client.supersim.v1.network_access_profiles.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

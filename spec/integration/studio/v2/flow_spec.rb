@@ -21,7 +21,6 @@ describe 'Flow' do
         'Status' => 'draft',
         'Definition' => Twilio.serialize_object({}),
     }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -73,7 +72,6 @@ describe 'Flow' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Status' => 'draft', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -124,8 +122,6 @@ describe 'Flow' do
       @client.studio.v2.flows.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -186,8 +182,6 @@ describe 'Flow' do
       @client.studio.v2.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -237,8 +231,6 @@ describe 'Flow' do
       @client.studio.v2.flows('FWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

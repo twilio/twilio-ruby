@@ -22,7 +22,6 @@ describe 'AuthCallsIpAccessControlListMapping' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'IpAccessControlListSid' => 'ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -67,8 +66,6 @@ describe 'AuthCallsIpAccessControlListMapping' do
                        .ip_access_control_list_mappings.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -152,8 +149,6 @@ describe 'AuthCallsIpAccessControlListMapping' do
                        .ip_access_control_list_mappings('ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -197,8 +192,6 @@ describe 'AuthCallsIpAccessControlListMapping' do
                        .ip_access_control_list_mappings('ALXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

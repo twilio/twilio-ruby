@@ -18,8 +18,6 @@ describe 'SyncMapPermission' do
                      .sync_map_permissions('identity').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -60,8 +58,6 @@ describe 'SyncMapPermission' do
                      .sync_map_permissions('identity').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
@@ -91,8 +87,6 @@ describe 'SyncMapPermission' do
                      .sync_map_permissions.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -173,7 +167,6 @@ describe 'SyncMapPermission' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Read' => true, 'Write' => true, 'Manage' => true, }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

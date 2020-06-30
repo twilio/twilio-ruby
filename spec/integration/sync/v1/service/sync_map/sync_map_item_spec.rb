@@ -18,8 +18,6 @@ describe 'SyncMapItem' do
                      .sync_map_items('key').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -63,7 +61,6 @@ describe 'SyncMapItem' do
                      .sync_map_items('key').delete(if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -96,7 +93,6 @@ describe 'SyncMapItem' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'Key' => 'key', 'Data' => Twilio.serialize_object({}), }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -141,8 +137,6 @@ describe 'SyncMapItem' do
                      .sync_map_items.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -225,7 +219,6 @@ describe 'SyncMapItem' do
                      .sync_map_items('key').update(if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(

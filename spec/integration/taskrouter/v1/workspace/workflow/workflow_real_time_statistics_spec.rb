@@ -18,8 +18,6 @@ describe 'WorkflowRealTimeStatistics' do
                            .real_time_statistics().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

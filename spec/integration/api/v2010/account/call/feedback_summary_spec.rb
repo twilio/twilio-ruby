@@ -22,7 +22,6 @@ describe 'FeedbackSummary' do
         'StartDate' => Twilio.serialize_iso8601_date(Date.new(2008, 1, 2)),
         'EndDate' => Twilio.serialize_iso8601_date(Date.new(2008, 1, 2)),
     }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -76,8 +75,6 @@ describe 'FeedbackSummary' do
                        .feedback_summaries('FSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -130,8 +127,6 @@ describe 'FeedbackSummary' do
                        .feedback_summaries('FSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

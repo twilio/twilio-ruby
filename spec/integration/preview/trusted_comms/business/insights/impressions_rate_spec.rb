@@ -18,8 +18,6 @@ describe 'ImpressionsRate' do
                                    .impressions_rate().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

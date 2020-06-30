@@ -18,8 +18,6 @@ describe 'Field' do
                                 .fields('UEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -61,8 +59,6 @@ describe 'Field' do
                                 .fields.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -144,7 +140,6 @@ describe 'Field' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'FieldType' => 'field_type', 'UniqueName' => 'unique_name', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -187,8 +182,6 @@ describe 'Field' do
                                 .fields('UEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

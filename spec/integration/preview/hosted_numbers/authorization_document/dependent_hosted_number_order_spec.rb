@@ -17,8 +17,6 @@ describe 'DependentHostedNumberOrder' do
                                     .dependent_hosted_number_orders.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

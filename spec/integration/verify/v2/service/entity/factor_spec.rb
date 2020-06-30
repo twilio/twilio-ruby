@@ -79,7 +79,6 @@ describe 'Factor' do
                        .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -111,7 +110,6 @@ describe 'Factor' do
                        .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -166,7 +164,6 @@ describe 'Factor' do
                        .factors.list(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -260,7 +257,6 @@ describe 'Factor' do
                        .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
     headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(

@@ -17,8 +17,6 @@ describe 'AvailablePhoneNumberCountry' do
                        .available_phone_numbers.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -98,8 +96,6 @@ describe 'AvailablePhoneNumberCountry' do
                        .available_phone_numbers('US').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

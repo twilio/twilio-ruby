@@ -17,7 +17,6 @@ describe 'PhoneCall' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'From' => 'from', 'To' => 'to', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

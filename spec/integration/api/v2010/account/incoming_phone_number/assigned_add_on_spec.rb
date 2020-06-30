@@ -18,8 +18,6 @@ describe 'AssignedAddOn' do
                        .assigned_add_ons('XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -67,8 +65,6 @@ describe 'AssignedAddOn' do
                        .assigned_add_ons.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -154,7 +150,6 @@ describe 'AssignedAddOn' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'InstalledAddOnSid' => 'XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -203,8 +198,6 @@ describe 'AssignedAddOn' do
                        .assigned_add_ons('XEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',

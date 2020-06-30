@@ -17,8 +17,6 @@ describe 'AssistantInitiationActions' do
                                 .assistant_initiation_actions().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -53,8 +51,6 @@ describe 'AssistantInitiationActions' do
                                 .assistant_initiation_actions().update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

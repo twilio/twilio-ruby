@@ -17,7 +17,6 @@ describe 'Fleet' do
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'NetworkAccessProfile' => 'HAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -60,8 +59,6 @@ describe 'Fleet' do
       @client.supersim.v1.fleets('HFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -103,8 +100,6 @@ describe 'Fleet' do
       @client.supersim.v1.fleets.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
@@ -183,8 +178,6 @@ describe 'Fleet' do
       @client.supersim.v1.fleets('HFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {}
-    headers = {}
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
