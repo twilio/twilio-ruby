@@ -195,6 +195,9 @@ module Twilio
               # Path Solution
               @solution = {conversation_sid: conversation_sid, sid: sid, }
               @uri = "/Conversations/#{@solution[:conversation_sid]}/Messages/#{@solution[:sid]}"
+
+              # Dependents
+              @delivery_receipts = nil
             end
 
             ##
@@ -258,6 +261,28 @@ module Twilio
             end
 
             ##
+            # Access the delivery_receipts
+            # @return [DeliveryReceiptList]
+            # @return [DeliveryReceiptContext] if sid was passed.
+            def delivery_receipts(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return DeliveryReceiptContext.new(@version, @solution[:conversation_sid], @solution[:sid], sid, )
+              end
+
+              unless @delivery_receipts
+                @delivery_receipts = DeliveryReceiptList.new(
+                    @version,
+                    conversation_sid: @solution[:conversation_sid],
+                    message_sid: @solution[:sid],
+                )
+              end
+
+              @delivery_receipts
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -301,6 +326,8 @@ module Twilio
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
+                  'delivery' => payload['delivery'],
+                  'links' => payload['links'],
               }
 
               # Context
@@ -392,6 +419,18 @@ module Twilio
             end
 
             ##
+            # @return [Hash] An object that contains the summary of delivery statuses for the message to non-chat participants.
+            def delivery
+              @properties['delivery']
+            end
+
+            ##
+            # @return [String] The links
+            def links
+              @properties['links']
+            end
+
+            ##
             # Update the MessageInstance
             # @param [String] author The channel specific identifier of the message's author.
             #   Defaults to `system`.
@@ -431,6 +470,13 @@ module Twilio
             # @return [MessageInstance] Fetched MessageInstance
             def fetch
               context.fetch
+            end
+
+            ##
+            # Access the delivery_receipts
+            # @return [delivery_receipts] delivery_receipts
+            def delivery_receipts
+              context.delivery_receipts
             end
 
             ##

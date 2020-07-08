@@ -1,6 +1,38 @@
 twilio-ruby changelog
 =====================
 
+[2020-07-08] Version 5.39.0
+---------------------------
+**Library - Feature**
+- [PR #516](https://github.com/twilio/twilio-ruby/pull/516): add custom header support. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+
+**Library - Chore**
+- [PR #515](https://github.com/twilio/twilio-ruby/pull/515): regenerate library after generator refactor. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+
+**Conversations**
+- Allow Address updates for Participants
+- Message delivery receipts
+
+**Events**
+- Add account_sid to subscription and subscribed_events resources
+
+**Flex**
+- Changed `wfm_integrations` Flex Configuration key to private **(breaking change)**
+
+**Messaging**
+- Add error states to WhatsApp Sender status with failed reason **(breaking change)**
+- Delete WhatsApp Template API
+- Update WhatsApp Template API
+- Add WhatsApp Template Get Api (fetch and read)
+
+**Numbers**
+- Add `valid_until` in the Bundles resource
+- Add API for Bundle deletion
+
+**Verify**
+- Removed support for `sms`, `totp` and `app-push` factor types in Verify push **(breaking change)**
+
+
 [2020-06-24] Version 5.38.0
 ---------------------------
 **Api**

@@ -14,15 +14,14 @@ describe 'AccessToken' do
 
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .entities('identity') \
-                       .access_tokens.create(factor_type: 'push')
+                       .access_tokens.create(identity: 'identity', factor_type: 'push')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'FactorType' => 'push', }
+    values = {'Identity' => 'identity', 'FactorType' => 'push', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/AccessTokens',
+        url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/AccessTokens',
         data: values,
     ))).to eq(true)
   end
@@ -38,8 +37,7 @@ describe 'AccessToken' do
     ))
 
     actual = @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .entities('identity') \
-                              .access_tokens.create(factor_type: 'push')
+                              .access_tokens.create(identity: 'identity', factor_type: 'push')
 
     expect(actual).to_not eq(nil)
   end

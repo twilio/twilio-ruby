@@ -36,11 +36,13 @@ module Twilio
             #   the type specified.
             # @param [String] minutes The period of events to read in minutes. Returns only
             #   Events that occurred since this many minutes in the past. The default is `15`
-            #   minutes.
+            #   minutes. Task Attributes for Events occuring more 43,200 minutes ago will be
+            #   redacted.
             # @param [String] reservation_sid The SID of the Reservation with the Events to
             #   read. Returns only Events that pertain to the specified Reservation.
             # @param [Time] start_date Only include Events from on or after this date and
             #   time, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+            #   Task Attributes for Events older than 30 days will be redacted.
             # @param [String] task_queue_sid The SID of the TaskQueue with the Events to read.
             #   Returns only the Events that pertain to the specified TaskQueue.
             # @param [String] task_sid The SID of the Task with the Events to read. Returns
@@ -88,11 +90,13 @@ module Twilio
             #   the type specified.
             # @param [String] minutes The period of events to read in minutes. Returns only
             #   Events that occurred since this many minutes in the past. The default is `15`
-            #   minutes.
+            #   minutes. Task Attributes for Events occuring more 43,200 minutes ago will be
+            #   redacted.
             # @param [String] reservation_sid The SID of the Reservation with the Events to
             #   read. Returns only Events that pertain to the specified Reservation.
             # @param [Time] start_date Only include Events from on or after this date and
             #   time, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+            #   Task Attributes for Events older than 30 days will be redacted.
             # @param [String] task_queue_sid The SID of the TaskQueue with the Events to read.
             #   Returns only the Events that pertain to the specified TaskQueue.
             # @param [String] task_sid The SID of the Task with the Events to read. Returns
@@ -156,11 +160,13 @@ module Twilio
             #   the type specified.
             # @param [String] minutes The period of events to read in minutes. Returns only
             #   Events that occurred since this many minutes in the past. The default is `15`
-            #   minutes.
+            #   minutes. Task Attributes for Events occuring more 43,200 minutes ago will be
+            #   redacted.
             # @param [String] reservation_sid The SID of the Reservation with the Events to
             #   read. Returns only Events that pertain to the specified Reservation.
             # @param [Time] start_date Only include Events from on or after this date and
             #   time, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+            #   Task Attributes for Events older than 30 days will be redacted.
             # @param [String] task_queue_sid The SID of the TaskQueue with the Events to read.
             #   Returns only the Events that pertain to the specified TaskQueue.
             # @param [String] task_sid The SID of the Task with the Events to read. Returns

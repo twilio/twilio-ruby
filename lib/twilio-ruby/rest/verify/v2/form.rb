@@ -68,8 +68,8 @@ module Twilio
           ##
           # Initialize the FormContext
           # @param [Version] version Version that contains the resource
-          # @param [form.FormTypes] form_type The Type of this Form. One of `form-app-push`,
-          #   `form-sms` or `form-totp`.
+          # @param [form.FormTypes] form_type The Type of this Form. Currently only
+          #   `form-push` is supported.
           # @return [FormContext] FormContext
           def initialize(version, form_type)
             super(version)
@@ -110,8 +110,8 @@ module Twilio
           # Initialize the FormInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [form.FormTypes] form_type The Type of this Form. One of `form-app-push`,
-          #   `form-sms` or `form-totp`.
+          # @param [form.FormTypes] form_type The Type of this Form. Currently only
+          #   `form-push` is supported.
           # @return [FormInstance] FormInstance
           def initialize(version, payload, form_type: nil)
             super(version)

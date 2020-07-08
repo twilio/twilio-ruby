@@ -272,6 +272,13 @@ module Twilio
             end
 
             ##
+            # Delete the BundleInstance
+            # @return [Boolean] true if delete succeeds, false otherwise
+            def delete
+               @version.delete('DELETE', @uri)
+            end
+
+            ##
             # Access the evaluations
             # @return [EvaluationList]
             # @return [EvaluationContext] if sid was passed.
@@ -340,6 +347,7 @@ module Twilio
                   'regulation_sid' => payload['regulation_sid'],
                   'friendly_name' => payload['friendly_name'],
                   'status' => payload['status'],
+                  'valid_until' => Twilio.deserialize_iso8601_datetime(payload['valid_until']),
                   'email' => payload['email'],
                   'status_callback' => payload['status_callback'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
@@ -392,6 +400,12 @@ module Twilio
             # @return [bundle.Status] The verification status of the Bundle resource
             def status
               @properties['status']
+            end
+
+            ##
+            # @return [Time] The ISO 8601 date and time in GMT when the resource will be valid until.
+            def valid_until
+              @properties['valid_until']
             end
 
             ##
@@ -454,6 +468,13 @@ module Twilio
                   friendly_name: friendly_name,
                   email: email,
               )
+            end
+
+            ##
+            # Delete the BundleInstance
+            # @return [Boolean] true if delete succeeds, false otherwise
+            def delete
+              context.delete
             end
 
             ##

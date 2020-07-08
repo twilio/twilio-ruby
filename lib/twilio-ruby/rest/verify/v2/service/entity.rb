@@ -29,7 +29,8 @@ module Twilio
 
             ##
             # Create the EntityInstance
-            # @param [String] identity Customer unique identity for the Entity of the Service
+            # @param [String] identity The unique external identifier for the Entity of the
+            #   Service
             # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
             # @return [EntityInstance] Created EntityInstance
             def create(identity: nil, twilio_sandbox_mode: :unset)
@@ -170,7 +171,8 @@ module Twilio
             # Initialize the EntityContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The unique SID identifier of the Service.
-            # @param [String] identity Customer unique identity for the Entity of the Service
+            # @param [String] identity The unique external identifier for the Entity of the
+            #   Service
             # @return [EntityContext] EntityContext
             def initialize(version, service_sid, identity)
               super(version)
@@ -181,7 +183,7 @@ module Twilio
 
               # Dependents
               @factors = nil
-              @access_tokens = nil
+              @challenges = nil
             end
 
             ##
@@ -234,19 +236,25 @@ module Twilio
             end
 
             ##
-            # Access the access_tokens
-            # @return [AccessTokenList]
-            # @return [AccessTokenContext]
-            def access_tokens
-              unless @access_tokens
-                @access_tokens = AccessTokenList.new(
+            # Access the challenges
+            # @return [ChallengeList]
+            # @return [ChallengeContext] if sid was passed.
+            def challenges(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return ChallengeContext.new(@version, @solution[:service_sid], @solution[:identity], sid, )
+              end
+
+              unless @challenges
+                @challenges = ChallengeList.new(
                     @version,
                     service_sid: @solution[:service_sid],
                     identity: @solution[:identity],
                 )
               end
 
-              @access_tokens
+              @challenges
             end
 
             ##
@@ -272,7 +280,8 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The unique SID identifier of the Service.
-            # @param [String] identity Customer unique identity for the Entity of the Service
+            # @param [String] identity The unique external identifier for the Entity of the
+            #   Service
             # @return [EntityInstance] EntityInstance
             def initialize(version, payload, service_sid: nil, identity: nil)
               super(version)
@@ -312,7 +321,7 @@ module Twilio
             end
 
             ##
-            # @return [String] Unique identity of the Entity
+            # @return [String] Unique external identifier of the Entity
             def identity
               @properties['identity']
             end
@@ -377,10 +386,10 @@ module Twilio
             end
 
             ##
-            # Access the access_tokens
-            # @return [access_tokens] access_tokens
-            def access_tokens
-              context.access_tokens
+            # Access the challenges
+            # @return [challenges] challenges
+            def challenges
+              context.challenges
             end
 
             ##

@@ -154,6 +154,34 @@ describe 'Participant' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives update_gmms responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "identity": "id",
+          "attributes": "{ \\"role\\": \\"driver\\" }",
+          "messaging_binding": {
+              "type": "sms",
+              "projected_address": "+15017122661"
+          },
+          "role_sid": "RLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_created": "2015-12-16T22:18:37Z",
+          "date_updated": "2015-12-16T22:18:38Z",
+          "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants/MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                     .participants('MBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

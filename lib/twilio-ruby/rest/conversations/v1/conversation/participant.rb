@@ -224,15 +224,21 @@ module Twilio
             # @param [String] role_sid The SID of the
             #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) to assign to the
             #   participant.
+            # @param [String] messaging_binding_proxy_address The address of the Twilio phone
+            #   number that the participant is in contact with. 'null' value will remove it.
+            # @param [String] messaging_binding_projected_address The address of the Twilio
+            #   phone number that is used in Group MMS. 'null' value will remove it.
             # @param [participant.WebhookEnabledType] x_twilio_webhook_enabled The
             #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ParticipantInstance] Updated ParticipantInstance
-            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, x_twilio_webhook_enabled: :unset)
+            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, messaging_binding_proxy_address: :unset, messaging_binding_projected_address: :unset, x_twilio_webhook_enabled: :unset)
               data = Twilio::Values.of({
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                   'Attributes' => attributes,
                   'RoleSid' => role_sid,
+                  'MessagingBinding.ProxyAddress' => messaging_binding_proxy_address,
+                  'MessagingBinding.ProjectedAddress' => messaging_binding_projected_address,
               })
               headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
@@ -402,15 +408,21 @@ module Twilio
             # @param [String] role_sid The SID of the
             #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) to assign to the
             #   participant.
+            # @param [String] messaging_binding_proxy_address The address of the Twilio phone
+            #   number that the participant is in contact with. 'null' value will remove it.
+            # @param [String] messaging_binding_projected_address The address of the Twilio
+            #   phone number that is used in Group MMS. 'null' value will remove it.
             # @param [participant.WebhookEnabledType] x_twilio_webhook_enabled The
             #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ParticipantInstance] Updated ParticipantInstance
-            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, x_twilio_webhook_enabled: :unset)
+            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, messaging_binding_proxy_address: :unset, messaging_binding_projected_address: :unset, x_twilio_webhook_enabled: :unset)
               context.update(
                   date_created: date_created,
                   date_updated: date_updated,
                   attributes: attributes,
                   role_sid: role_sid,
+                  messaging_binding_proxy_address: messaging_binding_proxy_address,
+                  messaging_binding_projected_address: messaging_binding_projected_address,
                   x_twilio_webhook_enabled: x_twilio_webhook_enabled,
               )
             end

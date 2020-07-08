@@ -13,13 +13,13 @@ describe 'Form' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.verify.v2.forms('form-app-push').fetch()
+      @client.verify.v2.forms('form-push').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://verify.twilio.com/v2/Forms/form-app-push',
+        url: 'https://verify.twilio.com/v2/Forms/form-push',
     ))).to eq(true)
   end
 
@@ -28,19 +28,19 @@ describe 'Form' do
         200,
       %q[
       {
-          "form_type": "form-sms",
+          "form_type": "form-push",
           "forms": {
               "create_factor": {},
               "verify_factor": {},
               "create_challenge": {}
           },
           "form_meta": {},
-          "url": "https://verify.twilio.com/v2/Forms/form-sms"
+          "url": "https://verify.twilio.com/v2/Forms/form-push"
       }
       ]
     ))
 
-    actual = @client.verify.v2.forms('form-app-push').fetch()
+    actual = @client.verify.v2.forms('form-push').fetch()
 
     expect(actual).to_not eq(nil)
   end

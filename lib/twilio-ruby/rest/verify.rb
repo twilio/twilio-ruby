@@ -29,8 +29,8 @@ module Twilio
       end
 
       ##
-      # @param [form.FormTypes] form_type The Type of this Form. One of `form-app-push`,
-      #   `form-sms` or `form-totp`.
+      # @param [form.FormTypes] form_type The Type of this Form. Currently only
+      #   `form-push` is supported.
       # @return [Twilio::REST::Verify::V2::FormInstance] if form_type was passed.
       # @return [Twilio::REST::Verify::V2::FormList]
       def forms(form_type=:unset)

@@ -38,6 +38,7 @@ describe 'Bundle' do
           "status": "draft",
           "email": "email",
           "status_callback": "http://www.example.com",
+          "valid_until": null,
           "date_created": "2019-07-30T22:29:24Z",
           "date_updated": "2019-07-31T01:09:00Z",
           "url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -106,9 +107,10 @@ describe 'Bundle' do
                   "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "regulation_sid": "RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "friendly_name": "friendly_name",
-                  "status": "draft",
+                  "status": "provisionally-approved",
                   "email": "email",
                   "status_callback": "http://www.example.com",
+                  "valid_until": "2020-07-31T01:00:00Z",
                   "date_created": "2019-07-30T22:29:24Z",
                   "date_updated": "2019-07-31T01:09:00Z",
                   "url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -162,6 +164,7 @@ describe 'Bundle' do
           "regulation_sid": "RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "friendly_name": "friendly_name",
           "status": "draft",
+          "valid_until": null,
           "email": "email",
           "status_callback": "http://www.example.com",
           "date_created": "2019-07-30T22:29:24Z",
@@ -208,6 +211,7 @@ describe 'Bundle' do
           "status": "draft",
           "email": "email",
           "status_callback": "http://www.example.com",
+          "valid_until": null,
           "date_created": "2019-07-30T22:29:24Z",
           "date_updated": "2019-07-31T01:09:00Z",
           "url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -223,5 +227,32 @@ describe 'Bundle' do
                                .bundles('BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
+  end
+
+  it "can delete" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.numbers.v2.regulatory_compliance \
+                        .bundles('BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'delete',
+        url: 'https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    ))).to eq(true)
+  end
+
+  it "receives delete responses" do
+    @holodeck.mock(Twilio::Response.new(
+        204,
+      nil,
+    ))
+
+    actual = @client.numbers.v2.regulatory_compliance \
+                               .bundles('BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+
+    expect(actual).to eq(true)
   end
 end

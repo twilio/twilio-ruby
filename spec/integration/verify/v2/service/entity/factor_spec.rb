@@ -15,13 +15,13 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'app-push', config: 'config', twilio_sandbox_mode: 'twilio_sandbox_mode', authorization: 'authorization')
+                       .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'push', config: 'config', twilio_sandbox_mode: 'twilio_sandbox_mode', authorization: 'authorization')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'Binding' => 'binding',
         'FriendlyName' => 'friendly_name',
-        'FactorType' => 'app-push',
+        'FactorType' => 'push',
         'Config' => 'config',
     }
     headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', 'Authorization' => 'authorization', }
@@ -55,17 +55,14 @@ describe 'Factor' do
               "notification_platform": "fcm",
               "notification_token": "test_token"
           },
-          "url": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "links": {
-              "challenges": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges"
-          }
+          "url": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
     ))
 
     actual = @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .entities('identity') \
-                              .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'app-push', config: 'config')
+                              .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'push', config: 'config')
 
     expect(actual).to_not eq(nil)
   end
@@ -140,10 +137,7 @@ describe 'Factor' do
               "notification_platform": "fcm",
               "notification_token": "test_token"
           },
-          "url": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "links": {
-              "challenges": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges"
-          }
+          "url": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
     ))
@@ -222,10 +216,7 @@ describe 'Factor' do
                       "notification_platform": "fcm",
                       "notification_token": "test_token"
                   },
-                  "url": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  "links": {
-                      "challenges": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges"
-                  }
+                  "url": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
               }
           ],
           "meta": {
@@ -287,10 +278,7 @@ describe 'Factor' do
               "notification_platform": "fcm",
               "notification_token": "test_token"
           },
-          "url": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "links": {
-              "challenges": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Challenges"
-          }
+          "url": "https://verify.twilio.com/v2/Services/VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Entities/ff483d1ff591898a9942916050d2ca3f/Factors/YFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       }
       ]
     ))

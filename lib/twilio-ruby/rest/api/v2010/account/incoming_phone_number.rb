@@ -541,6 +541,7 @@ module Twilio
                   'status_callback_method' => payload['status_callback_method'],
                   'trunk_sid' => payload['trunk_sid'],
                   'uri' => payload['uri'],
+                  'voice_receive_mode' => payload['voice_receive_mode'],
                   'voice_application_sid' => payload['voice_application_sid'],
                   'voice_caller_id_lookup' => payload['voice_caller_id_lookup'],
                   'voice_fallback_method' => payload['voice_fallback_method'],
@@ -550,6 +551,7 @@ module Twilio
                   'emergency_status' => payload['emergency_status'],
                   'emergency_address_sid' => payload['emergency_address_sid'],
                   'bundle_sid' => payload['bundle_sid'],
+                  'status' => payload['status'],
               }
 
               # Context
@@ -701,6 +703,12 @@ module Twilio
             end
 
             ##
+            # @return [incoming_phone_number.VoiceReceiveMode] The voice_receive_mode
+            def voice_receive_mode
+              @properties['voice_receive_mode']
+            end
+
+            ##
             # @return [String] The SID of the application that handles calls to the phone number
             def voice_application_sid
               @properties['voice_application_sid']
@@ -752,6 +760,12 @@ module Twilio
             # @return [String] The SID of the Bundle resource associated with number
             def bundle_sid
               @properties['bundle_sid']
+            end
+
+            ##
+            # @return [String] The status
+            def status
+              @properties['status']
             end
 
             ##

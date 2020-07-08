@@ -47,8 +47,12 @@ module Twilio
           # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
+          # @param [Hash] push The optional service level push factors configuration. If
+          #   present it must be a json string with the following format:
+          #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "include_date":
+          #   true}
           # @return [ServiceInstance] Created ServiceInstance
-          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset)
+          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -59,6 +63,7 @@ module Twilio
                 'Psd2Enabled' => psd2_enabled,
                 'DoNotShareWarningEnabled' => do_not_share_warning_enabled,
                 'CustomCodeEnabled' => custom_code_enabled,
+                'Push' => Twilio.serialize_object(push),
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -203,6 +208,7 @@ module Twilio
             @messaging_configurations = nil
             @entities = nil
             @webhooks = nil
+            @access_tokens = nil
           end
 
           ##
@@ -243,8 +249,12 @@ module Twilio
           # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
+          # @param [Hash] push The optional service level push factors configuration. If
+          #   present it must be a json string with the following format:
+          #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "include_date":
+          #   true}
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -255,6 +265,7 @@ module Twilio
                 'Psd2Enabled' => psd2_enabled,
                 'DoNotShareWarningEnabled' => do_not_share_warning_enabled,
                 'CustomCodeEnabled' => custom_code_enabled,
+                'Push' => Twilio.serialize_object(push),
             })
 
             payload = @version.update('POST', @uri, data: data)
@@ -365,6 +376,18 @@ module Twilio
           end
 
           ##
+          # Access the access_tokens
+          # @return [AccessTokenList]
+          # @return [AccessTokenContext]
+          def access_tokens
+            unless @access_tokens
+              @access_tokens = AccessTokenList.new(@version, service_sid: @solution[:sid], )
+            end
+
+            @access_tokens
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -403,6 +426,7 @@ module Twilio
                 'tts_name' => payload['tts_name'],
                 'do_not_share_warning_enabled' => payload['do_not_share_warning_enabled'],
                 'custom_code_enabled' => payload['custom_code_enabled'],
+                'push' => payload['push'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -492,6 +516,12 @@ module Twilio
           end
 
           ##
+          # @return [Hash] The service level configuration of factor push type.
+          def push
+            @properties['push']
+          end
+
+          ##
           # @return [Time] The RFC 2822 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
@@ -551,8 +581,12 @@ module Twilio
           # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
+          # @param [Hash] push The optional service level push factors configuration. If
+          #   present it must be a json string with the following format:
+          #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "include_date":
+          #   true}
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push: :unset)
             context.update(
                 friendly_name: friendly_name,
                 code_length: code_length,
@@ -563,6 +597,7 @@ module Twilio
                 psd2_enabled: psd2_enabled,
                 do_not_share_warning_enabled: do_not_share_warning_enabled,
                 custom_code_enabled: custom_code_enabled,
+                push: push,
             )
           end
 
@@ -606,6 +641,13 @@ module Twilio
           # @return [webhooks] webhooks
           def webhooks
             context.webhooks
+          end
+
+          ##
+          # Access the access_tokens
+          # @return [access_tokens] access_tokens
+          def access_tokens
+            context.access_tokens
           end
 
           ##
