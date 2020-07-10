@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+[2020-07-10] Version 5.39.1
+---------------------------
+**Library - Fix**
+- [PR #520](https://github.com/twilio/twilio-ruby/pull/520): use ruby keyword arguments for all action methods. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+
+
 [2020-07-08] Version 5.39.0
 ---------------------------
 **Library - Feature**
