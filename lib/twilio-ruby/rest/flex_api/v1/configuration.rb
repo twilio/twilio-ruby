@@ -79,7 +79,7 @@ module Twilio
           def fetch(ui_version: :unset)
             params = Twilio::Values.of({'UiVersion' => ui_version, })
 
-            payload = @version.fetch('GET', @uri, params)
+            payload = @version.fetch('GET', @uri, params: params)
 
             ConfigurationInstance.new(@version, payload, )
           end

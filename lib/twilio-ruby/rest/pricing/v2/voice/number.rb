@@ -86,7 +86,7 @@ module Twilio
             def fetch(origination_number: :unset)
               params = Twilio::Values.of({'OriginationNumber' => origination_number, })
 
-              payload = @version.fetch('GET', @uri, params)
+              payload = @version.fetch('GET', @uri, params: params)
 
               NumberInstance.new(@version, payload, destination_number: @solution[:destination_number], )
             end

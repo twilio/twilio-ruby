@@ -109,7 +109,7 @@ module Twilio
                     'Interval' => interval,
                 })
 
-                payload = @version.fetch('GET', @uri, params)
+                payload = @version.fetch('GET', @uri, params: params)
 
                 ImpressionsRateInstance.new(@version, payload, business_sid: @solution[:business_sid], )
               end

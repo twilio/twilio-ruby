@@ -168,7 +168,7 @@ module Twilio
                     'PageSize' => page_size,
                 })
 
-                response = @version.page('GET', @uri, params)
+                response = @version.page('GET', @uri, params: params)
 
                 SyncMapItemPage.new(@version, response, @solution)
               end

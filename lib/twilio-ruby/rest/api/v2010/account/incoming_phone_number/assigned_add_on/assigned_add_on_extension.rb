@@ -101,7 +101,7 @@ module Twilio
                       'PageSize' => page_size,
                   })
 
-                  response = @version.page('GET', @uri, params)
+                  response = @version.page('GET', @uri, params: params)
 
                   AssignedAddOnExtensionPage.new(@version, response, @solution)
                 end

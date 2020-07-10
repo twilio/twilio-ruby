@@ -102,7 +102,7 @@ module Twilio
             })
             params.merge!(Twilio.prefixed_collapsible_map(add_ons_data, 'AddOns'))
 
-            payload = @version.fetch('GET', @uri, params)
+            payload = @version.fetch('GET', @uri, params: params)
 
             PhoneNumberInstance.new(@version, payload, phone_number: @solution[:phone_number], )
           end
