@@ -127,7 +127,7 @@ module Twilio
         }
       end
 
-      def page(method, uri, params = {}, data = {}, headers: {}, auth: nil, timeout: nil)
+      def page(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         request(
           method,
           uri,

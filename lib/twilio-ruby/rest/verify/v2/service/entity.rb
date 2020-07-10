@@ -108,7 +108,7 @@ module Twilio
               })
               headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
-              response = @version.page('GET', @uri, params, headers: headers)
+              response = @version.page('GET', @uri, params: params, headers: headers)
 
               EntityPage.new(@version, response, @solution)
             end

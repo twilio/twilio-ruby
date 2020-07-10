@@ -108,7 +108,7 @@ module Twilio
                     'TaskChannel' => task_channel,
                 })
 
-                payload = @version.fetch('GET', @uri, params)
+                payload = @version.fetch('GET', @uri, params: params)
 
                 WorkerStatisticsInstance.new(
                     @version,

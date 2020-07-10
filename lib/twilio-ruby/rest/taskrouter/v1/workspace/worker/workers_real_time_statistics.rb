@@ -86,7 +86,7 @@ module Twilio
               def fetch(task_channel: :unset)
                 params = Twilio::Values.of({'TaskChannel' => task_channel, })
 
-                payload = @version.fetch('GET', @uri, params)
+                payload = @version.fetch('GET', @uri, params: params)
 
                 WorkersRealTimeStatisticsInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], )
               end

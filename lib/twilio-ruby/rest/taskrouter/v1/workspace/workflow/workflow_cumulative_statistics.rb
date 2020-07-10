@@ -116,7 +116,7 @@ module Twilio
                     'SplitByWaitTime' => split_by_wait_time,
                 })
 
-                payload = @version.fetch('GET', @uri, params)
+                payload = @version.fetch('GET', @uri, params: params)
 
                 WorkflowCumulativeStatisticsInstance.new(
                     @version,
