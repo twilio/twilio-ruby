@@ -4,7 +4,7 @@ githooks:
 	ln -sf ../../githooks/pre-commit .git/hooks/pre-commit
 
 install: githooks
-	bundle install; bundle exec rake install
+	bundle install --with development; bundle exec rake install
 
 test: lint
 	bundle exec rake spec
