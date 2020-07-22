@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2020-07-22] Version 5.39.2
+---------------------------
+**Api**
+- Add optional Click Tracking and Scheduling parameters to Create action of Message resource
+
+**Supersim**
+- Add callback_url and callback_method parameters to Sim resource update request
+
+
 [2020-07-10] Version 5.39.1
 ---------------------------
 **Library - Fix**

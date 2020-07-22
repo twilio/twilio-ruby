@@ -206,9 +206,19 @@ module Twilio
           #   for more info.
           # @param [String] fleet The SID or unique name of the Fleet to which the SIM
           #   resource should be assigned.
+          # @param [String] callback_url The URL we should call using the `callback_method`
+          #   after an asynchronous update has finished.
+          # @param [String] callback_method The HTTP method we should use to call
+          #   `callback_url`. Can be: `GET` or `POST` and the default is POST.
           # @return [SimInstance] Updated SimInstance
-          def update(unique_name: :unset, status: :unset, fleet: :unset)
-            data = Twilio::Values.of({'UniqueName' => unique_name, 'Status' => status, 'Fleet' => fleet, })
+          def update(unique_name: :unset, status: :unset, fleet: :unset, callback_url: :unset, callback_method: :unset)
+            data = Twilio::Values.of({
+                'UniqueName' => unique_name,
+                'Status' => status,
+                'Fleet' => fleet,
+                'CallbackUrl' => callback_url,
+                'CallbackMethod' => callback_method,
+            })
 
             payload = @version.update('POST', @uri, data: data)
 
@@ -343,9 +353,19 @@ module Twilio
           #   for more info.
           # @param [String] fleet The SID or unique name of the Fleet to which the SIM
           #   resource should be assigned.
+          # @param [String] callback_url The URL we should call using the `callback_method`
+          #   after an asynchronous update has finished.
+          # @param [String] callback_method The HTTP method we should use to call
+          #   `callback_url`. Can be: `GET` or `POST` and the default is POST.
           # @return [SimInstance] Updated SimInstance
-          def update(unique_name: :unset, status: :unset, fleet: :unset)
-            context.update(unique_name: unique_name, status: status, fleet: fleet, )
+          def update(unique_name: :unset, status: :unset, fleet: :unset, callback_url: :unset, callback_method: :unset)
+            context.update(
+                unique_name: unique_name,
+                status: status,
+                fleet: fleet,
+                callback_url: callback_url,
+                callback_method: callback_method,
+            )
           end
 
           ##
