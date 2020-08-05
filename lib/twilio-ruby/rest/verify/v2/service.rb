@@ -47,10 +47,14 @@ module Twilio
           # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
-          # @param [Hash] push The optional service level push factors configuration. If
-          #   present it must be a json string with the following format:
+          # @param [Hash] push Configurations for the Push factors (channel) created under
+          #   this Service. If present, it must be a json string with the following format:
           #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "include_date":
-          #   true}
+          #   true}. If `include_date` is set to `true`, which is the default, that means that
+          #   the push challenge’s response will include the date created value. If
+          #   `include_date` is set to `false`, then the date created value will not be
+          #   included. See [Challenge](https://www.twilio.com/docs/verify/api/challenge)
+          #   resource’s details parameter for more info
           # @return [ServiceInstance] Created ServiceInstance
           def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push: :unset)
             data = Twilio::Values.of({
@@ -249,10 +253,14 @@ module Twilio
           # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
-          # @param [Hash] push The optional service level push factors configuration. If
-          #   present it must be a json string with the following format:
+          # @param [Hash] push Configurations for the Push factors (channel) created under
+          #   this Service. If present, it must be a json string with the following format:
           #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "include_date":
-          #   true}
+          #   true}. If `include_date` is set to `true`, which is the default, that means that
+          #   the push challenge’s response will include the date created value. If
+          #   `include_date` is set to `false`, then the date created value will not be
+          #   included. See [Challenge](https://www.twilio.com/docs/verify/api/challenge)
+          #   resource’s details parameter for more info
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push: :unset)
             data = Twilio::Values.of({
@@ -581,10 +589,14 @@ module Twilio
           # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
-          # @param [Hash] push The optional service level push factors configuration. If
-          #   present it must be a json string with the following format:
+          # @param [Hash] push Configurations for the Push factors (channel) created under
+          #   this Service. If present, it must be a json string with the following format:
           #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "include_date":
-          #   true}
+          #   true}. If `include_date` is set to `true`, which is the default, that means that
+          #   the push challenge’s response will include the date created value. If
+          #   `include_date` is set to `false`, then the date created value will not be
+          #   included. See [Challenge](https://www.twilio.com/docs/verify/api/challenge)
+          #   resource’s details parameter for more info
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push: :unset)
             context.update(

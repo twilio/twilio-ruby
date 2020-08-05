@@ -34,6 +34,8 @@ module Twilio
             #   be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
             # @param [String] channel The verification method to use. Can be:
             #   [`email`](https://www.twilio.com/docs/verify/email), `sms` or `call`.
+            # @param [String] custom_friendly_name A custom user defined friendly name that
+            #   overwrites the existing one in the verification message
             # @param [String] custom_message The text of a custom message to use for the
             #   verification.
             # @param [String] send_digits The digits to send after a phone call is answered,
@@ -61,10 +63,11 @@ module Twilio
             # @param [String] app_hash Your [App
             #   Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string) to be appended at the end of your verification SMS body. Applies only to SMS. Example SMS body: `<#> Your AppName verification code is: 1234 He42w354ol9`.
             # @return [VerificationInstance] Created VerificationInstance
-            def create(to: nil, channel: nil, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset, app_hash: :unset)
+            def create(to: nil, channel: nil, custom_friendly_name: :unset, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset, app_hash: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'Channel' => channel,
+                  'CustomFriendlyName' => custom_friendly_name,
                   'CustomMessage' => custom_message,
                   'SendDigits' => send_digits,
                   'Locale' => locale,
