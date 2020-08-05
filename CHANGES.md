@@ -490,7 +490,7 @@ twilio-ruby changelog
 **Library**
 - [PR #481](https://github.com/twilio/twilio-ruby/pull/481): added request validation for urls with and without ports. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
 - [PR #480](https://github.com/twilio/twilio-ruby/pull/480): Update resources after sorting. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
-- [PR #479](https://github.com/twilio/twilio-ruby/pull/479): Auto-deploy via Travis CI upon tagged commit to master. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+- [PR #479](https://github.com/twilio/twilio-ruby/pull/479): Auto-deploy via Travis CI upon tagged commit to main. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
 
 **Api**
 - Add new usage categories to the public api `sms-messages-carrierfees` and `mms-messages-carrierfees`

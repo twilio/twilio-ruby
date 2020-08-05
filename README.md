@@ -214,7 +214,7 @@ If you've instead found a bug in the library or would like new features added, g
 [libdocs]: https://www.twilio.com/docs/libraries/ruby
 [refdocs]: https://twilio.github.io/twilio-ruby
 [capability]: https://github.com/twilio/twilio-ruby/wiki/JWT-Tokens
-[examples]: https://github.com/twilio/twilio-ruby/blob/master/examples
+[examples]: https://github.com/twilio/twilio-ruby/blob/HEAD/examples
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
 [bundler]: https://bundler.io
 [rubygems]: https://rubygems.org
