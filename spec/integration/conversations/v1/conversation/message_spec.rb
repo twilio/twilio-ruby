@@ -109,6 +109,44 @@ describe 'Message' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives create_no_attributes responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "sid": "IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "body": "Hello",
+          "media": null,
+          "author": "message author",
+          "participant_sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "attributes": "{}",
+          "date_created": "2020-07-01T22:18:37Z",
+          "date_updated": "2020-07-01T22:18:37Z",
+          "index": 0,
+          "delivery": {
+              "total": 2,
+              "sent": "all",
+              "delivered": "some",
+              "read": "some",
+              "failed": "none",
+              "undelivered": "none"
+          },
+          "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "delivery_receipts": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Receipts"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                     .messages.create()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can update" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

@@ -230,12 +230,21 @@ module Twilio
             #   is measured from the last Session create or the Session's last Interaction.
             # @param [session.Status] status The new status of the resource. Can be:
             #   `in-progress` to re-open a session or `closed` to close a session.
+            # @param [Boolean] fail_on_participant_conflict Setting to true (recommended),
+            #   enables Proxy to return a 400 error (Twilio error code 80604) when a request to
+            #   set a Session to in-progress would cause Participants with the same
+            #   identifier/proxy_identifier pair to be active in multiple Sessions. If not
+            #   provided, or if set to false, requests will be allowed to succeed and a Debugger
+            #   event (80801) will be emitted. This causes calls and messages from affected
+            #   Participants to be routed incorrectly. Please note, in a future release, the
+            #   default behavior will be to reject the request with a 400 error.
             # @return [SessionInstance] Updated SessionInstance
-            def update(date_expiry: :unset, ttl: :unset, status: :unset)
+            def update(date_expiry: :unset, ttl: :unset, status: :unset, fail_on_participant_conflict: :unset)
               data = Twilio::Values.of({
                   'DateExpiry' => Twilio.serialize_iso8601_datetime(date_expiry),
                   'Ttl' => ttl,
                   'Status' => status,
+                  'FailOnParticipantConflict' => fail_on_participant_conflict,
               })
 
               payload = @version.update('POST', @uri, data: data)
@@ -473,9 +482,22 @@ module Twilio
             #   is measured from the last Session create or the Session's last Interaction.
             # @param [session.Status] status The new status of the resource. Can be:
             #   `in-progress` to re-open a session or `closed` to close a session.
+            # @param [Boolean] fail_on_participant_conflict Setting to true (recommended),
+            #   enables Proxy to return a 400 error (Twilio error code 80604) when a request to
+            #   set a Session to in-progress would cause Participants with the same
+            #   identifier/proxy_identifier pair to be active in multiple Sessions. If not
+            #   provided, or if set to false, requests will be allowed to succeed and a Debugger
+            #   event (80801) will be emitted. This causes calls and messages from affected
+            #   Participants to be routed incorrectly. Please note, in a future release, the
+            #   default behavior will be to reject the request with a 400 error.
             # @return [SessionInstance] Updated SessionInstance
-            def update(date_expiry: :unset, ttl: :unset, status: :unset)
-              context.update(date_expiry: date_expiry, ttl: ttl, status: status, )
+            def update(date_expiry: :unset, ttl: :unset, status: :unset, fail_on_participant_conflict: :unset)
+              context.update(
+                  date_expiry: date_expiry,
+                  ttl: ttl,
+                  status: status,
+                  fail_on_participant_conflict: fail_on_participant_conflict,
+              )
             end
 
             ##

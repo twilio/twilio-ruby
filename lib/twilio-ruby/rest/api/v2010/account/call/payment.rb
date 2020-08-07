@@ -36,50 +36,59 @@ module Twilio
 
               ##
               # Create the PaymentInstance
-              # @param [String] idempotency_key A unique token for each payment session that
-              #   should be provided to maintain idempotency of the session.
-              # @param [String] status_callback The URL we should call using the
-              #   `status_callback` to send status information of payment session.
-              # @param [payment.BankAccountType] bank_account_type If Payment source is ACH,
-              #   type of bank account. Can be: `consumer-checking`, `consumer-savings`,
+              # @param [String] idempotency_key A unique token that will be used to ensure that
+              #   multiple API calls with the same information do not result in multiple
+              #   transactions. This should be a unique string value per API call and can be a
+              #   randomly generated.
+              # @param [String] status_callback Provide an absolute or relative URL to receive
+              #   status updates regarding your Pay session. Read more about the [expected
+              #   StatusCallback
+              #   values](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback)
+              # @param [payment.BankAccountType] bank_account_type Type of bank account if
+              #   payment source is ACH. One of `consumer-checking`, `consumer-savings`, or
               #   `commercial-checking`. The default value is `consumer-checking`.
-              # @param [String] charge_amount If this field is present and greater than `0.0`
-              #   payment source will be charged. Otherwise payment source will be tokenized.
-              # @param [String] currency Currency `charge_amount` is in. It's format should be
-              #   as specified in [ISO
+              # @param [String] charge_amount A positive decimal value less than 1,000,000 to
+              #   charge against the credit card or bank account. Default currency can be
+              #   overwritten with `currency` field. Leave blank or set to 0 to tokenize.
+              # @param [String] currency The currency of the `charge_amount`, formatted as [ISO
               #   4127](http://www.iso.org/iso/home/standards/currency_codes.htm) format. The
-              #   default value is `USD`.
-              # @param [String] description Decription of the charge.
-              # @param [String] input Kind of medium customer would enter payment source
-              #   information in. Currently only 'DTMF' is supported, which means customer would
-              #   use keypad of their phone to enter card number etc.
-              # @param [String] min_postal_code_length If postal code is expected, minimum
-              #   length of the postal code. When user enters postal code, this value will be used
-              #   to validate.
-              # @param [Hash] parameter Additonal data to be sent over to payment provider. It
-              #   has to be a JSON string with only one level object. This parameter can be used
-              #   to send information such as customer name, phone number etc. Refer to specific
-              #   payment provider's documentation in Twilio console for supported
-              #   names/values/format.
-              # @param [String] payment_connector Payment connector that you would like Twilio
-              #   to use for processing payments. The default value is `Default`, which means you
-              #   need to have at least one payment connector configured in Twilio with name
-              #   'Default'. If not you must provide connector configuration name here.
-              # @param [payment.PaymentMethod] payment_method Payment source type. Can be:
-              #   `credit-card`, `ach-debit`. The default value is `credit-card`.
-              # @param [Boolean] postal_code Whether to expect postal code during payment source
-              #   data gathering. Can be: `true`, `false`. The default value is `true`.
-              # @param [Boolean] security_code Whether to expect security code during payment
-              #   source data gathering. Can be: `true`, `false`. The default value is `true`.
-              # @param [String] timeout The number of seconds that we should allow customer to
-              #   enter payment information. Can be an integer between `5` and `600`, inclusive.
-              #   The default value is `5`.
-              # @param [payment.TokenType] token_type If tokenization of payment source is
-              #   desired, this represents type of token. Can be: `one-time`, `reusable`. The
-              #   default value is `reusable`.
-              # @param [String] valid_card_types List of card types accepted with each card
-              #   types separated by space. Can be:
-              #   `visa`,`nmastercard`,`amex`,`maestro`,`discover`,`optima`,`jcb`,`diners-club`,`enroute`. The default value is `visa mastercard amex`.
+              #   default value is `USD` and all values allowed from the <Pay> Connector are
+              #   accepted.
+              # @param [String] description The description can be used to provide more details
+              #   regarding the transaction. This information is submitted along with the payment
+              #   details to the Payment Connector which are then posted on the transactions.
+              # @param [String] input A list of inputs that should be accepted. Currently only
+              #   `dtmf` is supported. All digits captured during a pay session are redacted from
+              #   the logs.
+              # @param [String] min_postal_code_length A positive integer that is used to
+              #   validate the length of the `PostalCode` inputted by the user. User must enter
+              #   this many digits.
+              # @param [Hash] parameter A single level JSON string that is required when
+              #   accepting certain information specific only to ACH payments. The information
+              #   that has to be included here depends on the <Pay> Connector. [Read
+              #   more](https://www.twilio.com/console/voice/pay-connectors).
+              # @param [String] payment_connector This is the unique name corresponding to the
+              #   Payment Gateway Connector installed in the Twilio Add-ons. Learn more about
+              #   [<Pay> Connectors](https://www.twilio.com/console/voice/pay-connectors). The
+              #   default value is `Default`.
+              # @param [payment.PaymentMethod] payment_method Type of payment being captured.
+              #   One of `credit-card` or `ach-debit`. The default value is `credit-card`.
+              # @param [Boolean] postal_code Indicates whether the credit card postal code (zip
+              #   code) is a required piece of payment information that must be provided by the
+              #   caller. The default is `true`.
+              # @param [Boolean] security_code Indicates whether the credit card security code
+              #   is a required piece of payment information that must be provided by the caller.
+              #   The default is `true`.
+              # @param [String] timeout The number of seconds that <Pay> should wait for the
+              #   caller to press a digit between each subsequent digit, after the first one,
+              #   before moving on to validate the digits captured. The default is `5`, maximum is
+              #   `600`.
+              # @param [payment.TokenType] token_type Indicates whether the payment method
+              #   should be tokenized as a `one-time` or `reusable` token. The default value is
+              #   `reusable`. Do not enter a charge amount when tokenizing. If a charge amount is
+              #   entered, the payment method will be charged and not tokenized.
+              # @param [String] valid_card_types Credit card types separated by space that Pay
+              #   should accept. The default value is `visa mastercard amex`
               # @return [PaymentInstance] Created PaymentInstance
               def create(idempotency_key: nil, status_callback: nil, bank_account_type: :unset, charge_amount: :unset, currency: :unset, description: :unset, input: :unset, min_postal_code_length: :unset, parameter: :unset, payment_connector: :unset, payment_method: :unset, postal_code: :unset, security_code: :unset, timeout: :unset, token_type: :unset, valid_card_types: :unset)
                 data = Twilio::Values.of({
@@ -177,15 +186,20 @@ module Twilio
 
               ##
               # Update the PaymentInstance
-              # @param [String] idempotency_key A unique token for each payment session that
-              #   should be provided to maintain idempotency of the session.
-              # @param [String] status_callback The URL we should call using the
-              #   `status_callback` to send status information of payment session.
-              # @param [payment.Capture] capture Specific payment source information to expect.
-              #   Can be:
-              #   `payment-card-number`,`expiration-date`,`security-code`,`postal-code`,`bank-routing-number`,`bank-account-number`.
-              # @param [payment.Status] status Instruction to complete or cancel the
-              #   transaction. Can be: `complete`, `cancel.`
+              # @param [String] idempotency_key A unique token that will be used to ensure that
+              #   multiple API calls with the same information do not result in multiple
+              #   transactions. This should be a unique string value per API call and can be a
+              #   randomly generated.
+              # @param [String] status_callback Provide an absolute or relative URL to receive
+              #   status updates regarding your Pay session. Read more about the
+              #   [Update](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-update) and [Complete/Cancel](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-cancelcomplete) POST requests.
+              # @param [payment.Capture] capture The piece of payment information that you wish
+              #   the caller to enter. Must be one of `payment-card-number`, `expiration-date`,
+              #   `security-code`, `postal-code`, `bank-routing-number`, or `bank-account-number`.
+              # @param [payment.Status] status Indicates whether the current payment session
+              #   should be cancelled or completed. When `cancel` the payment session is
+              #   cancelled. When `complete`, Twilio sends the payment information to the selected
+              #   <Pay> connector for processing.
               # @return [PaymentInstance] Updated PaymentInstance
               def update(idempotency_key: nil, status_callback: nil, capture: :unset, status: :unset)
                 data = Twilio::Values.of({
@@ -309,15 +323,20 @@ module Twilio
 
               ##
               # Update the PaymentInstance
-              # @param [String] idempotency_key A unique token for each payment session that
-              #   should be provided to maintain idempotency of the session.
-              # @param [String] status_callback The URL we should call using the
-              #   `status_callback` to send status information of payment session.
-              # @param [payment.Capture] capture Specific payment source information to expect.
-              #   Can be:
-              #   `payment-card-number`,`expiration-date`,`security-code`,`postal-code`,`bank-routing-number`,`bank-account-number`.
-              # @param [payment.Status] status Instruction to complete or cancel the
-              #   transaction. Can be: `complete`, `cancel.`
+              # @param [String] idempotency_key A unique token that will be used to ensure that
+              #   multiple API calls with the same information do not result in multiple
+              #   transactions. This should be a unique string value per API call and can be a
+              #   randomly generated.
+              # @param [String] status_callback Provide an absolute or relative URL to receive
+              #   status updates regarding your Pay session. Read more about the
+              #   [Update](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-update) and [Complete/Cancel](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-cancelcomplete) POST requests.
+              # @param [payment.Capture] capture The piece of payment information that you wish
+              #   the caller to enter. Must be one of `payment-card-number`, `expiration-date`,
+              #   `security-code`, `postal-code`, `bank-routing-number`, or `bank-account-number`.
+              # @param [payment.Status] status Indicates whether the current payment session
+              #   should be cancelled or completed. When `cancel` the payment session is
+              #   cancelled. When `complete`, Twilio sends the payment information to the selected
+              #   <Pay> connector for processing.
               # @return [PaymentInstance] Updated PaymentInstance
               def update(idempotency_key: nil, status_callback: nil, capture: :unset, status: :unset)
                 context.update(
