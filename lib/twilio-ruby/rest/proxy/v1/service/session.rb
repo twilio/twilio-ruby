@@ -127,8 +127,19 @@ module Twilio
             #   on create.
             # @param [Hash] participants The Participant objects to include in the new
             #   session.
+            # @param [Boolean] fail_on_participant_conflict [Experimental] Setting to true
+            #   enables early opt-in to allowing Proxy to reject a Session create (with
+            #   Participants) request that could cause the same Identifier/ProxyIdentifier pair
+            #   to be active in multiple Sessions. Depending on the context, this could be a 409
+            #   error (Twilio error code 80623) or a 400 error (Twilio error code 80604). If not
+            #   provided, or if set to false, requests will be allowed to succeed and a Debugger
+            #   notification (80802) will be emitted. Having multiple, active Participants with
+            #   the same Identifier/ProxyIdentifier pair causes calls and messages from affected
+            #   Participants to be routed incorrectly. Please note, in a future release, the
+            #   default behavior will be to reject the request as described unless an exception
+            #   has been requested.
             # @return [SessionInstance] Created SessionInstance
-            def create(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset)
+            def create(unique_name: :unset, date_expiry: :unset, ttl: :unset, mode: :unset, status: :unset, participants: :unset, fail_on_participant_conflict: :unset)
               data = Twilio::Values.of({
                   'UniqueName' => unique_name,
                   'DateExpiry' => Twilio.serialize_iso8601_datetime(date_expiry),
@@ -136,6 +147,7 @@ module Twilio
                   'Mode' => mode,
                   'Status' => status,
                   'Participants' => Twilio.serialize_list(participants) { |e| Twilio.serialize_object(e) },
+                  'FailOnParticipantConflict' => fail_on_participant_conflict,
               })
 
               payload = @version.create('POST', @uri, data: data)
@@ -230,14 +242,16 @@ module Twilio
             #   is measured from the last Session create or the Session's last Interaction.
             # @param [session.Status] status The new status of the resource. Can be:
             #   `in-progress` to re-open a session or `closed` to close a session.
-            # @param [Boolean] fail_on_participant_conflict Setting to true (recommended),
-            #   enables Proxy to return a 400 error (Twilio error code 80604) when a request to
-            #   set a Session to in-progress would cause Participants with the same
-            #   identifier/proxy_identifier pair to be active in multiple Sessions. If not
-            #   provided, or if set to false, requests will be allowed to succeed and a Debugger
-            #   event (80801) will be emitted. This causes calls and messages from affected
-            #   Participants to be routed incorrectly. Please note, in a future release, the
-            #   default behavior will be to reject the request with a 400 error.
+            # @param [Boolean] fail_on_participant_conflict [Experimental] Setting to true
+            #   enables early opt-in to allowing Proxy to return a 400 error (Twilio error code
+            #   80604) when a request to set a Session to in-progress would cause Participants
+            #   with the same Identifier/ProxyIdentifier pair to be active in multiple Sessions.
+            #   If not provided, or if set to false, requests will be allowed to succeed, and a
+            #   Debugger notification (80801) will be emitted. Having multiple, active
+            #   Participants with the same Identifier/ProxyIdentifier pair causes calls and
+            #   messages from affected Participants to be routed incorrectly. Please note, in a
+            #   future release, the default behavior will be to reject the request with a 400
+            #   error unless an exception has been requested.
             # @return [SessionInstance] Updated SessionInstance
             def update(date_expiry: :unset, ttl: :unset, status: :unset, fail_on_participant_conflict: :unset)
               data = Twilio::Values.of({
@@ -482,14 +496,16 @@ module Twilio
             #   is measured from the last Session create or the Session's last Interaction.
             # @param [session.Status] status The new status of the resource. Can be:
             #   `in-progress` to re-open a session or `closed` to close a session.
-            # @param [Boolean] fail_on_participant_conflict Setting to true (recommended),
-            #   enables Proxy to return a 400 error (Twilio error code 80604) when a request to
-            #   set a Session to in-progress would cause Participants with the same
-            #   identifier/proxy_identifier pair to be active in multiple Sessions. If not
-            #   provided, or if set to false, requests will be allowed to succeed and a Debugger
-            #   event (80801) will be emitted. This causes calls and messages from affected
-            #   Participants to be routed incorrectly. Please note, in a future release, the
-            #   default behavior will be to reject the request with a 400 error.
+            # @param [Boolean] fail_on_participant_conflict [Experimental] Setting to true
+            #   enables early opt-in to allowing Proxy to return a 400 error (Twilio error code
+            #   80604) when a request to set a Session to in-progress would cause Participants
+            #   with the same Identifier/ProxyIdentifier pair to be active in multiple Sessions.
+            #   If not provided, or if set to false, requests will be allowed to succeed, and a
+            #   Debugger notification (80801) will be emitted. Having multiple, active
+            #   Participants with the same Identifier/ProxyIdentifier pair causes calls and
+            #   messages from affected Participants to be routed incorrectly. Please note, in a
+            #   future release, the default behavior will be to reject the request with a 400
+            #   error unless an exception has been requested.
             # @return [SessionInstance] Updated SessionInstance
             def update(date_expiry: :unset, ttl: :unset, status: :unset, fail_on_participant_conflict: :unset)
               context.update(

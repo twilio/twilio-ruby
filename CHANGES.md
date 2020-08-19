@@ -1,6 +1,29 @@
 twilio-ruby changelog
 =====================
 
+[2020-08-19] Version 5.40.0
+---------------------------
+**Library - Chore**
+- [PR #526](https://github.com/twilio/twilio-ruby/pull/526): update GitHub branch references to use HEAD. Thanks to [@thinkingserious](https://github.com/thinkingserious)!
+
+**Conversations**
+- Allow Identity addition to Participants
+
+**Events**
+- Sinks API Get all Sinks
+
+**Proxy**
+- Clarified usage of FailOnParticipantConflict param as experimental
+- Add FailOnParticipantConflict param to Proxy Session create and Proxy Participant create
+
+**Supersim**
+- Add fleet, network, and isoCountryCode to the UsageRecords resource
+- Change sort order of UsageRecords from ascending to descending with respect to start time field, records are now returned newest to oldest
+
+**Wireless**
+- Removed `Start` and `End` parameters from the Data Sessions list endpoint. **(breaking change)**
+
+
 [2020-08-05] Version 5.39.3
 ---------------------------
 **Messaging**

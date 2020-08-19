@@ -31,10 +31,6 @@ module Twilio
             # Lists DataSessionInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [Time] end_ The date that the record ended, given as GMT in [ISO
-            #   8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
-            # @param [Time] start The date that the Data Session started, given as GMT in [ISO
-            #   8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -42,18 +38,14 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(end_: :unset, start: :unset, limit: nil, page_size: nil)
-              self.stream(end_: end_, start: start, limit: limit, page_size: page_size).entries
+            def list(limit: nil, page_size: nil)
+              self.stream(limit: limit, page_size: page_size).entries
             end
 
             ##
             # Streams DataSessionInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [Time] end_ The date that the record ended, given as GMT in [ISO
-            #   8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
-            # @param [Time] start The date that the Data Session started, given as GMT in [ISO
-            #   8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -61,10 +53,10 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(end_: :unset, start: :unset, limit: nil, page_size: nil)
+            def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(end_: end_, start: start, page_size: limits[:page_size], )
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -86,18 +78,12 @@ module Twilio
             ##
             # Retrieve a single page of DataSessionInstance records from the API.
             # Request is executed immediately.
-            # @param [Time] end_ The date that the record ended, given as GMT in [ISO
-            #   8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
-            # @param [Time] start The date that the Data Session started, given as GMT in [ISO
-            #   8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of DataSessionInstance
-            def page(end_: :unset, start: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
-                  'End' => Twilio.serialize_iso8601_datetime(end_),
-                  'Start' => Twilio.serialize_iso8601_datetime(start),
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,

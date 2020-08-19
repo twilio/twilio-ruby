@@ -38,7 +38,7 @@ module Twilio
               # @param [String] contains The pattern on which to match phone numbers. Valid
               #   characters are `*`, `0-9`, `a-z`, and `A-Z`. The `*` character matches any
               #   single digit. For examples, see [Example
-              #   2](https://www.twilio.com/docs/phone-numbers/api/availablephonenumber-resource#local-get-basic-example-2) and [Example 3](https://www.twilio.com/docs/phone-numbers/api/availablephonenumber-resource#local-get-basic-example-3). If specified, this value must have at least two characters.
+              #   2](https://www.twilio.com/docs/phone-numbers/api/availablephonenumberlocal-resource?code-sample=code-find-available-local-phone-numbers-by-area-code) and [Example 3](https://www.twilio.com/docs/phone-numbers/api/availablephonenumberlocal-resource?code-sample=code-find-phone-numbers-by-number-pattern). If specified, this value must have at least two characters.
               # @param [Boolean] sms_enabled Whether the phone numbers can receive text
               #   messages. Can be: `true` or `false`.
               # @param [Boolean] mms_enabled Whether the phone numbers can receive MMS messages.
@@ -125,7 +125,7 @@ module Twilio
               # @param [String] contains The pattern on which to match phone numbers. Valid
               #   characters are `*`, `0-9`, `a-z`, and `A-Z`. The `*` character matches any
               #   single digit. For examples, see [Example
-              #   2](https://www.twilio.com/docs/phone-numbers/api/availablephonenumber-resource#local-get-basic-example-2) and [Example 3](https://www.twilio.com/docs/phone-numbers/api/availablephonenumber-resource#local-get-basic-example-3). If specified, this value must have at least two characters.
+              #   2](https://www.twilio.com/docs/phone-numbers/api/availablephonenumberlocal-resource?code-sample=code-find-available-local-phone-numbers-by-area-code) and [Example 3](https://www.twilio.com/docs/phone-numbers/api/availablephonenumberlocal-resource?code-sample=code-find-phone-numbers-by-number-pattern). If specified, this value must have at least two characters.
               # @param [Boolean] sms_enabled Whether the phone numbers can receive text
               #   messages. Can be: `true` or `false`.
               # @param [Boolean] mms_enabled Whether the phone numbers can receive MMS messages.
@@ -228,7 +228,7 @@ module Twilio
               # @param [String] contains The pattern on which to match phone numbers. Valid
               #   characters are `*`, `0-9`, `a-z`, and `A-Z`. The `*` character matches any
               #   single digit. For examples, see [Example
-              #   2](https://www.twilio.com/docs/phone-numbers/api/availablephonenumber-resource#local-get-basic-example-2) and [Example 3](https://www.twilio.com/docs/phone-numbers/api/availablephonenumber-resource#local-get-basic-example-3). If specified, this value must have at least two characters.
+              #   2](https://www.twilio.com/docs/phone-numbers/api/availablephonenumberlocal-resource?code-sample=code-find-available-local-phone-numbers-by-area-code) and [Example 3](https://www.twilio.com/docs/phone-numbers/api/availablephonenumberlocal-resource?code-sample=code-find-phone-numbers-by-number-pattern). If specified, this value must have at least two characters.
               # @param [Boolean] sms_enabled Whether the phone numbers can receive text
               #   messages. Can be: `true` or `false`.
               # @param [Boolean] mms_enabled Whether the phone numbers can receive MMS messages.

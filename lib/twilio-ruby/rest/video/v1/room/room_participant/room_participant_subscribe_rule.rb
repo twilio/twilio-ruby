@@ -12,8 +12,6 @@ module Twilio
       class V1 < Version
         class RoomContext < InstanceContext
           class ParticipantContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class SubscribeRulesList < ListResource
               ##
               # Initialize the SubscribeRulesList
@@ -71,8 +69,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class SubscribeRulesPage < Page
               ##
               # Initialize the SubscribeRulesPage
@@ -107,8 +103,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class SubscribeRulesInstance < InstanceResource
               ##
               # Initialize the SubscribeRulesInstance

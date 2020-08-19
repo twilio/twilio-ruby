@@ -29,8 +29,19 @@ module Twilio
           # Lists UsageRecordInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] sim SID of a Sim resource. Only show UsageRecords representing
-          #   usage incurred by this Super SIM.
+          # @param [String] sim SID or unique name of a Sim resource. Only show UsageRecords
+          #   representing usage incurred by this Super SIM.
+          # @param [String] fleet SID or unique name of a Fleet resource. Only show
+          #   UsageRecords representing usage for Super SIMs belonging to this Fleet resource
+          #   at the time the usage occurred.
+          # @param [String] network SID of a Network resource. Only show UsageRecords
+          #   representing usage on this network.
+          # @param [String] iso_country Alpha-2 ISO Country Code. Only show UsageRecords
+          #   representing usage in this country.
+          # @param [usage_record.Group] group Dimension over which to aggregate usage
+          #   records. Can be: `sim`, `fleet`, `network`, `isoCountry`. Default is to not
+          #   aggregate across any of these dimensions, UsageRecords will be aggregated into
+          #   the time buckets described by the `Granularity` parameter.
           # @param [usage_record.Granularity] granularity Time-based grouping that
           #   UsageRecords should be aggregated by. Can be: `hour`, `day`, or `all`. Default
           #   is `all`. `all` returns one UsageRecord that describes the usage for the entire
@@ -48,9 +59,13 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(sim: :unset, granularity: :unset, start_time: :unset, end_time: :unset, limit: nil, page_size: nil)
+          def list(sim: :unset, fleet: :unset, network: :unset, iso_country: :unset, group: :unset, granularity: :unset, start_time: :unset, end_time: :unset, limit: nil, page_size: nil)
             self.stream(
                 sim: sim,
+                fleet: fleet,
+                network: network,
+                iso_country: iso_country,
+                group: group,
                 granularity: granularity,
                 start_time: start_time,
                 end_time: end_time,
@@ -63,8 +78,19 @@ module Twilio
           # Streams UsageRecordInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] sim SID of a Sim resource. Only show UsageRecords representing
-          #   usage incurred by this Super SIM.
+          # @param [String] sim SID or unique name of a Sim resource. Only show UsageRecords
+          #   representing usage incurred by this Super SIM.
+          # @param [String] fleet SID or unique name of a Fleet resource. Only show
+          #   UsageRecords representing usage for Super SIMs belonging to this Fleet resource
+          #   at the time the usage occurred.
+          # @param [String] network SID of a Network resource. Only show UsageRecords
+          #   representing usage on this network.
+          # @param [String] iso_country Alpha-2 ISO Country Code. Only show UsageRecords
+          #   representing usage in this country.
+          # @param [usage_record.Group] group Dimension over which to aggregate usage
+          #   records. Can be: `sim`, `fleet`, `network`, `isoCountry`. Default is to not
+          #   aggregate across any of these dimensions, UsageRecords will be aggregated into
+          #   the time buckets described by the `Granularity` parameter.
           # @param [usage_record.Granularity] granularity Time-based grouping that
           #   UsageRecords should be aggregated by. Can be: `hour`, `day`, or `all`. Default
           #   is `all`. `all` returns one UsageRecord that describes the usage for the entire
@@ -82,11 +108,15 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(sim: :unset, granularity: :unset, start_time: :unset, end_time: :unset, limit: nil, page_size: nil)
+          def stream(sim: :unset, fleet: :unset, network: :unset, iso_country: :unset, group: :unset, granularity: :unset, start_time: :unset, end_time: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
                 sim: sim,
+                fleet: fleet,
+                network: network,
+                iso_country: iso_country,
+                group: group,
                 granularity: granularity,
                 start_time: start_time,
                 end_time: end_time,
@@ -113,8 +143,19 @@ module Twilio
           ##
           # Retrieve a single page of UsageRecordInstance records from the API.
           # Request is executed immediately.
-          # @param [String] sim SID of a Sim resource. Only show UsageRecords representing
-          #   usage incurred by this Super SIM.
+          # @param [String] sim SID or unique name of a Sim resource. Only show UsageRecords
+          #   representing usage incurred by this Super SIM.
+          # @param [String] fleet SID or unique name of a Fleet resource. Only show
+          #   UsageRecords representing usage for Super SIMs belonging to this Fleet resource
+          #   at the time the usage occurred.
+          # @param [String] network SID of a Network resource. Only show UsageRecords
+          #   representing usage on this network.
+          # @param [String] iso_country Alpha-2 ISO Country Code. Only show UsageRecords
+          #   representing usage in this country.
+          # @param [usage_record.Group] group Dimension over which to aggregate usage
+          #   records. Can be: `sim`, `fleet`, `network`, `isoCountry`. Default is to not
+          #   aggregate across any of these dimensions, UsageRecords will be aggregated into
+          #   the time buckets described by the `Granularity` parameter.
           # @param [usage_record.Granularity] granularity Time-based grouping that
           #   UsageRecords should be aggregated by. Can be: `hour`, `day`, or `all`. Default
           #   is `all`. `all` returns one UsageRecord that describes the usage for the entire
@@ -129,9 +170,13 @@ module Twilio
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of UsageRecordInstance
-          def page(sim: :unset, granularity: :unset, start_time: :unset, end_time: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          def page(sim: :unset, fleet: :unset, network: :unset, iso_country: :unset, group: :unset, granularity: :unset, start_time: :unset, end_time: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'Sim' => sim,
+                'Fleet' => fleet,
+                'Network' => network,
+                'IsoCountry' => iso_country,
+                'Group' => group,
                 'Granularity' => granularity,
                 'StartTime' => Twilio.serialize_iso8601_datetime(start_time),
                 'EndTime' => Twilio.serialize_iso8601_datetime(end_time),
@@ -211,6 +256,9 @@ module Twilio
             @properties = {
                 'account_sid' => payload['account_sid'],
                 'sim_sid' => payload['sim_sid'],
+                'network_sid' => payload['network_sid'],
+                'fleet_sid' => payload['fleet_sid'],
+                'iso_country' => payload['iso_country'],
                 'period' => payload['period'],
                 'data_upload' => payload['data_upload'].to_i,
                 'data_download' => payload['data_download'].to_i,
@@ -228,6 +276,24 @@ module Twilio
           # @return [String] SID of a Sim resource to which the UsageRecord belongs.
           def sim_sid
             @properties['sim_sid']
+          end
+
+          ##
+          # @return [String] SID of the Network resource on which the usage occurred.
+          def network_sid
+            @properties['network_sid']
+          end
+
+          ##
+          # @return [String] SID of the Fleet resource on which the usage occurred.
+          def fleet_sid
+            @properties['fleet_sid']
+          end
+
+          ##
+          # @return [String] Alpha-2 ISO Country Code of the country the usage occurred in.
+          def iso_country
+            @properties['iso_country']
           end
 
           ##

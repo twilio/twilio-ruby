@@ -228,10 +228,14 @@ module Twilio
             #   number that the participant is in contact with. 'null' value will remove it.
             # @param [String] messaging_binding_projected_address The address of the Twilio
             #   phone number that is used in Group MMS. 'null' value will remove it.
+            # @param [String] identity A unique string identifier for the conversation
+            #   participant as [Chat User](https://www.twilio.com/docs/chat/rest/user-resource).
+            #   This parameter is non-null if (and only if) the participant is using the
+            #   Programmable Chat SDK to communicate. Limited to 256 characters.
             # @param [participant.WebhookEnabledType] x_twilio_webhook_enabled The
             #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ParticipantInstance] Updated ParticipantInstance
-            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, messaging_binding_proxy_address: :unset, messaging_binding_projected_address: :unset, x_twilio_webhook_enabled: :unset)
+            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, messaging_binding_proxy_address: :unset, messaging_binding_projected_address: :unset, identity: :unset, x_twilio_webhook_enabled: :unset)
               data = Twilio::Values.of({
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
@@ -239,6 +243,7 @@ module Twilio
                   'RoleSid' => role_sid,
                   'MessagingBinding.ProxyAddress' => messaging_binding_proxy_address,
                   'MessagingBinding.ProjectedAddress' => messaging_binding_projected_address,
+                  'Identity' => identity,
               })
               headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
@@ -412,10 +417,14 @@ module Twilio
             #   number that the participant is in contact with. 'null' value will remove it.
             # @param [String] messaging_binding_projected_address The address of the Twilio
             #   phone number that is used in Group MMS. 'null' value will remove it.
+            # @param [String] identity A unique string identifier for the conversation
+            #   participant as [Chat User](https://www.twilio.com/docs/chat/rest/user-resource).
+            #   This parameter is non-null if (and only if) the participant is using the
+            #   Programmable Chat SDK to communicate. Limited to 256 characters.
             # @param [participant.WebhookEnabledType] x_twilio_webhook_enabled The
             #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ParticipantInstance] Updated ParticipantInstance
-            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, messaging_binding_proxy_address: :unset, messaging_binding_projected_address: :unset, x_twilio_webhook_enabled: :unset)
+            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, messaging_binding_proxy_address: :unset, messaging_binding_projected_address: :unset, identity: :unset, x_twilio_webhook_enabled: :unset)
               context.update(
                   date_created: date_created,
                   date_updated: date_updated,
@@ -423,6 +432,7 @@ module Twilio
                   role_sid: role_sid,
                   messaging_binding_proxy_address: messaging_binding_proxy_address,
                   messaging_binding_projected_address: messaging_binding_projected_address,
+                  identity: identity,
                   x_twilio_webhook_enabled: x_twilio_webhook_enabled,
               )
             end

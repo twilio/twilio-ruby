@@ -278,8 +278,9 @@ module Twilio
             #   occurs while retrieving or executing the TwiML from `sms_url`.
             # @param [String] sms_fallback_method The HTTP method we should use to call
             #   `sms_fallback_url`. Can be: `GET` or `POST`.
-            # @param [String] sms_status_callback The URL we should call using a POST method
-            #   to send status information about SMS messages sent by the application.
+            # @param [String] sms_status_callback Same as message_status_callback: The URL we
+            #   should call using a POST method to send status information about SMS messages
+            #   sent by the application. Deprecated, included for backwards compatibility.
             # @param [String] message_status_callback The URL we should call using a POST
             #   method to send message status information to your application.
             # @return [ApplicationInstance] Updated ApplicationInstance
@@ -545,8 +546,9 @@ module Twilio
             #   occurs while retrieving or executing the TwiML from `sms_url`.
             # @param [String] sms_fallback_method The HTTP method we should use to call
             #   `sms_fallback_url`. Can be: `GET` or `POST`.
-            # @param [String] sms_status_callback The URL we should call using a POST method
-            #   to send status information about SMS messages sent by the application.
+            # @param [String] sms_status_callback Same as message_status_callback: The URL we
+            #   should call using a POST method to send status information about SMS messages
+            #   sent by the application. Deprecated, included for backwards compatibility.
             # @param [String] message_status_callback The URL we should call using a POST
             #   method to send message status information to your application.
             # @return [ApplicationInstance] Updated ApplicationInstance
