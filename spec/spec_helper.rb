@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'bundler'
 Bundler.setup
 
-Dir.glob(File.expand_path('../support/**/*.rb', __FILE__), &method(:require))
+Dir.glob(File.expand_path('../support/**/*.rb', __FILE__)).sort.each(&method(:require))
 
 require_relative './holodeck/holodeck.rb'
 require_relative './holodeck/hologram.rb'
