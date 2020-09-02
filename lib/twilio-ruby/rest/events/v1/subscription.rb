@@ -107,9 +107,12 @@ module Twilio
 
           ##
           # Create the SubscriptionInstance
-          # @param [String] description The description
-          # @param [String] sink_sid The sink_sid
-          # @param [Hash] types The types
+          # @param [String] description A human readable description for the Subscription
+          # @param [String] sink_sid The SID of the sink that events selected by this
+          #   subscription should be sent to. Sink must be active for the subscription to be
+          #   created.
+          # @param [Hash] types Contains a dictionary of URL links to nested resources of
+          #   this Subscription.
           # @return [SubscriptionInstance] Created SubscriptionInstance
           def create(description: nil, sink_sid: nil, types: nil)
             data = Twilio::Values.of({
@@ -167,7 +170,8 @@ module Twilio
           ##
           # Initialize the SubscriptionContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this
+          #   Subscription.
           # @return [SubscriptionContext] SubscriptionContext
           def initialize(version, sid)
             super(version)
@@ -236,7 +240,8 @@ module Twilio
           # Initialize the SubscriptionInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this
+          #   Subscription.
           # @return [SubscriptionInstance] SubscriptionInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -270,49 +275,49 @@ module Twilio
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] Account SID.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A string that uniquely identifies this Subscription.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date this Subscription was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date this Subscription was updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The description
+          # @return [String] Subscription description
           def description
             @properties['description']
           end
 
           ##
-          # @return [String] The sink_sid
+          # @return [String] Sink SID.
           def sink_sid
             @properties['sink_sid']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The URL of this resource.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] Nested resource URLs.
           def links
             @properties['links']
           end

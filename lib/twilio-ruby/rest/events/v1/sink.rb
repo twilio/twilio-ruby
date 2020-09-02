@@ -27,9 +27,10 @@ module Twilio
 
           ##
           # Create the SinkInstance
-          # @param [String] description The description
-          # @param [Hash] sink_configuration The sink_configuration
-          # @param [sink.SinkType] sink_type The sink_type
+          # @param [String] description A human readable description for the Sink
+          # @param [Hash] sink_configuration The information required for Twilio to connect
+          #   to the provided Sink encoded as JSON.
+          # @param [sink.SinkType] sink_type The Sink type. Can only be "kinesis" currently.
           # @return [SinkInstance] Created SinkInstance
           def create(description: nil, sink_configuration: nil, sink_type: nil)
             data = Twilio::Values.of({
@@ -167,7 +168,7 @@ module Twilio
           ##
           # Initialize the SinkContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this Sink.
           # @return [SinkContext] SinkContext
           def initialize(version, sid)
             super(version)
@@ -243,7 +244,7 @@ module Twilio
           # Initialize the SinkInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The sid
+          # @param [String] sid A 34 character string that uniquely identifies this Sink.
           # @return [SinkInstance] SinkInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -278,55 +279,55 @@ module Twilio
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date this Sink was created
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date this Sink was updated
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The description
+          # @return [String] Sink Description
           def description
             @properties['description']
           end
 
           ##
-          # @return [String] The sid
+          # @return [String] A string that uniquely identifies this Sink.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [Hash] The sink_configuration
+          # @return [Hash] JSON Sink configuration.
           def sink_configuration
             @properties['sink_configuration']
           end
 
           ##
-          # @return [sink.SinkType] The sink_type
+          # @return [sink.SinkType] Sink type.
           def sink_type
             @properties['sink_type']
           end
 
           ##
-          # @return [sink.Status] The status
+          # @return [sink.Status] The Status of this Sink
           def status
             @properties['status']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The URL of this resource.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] Nested resource URLs.
           def links
             @properties['links']
           end

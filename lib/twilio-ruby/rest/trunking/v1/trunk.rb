@@ -48,6 +48,10 @@ module Twilio
           #   e.g.`/Trunks/[Trunk_SID]/Recording -XPOST -d'Mode=record-from-answer'`. See
           #   [Recording](https://www.twilio.com/docs/sip-trunking#recording) for more
           #   information.
+          # @param [trunk.TransferSetting] transfer_mode The call transfer settings for the
+          #   trunk. Can be: `enable-all`, `sip-only` and `disable-all`. See
+          #   [Transfer](https://www.twilio.com/docs/sip-trunking/call-transfer) for more
+          #   information.
           # @param [Boolean] secure Whether Secure Trunking is enabled for the trunk. If
           #   enabled, all calls going through the trunk will be secure using SRTP for media
           #   and TLS for signaling. If disabled, then RTP will be used for media. See [Secure
@@ -59,13 +63,14 @@ module Twilio
           #   Caller ID data on your phone. See [CNAM
           #   Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
           # @return [TrunkInstance] Created TrunkInstance
-          def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
+          def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DomainName' => domain_name,
                 'DisasterRecoveryUrl' => disaster_recovery_url,
                 'DisasterRecoveryMethod' => disaster_recovery_method,
                 'Recording' => recording,
+                'TransferMode' => transfer_mode,
                 'Secure' => secure,
                 'CnamLookupEnabled' => cnam_lookup_enabled,
             })
@@ -251,6 +256,10 @@ module Twilio
           #   will be recorded. See
           #   [Recording](https://www.twilio.com/docs/sip-trunking#recording) for more
           #   information.
+          # @param [trunk.TransferSetting] transfer_mode The call transfer settings for the
+          #   trunk. Can be: `enable-all`, `sip-only` and `disable-all`. See
+          #   [Transfer](https://www.twilio.com/docs/sip-trunking/call-transfer) for more
+          #   information.
           # @param [Boolean] secure Whether Secure Trunking is enabled for the trunk. If
           #   enabled, all calls going through the trunk will be secure using SRTP for media
           #   and TLS for signaling. If disabled, then RTP will be used for media. See [Secure
@@ -262,13 +271,14 @@ module Twilio
           #   Caller ID data on your phone. See [CNAM
           #   Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
           # @return [TrunkInstance] Updated TrunkInstance
-          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
+          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DomainName' => domain_name,
                 'DisasterRecoveryUrl' => disaster_recovery_url,
                 'DisasterRecoveryMethod' => disaster_recovery_method,
                 'Recording' => recording,
+                'TransferMode' => transfer_mode,
                 'Secure' => secure,
                 'CnamLookupEnabled' => cnam_lookup_enabled,
             })
@@ -385,6 +395,7 @@ module Twilio
                 'friendly_name' => payload['friendly_name'],
                 'secure' => payload['secure'],
                 'recording' => payload['recording'],
+                'transfer_mode' => payload['transfer_mode'],
                 'cnam_lookup_enabled' => payload['cnam_lookup_enabled'],
                 'auth_type' => payload['auth_type'],
                 'auth_type_set' => payload['auth_type_set'],
@@ -451,6 +462,12 @@ module Twilio
           # @return [Hash] The recording settings for the trunk
           def recording
             @properties['recording']
+          end
+
+          ##
+          # @return [trunk.TransferSetting] The call transfer settings for the trunk
+          def transfer_mode
+            @properties['transfer_mode']
           end
 
           ##
@@ -538,6 +555,10 @@ module Twilio
           #   will be recorded. See
           #   [Recording](https://www.twilio.com/docs/sip-trunking#recording) for more
           #   information.
+          # @param [trunk.TransferSetting] transfer_mode The call transfer settings for the
+          #   trunk. Can be: `enable-all`, `sip-only` and `disable-all`. See
+          #   [Transfer](https://www.twilio.com/docs/sip-trunking/call-transfer) for more
+          #   information.
           # @param [Boolean] secure Whether Secure Trunking is enabled for the trunk. If
           #   enabled, all calls going through the trunk will be secure using SRTP for media
           #   and TLS for signaling. If disabled, then RTP will be used for media. See [Secure
@@ -549,13 +570,14 @@ module Twilio
           #   Caller ID data on your phone. See [CNAM
           #   Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
           # @return [TrunkInstance] Updated TrunkInstance
-          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, secure: :unset, cnam_lookup_enabled: :unset)
+          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             context.update(
                 friendly_name: friendly_name,
                 domain_name: domain_name,
                 disaster_recovery_url: disaster_recovery_url,
                 disaster_recovery_method: disaster_recovery_method,
                 recording: recording,
+                transfer_mode: transfer_mode,
                 secure: secure,
                 cnam_lookup_enabled: cnam_lookup_enabled,
             )

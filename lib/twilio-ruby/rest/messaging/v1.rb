@@ -15,7 +15,14 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @deactivations = nil
           @services = nil
+        end
+
+        ##
+        # @return [Twilio::REST::Messaging::V1::DeactivationsContext]
+        def deactivations
+          @deactivations ||= DeactivationsContext.new self
         end
 
         ##

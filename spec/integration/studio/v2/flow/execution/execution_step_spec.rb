@@ -76,6 +76,7 @@ describe 'ExecutionStep' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "flow_sid": "FWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "execution_sid": "FNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "parent_step_sid": null,
           "name": "incomingRequest",
           "context": {},
           "transitioned_from": "Trigger",

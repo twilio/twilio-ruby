@@ -17,7 +17,7 @@ module Twilio
             ##
             # Initialize the SinkTestList
             # @param [Version] version Version that contains the resource
-            # @param [String] sid The sid
+            # @param [String] sid A 34 character string that uniquely identifies this Sink.
             # @return [SinkTestList] SinkTestList
             def initialize(version, sid: nil)
               super(version)
@@ -81,7 +81,7 @@ module Twilio
             # Initialize the SinkTestInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] sid The sid
+            # @param [String] sid A 34 character string that uniquely identifies this Sink.
             # @return [SinkTestInstance] SinkTestInstance
             def initialize(version, payload, sid: nil)
               super(version)
@@ -91,7 +91,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The result
+            # @return [String] Feedback indicating whether the test event was generated.
             def result
               @properties['result']
             end

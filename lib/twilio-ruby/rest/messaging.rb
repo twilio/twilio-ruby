@@ -29,6 +29,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Messaging::V1::DeactivationsInstance]
+      def deactivations
+        self.v1.deactivations()
+      end
+
+      ##
       # @param [String] sid The unique string that we created to identify the Service
       #   resource.
       # @return [Twilio::REST::Messaging::V1::ServiceInstance] if sid was passed.

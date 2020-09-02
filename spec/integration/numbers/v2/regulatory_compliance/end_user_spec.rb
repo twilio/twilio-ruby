@@ -208,4 +208,31 @@ describe 'EndUser' do
 
     expect(actual).to_not eq(nil)
   end
+
+  it "can delete" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.numbers.v2.regulatory_compliance \
+                        .end_users('ITXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'delete',
+        url: 'https://numbers.twilio.com/v2/RegulatoryCompliance/EndUsers/ITXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    ))).to eq(true)
+  end
+
+  it "receives delete responses" do
+    @holodeck.mock(Twilio::Response.new(
+        204,
+      nil,
+    ))
+
+    actual = @client.numbers.v2.regulatory_compliance \
+                               .end_users('ITXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+
+    expect(actual).to eq(true)
+  end
 end

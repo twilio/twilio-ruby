@@ -165,7 +165,7 @@ module Twilio
             ##
             # Initialize the EndUserContext
             # @param [Version] version Version that contains the resource
-            # @param [String] sid The unique string that we created to identify the End User
+            # @param [String] sid The unique string created by Twilio to identify the End User
             #   resource.
             # @return [EndUserContext] EndUserContext
             def initialize(version, sid)
@@ -204,6 +204,13 @@ module Twilio
             end
 
             ##
+            # Delete the EndUserInstance
+            # @return [Boolean] true if delete succeeds, false otherwise
+            def delete
+               @version.delete('DELETE', @uri)
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -223,7 +230,7 @@ module Twilio
             # Initialize the EndUserInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] sid The unique string that we created to identify the End User
+            # @param [String] sid The unique string created by Twilio to identify the End User
             #   resource.
             # @return [EndUserInstance] EndUserInstance
             def initialize(version, payload, sid: nil)
@@ -321,6 +328,13 @@ module Twilio
             # @return [EndUserInstance] Updated EndUserInstance
             def update(friendly_name: :unset, attributes: :unset)
               context.update(friendly_name: friendly_name, attributes: attributes, )
+            end
+
+            ##
+            # Delete the EndUserInstance
+            # @return [Boolean] true if delete succeeds, false otherwise
+            def delete
+              context.delete
             end
 
             ##

@@ -29,7 +29,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid A 34 character string that uniquely identifies this Sink.
       # @return [Twilio::REST::Events::V1::SinkInstance] if sid was passed.
       # @return [Twilio::REST::Events::V1::SinkList]
       def sinks(sid=:unset)
@@ -37,7 +37,8 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The sid
+      # @param [String] sid A 34 character string that uniquely identifies this
+      #   Subscription.
       # @return [Twilio::REST::Events::V1::SubscriptionInstance] if sid was passed.
       # @return [Twilio::REST::Events::V1::SubscriptionList]
       def subscriptions(sid=:unset)

@@ -64,9 +64,9 @@ describe 'Day' do
           "meta": {
               "page": 0,
               "page_size": 50,
-              "first_page_url": "https://bulkexports.twilio.com/v1/Exports/Calls/Days?PageSize=50&Page=0",
+              "first_page_url": "https://bulkexports.twilio.com/v1/Exports/Messages/Days?PageSize=50&Page=0",
               "previous_page_url": null,
-              "url": "https://bulkexports.twilio.com/v1/Exports/Calls/Days?PageSize=50&Page=0",
+              "url": "https://bulkexports.twilio.com/v1/Exports/Messages/Days?PageSize=50&Page=0",
               "next_page_url": null,
               "key": "days"
           }
@@ -89,7 +89,7 @@ describe 'Day' do
               {
                   "day": "2017-04-01",
                   "size": 100,
-                  "resource_type": "Calls",
+                  "resource_type": "Messages",
                   "create_date": "2017-04-02",
                   "friendly_name": "friendly_name"
               }
@@ -97,9 +97,9 @@ describe 'Day' do
           "meta": {
               "page": 0,
               "page_size": 50,
-              "first_page_url": "https://bulkexports.twilio.com/v1/Exports/Calls/Days?PageSize=50&Page=0",
+              "first_page_url": "https://bulkexports.twilio.com/v1/Exports/Messages/Days?PageSize=50&Page=0",
               "previous_page_url": null,
-              "url": "https://bulkexports.twilio.com/v1/Exports/Calls/Days?PageSize=50&Page=0",
+              "url": "https://bulkexports.twilio.com/v1/Exports/Messages/Days?PageSize=50&Page=0",
               "next_page_url": null,
               "key": "days"
           }

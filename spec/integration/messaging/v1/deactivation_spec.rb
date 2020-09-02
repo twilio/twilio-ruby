@@ -8,18 +8,18 @@
 
 require 'spec_helper.rb'
 
-describe 'Export' do
+describe 'Deactivations' do
   it "can fetch" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.bulkexports.v1.exports('resource_type').fetch()
+      @client.messaging.v1.deactivations().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://bulkexports.twilio.com/v1/Exports/resource_type',
+        url: 'https://messaging.twilio.com/v1/Deactivations',
     ))).to eq(true)
   end
 
@@ -28,16 +28,12 @@ describe 'Export' do
         200,
       %q[
       {
-          "resource_type": "Messages",
-          "url": "https://bulkexports.twilio.com/v1/Exports/Messages",
-          "links": {
-              "days": "https://bulkexports.twilio.com/v1/Exports/Messages/Days"
-          }
+          "redirect_to": "https://www.twilio.com"
       }
       ]
     ))
 
-    actual = @client.bulkexports.v1.exports('resource_type').fetch()
+    actual = @client.messaging.v1.deactivations().fetch()
 
     expect(actual).to_not eq(nil)
   end

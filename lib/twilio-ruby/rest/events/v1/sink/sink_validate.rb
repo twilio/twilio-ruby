@@ -17,7 +17,7 @@ module Twilio
             ##
             # Initialize the SinkValidateList
             # @param [Version] version Version that contains the resource
-            # @param [String] sid The sid
+            # @param [String] sid A 34 character string that uniquely identifies this Sink.
             # @return [SinkValidateList] SinkValidateList
             def initialize(version, sid: nil)
               super(version)
@@ -29,7 +29,8 @@ module Twilio
 
             ##
             # Create the SinkValidateInstance
-            # @param [String] test_id The test_id
+            # @param [String] test_id A 34 character string that uniquely identifies the test
+            #   event for a Sink being validated.
             # @return [SinkValidateInstance] Created SinkValidateInstance
             def create(test_id: nil)
               data = Twilio::Values.of({'TestId' => test_id, })
@@ -84,7 +85,7 @@ module Twilio
             # Initialize the SinkValidateInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] sid The sid
+            # @param [String] sid A 34 character string that uniquely identifies this Sink.
             # @return [SinkValidateInstance] SinkValidateInstance
             def initialize(version, payload, sid: nil)
               super(version)
@@ -94,7 +95,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The result
+            # @return [String] Feedback indicating whether the given Sink was validated.
             def result
               @properties['result']
             end

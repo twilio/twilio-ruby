@@ -48,7 +48,7 @@ module Twilio
 
           ##
           # Access the end_users
-          # @param [String] sid The unique string that we created to identify the End User
+          # @param [String] sid The unique string created by Twilio to identify the End User
           #   resource.
           # @return [EndUserList]
           # @return [EndUserContext] if sid was passed.

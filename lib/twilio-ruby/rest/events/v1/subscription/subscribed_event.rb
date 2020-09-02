@@ -17,7 +17,7 @@ module Twilio
             ##
             # Initialize the SubscribedEventList
             # @param [Version] version Version that contains the resource
-            # @param [String] subscription_sid The subscription_sid
+            # @param [String] subscription_sid The unique SID identifier of the Subscription.
             # @return [SubscribedEventList] SubscribedEventList
             def initialize(version, subscription_sid: nil)
               super(version)
@@ -109,8 +109,8 @@ module Twilio
 
             ##
             # Create the SubscribedEventInstance
-            # @param [String] type The type
-            # @param [String] version The version
+            # @param [String] type Type of event being subscribed to.
+            # @param [String] version The schema version that the subscription should use.
             # @return [SubscribedEventInstance] Created SubscribedEventInstance
             def create(type: nil, version: :unset)
               data = Twilio::Values.of({'Type' => type, 'Version' => version, })
@@ -164,8 +164,8 @@ module Twilio
             ##
             # Initialize the SubscribedEventContext
             # @param [Version] version Version that contains the resource
-            # @param [String] subscription_sid The subscription_sid
-            # @param [String] type The type
+            # @param [String] subscription_sid The unique SID identifier of the Subscription.
+            # @param [String] type Type of event being subscribed to.
             # @return [SubscribedEventContext] SubscribedEventContext
             def initialize(version, subscription_sid, type)
               super(version)
@@ -177,7 +177,7 @@ module Twilio
 
             ##
             # Update the SubscribedEventInstance
-            # @param [String] version The version
+            # @param [String] version The schema version that the subscription should use.
             # @return [SubscribedEventInstance] Updated SubscribedEventInstance
             def update(version: nil)
               data = Twilio::Values.of({'Version' => version, })
@@ -221,8 +221,8 @@ module Twilio
             # Initialize the SubscribedEventInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] subscription_sid The subscription_sid
-            # @param [String] type The type
+            # @param [String] subscription_sid The unique SID identifier of the Subscription.
+            # @param [String] type Type of event being subscribed to.
             # @return [SubscribedEventInstance] SubscribedEventInstance
             def initialize(version, payload, subscription_sid: nil, type: nil)
               super(version)
@@ -257,38 +257,38 @@ module Twilio
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] Account SID.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The type
+            # @return [String] Type of event being subscribed to.
             def type
               @properties['type']
             end
 
             ##
-            # @return [String] The version
+            # @return [String] The schema version that the subscription should use.
             def version
               @properties['version']
             end
 
             ##
-            # @return [String] The subscription_sid
+            # @return [String] Subscription SID.
             def subscription_sid
               @properties['subscription_sid']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The URL of this resource.
             def url
               @properties['url']
             end
 
             ##
             # Update the SubscribedEventInstance
-            # @param [String] version The version
+            # @param [String] version The schema version that the subscription should use.
             # @return [SubscribedEventInstance] Updated SubscribedEventInstance
             def update(version: nil)
               context.update(version: version, )
