@@ -112,18 +112,13 @@ module Twilio
       end
 
       def read_limits(limit = nil, page_size = nil)
-        page_limit = nil
-
-        unless limit.nil?
-          # If there is no user-specified page_size, pick the most network efficient size
+        unless limit.nil? || page_size
           page_size = limit
-          page_limit = (limit / page_size.to_f).ceil
         end
 
         {
           limit: limit || nil,
-          page_size: page_size || nil,
-          page_limit: page_limit
+          page_size: page_size || nil
         }
       end
 

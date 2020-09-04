@@ -21,6 +21,48 @@ describe 'Version Action Methods' do
     expect(actual).to_not eq(nil)
   end
 
+  describe 'stream' do
+    before(:each) do
+      @holodeck.mock(
+        Twilio::Response.new(
+          200,
+          '{
+            "next_page_uri": "/2010-04-01/Accounts/AC123/Messages.json?Page=1",
+            "messages": [{"body": "payload0"}, {"body": "payload1"}]
+          }'
+        )
+      )
+      @holodeck.mock(
+        Twilio::Response.new(
+          200,
+          '{
+            "next_page_uri": "/2010-04-01/Accounts/AC123/Messages.json?Page=2",
+            "messages": [{"body": "payload2"}, {"body": "payload3"}]
+          }'
+        )
+      )
+      @holodeck.mock(
+        Twilio::Response.new(
+          200,
+          '{
+            "next_page_uri": null,
+            "messages": [{"body": "payload4"}]
+          }'
+        )
+      )
+    end
+
+    it 'streams all results' do
+      actual = @client.messages.stream
+      expect(actual.count).to eq(5)
+    end
+
+    it 'limits results' do
+      actual = @client.messages.stream(limit: 3)
+      expect(actual.count).to eq(3)
+    end
+  end
+
   it 'receives create responses' do
     @holodeck.mock(
       Twilio::Response.new(
