@@ -40,12 +40,12 @@ class Holodeck
   ANY = Request.new(any: true)
 
   def initialize
-    @response = nil
+    @responses = []
     @requests = []
   end
 
   def mock(response)
-    @response = response
+    @responses << response
   end
 
   def request(host, port, method, url, params = {}, data = {}, headers = {}, auth = nil, _timeout = nil)
@@ -57,7 +57,7 @@ class Holodeck
       headers: headers,
       auth: auth
     )
-    @response
+    @responses.shift
   end
 
   def has_request?(request)
