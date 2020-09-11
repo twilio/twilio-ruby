@@ -135,3 +135,13 @@ end
   .queues('QQxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
   .members('CAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
   .update(url: 'http://myapp.com/deque', method: 'POST')
+
+
+################ LOOKUPS ###################
+
+@lookup = Twilio::REST::Lookups.new(@client)
+@phone = @lookup.phone_numbers('4159341234')
+@phone_instance = @phone.fetch(country_code: :us)
+
+@phone_instance.phone_number
+# => +14159341234
