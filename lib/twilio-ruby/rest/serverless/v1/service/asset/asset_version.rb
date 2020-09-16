@@ -21,7 +21,7 @@ module Twilio
               # @param [String] service_sid The SID of the Service that the Asset Version
               #   resource is associated with.
               # @param [String] asset_sid The SID of the Asset resource that is the parent of
-              #   the asset version.
+              #   the Asset Version.
               # @return [AssetVersionList] AssetVersionList
               def initialize(version, service_sid: nil, asset_sid: nil)
                 super(version)
@@ -214,7 +214,7 @@ module Twilio
               # @param [String] service_sid The SID of the Service that the Asset Version
               #   resource is associated with.
               # @param [String] asset_sid The SID of the Asset resource that is the parent of
-              #   the asset version.
+              #   the Asset Version.
               # @param [String] sid The SID of the Asset Version resource to fetch.
               # @return [AssetVersionInstance] AssetVersionInstance
               def initialize(version, payload, service_sid: nil, asset_sid: nil, sid: nil)
@@ -276,19 +276,19 @@ module Twilio
               end
 
               ##
-              # @return [String] The SID of the Asset resource that is the parent of the asset version
+              # @return [String] The SID of the Asset resource that is the parent of the Asset Version
               def asset_sid
                 @properties['asset_sid']
               end
 
               ##
-              # @return [String] The URL-friendly string by which the asset version can be referenced
+              # @return [String] The URL-friendly string by which the Asset Version can be referenced
               def path
                 @properties['path']
               end
 
               ##
-              # @return [asset_version.Visibility] The access control that determines how the asset version can be accessed
+              # @return [asset_version.Visibility] The access control that determines how the Asset Version can be accessed
               def visibility
                 @properties['visibility']
               end

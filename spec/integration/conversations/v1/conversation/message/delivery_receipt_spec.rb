@@ -31,6 +31,7 @@ describe 'DeliveryReceipt' do
       %q[
       {
           "sid": "DYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "message_sid": "IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "channel_message_sid": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -84,6 +85,7 @@ describe 'DeliveryReceipt' do
           "delivery_receipts": [
               {
                   "sid": "DYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "message_sid": "IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "channel_message_sid": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -96,6 +98,7 @@ describe 'DeliveryReceipt' do
               },
               {
                   "sid": "DYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "message_sid": "IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "channel_message_sid": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -108,6 +111,7 @@ describe 'DeliveryReceipt' do
               },
               {
                   "sid": "DYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "message_sid": "IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "channel_message_sid": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",

@@ -152,6 +152,29 @@ describe 'Sim' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives transfer_sim_to_another_account responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "sid": "HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "unique_name": null,
+          "status": "new",
+          "fleet_sid": "HFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "iccid": "iccid",
+          "date_created": "2015-07-30T20:00:00Z",
+          "date_updated": "2015-07-30T20:00:00Z",
+          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.supersim.v1.sims('HSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can read" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

@@ -140,7 +140,8 @@ module Twilio
             #   `break`, and `email`.
             # @param [Boolean] available Whether the Worker should be eligible to receive a
             #   Task when it occupies the Activity. A value of `true`, `1`, or `yes` specifies
-            #   the Activity is available. All other values specify that it is not.
+            #   the Activity is available. All other values specify that it is not. The value
+            #   cannot be changed after the Activity is created.
             # @return [ActivityInstance] Created ActivityInstance
             def create(friendly_name: nil, available: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'Available' => available, })

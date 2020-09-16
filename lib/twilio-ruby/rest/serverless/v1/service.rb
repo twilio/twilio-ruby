@@ -107,12 +107,12 @@ module Twilio
 
           ##
           # Create the ServiceInstance
-          # @param [String] unique_name An application-defined string that uniquely
-          #   identifies the Service resource. It can be used as an alternative to the `sid`
-          #   in the URL path to address the Service resource. This value must be 244
-          #   characters or less in length and be unique.
+          # @param [String] unique_name A user-defined string that uniquely identifies the
+          #   Service resource. It can be used as an alternative to the `sid` in the URL path
+          #   to address the Service resource. This value must be 50 characters or less in
+          #   length and be unique.
           # @param [String] friendly_name A descriptive string that you create to describe
-          #   the Service resource. It can be up to 255 characters long.
+          #   the Service resource. It can be a maximum of 255 characters.
           # @param [Boolean] include_credentials Whether to inject Account credentials into
           #   a function invocation context. The default value is `false`.
           # @param [Boolean] ui_editable Whether the Service's properties and subresources
@@ -212,9 +212,9 @@ module Twilio
           # @param [Boolean] include_credentials Whether to inject Account credentials into
           #   a function invocation context.
           # @param [String] friendly_name A descriptive string that you create to describe
-          #   the Service resource. It can be up to 255 characters long.
-          # @param [Boolean] ui_editable Whether the Service's properties and subresources
-          #   can be edited via the UI. The default value is `false`.
+          #   the Service resource. It can be a maximum of 255 characters.
+          # @param [Boolean] ui_editable Whether the Service resource's properties and
+          #   subresources can be edited via the UI. The default value is `false`.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(include_credentials: :unset, friendly_name: :unset, ui_editable: :unset)
             data = Twilio::Values.of({
@@ -376,7 +376,7 @@ module Twilio
           end
 
           ##
-          # @return [String] An application-defined string that uniquely identifies the Service resource
+          # @return [String] A user-defined string that uniquely identifies the Service resource
           def unique_name
             @properties['unique_name']
           end
@@ -388,7 +388,7 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] Whether the Service's properties and subresources can be edited via the UI
+          # @return [Boolean] Whether the Service resource's properties and subresources can be edited via the UI
           def ui_editable
             @properties['ui_editable']
           end
@@ -436,9 +436,9 @@ module Twilio
           # @param [Boolean] include_credentials Whether to inject Account credentials into
           #   a function invocation context.
           # @param [String] friendly_name A descriptive string that you create to describe
-          #   the Service resource. It can be up to 255 characters long.
-          # @param [Boolean] ui_editable Whether the Service's properties and subresources
-          #   can be edited via the UI. The default value is `false`.
+          #   the Service resource. It can be a maximum of 255 characters.
+          # @param [Boolean] ui_editable Whether the Service resource's properties and
+          #   subresources can be edited via the UI. The default value is `false`.
           # @return [ServiceInstance] Updated ServiceInstance
           def update(include_credentials: :unset, friendly_name: :unset, ui_editable: :unset)
             context.update(

@@ -30,7 +30,7 @@ module Twilio
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [sim.Status] status The status of the Sim resources to read. Can be
-          #   `new`, `active`, `inactive`, or `scheduled`.
+          #   `new`, `ready`, `active`, `inactive`, or `scheduled`.
           # @param [String] fleet The SID or unique name of the Fleet to which a list of
           #   Sims are assigned.
           # @param [String] iccid The
@@ -53,7 +53,7 @@ module Twilio
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [sim.Status] status The status of the Sim resources to read. Can be
-          #   `new`, `active`, `inactive`, or `scheduled`.
+          #   `new`, `ready`, `active`, `inactive`, or `scheduled`.
           # @param [String] fleet The SID or unique name of the Fleet to which a list of
           #   Sims are assigned.
           # @param [String] iccid The
@@ -93,7 +93,7 @@ module Twilio
           # Retrieve a single page of SimInstance records from the API.
           # Request is executed immediately.
           # @param [sim.Status] status The status of the Sim resources to read. Can be
-          #   `new`, `active`, `inactive`, or `scheduled`.
+          #   `new`, `ready`, `active`, `inactive`, or `scheduled`.
           # @param [String] fleet The SID or unique name of the Fleet to which a list of
           #   Sims are assigned.
           # @param [String] iccid The
@@ -201,7 +201,7 @@ module Twilio
           #   identifies the resource. It can be used in place of the resource's `sid` in the
           #   URL to address the resource.
           # @param [sim.StatusUpdate] status The new status of the resource. Can be:
-          #   `active` or `inactive`. See the [Super SIM Status
+          #   `ready`, `active`, or `inactive`. See the [Super SIM Status
           #   Values](https://www.twilio.com/docs/iot/supersim/api/sim-resource#status-values)
           #   for more info.
           # @param [String] fleet The SID or unique name of the Fleet to which the SIM
@@ -210,14 +210,19 @@ module Twilio
           #   after an asynchronous update has finished.
           # @param [String] callback_method The HTTP method we should use to call
           #   `callback_url`. Can be: `GET` or `POST` and the default is POST.
+          # @param [String] account_sid The SID of the Account to which the Sim resource
+          #   should belong. The Account SID can only be that of the requesting Account or
+          #   that of a Subaccount of the requesting Account. Only valid when the Sim
+          #   resource's status is new.
           # @return [SimInstance] Updated SimInstance
-          def update(unique_name: :unset, status: :unset, fleet: :unset, callback_url: :unset, callback_method: :unset)
+          def update(unique_name: :unset, status: :unset, fleet: :unset, callback_url: :unset, callback_method: :unset, account_sid: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'Status' => status,
                 'Fleet' => fleet,
                 'CallbackUrl' => callback_url,
                 'CallbackMethod' => callback_method,
+                'AccountSid' => account_sid,
             })
 
             payload = @version.update('POST', @uri, data: data)
@@ -348,7 +353,7 @@ module Twilio
           #   identifies the resource. It can be used in place of the resource's `sid` in the
           #   URL to address the resource.
           # @param [sim.StatusUpdate] status The new status of the resource. Can be:
-          #   `active` or `inactive`. See the [Super SIM Status
+          #   `ready`, `active`, or `inactive`. See the [Super SIM Status
           #   Values](https://www.twilio.com/docs/iot/supersim/api/sim-resource#status-values)
           #   for more info.
           # @param [String] fleet The SID or unique name of the Fleet to which the SIM
@@ -357,14 +362,19 @@ module Twilio
           #   after an asynchronous update has finished.
           # @param [String] callback_method The HTTP method we should use to call
           #   `callback_url`. Can be: `GET` or `POST` and the default is POST.
+          # @param [String] account_sid The SID of the Account to which the Sim resource
+          #   should belong. The Account SID can only be that of the requesting Account or
+          #   that of a Subaccount of the requesting Account. Only valid when the Sim
+          #   resource's status is new.
           # @return [SimInstance] Updated SimInstance
-          def update(unique_name: :unset, status: :unset, fleet: :unset, callback_url: :unset, callback_method: :unset)
+          def update(unique_name: :unset, status: :unset, fleet: :unset, callback_url: :unset, callback_method: :unset, account_sid: :unset)
             context.update(
                 unique_name: unique_name,
                 status: status,
                 fleet: fleet,
                 callback_url: callback_url,
                 callback_method: callback_method,
+                account_sid: account_sid,
             )
           end
 

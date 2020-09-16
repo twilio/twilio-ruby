@@ -85,7 +85,7 @@ module Twilio
                 # @param [Version] version Version that contains the resource
                 # @param [String] service_sid The SID of the Service to fetch the Function Version
                 #   content from.
-                # @param [String] function_sid The SID of the function that is the parent of the
+                # @param [String] function_sid The SID of the Function that is the parent of the
                 #   Function Version content to fetch.
                 # @param [String] sid The SID of the Function Version content to fetch.
                 # @return [FunctionVersionContentContext] FunctionVersionContentContext

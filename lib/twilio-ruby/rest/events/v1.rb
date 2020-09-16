@@ -15,8 +15,23 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @event_types = nil
           @sinks = nil
           @subscriptions = nil
+        end
+
+        ##
+        # @param [String] type The type
+        # @return [Twilio::REST::Events::V1::EventTypeContext] if type was passed.
+        # @return [Twilio::REST::Events::V1::EventTypeList]
+        def event_types(type=:unset)
+          if type.nil?
+            raise ArgumentError, 'type cannot be nil'
+          elsif type == :unset
+            @event_types ||= EventTypeList.new self
+          else
+            EventTypeContext.new(self, type)
+          end
         end
 
         ##

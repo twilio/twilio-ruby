@@ -164,8 +164,8 @@ module Twilio
             ##
             # Initialize the SupportingDocumentContext
             # @param [Version] version Version that contains the resource
-            # @param [String] sid The unique string that we created to identify the Supporting
-            #   Document resource.
+            # @param [String] sid The unique string created by Twilio to identify the
+            #   Supporting Document resource.
             # @return [SupportingDocumentContext] SupportingDocumentContext
             def initialize(version, sid)
               super(version)
@@ -203,6 +203,13 @@ module Twilio
             end
 
             ##
+            # Delete the SupportingDocumentInstance
+            # @return [Boolean] true if delete succeeds, false otherwise
+            def delete
+               @version.delete('DELETE', @uri)
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -222,8 +229,8 @@ module Twilio
             # Initialize the SupportingDocumentInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] sid The unique string that we created to identify the Supporting
-            #   Document resource.
+            # @param [String] sid The unique string created by Twilio to identify the
+            #   Supporting Document resource.
             # @return [SupportingDocumentInstance] SupportingDocumentInstance
             def initialize(version, payload, sid: nil)
               super(version)
@@ -334,6 +341,13 @@ module Twilio
             # @return [SupportingDocumentInstance] Updated SupportingDocumentInstance
             def update(friendly_name: :unset, attributes: :unset)
               context.update(friendly_name: friendly_name, attributes: attributes, )
+            end
+
+            ##
+            # Delete the SupportingDocumentInstance
+            # @return [Boolean] true if delete succeeds, false otherwise
+            def delete
+              context.delete
             end
 
             ##

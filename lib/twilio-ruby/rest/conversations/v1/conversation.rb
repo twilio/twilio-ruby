@@ -29,6 +29,9 @@ module Twilio
           # Create the ConversationInstance
           # @param [String] friendly_name The human-readable name of this conversation,
           #   limited to 256 characters. Optional.
+          # @param [String] unique_name An application-defined string that uniquely
+          #   identifies the resource. It can be used to address the resource in place of the
+          #   resource's `sid` in the URL.
           # @param [Time] date_created The date that this resource was created.
           # @param [Time] date_updated The date that this resource was last updated.
           # @param [String] messaging_service_sid The unique id of the [SMS
@@ -47,9 +50,10 @@ module Twilio
           # @param [conversation.WebhookEnabledType] x_twilio_webhook_enabled The
           #   X-Twilio-Webhook-Enabled HTTP request header
           # @return [ConversationInstance] Created ConversationInstance
-          def create(friendly_name: :unset, date_created: :unset, date_updated: :unset, messaging_service_sid: :unset, attributes: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset, x_twilio_webhook_enabled: :unset)
+          def create(friendly_name: :unset, unique_name: :unset, date_created: :unset, date_updated: :unset, messaging_service_sid: :unset, attributes: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset, x_twilio_webhook_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
+                'UniqueName' => unique_name,
                 'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                 'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                 'MessagingServiceSid' => messaging_service_sid,
@@ -190,7 +194,7 @@ module Twilio
           # Initialize the ConversationContext
           # @param [Version] version Version that contains the resource
           # @param [String] sid A 34 character string that uniquely identifies this
-          #   resource.
+          #   resource. Can also be the `unique_name` of the Conversation.
           # @return [ConversationContext] ConversationContext
           def initialize(version, sid)
             super(version)
@@ -342,7 +346,7 @@ module Twilio
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
           # @param [String] sid A 34 character string that uniquely identifies this
-          #   resource.
+          #   resource. Can also be the `unique_name` of the Conversation.
           # @return [ConversationInstance] ConversationInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -354,6 +358,7 @@ module Twilio
                 'messaging_service_sid' => payload['messaging_service_sid'],
                 'sid' => payload['sid'],
                 'friendly_name' => payload['friendly_name'],
+                'unique_name' => payload['unique_name'],
                 'attributes' => payload['attributes'],
                 'state' => payload['state'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
@@ -410,6 +415,12 @@ module Twilio
           end
 
           ##
+          # @return [String] An application-defined string that uniquely identifies the resource
+          def unique_name
+            @properties['unique_name']
+          end
+
+          ##
           # @return [String] An optional string metadata field you can use to store any data you wish.
           def attributes
             @properties['attributes']
@@ -446,7 +457,7 @@ module Twilio
           end
 
           ##
-          # @return [String] Absolute URLs to access the Participants of this Conversation.
+          # @return [String] Absolute URLs to access the Participants, Messages and Webhooks of this Conversation.
           def links
             @properties['links']
           end

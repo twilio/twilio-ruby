@@ -111,11 +111,11 @@ module Twilio
             ##
             # Create the BuildInstance
             # @param [String] asset_versions The list of Asset Version resource SIDs to
-            #   include in the build.
-            # @param [String] function_versions The list of the Variable resource SIDs to
-            #   include in the build.
+            #   include in the Build.
+            # @param [String] function_versions The list of the Function Version resource SIDs
+            #   to include in the Build.
             # @param [String] dependencies A list of objects that describe the Dependencies
-            #   included in the build. Each object contains the `name` and `version` of the
+            #   included in the Build. Each object contains the `name` and `version` of the
             #   dependency.
             # @return [BuildInstance] Created BuildInstance
             def create(asset_versions: :unset, function_versions: :unset, dependencies: :unset)
@@ -280,25 +280,25 @@ module Twilio
             end
 
             ##
-            # @return [build.Status] The status of the build
+            # @return [build.Status] The status of the Build
             def status
               @properties['status']
             end
 
             ##
-            # @return [Hash] The list of Asset Version resource SIDs that are included in the build
+            # @return [Hash] The list of Asset Version resource SIDs that are included in the Build
             def asset_versions
               @properties['asset_versions']
             end
 
             ##
-            # @return [Hash] The list of Function Version resource SIDs that are included in the build
+            # @return [Hash] The list of Function Version resource SIDs that are included in the Build
             def function_versions
               @properties['function_versions']
             end
 
             ##
-            # @return [Hash] A list of objects that describe the Dependencies included in the build
+            # @return [Hash] A list of objects that describe the Dependencies included in the Build
             def dependencies
               @properties['dependencies']
             end

@@ -20,8 +20,8 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the Service that the Function Version
               #   resource is associated with.
-              # @param [String] function_sid The SID of the function that is the parent of the
-              #   function version.
+              # @param [String] function_sid The SID of the Function resource that is the parent
+              #   of the Function Version resource.
               # @return [FunctionVersionList] FunctionVersionList
               def initialize(version, service_sid: nil, function_sid: nil)
                 super(version)
@@ -229,8 +229,8 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the Service that the Function Version
               #   resource is associated with.
-              # @param [String] function_sid The SID of the function that is the parent of the
-              #   function version.
+              # @param [String] function_sid The SID of the Function resource that is the parent
+              #   of the Function Version resource.
               # @param [String] sid The SID of the Function Version resource to fetch.
               # @return [FunctionVersionInstance] FunctionVersionInstance
               def initialize(version, payload, service_sid: nil, function_sid: nil, sid: nil)
@@ -293,19 +293,19 @@ module Twilio
               end
 
               ##
-              # @return [String] The SID of the function that is the parent of the function version
+              # @return [String] The SID of the Function resource that is the parent of the Function Version resource
               def function_sid
                 @properties['function_sid']
               end
 
               ##
-              # @return [String] The URL-friendly string by which the function version can be referenced
+              # @return [String] The URL-friendly string by which the Function Version resource can be referenced
               def path
                 @properties['path']
               end
 
               ##
-              # @return [function_version.Visibility] The access control that determines how the function version can be accessed
+              # @return [function_version.Visibility] The access control that determines how the Function Version resource can be accessed
               def visibility
                 @properties['visibility']
               end

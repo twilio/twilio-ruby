@@ -20,7 +20,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the Service that the Variable resource is
               #   associated with.
-              # @param [String] environment_sid The SID of the environment in which the variable
+              # @param [String] environment_sid The SID of the Environment in which the Variable
               #   exists.
               # @return [VariableList] VariableList
               def initialize(version, service_sid: nil, environment_sid: nil)
@@ -114,9 +114,9 @@ module Twilio
               ##
               # Create the VariableInstance
               # @param [String] key A string by which the Variable resource can be referenced.
-              #   Must be less than 128 characters long.
-              # @param [String] value A string that contains the actual value of the variable.
-              #   Must have less than 450 bytes.
+              #   It can be a maximum of 128 characters.
+              # @param [String] value A string that contains the actual value of the Variable.
+              #   It can be a maximum of 450 bytes in size.
               # @return [VariableInstance] Created VariableInstance
               def create(key: nil, value: nil)
                 data = Twilio::Values.of({'Key' => key, 'Value' => value, })
@@ -182,7 +182,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the Service to fetch the Variable
               #   resource from.
-              # @param [String] environment_sid The SID of the environment with the Variable
+              # @param [String] environment_sid The SID of the Environment with the Variable
               #   resource to fetch.
               # @param [String] sid The SID of the Variable resource to fetch.
               # @return [VariableContext] VariableContext
@@ -212,9 +212,9 @@ module Twilio
               ##
               # Update the VariableInstance
               # @param [String] key A string by which the Variable resource can be referenced.
-              #   Must be less than 128 characters long.
-              # @param [String] value A string that contains the actual value of the variable.
-              #   Must have less than 450 bytes.
+              #   It can be a maximum of 128 characters.
+              # @param [String] value A string that contains the actual value of the Variable.
+              #   It can be a maximum of 450 bytes in size.
               # @return [VariableInstance] Updated VariableInstance
               def update(key: :unset, value: :unset)
                 data = Twilio::Values.of({'Key' => key, 'Value' => value, })
@@ -261,7 +261,7 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the Service that the Variable resource is
               #   associated with.
-              # @param [String] environment_sid The SID of the environment in which the variable
+              # @param [String] environment_sid The SID of the Environment in which the Variable
               #   exists.
               # @param [String] sid The SID of the Variable resource to fetch.
               # @return [VariableInstance] VariableInstance
@@ -325,7 +325,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The SID of the environment in which the variable exists
+              # @return [String] The SID of the Environment in which the Variable exists
               def environment_sid
                 @properties['environment_sid']
               end
@@ -337,7 +337,7 @@ module Twilio
               end
 
               ##
-              # @return [String] A string that contains the actual value of the variable
+              # @return [String] A string that contains the actual value of the Variable
               def value
                 @properties['value']
               end
@@ -370,9 +370,9 @@ module Twilio
               ##
               # Update the VariableInstance
               # @param [String] key A string by which the Variable resource can be referenced.
-              #   Must be less than 128 characters long.
-              # @param [String] value A string that contains the actual value of the variable.
-              #   Must have less than 450 bytes.
+              #   It can be a maximum of 128 characters.
+              # @param [String] value A string that contains the actual value of the Variable.
+              #   It can be a maximum of 450 bytes in size.
               # @return [VariableInstance] Updated VariableInstance
               def update(key: :unset, value: :unset)
                 context.update(key: key, value: value, )

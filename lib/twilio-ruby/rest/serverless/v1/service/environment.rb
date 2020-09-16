@@ -110,12 +110,10 @@ module Twilio
 
             ##
             # Create the EnvironmentInstance
-            # @param [String] unique_name An application-defined string that uniquely
-            #   identifies the Environment resource. It can be used as an alternative to the
-            #   `sid` in the URL path to address the Environment resource. This value must have
-            #   fewer than 256 characters.
+            # @param [String] unique_name A user-defined string that uniquely identifies the
+            #   Environment resource. It can be a maximum of 100 characters.
             # @param [String] domain_suffix A URL-friendly name that represents the
-            #   environment and forms part of the domain name. Must have fewer than 32
+            #   environment and forms part of the domain name. It can be a maximum of 16
             #   characters.
             # @return [EnvironmentInstance] Created EnvironmentInstance
             def create(unique_name: nil, domain_suffix: :unset)
@@ -359,7 +357,7 @@ module Twilio
             end
 
             ##
-            # @return [String] An application-defined string that uniquely identifies the Environment resource
+            # @return [String] A user-defined string that uniquely identifies the Environment resource
             def unique_name
               @properties['unique_name']
             end
@@ -371,7 +369,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The base domain name for all Functions and Assets deployed in the environment
+            # @return [String] The base domain name for all Functions and Assets deployed in the Environment
             def domain_name
               @properties['domain_name']
             end
@@ -395,7 +393,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The URLs of the environment's nested resources
+            # @return [String] The URLs of the Environment resource's nested resources
             def links
               @properties['links']
             end

@@ -29,6 +29,14 @@ module Twilio
       end
 
       ##
+      # @param [String] type The type
+      # @return [Twilio::REST::Events::V1::EventTypeInstance] if type was passed.
+      # @return [Twilio::REST::Events::V1::EventTypeList]
+      def event_types(type=:unset)
+        self.v1.event_types(type)
+      end
+
+      ##
       # @param [String] sid A 34 character string that uniquely identifies this Sink.
       # @return [Twilio::REST::Events::V1::SinkInstance] if sid was passed.
       # @return [Twilio::REST::Events::V1::SinkList]

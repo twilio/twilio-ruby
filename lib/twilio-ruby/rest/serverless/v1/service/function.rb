@@ -111,7 +111,7 @@ module Twilio
             ##
             # Create the FunctionInstance
             # @param [String] friendly_name A descriptive string that you create to describe
-            #   the Function resource. It can be up to 255 characters long.
+            #   the Function resource. It can be a maximum of 255 characters.
             # @return [FunctionInstance] Created FunctionInstance
             def create(friendly_name: nil)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -199,7 +199,7 @@ module Twilio
             ##
             # Update the FunctionInstance
             # @param [String] friendly_name A descriptive string that you create to describe
-            #   the Function resource. It can be up to 255 characters long.
+            #   the Function resource. It can be a maximum of 255 characters.
             # @return [FunctionInstance] Updated FunctionInstance
             def update(friendly_name: nil)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -331,7 +331,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The URLs of nested resources of the function
+            # @return [String] The URLs of nested resources of the Function resource
             def links
               @properties['links']
             end
@@ -353,7 +353,7 @@ module Twilio
             ##
             # Update the FunctionInstance
             # @param [String] friendly_name A descriptive string that you create to describe
-            #   the Function resource. It can be up to 255 characters long.
+            #   the Function resource. It can be a maximum of 255 characters.
             # @return [FunctionInstance] Updated FunctionInstance
             def update(friendly_name: nil)
               context.update(friendly_name: friendly_name, )

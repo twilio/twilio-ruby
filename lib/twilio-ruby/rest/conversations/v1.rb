@@ -15,13 +15,25 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @configuration = nil
           @conversations = nil
           @webhooks = nil
+          @credentials = nil
+          @roles = nil
+          @services = nil
+          @notifications = nil
+          @users = nil
+        end
+
+        ##
+        # @return [Twilio::REST::Conversations::V1::ConfigurationContext]
+        def configuration
+          @configuration ||= ConfigurationContext.new self
         end
 
         ##
         # @param [String] sid A 34 character string that uniquely identifies this
-        #   resource.
+        #   resource. Can also be the `unique_name` of the Conversation.
         # @return [Twilio::REST::Conversations::V1::ConversationContext] if sid was passed.
         # @return [Twilio::REST::Conversations::V1::ConversationList]
         def conversations(sid=:unset)
@@ -38,6 +50,81 @@ module Twilio
         # @return [Twilio::REST::Conversations::V1::WebhookContext]
         def webhooks
           @webhooks ||= WebhookContext.new self
+        end
+
+        ##
+        # @param [String] sid A 34 character string that uniquely identifies this
+        #   resource.
+        # @return [Twilio::REST::Conversations::V1::CredentialContext] if sid was passed.
+        # @return [Twilio::REST::Conversations::V1::CredentialList]
+        def credentials(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @credentials ||= CredentialList.new self
+          else
+            CredentialContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The SID of the Role resource to fetch.
+        # @return [Twilio::REST::Conversations::V1::RoleContext] if sid was passed.
+        # @return [Twilio::REST::Conversations::V1::RoleList]
+        def roles(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @roles ||= RoleList.new self
+          else
+            RoleContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid A 34 character string that uniquely identifies this
+        #   resource.
+        # @return [Twilio::REST::Conversations::V1::ServiceContext] if sid was passed.
+        # @return [Twilio::REST::Conversations::V1::ServiceList]
+        def services(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @services ||= ServiceList.new self
+          else
+            ServiceContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] chat_service_sid The SID of the [Chat
+        #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the
+        #   Configuration applies to.
+        # @return [Twilio::REST::Conversations::V1::NotificationContext] if chat_service_sid was passed.
+        # @return [Twilio::REST::Conversations::V1::NotificationList]
+        def notifications(chat_service_sid=:unset)
+          if chat_service_sid.nil?
+            raise ArgumentError, 'chat_service_sid cannot be nil'
+          elsif chat_service_sid == :unset
+            @notifications ||= NotificationList.new self
+          else
+            NotificationContext.new(self, chat_service_sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The SID of the User resource to fetch. This value can be
+        #   either the `sid` or the `identity` of the User resource to fetch.
+        # @return [Twilio::REST::Conversations::V1::UserContext] if sid was passed.
+        # @return [Twilio::REST::Conversations::V1::UserList]
+        def users(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @users ||= UserList.new self
+          else
+            UserContext.new(self, sid)
+          end
         end
 
         ##

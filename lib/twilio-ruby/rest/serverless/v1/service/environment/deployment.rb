@@ -20,7 +20,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the Service that the Deployment resource
               #   is associated with.
-              # @param [String] environment_sid The SID of the environment for the deployment.
+              # @param [String] environment_sid The SID of the Environment for the Deployment.
               # @return [DeploymentList] DeploymentList
               def initialize(version, service_sid: nil, environment_sid: nil)
                 super(version)
@@ -112,7 +112,7 @@ module Twilio
 
               ##
               # Create the DeploymentInstance
-              # @param [String] build_sid The SID of the build for the deployment.
+              # @param [String] build_sid The SID of the Build for the Deployment.
               # @return [DeploymentInstance] Created DeploymentInstance
               def create(build_sid: :unset)
                 data = Twilio::Values.of({'BuildSid' => build_sid, })
@@ -178,9 +178,9 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the Service to fetch the Deployment
               #   resource from.
-              # @param [String] environment_sid The SID of the environment used by the
+              # @param [String] environment_sid The SID of the Environment used by the
               #   Deployment to fetch.
-              # @param [String] sid The SID of the Deployment resource to fetch.
+              # @param [String] sid The SID that identifies the Deployment resource to fetch.
               # @return [DeploymentContext] DeploymentContext
               def initialize(version, service_sid, environment_sid, sid)
                 super(version)
@@ -229,8 +229,8 @@ module Twilio
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the Service that the Deployment resource
               #   is associated with.
-              # @param [String] environment_sid The SID of the environment for the deployment.
-              # @param [String] sid The SID of the Deployment resource to fetch.
+              # @param [String] environment_sid The SID of the Environment for the Deployment.
+              # @param [String] sid The SID that identifies the Deployment resource to fetch.
               # @return [DeploymentInstance] DeploymentInstance
               def initialize(version, payload, service_sid: nil, environment_sid: nil, sid: nil)
                 super(version)
@@ -291,13 +291,13 @@ module Twilio
               end
 
               ##
-              # @return [String] The SID of the environment for the deployment
+              # @return [String] The SID of the Environment for the Deployment
               def environment_sid
                 @properties['environment_sid']
               end
 
               ##
-              # @return [String] The SID of the build for the deployment
+              # @return [String] The SID of the Build for the deployment
               def build_sid
                 @properties['build_sid']
               end

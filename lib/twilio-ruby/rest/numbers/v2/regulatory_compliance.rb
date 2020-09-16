@@ -95,8 +95,8 @@ module Twilio
 
           ##
           # Access the supporting_documents
-          # @param [String] sid The unique string that we created to identify the Supporting
-          #   Document resource.
+          # @param [String] sid The unique string created by Twilio to identify the
+          #   Supporting Document resource.
           # @return [SupportingDocumentList]
           # @return [SupportingDocumentContext] if sid was passed.
           def supporting_documents(sid=:unset)
