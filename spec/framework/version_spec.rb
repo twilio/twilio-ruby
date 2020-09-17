@@ -21,6 +21,17 @@ describe 'Version Action Methods' do
     expect(actual).to_not eq(nil)
   end
 
+  it 'handles redirect fetch responses' do
+    @holodeck.mock(
+      Twilio::Response.new(
+        307,
+        '{"phone_number": "+15108675310"}'
+      )
+    )
+    actual = @client.lookups.v1.phone_numbers('+15017122661').fetch
+    expect(actual).to_not eq(nil)
+  end
+
   describe 'stream' do
     before(:each) do
       @holodeck.mock(
