@@ -31,7 +31,9 @@ module Twilio
             ##
             # Create the PhoneNumberInstance
             # @param [String] sid The SID of a Twilio
-            #   [IncomingPhoneNumber](https://www.twilio.com/docs/phone-numbers/api/incomingphonenumber-resource) resource that represents the Twilio Number you would like to assign to your Proxy Service.
+            #   [IncomingPhoneNumber](https://www.twilio.com/docs/phone-numbers/api/incomingphonenumber-resource)
+            #   resource that represents the Twilio Number you would like to assign to your
+            #   Proxy Service.
             # @param [String] phone_number The phone number in
             #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format.  E.164 phone
             #   numbers consist of a + followed by the country code and subscriber number

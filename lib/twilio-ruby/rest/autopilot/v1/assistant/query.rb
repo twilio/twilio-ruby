@@ -34,7 +34,9 @@ module Twilio
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [String] language The [ISO
-            #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) string that specifies the language used by the Query resources to read. For example: `en-US`.
+            #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+            #   string that specifies the language used by the Query resources to read. For
+            #   example: `en-US`.
             # @param [String] model_build The SID or unique name of the [Model
             #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @param [String] status The status of the resources to read. Can be:
@@ -64,7 +66,9 @@ module Twilio
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [String] language The [ISO
-            #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) string that specifies the language used by the Query resources to read. For example: `en-US`.
+            #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+            #   string that specifies the language used by the Query resources to read. For
+            #   example: `en-US`.
             # @param [String] model_build The SID or unique name of the [Model
             #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @param [String] status The status of the resources to read. Can be:
@@ -110,7 +114,9 @@ module Twilio
             # Retrieve a single page of QueryInstance records from the API.
             # Request is executed immediately.
             # @param [String] language The [ISO
-            #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) string that specifies the language used by the Query resources to read. For example: `en-US`.
+            #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+            #   string that specifies the language used by the Query resources to read. For
+            #   example: `en-US`.
             # @param [String] model_build The SID or unique name of the [Model
             #   Build](https://www.twilio.com/docs/autopilot/api/model-build) to be queried.
             # @param [String] status The status of the resources to read. Can be:
@@ -153,7 +159,8 @@ module Twilio
             ##
             # Create the QueryInstance
             # @param [String] language The [ISO
-            #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) string that specifies the language used for the new query. For example: `en-US`.
+            #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+            #   string that specifies the language used for the new query. For example: `en-US`.
             # @param [String] query The end-user's natural language input. It can be up to
             #   2048 characters long.
             # @param [String] tasks The list of tasks to limit the new query to. Tasks are

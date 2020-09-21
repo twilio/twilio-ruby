@@ -76,7 +76,9 @@ module Twilio
             #   APNS `Payload` item, therefore the `aps` key must be used to change standard
             #   attributes. Adds custom key-value pairs to the root of the dictionary. See the
             #   [APNS
-            #   documentation](https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CommunicatingwithAPNs.html) for more details. We reserve keys that start with `twi_` for future use. Custom keys that start with `twi_` are not allowed.
+            #   documentation](https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CommunicatingwithAPNs.html)
+            #   for more details. We reserve keys that start with `twi_` for future use. Custom
+            #   keys that start with `twi_` are not allowed.
             # @param [Hash] gcm The GCM-specific payload that overrides corresponding
             #   attributes in the generic payload for GCM Bindings.  This property maps to the
             #   root JSON dictionary. See the [GCM
@@ -98,7 +100,13 @@ module Twilio
             # @param [Hash] fcm The FCM-specific payload that overrides corresponding
             #   attributes in the generic payload for FCM Bindings. This property maps to the
             #   root JSON dictionary. See the [FCM
-            #   documentation](https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream) for more details. Target parameters `to`, `registration_ids`, `condition`, and `notification_key` are not allowed in this parameter. We reserve keys that start with `twi_` for future use. Custom keys that start with `twi_` are not allowed. FCM also [reserves certain keys](https://firebase.google.com/docs/cloud-messaging/http-server-ref), which cannot be used in that channel.
+            #   documentation](https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream)
+            #   for more details. Target parameters `to`, `registration_ids`, `condition`, and
+            #   `notification_key` are not allowed in this parameter. We reserve keys that start
+            #   with `twi_` for future use. Custom keys that start with `twi_` are not allowed.
+            #   FCM also [reserves certain
+            #   keys](https://firebase.google.com/docs/cloud-messaging/http-server-ref), which
+            #   cannot be used in that channel.
             # @param [String] segment The Segment resource is deprecated. Use the `tag`
             #   parameter, instead.
             # @param [Hash] alexa Deprecated.

@@ -1,6 +1,21 @@
 twilio-ruby changelog
 =====================
 
+[2020-09-21] Version 5.40.3
+---------------------------
+**Library - Fix**
+- [PR #534](https://github.com/twilio/twilio-ruby/pull/534): allow API redirect responses. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Accounts**
+- Add Auth Token rotation API
+
+**Conversations**
+- Change resource path for Webhook Configuration
+
+**Events**
+- Schemas API get all Schemas names and versions
+
+
 [2020-09-16] Version 5.40.2
 ---------------------------
 **Library - Fix**

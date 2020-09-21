@@ -194,6 +194,21 @@ module Twilio
           end
 
           ##
+          # Update the SubscriptionInstance
+          # @param [String] description A human readable description for the Subscription.
+          # @param [String] sink_sid The SID of the sink that events selected by this
+          #   subscription should be sent to. Sink must be active for the subscription to be
+          #   created.
+          # @return [SubscriptionInstance] Updated SubscriptionInstance
+          def update(description: :unset, sink_sid: :unset)
+            data = Twilio::Values.of({'Description' => description, 'SinkSid' => sink_sid, })
+
+            payload = @version.update('POST', @uri, data: data)
+
+            SubscriptionInstance.new(@version, payload, sid: @solution[:sid], )
+          end
+
+          ##
           # Delete the SubscriptionInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
@@ -203,14 +218,8 @@ module Twilio
           ##
           # Access the subscribed_events
           # @return [SubscribedEventList]
-          # @return [SubscribedEventContext] if type was passed.
-          def subscribed_events(type=:unset)
-            raise ArgumentError, 'type cannot be nil' if type.nil?
-
-            if type != :unset
-              return SubscribedEventContext.new(@version, @solution[:sid], type, )
-            end
-
+          # @return [SubscribedEventContext]
+          def subscribed_events
             unless @subscribed_events
               @subscribed_events = SubscribedEventList.new(@version, subscription_sid: @solution[:sid], )
             end
@@ -327,6 +336,17 @@ module Twilio
           # @return [SubscriptionInstance] Fetched SubscriptionInstance
           def fetch
             context.fetch
+          end
+
+          ##
+          # Update the SubscriptionInstance
+          # @param [String] description A human readable description for the Subscription.
+          # @param [String] sink_sid The SID of the sink that events selected by this
+          #   subscription should be sent to. Sink must be active for the subscription to be
+          #   created.
+          # @return [SubscriptionInstance] Updated SubscriptionInstance
+          def update(description: :unset, sink_sid: :unset)
+            context.update(description: description, sink_sid: sink_sid, )
           end
 
           ##

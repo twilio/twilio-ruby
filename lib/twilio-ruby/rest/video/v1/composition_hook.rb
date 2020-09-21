@@ -165,7 +165,8 @@ module Twilio
           #   account. When `false`, the composition hook will never be triggered.
           # @param [Hash] video_layout An object that describes the video layout of the
           #   composition hook in terms of regions. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   for more info.
           # @param [String] audio_sources An array of track names from the same group room
           #   to merge into the compositions created by the composition hook. Can include zero
           #   or more track names. A composition triggered by the composition hook includes
@@ -199,7 +200,8 @@ module Twilio
           #   Note that the `resolution` imposes an aspect ratio to the resulting composition.
           #   When the original video tracks are constrained by the aspect ratio, they are
           #   scaled to fit. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   for more info.
           # @param [composition_hook.Format] format The container format of the media files
           #   used by the compositions created by the composition hook. Can be: `mp4` or
           #   `webm` and the default is `webm`. If `mp4` or `webm`, `audio_sources` must have
@@ -217,7 +219,8 @@ module Twilio
           #   and no Participant joins for a while as well as if all the Participants leave
           #   the room and join later, because those gaps will be removed. See [Specifying
           #   Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   for more info.
           # @return [CompositionHookInstance] Created CompositionHookInstance
           def create(friendly_name: nil, enabled: :unset, video_layout: :unset, audio_sources: :unset, audio_sources_excluded: :unset, resolution: :unset, format: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset)
             data = Twilio::Values.of({
@@ -318,7 +321,8 @@ module Twilio
           #   account. When `false`, the composition hook never triggers.
           # @param [Hash] video_layout A JSON object that describes the video layout of the
           #   composition hook in terms of regions. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   for more info.
           # @param [String] audio_sources An array of track names from the same group room
           #   to merge into the compositions created by the composition hook. Can include zero
           #   or more track names. A composition triggered by the composition hook includes
@@ -340,7 +344,8 @@ module Twilio
           #   and no Participant joins for a while as well as if all the Participants leave
           #   the room and join later, because those gaps will be removed. See [Specifying
           #   Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   for more info.
           # @param [composition_hook.Format] format The container format of the media files
           #   used by the compositions created by the composition hook. Can be: `mp4` or
           #   `webm` and the default is `webm`. If `mp4` or `webm`, `audio_sources` must have
@@ -364,7 +369,8 @@ module Twilio
           #   Note that the `resolution` imposes an aspect ratio to the resulting composition.
           #   When the original video tracks are constrained by the aspect ratio, they are
           #   scaled to fit. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   for more info.
           # @param [String] status_callback The URL we should call using the
           #   `status_callback_method` to send status information to your application on every
           #   composition event. If not provided, status callback events will not be
@@ -567,7 +573,8 @@ module Twilio
           #   account. When `false`, the composition hook never triggers.
           # @param [Hash] video_layout A JSON object that describes the video layout of the
           #   composition hook in terms of regions. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   for more info.
           # @param [String] audio_sources An array of track names from the same group room
           #   to merge into the compositions created by the composition hook. Can include zero
           #   or more track names. A composition triggered by the composition hook includes
@@ -589,7 +596,8 @@ module Twilio
           #   and no Participant joins for a while as well as if all the Participants leave
           #   the room and join later, because those gaps will be removed. See [Specifying
           #   Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   for more info.
           # @param [composition_hook.Format] format The container format of the media files
           #   used by the compositions created by the composition hook. Can be: `mp4` or
           #   `webm` and the default is `webm`. If `mp4` or `webm`, `audio_sources` must have
@@ -613,7 +621,8 @@ module Twilio
           #   Note that the `resolution` imposes an aspect ratio to the resulting composition.
           #   When the original video tracks are constrained by the aspect ratio, they are
           #   scaled to fit. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   for more info.
           # @param [String] status_callback The URL we should call using the
           #   `status_callback_method` to send status information to your application on every
           #   composition event. If not provided, status callback events will not be

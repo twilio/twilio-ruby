@@ -17,9 +17,9 @@ module Twilio
             ##
             # Initialize the BindingList
             # @param [Version] version Version that contains the resource
-            # @param [String] chat_service_sid The SID of the [Chat
-            #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the Binding
-            #   resource is associated with.
+            # @param [String] chat_service_sid The SID of the [Conversation
+            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+            #   Binding resource is associated with.
             # @return [BindingList] BindingList
             def initialize(version, chat_service_sid: nil)
               super(version)
@@ -38,10 +38,11 @@ module Twilio
             #   notification
             #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
             #   for more info.
-            # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
-            #   of the resources to read. See [access
-            #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
+            # @param [String] identity The identity of a [Conversation
+            #   User](https://www.twilio.com/docs/conversations/api/user-resource) this binding
+            #   belongs to. See [access
+            #   tokens](https://www.twilio.com/docs/conversations/create-tokens) for more
+            #   details.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -67,10 +68,11 @@ module Twilio
             #   notification
             #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
             #   for more info.
-            # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
-            #   of the resources to read. See [access
-            #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
+            # @param [String] identity The identity of a [Conversation
+            #   User](https://www.twilio.com/docs/conversations/api/user-resource) this binding
+            #   belongs to. See [access
+            #   tokens](https://www.twilio.com/docs/conversations/create-tokens) for more
+            #   details.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -108,10 +110,11 @@ module Twilio
             #   notification
             #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
             #   for more info.
-            # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
-            #   of the resources to read. See [access
-            #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
+            # @param [String] identity The identity of a [Conversation
+            #   User](https://www.twilio.com/docs/conversations/api/user-resource) this binding
+            #   belongs to. See [access
+            #   tokens](https://www.twilio.com/docs/conversations/create-tokens) for more
+            #   details.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -187,9 +190,9 @@ module Twilio
             ##
             # Initialize the BindingContext
             # @param [Version] version Version that contains the resource
-            # @param [String] chat_service_sid The SID of the [Chat
-            #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the Binding
-            #   resource is associated with.
+            # @param [String] chat_service_sid The SID of the [Conversation
+            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+            #   Binding resource is associated with.
             # @param [String] sid A 34 character string that uniquely identifies this
             #   resource.
             # @return [BindingContext] BindingContext
@@ -244,9 +247,9 @@ module Twilio
             # Initialize the BindingInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] chat_service_sid The SID of the [Chat
-            #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the Binding
-            #   resource is associated with.
+            # @param [String] chat_service_sid The SID of the [Conversation
+            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+            #   Binding resource is associated with.
             # @param [String] sid A 34 character string that uniquely identifies this
             #   resource.
             # @return [BindingInstance] BindingInstance
@@ -291,13 +294,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique id of the Account responsible for this binding.
+            # @return [String] The unique ID of the Account responsible for this binding.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The SID of the Chat Service that the resource is associated with.
+            # @return [String] The SID of the Conversation Service that the resource is associated with.
             def chat_service_sid
               @properties['chat_service_sid']
             end
@@ -327,7 +330,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The string that identifies the resource's User.
+            # @return [String] The identity of Conversation User associated with this binding.
             def identity
               @properties['identity']
             end
@@ -339,7 +342,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The Chat message types the binding is subscribed to.
+            # @return [String] The Conversation message types the binding is subscribed to.
             def message_types
               @properties['message_types']
             end

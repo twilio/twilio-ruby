@@ -81,7 +81,14 @@ module Twilio
             # @param [String] from A Twilio phone number in
             #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, an [alphanumeric
             #   sender
-            #   ID](https://www.twilio.com/docs/sms/send-messages#use-an-alphanumeric-sender-id), or a [Channel Endpoint address](https://www.twilio.com/docs/sms/channels#channel-addresses) that is enabled for the type of message you want to send. Phone numbers or [short codes](https://www.twilio.com/docs/sms/api/short-code) purchased from Twilio also work here. You cannot, for example, spoof messages from a private cell phone number. If you are using `messaging_service_sid`, this parameter must be empty.
+            #   ID](https://www.twilio.com/docs/sms/send-messages#use-an-alphanumeric-sender-id),
+            #   or a [Channel Endpoint
+            #   address](https://www.twilio.com/docs/sms/channels#channel-addresses) that is
+            #   enabled for the type of message you want to send. Phone numbers or [short
+            #   codes](https://www.twilio.com/docs/sms/api/short-code) purchased from Twilio
+            #   also work here. You cannot, for example, spoof messages from a private cell
+            #   phone number. If you are using `messaging_service_sid`, this parameter must be
+            #   empty.
             # @param [String] messaging_service_sid The SID of the [Messaging
             #   Service](https://www.twilio.com/docs/sms/services#send-a-message-with-copilot)
             #   you want to associate with the Message. Set this parameter to use the [Messaging

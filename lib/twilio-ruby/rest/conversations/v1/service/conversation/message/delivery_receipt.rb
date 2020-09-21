@@ -19,13 +19,15 @@ module Twilio
                 ##
                 # Initialize the DeliveryReceiptList
                 # @param [Version] version Version that contains the resource
-                # @param [String] chat_service_sid The SID of the [Chat
-                #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the Message
-                #   resource is associated with.
-                # @param [String] conversation_sid The unique id of the
-                #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for this message.
-                # @param [String] message_sid The sid of the message within a
-                #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) the delivery receipt belongs to
+                # @param [String] chat_service_sid The SID of the [Conversation
+                #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+                #   Message resource is associated with.
+                # @param [String] conversation_sid The unique ID of the
+                #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+                #   for this message.
+                # @param [String] message_sid The SID of the message within a
+                #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+                #   the delivery receipt belongs to
                 # @return [DeliveryReceiptList] DeliveryReceiptList
                 def initialize(version, chat_service_sid: nil, conversation_sid: nil, message_sid: nil)
                   super(version)
@@ -169,13 +171,15 @@ module Twilio
                 ##
                 # Initialize the DeliveryReceiptContext
                 # @param [Version] version Version that contains the resource
-                # @param [String] chat_service_sid The SID of the [Chat
-                #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the Message
-                #   resource is associated with.
-                # @param [String] conversation_sid The unique id of the
-                #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for this message.
-                # @param [String] message_sid The sid of the message within a
-                #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) the delivery receipt belongs to.
+                # @param [String] chat_service_sid The SID of the [Conversation
+                #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+                #   Message resource is associated with.
+                # @param [String] conversation_sid The unique ID of the
+                #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+                #   for this message.
+                # @param [String] message_sid The SID of the message within a
+                #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+                #   the delivery receipt belongs to.
                 # @param [String] sid A 34 character string that uniquely identifies this
                 #   resource.
                 # @return [DeliveryReceiptContext] DeliveryReceiptContext
@@ -230,13 +234,15 @@ module Twilio
                 # Initialize the DeliveryReceiptInstance
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
-                # @param [String] chat_service_sid The SID of the [Chat
-                #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the Message
-                #   resource is associated with.
-                # @param [String] conversation_sid The unique id of the
-                #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for this message.
-                # @param [String] message_sid The sid of the message within a
-                #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) the delivery receipt belongs to
+                # @param [String] chat_service_sid The SID of the [Conversation
+                #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+                #   Message resource is associated with.
+                # @param [String] conversation_sid The unique ID of the
+                #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+                #   for this message.
+                # @param [String] message_sid The SID of the message within a
+                #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+                #   the delivery receipt belongs to
                 # @param [String] sid A 34 character string that uniquely identifies this
                 #   resource.
                 # @return [DeliveryReceiptInstance] DeliveryReceiptInstance
@@ -287,25 +293,25 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The unique id of the Account responsible for this participant.
+                # @return [String] The unique ID of the Account responsible for this participant.
                 def account_sid
                   @properties['account_sid']
                 end
 
                 ##
-                # @return [String] The SID of the Chat Service that the resource is associated with.
+                # @return [String] The SID of the Conversation Service that the resource is associated with.
                 def chat_service_sid
                   @properties['chat_service_sid']
                 end
 
                 ##
-                # @return [String] The unique id of the Conversation for this message.
+                # @return [String] The unique ID of the Conversation for this message.
                 def conversation_sid
                   @properties['conversation_sid']
                 end
 
                 ##
-                # @return [String] The sid of the message the delivery receipt belongs to
+                # @return [String] The SID of the message the delivery receipt belongs to
                 def message_sid
                   @properties['message_sid']
                 end
@@ -323,7 +329,7 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The unique id of the participant the delivery receipt belongs to.
+                # @return [String] The unique ID of the participant the delivery receipt belongs to.
                 def participant_sid
                   @properties['participant_sid']
                 end

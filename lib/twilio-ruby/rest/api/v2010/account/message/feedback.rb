@@ -34,7 +34,9 @@ module Twilio
               # Create the FeedbackInstance
               # @param [feedback.Outcome] outcome Whether the feedback has arrived. Can be:
               #   `unconfirmed` or `confirmed`. If `provide_feedback`=`true` in [the initial HTTP
-              #   POST](https://www.twilio.com/docs/sms/api/message-resource#create-a-message-resource), the initial value of this property is `unconfirmed`. After the message arrives, update the value to `confirmed`.
+              #   POST](https://www.twilio.com/docs/sms/api/message-resource#create-a-message-resource),
+              #   the initial value of this property is `unconfirmed`. After the message arrives,
+              #   update the value to `confirmed`.
               # @return [FeedbackInstance] Created FeedbackInstance
               def create(outcome: :unset)
                 data = Twilio::Values.of({'Outcome' => outcome, })

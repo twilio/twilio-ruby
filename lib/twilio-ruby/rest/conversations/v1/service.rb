@@ -332,7 +332,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The unique id of the Account responsible for this service.
+          # @return [String] The unique ID of the Account responsible for this service.
           def account_sid
             @properties['account_sid']
           end

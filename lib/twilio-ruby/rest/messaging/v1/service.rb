@@ -41,7 +41,8 @@ module Twilio
           # @param [String] fallback_method The HTTP method we should use to call
           #   `fallback_url`. Can be: `GET` or `POST`.
           # @param [String] status_callback The URL we should call to [pass status
-          #   updates](https://www.twilio.com/docs/sms/api/message-resource#message-status-values) about message delivery.
+          #   updates](https://www.twilio.com/docs/sms/api/message-resource#message-status-values)
+          #   about message delivery.
           # @param [Boolean] sticky_sender Whether to enable [Sticky
           #   Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service
           #   instance.
@@ -240,7 +241,8 @@ module Twilio
           # @param [String] fallback_method The HTTP method we should use to call
           #   `fallback_url`. Can be: `GET` or `POST`.
           # @param [String] status_callback The URL we should call to [pass status
-          #   updates](https://www.twilio.com/docs/sms/api/message-resource#message-status-values) about message delivery.
+          #   updates](https://www.twilio.com/docs/sms/api/message-resource#message-status-values)
+          #   about message delivery.
           # @param [Boolean] sticky_sender Whether to enable [Sticky
           #   Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service
           #   instance.
@@ -557,7 +559,8 @@ module Twilio
           # @param [String] fallback_method The HTTP method we should use to call
           #   `fallback_url`. Can be: `GET` or `POST`.
           # @param [String] status_callback The URL we should call to [pass status
-          #   updates](https://www.twilio.com/docs/sms/api/message-resource#message-status-values) about message delivery.
+          #   updates](https://www.twilio.com/docs/sms/api/message-resource#message-status-values)
+          #   about message delivery.
           # @param [Boolean] sticky_sender Whether to enable [Sticky
           #   Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service
           #   instance.

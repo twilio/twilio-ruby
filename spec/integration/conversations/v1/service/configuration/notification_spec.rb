@@ -13,7 +13,9 @@ describe 'Notification' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.conversations.v1.notifications('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+      @client.conversations.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .configuration \
+                              .notifications().update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     expect(
@@ -52,7 +54,9 @@ describe 'Notification' do
       ]
     ))
 
-    actual = @client.conversations.v1.notifications('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+    actual = @client.conversations.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                     .configuration \
+                                     .notifications().update()
 
     expect(actual).to_not eq(nil)
   end
@@ -61,7 +65,9 @@ describe 'Notification' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.conversations.v1.notifications('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+      @client.conversations.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .configuration \
+                              .notifications().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     expect(
@@ -100,7 +106,9 @@ describe 'Notification' do
       ]
     ))
 
-    actual = @client.conversations.v1.notifications('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+    actual = @client.conversations.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                     .configuration \
+                                     .notifications().fetch()
 
     expect(actual).to_not eq(nil)
   end

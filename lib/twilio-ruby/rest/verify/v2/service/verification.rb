@@ -61,7 +61,9 @@ module Twilio
             #   [`email`](https://www.twilio.com/docs/verify/email) channel configuration in
             #   json format. Must include 'from' and 'from_name'.
             # @param [String] app_hash Your [App
-            #   Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string) to be appended at the end of your verification SMS body. Applies only to SMS. Example SMS body: `<#> Your AppName verification code is: 1234 He42w354ol9`.
+            #   Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string)
+            #   to be appended at the end of your verification SMS body. Applies only to SMS.
+            #   Example SMS body: `<#> Your AppName verification code is: 1234 He42w354ol9`.
             # @return [VerificationInstance] Created VerificationInstance
             def create(to: nil, channel: nil, custom_friendly_name: :unset, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset, app_hash: :unset)
               data = Twilio::Values.of({

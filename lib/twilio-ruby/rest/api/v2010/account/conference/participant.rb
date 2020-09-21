@@ -46,7 +46,8 @@ module Twilio
               #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g.,
               #   +16175551212). SIP addresses are formatted as `sip:name@company.com`. Client
               #   identifiers are formatted `client:name`. [Custom
-              #   parameters](https://www.twilio.com/docs/voice/api/conference-participant-resource#custom-parameters) may also be specified.
+              #   parameters](https://www.twilio.com/docs/voice/api/conference-participant-resource#custom-parameters)
+              #   may also be specified.
               # @param [String] status_callback The URL we should call using the
               #   `status_callback_method` to send status information to your application.
               # @param [String] status_callback_method The HTTP method we should use to call
@@ -118,7 +119,9 @@ module Twilio
               # @param [String] sip_auth_username The SIP username used for authentication.
               # @param [String] sip_auth_password The SIP password for authentication.
               # @param [String] region The
-              #   [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls) where we should mix the recorded audio. Can be:`us1`, `ie1`, `de1`, `sg1`, `br1`, `au1`, or `jp1`.
+              #   [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls)
+              #   where we should mix the recorded audio. Can be:`us1`, `ie1`, `de1`, `sg1`,
+              #   `br1`, `au1`, or `jp1`.
               # @param [String] conference_recording_status_callback The URL we should call
               #   using the `conference_recording_status_callback_method` when the conference
               #   recording is available.

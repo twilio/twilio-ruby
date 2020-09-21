@@ -51,7 +51,8 @@ module Twilio
               #   [UsageRecord](https://www.twilio.com/docs/usage/api/usage-record) resource that
               #   should fire the trigger.  Can be: `count`, `usage`, or `price` as described in
               #   the [UsageRecords
-              #   documentation](https://www.twilio.com/docs/usage/api/usage-record#usage-count-price).  The default is `usage`.
+              #   documentation](https://www.twilio.com/docs/usage/api/usage-record#usage-count-price).
+              #    The default is `usage`.
               # @return [TriggerInstance] Created TriggerInstance
               def create(callback_url: nil, trigger_value: nil, usage_category: nil, callback_method: :unset, friendly_name: :unset, recurring: :unset, trigger_by: :unset)
                 data = Twilio::Values.of({

@@ -44,12 +44,6 @@ module Twilio
       end
 
       ##
-      # @return [Twilio::REST::Conversations::V1::WebhookInstance]
-      def webhooks
-        self.v1.webhooks()
-      end
-
-      ##
       # @param [String] sid A 34 character string that uniquely identifies this
       #   resource.
       # @return [Twilio::REST::Conversations::V1::CredentialInstance] if sid was passed.
@@ -74,16 +68,6 @@ module Twilio
       # @return [Twilio::REST::Conversations::V1::ServiceList]
       def services(sid=:unset)
         self.v1.services(sid)
-      end
-
-      ##
-      # @param [String] chat_service_sid The SID of the [Chat
-      #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the
-      #   Configuration applies to.
-      # @return [Twilio::REST::Conversations::V1::NotificationInstance] if chat_service_sid was passed.
-      # @return [Twilio::REST::Conversations::V1::NotificationList]
-      def notifications(chat_service_sid=:unset)
-        self.v1.notifications(chat_service_sid)
       end
 
       ##

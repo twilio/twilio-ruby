@@ -13,13 +13,14 @@ describe 'Webhook' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.conversations.v1.webhooks().fetch()
+      @client.conversations.v1.configuration \
+                              .webhooks().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://conversations.twilio.com/v1/Conversations/Webhooks',
+        url: 'https://conversations.twilio.com/v1/Configuration/Webhooks',
     ))).to eq(true)
   end
 
@@ -37,12 +38,13 @@ describe 'Webhook' do
               "onConversationUpdated"
           ],
           "target": "webhook",
-          "url": "https://conversations.twilio.com/v1/Conversations/Webhooks"
+          "url": "https://conversations.twilio.com/v1/Configuration/Webhooks"
       }
       ]
     ))
 
-    actual = @client.conversations.v1.webhooks().fetch()
+    actual = @client.conversations.v1.configuration \
+                                     .webhooks().fetch()
 
     expect(actual).to_not eq(nil)
   end
@@ -51,13 +53,14 @@ describe 'Webhook' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.conversations.v1.webhooks().update()
+      @client.conversations.v1.configuration \
+                              .webhooks().update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://conversations.twilio.com/v1/Conversations/Webhooks',
+        url: 'https://conversations.twilio.com/v1/Configuration/Webhooks',
     ))).to eq(true)
   end
 
@@ -74,12 +77,13 @@ describe 'Webhook' do
               "onConversationUpdated"
           ],
           "target": "webhook",
-          "url": "https://conversations.twilio.com/v1/Conversations/Webhooks"
+          "url": "https://conversations.twilio.com/v1/Configuration/Webhooks"
       }
       ]
     ))
 
-    actual = @client.conversations.v1.webhooks().update()
+    actual = @client.conversations.v1.configuration \
+                                     .webhooks().update()
 
     expect(actual).to_not eq(nil)
   end

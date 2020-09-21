@@ -40,14 +40,6 @@ module Twilio
           #   information.
           # @param [String] disaster_recovery_method The HTTP method we should use to call
           #   the `disaster_recovery_url`. Can be: `GET` or `POST`.
-          # @param [trunk.RecordingSetting] recording The recording settings for the trunk.
-          #   Can be: `do-not-record`, `record-from-ringing`, `record-from-answer`. If set to
-          #   `record-from-ringing` or `record-from-answer`, all calls going through the trunk
-          #   will be recorded. The only way to change recording parameters is on a
-          #   sub-resource of a Trunk after it has been created.
-          #   e.g.`/Trunks/[Trunk_SID]/Recording -XPOST -d'Mode=record-from-answer'`. See
-          #   [Recording](https://www.twilio.com/docs/sip-trunking#recording) for more
-          #   information.
           # @param [trunk.TransferSetting] transfer_mode The call transfer settings for the
           #   trunk. Can be: `enable-all`, `sip-only` and `disable-all`. See
           #   [Transfer](https://www.twilio.com/docs/sip-trunking/call-transfer) for more
@@ -63,13 +55,12 @@ module Twilio
           #   Caller ID data on your phone. See [CNAM
           #   Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
           # @return [TrunkInstance] Created TrunkInstance
-          def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset)
+          def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DomainName' => domain_name,
                 'DisasterRecoveryUrl' => disaster_recovery_url,
                 'DisasterRecoveryMethod' => disaster_recovery_method,
-                'Recording' => recording,
                 'TransferMode' => transfer_mode,
                 'Secure' => secure,
                 'CnamLookupEnabled' => cnam_lookup_enabled,
@@ -215,6 +206,7 @@ module Twilio
             @credentials_lists = nil
             @ip_access_control_lists = nil
             @phone_numbers = nil
+            @recordings = nil
           end
 
           ##
@@ -250,12 +242,6 @@ module Twilio
           #   information.
           # @param [String] disaster_recovery_method The HTTP method we should use to call
           #   the `disaster_recovery_url`. Can be: `GET` or `POST`.
-          # @param [trunk.RecordingSetting] recording The recording settings for the trunk.
-          #   Can be: `do-not-record`, `record-from-ringing`, `record-from-answer`. If set to
-          #   `record-from-ringing` or `record-from-answer`, all calls going through the trunk
-          #   will be recorded. See
-          #   [Recording](https://www.twilio.com/docs/sip-trunking#recording) for more
-          #   information.
           # @param [trunk.TransferSetting] transfer_mode The call transfer settings for the
           #   trunk. Can be: `enable-all`, `sip-only` and `disable-all`. See
           #   [Transfer](https://www.twilio.com/docs/sip-trunking/call-transfer) for more
@@ -271,13 +257,12 @@ module Twilio
           #   Caller ID data on your phone. See [CNAM
           #   Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
           # @return [TrunkInstance] Updated TrunkInstance
-          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset)
+          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DomainName' => domain_name,
                 'DisasterRecoveryUrl' => disaster_recovery_url,
                 'DisasterRecoveryMethod' => disaster_recovery_method,
-                'Recording' => recording,
                 'TransferMode' => transfer_mode,
                 'Secure' => secure,
                 'CnamLookupEnabled' => cnam_lookup_enabled,
@@ -358,6 +343,14 @@ module Twilio
             end
 
             @phone_numbers
+          end
+
+          ##
+          # Access the recordings
+          # @return [RecordingList]
+          # @return [RecordingContext]
+          def recordings
+            RecordingContext.new(@version, @solution[:sid], )
           end
 
           ##
@@ -549,12 +542,6 @@ module Twilio
           #   information.
           # @param [String] disaster_recovery_method The HTTP method we should use to call
           #   the `disaster_recovery_url`. Can be: `GET` or `POST`.
-          # @param [trunk.RecordingSetting] recording The recording settings for the trunk.
-          #   Can be: `do-not-record`, `record-from-ringing`, `record-from-answer`. If set to
-          #   `record-from-ringing` or `record-from-answer`, all calls going through the trunk
-          #   will be recorded. See
-          #   [Recording](https://www.twilio.com/docs/sip-trunking#recording) for more
-          #   information.
           # @param [trunk.TransferSetting] transfer_mode The call transfer settings for the
           #   trunk. Can be: `enable-all`, `sip-only` and `disable-all`. See
           #   [Transfer](https://www.twilio.com/docs/sip-trunking/call-transfer) for more
@@ -570,13 +557,12 @@ module Twilio
           #   Caller ID data on your phone. See [CNAM
           #   Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
           # @return [TrunkInstance] Updated TrunkInstance
-          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, recording: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset)
+          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset)
             context.update(
                 friendly_name: friendly_name,
                 domain_name: domain_name,
                 disaster_recovery_url: disaster_recovery_url,
                 disaster_recovery_method: disaster_recovery_method,
-                recording: recording,
                 transfer_mode: transfer_mode,
                 secure: secure,
                 cnam_lookup_enabled: cnam_lookup_enabled,
@@ -609,6 +595,13 @@ module Twilio
           # @return [phone_numbers] phone_numbers
           def phone_numbers
             context.phone_numbers
+          end
+
+          ##
+          # Access the recordings
+          # @return [recordings] recordings
+          def recordings
+            context.recordings
           end
 
           ##

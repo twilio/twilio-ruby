@@ -192,7 +192,10 @@ module Twilio
               #   randomly generated.
               # @param [String] status_callback Provide an absolute or relative URL to receive
               #   status updates regarding your Pay session. Read more about the
-              #   [Update](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-update) and [Complete/Cancel](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-cancelcomplete) POST requests.
+              #   [Update](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-update)
+              #   and
+              #   [Complete/Cancel](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-cancelcomplete)
+              #   POST requests.
               # @param [payment.Capture] capture The piece of payment information that you wish
               #   the caller to enter. Must be one of `payment-card-number`, `expiration-date`,
               #   `security-code`, `postal-code`, `bank-routing-number`, or `bank-account-number`.
@@ -329,7 +332,10 @@ module Twilio
               #   randomly generated.
               # @param [String] status_callback Provide an absolute or relative URL to receive
               #   status updates regarding your Pay session. Read more about the
-              #   [Update](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-update) and [Complete/Cancel](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-cancelcomplete) POST requests.
+              #   [Update](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-update)
+              #   and
+              #   [Complete/Cancel](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-cancelcomplete)
+              #   POST requests.
               # @param [payment.Capture] capture The piece of payment information that you wish
               #   the caller to enter. Must be one of `payment-card-number`, `expiration-date`,
               #   `security-code`, `postal-code`, `bank-routing-number`, or `bank-account-number`.

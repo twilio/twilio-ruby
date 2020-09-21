@@ -309,7 +309,9 @@ module Twilio
               #   should use to call `conference_recording_status_callback`. Can be: `GET` or
               #   `POST` and defaults to `POST`.
               # @param [String] region The
-              #   [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls) where we should mix the recorded audio. Can be:`us1`, `ie1`, `de1`, `sg1`, `br1`, `au1`, or `jp1`.
+              #   [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls)
+              #   where we should mix the recorded audio. Can be:`us1`, `ie1`, `de1`, `sg1`,
+              #   `br1`, `au1`, or `jp1`.
               # @param [String] sip_auth_username The SIP username used for authentication.
               # @param [String] sip_auth_password The SIP password for authentication.
               # @param [String] dequeue_status_callback_event The call progress events sent via
@@ -645,7 +647,9 @@ module Twilio
               #   should use to call `conference_recording_status_callback`. Can be: `GET` or
               #   `POST` and defaults to `POST`.
               # @param [String] region The
-              #   [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls) where we should mix the recorded audio. Can be:`us1`, `ie1`, `de1`, `sg1`, `br1`, `au1`, or `jp1`.
+              #   [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls)
+              #   where we should mix the recorded audio. Can be:`us1`, `ie1`, `de1`, `sg1`,
+              #   `br1`, `au1`, or `jp1`.
               # @param [String] sip_auth_username The SIP username used for authentication.
               # @param [String] sip_auth_password The SIP password for authentication.
               # @param [String] dequeue_status_callback_event The call progress events sent via

@@ -80,6 +80,9 @@ module Twilio
               # Path Solution
               @solution = {chat_service_sid: chat_service_sid, }
               @uri = "/Services/#{@solution[:chat_service_sid]}/Configuration"
+
+              # Components
+              @notifications = nil
             end
 
             ##
@@ -93,17 +96,18 @@ module Twilio
 
             ##
             # Update the ConfigurationInstance
-            # @param [String] default_conversation_creator_role_sid The role assigned to a
-            #   conversation creator when they join a new conversation. See the [Role
-            #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+            # @param [String] default_conversation_creator_role_sid The conversation-level
+            #   role assigned to a conversation creator when they join a new conversation. See
+            #   the [Conversation
+            #   Role](https://www.twilio.com/docs/conversations/api/role-resource) for more info
             #   about roles.
-            # @param [String] default_conversation_role_sid The role assigned to users when
-            #   they are added to a conversation. See the [Role
-            #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+            # @param [String] default_conversation_role_sid The conversation-level role
+            #   assigned to users when they are added to a conversation. See the [Conversation
+            #   Role](https://www.twilio.com/docs/conversations/api/role-resource) for more info
             #   about roles.
-            # @param [String] default_chat_service_role_sid The service role assigned to users
-            #   when they are added to the service. See the [Role
-            #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+            # @param [String] default_chat_service_role_sid The service-level role assigned to
+            #   users when they are added to the service. See the [Conversation
+            #   Role](https://www.twilio.com/docs/conversations/api/role-resource) for more info
             #   about roles.
             # @return [ConfigurationInstance] Updated ConfigurationInstance
             def update(default_conversation_creator_role_sid: :unset, default_conversation_role_sid: :unset, default_chat_service_role_sid: :unset)
@@ -116,6 +120,13 @@ module Twilio
               payload = @version.update('POST', @uri, data: data)
 
               ConfigurationInstance.new(@version, payload, chat_service_sid: @solution[:chat_service_sid], )
+            end
+
+            ##
+            # Access the notifications
+            # @return [NotificationContext] NotificationContext
+            def notifications
+              return NotificationContext.new(@version, @solution[:chat_service_sid], )
             end
 
             ##
@@ -217,17 +228,18 @@ module Twilio
 
             ##
             # Update the ConfigurationInstance
-            # @param [String] default_conversation_creator_role_sid The role assigned to a
-            #   conversation creator when they join a new conversation. See the [Role
-            #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+            # @param [String] default_conversation_creator_role_sid The conversation-level
+            #   role assigned to a conversation creator when they join a new conversation. See
+            #   the [Conversation
+            #   Role](https://www.twilio.com/docs/conversations/api/role-resource) for more info
             #   about roles.
-            # @param [String] default_conversation_role_sid The role assigned to users when
-            #   they are added to a conversation. See the [Role
-            #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+            # @param [String] default_conversation_role_sid The conversation-level role
+            #   assigned to users when they are added to a conversation. See the [Conversation
+            #   Role](https://www.twilio.com/docs/conversations/api/role-resource) for more info
             #   about roles.
-            # @param [String] default_chat_service_role_sid The service role assigned to users
-            #   when they are added to the service. See the [Role
-            #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+            # @param [String] default_chat_service_role_sid The service-level role assigned to
+            #   users when they are added to the service. See the [Conversation
+            #   Role](https://www.twilio.com/docs/conversations/api/role-resource) for more info
             #   about roles.
             # @return [ConfigurationInstance] Updated ConfigurationInstance
             def update(default_conversation_creator_role_sid: :unset, default_conversation_role_sid: :unset, default_chat_service_role_sid: :unset)

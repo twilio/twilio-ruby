@@ -29,11 +29,20 @@ module Twilio
       end
 
       ##
-      # @param [String] type The type
+      # @param [String] type A string that uniquely identifies this Event Type.
       # @return [Twilio::REST::Events::V1::EventTypeInstance] if type was passed.
       # @return [Twilio::REST::Events::V1::EventTypeList]
       def event_types(type=:unset)
         self.v1.event_types(type)
+      end
+
+      ##
+      # @param [String] id The unique identifier of the schema. Each schema can have
+      #   multiple versions, that share the same id.
+      # @return [Twilio::REST::Events::V1::SchemaInstance] if id was passed.
+      # @return [Twilio::REST::Events::V1::SchemaList]
+      def schemas(id=:unset)
+        self.v1.schemas(id)
       end
 
       ##

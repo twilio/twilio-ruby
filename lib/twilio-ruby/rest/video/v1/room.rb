@@ -56,7 +56,8 @@ module Twilio
           #   ***This feature is not available in `peer-to-peer` rooms***
           # @param [String] media_region The region for the media server in Group Rooms.
           #   Can be: one of the [available Media
-          #   Regions](https://www.twilio.com/docs/video/ip-address-whitelisting#group-rooms-media-servers). ***This feature is not available in `peer-to-peer` rooms.***
+          #   Regions](https://www.twilio.com/docs/video/ip-address-whitelisting#group-rooms-media-servers).
+          #   ***This feature is not available in `peer-to-peer` rooms.***
           # @return [RoomInstance] Created RoomInstance
           def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset)
             data = Twilio::Values.of({

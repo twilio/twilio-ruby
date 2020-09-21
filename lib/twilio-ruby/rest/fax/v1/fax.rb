@@ -166,7 +166,8 @@ module Twilio
           #   defaults to `fine`.
           # @param [String] status_callback The URL we should call using the `POST` method
           #   to send [status
-          #   information](https://www.twilio.com/docs/fax/api/fax-resource#fax-status-callback) to your application when the status of the fax changes.
+          #   information](https://www.twilio.com/docs/fax/api/fax-resource#fax-status-callback)
+          #   to your application when the status of the fax changes.
           # @param [String] from The number the fax was sent from. Can be the phone number
           #   in [E.164](https://www.twilio.com/docs/glossary/what-e164) format or the SIP
           #   `from` value. The caller ID displayed to the recipient uses this value. If this

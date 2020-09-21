@@ -17,8 +17,9 @@ module Twilio
             ##
             # Initialize the MessageList
             # @param [Version] version Version that contains the resource
-            # @param [String] conversation_sid The unique id of the
-            #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for this message.
+            # @param [String] conversation_sid The unique ID of the
+            #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+            #   for this message.
             # @return [MessageList] MessageList
             def initialize(version, conversation_sid: nil)
               super(version)
@@ -40,7 +41,7 @@ module Twilio
             # @param [String] attributes A string metadata field you can use to store any data
             #   you wish. The string value must contain structurally valid JSON if specified.
             #   **Note** that if the attributes are not set "{}" will be returned.
-            # @param [String] media_sid The Media Sid to be attached to the new Message.
+            # @param [String] media_sid The Media SID to be attached to the new Message.
             # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
             #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [MessageInstance] Created MessageInstance
@@ -184,8 +185,9 @@ module Twilio
             ##
             # Initialize the MessageContext
             # @param [Version] version Version that contains the resource
-            # @param [String] conversation_sid The unique id of the
-            #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for this message.
+            # @param [String] conversation_sid The unique ID of the
+            #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+            #   for this message.
             # @param [String] sid A 34 character string that uniquely identifies this
             #   resource.
             # @return [MessageContext] MessageContext
@@ -304,8 +306,9 @@ module Twilio
             # Initialize the MessageInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] conversation_sid The unique id of the
-            #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for this message.
+            # @param [String] conversation_sid The unique ID of the
+            #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+            #   for this message.
             # @param [String] sid A 34 character string that uniquely identifies this
             #   resource.
             # @return [MessageInstance] MessageInstance
@@ -347,13 +350,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique id of the Account responsible for this message.
+            # @return [String] The unique ID of the Account responsible for this message.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The unique id of the Conversation for this message.
+            # @return [String] The unique ID of the Conversation for this message.
             def conversation_sid
               @properties['conversation_sid']
             end
@@ -395,7 +398,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique id of messages's author participant.
+            # @return [String] The unique ID of messages's author participant.
             def participant_sid
               @properties['participant_sid']
             end

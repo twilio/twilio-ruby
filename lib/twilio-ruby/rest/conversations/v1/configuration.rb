@@ -75,6 +75,9 @@ module Twilio
             # Path Solution
             @solution = {}
             @uri = "/Configuration"
+
+            # Components
+            @webhooks = nil
           end
 
           ##
@@ -88,9 +91,9 @@ module Twilio
 
           ##
           # Update the ConfigurationInstance
-          # @param [String] default_chat_service_sid The SID of the default [Chat
-          #   Service](https://www.twilio.com/docs/chat/rest/service-resource) to use when
-          #   creating a conversation.
+          # @param [String] default_chat_service_sid The SID of the default [Conversation
+          #   Service](https://www.twilio.com/docs/conversations/api/service-resource) to use
+          #   when creating a conversation.
           # @param [String] default_messaging_service_sid The SID of the default [Messaging
           #   Service](https://www.twilio.com/docs/sms/services/api) to use when creating a
           #   conversation.
@@ -111,6 +114,13 @@ module Twilio
             payload = @version.update('POST', @uri, data: data)
 
             ConfigurationInstance.new(@version, payload, )
+          end
+
+          ##
+          # Access the webhooks
+          # @return [WebhookContext] WebhookContext
+          def webhooks
+            return WebhookContext.new(@version, )
           end
 
           ##
@@ -173,7 +183,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The SID of the default Chat Service that every new conversation is associated with.
+          # @return [String] The SID of the default Conversation Service that every new conversation is associated with.
           def default_chat_service_sid
             @properties['default_chat_service_sid']
           end
@@ -217,9 +227,9 @@ module Twilio
 
           ##
           # Update the ConfigurationInstance
-          # @param [String] default_chat_service_sid The SID of the default [Chat
-          #   Service](https://www.twilio.com/docs/chat/rest/service-resource) to use when
-          #   creating a conversation.
+          # @param [String] default_chat_service_sid The SID of the default [Conversation
+          #   Service](https://www.twilio.com/docs/conversations/api/service-resource) to use
+          #   when creating a conversation.
           # @param [String] default_messaging_service_sid The SID of the default [Messaging
           #   Service](https://www.twilio.com/docs/sms/services/api) to use when creating a
           #   conversation.

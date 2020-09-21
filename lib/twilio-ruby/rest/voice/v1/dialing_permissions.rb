@@ -48,12 +48,9 @@ module Twilio
 
           ##
           # Access the settings
-          # @return [SettingsList]
-          # @return [SettingsContext]
+          # @return [SettingsContext] SettingsContext
           def settings
             return SettingsContext.new(@version, )
-
-            @settings ||= SettingsList.new(@version, )
           end
 
           ##

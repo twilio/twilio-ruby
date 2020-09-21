@@ -18,11 +18,12 @@ module Twilio
               ##
               # Initialize the WebhookList
               # @param [Version] version Version that contains the resource
-              # @param [String] chat_service_sid The SID of the [Chat
-              #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the Participant
-              #   resource is associated with.
-              # @param [String] conversation_sid The unique id of the
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for this webhook.
+              # @param [String] chat_service_sid The SID of the [Conversation
+              #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+              #   Participant resource is associated with.
+              # @param [String] conversation_sid The unique ID of the
+              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   for this webhook.
               # @return [WebhookList] WebhookList
               def initialize(version, chat_service_sid: nil, conversation_sid: nil)
                 super(version)
@@ -44,7 +45,7 @@ module Twilio
               #   for this Conversation.
               # @param [String] configuration_triggers The list of keywords, firing webhook
               #   event for this Conversation.
-              # @param [String] configuration_flow_sid The studio flow sid, where the webhook
+              # @param [String] configuration_flow_sid The studio flow SID, where the webhook
               #   should be sent to.
               # @param [String] configuration_replay_after The message index for which and it's
               #   successors the webhook will be replayed. Not set by default
@@ -199,11 +200,12 @@ module Twilio
               ##
               # Initialize the WebhookContext
               # @param [Version] version Version that contains the resource
-              # @param [String] chat_service_sid The SID of the [Chat
-              #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the Participant
-              #   resource is associated with.
-              # @param [String] conversation_sid The unique id of the
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for this webhook.
+              # @param [String] chat_service_sid The SID of the [Conversation
+              #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+              #   Participant resource is associated with.
+              # @param [String] conversation_sid The unique ID of the
+              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   for this webhook.
               # @param [String] sid A 34 character string that uniquely identifies this
               #   resource.
               # @return [WebhookContext] WebhookContext
@@ -225,7 +227,7 @@ module Twilio
               #   for this Conversation.
               # @param [String] configuration_triggers The list of keywords, firing webhook
               #   event for this Conversation.
-              # @param [String] configuration_flow_sid The studio flow sid, where the webhook
+              # @param [String] configuration_flow_sid The studio flow SID, where the webhook
               #   should be sent to.
               # @return [WebhookInstance] Updated WebhookInstance
               def update(configuration_url: :unset, configuration_method: :unset, configuration_filters: :unset, configuration_triggers: :unset, configuration_flow_sid: :unset)
@@ -292,11 +294,12 @@ module Twilio
               # Initialize the WebhookInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] chat_service_sid The SID of the [Chat
-              #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the Participant
-              #   resource is associated with.
-              # @param [String] conversation_sid The unique id of the
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for this webhook.
+              # @param [String] chat_service_sid The SID of the [Conversation
+              #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+              #   Participant resource is associated with.
+              # @param [String] conversation_sid The unique ID of the
+              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   for this webhook.
               # @param [String] sid A 34 character string that uniquely identifies this
               #   resource.
               # @return [WebhookInstance] WebhookInstance
@@ -348,19 +351,19 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique id of the Account responsible for this conversation.
+              # @return [String] The unique ID of the Account responsible for this conversation.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The SID of the Chat Service that the resource is associated with.
+              # @return [String] The SID of the Conversation Service that the resource is associated with.
               def chat_service_sid
                 @properties['chat_service_sid']
               end
 
               ##
-              # @return [String] The unique id of the Conversation for this webhook.
+              # @return [String] The unique ID of the Conversation for this webhook.
               def conversation_sid
                 @properties['conversation_sid']
               end
@@ -405,7 +408,7 @@ module Twilio
               #   for this Conversation.
               # @param [String] configuration_triggers The list of keywords, firing webhook
               #   event for this Conversation.
-              # @param [String] configuration_flow_sid The studio flow sid, where the webhook
+              # @param [String] configuration_flow_sid The studio flow SID, where the webhook
               #   should be sent to.
               # @return [WebhookInstance] Updated WebhookInstance
               def update(configuration_url: :unset, configuration_method: :unset, configuration_filters: :unset, configuration_triggers: :unset, configuration_flow_sid: :unset)

@@ -32,12 +32,9 @@ module Twilio
 
             ##
             # Access the impressions_rate
-            # @return [ImpressionsRateList]
-            # @return [ImpressionsRateContext]
+            # @return [ImpressionsRateContext] ImpressionsRateContext
             def impressions_rate
               return ImpressionsRateContext.new(@version, @solution[:business_sid], )
-
-              @impressions_rate ||= ImpressionsRateList.new(@version, business_sid: @solution[:business_sid], )
             end
 
             ##

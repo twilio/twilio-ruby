@@ -10,25 +10,26 @@ module Twilio
   module REST
     class Events < Domain
       class V1 < Version
-        class SubscriptionContext < InstanceContext
+        class SchemaContext < InstanceContext
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class SubscribedEventList < ListResource
+          class VersionList < ListResource
             ##
-            # Initialize the SubscribedEventList
+            # Initialize the VersionList
             # @param [Version] version Version that contains the resource
-            # @param [String] subscription_sid The unique SID identifier of the Subscription.
-            # @return [SubscribedEventList] SubscribedEventList
-            def initialize(version, subscription_sid: nil)
+            # @param [String] id The unique identifier of the schema. Each schema can have
+            #   multiple versions, that share the same id.
+            # @return [VersionList] VersionList
+            def initialize(version, id: nil)
               super(version)
 
               # Path Solution
-              @solution = {subscription_sid: subscription_sid}
-              @uri = "/Subscriptions/#{@solution[:subscription_sid]}/SubscribedEvents"
+              @solution = {id: id}
+              @uri = "/Schemas/#{@solution[:id]}/Versions"
             end
 
             ##
-            # Lists SubscribedEventInstance records from the API as a list.
+            # Lists VersionInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -43,7 +44,7 @@ module Twilio
             end
 
             ##
-            # Streams SubscribedEventInstance records from the API as an Enumerable.
+            # Streams VersionInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -62,7 +63,7 @@ module Twilio
             end
 
             ##
-            # When passed a block, yields SubscribedEventInstance records from the API.
+            # When passed a block, yields VersionInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             def each
@@ -76,12 +77,12 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of SubscribedEventInstance records from the API.
+            # Retrieve a single page of VersionInstance records from the API.
             # Request is executed immediately.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            # @return [Page] Page of SubscribedEventInstance
+            # @return [Page] Page of VersionInstance
             def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'PageToken' => page_token,
@@ -91,38 +92,38 @@ module Twilio
 
               response = @version.page('GET', @uri, params: params)
 
-              SubscribedEventPage.new(@version, response, @solution)
+              VersionPage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of SubscribedEventInstance records from the API.
+            # Retrieve a single page of VersionInstance records from the API.
             # Request is executed immediately.
             # @param [String] target_url API-generated URL for the requested results page
-            # @return [Page] Page of SubscribedEventInstance
+            # @return [Page] Page of VersionInstance
             def get_page(target_url)
               response = @version.domain.request(
                   'GET',
                   target_url
               )
-              SubscribedEventPage.new(@version, response, @solution)
+              VersionPage.new(@version, response, @solution)
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Events.V1.SubscribedEventList>'
+              '#<Twilio.Events.V1.VersionList>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class SubscribedEventPage < Page
+          class VersionPage < Page
             ##
-            # Initialize the SubscribedEventPage
+            # Initialize the VersionPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @return [SubscribedEventPage] SubscribedEventPage
+            # @return [VersionPage] VersionPage
             def initialize(version, response, solution)
               super(version, response)
 
@@ -131,64 +132,122 @@ module Twilio
             end
 
             ##
-            # Build an instance of SubscribedEventInstance
+            # Build an instance of VersionInstance
             # @param [Hash] payload Payload response from the API
-            # @return [SubscribedEventInstance] SubscribedEventInstance
+            # @return [VersionInstance] VersionInstance
             def get_instance(payload)
-              SubscribedEventInstance.new(@version, payload, subscription_sid: @solution[:subscription_sid], )
+              VersionInstance.new(@version, payload, id: @solution[:id], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Events.V1.SubscribedEventPage>'
+              '<Twilio.Events.V1.VersionPage>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-          class SubscribedEventInstance < InstanceResource
+          class VersionContext < InstanceContext
             ##
-            # Initialize the SubscribedEventInstance
+            # Initialize the VersionContext
+            # @param [Version] version Version that contains the resource
+            # @param [String] id The unique identifier of the schema. Each schema can have
+            #   multiple versions, that share the same id.
+            # @param [String] schema_version The version of the schema
+            # @return [VersionContext] VersionContext
+            def initialize(version, id, schema_version)
+              super(version)
+
+              # Path Solution
+              @solution = {id: id, schema_version: schema_version, }
+              @uri = "/Schemas/#{@solution[:id]}/Versions/#{@solution[:schema_version]}"
+            end
+
+            ##
+            # Fetch the VersionInstance
+            # @return [VersionInstance] Fetched VersionInstance
+            def fetch
+              payload = @version.fetch('GET', @uri)
+
+              VersionInstance.new(
+                  @version,
+                  payload,
+                  id: @solution[:id],
+                  schema_version: @solution[:schema_version],
+              )
+            end
+
+            ##
+            # Provide a user friendly representation
+            def to_s
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Events.V1.VersionContext #{context}>"
+            end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Events.V1.VersionContext #{context}>"
+            end
+          end
+
+          ##
+          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          class VersionInstance < InstanceResource
+            ##
+            # Initialize the VersionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] subscription_sid The unique SID identifier of the Subscription.
-            # @return [SubscribedEventInstance] SubscribedEventInstance
-            def initialize(version, payload, subscription_sid: nil)
+            # @param [String] id The unique identifier of the schema. Each schema can have
+            #   multiple versions, that share the same id.
+            # @param [String] schema_version The version of the schema
+            # @return [VersionInstance] VersionInstance
+            def initialize(version, payload, id: nil, schema_version: nil)
               super(version)
 
               # Marshaled Properties
               @properties = {
-                  'account_sid' => payload['account_sid'],
-                  'type' => payload['type'],
-                  'version' => payload['version'].to_i,
-                  'subscription_sid' => payload['subscription_sid'],
+                  'id' => payload['id'],
+                  'schema_version' => payload['schema_version'].to_i,
+                  'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'url' => payload['url'],
+                  'raw' => payload['raw'],
               }
+
+              # Context
+              @instance_context = nil
+              @params = {'id' => id, 'schema_version' => schema_version || @properties['schema_version'], }
             end
 
             ##
-            # @return [String] Account SID.
-            def account_sid
-              @properties['account_sid']
+            # Generate an instance context for the instance, the context is capable of
+            # performing various actions.  All instance actions are proxied to the context
+            # @return [VersionContext] VersionContext for this VersionInstance
+            def context
+              unless @instance_context
+                @instance_context = VersionContext.new(@version, @params['id'], @params['schema_version'], )
+              end
+              @instance_context
             end
 
             ##
-            # @return [String] Type of event being subscribed to.
-            def type
-              @properties['type']
+            # @return [String] The unique identifier of the schema.
+            def id
+              @properties['id']
             end
 
             ##
-            # @return [String] The schema version that the subscription should use.
-            def version
-              @properties['version']
+            # @return [String] The version of this schema.
+            def schema_version
+              @properties['schema_version']
             end
 
             ##
-            # @return [String] Subscription SID.
-            def subscription_sid
-              @properties['subscription_sid']
+            # @return [Time] The date the schema version was created.
+            def date_created
+              @properties['date_created']
             end
 
             ##
@@ -198,15 +257,30 @@ module Twilio
             end
 
             ##
+            # @return [String] The raw
+            def raw
+              @properties['raw']
+            end
+
+            ##
+            # Fetch the VersionInstance
+            # @return [VersionInstance] Fetched VersionInstance
+            def fetch
+              context.fetch
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
-              "<Twilio.Events.V1.SubscribedEventInstance>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Events.V1.VersionInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
-              "<Twilio.Events.V1.SubscribedEventInstance>"
+              values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Events.V1.VersionInstance #{values}>"
             end
           end
         end

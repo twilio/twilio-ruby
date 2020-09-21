@@ -149,7 +149,7 @@ module Twilio
           ##
           # Initialize the EventTypeContext
           # @param [Version] version Version that contains the resource
-          # @param [String] type The type
+          # @param [String] type A string that uniquely identifies this Event Type.
           # @return [EventTypeContext] EventTypeContext
           def initialize(version, type)
             super(version)
@@ -190,7 +190,7 @@ module Twilio
           # Initialize the EventTypeInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] type The type
+          # @param [String] type A string that uniquely identifies this Event Type.
           # @return [EventTypeInstance] EventTypeInstance
           def initialize(version, payload, type: nil)
             super(version)
@@ -223,37 +223,37 @@ module Twilio
           end
 
           ##
-          # @return [String] The type
+          # @return [String] The Event Type identifier.
           def type
             @properties['type']
           end
 
           ##
-          # @return [String] The schema_id
+          # @return [String] The Schema identifier for this Event Type.
           def schema_id
             @properties['schema_id']
           end
 
           ##
-          # @return [Time] The date_created
+          # @return [Time] The date this Event Type was created.
           def date_created
             @properties['date_created']
           end
 
           ##
-          # @return [Time] The date_updated
+          # @return [Time] The date this Event Type was updated.
           def date_updated
             @properties['date_updated']
           end
 
           ##
-          # @return [String] The description
+          # @return [String] Event Type description.
           def description
             @properties['description']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] The URL of this resource.
           def url
             @properties['url']
           end

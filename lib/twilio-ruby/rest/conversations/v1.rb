@@ -17,11 +17,9 @@ module Twilio
           @version = 'v1'
           @configuration = nil
           @conversations = nil
-          @webhooks = nil
           @credentials = nil
           @roles = nil
           @services = nil
-          @notifications = nil
           @users = nil
         end
 
@@ -44,12 +42,6 @@ module Twilio
           else
             ConversationContext.new(self, sid)
           end
-        end
-
-        ##
-        # @return [Twilio::REST::Conversations::V1::WebhookContext]
-        def webhooks
-          @webhooks ||= WebhookContext.new self
         end
 
         ##
@@ -93,22 +85,6 @@ module Twilio
             @services ||= ServiceList.new self
           else
             ServiceContext.new(self, sid)
-          end
-        end
-
-        ##
-        # @param [String] chat_service_sid The SID of the [Chat
-        #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the
-        #   Configuration applies to.
-        # @return [Twilio::REST::Conversations::V1::NotificationContext] if chat_service_sid was passed.
-        # @return [Twilio::REST::Conversations::V1::NotificationList]
-        def notifications(chat_service_sid=:unset)
-          if chat_service_sid.nil?
-            raise ArgumentError, 'chat_service_sid cannot be nil'
-          elsif chat_service_sid == :unset
-            @notifications ||= NotificationList.new self
-          else
-            NotificationContext.new(self, chat_service_sid)
           end
         end
 

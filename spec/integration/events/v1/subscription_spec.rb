@@ -178,6 +178,44 @@ describe 'Subscription' do
     expect(actual).to_not eq(nil)
   end
 
+  it "can update" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.events.v1.subscriptions('DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://events.twilio.com/v1/Subscriptions/DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    ))).to eq(true)
+  end
+
+  it "receives update responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_created": "2015-07-30T20:00:00Z",
+          "date_updated": "2020-07-30T20:01:33Z",
+          "sid": "DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "sink_sid": "DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+          "description": "Updated description",
+          "url": "https://events.twilio.com/v1/Subscriptions/DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "subscribed_events": "https://events.twilio.com/v1/Subscriptions/DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SubscribedEvents"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.events.v1.subscriptions('DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

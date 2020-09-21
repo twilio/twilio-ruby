@@ -38,7 +38,8 @@ module Twilio
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
               # @param [String] language The [ISO
-              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) string that specifies the language used for the sample. For example: `en-US`.
+              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              #   string that specifies the language used for the sample. For example: `en-US`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -55,7 +56,8 @@ module Twilio
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
               # @param [String] language The [ISO
-              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) string that specifies the language used for the sample. For example: `en-US`.
+              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              #   string that specifies the language used for the sample. For example: `en-US`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -89,7 +91,8 @@ module Twilio
               # Retrieve a single page of SampleInstance records from the API.
               # Request is executed immediately.
               # @param [String] language The [ISO
-              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) string that specifies the language used for the sample. For example: `en-US`.
+              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              #   string that specifies the language used for the sample. For example: `en-US`.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -123,7 +126,9 @@ module Twilio
               ##
               # Create the SampleInstance
               # @param [String] language The [ISO
-              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) string that specifies the language used for the new sample. For example: `en-US`.
+              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              #   string that specifies the language used for the new sample. For example:
+              #   `en-US`.
               # @param [String] tagged_text The text example of how end users might express the
               #   task. The sample can contain [Field tag
               #   blocks](https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging).
@@ -232,7 +237,8 @@ module Twilio
               ##
               # Update the SampleInstance
               # @param [String] language The [ISO
-              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) string that specifies the language used for the sample. For example: `en-US`.
+              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              #   string that specifies the language used for the sample. For example: `en-US`.
               # @param [String] tagged_text The text example of how end users might express the
               #   task. The sample can contain [Field tag
               #   blocks](https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging).
@@ -408,7 +414,8 @@ module Twilio
               ##
               # Update the SampleInstance
               # @param [String] language The [ISO
-              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html) string that specifies the language used for the sample. For example: `en-US`.
+              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              #   string that specifies the language used for the sample. For example: `en-US`.
               # @param [String] tagged_text The text example of how end users might express the
               #   task. The sample can contain [Field tag
               #   blocks](https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging).

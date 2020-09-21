@@ -57,7 +57,8 @@ module Twilio
             #   `completed`. If no event is specified, we send the `completed` status. If you
             #   want to receive multiple events, specify each one in a separate
             #   `status_callback_event` parameter. See the code sample for [monitoring call
-            #   progress](https://www.twilio.com/docs/voice/api/call-resource?code-sample=code-create-a-call-resource-and-specify-a-statuscallbackevent&code-sdk-version=json). If an `application_sid` is present, this parameter is ignored.
+            #   progress](https://www.twilio.com/docs/voice/api/call-resource?code-sample=code-create-a-call-resource-and-specify-a-statuscallbackevent&code-sdk-version=json).
+            #   If an `application_sid` is present, this parameter is ignored.
             # @param [String] status_callback_method The HTTP method we should use when
             #   calling the `status_callback` URL. Can be: `GET` or `POST` and the default is
             #   `POST`. If an `application_sid` parameter is present, this parameter is ignored.

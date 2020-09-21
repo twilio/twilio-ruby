@@ -34,7 +34,7 @@ module Twilio
           #   resource's `sid` in the URL.
           # @param [Time] date_created The date that this resource was created.
           # @param [Time] date_updated The date that this resource was last updated.
-          # @param [String] messaging_service_sid The unique id of the [SMS
+          # @param [String] messaging_service_sid The unique ID of the [Messaging
           #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
           #   to.
           # @param [String] attributes An optional string metadata field you can use to
@@ -219,7 +219,7 @@ module Twilio
           #   store any data you wish. The string value must contain structurally valid JSON
           #   if specified.  **Note** that if the attributes are not set "{}" will be
           #   returned.
-          # @param [String] messaging_service_sid The unique id of the [SMS
+          # @param [String] messaging_service_sid The unique ID of the [Messaging
           #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
           #   to.
           # @param [conversation.State] state Current state of this conversation. Can be
@@ -385,19 +385,19 @@ module Twilio
           end
 
           ##
-          # @return [String] The unique id of the Account responsible for this conversation.
+          # @return [String] The unique ID of the Account responsible for this conversation.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The unique id of the Chat Service this conversation belongs to.
+          # @return [String] The unique ID of the Conversation Service this conversation belongs to.
           def chat_service_sid
             @properties['chat_service_sid']
           end
 
           ##
-          # @return [String] The unique id of the SMS Service this conversation belongs to.
+          # @return [String] The unique ID of the Messaging Service this conversation belongs to.
           def messaging_service_sid
             @properties['messaging_service_sid']
           end
@@ -472,7 +472,7 @@ module Twilio
           #   store any data you wish. The string value must contain structurally valid JSON
           #   if specified.  **Note** that if the attributes are not set "{}" will be
           #   returned.
-          # @param [String] messaging_service_sid The unique id of the [SMS
+          # @param [String] messaging_service_sid The unique ID of the [Messaging
           #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
           #   to.
           # @param [conversation.State] state Current state of this conversation. Can be

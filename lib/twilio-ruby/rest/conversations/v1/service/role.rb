@@ -17,9 +17,9 @@ module Twilio
             ##
             # Initialize the RoleList
             # @param [Version] version Version that contains the resource
-            # @param [String] chat_service_sid The SID of the [Chat
-            #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the Role
-            #   resource is associated with.
+            # @param [String] chat_service_sid The SID of the [Conversation
+            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+            #   Role resource is associated with.
             # @return [RoleList] RoleList
             def initialize(version, chat_service_sid: nil)
               super(version)
@@ -34,7 +34,9 @@ module Twilio
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the new resource. It can be up to 64 characters long.
             # @param [role.RoleType] type The type of role. Can be: `conversation` for
-            #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) roles or `service` for [Service](https://www.twilio.com/docs/chat/rest/service-resource) roles.
+            #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+            #   roles or `service` for [Conversation
+            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) roles.
             # @param [String] permission A permission that you grant to the new role. Only one
             #   permission can be granted per parameter. To assign more than one permission,
             #   repeat this parameter for each permission value. The values for this parameter
@@ -176,9 +178,9 @@ module Twilio
             ##
             # Initialize the RoleContext
             # @param [Version] version Version that contains the resource
-            # @param [String] chat_service_sid The SID of the [Chat
-            #   Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
-            #   Role resource from.
+            # @param [String] chat_service_sid The SID of the [Conversation
+            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) to
+            #   fetch the Role resource from.
             # @param [String] sid The SID of the Role resource to fetch.
             # @return [RoleContext] RoleContext
             def initialize(version, chat_service_sid, sid)
@@ -254,9 +256,9 @@ module Twilio
             # Initialize the RoleInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] chat_service_sid The SID of the [Chat
-            #   Service](https://www.twilio.com/docs/chat/rest/service-resource) the Role
-            #   resource is associated with.
+            # @param [String] chat_service_sid The SID of the [Conversation
+            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+            #   Role resource is associated with.
             # @param [String] sid The SID of the Role resource to fetch.
             # @return [RoleInstance] RoleInstance
             def initialize(version, payload, chat_service_sid: nil, sid: nil)
@@ -304,7 +306,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The SID of the Service that the resource is associated with
+            # @return [String] The SID of the Conversation Service that the resource is associated with
             def chat_service_sid
               @properties['chat_service_sid']
             end
