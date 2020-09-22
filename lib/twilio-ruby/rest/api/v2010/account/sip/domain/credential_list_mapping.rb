@@ -174,7 +174,7 @@ module Twilio
                 # Initialize the CredentialListMappingContext
                 # @param [Version] version Version that contains the resource
                 # @param [String] account_sid The unique id of the
-                #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
+                #   {Account}[https://www.twilio.com/docs/iam/api/account] responsible for this
                 #   resource.
                 # @param [String] domain_sid A 34 character string that uniquely identifies the
                 #   SIP Domain that includes the resource to fetch.

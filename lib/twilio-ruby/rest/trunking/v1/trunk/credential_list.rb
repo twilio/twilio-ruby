@@ -28,8 +28,8 @@ module Twilio
 
             ##
             # Create the CredentialListInstance
-            # @param [String] credential_list_sid The SID of the [Credential
-            #   List](https://www.twilio.com/docs/voice/sip/api/sip-credentiallist-resource)
+            # @param [String] credential_list_sid The SID of the {Credential
+            #   List}[https://www.twilio.com/docs/voice/sip/api/sip-credentiallist-resource]
             #   that you want to associate with the trunk. Once associated, we will authenticate
             #   access to the trunk against this list.
             # @return [CredentialListInstance] Created CredentialListInstance

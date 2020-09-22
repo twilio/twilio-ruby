@@ -35,7 +35,7 @@ module Twilio
           #   `false`.
           # @param [Boolean] acl_enabled Whether token identities in the Service must be
           #   granted access to Sync objects by using the
-          #   [Permissions](https://www.twilio.com/docs/sync/api/sync-permissions) resource.
+          #   {Permissions}[https://www.twilio.com/docs/sync/api/sync-permissions] resource.
           # @param [Boolean] reachability_debouncing_enabled Whether every
           #   `endpoint_disconnected` event should occur after a configurable delay. The
           #   default is `false`, where the `endpoint_disconnected` event occurs immediately
@@ -234,7 +234,7 @@ module Twilio
           #   `false`.
           # @param [Boolean] acl_enabled Whether token identities in the Service must be
           #   granted access to Sync objects by using the
-          #   [Permissions](https://www.twilio.com/docs/sync/api/sync-permissions) resource.
+          #   {Permissions}[https://www.twilio.com/docs/sync/api/sync-permissions] resource.
           # @param [Boolean] reachability_debouncing_enabled Whether every
           #   `endpoint_disconnected` event should occur after a configurable delay. The
           #   default is `false`, where the `endpoint_disconnected` event occurs immediately
@@ -508,7 +508,7 @@ module Twilio
           #   `false`.
           # @param [Boolean] acl_enabled Whether token identities in the Service must be
           #   granted access to Sync objects by using the
-          #   [Permissions](https://www.twilio.com/docs/sync/api/sync-permissions) resource.
+          #   {Permissions}[https://www.twilio.com/docs/sync/api/sync-permissions] resource.
           # @param [Boolean] reachability_debouncing_enabled Whether every
           #   `endpoint_disconnected` event should occur after a configurable delay. The
           #   default is `false`, where the `endpoint_disconnected` event occurs immediately

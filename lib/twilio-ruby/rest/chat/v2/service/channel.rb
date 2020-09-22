@@ -16,7 +16,7 @@ module Twilio
             # Initialize the ChannelList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Channel
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Channel
             #   resource is associated with.
             # @return [ChannelList] ChannelList
             def initialize(version, service_sid: nil)
@@ -39,13 +39,13 @@ module Twilio
             #   application-specific data.
             # @param [channel.ChannelType] type The visibility of the channel. Can be:
             #   `public` or `private` and defaults to `public`.
-            # @param [Time] date_created The date, specified in [ISO
-            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            # @param [Time] date_created The date, specified in {ISO
+            #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
             #   as the date it was created. The default value is the current time set by the
             #   Chat service.  Note that this should only be used in cases where a Channel is
             #   being recreated from a backup/separate source.
-            # @param [Time] date_updated The date, specified in [ISO
-            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            # @param [Time] date_updated The date, specified in {ISO
+            #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
             #   as the date it was last updated. The default value is `null`. Note that this
             #   parameter should only be used in cases where a Channel is being recreated from a
             #   backup/separate source  and where a Message was previously updated.
@@ -199,7 +199,7 @@ module Twilio
             # Initialize the ChannelContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to fetch the
             #   Channel resource from.
             # @param [String] sid The SID of the Channel resource to fetch. This value can be
             #   either the `sid` or the `unique_name` of the Channel resource to fetch.
@@ -248,13 +248,13 @@ module Twilio
             #   and unique within the Service.
             # @param [String] attributes A valid JSON string that contains
             #   application-specific data.
-            # @param [Time] date_created The date, specified in [ISO
-            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            # @param [Time] date_created The date, specified in {ISO
+            #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
             #   as the date it was created. The default value is the current time set by the
             #   Chat service.  Note that this should only be used in cases where a Channel is
             #   being recreated from a backup/separate source.
-            # @param [Time] date_updated The date, specified in [ISO
-            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            # @param [Time] date_updated The date, specified in {ISO
+            #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
             #   as the date it was last updated.
             # @param [String] created_by The `identity` of the User that created the channel.
             #   Default is: `system`.
@@ -386,7 +386,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Channel
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Channel
             #   resource is associated with.
             # @param [String] sid The SID of the Channel resource to fetch. This value can be
             #   either the `sid` or the `unique_name` of the Channel resource to fetch.
@@ -538,13 +538,13 @@ module Twilio
             #   and unique within the Service.
             # @param [String] attributes A valid JSON string that contains
             #   application-specific data.
-            # @param [Time] date_created The date, specified in [ISO
-            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            # @param [Time] date_created The date, specified in {ISO
+            #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
             #   as the date it was created. The default value is the current time set by the
             #   Chat service.  Note that this should only be used in cases where a Channel is
             #   being recreated from a backup/separate source.
-            # @param [Time] date_updated The date, specified in [ISO
-            #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+            # @param [Time] date_updated The date, specified in {ISO
+            #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
             #   as the date it was last updated.
             # @param [String] created_by The `identity` of the User that created the channel.
             #   Default is: `system`.

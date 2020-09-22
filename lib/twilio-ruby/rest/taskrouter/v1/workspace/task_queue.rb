@@ -152,15 +152,15 @@ module Twilio
             #   criteria for any Tasks that enter the TaskQueue. For example, `'"language" ==
             #   "spanish"'`. The default value is `1==1`. If this value is empty, Tasks will
             #   wait in the TaskQueue until they are deleted or moved to another TaskQueue. For
-            #   more information about Worker selection, see [Describing Worker selection
-            #   criteria](https://www.twilio.com/docs/taskrouter/api/taskqueues#target-workers).
+            #   more information about Worker selection, see {Describing Worker selection
+            #   criteria}[https://www.twilio.com/docs/taskrouter/api/taskqueues#target-workers].
             # @param [String] max_reserved_workers The maximum number of Workers to reserve
             #   for the assignment of a Task in the queue. Can be an integer between 1 and 50,
             #   inclusive and defaults to 1.
             # @param [task_queue.TaskOrder] task_order How Tasks will be assigned to Workers.
             #   Set this parameter to `LIFO` to assign most recently created Task first or FIFO
-            #   to assign the oldest Task first. Default is `FIFO`. [Click
-            #   here](https://www.twilio.com/docs/taskrouter/queue-ordering-last-first-out-lifo)
+            #   to assign the oldest Task first. Default is `FIFO`. {Click
+            #   here}[https://www.twilio.com/docs/taskrouter/queue-ordering-last-first-out-lifo]
             #   to learn more.
             # @param [String] reservation_activity_sid The SID of the Activity to assign
             #   Workers when a task is reserved for them.
@@ -279,8 +279,8 @@ module Twilio
             # @param [task_queue.TaskOrder] task_order How Tasks will be assigned to Workers.
             #   Can be: `FIFO` or `LIFO` and the default is `FIFO`. Use `FIFO` to assign the
             #   oldest task first and `LIFO` to assign the most recent task first. For more
-            #   information, see [Queue
-            #   Ordering](https://www.twilio.com/docs/taskrouter/queue-ordering-last-first-out-lifo).
+            #   information, see {Queue
+            #   Ordering}[https://www.twilio.com/docs/taskrouter/queue-ordering-last-first-out-lifo].
             # @return [TaskQueueInstance] Updated TaskQueueInstance
             def update(friendly_name: :unset, target_workers: :unset, reservation_activity_sid: :unset, assignment_activity_sid: :unset, max_reserved_workers: :unset, task_order: :unset)
               data = Twilio::Values.of({
@@ -510,8 +510,8 @@ module Twilio
             # @param [task_queue.TaskOrder] task_order How Tasks will be assigned to Workers.
             #   Can be: `FIFO` or `LIFO` and the default is `FIFO`. Use `FIFO` to assign the
             #   oldest task first and `LIFO` to assign the most recent task first. For more
-            #   information, see [Queue
-            #   Ordering](https://www.twilio.com/docs/taskrouter/queue-ordering-last-first-out-lifo).
+            #   information, see {Queue
+            #   Ordering}[https://www.twilio.com/docs/taskrouter/queue-ordering-last-first-out-lifo].
             # @return [TaskQueueInstance] Updated TaskQueueInstance
             def update(friendly_name: :unset, target_workers: :unset, reservation_activity_sid: :unset, assignment_activity_sid: :unset, max_reserved_workers: :unset, task_order: :unset)
               context.update(

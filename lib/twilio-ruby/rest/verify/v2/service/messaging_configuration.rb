@@ -16,7 +16,7 @@ module Twilio
             # Initialize the MessagingConfigurationList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/verify/api/service) that the resource is
+            #   {Service}[https://www.twilio.com/docs/verify/api/service] that the resource is
             #   associated with.
             # @return [MessagingConfigurationList] MessagingConfigurationList
             def initialize(version, service_sid: nil)
@@ -30,11 +30,11 @@ module Twilio
             ##
             # Create the MessagingConfigurationInstance
             # @param [String] country The
-            #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of
+            #   {ISO-3166-1}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] country code of
             #   the country this configuration will be applied to. If this is a global
             #   configuration, Country will take the value `all`.
-            # @param [String] messaging_service_sid The SID of the [Messaging
-            #   Service](https://www.twilio.com/docs/sms/services/api) to be used to send SMS to
+            # @param [String] messaging_service_sid The SID of the {Messaging
+            #   Service}[https://www.twilio.com/docs/sms/services/api] to be used to send SMS to
             #   the country of this configuration.
             # @return [MessagingConfigurationInstance] Created MessagingConfigurationInstance
             def create(country: nil, messaging_service_sid: nil)
@@ -166,10 +166,10 @@ module Twilio
             # Initialize the MessagingConfigurationContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/verify/api/service) that the resource is
+            #   {Service}[https://www.twilio.com/docs/verify/api/service] that the resource is
             #   associated with.
             # @param [String] country The
-            #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of
+            #   {ISO-3166-1}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] country code of
             #   the country this configuration will be applied to. If this is a global
             #   configuration, Country will take the value `all`.
             # @return [MessagingConfigurationContext] MessagingConfigurationContext
@@ -183,8 +183,8 @@ module Twilio
 
             ##
             # Update the MessagingConfigurationInstance
-            # @param [String] messaging_service_sid The SID of the [Messaging
-            #   Service](https://www.twilio.com/docs/sms/services/api) to be used to send SMS to
+            # @param [String] messaging_service_sid The SID of the {Messaging
+            #   Service}[https://www.twilio.com/docs/sms/services/api] to be used to send SMS to
             #   the country of this configuration.
             # @return [MessagingConfigurationInstance] Updated MessagingConfigurationInstance
             def update(messaging_service_sid: nil)
@@ -242,10 +242,10 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/verify/api/service) that the resource is
+            #   {Service}[https://www.twilio.com/docs/verify/api/service] that the resource is
             #   associated with.
             # @param [String] country The
-            #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of
+            #   {ISO-3166-1}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] country code of
             #   the country this configuration will be applied to. If this is a global
             #   configuration, Country will take the value `all`.
             # @return [MessagingConfigurationInstance] MessagingConfigurationInstance
@@ -327,8 +327,8 @@ module Twilio
 
             ##
             # Update the MessagingConfigurationInstance
-            # @param [String] messaging_service_sid The SID of the [Messaging
-            #   Service](https://www.twilio.com/docs/sms/services/api) to be used to send SMS to
+            # @param [String] messaging_service_sid The SID of the {Messaging
+            #   Service}[https://www.twilio.com/docs/sms/services/api] to be used to send SMS to
             #   the country of this configuration.
             # @return [MessagingConfigurationInstance] Updated MessagingConfigurationInstance
             def update(messaging_service_sid: nil)

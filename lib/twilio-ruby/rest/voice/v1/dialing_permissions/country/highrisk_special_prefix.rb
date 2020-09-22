@@ -18,8 +18,8 @@ module Twilio
               ##
               # Initialize the HighriskSpecialPrefixList
               # @param [Version] version Version that contains the resource
-              # @param [String] iso_code The [ISO country
-              #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+              # @param [String] iso_code The {ISO country
+              #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2].
               # @return [HighriskSpecialPrefixList] HighriskSpecialPrefixList
               def initialize(version, iso_code: nil)
                 super(version)
@@ -154,8 +154,8 @@ module Twilio
               # Initialize the HighriskSpecialPrefixInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] iso_code The [ISO country
-              #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+              # @param [String] iso_code The {ISO country
+              #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2].
               # @return [HighriskSpecialPrefixInstance] HighriskSpecialPrefixInstance
               def initialize(version, payload, iso_code: nil)
                 super(version)

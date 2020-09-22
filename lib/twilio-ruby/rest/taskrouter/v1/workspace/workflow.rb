@@ -119,12 +119,12 @@ module Twilio
             #   the Workflow resource. For example, `Inbound Call Workflow` or `2014 Outbound
             #   Campaign`.
             # @param [String] configuration A JSON string that contains the rules to apply to
-            #   the Workflow. See [Configuring
-            #   Workflows](https://www.twilio.com/docs/taskrouter/workflow-configuration) for
+            #   the Workflow. See {Configuring
+            #   Workflows}[https://www.twilio.com/docs/taskrouter/workflow-configuration] for
             #   more information.
             # @param [String] assignment_callback_url The URL from your application that will
-            #   process task assignment events. See [Handling Task Assignment
-            #   Callback](https://www.twilio.com/docs/taskrouter/handle-assignment-callbacks)
+            #   process task assignment events. See {Handling Task Assignment
+            #   Callback}[https://www.twilio.com/docs/taskrouter/handle-assignment-callbacks]
             #   for more details.
             # @param [String] fallback_assignment_callback_url The URL that we should call
             #   when a call to the `assignment_callback_url` fails.
@@ -223,14 +223,14 @@ module Twilio
             #   the Workflow resource. For example, `Inbound Call Workflow` or `2014 Outbound
             #   Campaign`.
             # @param [String] assignment_callback_url The URL from your application that will
-            #   process task assignment events. See [Handling Task Assignment
-            #   Callback](https://www.twilio.com/docs/taskrouter/handle-assignment-callbacks)
+            #   process task assignment events. See {Handling Task Assignment
+            #   Callback}[https://www.twilio.com/docs/taskrouter/handle-assignment-callbacks]
             #   for more details.
             # @param [String] fallback_assignment_callback_url The URL that we should call
             #   when a call to the `assignment_callback_url` fails.
             # @param [String] configuration A JSON string that contains the rules to apply to
-            #   the Workflow. See [Configuring
-            #   Workflows](https://www.twilio.com/docs/taskrouter/workflow-configuration) for
+            #   the Workflow. See {Configuring
+            #   Workflows}[https://www.twilio.com/docs/taskrouter/workflow-configuration] for
             #   more information.
             # @param [String] task_reservation_timeout How long TaskRouter will wait for a
             #   confirmation response from your application after it assigns a Task to a Worker.
@@ -441,14 +441,14 @@ module Twilio
             #   the Workflow resource. For example, `Inbound Call Workflow` or `2014 Outbound
             #   Campaign`.
             # @param [String] assignment_callback_url The URL from your application that will
-            #   process task assignment events. See [Handling Task Assignment
-            #   Callback](https://www.twilio.com/docs/taskrouter/handle-assignment-callbacks)
+            #   process task assignment events. See {Handling Task Assignment
+            #   Callback}[https://www.twilio.com/docs/taskrouter/handle-assignment-callbacks]
             #   for more details.
             # @param [String] fallback_assignment_callback_url The URL that we should call
             #   when a call to the `assignment_callback_url` fails.
             # @param [String] configuration A JSON string that contains the rules to apply to
-            #   the Workflow. See [Configuring
-            #   Workflows](https://www.twilio.com/docs/taskrouter/workflow-configuration) for
+            #   the Workflow. See {Configuring
+            #   Workflows}[https://www.twilio.com/docs/taskrouter/workflow-configuration] for
             #   more information.
             # @param [String] task_reservation_timeout How long TaskRouter will wait for a
             #   confirmation response from your application after it assigns a Task to a Worker.

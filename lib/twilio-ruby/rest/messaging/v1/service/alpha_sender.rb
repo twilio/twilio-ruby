@@ -18,7 +18,7 @@ module Twilio
             # Initialize the AlphaSenderList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the resource
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the resource
             #   is associated with.
             # @return [AlphaSenderList] AlphaSenderList
             def initialize(version, service_sid: nil)
@@ -168,7 +168,7 @@ module Twilio
             # Initialize the AlphaSenderContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to fetch the
             #   resource from.
             # @param [String] sid The SID of the AlphaSender resource to fetch.
             # @return [AlphaSenderContext] AlphaSenderContext
@@ -224,7 +224,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the resource
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the resource
             #   is associated with.
             # @param [String] sid The SID of the AlphaSender resource to fetch.
             # @return [AlphaSenderInstance] AlphaSenderInstance

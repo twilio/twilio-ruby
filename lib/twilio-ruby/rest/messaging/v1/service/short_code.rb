@@ -18,7 +18,7 @@ module Twilio
             # Initialize the ShortCodeList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the resource
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the resource
             #   is associated with.
             # @return [ShortCodeList] ShortCodeList
             def initialize(version, service_sid: nil)
@@ -167,7 +167,7 @@ module Twilio
             # Initialize the ShortCodeContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to fetch the
             #   resource from.
             # @param [String] sid The SID of the ShortCode resource to fetch.
             # @return [ShortCodeContext] ShortCodeContext
@@ -218,7 +218,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the resource
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the resource
             #   is associated with.
             # @param [String] sid The SID of the ShortCode resource to fetch.
             # @return [ShortCodeInstance] ShortCodeInstance

@@ -17,10 +17,10 @@ module Twilio
               # Initialize the WebhookList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Channel
+              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Channel
               #   Webhook resource is associated with.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the Channel Webhook
+              #   {Channel}[https://www.twilio.com/docs/chat/channels] the Channel Webhook
               #   resource belongs to.
               # @return [WebhookList] WebhookList
               def initialize(version, service_sid: nil, channel_sid: nil)
@@ -122,14 +122,14 @@ module Twilio
               # @param [String] configuration_filters The events that cause us to call the
               #   Channel Webhook. Used when `type` is `webhook`. This parameter takes only one
               #   event. To specify more than one event, repeat this parameter for each event. For
-              #   the list of possible events, see [Webhook Event
-              #   Triggers](https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger).
+              #   the list of possible events, see {Webhook Event
+              #   Triggers}[https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger].
               # @param [String] configuration_triggers A string that will cause us to call the
               #   webhook when it is present in a message body. This parameter takes only one
               #   trigger string. To specify more than one, repeat this parameter for each trigger
               #   string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
               # @param [String] configuration_flow_sid The SID of the Studio
-              #   [Flow](https://www.twilio.com/docs/studio/rest-api/flow) to call when an event
+              #   {Flow}[https://www.twilio.com/docs/studio/rest-api/flow] to call when an event
               #   in `configuration.filters` occurs. Used only when `type` is `studio`.
               # @param [String] configuration_retry_count The number of times to retry the
               #   webhook if the first attempt fails. Can be an integer between 0 and 3,
@@ -202,10 +202,10 @@ module Twilio
               # Initialize the WebhookContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) with the
+              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] with the
               #   Channel to fetch the Webhook resource from.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the Channel Webhook
+              #   {Channel}[https://www.twilio.com/docs/chat/channels] the Channel Webhook
               #   resource to fetch belongs to. This value can be the Channel resource's `sid` or
               #   `unique_name`.
               # @param [String] sid The SID of the Channel Webhook resource to fetch.
@@ -242,14 +242,14 @@ module Twilio
               # @param [String] configuration_filters The events that cause us to call the
               #   Channel Webhook. Used when `type` is `webhook`. This parameter takes only one
               #   event. To specify more than one event, repeat this parameter for each event. For
-              #   the list of possible events, see [Webhook Event
-              #   Triggers](https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger).
+              #   the list of possible events, see {Webhook Event
+              #   Triggers}[https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger].
               # @param [String] configuration_triggers A string that will cause us to call the
               #   webhook when it is present in a message body. This parameter takes only one
               #   trigger string. To specify more than one, repeat this parameter for each trigger
               #   string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
               # @param [String] configuration_flow_sid The SID of the Studio
-              #   [Flow](https://www.twilio.com/docs/studio/rest-api/flow) to call when an event
+              #   {Flow}[https://www.twilio.com/docs/studio/rest-api/flow] to call when an event
               #   in `configuration.filters` occurs. Used only when `type` = `studio`.
               # @param [String] configuration_retry_count The number of times to retry the
               #   webhook if the first attempt fails. Can be an integer between 0 and 3,
@@ -304,10 +304,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Channel
+              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Channel
               #   Webhook resource is associated with.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the Channel Webhook
+              #   {Channel}[https://www.twilio.com/docs/chat/channels] the Channel Webhook
               #   resource belongs to.
               # @param [String] sid The SID of the Channel Webhook resource to fetch.
               # @return [WebhookInstance] WebhookInstance
@@ -422,14 +422,14 @@ module Twilio
               # @param [String] configuration_filters The events that cause us to call the
               #   Channel Webhook. Used when `type` is `webhook`. This parameter takes only one
               #   event. To specify more than one event, repeat this parameter for each event. For
-              #   the list of possible events, see [Webhook Event
-              #   Triggers](https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger).
+              #   the list of possible events, see {Webhook Event
+              #   Triggers}[https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger].
               # @param [String] configuration_triggers A string that will cause us to call the
               #   webhook when it is present in a message body. This parameter takes only one
               #   trigger string. To specify more than one, repeat this parameter for each trigger
               #   string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
               # @param [String] configuration_flow_sid The SID of the Studio
-              #   [Flow](https://www.twilio.com/docs/studio/rest-api/flow) to call when an event
+              #   {Flow}[https://www.twilio.com/docs/studio/rest-api/flow] to call when an event
               #   in `configuration.filters` occurs. Used only when `type` = `studio`.
               # @param [String] configuration_retry_count The number of times to retry the
               #   webhook if the first attempt fails. Can be an integer between 0 and 3,

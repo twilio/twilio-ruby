@@ -17,10 +17,10 @@ module Twilio
               # Initialize the UserChannelList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the User
+              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the User
               #   Channel resource is associated with.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/user-resource) the User Channel
+              #   {User}[https://www.twilio.com/docs/chat/rest/user-resource] the User Channel
               #   belongs to.
               # @return [UserChannelList] UserChannelList
               def initialize(version, service_sid: nil, user_sid: nil)
@@ -157,14 +157,14 @@ module Twilio
               # Initialize the UserChannelContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to fetch the
               #   User Channel resource from.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/user-resource) to fetch the User
+              #   {User}[https://www.twilio.com/docs/chat/rest/user-resource] to fetch the User
               #   Channel resource from. This value can be either the `sid` or the `identity` of
               #   the User resource.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) that has the User Channel
+              #   {Channel}[https://www.twilio.com/docs/chat/channels] that has the User Channel
               #   to fetch. This value can be either the `sid` or the `unique_name` of the Channel
               #   to fetch.
               # @return [UserChannelContext] UserChannelContext
@@ -203,12 +203,12 @@ module Twilio
               # @param [user_channel.NotificationLevel] notification_level The push notification
               #   level to assign to the User Channel. Can be: `default` or `muted`.
               # @param [String] last_consumed_message_index The index of the last
-              #   [Message](https://www.twilio.com/docs/chat/rest/message-resource) in the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) that the Member has read.
-              # @param [Time] last_consumption_timestamp The [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp of the last
-              #   [Message](https://www.twilio.com/docs/chat/rest/message-resource) read event for
-              #   the Member within the [Channel](https://www.twilio.com/docs/chat/channels).
+              #   {Message}[https://www.twilio.com/docs/chat/rest/message-resource] in the
+              #   {Channel}[https://www.twilio.com/docs/chat/channels] that the Member has read.
+              # @param [Time] last_consumption_timestamp The {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] timestamp of the last
+              #   {Message}[https://www.twilio.com/docs/chat/rest/message-resource] read event for
+              #   the Member within the {Channel}[https://www.twilio.com/docs/chat/channels].
               # @return [UserChannelInstance] Updated UserChannelInstance
               def update(notification_level: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset)
                 data = Twilio::Values.of({
@@ -249,13 +249,13 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the User
+              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the User
               #   Channel resource is associated with.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/user-resource) the User Channel
+              #   {User}[https://www.twilio.com/docs/chat/rest/user-resource] the User Channel
               #   belongs to.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) that has the User Channel
+              #   {Channel}[https://www.twilio.com/docs/chat/channels] that has the User Channel
               #   to fetch. This value can be either the `sid` or the `unique_name` of the Channel
               #   to fetch.
               # @return [UserChannelInstance] UserChannelInstance
@@ -387,12 +387,12 @@ module Twilio
               # @param [user_channel.NotificationLevel] notification_level The push notification
               #   level to assign to the User Channel. Can be: `default` or `muted`.
               # @param [String] last_consumed_message_index The index of the last
-              #   [Message](https://www.twilio.com/docs/chat/rest/message-resource) in the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) that the Member has read.
-              # @param [Time] last_consumption_timestamp The [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp of the last
-              #   [Message](https://www.twilio.com/docs/chat/rest/message-resource) read event for
-              #   the Member within the [Channel](https://www.twilio.com/docs/chat/channels).
+              #   {Message}[https://www.twilio.com/docs/chat/rest/message-resource] in the
+              #   {Channel}[https://www.twilio.com/docs/chat/channels] that the Member has read.
+              # @param [Time] last_consumption_timestamp The {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] timestamp of the last
+              #   {Message}[https://www.twilio.com/docs/chat/rest/message-resource] read event for
+              #   the Member within the {Channel}[https://www.twilio.com/docs/chat/channels].
               # @return [UserChannelInstance] Updated UserChannelInstance
               def update(notification_level: :unset, last_consumed_message_index: :unset, last_consumption_timestamp: :unset)
                 context.update(

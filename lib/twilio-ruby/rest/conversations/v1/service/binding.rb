@@ -17,8 +17,8 @@ module Twilio
             ##
             # Initialize the BindingList
             # @param [Version] version Version that contains the resource
-            # @param [String] chat_service_sid The SID of the [Conversation
-            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+            # @param [String] chat_service_sid The SID of the {Conversation
+            #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
             #   Binding resource is associated with.
             # @return [BindingList] BindingList
             def initialize(version, chat_service_sid: nil)
@@ -34,14 +34,14 @@ module Twilio
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [binding.BindingType] binding_type The push technology used by the
-            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push
+            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See {push
             #   notification
-            #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+            #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
             #   for more info.
-            # @param [String] identity The identity of a [Conversation
-            #   User](https://www.twilio.com/docs/conversations/api/user-resource) this binding
-            #   belongs to. See [access
-            #   tokens](https://www.twilio.com/docs/conversations/create-tokens) for more
+            # @param [String] identity The identity of a {Conversation
+            #   User}[https://www.twilio.com/docs/conversations/api/user-resource] this binding
+            #   belongs to. See {access
+            #   tokens}[https://www.twilio.com/docs/conversations/create-tokens] for more
             #   details.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
@@ -64,14 +64,14 @@ module Twilio
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [binding.BindingType] binding_type The push technology used by the
-            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push
+            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See {push
             #   notification
-            #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+            #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
             #   for more info.
-            # @param [String] identity The identity of a [Conversation
-            #   User](https://www.twilio.com/docs/conversations/api/user-resource) this binding
-            #   belongs to. See [access
-            #   tokens](https://www.twilio.com/docs/conversations/create-tokens) for more
+            # @param [String] identity The identity of a {Conversation
+            #   User}[https://www.twilio.com/docs/conversations/api/user-resource] this binding
+            #   belongs to. See {access
+            #   tokens}[https://www.twilio.com/docs/conversations/create-tokens] for more
             #   details.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
@@ -106,14 +106,14 @@ module Twilio
             # Retrieve a single page of BindingInstance records from the API.
             # Request is executed immediately.
             # @param [binding.BindingType] binding_type The push technology used by the
-            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push
+            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See {push
             #   notification
-            #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+            #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
             #   for more info.
-            # @param [String] identity The identity of a [Conversation
-            #   User](https://www.twilio.com/docs/conversations/api/user-resource) this binding
-            #   belongs to. See [access
-            #   tokens](https://www.twilio.com/docs/conversations/create-tokens) for more
+            # @param [String] identity The identity of a {Conversation
+            #   User}[https://www.twilio.com/docs/conversations/api/user-resource] this binding
+            #   belongs to. See {access
+            #   tokens}[https://www.twilio.com/docs/conversations/create-tokens] for more
             #   details.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
@@ -190,8 +190,8 @@ module Twilio
             ##
             # Initialize the BindingContext
             # @param [Version] version Version that contains the resource
-            # @param [String] chat_service_sid The SID of the [Conversation
-            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+            # @param [String] chat_service_sid The SID of the {Conversation
+            #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
             #   Binding resource is associated with.
             # @param [String] sid A 34 character string that uniquely identifies this
             #   resource.
@@ -247,8 +247,8 @@ module Twilio
             # Initialize the BindingInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] chat_service_sid The SID of the [Conversation
-            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+            # @param [String] chat_service_sid The SID of the {Conversation
+            #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
             #   Binding resource is associated with.
             # @param [String] sid A 34 character string that uniquely identifies this
             #   resource.

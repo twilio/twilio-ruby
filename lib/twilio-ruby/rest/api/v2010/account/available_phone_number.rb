@@ -147,10 +147,10 @@ module Twilio
             # Initialize the AvailablePhoneNumberCountryContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) requesting the available
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] requesting the available
             #   phone number Country resource.
             # @param [String] country_code The
-            #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of
+            #   {ISO-3166-1}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] country code of
             #   the country to fetch available phone number information about.
             # @return [AvailablePhoneNumberCountryContext] AvailablePhoneNumberCountryContext
             def initialize(version, account_sid, country_code)
@@ -319,7 +319,7 @@ module Twilio
             # @param [String] account_sid A 34 character string that uniquely identifies this
             #   resource.
             # @param [String] country_code The
-            #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of
+            #   {ISO-3166-1}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] country code of
             #   the country to fetch available phone number information about.
             # @return [AvailablePhoneNumberCountryInstance] AvailablePhoneNumberCountryInstance
             def initialize(version, payload, account_sid: nil, country_code: nil)

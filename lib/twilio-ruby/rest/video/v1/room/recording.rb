@@ -34,9 +34,9 @@ module Twilio
             #   Can be: `processing`, `completed`, or `deleted`.
             # @param [String] source_sid Read only the recordings that have this `source_sid`.
             # @param [Time] date_created_after Read only recordings that started on or after
-            #   this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+            #   this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] datetime with time zone.
             # @param [Time] date_created_before Read only Recordings that started before this
-            #   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+            #   {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] datetime with time zone.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -63,9 +63,9 @@ module Twilio
             #   Can be: `processing`, `completed`, or `deleted`.
             # @param [String] source_sid Read only the recordings that have this `source_sid`.
             # @param [Time] date_created_after Read only recordings that started on or after
-            #   this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+            #   this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] datetime with time zone.
             # @param [Time] date_created_before Read only Recordings that started before this
-            #   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+            #   {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] datetime with time zone.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -108,9 +108,9 @@ module Twilio
             #   Can be: `processing`, `completed`, or `deleted`.
             # @param [String] source_sid Read only the recordings that have this `source_sid`.
             # @param [Time] date_created_after Read only recordings that started on or after
-            #   this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+            #   this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] datetime with time zone.
             # @param [Time] date_created_before Read only Recordings that started before this
-            #   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+            #   {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] datetime with time zone.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50

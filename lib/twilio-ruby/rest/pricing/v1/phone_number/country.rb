@@ -144,8 +144,8 @@ module Twilio
             ##
             # Initialize the CountryContext
             # @param [Version] version Version that contains the resource
-            # @param [String] iso_country The [ISO country
-            #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the pricing
+            # @param [String] iso_country The {ISO country
+            #   code}[http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the pricing
             #   information to fetch.
             # @return [CountryContext] CountryContext
             def initialize(version, iso_country)
@@ -185,8 +185,8 @@ module Twilio
             # Initialize the CountryInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] iso_country The [ISO country
-            #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the pricing
+            # @param [String] iso_country The {ISO country
+            #   code}[http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the pricing
             #   information to fetch.
             # @return [CountryInstance] CountryInstance
             def initialize(version, payload, iso_country: nil)

@@ -18,7 +18,7 @@ module Twilio
             # Initialize the PhoneNumberList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the PhoneNumber resource's parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
+            #   {Service}[https://www.twilio.com/docs/proxy/api/service] resource.
             # @return [PhoneNumberList] PhoneNumberList
             def initialize(version, service_sid: nil)
               super(version)
@@ -31,16 +31,16 @@ module Twilio
             ##
             # Create the PhoneNumberInstance
             # @param [String] sid The SID of a Twilio
-            #   [IncomingPhoneNumber](https://www.twilio.com/docs/phone-numbers/api/incomingphonenumber-resource)
+            #   {IncomingPhoneNumber}[https://www.twilio.com/docs/phone-numbers/api/incomingphonenumber-resource]
             #   resource that represents the Twilio Number you would like to assign to your
             #   Proxy Service.
             # @param [String] phone_number The phone number in
-            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format.  E.164 phone
+            #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format.  E.164 phone
             #   numbers consist of a + followed by the country code and subscriber number
             #   without punctuation characters. For example, +14155551234.
             # @param [Boolean] is_reserved Whether the new phone number should be reserved and
-            #   not be assigned to a participant using proxy pool logic. See [Reserved Phone
-            #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
+            #   not be assigned to a participant using proxy pool logic. See {Reserved Phone
+            #   Numbers}[https://www.twilio.com/docs/proxy/reserved-phone-numbers] for more
             #   information.
             # @return [PhoneNumberInstance] Created PhoneNumberInstance
             def create(sid: :unset, phone_number: :unset, is_reserved: :unset)
@@ -176,7 +176,7 @@ module Twilio
             # Initialize the PhoneNumberContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service) of the PhoneNumber
+            #   {Service}[https://www.twilio.com/docs/proxy/api/service] of the PhoneNumber
             #   resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   PhoneNumber resource to fetch.
@@ -213,8 +213,8 @@ module Twilio
             ##
             # Update the PhoneNumberInstance
             # @param [Boolean] is_reserved Whether the phone number should be reserved and not
-            #   be assigned to a participant using proxy pool logic. See [Reserved Phone
-            #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
+            #   be assigned to a participant using proxy pool logic. See {Reserved Phone
+            #   Numbers}[https://www.twilio.com/docs/proxy/reserved-phone-numbers] for more
             #   information.
             # @return [PhoneNumberInstance] Updated PhoneNumberInstance
             def update(is_reserved: :unset)
@@ -253,7 +253,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the PhoneNumber resource's parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
+            #   {Service}[https://www.twilio.com/docs/proxy/api/service] resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   PhoneNumber resource to fetch.
             # @return [PhoneNumberInstance] PhoneNumberInstance
@@ -381,8 +381,8 @@ module Twilio
             ##
             # Update the PhoneNumberInstance
             # @param [Boolean] is_reserved Whether the phone number should be reserved and not
-            #   be assigned to a participant using proxy pool logic. See [Reserved Phone
-            #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
+            #   be assigned to a participant using proxy pool logic. See {Reserved Phone
+            #   Numbers}[https://www.twilio.com/docs/proxy/reserved-phone-numbers] for more
             #   information.
             # @return [PhoneNumberInstance] Updated PhoneNumberInstance
             def update(is_reserved: :unset)

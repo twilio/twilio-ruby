@@ -28,15 +28,15 @@ module Twilio
           ##
           # Create the UserInstance
           # @param [String] identity The application-defined string that uniquely identifies
-          #   the resource's User within the [Conversation
-          #   Service](https://www.twilio.com/docs/conversations/api/service-resource). This
+          #   the resource's User within the {Conversation
+          #   Service}[https://www.twilio.com/docs/conversations/api/service-resource]. This
           #   value is often a username or an email address, and is case-sensitive.
           # @param [String] friendly_name The string that you assigned to describe the
           #   resource.
           # @param [String] attributes The JSON Object string that stores
           #   application-specific data. If attributes have not been set, `{}` is returned.
           # @param [String] role_sid The SID of a service-level
-          #   [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to
+          #   {Role}[https://www.twilio.com/docs/conversations/api/role-resource] to assign to
           #   the user.
           # @return [UserInstance] Created UserInstance
           def create(identity: nil, friendly_name: :unset, attributes: :unset, role_sid: :unset)
@@ -194,7 +194,7 @@ module Twilio
           # @param [String] attributes The JSON Object string that stores
           #   application-specific data. If attributes have not been set, `{}` is returned.
           # @param [String] role_sid The SID of a service-level
-          #   [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to
+          #   {Role}[https://www.twilio.com/docs/conversations/api/role-resource] to assign to
           #   the user.
           # @return [UserInstance] Updated UserInstance
           def update(friendly_name: :unset, attributes: :unset, role_sid: :unset)
@@ -357,7 +357,7 @@ module Twilio
           # @param [String] attributes The JSON Object string that stores
           #   application-specific data. If attributes have not been set, `{}` is returned.
           # @param [String] role_sid The SID of a service-level
-          #   [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to
+          #   {Role}[https://www.twilio.com/docs/conversations/api/role-resource] to assign to
           #   the user.
           # @return [UserInstance] Updated UserInstance
           def update(friendly_name: :unset, attributes: :unset, role_sid: :unset)

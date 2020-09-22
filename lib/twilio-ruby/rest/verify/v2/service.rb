@@ -53,7 +53,7 @@ module Twilio
           #   true}. If `include_date` is set to `true`, which is the default, that means that
           #   the push challenge’s response will include the date created value. If
           #   `include_date` is set to `false`, then the date created value will not be
-          #   included. See [Challenge](https://www.twilio.com/docs/verify/api/challenge)
+          #   included. See {Challenge}[https://www.twilio.com/docs/verify/api/challenge]
           #   resource’s details parameter for more info
           # @return [ServiceInstance] Created ServiceInstance
           def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push: :unset)
@@ -259,7 +259,7 @@ module Twilio
           #   true}. If `include_date` is set to `true`, which is the default, that means that
           #   the push challenge’s response will include the date created value. If
           #   `include_date` is set to `false`, then the date created value will not be
-          #   included. See [Challenge](https://www.twilio.com/docs/verify/api/challenge)
+          #   included. See {Challenge}[https://www.twilio.com/docs/verify/api/challenge]
           #   resource’s details parameter for more info
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push: :unset)
@@ -595,7 +595,7 @@ module Twilio
           #   true}. If `include_date` is set to `true`, which is the default, that means that
           #   the push challenge’s response will include the date created value. If
           #   `include_date` is set to `false`, then the date created value will not be
-          #   included. See [Challenge](https://www.twilio.com/docs/verify/api/challenge)
+          #   included. See {Challenge}[https://www.twilio.com/docs/verify/api/challenge]
           #   resource’s details parameter for more info
           # @return [ServiceInstance] Updated ServiceInstance
           def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push: :unset)

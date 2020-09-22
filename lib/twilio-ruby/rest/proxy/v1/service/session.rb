@@ -18,7 +18,7 @@ module Twilio
             # Initialize the SessionList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/proxy/api/service) the session is
+            #   {Service}[https://www.twilio.com/docs/proxy/api/service] the session is
             #   associated with.
             # @return [SessionList] SessionList
             def initialize(version, service_sid: nil)
@@ -114,7 +114,7 @@ module Twilio
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the resource. This value must be 191 characters or fewer in length
             #   and be unique. **This value should not have PII.**
-            # @param [Time] date_expiry The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            # @param [Time] date_expiry The {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601]
             #   date when the Session should expire. If this is value is present, it overrides
             #   the `ttl` value.
             # @param [String] ttl The time, in seconds, when the session will expire. The time
@@ -201,7 +201,7 @@ module Twilio
             # Initialize the SessionContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service) of the resource to
+            #   {Service}[https://www.twilio.com/docs/proxy/api/service] of the resource to
             #   fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Session resource to fetch.
@@ -236,7 +236,7 @@ module Twilio
 
             ##
             # Update the SessionInstance
-            # @param [Time] date_expiry The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            # @param [Time] date_expiry The {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601]
             #   date when the Session should expire. If this is value is present, it overrides
             #   the `ttl` value.
             # @param [String] ttl The time, in seconds, when the session will expire. The time
@@ -335,7 +335,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/proxy/api/service) the session is
+            #   {Service}[https://www.twilio.com/docs/proxy/api/service] the session is
             #   associated with.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Session resource to fetch.
@@ -491,7 +491,7 @@ module Twilio
 
             ##
             # Update the SessionInstance
-            # @param [Time] date_expiry The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            # @param [Time] date_expiry The {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601]
             #   date when the Session should expire. If this is value is present, it overrides
             #   the `ttl` value.
             # @param [String] ttl The time, in seconds, when the session will expire. The time

@@ -71,7 +71,7 @@ module Twilio
 
       ##
       # @param [String] country_code The
-      #   [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of
+      #   {ISO-3166-1}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] country code of
       #   the country.
       # @return [Twilio::REST::Api::V2010::AccountContext::AvailablePhoneNumberCountryInstance] if country_code was passed.
       # @return [Twilio::REST::Api::V2010::AccountContext::AvailablePhoneNumberCountryList]

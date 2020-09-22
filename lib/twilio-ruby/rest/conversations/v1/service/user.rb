@@ -17,8 +17,8 @@ module Twilio
             ##
             # Initialize the UserList
             # @param [Version] version Version that contains the resource
-            # @param [String] chat_service_sid The SID of the [Conversation
-            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+            # @param [String] chat_service_sid The SID of the {Conversation
+            #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
             #   User resource is associated with.
             # @return [UserList] UserList
             def initialize(version, chat_service_sid: nil)
@@ -32,15 +32,15 @@ module Twilio
             ##
             # Create the UserInstance
             # @param [String] identity The application-defined string that uniquely identifies
-            #   the resource's User within the [Conversation
-            #   Service](https://www.twilio.com/docs/conversations/api/service-resource). This
+            #   the resource's User within the {Conversation
+            #   Service}[https://www.twilio.com/docs/conversations/api/service-resource]. This
             #   value is often a username or an email address, and is case-sensitive.
             # @param [String] friendly_name The string that you assigned to describe the
             #   resource.
             # @param [String] attributes The JSON Object string that stores
             #   application-specific data. If attributes have not been set, `{}` is returned.
             # @param [String] role_sid The SID of a service-level
-            #   [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to
+            #   {Role}[https://www.twilio.com/docs/conversations/api/role-resource] to assign to
             #   the user.
             # @return [UserInstance] Created UserInstance
             def create(identity: nil, friendly_name: :unset, attributes: :unset, role_sid: :unset)
@@ -180,8 +180,8 @@ module Twilio
             ##
             # Initialize the UserContext
             # @param [Version] version Version that contains the resource
-            # @param [String] chat_service_sid The SID of the [Conversation
-            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) to
+            # @param [String] chat_service_sid The SID of the {Conversation
+            #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] to
             #   fetch the User resource from.
             # @param [String] sid The SID of the User resource to fetch. This value can be
             #   either the `sid` or the `identity` of the User resource to fetch.
@@ -201,7 +201,7 @@ module Twilio
             # @param [String] attributes The JSON Object string that stores
             #   application-specific data. If attributes have not been set, `{}` is returned.
             # @param [String] role_sid The SID of a service-level
-            #   [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to
+            #   {Role}[https://www.twilio.com/docs/conversations/api/role-resource] to assign to
             #   the user.
             # @return [UserInstance] Updated UserInstance
             def update(friendly_name: :unset, attributes: :unset, role_sid: :unset)
@@ -264,8 +264,8 @@ module Twilio
             # Initialize the UserInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] chat_service_sid The SID of the [Conversation
-            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+            # @param [String] chat_service_sid The SID of the {Conversation
+            #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
             #   User resource is associated with.
             # @param [String] sid The SID of the User resource to fetch. This value can be
             #   either the `sid` or the `identity` of the User resource to fetch.
@@ -377,7 +377,7 @@ module Twilio
             # @param [String] attributes The JSON Object string that stores
             #   application-specific data. If attributes have not been set, `{}` is returned.
             # @param [String] role_sid The SID of a service-level
-            #   [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to
+            #   {Role}[https://www.twilio.com/docs/conversations/api/role-resource] to assign to
             #   the user.
             # @return [UserInstance] Updated UserInstance
             def update(friendly_name: :unset, attributes: :unset, role_sid: :unset)

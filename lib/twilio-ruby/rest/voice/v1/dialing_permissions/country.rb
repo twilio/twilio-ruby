@@ -31,20 +31,20 @@ module Twilio
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [String] iso_code Filter to retrieve the country permissions by
-            #   specifying the [ISO country
-            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+            #   specifying the {ISO country
+            #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2]
             # @param [String] continent Filter to retrieve the country permissions by
             #   specifying the continent
-            # @param [String] country_code Filter the results by specified [country
-            #   codes](https://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html)
+            # @param [String] country_code Filter the results by specified {country
+            #   codes}[https://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html]
             # @param [Boolean] low_risk_numbers_enabled Filter to retrieve the country
             #   permissions with dialing to low-risk numbers enabled. Can be: `true` or `false`.
             # @param [Boolean] high_risk_special_numbers_enabled Filter to retrieve the
             #   country permissions with dialing to high-risk special service numbers enabled.
             #   Can be: `true` or `false`
             # @param [Boolean] high_risk_tollfraud_numbers_enabled Filter to retrieve the
-            #   country permissions with dialing to high-risk [toll
-            #   fraud](https://www.twilio.com/learn/voice-and-video/toll-fraud) numbers enabled.
+            #   country permissions with dialing to high-risk {toll
+            #   fraud}[https://www.twilio.com/learn/voice-and-video/toll-fraud] numbers enabled.
             #   Can be: `true` or `false`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
@@ -71,20 +71,20 @@ module Twilio
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [String] iso_code Filter to retrieve the country permissions by
-            #   specifying the [ISO country
-            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+            #   specifying the {ISO country
+            #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2]
             # @param [String] continent Filter to retrieve the country permissions by
             #   specifying the continent
-            # @param [String] country_code Filter the results by specified [country
-            #   codes](https://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html)
+            # @param [String] country_code Filter the results by specified {country
+            #   codes}[https://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html]
             # @param [Boolean] low_risk_numbers_enabled Filter to retrieve the country
             #   permissions with dialing to low-risk numbers enabled. Can be: `true` or `false`.
             # @param [Boolean] high_risk_special_numbers_enabled Filter to retrieve the
             #   country permissions with dialing to high-risk special service numbers enabled.
             #   Can be: `true` or `false`
             # @param [Boolean] high_risk_tollfraud_numbers_enabled Filter to retrieve the
-            #   country permissions with dialing to high-risk [toll
-            #   fraud](https://www.twilio.com/learn/voice-and-video/toll-fraud) numbers enabled.
+            #   country permissions with dialing to high-risk {toll
+            #   fraud}[https://www.twilio.com/learn/voice-and-video/toll-fraud] numbers enabled.
             #   Can be: `true` or `false`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
@@ -127,20 +127,20 @@ module Twilio
             # Retrieve a single page of CountryInstance records from the API.
             # Request is executed immediately.
             # @param [String] iso_code Filter to retrieve the country permissions by
-            #   specifying the [ISO country
-            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+            #   specifying the {ISO country
+            #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2]
             # @param [String] continent Filter to retrieve the country permissions by
             #   specifying the continent
-            # @param [String] country_code Filter the results by specified [country
-            #   codes](https://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html)
+            # @param [String] country_code Filter the results by specified {country
+            #   codes}[https://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html]
             # @param [Boolean] low_risk_numbers_enabled Filter to retrieve the country
             #   permissions with dialing to low-risk numbers enabled. Can be: `true` or `false`.
             # @param [Boolean] high_risk_special_numbers_enabled Filter to retrieve the
             #   country permissions with dialing to high-risk special service numbers enabled.
             #   Can be: `true` or `false`
             # @param [Boolean] high_risk_tollfraud_numbers_enabled Filter to retrieve the
-            #   country permissions with dialing to high-risk [toll
-            #   fraud](https://www.twilio.com/learn/voice-and-video/toll-fraud) numbers enabled.
+            #   country permissions with dialing to high-risk {toll
+            #   fraud}[https://www.twilio.com/learn/voice-and-video/toll-fraud] numbers enabled.
             #   Can be: `true` or `false`.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
@@ -221,8 +221,8 @@ module Twilio
             ##
             # Initialize the CountryContext
             # @param [Version] version Version that contains the resource
-            # @param [String] iso_code The [ISO country
-            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the
+            # @param [String] iso_code The {ISO country
+            #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the
             #   DialingPermissions Country resource to fetch
             # @return [CountryContext] CountryContext
             def initialize(version, iso_code)
@@ -279,8 +279,8 @@ module Twilio
             # Initialize the CountryInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] iso_code The [ISO country
-            #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the
+            # @param [String] iso_code The {ISO country
+            #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the
             #   DialingPermissions Country resource to fetch
             # @return [CountryInstance] CountryInstance
             def initialize(version, payload, iso_code: nil)

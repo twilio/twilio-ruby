@@ -31,8 +31,8 @@ module Twilio
 
           ##
           # Access the countries
-          # @param [String] iso_code The [ISO country
-          #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the
+          # @param [String] iso_code The {ISO country
+          #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the
           #   DialingPermissions Country resource to fetch
           # @return [CountryList]
           # @return [CountryContext] if iso_code was passed.

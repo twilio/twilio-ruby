@@ -126,7 +126,7 @@ module Twilio
           #   `prefer-sticky` or `avoid-sticky` and the default is `prefer-sticky`.
           #   `prefer-sticky` means that we will try and select the same Proxy Number for a
           #   given participant if they have previous
-          #   [Sessions](https://www.twilio.com/docs/proxy/api/session), but we will not fail
+          #   {Sessions}[https://www.twilio.com/docs/proxy/api/session], but we will not fail
           #   if that Proxy Number cannot be used.  `avoid-sticky` means that we will try to
           #   use different Proxy Numbers as long as that is possible within a given pool
           #   rather than try and use a previously assigned number.
@@ -135,12 +135,12 @@ module Twilio
           #   continues.
           # @param [String] out_of_session_callback_url The URL we should call when an
           #   inbound call or SMS action occurs on a closed or non-existent Session. If your
-          #   server (or a Twilio [function](https://www.twilio.com/functions)) responds with
-          #   valid [TwiML](https://www.twilio.com/docs/voice/twiml), we will process it. This
+          #   server (or a Twilio {function}[https://www.twilio.com/functions]) responds with
+          #   valid {TwiML}[https://www.twilio.com/docs/voice/twiml], we will process it. This
           #   means it is possible, for example, to play a message for a call, send an
           #   automated text message response, or redirect a call to another Phone Number. See
-          #   [Out-of-Session Callback Response
-          #   Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide)
+          #   {Out-of-Session Callback Response
+          #   Guide}[https://www.twilio.com/docs/proxy/out-session-callback-response-guide]
           #   for more information.
           # @param [String] chat_instance_sid The SID of the Chat Service Instance managed
           #   by Proxy Service. The Chat Service enables Proxy to forward SMS and channel
@@ -260,7 +260,7 @@ module Twilio
           #   `prefer-sticky` or `avoid-sticky` and the default is `prefer-sticky`.
           #   `prefer-sticky` means that we will try and select the same Proxy Number for a
           #   given participant if they have previous
-          #   [Sessions](https://www.twilio.com/docs/proxy/api/session), but we will not fail
+          #   {Sessions}[https://www.twilio.com/docs/proxy/api/session], but we will not fail
           #   if that Proxy Number cannot be used.  `avoid-sticky` means that we will try to
           #   use different Proxy Numbers as long as that is possible within a given pool
           #   rather than try and use a previously assigned number.
@@ -269,12 +269,12 @@ module Twilio
           #   continues.
           # @param [String] out_of_session_callback_url The URL we should call when an
           #   inbound call or SMS action occurs on a closed or non-existent Session. If your
-          #   server (or a Twilio [function](https://www.twilio.com/functions)) responds with
-          #   valid [TwiML](https://www.twilio.com/docs/voice/twiml), we will process it. This
+          #   server (or a Twilio {function}[https://www.twilio.com/functions]) responds with
+          #   valid {TwiML}[https://www.twilio.com/docs/voice/twiml], we will process it. This
           #   means it is possible, for example, to play a message for a call, send an
           #   automated text message response, or redirect a call to another Phone Number. See
-          #   [Out-of-Session Callback Response
-          #   Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide)
+          #   {Out-of-Session Callback Response
+          #   Guide}[https://www.twilio.com/docs/proxy/out-session-callback-response-guide]
           #   for more information.
           # @param [String] chat_instance_sid The SID of the Chat Service Instance managed
           #   by Proxy Service. The Chat Service enables Proxy to forward SMS and channel
@@ -532,7 +532,7 @@ module Twilio
           #   `prefer-sticky` or `avoid-sticky` and the default is `prefer-sticky`.
           #   `prefer-sticky` means that we will try and select the same Proxy Number for a
           #   given participant if they have previous
-          #   [Sessions](https://www.twilio.com/docs/proxy/api/session), but we will not fail
+          #   {Sessions}[https://www.twilio.com/docs/proxy/api/session], but we will not fail
           #   if that Proxy Number cannot be used.  `avoid-sticky` means that we will try to
           #   use different Proxy Numbers as long as that is possible within a given pool
           #   rather than try and use a previously assigned number.
@@ -541,12 +541,12 @@ module Twilio
           #   continues.
           # @param [String] out_of_session_callback_url The URL we should call when an
           #   inbound call or SMS action occurs on a closed or non-existent Session. If your
-          #   server (or a Twilio [function](https://www.twilio.com/functions)) responds with
-          #   valid [TwiML](https://www.twilio.com/docs/voice/twiml), we will process it. This
+          #   server (or a Twilio {function}[https://www.twilio.com/functions]) responds with
+          #   valid {TwiML}[https://www.twilio.com/docs/voice/twiml], we will process it. This
           #   means it is possible, for example, to play a message for a call, send an
           #   automated text message response, or redirect a call to another Phone Number. See
-          #   [Out-of-Session Callback Response
-          #   Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide)
+          #   {Out-of-Session Callback Response
+          #   Guide}[https://www.twilio.com/docs/proxy/out-session-callback-response-guide]
           #   for more information.
           # @param [String] chat_instance_sid The SID of the Chat Service Instance managed
           #   by Proxy Service. The Chat Service enables Proxy to forward SMS and channel

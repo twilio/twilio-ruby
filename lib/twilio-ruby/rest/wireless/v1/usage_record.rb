@@ -28,9 +28,9 @@ module Twilio
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [Time] end_ Only include usage that has occurred on or before this date.
-          #   Format is [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+          #   Format is {ISO 8601}[https://www.iso.org/iso-8601-date-and-time-format.html].
           # @param [Time] start Only include usage that has occurred on or after this date.
-          #   Format is [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+          #   Format is {ISO 8601}[https://www.iso.org/iso-8601-date-and-time-format.html].
           # @param [usage_record.Granularity] granularity How to summarize the usage by
           #   time. Can be: `daily`, `hourly`, or `all`. A value of `all` returns one Usage
           #   Record that describes the usage for the entire period.
@@ -56,9 +56,9 @@ module Twilio
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [Time] end_ Only include usage that has occurred on or before this date.
-          #   Format is [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+          #   Format is {ISO 8601}[https://www.iso.org/iso-8601-date-and-time-format.html].
           # @param [Time] start Only include usage that has occurred on or after this date.
-          #   Format is [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+          #   Format is {ISO 8601}[https://www.iso.org/iso-8601-date-and-time-format.html].
           # @param [usage_record.Granularity] granularity How to summarize the usage by
           #   time. Can be: `daily`, `hourly`, or `all`. A value of `all` returns one Usage
           #   Record that describes the usage for the entire period.
@@ -95,9 +95,9 @@ module Twilio
           # Retrieve a single page of UsageRecordInstance records from the API.
           # Request is executed immediately.
           # @param [Time] end_ Only include usage that has occurred on or before this date.
-          #   Format is [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+          #   Format is {ISO 8601}[https://www.iso.org/iso-8601-date-and-time-format.html].
           # @param [Time] start Only include usage that has occurred on or after this date.
-          #   Format is [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+          #   Format is {ISO 8601}[https://www.iso.org/iso-8601-date-and-time-format.html].
           # @param [usage_record.Granularity] granularity How to summarize the usage by
           #   time. Can be: `daily`, `hourly`, or `all`. A value of `all` returns one Usage
           #   Record that describes the usage for the entire period.

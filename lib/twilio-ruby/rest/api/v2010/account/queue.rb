@@ -16,7 +16,7 @@ module Twilio
             # Initialize the QueueList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Queue
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Queue
             #   resource.
             # @return [QueueList] QueueList
             def initialize(version, account_sid: nil)
@@ -163,7 +163,7 @@ module Twilio
             # Initialize the QueueContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Queue
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the Queue
             #   resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Queue resource to fetch
@@ -253,7 +253,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Queue
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Queue
             #   resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Queue resource to fetch

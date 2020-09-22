@@ -18,8 +18,8 @@ module Twilio
               ##
               # Initialize the DocumentPermissionList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
               #   associated with.
               # @param [String] document_sid The SID of the Sync Document to which the Document
               #   Permission applies.
@@ -161,8 +161,8 @@ module Twilio
               ##
               # Initialize the DocumentPermissionContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) with the Document
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] with the Document
               #   Permission resource to fetch.
               # @param [String] document_sid The SID of the Sync Document with the Document
               #   Permission resource to fetch. Can be the Document resource's `sid` or its
@@ -245,8 +245,8 @@ module Twilio
               # Initialize the DocumentPermissionInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
               #   associated with.
               # @param [String] document_sid The SID of the Sync Document to which the Document
               #   Permission applies.

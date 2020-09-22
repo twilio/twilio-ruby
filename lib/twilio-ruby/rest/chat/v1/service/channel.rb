@@ -16,7 +16,7 @@ module Twilio
             # Initialize the ChannelList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) the resource is
+            #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] the resource is
             #   associated with.
             # @return [ChannelList] ChannelList
             def initialize(version, service_sid: nil)
@@ -181,7 +181,7 @@ module Twilio
             # Initialize the ChannelContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) to fetch the
+            #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] to fetch the
             #   resource from.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Channel resource to fetch.
@@ -325,7 +325,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/api/chat/rest/services) the resource is
+            #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] the resource is
             #   associated with.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Channel resource to fetch.

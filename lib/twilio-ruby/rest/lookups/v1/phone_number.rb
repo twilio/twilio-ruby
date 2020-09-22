@@ -63,7 +63,7 @@ module Twilio
           # Initialize the PhoneNumberContext
           # @param [Version] version Version that contains the resource
           # @param [String] phone_number The phone number to lookup in
-          #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, which consists
+          #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, which consists
           #   of a + followed by the country code and subscriber number.
           # @return [PhoneNumberContext] PhoneNumberContext
           def initialize(version, phone_number)
@@ -76,8 +76,8 @@ module Twilio
 
           ##
           # Fetch the PhoneNumberInstance
-          # @param [String] country_code The [ISO country
-          #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number to
+          # @param [String] country_code The {ISO country
+          #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the phone number to
           #   fetch. This is used to specify the country when the phone number is provided in
           #   a national format.
           # @param [String] type The type of information to return. Can be: `carrier` or
@@ -89,8 +89,8 @@ module Twilio
           # @param [String] add_ons The `unique_name` of an Add-on you would like to invoke.
           #   Can be the `unique_name` of an Add-on that is installed on your account. You can
           #   specify multiple instances of this parameter to invoke multiple Add-ons. For
-          #   more information about  Add-ons, see the [Add-ons
-          #   documentation](https://www.twilio.com/docs/add-ons).
+          #   more information about  Add-ons, see the {Add-ons
+          #   documentation}[https://www.twilio.com/docs/add-ons].
           # @param [Hash] add_ons_data Data specific to the add-on you would like to invoke.
           #   The content and format of this value depends on the add-on.
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
@@ -128,7 +128,7 @@ module Twilio
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
           # @param [String] phone_number The phone number to lookup in
-          #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, which consists
+          #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, which consists
           #   of a + followed by the country code and subscriber number.
           # @return [PhoneNumberInstance] PhoneNumberInstance
           def initialize(version, payload, phone_number: nil)
@@ -205,8 +205,8 @@ module Twilio
 
           ##
           # Fetch the PhoneNumberInstance
-          # @param [String] country_code The [ISO country
-          #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number to
+          # @param [String] country_code The {ISO country
+          #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the phone number to
           #   fetch. This is used to specify the country when the phone number is provided in
           #   a national format.
           # @param [String] type The type of information to return. Can be: `carrier` or
@@ -218,8 +218,8 @@ module Twilio
           # @param [String] add_ons The `unique_name` of an Add-on you would like to invoke.
           #   Can be the `unique_name` of an Add-on that is installed on your account. You can
           #   specify multiple instances of this parameter to invoke multiple Add-ons. For
-          #   more information about  Add-ons, see the [Add-ons
-          #   documentation](https://www.twilio.com/docs/add-ons).
+          #   more information about  Add-ons, see the {Add-ons
+          #   documentation}[https://www.twilio.com/docs/add-ons].
           # @param [Hash] add_ons_data Data specific to the add-on you would like to invoke.
           #   The content and format of this value depends on the add-on.
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance

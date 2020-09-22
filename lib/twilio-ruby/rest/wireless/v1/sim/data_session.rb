@@ -15,8 +15,8 @@ module Twilio
             ##
             # Initialize the DataSessionList
             # @param [Version] version Version that contains the resource
-            # @param [String] sim_sid The SID of the [Sim
-            #   resource](https://www.twilio.com/docs/wireless/api/sim-resource) that the Data
+            # @param [String] sim_sid The SID of the {Sim
+            #   resource}[https://www.twilio.com/docs/wireless/api/sim-resource] that the Data
             #   Session is for.
             # @return [DataSessionList] DataSessionList
             def initialize(version, sim_sid: nil)
@@ -148,8 +148,8 @@ module Twilio
             # Initialize the DataSessionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] sim_sid The SID of the [Sim
-            #   resource](https://www.twilio.com/docs/wireless/api/sim-resource) that the Data
+            # @param [String] sim_sid The SID of the {Sim
+            #   resource}[https://www.twilio.com/docs/wireless/api/sim-resource] that the Data
             #   Session is for.
             # @return [DataSessionInstance] DataSessionInstance
             def initialize(version, payload, sim_sid: nil)

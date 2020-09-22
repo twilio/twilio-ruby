@@ -34,14 +34,14 @@ module Twilio
               # Create the ChallengeInstance
               # @param [String] factor_sid The unique SID identifier of the Factor.
               # @param [Time] expiration_date The future date in which this Challenge will
-              #   expire, given in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              #   expire, given in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
               # @param [String] details Details provided to give context about the Challenge.
               #   Shown to the end user. It must be a stringified JSON with the following
-              #   structure: {"message": "string", "fields": [ { "label": "string", "value":
+              #   structure: {"message": "string", "fields": { { "label": "string", "value":
               #   "string"}]}. `message` is required. If you send the `fields` property, each
               #   field has to include `label` and `value` properties. If you had set
               #   `include_date=true` in the `push` configuration of the
-              #   [service](https://www.twilio.com/docs/verify/api/service), the response will
+              #   [service}[https://www.twilio.com/docs/verify/api/service], the response will
               #   also include the challenge's date created value as an additional field called
               #   `date`
               # @param [String] hidden_details Details provided to give context about the

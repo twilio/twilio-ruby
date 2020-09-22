@@ -18,11 +18,11 @@ module Twilio
               ##
               # Initialize the WebhookList
               # @param [Version] version Version that contains the resource
-              # @param [String] chat_service_sid The SID of the [Conversation
-              #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+              # @param [String] chat_service_sid The SID of the {Conversation
+              #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
               #   Participant resource is associated with.
               # @param [String] conversation_sid The unique ID of the
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
               #   for this webhook.
               # @return [WebhookList] WebhookList
               def initialize(version, chat_service_sid: nil, conversation_sid: nil)
@@ -200,11 +200,11 @@ module Twilio
               ##
               # Initialize the WebhookContext
               # @param [Version] version Version that contains the resource
-              # @param [String] chat_service_sid The SID of the [Conversation
-              #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+              # @param [String] chat_service_sid The SID of the {Conversation
+              #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
               #   Participant resource is associated with.
               # @param [String] conversation_sid The unique ID of the
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
               #   for this webhook.
               # @param [String] sid A 34 character string that uniquely identifies this
               #   resource.
@@ -294,11 +294,11 @@ module Twilio
               # Initialize the WebhookInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] chat_service_sid The SID of the [Conversation
-              #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+              # @param [String] chat_service_sid The SID of the {Conversation
+              #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
               #   Participant resource is associated with.
               # @param [String] conversation_sid The unique ID of the
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
               #   for this webhook.
               # @param [String] sid A 34 character string that uniquely identifies this
               #   resource.

@@ -16,7 +16,7 @@ module Twilio
             # Initialize the VerificationList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
+            #   {Service}[https://www.twilio.com/docs/verify/api/service] the resource is
             #   associated with.
             # @return [VerificationList] VerificationList
             def initialize(version, service_sid: nil)
@@ -30,10 +30,10 @@ module Twilio
             ##
             # Create the VerificationInstance
             # @param [String] to The phone number or
-            #   [email](https://www.twilio.com/docs/verify/email) to verify. Phone numbers must
-            #   be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+            #   {email}[https://www.twilio.com/docs/verify/email] to verify. Phone numbers must
+            #   be in {E.164 format}[https://www.twilio.com/docs/glossary/what-e164].
             # @param [String] channel The verification method to use. Can be:
-            #   [`email`](https://www.twilio.com/docs/verify/email), `sms` or `call`.
+            #   {`email`}[https://www.twilio.com/docs/verify/email], `sms` or `call`.
             # @param [String] custom_friendly_name A custom user defined friendly name that
             #   overwrites the existing one in the verification message
             # @param [String] custom_message The text of a custom message to use for the
@@ -41,7 +41,7 @@ module Twilio
             # @param [String] send_digits The digits to send after a phone call is answered,
             #   for example, to dial an extension. For more information, see the Programmable
             #   Voice documentation of
-            #   [sendDigits](https://www.twilio.com/docs/voice/twiml/number#attributes-sendDigits).
+            #   {sendDigits}[https://www.twilio.com/docs/voice/twiml/number#attributes-sendDigits].
             # @param [String] locale The locale to use for the verification SMS or call. Can
             #   be: `af`, `ar`, `ca`, `cs`, `da`, `de`, `el`, `en`, `en-GB`, `es`, `fi`, `fr`,
             #   `he`, `hi`, `hr`, `hu`, `id`, `it`, `ja`, `ko`, `ms`, `nb`, `nl`, `pl`, `pt`,
@@ -53,15 +53,15 @@ module Twilio
             # @param [String] payee The payee of the associated PSD2 compliant transaction.
             #   Requires the PSD2 Service flag enabled.
             # @param [Hash] rate_limits The custom key-value pairs of Programmable Rate
-            #   Limits. Keys correspond to `unique_name` fields defined when [creating your Rate
-            #   Limit](https://www.twilio.com/docs/verify/api/service-rate-limits). Associated
+            #   Limits. Keys correspond to `unique_name` fields defined when {creating your Rate
+            #   Limit}[https://www.twilio.com/docs/verify/api/service-rate-limits]. Associated
             #   value pairs represent values in the request that you are rate limiting on. You
             #   may include multiple Rate Limit values in each request.
             # @param [Hash] channel_configuration
-            #   [`email`](https://www.twilio.com/docs/verify/email) channel configuration in
+            #   {`email`}[https://www.twilio.com/docs/verify/email] channel configuration in
             #   json format. Must include 'from' and 'from_name'.
-            # @param [String] app_hash Your [App
-            #   Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string)
+            # @param [String] app_hash Your {App
+            #   Hash}[https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string]
             #   to be appended at the end of your verification SMS body. Applies only to SMS.
             #   Example SMS body: `<#> Your AppName verification code is: 1234 He42w354ol9`.
             # @return [VerificationInstance] Created VerificationInstance
@@ -127,7 +127,7 @@ module Twilio
             # Initialize the VerificationContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the verification
-            #   [Service](https://www.twilio.com/docs/verify/api/service) to fetch the resource
+            #   {Service}[https://www.twilio.com/docs/verify/api/service] to fetch the resource
             #   from.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Verification resource to fetch.
@@ -193,7 +193,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
+            #   {Service}[https://www.twilio.com/docs/verify/api/service] the resource is
             #   associated with.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Verification resource to fetch.

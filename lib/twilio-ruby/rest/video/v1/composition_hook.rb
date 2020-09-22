@@ -32,10 +32,10 @@ module Twilio
           # @param [Boolean] enabled Read only CompositionHook resources with an `enabled`
           #   value that matches this parameter.
           # @param [Time] date_created_after Read only CompositionHook resources created on
-          #   or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with
+          #   or after this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] datetime with
           #   time zone.
           # @param [Time] date_created_before Read only CompositionHook resources created
-          #   before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with
+          #   before this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] datetime with
           #   time zone.
           # @param [String] friendly_name Read only CompositionHook resources with friendly
           #   names that match this string. The match is not case sensitive and can include
@@ -65,10 +65,10 @@ module Twilio
           # @param [Boolean] enabled Read only CompositionHook resources with an `enabled`
           #   value that matches this parameter.
           # @param [Time] date_created_after Read only CompositionHook resources created on
-          #   or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with
+          #   or after this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] datetime with
           #   time zone.
           # @param [Time] date_created_before Read only CompositionHook resources created
-          #   before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with
+          #   before this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] datetime with
           #   time zone.
           # @param [String] friendly_name Read only CompositionHook resources with friendly
           #   names that match this string. The match is not case sensitive and can include
@@ -114,10 +114,10 @@ module Twilio
           # @param [Boolean] enabled Read only CompositionHook resources with an `enabled`
           #   value that matches this parameter.
           # @param [Time] date_created_after Read only CompositionHook resources created on
-          #   or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with
+          #   or after this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] datetime with
           #   time zone.
           # @param [Time] date_created_before Read only CompositionHook resources created
-          #   before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with
+          #   before this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] datetime with
           #   time zone.
           # @param [String] friendly_name Read only CompositionHook resources with friendly
           #   names that match this string. The match is not case sensitive and can include
@@ -164,8 +164,8 @@ module Twilio
           #   the composition hook will be triggered for every completed Group Room in the
           #   account. When `false`, the composition hook will never be triggered.
           # @param [Hash] video_layout An object that describes the video layout of the
-          #   composition hook in terms of regions. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   composition hook in terms of regions. See {Specifying Video
+          #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
           # @param [String] audio_sources An array of track names from the same group room
           #   to merge into the compositions created by the composition hook. Can include zero
@@ -199,8 +199,8 @@ module Twilio
           #
           #   Note that the `resolution` imposes an aspect ratio to the resulting composition.
           #   When the original video tracks are constrained by the aspect ratio, they are
-          #   scaled to fit. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   scaled to fit. See {Specifying Video
+          #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
           # @param [composition_hook.Format] format The container format of the media files
           #   used by the compositions created by the composition hook. Can be: `mp4` or
@@ -217,9 +217,9 @@ module Twilio
           #   media in the Compositions triggered by the composition hook. The default is
           #   `true`. Compositions with `trim` enabled are shorter when the Room is created
           #   and no Participant joins for a while as well as if all the Participants leave
-          #   the room and join later, because those gaps will be removed. See [Specifying
+          #   the room and join later, because those gaps will be removed. See {Specifying
           #   Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
           # @return [CompositionHookInstance] Created CompositionHookInstance
           def create(friendly_name: nil, enabled: :unset, video_layout: :unset, audio_sources: :unset, audio_sources_excluded: :unset, resolution: :unset, format: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset)
@@ -320,8 +320,8 @@ module Twilio
           #   the composition hook will be triggered for every completed Group Room in the
           #   account. When `false`, the composition hook never triggers.
           # @param [Hash] video_layout A JSON object that describes the video layout of the
-          #   composition hook in terms of regions. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   composition hook in terms of regions. See {Specifying Video
+          #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
           # @param [String] audio_sources An array of track names from the same group room
           #   to merge into the compositions created by the composition hook. Can include zero
@@ -342,9 +342,9 @@ module Twilio
           #   media in the compositions triggered by the composition hook. The default is
           #   `true`. Compositions with `trim` enabled are shorter when the Room is created
           #   and no Participant joins for a while as well as if all the Participants leave
-          #   the room and join later, because those gaps will be removed. See [Specifying
+          #   the room and join later, because those gaps will be removed. See {Specifying
           #   Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
           # @param [composition_hook.Format] format The container format of the media files
           #   used by the compositions created by the composition hook. Can be: `mp4` or
@@ -368,8 +368,8 @@ module Twilio
           #
           #   Note that the `resolution` imposes an aspect ratio to the resulting composition.
           #   When the original video tracks are constrained by the aspect ratio, they are
-          #   scaled to fit. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   scaled to fit. See {Specifying Video
+          #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
           # @param [String] status_callback The URL we should call using the
           #   `status_callback_method` to send status information to your application on every
@@ -572,8 +572,8 @@ module Twilio
           #   the composition hook will be triggered for every completed Group Room in the
           #   account. When `false`, the composition hook never triggers.
           # @param [Hash] video_layout A JSON object that describes the video layout of the
-          #   composition hook in terms of regions. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   composition hook in terms of regions. See {Specifying Video
+          #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
           # @param [String] audio_sources An array of track names from the same group room
           #   to merge into the compositions created by the composition hook. Can include zero
@@ -594,9 +594,9 @@ module Twilio
           #   media in the compositions triggered by the composition hook. The default is
           #   `true`. Compositions with `trim` enabled are shorter when the Room is created
           #   and no Participant joins for a while as well as if all the Participants leave
-          #   the room and join later, because those gaps will be removed. See [Specifying
+          #   the room and join later, because those gaps will be removed. See {Specifying
           #   Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
           # @param [composition_hook.Format] format The container format of the media files
           #   used by the compositions created by the composition hook. Can be: `mp4` or
@@ -620,8 +620,8 @@ module Twilio
           #
           #   Note that the `resolution` imposes an aspect ratio to the resulting composition.
           #   When the original video tracks are constrained by the aspect ratio, they are
-          #   scaled to fit. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   scaled to fit. See {Specifying Video
+          #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
           # @param [String] status_callback The URL we should call using the
           #   `status_callback_method` to send status information to your application on every

@@ -91,11 +91,11 @@ module Twilio
 
           ##
           # Update the ConfigurationInstance
-          # @param [String] default_chat_service_sid The SID of the default [Conversation
-          #   Service](https://www.twilio.com/docs/conversations/api/service-resource) to use
+          # @param [String] default_chat_service_sid The SID of the default {Conversation
+          #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] to use
           #   when creating a conversation.
-          # @param [String] default_messaging_service_sid The SID of the default [Messaging
-          #   Service](https://www.twilio.com/docs/sms/services/api) to use when creating a
+          # @param [String] default_messaging_service_sid The SID of the default {Messaging
+          #   Service}[https://www.twilio.com/docs/sms/services/api] to use when creating a
           #   conversation.
           # @param [String] default_inactive_timer Default ISO8601 duration when
           #   conversation will be switched to `inactive` state. Minimum value for this timer
@@ -227,11 +227,11 @@ module Twilio
 
           ##
           # Update the ConfigurationInstance
-          # @param [String] default_chat_service_sid The SID of the default [Conversation
-          #   Service](https://www.twilio.com/docs/conversations/api/service-resource) to use
+          # @param [String] default_chat_service_sid The SID of the default {Conversation
+          #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] to use
           #   when creating a conversation.
-          # @param [String] default_messaging_service_sid The SID of the default [Messaging
-          #   Service](https://www.twilio.com/docs/sms/services/api) to use when creating a
+          # @param [String] default_messaging_service_sid The SID of the default {Messaging
+          #   Service}[https://www.twilio.com/docs/sms/services/api] to use when creating a
           #   conversation.
           # @param [String] default_inactive_timer Default ISO8601 duration when
           #   conversation will be switched to `inactive` state. Minimum value for this timer

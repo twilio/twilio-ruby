@@ -18,7 +18,7 @@ module Twilio
             # Initialize the ShortCodeList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the ShortCode resource's parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
+            #   {Service}[https://www.twilio.com/docs/proxy/api/service] resource.
             # @return [ShortCodeList] ShortCodeList
             def initialize(version, service_sid: nil)
               super(version)
@@ -31,7 +31,7 @@ module Twilio
             ##
             # Create the ShortCodeInstance
             # @param [String] sid The SID of a Twilio
-            #   [ShortCode](https://www.twilio.com/docs/sms/api/short-code) resource that
+            #   {ShortCode}[https://www.twilio.com/docs/sms/api/short-code] resource that
             #   represents the short code you would like to assign to your Proxy Service.
             # @return [ShortCodeInstance] Created ShortCodeInstance
             def create(sid: nil)
@@ -167,7 +167,7 @@ module Twilio
             # Initialize the ShortCodeContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service) to fetch the resource
+            #   {Service}[https://www.twilio.com/docs/proxy/api/service] to fetch the resource
             #   from.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   ShortCode resource to fetch.
@@ -199,8 +199,8 @@ module Twilio
             ##
             # Update the ShortCodeInstance
             # @param [Boolean] is_reserved Whether the short code should be reserved and not
-            #   be assigned to a participant using proxy pool logic. See [Reserved Phone
-            #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
+            #   be assigned to a participant using proxy pool logic. See {Reserved Phone
+            #   Numbers}[https://www.twilio.com/docs/proxy/reserved-phone-numbers] for more
             #   information.
             # @return [ShortCodeInstance] Updated ShortCodeInstance
             def update(is_reserved: :unset)
@@ -234,7 +234,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the ShortCode resource's parent
-            #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
+            #   {Service}[https://www.twilio.com/docs/proxy/api/service] resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   ShortCode resource to fetch.
             # @return [ShortCodeInstance] ShortCodeInstance
@@ -348,8 +348,8 @@ module Twilio
             ##
             # Update the ShortCodeInstance
             # @param [Boolean] is_reserved Whether the short code should be reserved and not
-            #   be assigned to a participant using proxy pool logic. See [Reserved Phone
-            #   Numbers](https://www.twilio.com/docs/proxy/reserved-phone-numbers) for more
+            #   be assigned to a participant using proxy pool logic. See {Reserved Phone
+            #   Numbers}[https://www.twilio.com/docs/proxy/reserved-phone-numbers] for more
             #   information.
             # @return [ShortCodeInstance] Updated ShortCodeInstance
             def update(is_reserved: :unset)

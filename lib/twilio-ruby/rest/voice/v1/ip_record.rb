@@ -29,7 +29,7 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource. It is not unique and can be up to 255 characters long.
           # @param [String] cidr_prefix_length An integer representing the length of the
-          #   [CIDR](https://tools.ietf.org/html/rfc4632) prefix to use with this IP address.
+          #   {CIDR}[https://tools.ietf.org/html/rfc4632] prefix to use with this IP address.
           #   By default the entire IP address is used, which for IPv4 is value 32.
           # @return [IpRecordInstance] Created IpRecordInstance
           def create(ip_address: nil, friendly_name: :unset, cidr_prefix_length: :unset)
@@ -283,7 +283,7 @@ module Twilio
           end
 
           ##
-          # @return [String] An integer representing the length of the [CIDR](https://tools.ietf.org/html/rfc4632) prefix to use with this IP address. By default the entire IP address is used, which for IPv4 is value 32.
+          # @return [String] An integer representing the length of the {CIDR}[https://tools.ietf.org/html/rfc4632] prefix to use with this IP address. By default the entire IP address is used, which for IPv4 is value 32.
           def cidr_prefix_length
             @properties['cidr_prefix_length']
           end

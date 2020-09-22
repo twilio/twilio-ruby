@@ -34,7 +34,7 @@ module Twilio
           # @param [String] fleet The SID or unique name of the Fleet to which a list of
           #   Sims are assigned.
           # @param [String] iccid The
-          #   [ICCID](https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID)
+          #   {ICCID}[https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID]
           #   associated with a Super SIM to filter the list by. Passing this parameter will
           #   always return a list containing zero or one SIMs.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -57,7 +57,7 @@ module Twilio
           # @param [String] fleet The SID or unique name of the Fleet to which a list of
           #   Sims are assigned.
           # @param [String] iccid The
-          #   [ICCID](https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID)
+          #   {ICCID}[https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID]
           #   associated with a Super SIM to filter the list by. Passing this parameter will
           #   always return a list containing zero or one SIMs.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -97,7 +97,7 @@ module Twilio
           # @param [String] fleet The SID or unique name of the Fleet to which a list of
           #   Sims are assigned.
           # @param [String] iccid The
-          #   [ICCID](https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID)
+          #   {ICCID}[https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID]
           #   associated with a Super SIM to filter the list by. Passing this parameter will
           #   always return a list containing zero or one SIMs.
           # @param [String] page_token PageToken provided by the API
@@ -201,8 +201,8 @@ module Twilio
           #   identifies the resource. It can be used in place of the resource's `sid` in the
           #   URL to address the resource.
           # @param [sim.StatusUpdate] status The new status of the resource. Can be:
-          #   `ready`, `active`, or `inactive`. See the [Super SIM Status
-          #   Values](https://www.twilio.com/docs/iot/supersim/api/sim-resource#status-values)
+          #   `ready`, `active`, or `inactive`. See the {Super SIM Status
+          #   Values}[https://www.twilio.com/docs/iot/supersim/api/sim-resource#status-values]
           #   for more info.
           # @param [String] fleet The SID or unique name of the Fleet to which the SIM
           #   resource should be assigned.
@@ -353,8 +353,8 @@ module Twilio
           #   identifies the resource. It can be used in place of the resource's `sid` in the
           #   URL to address the resource.
           # @param [sim.StatusUpdate] status The new status of the resource. Can be:
-          #   `ready`, `active`, or `inactive`. See the [Super SIM Status
-          #   Values](https://www.twilio.com/docs/iot/supersim/api/sim-resource#status-values)
+          #   `ready`, `active`, or `inactive`. See the {Super SIM Status
+          #   Values}[https://www.twilio.com/docs/iot/supersim/api/sim-resource#status-values]
           #   for more info.
           # @param [String] fleet The SID or unique name of the Fleet to which the SIM
           #   resource should be assigned.

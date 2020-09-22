@@ -29,8 +29,8 @@ module Twilio
           # Lists NetworkInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] iso_country The [ISO country
-          #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Network resources
+          # @param [String] iso_country The {ISO country
+          #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the Network resources
           #   to read.
           # @param [String] mcc The 'mobile country code' of a country. Network resources
           #   with this `mcc` in their `identifiers` will be read.
@@ -57,8 +57,8 @@ module Twilio
           # Streams NetworkInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] iso_country The [ISO country
-          #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Network resources
+          # @param [String] iso_country The {ISO country
+          #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the Network resources
           #   to read.
           # @param [String] mcc The 'mobile country code' of a country. Network resources
           #   with this `mcc` in their `identifiers` will be read.
@@ -96,8 +96,8 @@ module Twilio
           ##
           # Retrieve a single page of NetworkInstance records from the API.
           # Request is executed immediately.
-          # @param [String] iso_country The [ISO country
-          #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Network resources
+          # @param [String] iso_country The {ISO country
+          #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the Network resources
           #   to read.
           # @param [String] mcc The 'mobile country code' of a country. Network resources
           #   with this `mcc` in their `identifiers` will be read.

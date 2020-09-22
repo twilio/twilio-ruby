@@ -17,7 +17,7 @@ module Twilio
               # Initialize the ParticipantList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
               #   Participant resource.
               # @param [String] conference_sid The SID of the conference the participant is in.
               # @return [ParticipantList] ParticipantList
@@ -33,20 +33,20 @@ module Twilio
               # Create the ParticipantInstance
               # @param [String] from The phone number, Client identifier, or username portion of
               #   SIP address that made this call. Phone numbers are in
-              #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g.,
+              #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format (e.g.,
               #   +16175551212). Client identifiers are formatted `client:name`. If using a phone
-              #   number, it must be a Twilio number or a Verified [outgoing caller
-              #   id](https://www.twilio.com/docs/voice/api/outgoing-caller-ids) for your account.
+              #   number, it must be a Twilio number or a Verified {outgoing caller
+              #   id}[https://www.twilio.com/docs/voice/api/outgoing-caller-ids] for your account.
               #   If the `to` parameter is a phone number, `from` must also be a phone number. If
               #   `to` is sip address, this value of `from` should be a username portion to be
               #   used to populate the P-Asserted-Identity header that is passed to the SIP
               #   endpoint.
               # @param [String] to The phone number, SIP address, or Client identifier that
               #   received this call. Phone numbers are in
-              #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g.,
+              #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format (e.g.,
               #   +16175551212). SIP addresses are formatted as `sip:name@company.com`. Client
-              #   identifiers are formatted `client:name`. [Custom
-              #   parameters](https://www.twilio.com/docs/voice/api/conference-participant-resource#custom-parameters)
+              #   identifiers are formatted `client:name`. {Custom
+              #   parameters}[https://www.twilio.com/docs/voice/api/conference-participant-resource#custom-parameters]
               #   may also be specified.
               # @param [String] status_callback The URL we should call using the
               #   `status_callback_method` to send status information to your application.
@@ -80,8 +80,8 @@ module Twilio
               #   participant leaves. Can be: `true` or `false` and defaults to `false`.
               # @param [String] wait_url The URL we should call using the `wait_method` for the
               #   music to play while participants are waiting for the conference to start. The
-              #   default value is the URL of our standard hold music. [Learn more about hold
-              #   music](https://www.twilio.com/labs/twimlets/holdmusic).
+              #   default value is the URL of our standard hold music. {Learn more about hold
+              #   music}[https://www.twilio.com/labs/twimlets/holdmusic].
               # @param [String] wait_method The HTTP method we should use to call `wait_url`.
               #   Can be `GET` or `POST` and the default is `POST`. When using a static audio
               #   file, this should be `GET` so that we can cache the file.
@@ -119,7 +119,7 @@ module Twilio
               # @param [String] sip_auth_username The SIP username used for authentication.
               # @param [String] sip_auth_password The SIP password for authentication.
               # @param [String] region The
-              #   [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls)
+              #   {region}[https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls]
               #   where we should mix the recorded audio. Can be:`us1`, `ie1`, `de1`, `sg1`,
               #   `br1`, `au1`, or `jp1`.
               # @param [String] conference_recording_status_callback The URL we should call
@@ -152,10 +152,10 @@ module Twilio
               #   it will otherwise be ignored. (Beta)
               # @param [String] caller_id The phone number, Client identifier, or username
               #   portion of SIP address that made this call. Phone numbers are in
-              #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g.,
+              #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format (e.g.,
               #   +16175551212). Client identifiers are formatted `client:name`. If using a phone
-              #   number, it must be a Twilio number or a Verified [outgoing caller
-              #   id](https://www.twilio.com/docs/voice/api/outgoing-caller-ids) for your account.
+              #   number, it must be a Twilio number or a Verified {outgoing caller
+              #   id}[https://www.twilio.com/docs/voice/api/outgoing-caller-ids] for your account.
               #   If the `to` parameter is a phone number, `callerId` must also be a phone number.
               #   If `to` is sip address, this value of `callerId` should be a username portion to
               #   be used to populate the From header that is passed to the SIP endpoint.
@@ -363,12 +363,12 @@ module Twilio
               # Initialize the ParticipantContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
               #   Participant resource to fetch.
               # @param [String] conference_sid The SID of the conference with the participant to
               #   fetch.
               # @param [String] call_sid The
-              #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID or label of the
+              #   {Call}[https://www.twilio.com/docs/voice/api/call-resource] SID or label of the
               #   participant to fetch. Non URL safe characters in a label must be percent
               #   encoded, for example, a space character is represented as %20.
               # @return [ParticipantContext] ParticipantContext
@@ -416,8 +416,8 @@ module Twilio
               #   `announce_url`. Can be: `GET` or `POST` and defaults to `POST`.
               # @param [String] wait_url The URL we should call using the `wait_method` for the
               #   music to play while participants are waiting for the conference to start. The
-              #   default value is the URL of our standard hold music. [Learn more about hold
-              #   music](https://www.twilio.com/labs/twimlets/holdmusic).
+              #   default value is the URL of our standard hold music. {Learn more about hold
+              #   music}[https://www.twilio.com/labs/twimlets/holdmusic].
               # @param [String] wait_method The HTTP method we should use to call `wait_url`.
               #   Can be `GET` or `POST` and the default is `POST`. When using a static audio
               #   file, this should be `GET` so that we can cache the file.
@@ -487,11 +487,11 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
               #   Participant resource.
               # @param [String] conference_sid The SID of the conference the participant is in.
               # @param [String] call_sid The
-              #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID or label of the
+              #   {Call}[https://www.twilio.com/docs/voice/api/call-resource] SID or label of the
               #   participant to fetch. Non URL safe characters in a label must be percent
               #   encoded, for example, a space character is represented as %20.
               # @return [ParticipantInstance] ParticipantInstance
@@ -653,8 +653,8 @@ module Twilio
               #   `announce_url`. Can be: `GET` or `POST` and defaults to `POST`.
               # @param [String] wait_url The URL we should call using the `wait_method` for the
               #   music to play while participants are waiting for the conference to start. The
-              #   default value is the URL of our standard hold music. [Learn more about hold
-              #   music](https://www.twilio.com/labs/twimlets/holdmusic).
+              #   default value is the URL of our standard hold music. {Learn more about hold
+              #   music}[https://www.twilio.com/labs/twimlets/holdmusic].
               # @param [String] wait_method The HTTP method we should use to call `wait_url`.
               #   Can be `GET` or `POST` and the default is `POST`. When using a static audio
               #   file, this should be `GET` so that we can cache the file.

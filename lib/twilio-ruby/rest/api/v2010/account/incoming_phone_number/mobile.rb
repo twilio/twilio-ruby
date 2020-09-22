@@ -17,7 +17,7 @@ module Twilio
               # Initialize the MobileList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this
               #   IncomingPhoneNumber resource.
               # @return [MobileList] MobileList
               def initialize(version, account_sid: nil)
@@ -155,7 +155,7 @@ module Twilio
               ##
               # Create the MobileInstance
               # @param [String] phone_number The phone number to purchase specified in
-              #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format.  E.164 phone
+              #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format.  E.164 phone
               #   numbers consist of a + followed by the country code and subscriber number
               #   without punctuation characters. For example, +14155551234.
               # @param [String] api_version The API version to use for incoming calls made to
@@ -291,7 +291,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this
               #   IncomingPhoneNumber resource.
               # @return [MobileInstance] MobileInstance
               def initialize(version, payload, account_sid: nil)

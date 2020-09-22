@@ -19,7 +19,7 @@ module Twilio
               # Initialize the AssignedAddOnList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
               #   resource.
               # @param [String] resource_sid The SID of the Phone Number to which the Add-on is
               #   assigned.
@@ -180,7 +180,7 @@ module Twilio
               # Initialize the AssignedAddOnContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the resource
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the resource
               #   to fetch.
               # @param [String] resource_sid The SID of the Phone Number to which the Add-on is
               #   assigned.
@@ -272,7 +272,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
               #   resource.
               # @param [String] resource_sid The SID of the Phone Number to which the Add-on is
               #   assigned.

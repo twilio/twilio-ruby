@@ -19,10 +19,10 @@ module Twilio
               # Initialize the FieldList
               # @param [Version] version Version that contains the resource
               # @param [String] assistant_sid The SID of the
-              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
               #   parent of the Task associated with the resource.
               # @param [String] task_sid The SID of the
-              #   [Task](https://www.twilio.com/docs/autopilot/api/task) resource associated with
+              #   {Task}[https://www.twilio.com/docs/autopilot/api/task] resource associated with
               #   this Field.
               # @return [FieldList] FieldList
               def initialize(version, assistant_sid: nil, task_sid: nil)
@@ -115,8 +115,8 @@ module Twilio
 
               ##
               # Create the FieldInstance
-              # @param [String] field_type The Field Type of the new field. Can be: a [Built-in
-              #   Field Type](https://www.twilio.com/docs/autopilot/built-in-field-types), the
+              # @param [String] field_type The Field Type of the new field. Can be: a {Built-in
+              #   Field Type}[https://www.twilio.com/docs/autopilot/built-in-field-types], the
               #   `unique_name`, or the `sid` of a custom Field Type.
               # @param [String] unique_name An application-defined string that uniquely
               #   identifies the new resource. This value must be a unique string of no more than
@@ -186,10 +186,10 @@ module Twilio
               # Initialize the FieldContext
               # @param [Version] version Version that contains the resource
               # @param [String] assistant_sid The SID of the
-              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
               #   parent of the Task associated with the resource to fetch.
               # @param [String] task_sid The SID of the
-              #   [Task](https://www.twilio.com/docs/autopilot/api/task) resource associated with
+              #   {Task}[https://www.twilio.com/docs/autopilot/api/task] resource associated with
               #   the Field resource to fetch.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Field resource to fetch.
@@ -247,10 +247,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] assistant_sid The SID of the
-              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
               #   parent of the Task associated with the resource.
               # @param [String] task_sid The SID of the
-              #   [Task](https://www.twilio.com/docs/autopilot/api/task) resource associated with
+              #   {Task}[https://www.twilio.com/docs/autopilot/api/task] resource associated with
               #   this Field.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Field resource to fetch.
@@ -321,7 +321,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The SID of the [Task](https://www.twilio.com/docs/autopilot/api/task) resource associated with this Field
+              # @return [String] The SID of the {Task}[https://www.twilio.com/docs/autopilot/api/task] resource associated with this Field
               def task_sid
                 @properties['task_sid']
               end

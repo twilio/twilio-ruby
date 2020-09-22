@@ -30,7 +30,7 @@ module Twilio
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [Time] end_date Only include Events that occurred on or before this date,
-            #   specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            #   specified in GMT as an {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601]
             #   date-time.
             # @param [String] event_type The type of Events to read. Returns only Events of
             #   the type specified.
@@ -41,7 +41,7 @@ module Twilio
             # @param [String] reservation_sid The SID of the Reservation with the Events to
             #   read. Returns only Events that pertain to the specified Reservation.
             # @param [Time] start_date Only include Events from on or after this date and
-            #   time, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+            #   time, specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
             #   Task Attributes for Events older than 30 days will be redacted.
             # @param [String] task_queue_sid The SID of the TaskQueue with the Events to read.
             #   Returns only the Events that pertain to the specified TaskQueue.
@@ -84,7 +84,7 @@ module Twilio
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [Time] end_date Only include Events that occurred on or before this date,
-            #   specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            #   specified in GMT as an {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601]
             #   date-time.
             # @param [String] event_type The type of Events to read. Returns only Events of
             #   the type specified.
@@ -95,7 +95,7 @@ module Twilio
             # @param [String] reservation_sid The SID of the Reservation with the Events to
             #   read. Returns only Events that pertain to the specified Reservation.
             # @param [Time] start_date Only include Events from on or after this date and
-            #   time, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+            #   time, specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
             #   Task Attributes for Events older than 30 days will be redacted.
             # @param [String] task_queue_sid The SID of the TaskQueue with the Events to read.
             #   Returns only the Events that pertain to the specified TaskQueue.
@@ -154,7 +154,7 @@ module Twilio
             # Retrieve a single page of EventInstance records from the API.
             # Request is executed immediately.
             # @param [Time] end_date Only include Events that occurred on or before this date,
-            #   specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            #   specified in GMT as an {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601]
             #   date-time.
             # @param [String] event_type The type of Events to read. Returns only Events of
             #   the type specified.
@@ -165,7 +165,7 @@ module Twilio
             # @param [String] reservation_sid The SID of the Reservation with the Events to
             #   read. Returns only Events that pertain to the specified Reservation.
             # @param [Time] start_date Only include Events from on or after this date and
-            #   time, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+            #   time, specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
             #   Task Attributes for Events older than 30 days will be redacted.
             # @param [String] task_queue_sid The SID of the TaskQueue with the Events to read.
             #   Returns only the Events that pertain to the specified TaskQueue.

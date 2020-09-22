@@ -17,10 +17,10 @@ module Twilio
               # Initialize the MessageList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Message
+              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Message
               #   resource is associated with.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the Message resource
+              #   {Channel}[https://www.twilio.com/docs/chat/channels] the Message resource
               #   belongs to.
               # @return [MessageList] MessageList
               def initialize(version, service_sid: nil, channel_sid: nil)
@@ -33,26 +33,26 @@ module Twilio
 
               ##
               # Create the MessageInstance
-              # @param [String] from The [Identity](https://www.twilio.com/docs/chat/identity)
+              # @param [String] from The {Identity}[https://www.twilio.com/docs/chat/identity]
               #   of the new message's author. The default value is `system`.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
-              # @param [Time] date_created The date, specified in [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+              # @param [Time] date_created The date, specified in {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
               #   as the date it was created. The default value is the current time set by the
               #   Chat service. This parameter should only be used when a Chat's history is being
               #   recreated from a backup/separate source.
-              # @param [Time] date_updated The date, specified in [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+              # @param [Time] date_updated The date, specified in {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
               #   as the date it was last updated.
               # @param [String] last_updated_by The
-              #   [Identity](https://www.twilio.com/docs/chat/identity) of the User who last
+              #   {Identity}[https://www.twilio.com/docs/chat/identity] of the User who last
               #   updated the Message, if applicable.
               # @param [String] body The message to send to the channel. Can be an empty string
               #   or `null`, which sets the value as an empty string. You can send structured data
               #   in the body by serializing it as a string.
               # @param [String] media_sid The SID of the
-              #   [Media](https://www.twilio.com/docs/chat/rest/media) to attach to the new
+              #   {Media}[https://www.twilio.com/docs/chat/rest/media] to attach to the new
               #   Message.
               # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
               #   X-Twilio-Webhook-Enabled HTTP request header
@@ -212,10 +212,10 @@ module Twilio
               # Initialize the MessageContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to fetch the
               #   Message resource from.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the Message resource to
+              #   {Channel}[https://www.twilio.com/docs/chat/channels] the Message resource to
               #   fetch belongs to. This value can be the Channel resource's `sid` or
               #   `unique_name`.
               # @param [String] sid The SID of the Message resource to fetch.
@@ -261,18 +261,18 @@ module Twilio
               #   in the body by serializing it as a string.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
-              # @param [Time] date_created The date, specified in [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+              # @param [Time] date_created The date, specified in {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
               #   as the date it was created. The default value is the current time set by the
               #   Chat service. This parameter should only be used when a Chat's history is being
               #   recreated from a backup/separate source.
-              # @param [Time] date_updated The date, specified in [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+              # @param [Time] date_updated The date, specified in {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
               #   as the date it was last updated.
               # @param [String] last_updated_by The
-              #   [Identity](https://www.twilio.com/docs/chat/identity) of the User who last
+              #   {Identity}[https://www.twilio.com/docs/chat/identity] of the User who last
               #   updated the Message, if applicable.
-              # @param [String] from The [Identity](https://www.twilio.com/docs/chat/identity)
+              # @param [String] from The {Identity}[https://www.twilio.com/docs/chat/identity]
               #   of the message's author.
               # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
               #   X-Twilio-Webhook-Enabled HTTP request header
@@ -320,10 +320,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Message
+              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Message
               #   resource is associated with.
               # @param [String] channel_sid The SID of the
-              #   [Channel](https://www.twilio.com/docs/chat/channels) the Message resource
+              #   {Channel}[https://www.twilio.com/docs/chat/channels] the Message resource
               #   belongs to.
               # @param [String] sid The SID of the Message resource to fetch.
               # @return [MessageInstance] MessageInstance
@@ -494,18 +494,18 @@ module Twilio
               #   in the body by serializing it as a string.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
-              # @param [Time] date_created The date, specified in [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+              # @param [Time] date_created The date, specified in {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
               #   as the date it was created. The default value is the current time set by the
               #   Chat service. This parameter should only be used when a Chat's history is being
               #   recreated from a backup/separate source.
-              # @param [Time] date_updated The date, specified in [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource
+              # @param [Time] date_updated The date, specified in {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
               #   as the date it was last updated.
               # @param [String] last_updated_by The
-              #   [Identity](https://www.twilio.com/docs/chat/identity) of the User who last
+              #   {Identity}[https://www.twilio.com/docs/chat/identity] of the User who last
               #   updated the Message, if applicable.
-              # @param [String] from The [Identity](https://www.twilio.com/docs/chat/identity)
+              # @param [String] from The {Identity}[https://www.twilio.com/docs/chat/identity]
               #   of the message's author.
               # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
               #   X-Twilio-Webhook-Enabled HTTP request header

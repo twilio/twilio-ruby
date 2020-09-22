@@ -16,7 +16,7 @@ module Twilio
             # Initialize the MessageList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that sent the message
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that sent the message
             #   that created the resource.
             # @return [MessageList] MessageList
             def initialize(version, account_sid: nil)
@@ -30,24 +30,24 @@ module Twilio
             ##
             # Create the MessageInstance
             # @param [String] to The destination phone number in
-            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format for SMS/MMS or
-            #   [Channel user
-            #   address](https://www.twilio.com/docs/sms/channels#channel-addresses) for other
+            #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format for SMS/MMS or
+            #   {Channel user
+            #   address}[https://www.twilio.com/docs/sms/channels#channel-addresses] for other
             #   3rd-party channels.
             # @param [String] status_callback The URL we should call using the
             #   `status_callback_method` to send status information to your application. If
             #   specified, we POST these message status changes to the URL: `queued`, `failed`,
-            #   `sent`, `delivered`, or `undelivered`. Twilio will POST its [standard request
-            #   parameters](https://www.twilio.com/docs/sms/twiml#request-parameters) as well as
+            #   `sent`, `delivered`, or `undelivered`. Twilio will POST its {standard request
+            #   parameters}[https://www.twilio.com/docs/sms/twiml#request-parameters] as well as
             #   some additional parameters including `MessageSid`, `MessageStatus`, and
             #   `ErrorCode`. If you include this parameter with the `messaging_service_sid`, we
-            #   use this URL instead of the Status Callback URL of the [Messaging
-            #   Service](https://www.twilio.com/docs/sms/services/api). URLs must contain a
+            #   use this URL instead of the Status Callback URL of the {Messaging
+            #   Service}[https://www.twilio.com/docs/sms/services/api]. URLs must contain a
             #   valid hostname and underscores are not allowed.
             # @param [String] application_sid The SID of the application that should receive
             #   message status. We POST a `message_sid` parameter and a `message_status`
             #   parameter with a value of `sent` or `failed` to the
-            #   [application](https://www.twilio.com/docs/usage/api/applications)'s
+            #   {application}[https://www.twilio.com/docs/usage/api/applications]'s
             #   `message_status_callback`. If a `status_callback` parameter is also passed, it
             #   will be ignored and the application's `message_status_callback` parameter will
             #   be used.
@@ -59,8 +59,8 @@ module Twilio
             #   is not set, the message cost is not checked.
             # @param [Boolean] provide_feedback Whether to confirm delivery of the message.
             #   Set this value to `true` if you are sending messages that have a trackable user
-            #   action and you intend to confirm delivery of the message using the [Message
-            #   Feedback API](https://www.twilio.com/docs/sms/api/message-feedback-resource).
+            #   action and you intend to confirm delivery of the message using the {Message
+            #   Feedback API}[https://www.twilio.com/docs/sms/api/message-feedback-resource].
             #   This parameter is `false` by default.
             # @param [String] attempt Total number of attempts made ( including this ) to send
             #   out the message regardless of the provider used
@@ -79,21 +79,21 @@ module Twilio
             #   similar GSM-7 character and replace them. Can be: `true` or `false`.
             # @param [String] persistent_action Rich actions for Channels Messages.
             # @param [String] from A Twilio phone number in
-            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, an [alphanumeric
+            #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, an {alphanumeric
             #   sender
-            #   ID](https://www.twilio.com/docs/sms/send-messages#use-an-alphanumeric-sender-id),
-            #   or a [Channel Endpoint
-            #   address](https://www.twilio.com/docs/sms/channels#channel-addresses) that is
-            #   enabled for the type of message you want to send. Phone numbers or [short
-            #   codes](https://www.twilio.com/docs/sms/api/short-code) purchased from Twilio
+            #   ID}[https://www.twilio.com/docs/sms/send-messages#use-an-alphanumeric-sender-id],
+            #   or a {Channel Endpoint
+            #   address}[https://www.twilio.com/docs/sms/channels#channel-addresses] that is
+            #   enabled for the type of message you want to send. Phone numbers or {short
+            #   codes}[https://www.twilio.com/docs/sms/api/short-code] purchased from Twilio
             #   also work here. You cannot, for example, spoof messages from a private cell
             #   phone number. If you are using `messaging_service_sid`, this parameter must be
             #   empty.
-            # @param [String] messaging_service_sid The SID of the [Messaging
-            #   Service](https://www.twilio.com/docs/sms/services#send-a-message-with-copilot)
-            #   you want to associate with the Message. Set this parameter to use the [Messaging
+            # @param [String] messaging_service_sid The SID of the {Messaging
+            #   Service}[https://www.twilio.com/docs/sms/services#send-a-message-with-copilot]
+            #   you want to associate with the Message. Set this parameter to use the {Messaging
             #   Service Settings and Copilot
-            #   Features](https://www.twilio.com/console/sms/services) you have configured and
+            #   Features}[https://www.twilio.com/console/sms/services] you have configured and
             #   leave the `from` parameter empty. When only this parameter is set, Twilio will
             #   use your enabled Copilot Features to select the `from` phone number for
             #   delivery.
@@ -102,8 +102,8 @@ module Twilio
             # @param [String] media_url The URL of the media to send with the message. The
             #   media can be of type `gif`, `png`, and `jpeg` and will be formatted correctly on
             #   the recipient's device. The media size limit is 5MB for supported file types
-            #   (JPEG, PNG, GIF) and 500KB for [other
-            #   types](https://www.twilio.com/docs/sms/accepted-mime-types) of accepted media.
+            #   (JPEG, PNG, GIF) and 500KB for {other
+            #   types}[https://www.twilio.com/docs/sms/accepted-mime-types] of accepted media.
             #   To send more than one image in the message body, provide multiple `media_url`
             #   parameters in the POST request. You can include up to 10 `media_url` parameters
             #   per message. You can send images in an SMS message in only the US and Canada.
@@ -292,7 +292,7 @@ module Twilio
             # Initialize the MessageContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Message
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the Message
             #   resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Message resource to fetch.
@@ -393,7 +393,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that sent the message
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that sent the message
             #   that created the resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Message resource to fetch.

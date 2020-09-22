@@ -18,7 +18,7 @@ module Twilio
             # Initialize the ModelBuildList
             # @param [Version] version Version that contains the resource
             # @param [String] assistant_sid The SID of the
-            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
             #   parent of the resource.
             # @return [ModelBuildList] ModelBuildList
             def initialize(version, assistant_sid: nil)
@@ -171,7 +171,7 @@ module Twilio
             # Initialize the ModelBuildContext
             # @param [Version] version Version that contains the resource
             # @param [String] assistant_sid The SID of the
-            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
             #   parent of the resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   ModelBuild resource to fetch.
@@ -248,7 +248,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] assistant_sid The SID of the
-            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
             #   parent of the resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   ModelBuild resource to fetch.

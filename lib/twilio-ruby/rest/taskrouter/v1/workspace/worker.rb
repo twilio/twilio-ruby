@@ -188,7 +188,7 @@ module Twilio
             #   the new Worker. It can be up to 64 characters long.
             # @param [String] activity_sid The SID of a valid Activity that will describe the
             #   new Worker's initial state. See
-            #   [Activities](https://www.twilio.com/docs/taskrouter/api/activity) for more
+            #   {Activities}[https://www.twilio.com/docs/taskrouter/api/activity] for more
             #   information. If not provided, the new Worker's initial state is the
             #   `default_activity_sid` configured on the Workspace.
             # @param [String] attributes A valid JSON string that describes the new Worker.
@@ -291,7 +291,7 @@ module Twilio
             # Update the WorkerInstance
             # @param [String] activity_sid The SID of a valid Activity that will describe the
             #   Worker's initial state. See
-            #   [Activities](https://www.twilio.com/docs/taskrouter/api/activity) for more
+            #   {Activities}[https://www.twilio.com/docs/taskrouter/api/activity] for more
             #   information.
             # @param [String] attributes The JSON string that describes the Worker. For
             #   example: `{ "email": "Bob@example.com", "phone": "+5095551234" }`. This data is
@@ -543,7 +543,7 @@ module Twilio
             # Update the WorkerInstance
             # @param [String] activity_sid The SID of a valid Activity that will describe the
             #   Worker's initial state. See
-            #   [Activities](https://www.twilio.com/docs/taskrouter/api/activity) for more
+            #   {Activities}[https://www.twilio.com/docs/taskrouter/api/activity] for more
             #   information.
             # @param [String] attributes The JSON string that describes the Worker. For
             #   example: `{ "email": "Bob@example.com", "phone": "+5095551234" }`. This data is

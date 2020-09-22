@@ -80,11 +80,11 @@ module Twilio
           ##
           # Fetch the CurrentCallInstance
           # @param [String] x_xcnam_sensitive_phone_number_from The originating Phone
-          #   Number, given in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+          #   Number, given in {E.164 format}[https://www.twilio.com/docs/glossary/what-e164].
           #   This phone number should be a Twilio number, otherwise it will return an error
           #   with HTTP Status Code 400.
           # @param [String] x_xcnam_sensitive_phone_number_to The terminating Phone Number,
-          #   given in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+          #   given in {E.164 format}[https://www.twilio.com/docs/glossary/what-e164].
           # @return [CurrentCallInstance] Fetched CurrentCallInstance
           def fetch(x_xcnam_sensitive_phone_number_from: :unset, x_xcnam_sensitive_phone_number_to: :unset)
             headers = Twilio::Values.of({
@@ -244,11 +244,11 @@ module Twilio
           ##
           # Fetch the CurrentCallInstance
           # @param [String] x_xcnam_sensitive_phone_number_from The originating Phone
-          #   Number, given in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+          #   Number, given in {E.164 format}[https://www.twilio.com/docs/glossary/what-e164].
           #   This phone number should be a Twilio number, otherwise it will return an error
           #   with HTTP Status Code 400.
           # @param [String] x_xcnam_sensitive_phone_number_to The terminating Phone Number,
-          #   given in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+          #   given in {E.164 format}[https://www.twilio.com/docs/glossary/what-e164].
           # @return [CurrentCallInstance] Fetched CurrentCallInstance
           def fetch(x_xcnam_sensitive_phone_number_from: :unset, x_xcnam_sensitive_phone_number_to: :unset)
             context.fetch(

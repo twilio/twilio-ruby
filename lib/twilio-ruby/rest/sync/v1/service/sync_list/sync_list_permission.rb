@@ -18,8 +18,8 @@ module Twilio
               ##
               # Initialize the SyncListPermissionList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
               #   associated with.
               # @param [String] list_sid The SID of the Sync List to which the Permission
               #   applies.
@@ -161,8 +161,8 @@ module Twilio
               ##
               # Initialize the SyncListPermissionContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) with the Sync List
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] with the Sync List
               #   Permission resource to fetch.
               # @param [String] list_sid The SID of the Sync List with the Sync List Permission
               #   resource to fetch. Can be the Sync List resource's `sid` or its `unique_name`.
@@ -244,8 +244,8 @@ module Twilio
               # Initialize the SyncListPermissionInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
               #   associated with.
               # @param [String] list_sid The SID of the Sync List to which the Permission
               #   applies.

@@ -15,8 +15,8 @@ module Twilio
             ##
             # Initialize the UsageRecordList
             # @param [Version] version Version that contains the resource
-            # @param [String] sim_sid The SID of the [Sim
-            #   resource](https://www.twilio.com/docs/wireless/api/sim-resource) that this Usage
+            # @param [String] sim_sid The SID of the {Sim
+            #   resource}[https://www.twilio.com/docs/wireless/api/sim-resource] that this Usage
             #   Record is for.
             # @return [UsageRecordList] UsageRecordList
             def initialize(version, sim_sid: nil)
@@ -32,10 +32,10 @@ module Twilio
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [Time] end_ Only include usage that occurred on or before this date,
-            #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+            #   specified in {ISO 8601}[https://www.iso.org/iso-8601-date-and-time-format.html].
             #   The default is the current time.
             # @param [Time] start Only include usage that has occurred on or after this date,
-            #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+            #   specified in {ISO 8601}[https://www.iso.org/iso-8601-date-and-time-format.html].
             #   The default is one month before the `end` parameter value.
             # @param [usage_record.Granularity] granularity How to summarize the usage by
             #   time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of
@@ -62,10 +62,10 @@ module Twilio
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [Time] end_ Only include usage that occurred on or before this date,
-            #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+            #   specified in {ISO 8601}[https://www.iso.org/iso-8601-date-and-time-format.html].
             #   The default is the current time.
             # @param [Time] start Only include usage that has occurred on or after this date,
-            #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+            #   specified in {ISO 8601}[https://www.iso.org/iso-8601-date-and-time-format.html].
             #   The default is one month before the `end` parameter value.
             # @param [usage_record.Granularity] granularity How to summarize the usage by
             #   time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of
@@ -103,10 +103,10 @@ module Twilio
             # Retrieve a single page of UsageRecordInstance records from the API.
             # Request is executed immediately.
             # @param [Time] end_ Only include usage that occurred on or before this date,
-            #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+            #   specified in {ISO 8601}[https://www.iso.org/iso-8601-date-and-time-format.html].
             #   The default is the current time.
             # @param [Time] start Only include usage that has occurred on or after this date,
-            #   specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+            #   specified in {ISO 8601}[https://www.iso.org/iso-8601-date-and-time-format.html].
             #   The default is one month before the `end` parameter value.
             # @param [usage_record.Granularity] granularity How to summarize the usage by
             #   time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of
@@ -184,8 +184,8 @@ module Twilio
             # Initialize the UsageRecordInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] sim_sid The SID of the [Sim
-            #   resource](https://www.twilio.com/docs/wireless/api/sim-resource) that this Usage
+            # @param [String] sim_sid The SID of the {Sim
+            #   resource}[https://www.twilio.com/docs/wireless/api/sim-resource] that this Usage
             #   Record is for.
             # @return [UsageRecordInstance] UsageRecordInstance
             def initialize(version, payload, sim_sid: nil)

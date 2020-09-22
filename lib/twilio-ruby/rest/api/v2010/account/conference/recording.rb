@@ -17,7 +17,7 @@ module Twilio
               # Initialize the RecordingList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
               #   Conference Recording resource.
               # @param [String] conference_sid The Conference SID that identifies the conference
               #   associated with the recording.
@@ -179,7 +179,7 @@ module Twilio
               # Initialize the RecordingContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
               #   Conference Recording resource to fetch.
               # @param [String] conference_sid The Conference SID that identifies the conference
               #   associated with the recording to fetch.
@@ -261,7 +261,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
               #   Conference Recording resource.
               # @param [String] conference_sid The Conference SID that identifies the conference
               #   associated with the recording.

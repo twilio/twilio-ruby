@@ -209,7 +209,7 @@ module Twilio
               #   instruction.
               # @param [String] dequeue_to The Contact URI of the worker when executing a
               #   Dequeue instruction. Can be the URI of the Twilio Client, the SIP URI for
-              #   Programmable SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164)
+              #   Programmable SIP, or the {E.164}[https://www.twilio.com/docs/glossary/what-e164]
               #   formatted phone number, depending on the destination.
               # @param [String] dequeue_status_callback_url The Callback URL for completed call
               #   event when executing a Dequeue instruction.
@@ -220,7 +220,7 @@ module Twilio
               # @param [String] call_timeout Timeout for call when executing a Call instruction.
               # @param [String] call_to The Contact URI of the worker when executing a Call
               #   instruction.  Can be the URI of the Twilio Client, the SIP URI for Programmable
-              #   SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164) formatted
+              #   SIP, or the {E.164}[https://www.twilio.com/docs/glossary/what-e164] formatted
               #   phone number, depending on the destination.
               # @param [String] call_url TwiML URI executed on answering the worker's leg as a
               #   result of the Call instruction.
@@ -236,7 +236,7 @@ module Twilio
               #   the Redirect instruction.
               # @param [String] to The Contact URI of the worker when executing a Conference
               #   instruction. Can be the URI of the Twilio Client, the SIP URI for Programmable
-              #   SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164) formatted
+              #   SIP, or the {E.164}[https://www.twilio.com/docs/glossary/what-e164] formatted
               #   phone number, depending on the destination.
               # @param [String] from The Caller ID of the call to the worker when executing a
               #   Conference instruction.
@@ -264,8 +264,8 @@ module Twilio
               #   agent leaves.
               # @param [String] wait_url The URL we should call using the `wait_method` for the
               #   music to play while participants are waiting for the conference to start. The
-              #   default value is the URL of our standard hold music. [Learn more about hold
-              #   music](https://www.twilio.com/labs/twimlets/holdmusic).
+              #   default value is the URL of our standard hold music. {Learn more about hold
+              #   music}[https://www.twilio.com/labs/twimlets/holdmusic].
               # @param [String] wait_method The HTTP method we should use to call `wait_url`.
               #   Can be `GET` or `POST` and the default is `POST`. When using a static audio
               #   file, this should be `GET` so that we can cache the file.
@@ -305,7 +305,7 @@ module Twilio
               #   should use to call `conference_recording_status_callback`. Can be: `GET` or
               #   `POST` and defaults to `POST`.
               # @param [String] region The
-              #   [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls)
+              #   {region}[https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls]
               #   where we should mix the recorded audio. Can be:`us1`, `ie1`, `de1`, `sg1`,
               #   `br1`, `au1`, or `jp1`.
               # @param [String] sip_auth_username The SIP username used for authentication.
@@ -549,7 +549,7 @@ module Twilio
               #   instruction.
               # @param [String] dequeue_to The Contact URI of the worker when executing a
               #   Dequeue instruction. Can be the URI of the Twilio Client, the SIP URI for
-              #   Programmable SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164)
+              #   Programmable SIP, or the {E.164}[https://www.twilio.com/docs/glossary/what-e164]
               #   formatted phone number, depending on the destination.
               # @param [String] dequeue_status_callback_url The Callback URL for completed call
               #   event when executing a Dequeue instruction.
@@ -560,7 +560,7 @@ module Twilio
               # @param [String] call_timeout Timeout for call when executing a Call instruction.
               # @param [String] call_to The Contact URI of the worker when executing a Call
               #   instruction.  Can be the URI of the Twilio Client, the SIP URI for Programmable
-              #   SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164) formatted
+              #   SIP, or the {E.164}[https://www.twilio.com/docs/glossary/what-e164] formatted
               #   phone number, depending on the destination.
               # @param [String] call_url TwiML URI executed on answering the worker's leg as a
               #   result of the Call instruction.
@@ -576,7 +576,7 @@ module Twilio
               #   the Redirect instruction.
               # @param [String] to The Contact URI of the worker when executing a Conference
               #   instruction. Can be the URI of the Twilio Client, the SIP URI for Programmable
-              #   SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164) formatted
+              #   SIP, or the {E.164}[https://www.twilio.com/docs/glossary/what-e164] formatted
               #   phone number, depending on the destination.
               # @param [String] from The Caller ID of the call to the worker when executing a
               #   Conference instruction.
@@ -604,8 +604,8 @@ module Twilio
               #   agent leaves.
               # @param [String] wait_url The URL we should call using the `wait_method` for the
               #   music to play while participants are waiting for the conference to start. The
-              #   default value is the URL of our standard hold music. [Learn more about hold
-              #   music](https://www.twilio.com/labs/twimlets/holdmusic).
+              #   default value is the URL of our standard hold music. {Learn more about hold
+              #   music}[https://www.twilio.com/labs/twimlets/holdmusic].
               # @param [String] wait_method The HTTP method we should use to call `wait_url`.
               #   Can be `GET` or `POST` and the default is `POST`. When using a static audio
               #   file, this should be `GET` so that we can cache the file.
@@ -645,7 +645,7 @@ module Twilio
               #   should use to call `conference_recording_status_callback`. Can be: `GET` or
               #   `POST` and defaults to `POST`.
               # @param [String] region The
-              #   [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls)
+              #   {region}[https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls]
               #   where we should mix the recorded audio. Can be:`us1`, `ie1`, `de1`, `sg1`,
               #   `br1`, `au1`, or `jp1`.
               # @param [String] sip_auth_username The SIP username used for authentication.

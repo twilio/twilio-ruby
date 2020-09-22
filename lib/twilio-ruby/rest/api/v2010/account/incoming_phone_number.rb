@@ -16,7 +16,7 @@ module Twilio
             # Initialize the IncomingPhoneNumberList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this
             #   IncomingPhoneNumber resource.
             # @return [IncomingPhoneNumberList] IncomingPhoneNumberList
             def initialize(version, account_sid: nil)
@@ -221,7 +221,7 @@ module Twilio
             # @param [String] bundle_sid The SID of the Bundle resource that you associate
             #   with the phone number. Some regions require a Bundle to meet local Regulations.
             # @param [String] phone_number The phone number to purchase specified in
-            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format.  E.164 phone
+            #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format.  E.164 phone
             #   numbers consist of a + followed by the country code and subscriber number
             #   without punctuation characters. For example, +14155551234.
             # @param [String] area_code The desired area code for your new incoming phone
@@ -327,7 +327,7 @@ module Twilio
             # Initialize the IncomingPhoneNumberContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
             #   IncomingPhoneNumber resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   IncomingPhoneNumber resource to fetch.
@@ -346,10 +346,10 @@ module Twilio
             ##
             # Update the IncomingPhoneNumberInstance
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
-            #   IncomingPhoneNumber resource to update.  For more information, see [Exchanging
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
+            #   IncomingPhoneNumber resource to update.  For more information, see {Exchanging
             #   Numbers Between
-            #   Subaccounts](https://www.twilio.com/docs/iam/api/subaccounts#exchanging-numbers).
+            #   Subaccounts}[https://www.twilio.com/docs/iam/api/subaccounts#exchanging-numbers].
             # @param [String] api_version The API version to use for incoming calls made to
             #   the phone number. The default is `2010-04-01`.
             # @param [String] friendly_name A descriptive string that you created to describe
@@ -509,7 +509,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this
             #   IncomingPhoneNumber resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   IncomingPhoneNumber resource to fetch.
@@ -771,10 +771,10 @@ module Twilio
             ##
             # Update the IncomingPhoneNumberInstance
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
-            #   IncomingPhoneNumber resource to update.  For more information, see [Exchanging
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
+            #   IncomingPhoneNumber resource to update.  For more information, see {Exchanging
             #   Numbers Between
-            #   Subaccounts](https://www.twilio.com/docs/iam/api/subaccounts#exchanging-numbers).
+            #   Subaccounts}[https://www.twilio.com/docs/iam/api/subaccounts#exchanging-numbers].
             # @param [String] api_version The API version to use for incoming calls made to
             #   the phone number. The default is `2010-04-01`.
             # @param [String] friendly_name A descriptive string that you created to describe

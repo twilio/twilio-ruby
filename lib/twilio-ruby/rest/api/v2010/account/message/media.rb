@@ -17,7 +17,7 @@ module Twilio
               # Initialize the MediaList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Media
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Media
               #   resource.
               # @param [String] message_sid The unique string that that we created to identify
               #   the Message resource.
@@ -179,7 +179,7 @@ module Twilio
               # Initialize the MediaContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Media
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the Media
               #   resource(s) to fetch.
               # @param [String] message_sid The SID of the Message resource that this Media
               #   resource belongs to.
@@ -237,7 +237,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Media
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Media
               #   resource.
               # @param [String] message_sid The unique string that that we created to identify
               #   the Message resource.

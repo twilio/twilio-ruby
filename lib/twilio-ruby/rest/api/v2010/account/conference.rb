@@ -16,7 +16,7 @@ module Twilio
             # Initialize the ConferenceList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this
             #   Conference resource.
             # @return [ConferenceList] ConferenceList
             def initialize(version, account_sid: nil)
@@ -207,7 +207,7 @@ module Twilio
             # Initialize the ConferenceContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
             #   Conference resource(s) to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Conference resource to fetch
@@ -331,7 +331,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this
             #   Conference resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Conference resource to fetch

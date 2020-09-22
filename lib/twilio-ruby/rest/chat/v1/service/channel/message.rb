@@ -17,10 +17,10 @@ module Twilio
               # Initialize the MessageList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) the resource is
+              #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] the resource is
               #   associated with.
               # @param [String] channel_sid The unique ID of the
-              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) the Message
+              #   {Channel}[https://www.twilio.com/docs/api/chat/rest/channels] the Message
               #   resource belongs to.
               # @return [MessageList] MessageList
               def initialize(version, service_sid: nil, channel_sid: nil)
@@ -37,7 +37,7 @@ module Twilio
               #   string or `null`, which sets the value as an empty string. You can send
               #   structured data in the body by serializing it as a string.
               # @param [String] from The
-              #   [identity](https://www.twilio.com/docs/api/chat/guides/identity) of the new
+              #   {identity}[https://www.twilio.com/docs/api/chat/guides/identity] of the new
               #   message's author. The default value is `system`.
               # @param [String] attributes A valid JSON string that contains
               #   application-specific data.
@@ -188,10 +188,10 @@ module Twilio
               # Initialize the MessageContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) to fetch the
+              #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] to fetch the
               #   resource from.
               # @param [String] channel_sid The unique ID of the
-              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) the message to
+              #   {Channel}[https://www.twilio.com/docs/api/chat/rest/channels] the message to
               #   fetch belongs to. Can be the Channel's `sid` or `unique_name`.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Message resource to fetch.
@@ -269,10 +269,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) the resource is
+              #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] the resource is
               #   associated with.
               # @param [String] channel_sid The unique ID of the
-              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) the Message
+              #   {Channel}[https://www.twilio.com/docs/api/chat/rest/channels] the Message
               #   resource belongs to.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Message resource to fetch.

@@ -18,7 +18,7 @@ module Twilio
             # Initialize the TaskList
             # @param [Version] version Version that contains the resource
             # @param [String] assistant_sid The SID of the
-            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
             #   parent of the resource.
             # @return [TaskList] TaskList
             def initialize(version, assistant_sid: nil)
@@ -118,7 +118,7 @@ module Twilio
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the new resource. It is not unique and can be up to 255 characters long.
             # @param [Hash] actions The JSON string that specifies the
-            #   [actions](https://www.twilio.com/docs/autopilot/actions) that instruct the
+            #   {actions}[https://www.twilio.com/docs/autopilot/actions] that instruct the
             #   Assistant on how to perform the task. It is optional and not unique.
             # @param [String] actions_url The URL from which the Assistant can fetch actions.
             # @return [TaskInstance] Created TaskInstance
@@ -180,7 +180,7 @@ module Twilio
             # Initialize the TaskContext
             # @param [Version] version Version that contains the resource
             # @param [String] assistant_sid The SID of the
-            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
             #   parent of the resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the Task
             #   resource to fetch.
@@ -217,7 +217,7 @@ module Twilio
             #   be unique. It can be used as an alternative to the `sid` in the URL path to
             #   address the resource.
             # @param [Hash] actions The JSON string that specifies the
-            #   [actions](https://www.twilio.com/docs/autopilot/actions) that instruct the
+            #   {actions}[https://www.twilio.com/docs/autopilot/actions] that instruct the
             #   Assistant on how to perform the task.
             # @param [String] actions_url The URL from which the Assistant can fetch actions.
             # @return [TaskInstance] Updated TaskInstance
@@ -324,7 +324,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] assistant_sid The SID of the
-            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
             #   parent of the resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the Task
             #   resource to fetch.
@@ -438,7 +438,7 @@ module Twilio
             #   be unique. It can be used as an alternative to the `sid` in the URL path to
             #   address the resource.
             # @param [Hash] actions The JSON string that specifies the
-            #   [actions](https://www.twilio.com/docs/autopilot/actions) that instruct the
+            #   {actions}[https://www.twilio.com/docs/autopilot/actions] that instruct the
             #   Assistant on how to perform the task.
             # @param [String] actions_url The URL from which the Assistant can fetch actions.
             # @return [TaskInstance] Updated TaskInstance

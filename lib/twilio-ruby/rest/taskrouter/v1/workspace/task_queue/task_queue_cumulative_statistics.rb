@@ -89,12 +89,12 @@ module Twilio
               ##
               # Fetch the TaskQueueCumulativeStatisticsInstance
               # @param [Time] end_date Only calculate statistics from this date and time and
-              #   earlier, specified in GMT as an [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+              #   earlier, specified in GMT as an {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time.
               # @param [String] minutes Only calculate statistics since this many minutes in the
               #   past. The default is 15 minutes.
               # @param [Time] start_date Only calculate statistics from this date and time and
-              #   later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              #   later, specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
               # @param [String] task_channel Only calculate cumulative statistics on this
               #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
               #   `sms`, or `default`.
@@ -331,12 +331,12 @@ module Twilio
               ##
               # Fetch the TaskQueueCumulativeStatisticsInstance
               # @param [Time] end_date Only calculate statistics from this date and time and
-              #   earlier, specified in GMT as an [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+              #   earlier, specified in GMT as an {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time.
               # @param [String] minutes Only calculate statistics since this many minutes in the
               #   past. The default is 15 minutes.
               # @param [Time] start_date Only calculate statistics from this date and time and
-              #   later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              #   later, specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
               # @param [String] task_channel Only calculate cumulative statistics on this
               #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
               #   `sms`, or `default`.

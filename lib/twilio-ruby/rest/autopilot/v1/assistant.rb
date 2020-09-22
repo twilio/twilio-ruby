@@ -117,10 +117,10 @@ module Twilio
           #   the URL path to address the resource. The first 64 characters must be unique.
           # @param [String] callback_url Reserved.
           # @param [String] callback_events Reserved.
-          # @param [Hash] style_sheet The JSON string that defines the Assistant's [style
-          #   sheet](https://www.twilio.com/docs/autopilot/api/assistant/stylesheet)
-          # @param [Hash] defaults A JSON object that defines the Assistant's [default
-          #   tasks](https://www.twilio.com/docs/autopilot/api/assistant/defaults) for various
+          # @param [Hash] style_sheet The JSON string that defines the Assistant's {style
+          #   sheet}[https://www.twilio.com/docs/autopilot/api/assistant/stylesheet]
+          # @param [Hash] defaults A JSON object that defines the Assistant's {default
+          #   tasks}[https://www.twilio.com/docs/autopilot/api/assistant/defaults] for various
           #   scenarios, including initiation actions and fallback tasks.
           # @return [AssistantInstance] Created AssistantInstance
           def create(friendly_name: :unset, log_queries: :unset, unique_name: :unset, callback_url: :unset, callback_events: :unset, style_sheet: :unset, defaults: :unset)
@@ -225,10 +225,10 @@ module Twilio
           #   URL path to address the resource. The first 64 characters must be unique.
           # @param [String] callback_url Reserved.
           # @param [String] callback_events Reserved.
-          # @param [Hash] style_sheet The JSON string that defines the Assistant's [style
-          #   sheet](https://www.twilio.com/docs/autopilot/api/assistant/stylesheet)
-          # @param [Hash] defaults A JSON object that defines the Assistant's [default
-          #   tasks](https://www.twilio.com/docs/autopilot/api/assistant/defaults) for various
+          # @param [Hash] style_sheet The JSON string that defines the Assistant's {style
+          #   sheet}[https://www.twilio.com/docs/autopilot/api/assistant/stylesheet]
+          # @param [Hash] defaults A JSON object that defines the Assistant's {default
+          #   tasks}[https://www.twilio.com/docs/autopilot/api/assistant/defaults] for various
           #   scenarios, including initiation actions and fallback tasks.
           # @param [String] development_stage A string describing the state of the
           #   assistant.
@@ -546,10 +546,10 @@ module Twilio
           #   URL path to address the resource. The first 64 characters must be unique.
           # @param [String] callback_url Reserved.
           # @param [String] callback_events Reserved.
-          # @param [Hash] style_sheet The JSON string that defines the Assistant's [style
-          #   sheet](https://www.twilio.com/docs/autopilot/api/assistant/stylesheet)
-          # @param [Hash] defaults A JSON object that defines the Assistant's [default
-          #   tasks](https://www.twilio.com/docs/autopilot/api/assistant/defaults) for various
+          # @param [Hash] style_sheet The JSON string that defines the Assistant's {style
+          #   sheet}[https://www.twilio.com/docs/autopilot/api/assistant/stylesheet]
+          # @param [Hash] defaults A JSON object that defines the Assistant's {default
+          #   tasks}[https://www.twilio.com/docs/autopilot/api/assistant/defaults] for various
           #   scenarios, including initiation actions and fallback tasks.
           # @param [String] development_stage A string describing the state of the
           #   assistant.

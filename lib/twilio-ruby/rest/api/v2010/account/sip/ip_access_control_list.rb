@@ -161,7 +161,7 @@ module Twilio
               # Initialize the IpAccessControlListContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The unique id of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for this
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] responsible for this
               #   resource.
               # @param [String] sid A 34 character string that uniquely identifies the resource
               #   to fetch.

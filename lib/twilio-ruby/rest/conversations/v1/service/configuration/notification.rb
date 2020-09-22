@@ -72,8 +72,8 @@ module Twilio
               ##
               # Initialize the NotificationContext
               # @param [Version] version Version that contains the resource
-              # @param [String] chat_service_sid The SID of the [Conversation
-              #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+              # @param [String] chat_service_sid The SID of the {Conversation
+              #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
               #   Configuration applies to.
               # @return [NotificationContext] NotificationContext
               def initialize(version, chat_service_sid)

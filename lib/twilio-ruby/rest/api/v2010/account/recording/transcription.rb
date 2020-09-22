@@ -17,10 +17,10 @@ module Twilio
               # Initialize the TranscriptionList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
               #   Transcription resource.
               # @param [String] recording_sid The SID of the
-              #   [Recording](https://www.twilio.com/docs/voice/api/recording) from which the
+              #   {Recording}[https://www.twilio.com/docs/voice/api/recording] from which the
               #   transcription was created.
               # @return [TranscriptionList] TranscriptionList
               def initialize(version, account_sid: nil, recording_sid: nil)
@@ -157,10 +157,10 @@ module Twilio
               # Initialize the TranscriptionContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
               #   Transcription resource to fetch.
               # @param [String] recording_sid The SID of the
-              #   [Recording](https://www.twilio.com/docs/voice/api/recording) that created the
+              #   {Recording}[https://www.twilio.com/docs/voice/api/recording] that created the
               #   transcription to fetch.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Transcription resource to fetch.
@@ -216,10 +216,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
               #   Transcription resource.
               # @param [String] recording_sid The SID of the
-              #   [Recording](https://www.twilio.com/docs/voice/api/recording) from which the
+              #   {Recording}[https://www.twilio.com/docs/voice/api/recording] from which the
               #   transcription was created.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Transcription resource to fetch.
