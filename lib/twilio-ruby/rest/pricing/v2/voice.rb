@@ -28,8 +28,8 @@ module Twilio
 
           ##
           # Access the countries
-          # @param [String] iso_country The [ISO country
-          #   code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the origin-based
+          # @param [String] iso_country The {ISO country
+          #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the origin-based
           #   voice pricing information to fetch.
           # @return [CountryList]
           # @return [CountryContext] if iso_country was passed.
@@ -46,7 +46,7 @@ module Twilio
           ##
           # Access the numbers
           # @param [String] destination_number The destination phone number, in
-          #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to
+          #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, for which to
           #   fetch the origin-based voice pricing information. E.164 format consists of a +
           #   followed by the country code and subscriber number.
           # @return [NumberList]

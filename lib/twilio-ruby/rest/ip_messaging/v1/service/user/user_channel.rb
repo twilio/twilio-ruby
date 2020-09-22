@@ -17,7 +17,7 @@ module Twilio
               # Initialize the UserChannelList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) the resource is
+              #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] the resource is
               #   associated with.
               # @param [String] user_sid The unique string that we created to identify the User
               #   resource.
@@ -157,7 +157,7 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) the resource is
+              #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] the resource is
               #   associated with.
               # @param [String] user_sid The unique string that we created to identify the User
               #   resource.

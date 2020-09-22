@@ -18,7 +18,7 @@ module Twilio
             # Initialize the DefaultsList
             # @param [Version] version Version that contains the resource
             # @param [String] assistant_sid The SID of the
-            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
             #   parent of the resource.
             # @return [DefaultsList] DefaultsList
             def initialize(version, assistant_sid: nil)
@@ -73,7 +73,7 @@ module Twilio
             # Initialize the DefaultsContext
             # @param [Version] version Version that contains the resource
             # @param [String] assistant_sid The SID of the
-            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
             #   parent of the resource to fetch.
             # @return [DefaultsContext] DefaultsContext
             def initialize(version, assistant_sid)
@@ -129,7 +129,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] assistant_sid The SID of the
-            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
             #   parent of the resource.
             # @return [DefaultsInstance] DefaultsInstance
             def initialize(version, payload, assistant_sid: nil)

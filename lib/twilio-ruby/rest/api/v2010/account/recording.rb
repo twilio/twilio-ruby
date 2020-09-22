@@ -16,7 +16,7 @@ module Twilio
             # Initialize the RecordingList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
             #   Recording resource.
             # @return [RecordingList] RecordingList
             def initialize(version, account_sid: nil)
@@ -35,7 +35,7 @@ module Twilio
             # @param [Time] date_created Only include recordings that were created on this date
             # @param [Time] date_created_after Only include recordings that were created on this date
             # @param [String] call_sid The
-            #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID of the resources
+            #   {Call}[https://www.twilio.com/docs/voice/api/call-resource] SID of the resources
             #   to read.
             # @param [String] conference_sid The Conference SID that identifies the conference
             #   associated with the recording to read.
@@ -66,7 +66,7 @@ module Twilio
             # @param [Time] date_created Only include recordings that were created on this date
             # @param [Time] date_created_after Only include recordings that were created on this date
             # @param [String] call_sid The
-            #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID of the resources
+            #   {Call}[https://www.twilio.com/docs/voice/api/call-resource] SID of the resources
             #   to read.
             # @param [String] conference_sid The Conference SID that identifies the conference
             #   associated with the recording to read.
@@ -113,7 +113,7 @@ module Twilio
             # @param [Time] date_created Only include recordings that were created on this date
             # @param [Time] date_created_after Only include recordings that were created on this date
             # @param [String] call_sid The
-            #   [Call](https://www.twilio.com/docs/voice/api/call-resource) SID of the resources
+            #   {Call}[https://www.twilio.com/docs/voice/api/call-resource] SID of the resources
             #   to read.
             # @param [String] conference_sid The Conference SID that identifies the conference
             #   associated with the recording to read.
@@ -192,7 +192,7 @@ module Twilio
             # Initialize the RecordingContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
             #   Recording resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Recording resource to fetch.
@@ -290,7 +290,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
             #   Recording resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Recording resource to fetch.

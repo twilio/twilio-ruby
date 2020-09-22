@@ -19,10 +19,10 @@ module Twilio
               # Initialize the TaskStatisticsList
               # @param [Version] version Version that contains the resource
               # @param [String] assistant_sid The SID of the
-              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
               #   parent of the Task associated with the resource.
               # @param [String] task_sid The SID of the
-              #   [Task](https://www.twilio.com/docs/autopilot/api/task) for which the statistics
+              #   {Task}[https://www.twilio.com/docs/autopilot/api/task] for which the statistics
               #   were collected.
               # @return [TaskStatisticsList] TaskStatisticsList
               def initialize(version, assistant_sid: nil, task_sid: nil)
@@ -82,10 +82,10 @@ module Twilio
               # Initialize the TaskStatisticsContext
               # @param [Version] version Version that contains the resource
               # @param [String] assistant_sid The SID of the
-              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
               #   parent of the resource to fetch.
               # @param [String] task_sid The SID of the
-              #   [Task](https://www.twilio.com/docs/autopilot/api/task) that is associated with
+              #   {Task}[https://www.twilio.com/docs/autopilot/api/task] that is associated with
               #   the resource to fetch.
               # @return [TaskStatisticsContext] TaskStatisticsContext
               def initialize(version, assistant_sid, task_sid)
@@ -133,10 +133,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] assistant_sid The SID of the
-              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
               #   parent of the Task associated with the resource.
               # @param [String] task_sid The SID of the
-              #   [Task](https://www.twilio.com/docs/autopilot/api/task) for which the statistics
+              #   {Task}[https://www.twilio.com/docs/autopilot/api/task] for which the statistics
               #   were collected.
               # @return [TaskStatisticsInstance] TaskStatisticsInstance
               def initialize(version, payload, assistant_sid: nil, task_sid: nil)

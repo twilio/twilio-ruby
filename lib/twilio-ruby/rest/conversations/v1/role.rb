@@ -30,9 +30,9 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the new resource. It can be up to 64 characters long.
           # @param [role.RoleType] type The type of role. Can be: `conversation` for
-          #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
-          #   roles or `service` for [Conversation
-          #   Service](https://www.twilio.com/docs/conversations/api/service-resource) roles.
+          #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
+          #   roles or `service` for {Conversation
+          #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] roles.
           # @param [String] permission A permission that you grant to the new role. Only one
           #   permission can be granted per parameter. To assign more than one permission,
           #   repeat this parameter for each permission value. The values for this parameter

@@ -20,11 +20,11 @@ module Twilio
                 # Initialize the MessageInteractionList
                 # @param [Version] version Version that contains the resource
                 # @param [String] service_sid The SID of the parent
-                #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
+                #   {Service}[https://www.twilio.com/docs/proxy/api/service] resource.
                 # @param [String] session_sid The SID of the parent
-                #   [Session](https://www.twilio.com/docs/proxy/api/session) resource.
+                #   {Session}[https://www.twilio.com/docs/proxy/api/session] resource.
                 # @param [String] participant_sid The SID of the
-                #   [Participant](https://www.twilio.com/docs/proxy/api/participant) resource.
+                #   {Participant}[https://www.twilio.com/docs/proxy/api/participant] resource.
                 # @return [MessageInteractionList] MessageInteractionList
                 def initialize(version, service_sid: nil, session_sid: nil, participant_sid: nil)
                   super(version)
@@ -184,13 +184,13 @@ module Twilio
                 # Initialize the MessageInteractionContext
                 # @param [Version] version Version that contains the resource
                 # @param [String] service_sid The SID of the parent
-                #   [Service](https://www.twilio.com/docs/proxy/api/service) of the resource to
+                #   {Service}[https://www.twilio.com/docs/proxy/api/service] of the resource to
                 #   fetch.
                 # @param [String] session_sid The SID of the parent
-                #   [Session](https://www.twilio.com/docs/proxy/api/session) of the resource to
+                #   {Session}[https://www.twilio.com/docs/proxy/api/session] of the resource to
                 #   fetch.
                 # @param [String] participant_sid The SID of the
-                #   [Participant](https://www.twilio.com/docs/proxy/api/participant) resource.
+                #   {Participant}[https://www.twilio.com/docs/proxy/api/participant] resource.
                 # @param [String] sid The Twilio-provided string that uniquely identifies the
                 #   MessageInteraction resource to fetch.
                 # @return [MessageInteractionContext] MessageInteractionContext
@@ -246,11 +246,11 @@ module Twilio
                 # @param [Version] version Version that contains the resource
                 # @param [Hash] payload payload that contains response from Twilio
                 # @param [String] service_sid The SID of the parent
-                #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
+                #   {Service}[https://www.twilio.com/docs/proxy/api/service] resource.
                 # @param [String] session_sid The SID of the parent
-                #   [Session](https://www.twilio.com/docs/proxy/api/session) resource.
+                #   {Session}[https://www.twilio.com/docs/proxy/api/session] resource.
                 # @param [String] participant_sid The SID of the
-                #   [Participant](https://www.twilio.com/docs/proxy/api/participant) resource.
+                #   {Participant}[https://www.twilio.com/docs/proxy/api/participant] resource.
                 # @param [String] sid The Twilio-provided string that uniquely identifies the
                 #   MessageInteraction resource to fetch.
                 # @return [MessageInteractionInstance] MessageInteractionInstance

@@ -92,10 +92,10 @@ module Twilio
               #   past. The default 15 minutes. This is helpful for displaying statistics for the
               #   last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
               # @param [Time] start_date Only calculate statistics from this date and time and
-              #   later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              #   later, specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
               # @param [Time] end_date Only calculate statistics from this date and time and
-              #   earlier, specified in GMT as an [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+              #   earlier, specified in GMT as an {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time.
               # @param [String] task_channel Only calculate real-time statistics on this
               #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
               #   `sms`, or `default`.
@@ -226,10 +226,10 @@ module Twilio
               #   past. The default 15 minutes. This is helpful for displaying statistics for the
               #   last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
               # @param [Time] start_date Only calculate statistics from this date and time and
-              #   later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              #   later, specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
               # @param [Time] end_date Only calculate statistics from this date and time and
-              #   earlier, specified in GMT as an [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+              #   earlier, specified in GMT as an {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time.
               # @param [String] task_channel Only calculate real-time statistics on this
               #   TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`,
               #   `sms`, or `default`.

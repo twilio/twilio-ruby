@@ -18,8 +18,8 @@ module Twilio
               ##
               # Initialize the SyncMapPermissionList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
               #   associated with.
               # @param [String] map_sid The SID of the Sync Map to which the Permission applies.
               # @return [SyncMapPermissionList] SyncMapPermissionList
@@ -160,8 +160,8 @@ module Twilio
               ##
               # Initialize the SyncMapPermissionContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) with the Sync Map
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] with the Sync Map
               #   Permission resource to fetch. Can be the Service's `sid` value or `default`.
               # @param [String] map_sid The SID of the Sync Map with the Sync Map Permission
               #   resource to fetch. Can be the Sync Map's `sid` or its `unique_name`.
@@ -243,8 +243,8 @@ module Twilio
               # Initialize the SyncMapPermissionInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
               #   associated with.
               # @param [String] map_sid The SID of the Sync Map to which the Permission applies.
               # @param [String] identity The application-defined string that uniquely identifies

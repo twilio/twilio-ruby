@@ -32,7 +32,7 @@ module Twilio
           # @param [composition.Status] status Read only Composition resources with this
           #   status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
           # @param [Time] date_created_after Read only Composition resources created on or
-          #   after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with
+          #   after this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time with
           #   time zone.
           # @param [Time] date_created_before Read only Composition resources created before
           #   this ISO 8601 date-time with time zone.
@@ -62,7 +62,7 @@ module Twilio
           # @param [composition.Status] status Read only Composition resources with this
           #   status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
           # @param [Time] date_created_after Read only Composition resources created on or
-          #   after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with
+          #   after this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time with
           #   time zone.
           # @param [Time] date_created_before Read only Composition resources created before
           #   this ISO 8601 date-time with time zone.
@@ -108,7 +108,7 @@ module Twilio
           # @param [composition.Status] status Read only Composition resources with this
           #   status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
           # @param [Time] date_created_after Read only Composition resources created on or
-          #   after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with
+          #   after this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time with
           #   time zone.
           # @param [Time] date_created_before Read only Composition resources created before
           #   this ISO 8601 date-time with time zone.
@@ -151,8 +151,8 @@ module Twilio
           # @param [String] room_sid The SID of the Group Room with the media tracks to be
           #   used as composition sources.
           # @param [Hash] video_layout An object that describes the video layout of the
-          #   composition in terms of regions. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   composition in terms of regions. See {Specifying Video
+          #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info. Please, be aware that either video_layout or audio_sources have
           #   to be provided to get a valid creation request
           # @param [String] audio_sources An array of track names from the same group room
@@ -186,8 +186,8 @@ module Twilio
           #
           #   Note that the `resolution` imposes an aspect ratio to the resulting composition.
           #   When the original video tracks are constrained by the aspect ratio, they are
-          #   scaled to fit. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   scaled to fit. See {Specifying Video
+          #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
           # @param [composition.Format] format The container format of the composition's
           #   media files. Can be: `mp4` or `webm` and the default is `webm`. If you specify
@@ -204,8 +204,8 @@ module Twilio
           #   media in the composition. The default is `true`. Compositions with `trim`
           #   enabled are shorter when the Room is created and no Participant joins for a
           #   while as well as if all the Participants leave the room and join later, because
-          #   those gaps will be removed. See [Specifying Video
-          #   Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts)
+          #   those gaps will be removed. See {Specifying Video
+          #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
           # @return [CompositionInstance] Created CompositionInstance
           def create(room_sid: nil, video_layout: :unset, audio_sources: :unset, audio_sources_excluded: :unset, resolution: :unset, format: :unset, status_callback: :unset, status_callback_method: :unset, trim: :unset)

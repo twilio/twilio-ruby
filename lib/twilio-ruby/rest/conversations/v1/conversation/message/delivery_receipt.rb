@@ -19,10 +19,10 @@ module Twilio
               # Initialize the DeliveryReceiptList
               # @param [Version] version Version that contains the resource
               # @param [String] conversation_sid The unique ID of the
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
               #   for this message.
               # @param [String] message_sid The SID of the message within a
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
               #   the delivery receipt belongs to
               # @return [DeliveryReceiptList] DeliveryReceiptList
               def initialize(version, conversation_sid: nil, message_sid: nil)
@@ -163,10 +163,10 @@ module Twilio
               # Initialize the DeliveryReceiptContext
               # @param [Version] version Version that contains the resource
               # @param [String] conversation_sid The unique ID of the
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
               #   for this message.
               # @param [String] message_sid The SID of the message within a
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
               #   the delivery receipt belongs to.
               # @param [String] sid A 34 character string that uniquely identifies this
               #   resource.
@@ -217,10 +217,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] conversation_sid The unique ID of the
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
               #   for this message.
               # @param [String] message_sid The SID of the message within a
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
               #   the delivery receipt belongs to
               # @param [String] sid A 34 character string that uniquely identifies this
               #   resource.
@@ -311,7 +311,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The message [delivery error code](https://www.twilio.com/docs/sms/api/message-resource#delivery-related-errors) for a `failed` status
+              # @return [String] The message {delivery error code}[https://www.twilio.com/docs/sms/api/message-resource#delivery-related-errors] for a `failed` status
               def error_code
                 @properties['error_code']
               end

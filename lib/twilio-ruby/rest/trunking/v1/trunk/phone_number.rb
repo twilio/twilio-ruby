@@ -30,8 +30,8 @@ module Twilio
 
             ##
             # Create the PhoneNumberInstance
-            # @param [String] phone_number_sid The SID of the [Incoming Phone
-            #   Number](https://www.twilio.com/docs/phone-numbers/api/incomingphonenumber-resource)
+            # @param [String] phone_number_sid The SID of the {Incoming Phone
+            #   Number}[https://www.twilio.com/docs/phone-numbers/api/incomingphonenumber-resource]
             #   that you want to associate with the trunk.
             # @return [PhoneNumberInstance] Created PhoneNumberInstance
             def create(phone_number_sid: nil)

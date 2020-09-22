@@ -34,8 +34,8 @@ module Twilio
           #   resource's `sid` in the URL.
           # @param [Time] date_created The date that this resource was created.
           # @param [Time] date_updated The date that this resource was last updated.
-          # @param [String] messaging_service_sid The unique ID of the [Messaging
-          #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
+          # @param [String] messaging_service_sid The unique ID of the {Messaging
+          #   Service}[https://www.twilio.com/docs/sms/services/api] this conversation belongs
           #   to.
           # @param [String] attributes An optional string metadata field you can use to
           #   store any data you wish. The string value must contain structurally valid JSON
@@ -219,8 +219,8 @@ module Twilio
           #   store any data you wish. The string value must contain structurally valid JSON
           #   if specified.  **Note** that if the attributes are not set "{}" will be
           #   returned.
-          # @param [String] messaging_service_sid The unique ID of the [Messaging
-          #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
+          # @param [String] messaging_service_sid The unique ID of the {Messaging
+          #   Service}[https://www.twilio.com/docs/sms/services/api] this conversation belongs
           #   to.
           # @param [conversation.State] state Current state of this conversation. Can be
           #   either `active`, `inactive` or `closed` and defaults to `active`
@@ -472,8 +472,8 @@ module Twilio
           #   store any data you wish. The string value must contain structurally valid JSON
           #   if specified.  **Note** that if the attributes are not set "{}" will be
           #   returned.
-          # @param [String] messaging_service_sid The unique ID of the [Messaging
-          #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
+          # @param [String] messaging_service_sid The unique ID of the {Messaging
+          #   Service}[https://www.twilio.com/docs/sms/services/api] this conversation belongs
           #   to.
           # @param [conversation.State] state Current state of this conversation. Can be
           #   either `active`, `inactive` or `closed` and defaults to `active`

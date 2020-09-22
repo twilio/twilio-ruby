@@ -34,11 +34,11 @@ module Twilio
             #   Status is `connected`, for `completed` Rooms only `disconnected` Participants
             #   are returned.
             # @param [String] identity Read only the Participants with this
-            #   [User](https://www.twilio.com/docs/chat/rest/user-resource) `identity` value.
+            #   {User}[https://www.twilio.com/docs/chat/rest/user-resource] `identity` value.
             # @param [Time] date_created_after Read only Participants that started after this
-            #   date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
+            #   date in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601#UTC] format.
             # @param [Time] date_created_before Read only Participants that started before
-            #   this date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
+            #   this date in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601#UTC] format.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -66,11 +66,11 @@ module Twilio
             #   Status is `connected`, for `completed` Rooms only `disconnected` Participants
             #   are returned.
             # @param [String] identity Read only the Participants with this
-            #   [User](https://www.twilio.com/docs/chat/rest/user-resource) `identity` value.
+            #   {User}[https://www.twilio.com/docs/chat/rest/user-resource] `identity` value.
             # @param [Time] date_created_after Read only Participants that started after this
-            #   date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
+            #   date in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601#UTC] format.
             # @param [Time] date_created_before Read only Participants that started before
-            #   this date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
+            #   this date in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601#UTC] format.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -114,11 +114,11 @@ module Twilio
             #   Status is `connected`, for `completed` Rooms only `disconnected` Participants
             #   are returned.
             # @param [String] identity Read only the Participants with this
-            #   [User](https://www.twilio.com/docs/chat/rest/user-resource) `identity` value.
+            #   {User}[https://www.twilio.com/docs/chat/rest/user-resource] `identity` value.
             # @param [Time] date_created_after Read only Participants that started after this
-            #   date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
+            #   date in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601#UTC] format.
             # @param [Time] date_created_before Read only Participants that started before
-            #   this date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
+            #   this date in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601#UTC] format.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50

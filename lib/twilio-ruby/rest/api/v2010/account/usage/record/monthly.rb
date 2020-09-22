@@ -32,8 +32,8 @@ module Twilio
                 # Lists MonthlyInstance records from the API as a list.
                 # Unlike stream(), this operation is eager and will load `limit` records into
                 # memory before returning.
-                # @param [monthly.Category] category The [usage
-                #   category](https://www.twilio.com/docs/usage/api/usage-record#usage-categories)
+                # @param [monthly.Category] category The {usage
+                #   category}[https://www.twilio.com/docs/usage/api/usage-record#usage-categories]
                 #   of the UsageRecord resources to read. Only UsageRecord resources in the
                 #   specified category are retrieved.
                 # @param [Date] start_date Only include usage that has occurred on or after this
@@ -70,8 +70,8 @@ module Twilio
                 # Streams MonthlyInstance records from the API as an Enumerable.
                 # This operation lazily loads records as efficiently as possible until the limit
                 # is reached.
-                # @param [monthly.Category] category The [usage
-                #   category](https://www.twilio.com/docs/usage/api/usage-record#usage-categories)
+                # @param [monthly.Category] category The {usage
+                #   category}[https://www.twilio.com/docs/usage/api/usage-record#usage-categories]
                 #   of the UsageRecord resources to read. Only UsageRecord resources in the
                 #   specified category are retrieved.
                 # @param [Date] start_date Only include usage that has occurred on or after this
@@ -124,8 +124,8 @@ module Twilio
                 ##
                 # Retrieve a single page of MonthlyInstance records from the API.
                 # Request is executed immediately.
-                # @param [monthly.Category] category The [usage
-                #   category](https://www.twilio.com/docs/usage/api/usage-record#usage-categories)
+                # @param [monthly.Category] category The {usage
+                #   category}[https://www.twilio.com/docs/usage/api/usage-record#usage-categories]
                 #   of the UsageRecord resources to read. Only UsageRecord resources in the
                 #   specified category are retrieved.
                 # @param [Date] start_date Only include usage that has occurred on or after this

@@ -19,10 +19,10 @@ module Twilio
               # Initialize the SampleList
               # @param [Version] version Version that contains the resource
               # @param [String] assistant_sid The SID of the
-              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
               #   parent of the Task associated with the resource.
               # @param [String] task_sid The SID of the
-              #   [Task](https://www.twilio.com/docs/autopilot/api/task) associated with the
+              #   {Task}[https://www.twilio.com/docs/autopilot/api/task] associated with the
               #   resource.
               # @return [SampleList] SampleList
               def initialize(version, assistant_sid: nil, task_sid: nil)
@@ -37,8 +37,8 @@ module Twilio
               # Lists SampleInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] language The [ISO
-              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              # @param [String] language The {ISO
+              #   language-country}[https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html]
               #   string that specifies the language used for the sample. For example: `en-US`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
@@ -55,8 +55,8 @@ module Twilio
               # Streams SampleInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] language The [ISO
-              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              # @param [String] language The {ISO
+              #   language-country}[https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html]
               #   string that specifies the language used for the sample. For example: `en-US`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
@@ -90,8 +90,8 @@ module Twilio
               ##
               # Retrieve a single page of SampleInstance records from the API.
               # Request is executed immediately.
-              # @param [String] language The [ISO
-              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              # @param [String] language The {ISO
+              #   language-country}[https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html]
               #   string that specifies the language used for the sample. For example: `en-US`.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
@@ -125,13 +125,13 @@ module Twilio
 
               ##
               # Create the SampleInstance
-              # @param [String] language The [ISO
-              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              # @param [String] language The {ISO
+              #   language-country}[https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html]
               #   string that specifies the language used for the new sample. For example:
               #   `en-US`.
               # @param [String] tagged_text The text example of how end users might express the
-              #   task. The sample can contain [Field tag
-              #   blocks](https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging).
+              #   task. The sample can contain {Field tag
+              #   blocks}[https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging].
               # @param [String] source_channel The communication channel from which the new
               #   sample was captured. Can be: `voice`, `sms`, `chat`, `alexa`,
               #   `google-assistant`, `slack`, or null if not included.
@@ -203,10 +203,10 @@ module Twilio
               # Initialize the SampleContext
               # @param [Version] version Version that contains the resource
               # @param [String] assistant_sid The SID of the
-              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
               #   parent of the Task associated with the resource to fetch.
               # @param [String] task_sid The SID of the
-              #   [Task](https://www.twilio.com/docs/autopilot/api/task) associated with the
+              #   {Task}[https://www.twilio.com/docs/autopilot/api/task] associated with the
               #   Sample resource to create.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Sample resource to fetch.
@@ -236,12 +236,12 @@ module Twilio
 
               ##
               # Update the SampleInstance
-              # @param [String] language The [ISO
-              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              # @param [String] language The {ISO
+              #   language-country}[https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html]
               #   string that specifies the language used for the sample. For example: `en-US`.
               # @param [String] tagged_text The text example of how end users might express the
-              #   task. The sample can contain [Field tag
-              #   blocks](https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging).
+              #   task. The sample can contain {Field tag
+              #   blocks}[https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging].
               # @param [String] source_channel The communication channel from which the sample
               #   was captured. Can be: `voice`, `sms`, `chat`, `alexa`, `google-assistant`,
               #   `slack`, or null if not included.
@@ -294,10 +294,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] assistant_sid The SID of the
-              #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+              #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
               #   parent of the Task associated with the resource.
               # @param [String] task_sid The SID of the
-              #   [Task](https://www.twilio.com/docs/autopilot/api/task) associated with the
+              #   {Task}[https://www.twilio.com/docs/autopilot/api/task] associated with the
               #   resource.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Sample resource to fetch.
@@ -413,12 +413,12 @@ module Twilio
 
               ##
               # Update the SampleInstance
-              # @param [String] language The [ISO
-              #   language-country](https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html)
+              # @param [String] language The {ISO
+              #   language-country}[https://docs.oracle.com/cd/E13214_01/wli/docs92/xref/xqisocodes.html]
               #   string that specifies the language used for the sample. For example: `en-US`.
               # @param [String] tagged_text The text example of how end users might express the
-              #   task. The sample can contain [Field tag
-              #   blocks](https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging).
+              #   task. The sample can contain {Field tag
+              #   blocks}[https://www.twilio.com/docs/autopilot/api/task-sample#field-tagging].
               # @param [String] source_channel The communication channel from which the sample
               #   was captured. Can be: `voice`, `sms`, `chat`, `alexa`, `google-assistant`,
               #   `slack`, or null if not included.

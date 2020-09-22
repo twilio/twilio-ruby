@@ -19,9 +19,9 @@ module Twilio
               # Initialize the InteractionList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the parent
-              #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
+              #   {Service}[https://www.twilio.com/docs/proxy/api/service] resource.
               # @param [String] session_sid The SID of the parent
-              #   [Session](https://www.twilio.com/docs/proxy/api/session) resource.
+              #   {Session}[https://www.twilio.com/docs/proxy/api/session] resource.
               # @return [InteractionList] InteractionList
               def initialize(version, service_sid: nil, session_sid: nil)
                 super(version)
@@ -161,10 +161,10 @@ module Twilio
               # Initialize the InteractionContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the parent
-              #   [Service](https://www.twilio.com/docs/proxy/api/service) of the resource to
+              #   {Service}[https://www.twilio.com/docs/proxy/api/service] of the resource to
               #   fetch.
               # @param [String] session_sid The SID of the parent
-              #   [Session](https://www.twilio.com/docs/proxy/api/session) of the resource to
+              #   {Session}[https://www.twilio.com/docs/proxy/api/session] of the resource to
               #   fetch.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Interaction resource to fetch.
@@ -222,9 +222,9 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the parent
-              #   [Service](https://www.twilio.com/docs/proxy/api/service) resource.
+              #   {Service}[https://www.twilio.com/docs/proxy/api/service] resource.
               # @param [String] session_sid The SID of the parent
-              #   [Session](https://www.twilio.com/docs/proxy/api/session) resource.
+              #   {Session}[https://www.twilio.com/docs/proxy/api/session] resource.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Interaction resource to fetch.
               # @return [InteractionInstance] InteractionInstance

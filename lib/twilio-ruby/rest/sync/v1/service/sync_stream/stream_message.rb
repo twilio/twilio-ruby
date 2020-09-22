@@ -18,8 +18,8 @@ module Twilio
               ##
               # Initialize the StreamMessageList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
               #   associated with.
               # @param [String] stream_sid The unique string that we created to identify the
               #   Sync Stream resource.
@@ -100,8 +100,8 @@ module Twilio
               # Initialize the StreamMessageInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
               #   associated with.
               # @param [String] stream_sid The unique string that we created to identify the
               #   Sync Stream resource.

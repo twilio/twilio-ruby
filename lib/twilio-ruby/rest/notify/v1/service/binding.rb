@@ -18,7 +18,7 @@ module Twilio
             # Initialize the BindingList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/notify/api/service-resource) the resource
+            #   {Service}[https://www.twilio.com/docs/notify/api/service-resource] the resource
             #   is associated with.
             # @return [BindingList] BindingList
             def initialize(version, service_sid: nil)
@@ -32,8 +32,8 @@ module Twilio
             ##
             # Create the BindingInstance
             # @param [String] identity The `identity` value that uniquely identifies the new
-            #   resource's [User](https://www.twilio.com/docs/chat/rest/user-resource) within
-            #   the [Service](https://www.twilio.com/docs/notify/api/service-resource). Up to 20
+            #   resource's {User}[https://www.twilio.com/docs/chat/rest/user-resource] within
+            #   the {Service}[https://www.twilio.com/docs/notify/api/service-resource]. Up to 20
             #   Bindings can be created for the same Identity in a given Service.
             # @param [binding.BindingType] binding_type The transport technology to use for
             #   the Binding. Can be: `apn`, `fcm`, `gcm`, `sms`, or `facebook-messenger`.
@@ -46,12 +46,12 @@ module Twilio
             # @param [String] notification_protocol_version The protocol version to use to
             #   send the notification. This defaults to the value of
             #   `default_xxxx_notification_protocol_version` for the protocol in the
-            #   [Service](https://www.twilio.com/docs/notify/api/service-resource). The current
+            #   {Service}[https://www.twilio.com/docs/notify/api/service-resource]. The current
             #   version is `"3"` for `apn`, `fcm`, and `gcm` type Bindings. The parameter is not
             #   applicable to `sms` and `facebook-messenger` type Bindings as the data format is
             #   fixed.
             # @param [String] credential_sid The SID of the
-            #   [Credential](https://www.twilio.com/docs/notify/api/credential-resource)
+            #   {Credential}[https://www.twilio.com/docs/notify/api/credential-resource]
             #   resource to be used to send notifications to this Binding. If present, this
             #   overrides the Credential specified in the Service resource. Applies to only
             #   `apn`, `fcm`, and `gcm` type Bindings.
@@ -82,7 +82,7 @@ module Twilio
             # @param [Date] end_date Only include usage that occurred on or before this date.
             #   Specify the date in GMT and format as `YYYY-MM-DD`.
             # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
+            #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
             #   of the resources to read.
             # @param [String] tag Only list Bindings that have all of the specified Tags. The
             #   following implicit tags are available: `all`, `apn`, `fcm`, `gcm`, `sms`,
@@ -114,7 +114,7 @@ module Twilio
             # @param [Date] end_date Only include usage that occurred on or before this date.
             #   Specify the date in GMT and format as `YYYY-MM-DD`.
             # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
+            #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
             #   of the resources to read.
             # @param [String] tag Only list Bindings that have all of the specified Tags. The
             #   following implicit tags are available: `all`, `apn`, `fcm`, `gcm`, `sms`,
@@ -162,7 +162,7 @@ module Twilio
             # @param [Date] end_date Only include usage that occurred on or before this date.
             #   Specify the date in GMT and format as `YYYY-MM-DD`.
             # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
+            #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
             #   of the resources to read.
             # @param [String] tag Only list Bindings that have all of the specified Tags. The
             #   following implicit tags are available: `all`, `apn`, `fcm`, `gcm`, `sms`,
@@ -245,7 +245,7 @@ module Twilio
             # Initialize the BindingContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/notify/api/service-resource) to fetch the
+            #   {Service}[https://www.twilio.com/docs/notify/api/service-resource] to fetch the
             #   resource from.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Binding resource to fetch.
@@ -297,7 +297,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/notify/api/service-resource) the resource
+            #   {Service}[https://www.twilio.com/docs/notify/api/service-resource] the resource
             #   is associated with.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Binding resource to fetch.

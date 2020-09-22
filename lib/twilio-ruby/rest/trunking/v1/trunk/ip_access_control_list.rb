@@ -27,8 +27,8 @@ module Twilio
 
             ##
             # Create the IpAccessControlListInstance
-            # @param [String] ip_access_control_list_sid The SID of the [IP Access Control
-            #   List](https://www.twilio.com/docs/voice/sip/api/sip-ipaccesscontrollist-resource)
+            # @param [String] ip_access_control_list_sid The SID of the {IP Access Control
+            #   List}[https://www.twilio.com/docs/voice/sip/api/sip-ipaccesscontrollist-resource]
             #   that you want to associate with the trunk.
             # @return [IpAccessControlListInstance] Created IpAccessControlListInstance
             def create(ip_access_control_list_sid: nil)

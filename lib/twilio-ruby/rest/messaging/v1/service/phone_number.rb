@@ -18,7 +18,7 @@ module Twilio
             # Initialize the PhoneNumberList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the resource
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the resource
             #   is associated with.
             # @return [PhoneNumberList] PhoneNumberList
             def initialize(version, service_sid: nil)
@@ -167,7 +167,7 @@ module Twilio
             # Initialize the PhoneNumberContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to fetch the
             #   resource from.
             # @param [String] sid The SID of the PhoneNumber resource to fetch.
             # @return [PhoneNumberContext] PhoneNumberContext
@@ -223,7 +223,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the resource
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the resource
             #   is associated with.
             # @param [String] sid The SID of the PhoneNumber resource to fetch.
             # @return [PhoneNumberInstance] PhoneNumberInstance

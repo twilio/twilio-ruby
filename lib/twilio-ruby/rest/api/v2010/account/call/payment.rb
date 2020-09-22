@@ -19,10 +19,10 @@ module Twilio
               # Initialize the PaymentList
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Payments
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the Payments
               #   resource.
               # @param [String] call_sid The SID of the
-              #   [Call](https://www.twilio.com/docs/voice/api/call-resource) the Payments
+              #   {Call}[https://www.twilio.com/docs/voice/api/call-resource] the Payments
               #   resource is associated with. This will refer to the call sid that is producing
               #   the payment card (credit/ACH) information thru DTMF.
               # @return [PaymentList] PaymentList
@@ -41,17 +41,17 @@ module Twilio
               #   transactions. This should be a unique string value per API call and can be a
               #   randomly generated.
               # @param [String] status_callback Provide an absolute or relative URL to receive
-              #   status updates regarding your Pay session. Read more about the [expected
+              #   status updates regarding your Pay session. Read more about the {expected
               #   StatusCallback
-              #   values](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback)
+              #   values}[https://www.twilio.com/docs/voice/api/payment-resource#statuscallback]
               # @param [payment.BankAccountType] bank_account_type Type of bank account if
               #   payment source is ACH. One of `consumer-checking`, `consumer-savings`, or
               #   `commercial-checking`. The default value is `consumer-checking`.
               # @param [String] charge_amount A positive decimal value less than 1,000,000 to
               #   charge against the credit card or bank account. Default currency can be
               #   overwritten with `currency` field. Leave blank or set to 0 to tokenize.
-              # @param [String] currency The currency of the `charge_amount`, formatted as [ISO
-              #   4127](http://www.iso.org/iso/home/standards/currency_codes.htm) format. The
+              # @param [String] currency The currency of the `charge_amount`, formatted as {ISO
+              #   4127}[http://www.iso.org/iso/home/standards/currency_codes.htm] format. The
               #   default value is `USD` and all values allowed from the <Pay> Connector are
               #   accepted.
               # @param [String] description The description can be used to provide more details
@@ -65,11 +65,11 @@ module Twilio
               #   this many digits.
               # @param [Hash] parameter A single level JSON string that is required when
               #   accepting certain information specific only to ACH payments. The information
-              #   that has to be included here depends on the <Pay> Connector. [Read
-              #   more](https://www.twilio.com/console/voice/pay-connectors).
+              #   that has to be included here depends on the <Pay> Connector. {Read
+              #   more}[https://www.twilio.com/console/voice/pay-connectors].
               # @param [String] payment_connector This is the unique name corresponding to the
               #   Payment Gateway Connector installed in the Twilio Add-ons. Learn more about
-              #   [<Pay> Connectors](https://www.twilio.com/console/voice/pay-connectors). The
+              #   {<Pay> Connectors}[https://www.twilio.com/console/voice/pay-connectors]. The
               #   default value is `Default`.
               # @param [payment.PaymentMethod] payment_method Type of payment being captured.
               #   One of `credit-card` or `ach-debit`. The default value is `credit-card`.
@@ -170,7 +170,7 @@ module Twilio
               # Initialize the PaymentContext
               # @param [Version] version Version that contains the resource
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that will update the
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that will update the
               #   resource.
               # @param [String] call_sid The SID of the call that will update the resource. This
               #   should be the same call sid that was used to create payments resource.
@@ -192,9 +192,9 @@ module Twilio
               #   randomly generated.
               # @param [String] status_callback Provide an absolute or relative URL to receive
               #   status updates regarding your Pay session. Read more about the
-              #   [Update](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-update)
+              #   {Update}[https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-update]
               #   and
-              #   [Complete/Cancel](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-cancelcomplete)
+              #   {Complete/Cancel}[https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-cancelcomplete]
               #   POST requests.
               # @param [payment.Capture] capture The piece of payment information that you wish
               #   the caller to enter. Must be one of `payment-card-number`, `expiration-date`,
@@ -246,10 +246,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] account_sid The SID of the
-              #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Payments
+              #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the Payments
               #   resource.
               # @param [String] call_sid The SID of the
-              #   [Call](https://www.twilio.com/docs/voice/api/call-resource) the Payments
+              #   {Call}[https://www.twilio.com/docs/voice/api/call-resource] the Payments
               #   resource is associated with. This will refer to the call sid that is producing
               #   the payment card (credit/ACH) information thru DTMF.
               # @param [String] sid The SID of Payments session that needs to be updated.
@@ -332,9 +332,9 @@ module Twilio
               #   randomly generated.
               # @param [String] status_callback Provide an absolute or relative URL to receive
               #   status updates regarding your Pay session. Read more about the
-              #   [Update](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-update)
+              #   {Update}[https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-update]
               #   and
-              #   [Complete/Cancel](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-cancelcomplete)
+              #   {Complete/Cancel}[https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-cancelcomplete]
               #   POST requests.
               # @param [payment.Capture] capture The piece of payment information that you wish
               #   the caller to enter. Must be one of `payment-card-number`, `expiration-date`,

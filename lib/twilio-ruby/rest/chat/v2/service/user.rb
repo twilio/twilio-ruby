@@ -16,7 +16,7 @@ module Twilio
             # Initialize the UserList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the User
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the User
             #   resource is associated with.
             # @return [UserList] UserList
             def initialize(version, service_sid: nil)
@@ -30,12 +30,12 @@ module Twilio
             ##
             # Create the UserInstance
             # @param [String] identity The `identity` value that uniquely identifies the new
-            #   resource's [User](https://www.twilio.com/docs/chat/rest/user-resource) within
-            #   the [Service](https://www.twilio.com/docs/chat/rest/service-resource). This
+            #   resource's {User}[https://www.twilio.com/docs/chat/rest/user-resource] within
+            #   the {Service}[https://www.twilio.com/docs/chat/rest/service-resource]. This
             #   value is often a username or email address. See the Identity documentation for
             #   more info.
             # @param [String] role_sid The SID of the
-            #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) to assign to the new
+            #   {Role}[https://www.twilio.com/docs/chat/rest/role-resource] to assign to the new
             #   User.
             # @param [String] attributes A valid JSON string that contains
             #   application-specific data.
@@ -179,7 +179,7 @@ module Twilio
             # Initialize the UserContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to fetch the
             #   User resource from.
             # @param [String] sid The SID of the User resource to fetch. This value can be
             #   either the `sid` or the `identity` of the User resource to fetch.
@@ -215,7 +215,7 @@ module Twilio
             ##
             # Update the UserInstance
             # @param [String] role_sid The SID of the
-            #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) to assign to the
+            #   {Role}[https://www.twilio.com/docs/chat/rest/role-resource] to assign to the
             #   User.
             # @param [String] attributes A valid JSON string that contains
             #   application-specific data.
@@ -302,7 +302,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the User
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the User
             #   resource is associated with.
             # @param [String] sid The SID of the User resource to fetch. This value can be
             #   either the `sid` or the `identity` of the User resource to fetch.
@@ -445,7 +445,7 @@ module Twilio
             ##
             # Update the UserInstance
             # @param [String] role_sid The SID of the
-            #   [Role](https://www.twilio.com/docs/chat/rest/role-resource) to assign to the
+            #   {Role}[https://www.twilio.com/docs/chat/rest/role-resource] to assign to the
             #   User.
             # @param [String] attributes A valid JSON string that contains
             #   application-specific data.

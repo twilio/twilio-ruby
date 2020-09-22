@@ -44,9 +44,9 @@ module Twilio
 
               ##
               # Update the SubscribeRulesInstance
-              # @param [Hash] rules A JSON-encoded array of subscribe rules. See the [Specifying
+              # @param [Hash] rules A JSON-encoded array of subscribe rules. See the {Specifying
               #   Subscribe
-              #   Rules](https://www.twilio.com/docs/video/api/track-subscriptions#specifying-sr)
+              #   Rules}[https://www.twilio.com/docs/video/api/track-subscriptions#specifying-sr]
               #   section for further information.
               # @return [SubscribeRulesInstance] Updated SubscribeRulesInstance
               def update(rules: :unset)

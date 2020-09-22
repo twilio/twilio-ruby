@@ -18,7 +18,7 @@ module Twilio
             # Initialize the WebhookList
             # @param [Version] version Version that contains the resource
             # @param [String] conversation_sid The unique ID of the
-            #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+            #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
             #   for this webhook.
             # @return [WebhookList] WebhookList
             def initialize(version, conversation_sid: nil)
@@ -187,7 +187,7 @@ module Twilio
             # Initialize the WebhookContext
             # @param [Version] version Version that contains the resource
             # @param [String] conversation_sid The unique ID of the
-            #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+            #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
             #   for this webhook.
             # @param [String] sid A 34 character string that uniquely identifies this
             #   resource.
@@ -276,7 +276,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] conversation_sid The unique ID of the
-            #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+            #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
             #   for this webhook.
             # @param [String] sid A 34 character string that uniquely identifies this
             #   resource.

@@ -81,10 +81,10 @@ module Twilio
               #   past. The default 15 minutes. This is helpful for displaying statistics for the
               #   last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
               # @param [Time] start_date Only calculate statistics from this date and time and
-              #   later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              #   later, specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
               # @param [Time] end_date Only calculate statistics from this date and time and
-              #   earlier, specified in GMT as an [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+              #   earlier, specified in GMT as an {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time.
               # @param [String] task_queue_sid The SID of the TaskQueue for which to fetch
               #   Worker statistics.
               # @param [String] task_queue_name The `friendly_name` of the TaskQueue for which
@@ -197,10 +197,10 @@ module Twilio
               #   past. The default 15 minutes. This is helpful for displaying statistics for the
               #   last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
               # @param [Time] start_date Only calculate statistics from this date and time and
-              #   later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+              #   later, specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
               # @param [Time] end_date Only calculate statistics from this date and time and
-              #   earlier, specified in GMT as an [ISO
-              #   8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+              #   earlier, specified in GMT as an {ISO
+              #   8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time.
               # @param [String] task_queue_sid The SID of the TaskQueue for which to fetch
               #   Worker statistics.
               # @param [String] task_queue_name The `friendly_name` of the TaskQueue for which

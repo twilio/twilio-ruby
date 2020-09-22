@@ -30,15 +30,15 @@ module Twilio
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [String] from Retrieve only those faxes sent from this phone number,
-          #   specified in [E.164](https://www.twilio.com/docs/glossary/what-e164) format.
+          #   specified in {E.164}[https://www.twilio.com/docs/glossary/what-e164] format.
           # @param [String] to Retrieve only those faxes sent to this phone number,
-          #   specified in [E.164](https://www.twilio.com/docs/glossary/what-e164) format.
+          #   specified in {E.164}[https://www.twilio.com/docs/glossary/what-e164] format.
           # @param [Time] date_created_on_or_before Retrieve only those faxes with a
-          #   `date_created` that is before or equal to this value, specified in [ISO
-          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+          #   `date_created` that is before or equal to this value, specified in {ISO
+          #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
           # @param [Time] date_created_after Retrieve only those faxes with a `date_created`
-          #   that is later than this value, specified in [ISO
-          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+          #   that is later than this value, specified in {ISO
+          #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -62,15 +62,15 @@ module Twilio
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [String] from Retrieve only those faxes sent from this phone number,
-          #   specified in [E.164](https://www.twilio.com/docs/glossary/what-e164) format.
+          #   specified in {E.164}[https://www.twilio.com/docs/glossary/what-e164] format.
           # @param [String] to Retrieve only those faxes sent to this phone number,
-          #   specified in [E.164](https://www.twilio.com/docs/glossary/what-e164) format.
+          #   specified in {E.164}[https://www.twilio.com/docs/glossary/what-e164] format.
           # @param [Time] date_created_on_or_before Retrieve only those faxes with a
-          #   `date_created` that is before or equal to this value, specified in [ISO
-          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+          #   `date_created` that is before or equal to this value, specified in {ISO
+          #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
           # @param [Time] date_created_after Retrieve only those faxes with a `date_created`
-          #   that is later than this value, specified in [ISO
-          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+          #   that is later than this value, specified in {ISO
+          #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -110,15 +110,15 @@ module Twilio
           # Retrieve a single page of FaxInstance records from the API.
           # Request is executed immediately.
           # @param [String] from Retrieve only those faxes sent from this phone number,
-          #   specified in [E.164](https://www.twilio.com/docs/glossary/what-e164) format.
+          #   specified in {E.164}[https://www.twilio.com/docs/glossary/what-e164] format.
           # @param [String] to Retrieve only those faxes sent to this phone number,
-          #   specified in [E.164](https://www.twilio.com/docs/glossary/what-e164) format.
+          #   specified in {E.164}[https://www.twilio.com/docs/glossary/what-e164] format.
           # @param [Time] date_created_on_or_before Retrieve only those faxes with a
-          #   `date_created` that is before or equal to this value, specified in [ISO
-          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+          #   `date_created` that is before or equal to this value, specified in {ISO
+          #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
           # @param [Time] date_created_after Retrieve only those faxes with a `date_created`
-          #   that is later than this value, specified in [ISO
-          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+          #   that is later than this value, specified in {ISO
+          #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -155,21 +155,21 @@ module Twilio
           ##
           # Create the FaxInstance
           # @param [String] to The phone number to receive the fax in
-          #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format or the
+          #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format or the
           #   recipient's SIP URI.
           # @param [String] media_url The URL of the PDF that contains the fax. See our
-          #   [security](https://www.twilio.com/docs/usage/security) page for information on
+          #   {security}[https://www.twilio.com/docs/usage/security] page for information on
           #   how to ensure the request for your media comes from Twilio.
-          # @param [fax.Quality] quality The [Fax Quality
-          #   value](https://www.twilio.com/docs/fax/api/fax-resource#fax-quality-values) that
+          # @param [fax.Quality] quality The {Fax Quality
+          #   value}[https://www.twilio.com/docs/fax/api/fax-resource#fax-quality-values] that
           #   describes the fax quality. Can be: `standard`, `fine`, or `superfine` and
           #   defaults to `fine`.
           # @param [String] status_callback The URL we should call using the `POST` method
-          #   to send [status
-          #   information](https://www.twilio.com/docs/fax/api/fax-resource#fax-status-callback)
+          #   to send {status
+          #   information}[https://www.twilio.com/docs/fax/api/fax-resource#fax-status-callback]
           #   to your application when the status of the fax changes.
           # @param [String] from The number the fax was sent from. Can be the phone number
-          #   in [E.164](https://www.twilio.com/docs/glossary/what-e164) format or the SIP
+          #   in {E.164}[https://www.twilio.com/docs/glossary/what-e164] format or the SIP
           #   `from` value. The caller ID displayed to the recipient uses this value. If this
           #   is a phone number, it must be a Twilio number or a verified outgoing caller id
           #   from your account. If `to` is a SIP address, this can be any alphanumeric string
@@ -273,7 +273,7 @@ module Twilio
           ##
           # Update the FaxInstance
           # @param [fax.UpdateStatus] status The new
-          #   [status](https://www.twilio.com/docs/fax/api/fax-resource#fax-status-values) of
+          #   {status}[https://www.twilio.com/docs/fax/api/fax-resource#fax-status-values] of
           #   the resource. Can be only `canceled`. This may fail if transmission has already
           #   started.
           # @return [FaxInstance] Updated FaxInstance
@@ -494,7 +494,7 @@ module Twilio
           ##
           # Update the FaxInstance
           # @param [fax.UpdateStatus] status The new
-          #   [status](https://www.twilio.com/docs/fax/api/fax-resource#fax-status-values) of
+          #   {status}[https://www.twilio.com/docs/fax/api/fax-resource#fax-status-values] of
           #   the resource. Can be only `canceled`. This may fail if transmission has already
           #   started.
           # @return [FaxInstance] Updated FaxInstance

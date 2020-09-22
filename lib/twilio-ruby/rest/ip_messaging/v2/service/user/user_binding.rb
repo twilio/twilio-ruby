@@ -17,12 +17,12 @@ module Twilio
               # Initialize the UserBindingList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the User
+              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the User
               #   Binding resource is associated with.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/user-resource) with the User
-              #   Binding resource.  See [push notification
-              #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+              #   {User}[https://www.twilio.com/docs/chat/rest/user-resource] with the User
+              #   Binding resource.  See {push notification
+              #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
               #   for more info.
               # @return [UserBindingList] UserBindingList
               def initialize(version, service_sid: nil, user_sid: nil)
@@ -38,9 +38,9 @@ module Twilio
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
               # @param [user_binding.BindingType] binding_type The push technology used by the
-              #   User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See [push
+              #   User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See {push
               #   notification
-              #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+              #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
               #   for more info.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
@@ -58,9 +58,9 @@ module Twilio
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
               # @param [user_binding.BindingType] binding_type The push technology used by the
-              #   User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See [push
+              #   User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See {push
               #   notification
-              #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+              #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
               #   for more info.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
@@ -95,9 +95,9 @@ module Twilio
               # Retrieve a single page of UserBindingInstance records from the API.
               # Request is executed immediately.
               # @param [user_binding.BindingType] binding_type The push technology used by the
-              #   User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See [push
+              #   User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See {push
               #   notification
-              #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+              #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
               #   for more info.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
@@ -175,12 +175,12 @@ module Twilio
               # Initialize the UserBindingContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to fetch the
               #   User Binding resource from.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/user-resource) with the User
-              #   Binding resource to fetch.  See [push notification
-              #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+              #   {User}[https://www.twilio.com/docs/chat/rest/user-resource] with the User
+              #   Binding resource to fetch.  See {push notification
+              #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
               #   for more info.
               # @param [String] sid The SID of the User Binding resource to fetch.
               # @return [UserBindingContext] UserBindingContext
@@ -235,12 +235,12 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the User
+              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the User
               #   Binding resource is associated with.
               # @param [String] user_sid The SID of the
-              #   [User](https://www.twilio.com/docs/chat/rest/user-resource) with the User
-              #   Binding resource.  See [push notification
-              #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+              #   {User}[https://www.twilio.com/docs/chat/rest/user-resource] with the User
+              #   Binding resource.  See {push notification
+              #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
               #   for more info.
               # @param [String] sid The SID of the User Binding resource to fetch.
               # @return [UserBindingInstance] UserBindingInstance

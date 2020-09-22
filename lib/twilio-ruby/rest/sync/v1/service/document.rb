@@ -17,8 +17,8 @@ module Twilio
             ##
             # Initialize the DocumentList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The SID of the [Sync
-            #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+            # @param [String] service_sid The SID of the {Sync
+            #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
             #   associated with.
             # @return [DocumentList] DocumentList
             def initialize(version, service_sid: nil)
@@ -178,8 +178,8 @@ module Twilio
             ##
             # Initialize the DocumentContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The SID of the [Sync
-            #   Service](https://www.twilio.com/docs/sync/api/service) with the Document
+            # @param [String] service_sid The SID of the {Sync
+            #   Service}[https://www.twilio.com/docs/sync/api/service] with the Document
             #   resource to fetch.
             # @param [String] sid The SID of the Document resource to fetch.
             # @return [DocumentContext] DocumentContext
@@ -277,8 +277,8 @@ module Twilio
             # Initialize the DocumentInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The SID of the [Sync
-            #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+            # @param [String] service_sid The SID of the {Sync
+            #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
             #   associated with.
             # @param [String] sid The SID of the Document resource to fetch.
             # @return [DocumentInstance] DocumentInstance

@@ -17,10 +17,10 @@ module Twilio
               # Initialize the MemberList
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) the resource is
+              #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] the resource is
               #   associated with.
               # @param [String] channel_sid The unique ID of the
-              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) for the member.
+              #   {Channel}[https://www.twilio.com/docs/api/chat/rest/channels] for the member.
               # @return [MemberList] MemberList
               def initialize(version, service_sid: nil, channel_sid: nil)
                 super(version)
@@ -33,14 +33,14 @@ module Twilio
               ##
               # Create the MemberInstance
               # @param [String] identity The `identity` value that uniquely identifies the new
-              #   resource's [User](https://www.twilio.com/docs/api/chat/rest/v1/user) within the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services). See [access
-              #   tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens) for more
+              #   resource's {User}[https://www.twilio.com/docs/api/chat/rest/v1/user] within the
+              #   {Service}[https://www.twilio.com/docs/api/chat/rest/services]. See {access
+              #   tokens}[https://www.twilio.com/docs/api/chat/guides/create-tokens] for more
               #   details.
               # @param [String] role_sid The SID of the
-              #   [Role](https://www.twilio.com/docs/api/chat/rest/roles) to assign to the member.
+              #   {Role}[https://www.twilio.com/docs/api/chat/rest/roles] to assign to the member.
               #   The default roles are those specified on the
-              #   [Service](https://www.twilio.com/docs/chat/api/services).
+              #   {Service}[https://www.twilio.com/docs/chat/api/services].
               # @return [MemberInstance] Created MemberInstance
               def create(identity: nil, role_sid: :unset)
                 data = Twilio::Values.of({'Identity' => identity, 'RoleSid' => role_sid, })
@@ -60,9 +60,9 @@ module Twilio
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
               # @param [String] identity The
-              #   [User](https://www.twilio.com/docs/api/chat/rest/v1/user)'s `identity` value of
-              #   the resources to read. See [access
-              #   tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens) for more
+              #   {User}[https://www.twilio.com/docs/api/chat/rest/v1/user]'s `identity` value of
+              #   the resources to read. See {access
+              #   tokens}[https://www.twilio.com/docs/api/chat/guides/create-tokens] for more
               #   details.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
@@ -80,9 +80,9 @@ module Twilio
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
               # @param [String] identity The
-              #   [User](https://www.twilio.com/docs/api/chat/rest/v1/user)'s `identity` value of
-              #   the resources to read. See [access
-              #   tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens) for more
+              #   {User}[https://www.twilio.com/docs/api/chat/rest/v1/user]'s `identity` value of
+              #   the resources to read. See {access
+              #   tokens}[https://www.twilio.com/docs/api/chat/guides/create-tokens] for more
               #   details.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
@@ -117,9 +117,9 @@ module Twilio
               # Retrieve a single page of MemberInstance records from the API.
               # Request is executed immediately.
               # @param [String] identity The
-              #   [User](https://www.twilio.com/docs/api/chat/rest/v1/user)'s `identity` value of
-              #   the resources to read. See [access
-              #   tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens) for more
+              #   {User}[https://www.twilio.com/docs/api/chat/rest/v1/user]'s `identity` value of
+              #   the resources to read. See {access
+              #   tokens}[https://www.twilio.com/docs/api/chat/guides/create-tokens] for more
               #   details.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
@@ -197,10 +197,10 @@ module Twilio
               # Initialize the MemberContext
               # @param [Version] version Version that contains the resource
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) to fetch the
+              #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] to fetch the
               #   resource from.
               # @param [String] channel_sid The unique ID of the
-              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) the member to
+              #   {Channel}[https://www.twilio.com/docs/api/chat/rest/channels] the member to
               #   fetch belongs to. Can be the Channel resource's `sid` or `unique_name` value.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Member resource to fetch.
@@ -238,13 +238,13 @@ module Twilio
               ##
               # Update the MemberInstance
               # @param [String] role_sid The SID of the
-              #   [Role](https://www.twilio.com/docs/api/chat/rest/roles) to assign to the member.
+              #   {Role}[https://www.twilio.com/docs/api/chat/rest/roles] to assign to the member.
               #   The default roles are those specified on the
-              #   [Service](https://www.twilio.com/docs/chat/api/services).
+              #   {Service}[https://www.twilio.com/docs/chat/api/services].
               # @param [String] last_consumed_message_index The index of the last
-              #   [Message](https://www.twilio.com/docs/api/chat/rest/messages) that the Member
+              #   {Message}[https://www.twilio.com/docs/api/chat/rest/messages] that the Member
               #   has read within the
-              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels).
+              #   {Channel}[https://www.twilio.com/docs/api/chat/rest/channels].
               # @return [MemberInstance] Updated MemberInstance
               def update(role_sid: :unset, last_consumed_message_index: :unset)
                 data = Twilio::Values.of({
@@ -284,10 +284,10 @@ module Twilio
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
               # @param [String] service_sid The SID of the
-              #   [Service](https://www.twilio.com/docs/api/chat/rest/services) the resource is
+              #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] the resource is
               #   associated with.
               # @param [String] channel_sid The unique ID of the
-              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels) for the member.
+              #   {Channel}[https://www.twilio.com/docs/api/chat/rest/channels] for the member.
               # @param [String] sid The Twilio-provided string that uniquely identifies the
               #   Member resource to fetch.
               # @return [MemberInstance] MemberInstance
@@ -417,13 +417,13 @@ module Twilio
               ##
               # Update the MemberInstance
               # @param [String] role_sid The SID of the
-              #   [Role](https://www.twilio.com/docs/api/chat/rest/roles) to assign to the member.
+              #   {Role}[https://www.twilio.com/docs/api/chat/rest/roles] to assign to the member.
               #   The default roles are those specified on the
-              #   [Service](https://www.twilio.com/docs/chat/api/services).
+              #   {Service}[https://www.twilio.com/docs/chat/api/services].
               # @param [String] last_consumed_message_index The index of the last
-              #   [Message](https://www.twilio.com/docs/api/chat/rest/messages) that the Member
+              #   {Message}[https://www.twilio.com/docs/api/chat/rest/messages] that the Member
               #   has read within the
-              #   [Channel](https://www.twilio.com/docs/api/chat/rest/channels).
+              #   {Channel}[https://www.twilio.com/docs/api/chat/rest/channels].
               # @return [MemberInstance] Updated MemberInstance
               def update(role_sid: :unset, last_consumed_message_index: :unset)
                 context.update(role_sid: role_sid, last_consumed_message_index: last_consumed_message_index, )

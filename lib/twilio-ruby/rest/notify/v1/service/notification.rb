@@ -18,7 +18,7 @@ module Twilio
             # Initialize the NotificationList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/notify/api/service-resource) the resource
+            #   {Service}[https://www.twilio.com/docs/notify/api/service-resource] the resource
             #   is associated with.
             # @return [NotificationList] NotificationList
             def initialize(version, service_sid: nil)
@@ -63,8 +63,8 @@ module Twilio
             #   from deliveries to those channels.
             # @param [Hash] data The custom key-value pairs of the notification's payload. For
             #   FCM and GCM, this value translates to `data` in the FCM and GCM payloads. FCM
-            #   and GCM [reserve certain
-            #   keys](https://firebase.google.com/docs/cloud-messaging/http-server-ref) that
+            #   and GCM {reserve certain
+            #   keys}[https://firebase.google.com/docs/cloud-messaging/http-server-ref] that
             #   cannot be used in those channels. For APNS, attributes of `data` are inserted
             #   into the APNS payload as custom properties outside of the `aps` dictionary. In
             #   all channels, we reserve keys that start with `twi_` for future use. Custom keys
@@ -75,23 +75,23 @@ module Twilio
             #   attributes in the generic payload for APNS Bindings. This property maps to the
             #   APNS `Payload` item, therefore the `aps` key must be used to change standard
             #   attributes. Adds custom key-value pairs to the root of the dictionary. See the
-            #   [APNS
-            #   documentation](https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CommunicatingwithAPNs.html)
+            #   {APNS
+            #   documentation}[https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CommunicatingwithAPNs.html]
             #   for more details. We reserve keys that start with `twi_` for future use. Custom
             #   keys that start with `twi_` are not allowed.
             # @param [Hash] gcm The GCM-specific payload that overrides corresponding
             #   attributes in the generic payload for GCM Bindings.  This property maps to the
-            #   root JSON dictionary. See the [GCM
-            #   documentation](https://firebase.google.com/docs/cloud-messaging/http-server-ref)
+            #   root JSON dictionary. See the {GCM
+            #   documentation}[https://firebase.google.com/docs/cloud-messaging/http-server-ref]
             #   for more details. Target parameters `to`, `registration_ids`, and
             #   `notification_key` are not allowed. We reserve keys that start with `twi_` for
             #   future use. Custom keys that start with `twi_` are not allowed. GCM also
-            #   [reserves certain
-            #   keys](https://firebase.google.com/docs/cloud-messaging/http-server-ref).
+            #   {reserves certain
+            #   keys}[https://firebase.google.com/docs/cloud-messaging/http-server-ref].
             # @param [Hash] sms The SMS-specific payload that overrides corresponding
             #   attributes in the generic payload for SMS Bindings.  Each attribute in this
             #   value maps to the corresponding `form` parameter of the Twilio
-            #   [Message](https://www.twilio.com/docs/sms/send-messages) resource.  These
+            #   {Message}[https://www.twilio.com/docs/sms/send-messages] resource.  These
             #   parameters of the Message resource are supported in snake case format: `body`,
             #   `media_urls`, `status_callback`, and `max_price`.  The `status_callback`
             #   parameter overrides the corresponding parameter in the messaging service, if
@@ -99,13 +99,13 @@ module Twilio
             # @param [Hash] facebook_messenger Deprecated.
             # @param [Hash] fcm The FCM-specific payload that overrides corresponding
             #   attributes in the generic payload for FCM Bindings. This property maps to the
-            #   root JSON dictionary. See the [FCM
-            #   documentation](https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream)
+            #   root JSON dictionary. See the {FCM
+            #   documentation}[https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream]
             #   for more details. Target parameters `to`, `registration_ids`, `condition`, and
             #   `notification_key` are not allowed in this parameter. We reserve keys that start
             #   with `twi_` for future use. Custom keys that start with `twi_` are not allowed.
-            #   FCM also [reserves certain
-            #   keys](https://firebase.google.com/docs/cloud-messaging/http-server-ref), which
+            #   FCM also {reserves certain
+            #   keys}[https://firebase.google.com/docs/cloud-messaging/http-server-ref], which
             #   cannot be used in that channel.
             # @param [String] segment The Segment resource is deprecated. Use the `tag`
             #   parameter, instead.
@@ -116,8 +116,8 @@ module Twilio
             #   phone numbers.
             # @param [String] delivery_callback_url URL to send webhooks.
             # @param [String] identity The `identity` value that uniquely identifies the new
-            #   resource's [User](https://www.twilio.com/docs/chat/rest/user-resource) within
-            #   the [Service](https://www.twilio.com/docs/notify/api/service-resource). Delivery
+            #   resource's {User}[https://www.twilio.com/docs/chat/rest/user-resource] within
+            #   the {Service}[https://www.twilio.com/docs/notify/api/service-resource]. Delivery
             #   will be attempted only to Bindings with an Identity in this list. No more than
             #   20 items are allowed in this list.
             # @param [String] tag A tag that selects the Bindings to notify. Repeat this
@@ -199,7 +199,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/notify/api/service-resource) the resource
+            #   {Service}[https://www.twilio.com/docs/notify/api/service-resource] the resource
             #   is associated with.
             # @return [NotificationInstance] NotificationInstance
             def initialize(version, payload, service_sid: nil)

@@ -18,11 +18,11 @@ module Twilio
               ##
               # Initialize the ParticipantList
               # @param [Version] version Version that contains the resource
-              # @param [String] chat_service_sid The SID of the [Conversation
-              #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+              # @param [String] chat_service_sid The SID of the {Conversation
+              #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
               #   Participant resource is associated with.
               # @param [String] conversation_sid The unique ID of the
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
               #   for this participant.
               # @return [ParticipantList] ParticipantList
               def initialize(version, chat_service_sid: nil, conversation_sid: nil)
@@ -36,8 +36,8 @@ module Twilio
               ##
               # Create the ParticipantInstance
               # @param [String] identity A unique string identifier for the conversation
-              #   participant as [Conversation
-              #   User](https://www.twilio.com/docs/conversations/api/user-resource). This
+              #   participant as {Conversation
+              #   User}[https://www.twilio.com/docs/conversations/api/user-resource]. This
               #   parameter is non-null if (and only if) the participant is using the Conversation
               #   SDK to communicate. Limited to 256 characters.
               # @param [String] messaging_binding_address The address of the participant's
@@ -59,7 +59,7 @@ module Twilio
               #   phone number that is used in Group MMS. Communication mask for the Conversation
               #   participant with Identity.
               # @param [String] role_sid The SID of a conversation-level
-              #   [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to
+              #   {Role}[https://www.twilio.com/docs/conversations/api/role-resource] to assign to
               #   the participant.
               # @param [participant.WebhookEnabledType] x_twilio_webhook_enabled The
               #   X-Twilio-Webhook-Enabled HTTP request header
@@ -216,11 +216,11 @@ module Twilio
               ##
               # Initialize the ParticipantContext
               # @param [Version] version Version that contains the resource
-              # @param [String] chat_service_sid The SID of the [Conversation
-              #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+              # @param [String] chat_service_sid The SID of the {Conversation
+              #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
               #   Participant resource is associated with.
               # @param [String] conversation_sid The unique ID of the
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
               #   for this participant.
               # @param [String] sid A 34 character string that uniquely identifies this
               #   resource.
@@ -238,8 +238,8 @@ module Twilio
               # @param [Time] date_created The date that this resource was created.
               # @param [Time] date_updated The date that this resource was last updated.
               # @param [String] identity A unique string identifier for the conversation
-              #   participant as [Conversation
-              #   User](https://www.twilio.com/docs/conversations/api/user-resource). This
+              #   participant as {Conversation
+              #   User}[https://www.twilio.com/docs/conversations/api/user-resource]. This
               #   parameter is non-null if (and only if) the participant is using the Conversation
               #   SDK to communicate. Limited to 256 characters.
               # @param [String] attributes An optional string metadata field you can use to
@@ -247,7 +247,7 @@ module Twilio
               #   if specified.  **Note** that if the attributes are not set "{}" will be
               #   returned.
               # @param [String] role_sid The SID of a conversation-level
-              #   [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to
+              #   {Role}[https://www.twilio.com/docs/conversations/api/role-resource] to assign to
               #   the participant.
               # @param [String] messaging_binding_proxy_address The address of the Twilio phone
               #   number that the participant is in contact with. 'null' value will remove it.
@@ -327,11 +327,11 @@ module Twilio
               # Initialize the ParticipantInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] chat_service_sid The SID of the [Conversation
-              #   Service](https://www.twilio.com/docs/conversations/api/service-resource) the
+              # @param [String] chat_service_sid The SID of the {Conversation
+              #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
               #   Participant resource is associated with.
               # @param [String] conversation_sid The unique ID of the
-              #   [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource)
+              #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
               #   for this participant.
               # @param [String] sid A 34 character string that uniquely identifies this
               #   resource.
@@ -450,8 +450,8 @@ module Twilio
               # @param [Time] date_created The date that this resource was created.
               # @param [Time] date_updated The date that this resource was last updated.
               # @param [String] identity A unique string identifier for the conversation
-              #   participant as [Conversation
-              #   User](https://www.twilio.com/docs/conversations/api/user-resource). This
+              #   participant as {Conversation
+              #   User}[https://www.twilio.com/docs/conversations/api/user-resource]. This
               #   parameter is non-null if (and only if) the participant is using the Conversation
               #   SDK to communicate. Limited to 256 characters.
               # @param [String] attributes An optional string metadata field you can use to
@@ -459,7 +459,7 @@ module Twilio
               #   if specified.  **Note** that if the attributes are not set "{}" will be
               #   returned.
               # @param [String] role_sid The SID of a conversation-level
-              #   [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to
+              #   {Role}[https://www.twilio.com/docs/conversations/api/role-resource] to assign to
               #   the participant.
               # @param [String] messaging_binding_proxy_address The address of the Twilio phone
               #   number that the participant is in contact with. 'null' value will remove it.

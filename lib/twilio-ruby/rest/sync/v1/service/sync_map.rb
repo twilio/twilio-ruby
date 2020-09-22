@@ -17,8 +17,8 @@ module Twilio
             ##
             # Initialize the SyncMapList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The SID of the [Sync
-            #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+            # @param [String] service_sid The SID of the {Sync
+            #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
             #   associated with.
             # @return [SyncMapList] SyncMapList
             def initialize(version, service_sid: nil)
@@ -178,8 +178,8 @@ module Twilio
             ##
             # Initialize the SyncMapContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The SID of the [Sync
-            #   Service](https://www.twilio.com/docs/sync/api/service) with the Sync Map
+            # @param [String] service_sid The SID of the {Sync
+            #   Service}[https://www.twilio.com/docs/sync/api/service] with the Sync Map
             #   resource to fetch.
             # @param [String] sid The SID of the Sync Map resource to fetch.
             # @return [SyncMapContext] SyncMapContext
@@ -295,8 +295,8 @@ module Twilio
             # Initialize the SyncMapInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The SID of the [Sync
-            #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+            # @param [String] service_sid The SID of the {Sync
+            #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
             #   associated with.
             # @param [String] sid The SID of the Sync Map resource to fetch.
             # @return [SyncMapInstance] SyncMapInstance

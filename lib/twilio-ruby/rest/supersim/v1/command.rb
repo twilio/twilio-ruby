@@ -28,7 +28,7 @@ module Twilio
           ##
           # Create the CommandInstance
           # @param [String] sim The `sid` or `unique_name` of the
-          #   [SIM](https://www.twilio.com/docs/wireless/api/sim-resource) to send the Command
+          #   {SIM}[https://www.twilio.com/docs/wireless/api/sim-resource] to send the Command
           #   to.
           # @param [String] command The message body of the command.
           # @param [String] callback_method The HTTP method we should use to call
@@ -56,8 +56,8 @@ module Twilio
           # @param [String] sim The SID or unique name of the Sim that Command was sent to
           #   or from.
           # @param [command.Status] status The status of the Command. Can be: `queued`,
-          #   `sent`, `delivered`, `received` or `failed`. See the [Command Status
-          #   Values](https://www.twilio.com/docs/wireless/api/command-resource#status-values)
+          #   `sent`, `delivered`, `received` or `failed`. See the {Command Status
+          #   Values}[https://www.twilio.com/docs/wireless/api/command-resource#status-values]
           #   for a description of each.
           # @param [command.Direction] direction The direction of the Command. Can be
           #   `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term
@@ -87,8 +87,8 @@ module Twilio
           # @param [String] sim The SID or unique name of the Sim that Command was sent to
           #   or from.
           # @param [command.Status] status The status of the Command. Can be: `queued`,
-          #   `sent`, `delivered`, `received` or `failed`. See the [Command Status
-          #   Values](https://www.twilio.com/docs/wireless/api/command-resource#status-values)
+          #   `sent`, `delivered`, `received` or `failed`. See the {Command Status
+          #   Values}[https://www.twilio.com/docs/wireless/api/command-resource#status-values]
           #   for a description of each.
           # @param [command.Direction] direction The direction of the Command. Can be
           #   `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term
@@ -129,8 +129,8 @@ module Twilio
           # @param [String] sim The SID or unique name of the Sim that Command was sent to
           #   or from.
           # @param [command.Status] status The status of the Command. Can be: `queued`,
-          #   `sent`, `delivered`, `received` or `failed`. See the [Command Status
-          #   Values](https://www.twilio.com/docs/wireless/api/command-resource#status-values)
+          #   `sent`, `delivered`, `received` or `failed`. See the {Command Status
+          #   Values}[https://www.twilio.com/docs/wireless/api/command-resource#status-values]
           #   for a description of each.
           # @param [command.Direction] direction The direction of the Command. Can be
           #   `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term

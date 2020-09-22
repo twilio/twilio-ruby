@@ -25,8 +25,8 @@ module Twilio
 
           ##
           # Create the RoomInstance
-          # @param [Boolean] enable_turn Deprecated. Whether to enable [Twilio's Network
-          #   Traversal TURN service](https://www.twilio.com/stun-turn). TURN service is used
+          # @param [Boolean] enable_turn Deprecated. Whether to enable {Twilio's Network
+          #   Traversal TURN service}[https://www.twilio.com/stun-turn]. TURN service is used
           #   when direct peer-to-peer media connections cannot be established due to firewall
           #   restrictions. This setting only applies to rooms with type `peer-to-peer`.
           # @param [room.RoomType] type The type of room. Can be: `peer-to-peer`,
@@ -39,8 +39,8 @@ module Twilio
           #   as long as the room is `in-progress`.
           # @param [String] status_callback The URL we should call using the
           #   `status_callback_method` to send status information to your application on every
-          #   room event. See [Status
-          #   Callbacks](https://www.twilio.com/docs/video/api/status-callbacks) for more
+          #   room event. See {Status
+          #   Callbacks}[https://www.twilio.com/docs/video/api/status-callbacks] for more
           #   info.
           # @param [String] status_callback_method The HTTP method we should use to call
           #   `status_callback`. Can be `POST` or `GET`.
@@ -55,8 +55,8 @@ module Twilio
           #   supported when publishing a track in the room.  Can be: `VP8` and `H264`.
           #   ***This feature is not available in `peer-to-peer` rooms***
           # @param [String] media_region The region for the media server in Group Rooms.
-          #   Can be: one of the [available Media
-          #   Regions](https://www.twilio.com/docs/video/ip-address-whitelisting#group-rooms-media-servers).
+          #   Can be: one of the {available Media
+          #   Regions}[https://www.twilio.com/docs/video/ip-address-whitelisting#group-rooms-media-servers].
           #   ***This feature is not available in `peer-to-peer` rooms.***
           # @return [RoomInstance] Created RoomInstance
           def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset)

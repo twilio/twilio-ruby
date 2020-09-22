@@ -16,7 +16,7 @@ module Twilio
             # Initialize the CallList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Call
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Call
             #   resource.
             # @return [CallList] CallList
             def initialize(version, account_sid: nil)
@@ -34,8 +34,8 @@ module Twilio
             # Create the CallInstance
             # @param [String] to The phone number, SIP address, or client identifier to call.
             # @param [String] from The phone number or client identifier to use as the caller
-            #   id. If using a phone number, it must be a Twilio number or a Verified [outgoing
-            #   caller id](https://www.twilio.com/docs/voice/api/outgoing-caller-ids) for your
+            #   id. If using a phone number, it must be a Twilio number or a Verified {outgoing
+            #   caller id}[https://www.twilio.com/docs/voice/api/outgoing-caller-ids] for your
             #   account. If the `to` parameter is a phone number, `From` must also be a phone
             #   number.
             # @param [String] method The HTTP method we should use when calling the `url`
@@ -56,8 +56,8 @@ module Twilio
             #   to the `status_callback` URL. Can be: `initiated`, `ringing`, `answered`, and
             #   `completed`. If no event is specified, we send the `completed` status. If you
             #   want to receive multiple events, specify each one in a separate
-            #   `status_callback_event` parameter. See the code sample for [monitoring call
-            #   progress](https://www.twilio.com/docs/voice/api/call-resource?code-sample=code-create-a-call-resource-and-specify-a-statuscallbackevent&code-sdk-version=json).
+            #   `status_callback_event` parameter. See the code sample for {monitoring call
+            #   progress}[https://www.twilio.com/docs/voice/api/call-resource?code-sample=code-create-a-call-resource-and-specify-a-statuscallbackevent&code-sdk-version=json].
             #   If an `application_sid` is present, this parameter is ignored.
             # @param [String] status_callback_method The HTTP method we should use when
             #   calling the `status_callback` URL. Can be: `GET` or `POST` and the default is
@@ -101,8 +101,8 @@ module Twilio
             #   Use `Enable` if you would like us to return `AnsweredBy` as soon as the called
             #   party is identified. Use `DetectMessageEnd`, if you would like to leave a
             #   message on an answering machine. If `send_digits` is provided, this parameter is
-            #   ignored. For more information, see [Answering Machine
-            #   Detection](https://www.twilio.com/docs/voice/answering-machine-detection).
+            #   ignored. For more information, see {Answering Machine
+            #   Detection}[https://www.twilio.com/docs/voice/answering-machine-detection].
             # @param [String] machine_detection_timeout The number of seconds that we should
             #   attempt to detect an answering machine before timing out and sending a voice
             #   request with `AnsweredBy` of `unknown`. The default timeout is 30 seconds.
@@ -114,8 +114,8 @@ module Twilio
             #   recording. Can be: `trim-silence` or `do-not-trim` and the default is
             #   `trim-silence`.
             # @param [String] caller_id The phone number, SIP address, or Client identifier
-            #   that made this call. Phone numbers are in [E.164
-            #   format](https://wwnw.twilio.com/docs/glossary/what-e164) (e.g., +16175551212).
+            #   that made this call. Phone numbers are in {E.164
+            #   format}[https://wwnw.twilio.com/docs/glossary/what-e164] (e.g., +16175551212).
             #   SIP addresses are formatted as `name@company.com`.
             # @param [String] machine_detection_speech_threshold The number of milliseconds
             #   that is used as the measuring stick for the length of the speech activity, where
@@ -144,9 +144,9 @@ module Twilio
             #   Calls Beta)
             # @param [String] url The absolute URL that returns the TwiML instructions for the
             #   call. We will call this URL using the `method` when the call connects. For more
-            #   information, see the [Url
-            #   Parameter](https://www.twilio.com/docs/voice/make-calls#specify-a-url-parameter)
-            #   section in [Making Calls](https://www.twilio.com/docs/voice/make-calls).
+            #   information, see the {Url
+            #   Parameter}[https://www.twilio.com/docs/voice/make-calls#specify-a-url-parameter]
+            #   section in {Making Calls}[https://www.twilio.com/docs/voice/make-calls].
             # @param [String] twiml TwiML instructions for the call Twilio will use without
             #   fetching Twiml from url parameter. If both `twiml` and `url` are provided then
             #   `twiml` parameter will be ignored.
@@ -411,7 +411,7 @@ module Twilio
             # Initialize the CallContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Call
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the Call
             #   resource(s) to fetch.
             # @param [String] sid The SID of the Call resource to fetch.
             # @return [CallContext] CallContext
@@ -449,9 +449,9 @@ module Twilio
             # Update the CallInstance
             # @param [String] url The absolute URL that returns the TwiML instructions for the
             #   call. We will call this URL using the `method` when the call connects. For more
-            #   information, see the [Url
-            #   Parameter](https://www.twilio.com/docs/voice/make-calls#specify-a-url-parameter)
-            #   section in [Making Calls](https://www.twilio.com/docs/voice/make-calls).
+            #   information, see the {Url
+            #   Parameter}[https://www.twilio.com/docs/voice/make-calls#specify-a-url-parameter]
+            #   section in {Making Calls}[https://www.twilio.com/docs/voice/make-calls].
             # @param [String] method The HTTP method we should use when calling the `url`. Can
             #   be: `GET` or `POST` and the default is `POST`. If an `application_sid` parameter
             #   is present, this parameter is ignored.
@@ -589,7 +589,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created this Call
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Call
             #   resource.
             # @param [String] sid The SID of the Call resource to fetch.
             # @return [CallInstance] CallInstance
@@ -823,9 +823,9 @@ module Twilio
             # Update the CallInstance
             # @param [String] url The absolute URL that returns the TwiML instructions for the
             #   call. We will call this URL using the `method` when the call connects. For more
-            #   information, see the [Url
-            #   Parameter](https://www.twilio.com/docs/voice/make-calls#specify-a-url-parameter)
-            #   section in [Making Calls](https://www.twilio.com/docs/voice/make-calls).
+            #   information, see the {Url
+            #   Parameter}[https://www.twilio.com/docs/voice/make-calls#specify-a-url-parameter]
+            #   section in {Making Calls}[https://www.twilio.com/docs/voice/make-calls].
             # @param [String] method The HTTP method we should use when calling the `url`. Can
             #   be: `GET` or `POST` and the default is `POST`. If an `application_sid` parameter
             #   is present, this parameter is ignored.

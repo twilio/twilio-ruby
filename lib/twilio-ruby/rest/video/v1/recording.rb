@@ -33,10 +33,10 @@ module Twilio
           # @param [String] grouping_sid Read only recordings with this `grouping_sid`,
           #   which may include a `participant_sid` and/or a `room_sid`.
           # @param [Time] date_created_after Read only recordings that started on or after
-          #   this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time
+          #   this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time with time
           #   zone.
           # @param [Time] date_created_before Read only recordings that started before this
-          #   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone,
+          #   {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time with time zone,
           #   given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or `YYYY-MM-DDThh:mm:ssZ`.
           # @param [recording.Type] media_type Read only recordings that have this media
           #   type. Can be either `audio` or `video`.
@@ -70,10 +70,10 @@ module Twilio
           # @param [String] grouping_sid Read only recordings with this `grouping_sid`,
           #   which may include a `participant_sid` and/or a `room_sid`.
           # @param [Time] date_created_after Read only recordings that started on or after
-          #   this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time
+          #   this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time with time
           #   zone.
           # @param [Time] date_created_before Read only recordings that started before this
-          #   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone,
+          #   {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time with time zone,
           #   given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or `YYYY-MM-DDThh:mm:ssZ`.
           # @param [recording.Type] media_type Read only recordings that have this media
           #   type. Can be either `audio` or `video`.
@@ -123,10 +123,10 @@ module Twilio
           # @param [String] grouping_sid Read only recordings with this `grouping_sid`,
           #   which may include a `participant_sid` and/or a `room_sid`.
           # @param [Time] date_created_after Read only recordings that started on or after
-          #   this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time
+          #   this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time with time
           #   zone.
           # @param [Time] date_created_before Read only recordings that started before this
-          #   [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone,
+          #   {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time with time zone,
           #   given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or `YYYY-MM-DDThh:mm:ssZ`.
           # @param [recording.Type] media_type Read only recordings that have this media
           #   type. Can be either `audio` or `video`.

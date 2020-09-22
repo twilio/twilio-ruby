@@ -164,7 +164,7 @@ module Twilio
           ##
           # Create the HostedNumberOrderInstance
           # @param [String] phone_number The number to host in
-          #   [+E.164](https://en.wikipedia.org/wiki/E.164) format
+          #   {+E.164}[https://en.wikipedia.org/wiki/E.164] format
           # @param [Boolean] sms_capability Used to specify that the SMS capability will be
           #   hosted on Twilio's platform.
           # @param [String] account_sid This defaults to the AccountSid of the authorization

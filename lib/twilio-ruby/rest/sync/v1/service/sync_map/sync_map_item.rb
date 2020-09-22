@@ -18,8 +18,8 @@ module Twilio
               ##
               # Initialize the SyncMapItemList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
               #   associated with.
               # @param [String] map_sid The SID of the Sync Map that contains the Map Item.
               # @return [SyncMapItemList] SyncMapItemList
@@ -76,8 +76,8 @@ module Twilio
               # memory before returning.
               # @param [sync_map_item.QueryResultOrder] order How to order the Map Items
               #   returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending)
-              #   and the default is ascending. Map Items are [ordered
-              #   lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item
+              #   and the default is ascending. Map Items are {ordered
+              #   lexicographically}[https://en.wikipedia.org/wiki/Lexicographical_order] by Item
               #   key.
               # @param [String] from The `key` of the first Sync Map Item resource to read. See
               #   also `bounds`.
@@ -102,8 +102,8 @@ module Twilio
               # is reached.
               # @param [sync_map_item.QueryResultOrder] order How to order the Map Items
               #   returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending)
-              #   and the default is ascending. Map Items are [ordered
-              #   lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item
+              #   and the default is ascending. Map Items are {ordered
+              #   lexicographically}[https://en.wikipedia.org/wiki/Lexicographical_order] by Item
               #   key.
               # @param [String] from The `key` of the first Sync Map Item resource to read. See
               #   also `bounds`.
@@ -145,8 +145,8 @@ module Twilio
               # Request is executed immediately.
               # @param [sync_map_item.QueryResultOrder] order How to order the Map Items
               #   returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending)
-              #   and the default is ascending. Map Items are [ordered
-              #   lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item
+              #   and the default is ascending. Map Items are {ordered
+              #   lexicographically}[https://en.wikipedia.org/wiki/Lexicographical_order] by Item
               #   key.
               # @param [String] from The `key` of the first Sync Map Item resource to read. See
               #   also `bounds`.
@@ -235,8 +235,8 @@ module Twilio
               ##
               # Initialize the SyncMapItemContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) with the Sync Map Item
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] with the Sync Map Item
               #   resource to fetch.
               # @param [String] map_sid The SID of the Sync Map with the Sync Map Item resource
               #   to fetch. Can be the Sync Map's `sid` or its `unique_name`.
@@ -337,8 +337,8 @@ module Twilio
               # Initialize the SyncMapItemInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
               #   associated with.
               # @param [String] map_sid The SID of the Sync Map that contains the Map Item.
               # @param [String] key The `key` value of the Sync Map Item resource to fetch.

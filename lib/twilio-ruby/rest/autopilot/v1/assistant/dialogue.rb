@@ -18,7 +18,7 @@ module Twilio
             # Initialize the DialogueList
             # @param [Version] version Version that contains the resource
             # @param [String] assistant_sid The SID of the
-            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
             #   parent of the resource.
             # @return [DialogueList] DialogueList
             def initialize(version, assistant_sid: nil)
@@ -73,7 +73,7 @@ module Twilio
             # Initialize the DialogueContext
             # @param [Version] version Version that contains the resource
             # @param [String] assistant_sid The SID of the
-            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
             #   parent of the resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Dialogue resource to fetch.
@@ -123,7 +123,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] assistant_sid The SID of the
-            #   [Assistant](https://www.twilio.com/docs/autopilot/api/assistant) that is the
+            #   {Assistant}[https://www.twilio.com/docs/autopilot/api/assistant] that is the
             #   parent of the resource.
             # @param [String] sid The Twilio-provided string that uniquely identifies the
             #   Dialogue resource to fetch.

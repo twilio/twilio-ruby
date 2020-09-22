@@ -64,7 +64,7 @@ module Twilio
             # Initialize the NumberContext
             # @param [Version] version Version that contains the resource
             # @param [String] destination_number The destination phone number, in
-            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to
+            #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, for which to
             #   fetch the origin-based voice pricing information. E.164 format consists of a +
             #   followed by the country code and subscriber number.
             # @return [NumberContext] NumberContext
@@ -79,7 +79,7 @@ module Twilio
             ##
             # Fetch the NumberInstance
             # @param [String] origination_number The origination phone number, in
-            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to
+            #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, for which to
             #   fetch the origin-based voice pricing information. E.164 format consists of a +
             #   followed by the country code and subscriber number.
             # @return [NumberInstance] Fetched NumberInstance
@@ -112,7 +112,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] destination_number The destination phone number, in
-            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to
+            #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, for which to
             #   fetch the origin-based voice pricing information. E.164 format consists of a +
             #   followed by the country code and subscriber number.
             # @return [NumberInstance] NumberInstance
@@ -198,7 +198,7 @@ module Twilio
             ##
             # Fetch the NumberInstance
             # @param [String] origination_number The origination phone number, in
-            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to
+            #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, for which to
             #   fetch the origin-based voice pricing information. E.164 format consists of a +
             #   followed by the country code and subscriber number.
             # @return [NumberInstance] Fetched NumberInstance

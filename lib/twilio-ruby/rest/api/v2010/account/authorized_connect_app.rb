@@ -16,7 +16,7 @@ module Twilio
             # Initialize the AuthorizedConnectAppList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
             #   AuthorizedConnectApp resource.
             # @return [AuthorizedConnectAppList] AuthorizedConnectAppList
             def initialize(version, account_sid: nil)
@@ -148,7 +148,7 @@ module Twilio
             # Initialize the AuthorizedConnectAppContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
             #   AuthorizedConnectApp resource to fetch.
             # @param [String] connect_app_sid The SID of the Connect App to fetch.
             # @return [AuthorizedConnectAppContext] AuthorizedConnectAppContext
@@ -195,7 +195,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the
             #   AuthorizedConnectApp resource.
             # @param [String] connect_app_sid The SID of the Connect App to fetch.
             # @return [AuthorizedConnectAppInstance] AuthorizedConnectAppInstance

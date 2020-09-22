@@ -40,24 +40,24 @@ module Twilio
           #   Request URL.
           # @param [String] fallback_method The HTTP method we should use to call
           #   `fallback_url`. Can be: `GET` or `POST`.
-          # @param [String] status_callback The URL we should call to [pass status
-          #   updates](https://www.twilio.com/docs/sms/api/message-resource#message-status-values)
+          # @param [String] status_callback The URL we should call to {pass status
+          #   updates}[https://www.twilio.com/docs/sms/api/message-resource#message-status-values]
           #   about message delivery.
-          # @param [Boolean] sticky_sender Whether to enable [Sticky
-          #   Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service
+          # @param [Boolean] sticky_sender Whether to enable {Sticky
+          #   Sender}[https://www.twilio.com/docs/sms/services#sticky-sender] on the Service
           #   instance.
-          # @param [Boolean] mms_converter Whether to enable the [MMS
-          #   Converter](https://www.twilio.com/docs/sms/services#mms-converter) for messages
+          # @param [Boolean] mms_converter Whether to enable the {MMS
+          #   Converter}[https://www.twilio.com/docs/sms/services#mms-converter] for messages
           #   sent through the Service instance.
-          # @param [Boolean] smart_encoding Whether to enable [Smart
-          #   Encoding](https://www.twilio.com/docs/sms/services#smart-encoding) for messages
+          # @param [Boolean] smart_encoding Whether to enable {Smart
+          #   Encoding}[https://www.twilio.com/docs/sms/services#smart-encoding] for messages
           #   sent through the Service instance.
           # @param [service.ScanMessageContent] scan_message_content Reserved.
-          # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long
-          #   Code](https://www.twilio.com/docs/sms/services#fallback-to-long-code) for
+          # @param [Boolean] fallback_to_long_code Whether to enable {Fallback to Long
+          #   Code}[https://www.twilio.com/docs/sms/services#fallback-to-long-code] for
           #   messages sent through the Service instance.
-          # @param [Boolean] area_code_geomatch Whether to enable [Area Code
-          #   Geomatch](https://www.twilio.com/docs/sms/services#area-code-geomatch) on the
+          # @param [Boolean] area_code_geomatch Whether to enable {Area Code
+          #   Geomatch}[https://www.twilio.com/docs/sms/services#area-code-geomatch] on the
           #   Service Instance.
           # @param [String] validity_period How long, in seconds, messages sent from the
           #   Service are valid. Can be an integer from `1` to `14,400`.
@@ -240,24 +240,24 @@ module Twilio
           #   Request URL.
           # @param [String] fallback_method The HTTP method we should use to call
           #   `fallback_url`. Can be: `GET` or `POST`.
-          # @param [String] status_callback The URL we should call to [pass status
-          #   updates](https://www.twilio.com/docs/sms/api/message-resource#message-status-values)
+          # @param [String] status_callback The URL we should call to {pass status
+          #   updates}[https://www.twilio.com/docs/sms/api/message-resource#message-status-values]
           #   about message delivery.
-          # @param [Boolean] sticky_sender Whether to enable [Sticky
-          #   Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service
+          # @param [Boolean] sticky_sender Whether to enable {Sticky
+          #   Sender}[https://www.twilio.com/docs/sms/services#sticky-sender] on the Service
           #   instance.
-          # @param [Boolean] mms_converter Whether to enable the [MMS
-          #   Converter](https://www.twilio.com/docs/sms/services#mms-converter) for messages
+          # @param [Boolean] mms_converter Whether to enable the {MMS
+          #   Converter}[https://www.twilio.com/docs/sms/services#mms-converter] for messages
           #   sent through the Service instance.
-          # @param [Boolean] smart_encoding Whether to enable [Smart
-          #   Encoding](https://www.twilio.com/docs/sms/services#smart-encoding) for messages
+          # @param [Boolean] smart_encoding Whether to enable {Smart
+          #   Encoding}[https://www.twilio.com/docs/sms/services#smart-encoding] for messages
           #   sent through the Service instance.
           # @param [service.ScanMessageContent] scan_message_content Reserved.
-          # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long
-          #   Code](https://www.twilio.com/docs/sms/services#fallback-to-long-code) for
+          # @param [Boolean] fallback_to_long_code Whether to enable {Fallback to Long
+          #   Code}[https://www.twilio.com/docs/sms/services#fallback-to-long-code] for
           #   messages sent through the Service instance.
-          # @param [Boolean] area_code_geomatch Whether to enable [Area Code
-          #   Geomatch](https://www.twilio.com/docs/sms/services#area-code-geomatch) on the
+          # @param [Boolean] area_code_geomatch Whether to enable {Area Code
+          #   Geomatch}[https://www.twilio.com/docs/sms/services#area-code-geomatch] on the
           #   Service Instance.
           # @param [String] validity_period How long, in seconds, messages sent from the
           #   Service are valid. Can be an integer from `1` to `14,400`.
@@ -558,24 +558,24 @@ module Twilio
           #   Request URL.
           # @param [String] fallback_method The HTTP method we should use to call
           #   `fallback_url`. Can be: `GET` or `POST`.
-          # @param [String] status_callback The URL we should call to [pass status
-          #   updates](https://www.twilio.com/docs/sms/api/message-resource#message-status-values)
+          # @param [String] status_callback The URL we should call to {pass status
+          #   updates}[https://www.twilio.com/docs/sms/api/message-resource#message-status-values]
           #   about message delivery.
-          # @param [Boolean] sticky_sender Whether to enable [Sticky
-          #   Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service
+          # @param [Boolean] sticky_sender Whether to enable {Sticky
+          #   Sender}[https://www.twilio.com/docs/sms/services#sticky-sender] on the Service
           #   instance.
-          # @param [Boolean] mms_converter Whether to enable the [MMS
-          #   Converter](https://www.twilio.com/docs/sms/services#mms-converter) for messages
+          # @param [Boolean] mms_converter Whether to enable the {MMS
+          #   Converter}[https://www.twilio.com/docs/sms/services#mms-converter] for messages
           #   sent through the Service instance.
-          # @param [Boolean] smart_encoding Whether to enable [Smart
-          #   Encoding](https://www.twilio.com/docs/sms/services#smart-encoding) for messages
+          # @param [Boolean] smart_encoding Whether to enable {Smart
+          #   Encoding}[https://www.twilio.com/docs/sms/services#smart-encoding] for messages
           #   sent through the Service instance.
           # @param [service.ScanMessageContent] scan_message_content Reserved.
-          # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long
-          #   Code](https://www.twilio.com/docs/sms/services#fallback-to-long-code) for
+          # @param [Boolean] fallback_to_long_code Whether to enable {Fallback to Long
+          #   Code}[https://www.twilio.com/docs/sms/services#fallback-to-long-code] for
           #   messages sent through the Service instance.
-          # @param [Boolean] area_code_geomatch Whether to enable [Area Code
-          #   Geomatch](https://www.twilio.com/docs/sms/services#area-code-geomatch) on the
+          # @param [Boolean] area_code_geomatch Whether to enable {Area Code
+          #   Geomatch}[https://www.twilio.com/docs/sms/services#area-code-geomatch] on the
           #   Service Instance.
           # @param [String] validity_period How long, in seconds, messages sent from the
           #   Service are valid. Can be an integer from `1` to `14,400`.

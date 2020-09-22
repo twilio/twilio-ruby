@@ -16,7 +16,7 @@ module Twilio
             # Initialize the ValidationRequestList
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for the
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] responsible for the
             #   Caller ID.
             # @return [ValidationRequestList] ValidationRequestList
             def initialize(version, account_sid: nil)
@@ -30,7 +30,7 @@ module Twilio
             ##
             # Create the ValidationRequestInstance
             # @param [String] phone_number The phone number to verify in
-            #   [E.164](https://www.twilio.com/docs/glossary/what-e164) format, which consists
+            #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, which consists
             #   of a + followed by the country code and subscriber number.
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the new caller ID resource. It can be up to 64 characters long. The default
@@ -103,7 +103,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) responsible for the
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] responsible for the
             #   Caller ID.
             # @return [ValidationRequestInstance] ValidationRequestInstance
             def initialize(version, payload, account_sid: nil)

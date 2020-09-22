@@ -16,7 +16,7 @@ module Twilio
             # Initialize the BindingList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Binding
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Binding
             #   resource is associated with.
             # @return [BindingList] BindingList
             def initialize(version, service_sid: nil)
@@ -32,14 +32,14 @@ module Twilio
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [binding.BindingType] binding_type The push technology used by the
-            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push
+            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See {push
             #   notification
-            #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+            #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
             #   for more info.
             # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
-            #   of the resources to read. See [access
-            #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
+            #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
+            #   of the resources to read. See {access
+            #   tokens}[https://www.twilio.com/docs/chat/create-tokens] for more details.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -61,14 +61,14 @@ module Twilio
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [binding.BindingType] binding_type The push technology used by the
-            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push
+            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See {push
             #   notification
-            #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+            #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
             #   for more info.
             # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
-            #   of the resources to read. See [access
-            #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
+            #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
+            #   of the resources to read. See {access
+            #   tokens}[https://www.twilio.com/docs/chat/create-tokens] for more details.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -102,14 +102,14 @@ module Twilio
             # Retrieve a single page of BindingInstance records from the API.
             # Request is executed immediately.
             # @param [binding.BindingType] binding_type The push technology used by the
-            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push
+            #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See {push
             #   notification
-            #   configuration](https://www.twilio.com/docs/chat/push-notification-configuration)
+            #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
             #   for more info.
             # @param [String] identity The
-            #   [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value
-            #   of the resources to read. See [access
-            #   tokens](https://www.twilio.com/docs/chat/create-tokens) for more details.
+            #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
+            #   of the resources to read. See {access
+            #   tokens}[https://www.twilio.com/docs/chat/create-tokens] for more details.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -182,7 +182,7 @@ module Twilio
             # Initialize the BindingContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to fetch the
             #   Binding resource from.
             # @param [String] sid The SID of the Binding resource to fetch.
             # @return [BindingContext] BindingContext
@@ -231,7 +231,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Binding
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Binding
             #   resource is associated with.
             # @param [String] sid The SID of the Binding resource to fetch.
             # @return [BindingInstance] BindingInstance

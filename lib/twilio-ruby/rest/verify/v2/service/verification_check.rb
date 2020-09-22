@@ -16,7 +16,7 @@ module Twilio
             # Initialize the VerificationCheckList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
+            #   {Service}[https://www.twilio.com/docs/verify/api/service] the resource is
             #   associated with.
             # @return [VerificationCheckList] VerificationCheckList
             def initialize(version, service_sid: nil)
@@ -31,12 +31,12 @@ module Twilio
             # Create the VerificationCheckInstance
             # @param [String] code The 4-10 character string being verified.
             # @param [String] to The phone number or
-            #   [email](https://www.twilio.com/docs/verify/email) to verify. Either this
+            #   {email}[https://www.twilio.com/docs/verify/email] to verify. Either this
             #   parameter or the `verification_sid` must be specified. Phone numbers must be in
-            #   [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+            #   {E.164 format}[https://www.twilio.com/docs/glossary/what-e164].
             # @param [String] verification_sid A SID that uniquely identifies the Verification
             #   Check. Either this parameter or the `to` phone
-            #   number/[email](https://www.twilio.com/docs/verify/email) must be specified.
+            #   number/{email}[https://www.twilio.com/docs/verify/email] must be specified.
             # @param [String] amount The amount of the associated PSD2 compliant transaction.
             #   Requires the PSD2 Service flag enabled.
             # @param [String] payee The payee of the associated PSD2 compliant transaction.
@@ -98,7 +98,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/verify/api/service) the resource is
+            #   {Service}[https://www.twilio.com/docs/verify/api/service] the resource is
             #   associated with.
             # @return [VerificationCheckInstance] VerificationCheckInstance
             def initialize(version, payload, service_sid: nil)

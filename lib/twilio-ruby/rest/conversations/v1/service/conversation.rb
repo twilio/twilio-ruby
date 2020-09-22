@@ -17,8 +17,8 @@ module Twilio
             ##
             # Initialize the ConversationList
             # @param [Version] version Version that contains the resource
-            # @param [String] chat_service_sid The unique ID of the [Conversation
-            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) this
+            # @param [String] chat_service_sid The unique ID of the {Conversation
+            #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] this
             #   conversation belongs to.
             # @return [ConversationList] ConversationList
             def initialize(version, chat_service_sid: nil)
@@ -40,8 +40,8 @@ module Twilio
             #   store any data you wish. The string value must contain structurally valid JSON
             #   if specified.  **Note** that if the attributes are not set "{}" will be
             #   returned.
-            # @param [String] messaging_service_sid The unique ID of the [Messaging
-            #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
+            # @param [String] messaging_service_sid The unique ID of the {Messaging
+            #   Service}[https://www.twilio.com/docs/sms/services/api] this conversation belongs
             #   to.
             # @param [Time] date_created The date that this resource was created.
             # @param [Time] date_updated The date that this resource was last updated.
@@ -224,8 +224,8 @@ module Twilio
             #   store any data you wish. The string value must contain structurally valid JSON
             #   if specified.  **Note** that if the attributes are not set "{}" will be
             #   returned.
-            # @param [String] messaging_service_sid The unique ID of the [Messaging
-            #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
+            # @param [String] messaging_service_sid The unique ID of the {Messaging
+            #   Service}[https://www.twilio.com/docs/sms/services/api] this conversation belongs
             #   to.
             # @param [conversation.State] state Current state of this conversation. Can be
             #   either `active`, `inactive` or `closed` and defaults to `active`
@@ -372,8 +372,8 @@ module Twilio
             # Initialize the ConversationInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] chat_service_sid The unique ID of the [Conversation
-            #   Service](https://www.twilio.com/docs/conversations/api/service-resource) this
+            # @param [String] chat_service_sid The unique ID of the {Conversation
+            #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] this
             #   conversation belongs to.
             # @param [String] sid A 34 character string that uniquely identifies this
             #   resource. Can also be the `unique_name` of the Conversation.
@@ -502,8 +502,8 @@ module Twilio
             #   store any data you wish. The string value must contain structurally valid JSON
             #   if specified.  **Note** that if the attributes are not set "{}" will be
             #   returned.
-            # @param [String] messaging_service_sid The unique ID of the [Messaging
-            #   Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs
+            # @param [String] messaging_service_sid The unique ID of the {Messaging
+            #   Service}[https://www.twilio.com/docs/sms/services/api] this conversation belongs
             #   to.
             # @param [conversation.State] state Current state of this conversation. Can be
             #   either `active`, `inactive` or `closed` and defaults to `active`

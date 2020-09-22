@@ -16,7 +16,7 @@ module Twilio
             # Initialize the RoleList
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Role
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Role
             #   resource is associated with.
             # @return [RoleList] RoleList
             def initialize(version, service_sid: nil)
@@ -32,8 +32,8 @@ module Twilio
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the new resource. It can be up to 64 characters long.
             # @param [role.RoleType] type The type of role. Can be: `channel` for
-            #   [Channel](https://www.twilio.com/docs/chat/channels) roles or `deployment` for
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) roles.
+            #   {Channel}[https://www.twilio.com/docs/chat/channels] roles or `deployment` for
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] roles.
             # @param [String] permission A permission that you grant to the new role. Only one
             #   permission can be granted per parameter. To assign more than one permission,
             #   repeat this parameter for each permission value. The values for this parameter
@@ -172,7 +172,7 @@ module Twilio
             # Initialize the RoleContext
             # @param [Version] version Version that contains the resource
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) to fetch the
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to fetch the
             #   Role resource from.
             # @param [String] sid The SID of the Role resource to fetch.
             # @return [RoleContext] RoleContext
@@ -238,7 +238,7 @@ module Twilio
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] service_sid The SID of the
-            #   [Service](https://www.twilio.com/docs/chat/rest/service-resource) the Role
+            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Role
             #   resource is associated with.
             # @param [String] sid The SID of the Role resource to fetch.
             # @return [RoleInstance] RoleInstance

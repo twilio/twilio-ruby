@@ -147,7 +147,7 @@ module Twilio
             # Initialize the KeyContext
             # @param [Version] version Version that contains the resource
             # @param [String] account_sid The SID of the
-            #   [Account](https://www.twilio.com/docs/iam/api/account) that created the Key
+            #   {Account}[https://www.twilio.com/docs/iam/api/account] that created the Key
             #   resource to fetch.
             # @param [String] sid The Twilio-provided string that uniquely identifies the Key
             #   resource to fetch.

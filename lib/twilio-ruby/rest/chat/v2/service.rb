@@ -193,22 +193,22 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource.
           # @param [String] default_service_role_sid The service role assigned to users when
-          #   they are added to the service. See the [Role
-          #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+          #   they are added to the service. See the {Role
+          #   resource}[https://www.twilio.com/docs/chat/rest/role-resource] for more info
           #   about roles.
           # @param [String] default_channel_role_sid The channel role assigned to users when
-          #   they are added to a channel. See the [Role
-          #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+          #   they are added to a channel. See the {Role
+          #   resource}[https://www.twilio.com/docs/chat/rest/role-resource] for more info
           #   about roles.
           # @param [String] default_channel_creator_role_sid The channel role assigned to a
-          #   channel creator when they join a new channel. See the [Role
-          #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+          #   channel creator when they join a new channel. See the {Role
+          #   resource}[https://www.twilio.com/docs/chat/rest/role-resource] for more info
           #   about roles.
-          # @param [Boolean] read_status_enabled Whether to enable the [Message Consumption
-          #   Horizon](https://www.twilio.com/docs/chat/consumption-horizon) feature. The
+          # @param [Boolean] read_status_enabled Whether to enable the {Message Consumption
+          #   Horizon}[https://www.twilio.com/docs/chat/consumption-horizon] feature. The
           #   default is `true`.
-          # @param [Boolean] reachability_enabled Whether to enable the [Reachability
-          #   Indicator](https://www.twilio.com/docs/chat/reachability-indicator) for this
+          # @param [Boolean] reachability_enabled Whether to enable the {Reachability
+          #   Indicator}[https://www.twilio.com/docs/chat/reachability-indicator] for this
           #   Service instance. The default is `false`.
           # @param [String] typing_indicator_timeout How long in seconds after a `started
           #   typing` event until clients should assume that user is no longer typing, even if
@@ -251,18 +251,18 @@ module Twilio
           #   play when a user is invited to a channel and
           #   `notifications.invited_to_channel.enabled` is `true`.
           # @param [String] pre_webhook_url The URL for pre-event webhooks, which are called
-          #   by using the `webhook_method`. See [Webhook
-          #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+          #   by using the `webhook_method`. See {Webhook
+          #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
           # @param [String] post_webhook_url The URL for post-event webhooks, which are
-          #   called by using the `webhook_method`. See [Webhook
-          #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+          #   called by using the `webhook_method`. See {Webhook
+          #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
           # @param [String] webhook_method The HTTP method to use for calls to the
           #   `pre_webhook_url` and `post_webhook_url` webhooks.  Can be: `POST` or `GET` and
-          #   the default is `POST`. See [Webhook
-          #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+          #   the default is `POST`. See {Webhook
+          #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
           # @param [String] webhook_filters The list of webhook events that are enabled for
-          #   this Service instance. See [Webhook
-          #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+          #   this Service instance. See {Webhook
+          #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
           # @param [String] limits_channel_members The maximum number of Members that can be
           #   added to Channels within this Service. Can be up to 1,000.
           # @param [String] limits_user_channels The maximum number of Channels Users can be
@@ -617,22 +617,22 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource.
           # @param [String] default_service_role_sid The service role assigned to users when
-          #   they are added to the service. See the [Role
-          #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+          #   they are added to the service. See the {Role
+          #   resource}[https://www.twilio.com/docs/chat/rest/role-resource] for more info
           #   about roles.
           # @param [String] default_channel_role_sid The channel role assigned to users when
-          #   they are added to a channel. See the [Role
-          #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+          #   they are added to a channel. See the {Role
+          #   resource}[https://www.twilio.com/docs/chat/rest/role-resource] for more info
           #   about roles.
           # @param [String] default_channel_creator_role_sid The channel role assigned to a
-          #   channel creator when they join a new channel. See the [Role
-          #   resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info
+          #   channel creator when they join a new channel. See the {Role
+          #   resource}[https://www.twilio.com/docs/chat/rest/role-resource] for more info
           #   about roles.
-          # @param [Boolean] read_status_enabled Whether to enable the [Message Consumption
-          #   Horizon](https://www.twilio.com/docs/chat/consumption-horizon) feature. The
+          # @param [Boolean] read_status_enabled Whether to enable the {Message Consumption
+          #   Horizon}[https://www.twilio.com/docs/chat/consumption-horizon] feature. The
           #   default is `true`.
-          # @param [Boolean] reachability_enabled Whether to enable the [Reachability
-          #   Indicator](https://www.twilio.com/docs/chat/reachability-indicator) for this
+          # @param [Boolean] reachability_enabled Whether to enable the {Reachability
+          #   Indicator}[https://www.twilio.com/docs/chat/reachability-indicator] for this
           #   Service instance. The default is `false`.
           # @param [String] typing_indicator_timeout How long in seconds after a `started
           #   typing` event until clients should assume that user is no longer typing, even if
@@ -675,18 +675,18 @@ module Twilio
           #   play when a user is invited to a channel and
           #   `notifications.invited_to_channel.enabled` is `true`.
           # @param [String] pre_webhook_url The URL for pre-event webhooks, which are called
-          #   by using the `webhook_method`. See [Webhook
-          #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+          #   by using the `webhook_method`. See {Webhook
+          #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
           # @param [String] post_webhook_url The URL for post-event webhooks, which are
-          #   called by using the `webhook_method`. See [Webhook
-          #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+          #   called by using the `webhook_method`. See {Webhook
+          #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
           # @param [String] webhook_method The HTTP method to use for calls to the
           #   `pre_webhook_url` and `post_webhook_url` webhooks.  Can be: `POST` or `GET` and
-          #   the default is `POST`. See [Webhook
-          #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+          #   the default is `POST`. See {Webhook
+          #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
           # @param [String] webhook_filters The list of webhook events that are enabled for
-          #   this Service instance. See [Webhook
-          #   Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+          #   this Service instance. See {Webhook
+          #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
           # @param [String] limits_channel_members The maximum number of Members that can be
           #   added to Channels within this Service. Can be up to 1,000.
           # @param [String] limits_user_channels The maximum number of Channels Users can be

@@ -27,8 +27,8 @@ module Twilio
 
           ##
           # Access the countries
-          # @param [String] iso_country The [ISO country
-          #   code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the pricing
+          # @param [String] iso_country The {ISO country
+          #   code}[http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the pricing
           #   information to fetch.
           # @return [CountryList]
           # @return [CountryContext] if iso_country was passed.

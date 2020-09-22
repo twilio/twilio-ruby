@@ -18,8 +18,8 @@ module Twilio
               ##
               # Initialize the SyncListItemList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
               #   associated with.
               # @param [String] list_sid The SID of the Sync List that contains the List Item.
               # @return [SyncListItemList] SyncListItemList
@@ -226,8 +226,8 @@ module Twilio
               ##
               # Initialize the SyncListItemContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) with the Sync List Item
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] with the Sync List Item
               #   resource to fetch.
               # @param [String] list_sid The SID of the Sync List with the Sync List Item
               #   resource to fetch. Can be the Sync List resource's `sid` or its `unique_name`.
@@ -327,8 +327,8 @@ module Twilio
               # Initialize the SyncListItemInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The SID of the [Sync
-              #   Service](https://www.twilio.com/docs/sync/api/service) the resource is
+              # @param [String] service_sid The SID of the {Sync
+              #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
               #   associated with.
               # @param [String] list_sid The SID of the Sync List that contains the List Item.
               # @param [String] index The index of the Sync List Item resource to fetch.

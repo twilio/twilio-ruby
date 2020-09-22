@@ -117,8 +117,8 @@ module Twilio
           #   `Customer Support` or `2014 Election Campaign`.
           # @param [String] event_callback_url The URL we should call when an event occurs.
           #   If provided, the Workspace will publish events to this URL, for example, to
-          #   collect data for reporting. See [Workspace
-          #   Events](https://www.twilio.com/docs/taskrouter/api/event) for more information.
+          #   collect data for reporting. See {Workspace
+          #   Events}[https://www.twilio.com/docs/taskrouter/api/event] for more information.
           # @param [String] events_filter The list of Workspace events for which to call
           #   event_callback_url. For example if
           #   `EventsFilter=task.created,task.canceled,worker.activity.update`, then
@@ -233,7 +233,7 @@ module Twilio
           # @param [String] default_activity_sid The SID of the Activity that will be used
           #   when new Workers are created in the Workspace.
           # @param [String] event_callback_url The URL we should call when an event occurs.
-          #   See [Workspace Events](https://www.twilio.com/docs/taskrouter/api/event) for
+          #   See {Workspace Events}[https://www.twilio.com/docs/taskrouter/api/event] for
           #   more information.
           # @param [String] events_filter The list of Workspace events for which to call
           #   event_callback_url. For example if
@@ -592,7 +592,7 @@ module Twilio
           # @param [String] default_activity_sid The SID of the Activity that will be used
           #   when new Workers are created in the Workspace.
           # @param [String] event_callback_url The URL we should call when an event occurs.
-          #   See [Workspace Events](https://www.twilio.com/docs/taskrouter/api/event) for
+          #   See {Workspace Events}[https://www.twilio.com/docs/taskrouter/api/event] for
           #   more information.
           # @param [String] events_filter The list of Workspace events for which to call
           #   event_callback_url. For example if

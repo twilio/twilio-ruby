@@ -29,18 +29,18 @@ module Twilio
           # memory before returning.
           # @param [String] actor_sid Only include events initiated by this Actor. Useful
           #   for auditing actions taken by specific users or API credentials.
-          # @param [String] event_type Only include events of this [Event
-          #   Type](https://www.twilio.com/docs/usage/monitor-events#event-types).
+          # @param [String] event_type Only include events of this {Event
+          #   Type}[https://www.twilio.com/docs/usage/monitor-events#event-types].
           # @param [String] resource_sid Only include events that refer to this resource.
           #   Useful for discovering the history of a specific resource.
           # @param [String] source_ip_address Only include events that originated from this
           #   IP address. Useful for tracking suspicious activity originating from the API or
           #   the Twilio Console.
           # @param [Time] start_date Only include events that occurred on or after this
-          #   date. Specify the date in GMT and [ISO
-          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+          #   date. Specify the date in GMT and {ISO
+          #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
           # @param [Time] end_date Only include events that occurred on or before this date.
-          #   Specify the date in GMT and [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+          #   Specify the date in GMT and {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601]
           #   format.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
@@ -68,18 +68,18 @@ module Twilio
           # is reached.
           # @param [String] actor_sid Only include events initiated by this Actor. Useful
           #   for auditing actions taken by specific users or API credentials.
-          # @param [String] event_type Only include events of this [Event
-          #   Type](https://www.twilio.com/docs/usage/monitor-events#event-types).
+          # @param [String] event_type Only include events of this {Event
+          #   Type}[https://www.twilio.com/docs/usage/monitor-events#event-types].
           # @param [String] resource_sid Only include events that refer to this resource.
           #   Useful for discovering the history of a specific resource.
           # @param [String] source_ip_address Only include events that originated from this
           #   IP address. Useful for tracking suspicious activity originating from the API or
           #   the Twilio Console.
           # @param [Time] start_date Only include events that occurred on or after this
-          #   date. Specify the date in GMT and [ISO
-          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+          #   date. Specify the date in GMT and {ISO
+          #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
           # @param [Time] end_date Only include events that occurred on or before this date.
-          #   Specify the date in GMT and [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+          #   Specify the date in GMT and {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601]
           #   format.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
@@ -123,18 +123,18 @@ module Twilio
           # Request is executed immediately.
           # @param [String] actor_sid Only include events initiated by this Actor. Useful
           #   for auditing actions taken by specific users or API credentials.
-          # @param [String] event_type Only include events of this [Event
-          #   Type](https://www.twilio.com/docs/usage/monitor-events#event-types).
+          # @param [String] event_type Only include events of this {Event
+          #   Type}[https://www.twilio.com/docs/usage/monitor-events#event-types].
           # @param [String] resource_sid Only include events that refer to this resource.
           #   Useful for discovering the history of a specific resource.
           # @param [String] source_ip_address Only include events that originated from this
           #   IP address. Useful for tracking suspicious activity originating from the API or
           #   the Twilio Console.
           # @param [Time] start_date Only include events that occurred on or after this
-          #   date. Specify the date in GMT and [ISO
-          #   8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+          #   date. Specify the date in GMT and {ISO
+          #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
           # @param [Time] end_date Only include events that occurred on or before this date.
-          #   Specify the date in GMT and [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+          #   Specify the date in GMT and {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601]
           #   format.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
