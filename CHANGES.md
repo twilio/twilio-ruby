@@ -1,6 +1,25 @@
 twilio-ruby changelog
 =====================
 
+[2020-09-28] Version 5.40.4
+---------------------------
+**Library - Docs**
+- [PR #535](https://github.com/twilio/twilio-ruby/pull/535): convert markdown links to RDoc formatted links. Thanks to [@JenniferMah](https://github.com/JenniferMah)!
+
+**Api**
+- Add optional property `call_reason` in the participant create request
+- Make sip-domain-service endpoints available in stage-au1 and prod-au1
+
+**Messaging**
+- Removed beta feature gate from WhatsApp Templates API
+
+**Serverless**
+- Add Build Status endpoint
+
+**Video**
+- [Rooms] Add new room type "go" for WebRTC Go
+
+
 [2020-09-21] Version 5.40.3
 ---------------------------
 **Library - Fix**

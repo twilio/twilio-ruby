@@ -25,11 +25,8 @@ module Twilio
 
           ##
           # Create the RoomInstance
-          # @param [Boolean] enable_turn Deprecated. Whether to enable {Twilio's Network
-          #   Traversal TURN service}[https://www.twilio.com/stun-turn]. TURN service is used
-          #   when direct peer-to-peer media connections cannot be established due to firewall
-          #   restrictions. This setting only applies to rooms with type `peer-to-peer`.
-          # @param [room.RoomType] type The type of room. Can be: `peer-to-peer`,
+          # @param [Boolean] enable_turn Deprecated, now always considered to be true.
+          # @param [room.RoomType] type The type of room. Can be: `go`, `peer-to-peer`,
           #   `group-small`, or `group`. The default value is `group`.
           # @param [String] unique_name An application-defined string that uniquely
           #   identifies the resource. It can be used as a `room_sid` in place of the

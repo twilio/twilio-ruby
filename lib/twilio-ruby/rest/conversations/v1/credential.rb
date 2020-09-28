@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Conversations < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class CredentialList < ListResource
           ##
           # Initialize the CredentialList
@@ -151,8 +149,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class CredentialPage < Page
           ##
           # Initialize the CredentialPage
@@ -182,8 +178,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class CredentialContext < InstanceContext
           ##
           # Initialize the CredentialContext
@@ -269,8 +263,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class CredentialInstance < InstanceResource
           ##
           # Initialize the CredentialInstance

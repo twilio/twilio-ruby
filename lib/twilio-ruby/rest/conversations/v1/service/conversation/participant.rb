@@ -12,8 +12,6 @@ module Twilio
       class V1 < Version
         class ServiceContext < InstanceContext
           class ConversationContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class ParticipantList < ListResource
               ##
               # Initialize the ParticipantList
@@ -174,8 +172,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class ParticipantPage < Page
               ##
               # Initialize the ParticipantPage
@@ -210,8 +206,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class ParticipantContext < InstanceContext
               ##
               # Initialize the ParticipantContext
@@ -320,8 +314,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class ParticipantInstance < InstanceResource
               ##
               # Initialize the ParticipantInstance

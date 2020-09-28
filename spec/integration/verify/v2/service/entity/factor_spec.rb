@@ -15,7 +15,7 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'push', config: 'config', twilio_sandbox_mode: 'twilio_sandbox_mode', authorization: 'authorization')
+                       .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'push', config: 'config', twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
@@ -24,7 +24,7 @@ describe 'Factor' do
         'FactorType' => 'push',
         'Config' => 'config',
     }
-    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', 'Authorization' => 'authorization', }
+    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

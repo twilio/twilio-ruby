@@ -159,8 +159,11 @@ module Twilio
               #   If the `to` parameter is a phone number, `callerId` must also be a phone number.
               #   If `to` is sip address, this value of `callerId` should be a username portion to
               #   be used to populate the From header that is passed to the SIP endpoint.
+              # @param [String] call_reason The Reason for the outgoing call. Use it to specify
+              #   the purpose of the call that is presented on the called party's phone. (Branded
+              #   Calls Beta)
               # @return [ParticipantInstance] Created ParticipantInstance
-              def create(from: nil, to: nil, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, label: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_record: :unset, conference_trim: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, region: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, recording_status_callback_event: :unset, conference_recording_status_callback_event: :unset, coaching: :unset, call_sid_to_coach: :unset, jitter_buffer_size: :unset, byoc: :unset, caller_id: :unset)
+              def create(from: nil, to: nil, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, label: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_record: :unset, conference_trim: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, region: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, recording_status_callback_event: :unset, conference_recording_status_callback_event: :unset, coaching: :unset, call_sid_to_coach: :unset, jitter_buffer_size: :unset, byoc: :unset, caller_id: :unset, call_reason: :unset)
                 data = Twilio::Values.of({
                     'From' => from,
                     'To' => to,
@@ -198,6 +201,7 @@ module Twilio
                     'JitterBufferSize' => jitter_buffer_size,
                     'Byoc' => byoc,
                     'CallerId' => caller_id,
+                    'CallReason' => call_reason,
                 })
 
                 payload = @version.create('POST', @uri, data: data)

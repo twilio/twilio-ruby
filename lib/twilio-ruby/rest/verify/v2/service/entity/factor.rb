@@ -44,19 +44,15 @@ module Twilio
               # @param [String] config The config required for this Factor. It must be a json
               #   string with the required properties for the given factor type
               # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
-              # @param [String] authorization The Authorization HTTP request header
               # @return [FactorInstance] Created FactorInstance
-              def create(binding: nil, friendly_name: nil, factor_type: nil, config: nil, twilio_sandbox_mode: :unset, authorization: :unset)
+              def create(binding: nil, friendly_name: nil, factor_type: nil, config: nil, twilio_sandbox_mode: :unset)
                 data = Twilio::Values.of({
                     'Binding' => binding,
                     'FriendlyName' => friendly_name,
                     'FactorType' => factor_type,
                     'Config' => config,
                 })
-                headers = Twilio::Values.of({
-                    'Twilio-Sandbox-Mode' => twilio_sandbox_mode,
-                    'Authorization' => authorization,
-                })
+                headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
                 payload = @version.create('POST', @uri, data: data, headers: headers)
 

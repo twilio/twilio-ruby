@@ -12,8 +12,6 @@ module Twilio
       class V1 < Version
         class ServiceContext < InstanceContext
           class ConversationContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class WebhookList < ListResource
               ##
               # Initialize the WebhookList
@@ -158,8 +156,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class WebhookPage < Page
               ##
               # Initialize the WebhookPage
@@ -194,8 +190,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class WebhookContext < InstanceContext
               ##
               # Initialize the WebhookContext
@@ -287,8 +281,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class WebhookInstance < InstanceResource
               ##
               # Initialize the WebhookInstance

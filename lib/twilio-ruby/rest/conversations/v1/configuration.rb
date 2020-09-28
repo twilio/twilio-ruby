@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Conversations < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ConfigurationList < ListResource
           ##
           # Initialize the ConfigurationList
@@ -31,8 +29,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ConfigurationPage < Page
           ##
           # Initialize the ConfigurationPage
@@ -62,8 +58,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ConfigurationContext < InstanceContext
           ##
           # Initialize the ConfigurationContext
@@ -138,8 +132,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ConfigurationInstance < InstanceResource
           ##
           # Initialize the ConfigurationInstance
@@ -207,13 +199,13 @@ module Twilio
           end
 
           ##
-          # @return [String] The url
+          # @return [String] An absolute URL for this global configuration.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] Absolute URLs to access the webhook and default service configurations.
           def links
             @properties['links']
           end

@@ -184,6 +184,9 @@ module Twilio
               # Path Solution
               @solution = {service_sid: service_sid, sid: sid, }
               @uri = "/Services/#{@solution[:service_sid]}/Builds/#{@solution[:sid]}"
+
+              # Dependents
+              @build_status = nil
             end
 
             ##
@@ -200,6 +203,14 @@ module Twilio
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
                @version.delete('DELETE', @uri)
+            end
+
+            ##
+            # Access the build_status
+            # @return [BuildStatusList]
+            # @return [BuildStatusContext]
+            def build_status
+              BuildStatusContext.new(@version, @solution[:service_sid], @solution[:sid], )
             end
 
             ##
@@ -243,6 +254,7 @@ module Twilio
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
+                  'links' => payload['links'],
               }
 
               # Context
@@ -322,6 +334,12 @@ module Twilio
             end
 
             ##
+            # @return [String] The links
+            def links
+              @properties['links']
+            end
+
+            ##
             # Fetch the BuildInstance
             # @return [BuildInstance] Fetched BuildInstance
             def fetch
@@ -333,6 +351,13 @@ module Twilio
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
               context.delete
+            end
+
+            ##
+            # Access the build_status
+            # @return [build_status] build_status
+            def build_status
+              context.build_status
             end
 
             ##

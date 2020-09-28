@@ -12,8 +12,6 @@ module Twilio
       class V1 < Version
         class ServiceContext < InstanceContext
           class ConversationContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class MessageList < ListResource
               ##
               # Initialize the MessageList
@@ -157,8 +155,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class MessagePage < Page
               ##
               # Initialize the MessagePage
@@ -193,8 +189,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class MessageContext < InstanceContext
               ##
               # Initialize the MessageContext
@@ -325,8 +319,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class MessageInstance < InstanceResource
               ##
               # Initialize the MessageInstance
@@ -473,7 +465,7 @@ module Twilio
               end
 
               ##
-              # @return [String] Absolute URLs to access the Receipts of this Message.
+              # @return [String] Absolute URL to access the receipts of this message.
               def links
                 @properties['links']
               end

@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Conversations < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ServiceList < ListResource
           ##
           # Initialize the ServiceList
@@ -125,8 +123,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ServicePage < Page
           ##
           # Initialize the ServicePage
@@ -156,8 +152,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ServiceContext < InstanceContext
           ##
           # Initialize the ServiceContext
@@ -291,8 +285,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ServiceInstance < InstanceResource
           ##
           # Initialize the ServiceInstance
@@ -368,7 +360,7 @@ module Twilio
           end
 
           ##
-          # @return [String] Absolute URLs to access the Conversations, Users, Roles and Bindings of this Service.
+          # @return [String] Absolute URLs to access the conversations, users, roles, bindings and configuration of this service.
           def links
             @properties['links']
           end

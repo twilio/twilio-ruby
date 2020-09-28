@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Conversations < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class UserList < ListResource
           ##
           # Initialize the UserList
@@ -38,16 +36,19 @@ module Twilio
           # @param [String] role_sid The SID of a service-level
           #   {Role}[https://www.twilio.com/docs/conversations/api/role-resource] to assign to
           #   the user.
+          # @param [user.WebhookEnabledType] x_twilio_webhook_enabled The
+          #   X-Twilio-Webhook-Enabled HTTP request header
           # @return [UserInstance] Created UserInstance
-          def create(identity: nil, friendly_name: :unset, attributes: :unset, role_sid: :unset)
+          def create(identity: nil, friendly_name: :unset, attributes: :unset, role_sid: :unset, x_twilio_webhook_enabled: :unset)
             data = Twilio::Values.of({
                 'Identity' => identity,
                 'FriendlyName' => friendly_name,
                 'Attributes' => attributes,
                 'RoleSid' => role_sid,
             })
+            headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-            payload = @version.create('POST', @uri, data: data)
+            payload = @version.create('POST', @uri, data: data, headers: headers)
 
             UserInstance.new(@version, payload, )
           end
@@ -139,8 +140,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class UserPage < Page
           ##
           # Initialize the UserPage
@@ -170,8 +169,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class UserContext < InstanceContext
           ##
           # Initialize the UserContext
@@ -196,24 +193,31 @@ module Twilio
           # @param [String] role_sid The SID of a service-level
           #   {Role}[https://www.twilio.com/docs/conversations/api/role-resource] to assign to
           #   the user.
+          # @param [user.WebhookEnabledType] x_twilio_webhook_enabled The
+          #   X-Twilio-Webhook-Enabled HTTP request header
           # @return [UserInstance] Updated UserInstance
-          def update(friendly_name: :unset, attributes: :unset, role_sid: :unset)
+          def update(friendly_name: :unset, attributes: :unset, role_sid: :unset, x_twilio_webhook_enabled: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'Attributes' => attributes,
                 'RoleSid' => role_sid,
             })
+            headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
-            payload = @version.update('POST', @uri, data: data)
+            payload = @version.update('POST', @uri, data: data, headers: headers)
 
             UserInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
           # Delete the UserInstance
+          # @param [user.WebhookEnabledType] x_twilio_webhook_enabled The
+          #   X-Twilio-Webhook-Enabled HTTP request header
           # @return [Boolean] true if delete succeeds, false otherwise
-          def delete
-             @version.delete('DELETE', @uri)
+          def delete(x_twilio_webhook_enabled: :unset)
+            headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+
+             @version.delete('DELETE', @uri, headers: headers)
           end
 
           ##
@@ -240,8 +244,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class UserInstance < InstanceResource
           ##
           # Initialize the UserInstance
@@ -345,7 +347,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The absolute URL of the User resource
+          # @return [String] An absolute URL for this user.
           def url
             @properties['url']
           end
@@ -359,16 +361,25 @@ module Twilio
           # @param [String] role_sid The SID of a service-level
           #   {Role}[https://www.twilio.com/docs/conversations/api/role-resource] to assign to
           #   the user.
+          # @param [user.WebhookEnabledType] x_twilio_webhook_enabled The
+          #   X-Twilio-Webhook-Enabled HTTP request header
           # @return [UserInstance] Updated UserInstance
-          def update(friendly_name: :unset, attributes: :unset, role_sid: :unset)
-            context.update(friendly_name: friendly_name, attributes: attributes, role_sid: role_sid, )
+          def update(friendly_name: :unset, attributes: :unset, role_sid: :unset, x_twilio_webhook_enabled: :unset)
+            context.update(
+                friendly_name: friendly_name,
+                attributes: attributes,
+                role_sid: role_sid,
+                x_twilio_webhook_enabled: x_twilio_webhook_enabled,
+            )
           end
 
           ##
           # Delete the UserInstance
+          # @param [user.WebhookEnabledType] x_twilio_webhook_enabled The
+          #   X-Twilio-Webhook-Enabled HTTP request header
           # @return [Boolean] true if delete succeeds, false otherwise
-          def delete
-            context.delete
+          def delete(x_twilio_webhook_enabled: :unset)
+            context.delete(x_twilio_webhook_enabled: x_twilio_webhook_enabled, )
           end
 
           ##

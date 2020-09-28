@@ -11,8 +11,6 @@ module Twilio
     class Conversations < Domain
       class V1 < Version
         class ServiceContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class ConfigurationList < ListResource
             ##
             # Initialize the ConfigurationList
@@ -34,8 +32,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class ConfigurationPage < Page
             ##
             # Initialize the ConfigurationPage
@@ -65,8 +61,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class ConfigurationContext < InstanceContext
             ##
             # Initialize the ConfigurationContext
@@ -144,8 +138,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class ConfigurationInstance < InstanceResource
             ##
             # Initialize the ConfigurationInstance
@@ -208,13 +200,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The absolute URL of the Service configuration resource
+            # @return [String] An absolute URL for this service configuration.
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] Absolute URL to access the Push Notifications configuration of this Service.
+            # @return [String] Absolute URL to access the push notifications configuration of this service.
             def links
               @properties['links']
             end

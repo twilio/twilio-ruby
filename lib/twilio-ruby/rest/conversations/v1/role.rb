@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Conversations < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class RoleList < ListResource
           ##
           # Initialize the RoleList
@@ -137,8 +135,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class RolePage < Page
           ##
           # Initialize the RolePage
@@ -168,8 +164,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class RoleContext < InstanceContext
           ##
           # Initialize the RoleContext
@@ -232,8 +226,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class RoleInstance < InstanceResource
           ##
           # Initialize the RoleInstance
@@ -322,7 +314,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The absolute URL of the Role resource
+          # @return [String] An absolute URL for this user role.
           def url
             @properties['url']
           end

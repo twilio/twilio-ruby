@@ -12,8 +12,6 @@ module Twilio
       class V1 < Version
         class ConversationContext < InstanceContext
           class MessageContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class DeliveryReceiptList < ListResource
               ##
               # Initialize the DeliveryReceiptList
@@ -120,8 +118,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class DeliveryReceiptPage < Page
               ##
               # Initialize the DeliveryReceiptPage
@@ -156,8 +152,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class DeliveryReceiptContext < InstanceContext
               ##
               # Initialize the DeliveryReceiptContext
@@ -209,8 +203,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class DeliveryReceiptInstance < InstanceResource
               ##
               # Initialize the DeliveryReceiptInstance

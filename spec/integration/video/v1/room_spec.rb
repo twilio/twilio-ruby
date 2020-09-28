@@ -111,7 +111,7 @@ describe 'Room' do
     expect(actual).to_not eq(nil)
   end
 
-  it "receives create_p2p_basic responses" do
+  it "receives create_webrtc_go responses" do
     @holodeck.mock(Twilio::Response.new(
         201,
       %q[
@@ -120,7 +120,7 @@ describe 'Room' do
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
           "status": "in-progress",
-          "type": "peer-to-peer-basic",
+          "type": "go",
           "sid": "RMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "enable_turn": true,
           "unique_name": "room1",

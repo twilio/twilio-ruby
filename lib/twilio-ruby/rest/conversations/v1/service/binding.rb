@@ -11,8 +11,6 @@ module Twilio
     class Conversations < Domain
       class V1 < Version
         class ServiceContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class BindingList < ListResource
             ##
             # Initialize the BindingList
@@ -153,8 +151,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class BindingPage < Page
             ##
             # Initialize the BindingPage
@@ -184,8 +180,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class BindingContext < InstanceContext
             ##
             # Initialize the BindingContext
@@ -240,8 +234,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class BindingInstance < InstanceResource
             ##
             # Initialize the BindingInstance
