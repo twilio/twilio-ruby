@@ -49,6 +49,7 @@ describe 'CallSummary' do
           ],
           "attributes": {},
           "properties": {},
+          "trust": {},
           "url": "https://insights.twilio.com/v1/Voice/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Summary"
       }
       ]

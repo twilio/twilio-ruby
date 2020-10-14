@@ -15,13 +15,27 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @auth_token_promotion = nil
           @credentials = nil
+          @secondary_auth_token = nil
+        end
+
+        ##
+        # @return [Twilio::REST::Accounts::V1::AuthTokenPromotionContext]
+        def auth_token_promotion
+          @auth_token_promotion ||= AuthTokenPromotionContext.new self
         end
 
         ##
         # @return [Twilio::REST::Accounts::V1::CredentialContext]
         def credentials
           @credentials ||= CredentialList.new self
+        end
+
+        ##
+        # @return [Twilio::REST::Accounts::V1::SecondaryAuthTokenContext]
+        def secondary_auth_token
+          @secondary_auth_token ||= SecondaryAuthTokenContext.new self
         end
 
         ##

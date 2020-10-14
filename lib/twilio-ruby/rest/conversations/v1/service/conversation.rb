@@ -191,7 +191,9 @@ module Twilio
             ##
             # Initialize the ConversationContext
             # @param [Version] version Version that contains the resource
-            # @param [String] chat_service_sid The chat_service_sid
+            # @param [String] chat_service_sid The SID of the {Conversation
+            #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] the
+            #   Conversation resource is associated with.
             # @param [String] sid A 34 character string that uniquely identifies this
             #   resource. Can also be the `unique_name` of the Conversation.
             # @return [ConversationContext] ConversationContext
@@ -227,10 +229,13 @@ module Twilio
             #   switched to `inactive` state. Minimum value for this timer is 1 minute.
             # @param [String] timers_closed ISO8601 duration when conversation will be
             #   switched to `closed` state. Minimum value for this timer is 10 minutes.
+            # @param [String] unique_name An application-defined string that uniquely
+            #   identifies the resource. It can be used to address the resource in place of the
+            #   resource's `sid` in the URL.
             # @param [conversation.WebhookEnabledType] x_twilio_webhook_enabled The
             #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ConversationInstance] Updated ConversationInstance
-            def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset, x_twilio_webhook_enabled: :unset)
+            def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset, unique_name: :unset, x_twilio_webhook_enabled: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
@@ -240,6 +245,7 @@ module Twilio
                   'State' => state,
                   'Timers.Inactive' => timers_inactive,
                   'Timers.Closed' => timers_closed,
+                  'UniqueName' => unique_name,
               })
               headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
@@ -503,10 +509,13 @@ module Twilio
             #   switched to `inactive` state. Minimum value for this timer is 1 minute.
             # @param [String] timers_closed ISO8601 duration when conversation will be
             #   switched to `closed` state. Minimum value for this timer is 10 minutes.
+            # @param [String] unique_name An application-defined string that uniquely
+            #   identifies the resource. It can be used to address the resource in place of the
+            #   resource's `sid` in the URL.
             # @param [conversation.WebhookEnabledType] x_twilio_webhook_enabled The
             #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ConversationInstance] Updated ConversationInstance
-            def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset, x_twilio_webhook_enabled: :unset)
+            def update(friendly_name: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, messaging_service_sid: :unset, state: :unset, timers_inactive: :unset, timers_closed: :unset, unique_name: :unset, x_twilio_webhook_enabled: :unset)
               context.update(
                   friendly_name: friendly_name,
                   date_created: date_created,
@@ -516,6 +525,7 @@ module Twilio
                   state: state,
                   timers_inactive: timers_inactive,
                   timers_closed: timers_closed,
+                  unique_name: unique_name,
                   x_twilio_webhook_enabled: x_twilio_webhook_enabled,
               )
             end

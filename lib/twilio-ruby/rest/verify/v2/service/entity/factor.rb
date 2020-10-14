@@ -33,24 +33,36 @@ module Twilio
 
               ##
               # Create the FactorInstance
-              # @param [String] binding A unique binding for this Factor that identifies it.
-              #   E.g. the algorithm and public key for `push` factors. It must be a json string
-              #   with the required properties for the given factor type. Required when creating a
-              #   new Factor. This value is never returned because it can contain customer
-              #   secrets.
               # @param [String] friendly_name The friendly name of this Factor
               # @param [factor.FactorTypes] factor_type The Type of this Factor. Currently only
               #   `push` is supported
-              # @param [String] config The config required for this Factor. It must be a json
-              #   string with the required properties for the given factor type
+              # @param [String] binding_alg The algorithm used when `factor_type` is `push`.
+              #   Algorithm supported: `ES256`
+              # @param [String] binding_public_key The Ecdsa public key in PKIX, ASN.1 DER
+              #   format encoded in Base64
+              # @param [String] config_app_id The ID that uniquely identifies your app in the
+              #   Google or Apple store, such as `com.example.myapp`. Required when `factor_type`
+              #   is `push`
+              # @param [factor.NotificationPlatforms] config_notification_platform The transport
+              #   technology used to generate the Notification Token. Can be `apn` or `fcm`.
+              #   Required when `factor_type` is `push`
+              # @param [String] config_notification_token For APN, the device token. For FCM the
+              #   registration token. It used to send the push notifications. Required when
+              #   `factor_type` is `push`
+              # @param [String] config_sdk_version The Verify Push SDK version used to configure
+              #   the factor
               # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [FactorInstance] Created FactorInstance
-              def create(binding: nil, friendly_name: nil, factor_type: nil, config: nil, twilio_sandbox_mode: :unset)
+              def create(friendly_name: nil, factor_type: nil, binding_alg: :unset, binding_public_key: :unset, config_app_id: :unset, config_notification_platform: :unset, config_notification_token: :unset, config_sdk_version: :unset, twilio_sandbox_mode: :unset)
                 data = Twilio::Values.of({
-                    'Binding' => binding,
                     'FriendlyName' => friendly_name,
                     'FactorType' => factor_type,
-                    'Config' => config,
+                    'Binding.Alg' => binding_alg,
+                    'Binding.PublicKey' => binding_public_key,
+                    'Config.AppId' => config_app_id,
+                    'Config.NotificationPlatform' => config_notification_platform,
+                    'Config.NotificationToken' => config_notification_token,
+                    'Config.SdkVersion' => config_sdk_version,
                 })
                 headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
@@ -243,15 +255,19 @@ module Twilio
               # @param [String] auth_payload The optional payload needed to verify the Factor
               #   for the first time. E.g. for a TOTP, the numeric code.
               # @param [String] friendly_name The new friendly name of this Factor
-              # @param [String] config The new config for this Factor. It must be a json string
-              #   with the required properties for the given factor type
+              # @param [String] config_notification_token For APN, the device token. For FCM the
+              #   registration token. It used to send the push notifications. Required when
+              #   `factor_type` is `push`
+              # @param [String] config_sdk_version The Verify Push SDK version used to configure
+              #   the factor
               # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [FactorInstance] Updated FactorInstance
-              def update(auth_payload: :unset, friendly_name: :unset, config: :unset, twilio_sandbox_mode: :unset)
+              def update(auth_payload: :unset, friendly_name: :unset, config_notification_token: :unset, config_sdk_version: :unset, twilio_sandbox_mode: :unset)
                 data = Twilio::Values.of({
                     'AuthPayload' => auth_payload,
                     'FriendlyName' => friendly_name,
-                    'Config' => config,
+                    'Config.NotificationToken' => config_notification_token,
+                    'Config.SdkVersion' => config_sdk_version,
                 })
                 headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
@@ -427,15 +443,19 @@ module Twilio
               # @param [String] auth_payload The optional payload needed to verify the Factor
               #   for the first time. E.g. for a TOTP, the numeric code.
               # @param [String] friendly_name The new friendly name of this Factor
-              # @param [String] config The new config for this Factor. It must be a json string
-              #   with the required properties for the given factor type
+              # @param [String] config_notification_token For APN, the device token. For FCM the
+              #   registration token. It used to send the push notifications. Required when
+              #   `factor_type` is `push`
+              # @param [String] config_sdk_version The Verify Push SDK version used to configure
+              #   the factor
               # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [FactorInstance] Updated FactorInstance
-              def update(auth_payload: :unset, friendly_name: :unset, config: :unset, twilio_sandbox_mode: :unset)
+              def update(auth_payload: :unset, friendly_name: :unset, config_notification_token: :unset, config_sdk_version: :unset, twilio_sandbox_mode: :unset)
                 context.update(
                     auth_payload: auth_payload,
                     friendly_name: friendly_name,
-                    config: config,
+                    config_notification_token: config_notification_token,
+                    config_sdk_version: config_sdk_version,
                     twilio_sandbox_mode: twilio_sandbox_mode,
                 )
               end

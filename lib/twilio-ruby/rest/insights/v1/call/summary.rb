@@ -140,6 +140,7 @@ module Twilio
                   'url' => payload['url'],
                   'attributes' => payload['attributes'],
                   'properties' => payload['properties'],
+                  'trust' => payload['trust'],
               }
 
               # Context
@@ -270,6 +271,12 @@ module Twilio
             # @return [Hash] The properties
             def properties
               @properties['properties']
+            end
+
+            ##
+            # @return [Hash] The trust
+            def trust
+              @properties['trust']
             end
 
             ##

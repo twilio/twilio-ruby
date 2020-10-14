@@ -47,16 +47,21 @@ module Twilio
           # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
-          # @param [Hash] push Configurations for the Push factors (channel) created under
-          #   this Service. If present, it must be a json string with the following format:
-          #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "include_date":
-          #   true}. If `include_date` is set to `true`, which is the default, that means that
-          #   the push challenge’s response will include the date created value. If
-          #   `include_date` is set to `false`, then the date created value will not be
-          #   included. See {Challenge}[https://www.twilio.com/docs/verify/api/challenge]
-          #   resource’s details parameter for more info
+          # @param [Boolean] push_include_date Optional configuration for the Push factors.
+          #   If true, include the date in the Challenge's reponse. Otherwise, the date is
+          #   omitted from the response. See
+          #   {Challenge}[https://www.twilio.com/docs/verify/api/challenge] resource’s details
+          #   parameter for more info. Default: true
+          # @param [String] push_apn_credential_sid Optional configuration for the Push
+          #   factors. Set the APN Credential for this service. This will allow to send push
+          #   notifications to iOS devices. See {Credential
+          #   Resource}[https://www.twilio.com/docs/notify/api/credential-resource]
+          # @param [String] push_fcm_credential_sid Optional configuration for the Push
+          #   factors. Set the FCM Credential for this service. This will allow to send push
+          #   notifications to Android devices. See {Credential
+          #   Resource}[https://www.twilio.com/docs/notify/api/credential-resource]
           # @return [ServiceInstance] Created ServiceInstance
-          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push: :unset)
+          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -67,7 +72,9 @@ module Twilio
                 'Psd2Enabled' => psd2_enabled,
                 'DoNotShareWarningEnabled' => do_not_share_warning_enabled,
                 'CustomCodeEnabled' => custom_code_enabled,
-                'Push' => Twilio.serialize_object(push),
+                'Push.IncludeDate' => push_include_date,
+                'Push.ApnCredentialSid' => push_apn_credential_sid,
+                'Push.FcmCredentialSid' => push_fcm_credential_sid,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -253,16 +260,21 @@ module Twilio
           # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
-          # @param [Hash] push Configurations for the Push factors (channel) created under
-          #   this Service. If present, it must be a json string with the following format:
-          #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "include_date":
-          #   true}. If `include_date` is set to `true`, which is the default, that means that
-          #   the push challenge’s response will include the date created value. If
-          #   `include_date` is set to `false`, then the date created value will not be
-          #   included. See {Challenge}[https://www.twilio.com/docs/verify/api/challenge]
-          #   resource’s details parameter for more info
+          # @param [Boolean] push_include_date Optional configuration for the Push factors.
+          #   If true, include the date in the Challenge's reponse. Otherwise, the date is
+          #   omitted from the response. See
+          #   {Challenge}[https://www.twilio.com/docs/verify/api/challenge] resource’s details
+          #   parameter for more info. Default: true
+          # @param [String] push_apn_credential_sid Optional configuration for the Push
+          #   factors. Set the APN Credential for this service. This will allow to send push
+          #   notifications to iOS devices. See {Credential
+          #   Resource}[https://www.twilio.com/docs/notify/api/credential-resource]
+          # @param [String] push_fcm_credential_sid Optional configuration for the Push
+          #   factors. Set the FCM Credential for this service. This will allow to send push
+          #   notifications to Android devices. See {Credential
+          #   Resource}[https://www.twilio.com/docs/notify/api/credential-resource]
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -273,7 +285,9 @@ module Twilio
                 'Psd2Enabled' => psd2_enabled,
                 'DoNotShareWarningEnabled' => do_not_share_warning_enabled,
                 'CustomCodeEnabled' => custom_code_enabled,
-                'Push' => Twilio.serialize_object(push),
+                'Push.IncludeDate' => push_include_date,
+                'Push.ApnCredentialSid' => push_apn_credential_sid,
+                'Push.FcmCredentialSid' => push_fcm_credential_sid,
             })
 
             payload = @version.update('POST', @uri, data: data)
@@ -589,16 +603,21 @@ module Twilio
           # @param [Boolean] custom_code_enabled Whether to allow sending verifications with
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
-          # @param [Hash] push Configurations for the Push factors (channel) created under
-          #   this Service. If present, it must be a json string with the following format:
-          #   {"notify_service_sid": "ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "include_date":
-          #   true}. If `include_date` is set to `true`, which is the default, that means that
-          #   the push challenge’s response will include the date created value. If
-          #   `include_date` is set to `false`, then the date created value will not be
-          #   included. See {Challenge}[https://www.twilio.com/docs/verify/api/challenge]
-          #   resource’s details parameter for more info
+          # @param [Boolean] push_include_date Optional configuration for the Push factors.
+          #   If true, include the date in the Challenge's reponse. Otherwise, the date is
+          #   omitted from the response. See
+          #   {Challenge}[https://www.twilio.com/docs/verify/api/challenge] resource’s details
+          #   parameter for more info. Default: true
+          # @param [String] push_apn_credential_sid Optional configuration for the Push
+          #   factors. Set the APN Credential for this service. This will allow to send push
+          #   notifications to iOS devices. See {Credential
+          #   Resource}[https://www.twilio.com/docs/notify/api/credential-resource]
+          # @param [String] push_fcm_credential_sid Optional configuration for the Push
+          #   factors. Set the FCM Credential for this service. This will allow to send push
+          #   notifications to Android devices. See {Credential
+          #   Resource}[https://www.twilio.com/docs/notify/api/credential-resource]
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset)
             context.update(
                 friendly_name: friendly_name,
                 code_length: code_length,
@@ -609,7 +628,9 @@ module Twilio
                 psd2_enabled: psd2_enabled,
                 do_not_share_warning_enabled: do_not_share_warning_enabled,
                 custom_code_enabled: custom_code_enabled,
-                push: push,
+                push_include_date: push_include_date,
+                push_apn_credential_sid: push_apn_credential_sid,
+                push_fcm_credential_sid: push_fcm_credential_sid,
             )
           end
 

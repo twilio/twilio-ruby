@@ -29,9 +29,21 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Accounts::V1::AuthTokenPromotionInstance]
+      def auth_token_promotion
+        self.v1.auth_token_promotion()
+      end
+
+      ##
       # @return [Twilio::REST::Accounts::V1::CredentialInstance]
       def credentials
         self.v1.credentials()
+      end
+
+      ##
+      # @return [Twilio::REST::Accounts::V1::SecondaryAuthTokenInstance]
+      def secondary_auth_token
+        self.v1.secondary_auth_token()
       end
 
       ##

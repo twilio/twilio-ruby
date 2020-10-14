@@ -13,9 +13,7 @@ describe 'Channel' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.preview.trusted_comms.businesses('BXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                   .brands('BZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                   .branded_channels('BWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+      @client.preview.trusted_comms.branded_channels('BWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                    .channels.create(phone_number_sid: 'PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
@@ -23,7 +21,7 @@ describe 'Channel' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://preview.twilio.com/TrustedComms/Businesses/BXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Brands/BZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/BrandedChannels/BWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels',
+        url: 'https://preview.twilio.com/TrustedComms/BrandedChannels/BWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Channels',
         data: values,
     ))).to eq(true)
   end
@@ -39,14 +37,12 @@ describe 'Channel' do
           "branded_channel_sid": "BWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "phone_number_sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "phone_number": "+15000000000",
-          "url": "https://preview.twilio.com/TrustedComms/Businesses/BXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Brands/BZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/BrandedChannels/BWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels"
+          "url": "https://preview.twilio.com/TrustedComms/BrandedChannels/BWaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels"
       }
       ]
     ))
 
-    actual = @client.preview.trusted_comms.businesses('BXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                          .brands('BZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                          .branded_channels('BWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+    actual = @client.preview.trusted_comms.branded_channels('BWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                           .channels.create(phone_number_sid: 'PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)

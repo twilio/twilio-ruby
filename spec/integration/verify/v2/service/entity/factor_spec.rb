@@ -15,15 +15,10 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'push', config: 'config', twilio_sandbox_mode: 'twilio_sandbox_mode')
+                       .factors.create(friendly_name: 'friendly_name', factor_type: 'push', twilio_sandbox_mode: 'twilio_sandbox_mode')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'Binding' => 'binding',
-        'FriendlyName' => 'friendly_name',
-        'FactorType' => 'push',
-        'Config' => 'config',
-    }
+    values = {'FriendlyName' => 'friendly_name', 'FactorType' => 'push', }
     headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -51,7 +46,7 @@ describe 'Factor' do
           "factor_type": "push",
           "config": {
               "sdk_version": "1.0",
-              "app_id": "com.authy.authy",
+              "app_id": "com.example.myapp",
               "notification_platform": "fcm",
               "notification_token": "test_token"
           },
@@ -62,7 +57,7 @@ describe 'Factor' do
 
     actual = @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .entities('identity') \
-                              .factors.create(binding: 'binding', friendly_name: 'friendly_name', factor_type: 'push', config: 'config')
+                              .factors.create(friendly_name: 'friendly_name', factor_type: 'push')
 
     expect(actual).to_not eq(nil)
   end
@@ -133,7 +128,7 @@ describe 'Factor' do
           "factor_type": "push",
           "config": {
               "sdk_version": "1.0",
-              "app_id": "com.authy.authy",
+              "app_id": "com.example.myapp",
               "notification_platform": "fcm",
               "notification_token": "test_token"
           },
@@ -212,7 +207,7 @@ describe 'Factor' do
                   "factor_type": "push",
                   "config": {
                       "sdk_version": "1.0",
-                      "app_id": "com.authy.authy",
+                      "app_id": "com.example.myapp",
                       "notification_platform": "fcm",
                       "notification_token": "test_token"
                   },
@@ -274,7 +269,7 @@ describe 'Factor' do
           "factor_type": "push",
           "config": {
               "sdk_version": "1.0",
-              "app_id": "com.authy.authy",
+              "app_id": "com.example.myapp",
               "notification_platform": "fcm",
               "notification_token": "test_token"
           },

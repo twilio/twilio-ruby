@@ -187,6 +187,14 @@ module Twilio
       end
 
       ##
+      # @param [String] sid The unique SID identifier of the Branded Channel.
+      # @return [Twilio::REST::Preview::TrustedComms::BrandedChannelInstance] if sid was passed.
+      # @return [Twilio::REST::Preview::TrustedComms::BrandedChannelList]
+      def branded_channels(sid=:unset)
+        self.trusted_comms.branded_channels(sid)
+      end
+
+      ##
       # @return [Twilio::REST::Preview::TrustedComms::BrandsInformationInstance]
       def brands_information
         self.trusted_comms.brands_information()

@@ -12,11 +12,11 @@ module Twilio
       class TrustedComms < Version
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class BusinessList < ListResource
+        class BrandedChannelList < ListResource
           ##
-          # Initialize the BusinessList
+          # Initialize the BrandedChannelList
           # @param [Version] version Version that contains the resource
-          # @return [BusinessList] BusinessList
+          # @return [BrandedChannelList] BrandedChannelList
           def initialize(version)
             super(version)
 
@@ -27,19 +27,19 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Preview.TrustedComms.BusinessList>'
+            '#<Twilio.Preview.TrustedComms.BrandedChannelList>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class BusinessPage < Page
+        class BrandedChannelPage < Page
           ##
-          # Initialize the BusinessPage
+          # Initialize the BrandedChannelPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [BusinessPage] BusinessPage
+          # @return [BrandedChannelPage] BrandedChannelPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -48,95 +48,95 @@ module Twilio
           end
 
           ##
-          # Build an instance of BusinessInstance
+          # Build an instance of BrandedChannelInstance
           # @param [Hash] payload Payload response from the API
-          # @return [BusinessInstance] BusinessInstance
+          # @return [BrandedChannelInstance] BrandedChannelInstance
           def get_instance(payload)
-            BusinessInstance.new(@version, payload, )
+            BrandedChannelInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Preview.TrustedComms.BusinessPage>'
+            '<Twilio.Preview.TrustedComms.BrandedChannelPage>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class BusinessContext < InstanceContext
+        class BrandedChannelContext < InstanceContext
           ##
-          # Initialize the BusinessContext
+          # Initialize the BrandedChannelContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34 character string that uniquely identifies this
-          #   Business.
-          # @return [BusinessContext] BusinessContext
+          # @param [String] sid The unique SID identifier of the Branded Channel.
+          # @return [BrandedChannelContext] BrandedChannelContext
           def initialize(version, sid)
             super(version)
 
             # Path Solution
             @solution = {sid: sid, }
-            @uri = "/Businesses/#{@solution[:sid]}"
+            @uri = "/BrandedChannels/#{@solution[:sid]}"
 
             # Dependents
-            @insights = nil
+            @channels = nil
           end
 
           ##
-          # Fetch the BusinessInstance
-          # @return [BusinessInstance] Fetched BusinessInstance
+          # Fetch the BrandedChannelInstance
+          # @return [BrandedChannelInstance] Fetched BrandedChannelInstance
           def fetch
             payload = @version.fetch('GET', @uri)
 
-            BusinessInstance.new(@version, payload, sid: @solution[:sid], )
+            BrandedChannelInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Access the insights
-          # @return [InsightsList]
-          # @return [InsightsContext]
-          def insights
-            unless @insights
-              @insights = InsightsList.new(@version, business_sid: @solution[:sid], )
+          # Access the channels
+          # @return [ChannelList]
+          # @return [ChannelContext]
+          def channels
+            unless @channels
+              @channels = ChannelList.new(@version, branded_channel_sid: @solution[:sid], )
             end
 
-            @insights
+            @channels
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Preview.TrustedComms.BusinessContext #{context}>"
+            "#<Twilio.Preview.TrustedComms.BrandedChannelContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Preview.TrustedComms.BusinessContext #{context}>"
+            "#<Twilio.Preview.TrustedComms.BrandedChannelContext #{context}>"
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class BusinessInstance < InstanceResource
+        class BrandedChannelInstance < InstanceResource
           ##
-          # Initialize the BusinessInstance
+          # Initialize the BrandedChannelInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34 character string that uniquely identifies this
-          #   Business.
-          # @return [BusinessInstance] BusinessInstance
+          # @param [String] sid The unique SID identifier of the Branded Channel.
+          # @return [BrandedChannelInstance] BrandedChannelInstance
           def initialize(version, payload, sid: nil)
             super(version)
 
             # Marshaled Properties
             @properties = {
                 'account_sid' => payload['account_sid'],
+                'business_sid' => payload['business_sid'],
+                'brand_sid' => payload['brand_sid'],
                 'sid' => payload['sid'],
-                'url' => payload['url'],
                 'links' => payload['links'],
+                'url' => payload['url'],
             }
 
             # Context
@@ -147,10 +147,10 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [BusinessContext] BusinessContext for this BusinessInstance
+          # @return [BrandedChannelContext] BrandedChannelContext for this BrandedChannelInstance
           def context
             unless @instance_context
-              @instance_context = BusinessContext.new(@version, @params['sid'], )
+              @instance_context = BrandedChannelContext.new(@version, @params['sid'], )
             end
             @instance_context
           end
@@ -162,15 +162,21 @@ module Twilio
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Business.
-          def sid
-            @properties['sid']
+          # @return [String] Business Sid.
+          def business_sid
+            @properties['business_sid']
           end
 
           ##
-          # @return [String] The URL of this resource.
-          def url
-            @properties['url']
+          # @return [String] Brand Sid.
+          def brand_sid
+            @properties['brand_sid']
+          end
+
+          ##
+          # @return [String] Branded Channel Sid.
+          def sid
+            @properties['sid']
           end
 
           ##
@@ -180,31 +186,37 @@ module Twilio
           end
 
           ##
-          # Fetch the BusinessInstance
-          # @return [BusinessInstance] Fetched BusinessInstance
+          # @return [String] The URL of this resource.
+          def url
+            @properties['url']
+          end
+
+          ##
+          # Fetch the BrandedChannelInstance
+          # @return [BrandedChannelInstance] Fetched BrandedChannelInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Access the insights
-          # @return [insights] insights
-          def insights
-            context.insights
+          # Access the channels
+          # @return [channels] channels
+          def channels
+            context.channels
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Preview.TrustedComms.BusinessInstance #{values}>"
+            "<Twilio.Preview.TrustedComms.BrandedChannelInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Preview.TrustedComms.BusinessInstance #{values}>"
+            "<Twilio.Preview.TrustedComms.BrandedChannelInstance #{values}>"
           end
         end
       end

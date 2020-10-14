@@ -35,26 +35,23 @@ module Twilio
               # @param [String] factor_sid The unique SID identifier of the Factor.
               # @param [Time] expiration_date The future date in which this Challenge will
               #   expire, given in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
-              # @param [String] details Details provided to give context about the Challenge.
-              #   Shown to the end user. It must be a stringified JSON with the following
-              #   structure: {"message": "string", "fields": { { "label": "string", "value":
-              #   "string"}]}. `message` is required. If you send the `fields` property, each
-              #   field has to include `label` and `value` properties. If you had set
-              #   `include_date=true` in the `push` configuration of the
-              #   [service}[https://www.twilio.com/docs/verify/api/service], the response will
-              #   also include the challenge's date created value as an additional field called
-              #   `date`
-              # @param [String] hidden_details Details provided to give context about the
+              # @param [String] details_message Shown to the user when the push notification
+              #   arrives. Required when `factor_type` is `push`
+              # @param [Hash] details_fields A list of objects that describe the Fields included
+              #   in the Challenge. Each object contains the label and value of the field. Used
+              #   when `factor_type` is `push`.
+              # @param [Hash] hidden_details Details provided to give context about the
               #   Challenge. Not shown to the end user. It must be a stringified JSON with only
               #   strings values eg. `{"ip": "172.168.1.234"}`
               # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [ChallengeInstance] Created ChallengeInstance
-              def create(factor_sid: nil, expiration_date: :unset, details: :unset, hidden_details: :unset, twilio_sandbox_mode: :unset)
+              def create(factor_sid: nil, expiration_date: :unset, details_message: :unset, details_fields: :unset, hidden_details: :unset, twilio_sandbox_mode: :unset)
                 data = Twilio::Values.of({
                     'FactorSid' => factor_sid,
                     'ExpirationDate' => Twilio.serialize_iso8601_datetime(expiration_date),
-                    'Details' => details,
-                    'HiddenDetails' => hidden_details,
+                    'Details.Message' => details_message,
+                    'Details.Fields' => Twilio.serialize_list(details_fields) { |e| Twilio.serialize_object(e) },
+                    'HiddenDetails' => Twilio.serialize_object(hidden_details),
                 })
                 headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
@@ -422,13 +419,13 @@ module Twilio
               end
 
               ##
-              # @return [String] Public details provided to contextualize the Challenge
+              # @return [Hash] The details
               def details
                 @properties['details']
               end
 
               ##
-              # @return [String] Hidden details provided to contextualize the Challenge
+              # @return [Hash] Hidden details provided to contextualize the Challenge
               def hidden_details
                 @properties['hidden_details']
               end
