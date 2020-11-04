@@ -14,10 +14,18 @@ describe Twilio::JWT::AccessToken do
       expect(payload['grants'].count).to eq(0)
     end
 
-    it 'should add the proper headers' do
+    it 'should add the proper headers without region' do
       scat = Twilio::JWT::AccessToken.new 'AC123', 'SK123', 'secret'
       _, headers = JWT.decode scat.to_s, 'secret'
       expect(headers['cty']).to eq('twilio-fpa;v=1')
+      expect(headers['twr']).to be_nil
+    end
+
+    it 'should add the proper headers with region' do
+      scat = Twilio::JWT::AccessToken.new 'AC123', 'SK123', 'secret', region: 'foo'
+      _, headers = JWT.decode scat.to_s, 'secret'
+      expect(headers['cty']).to eq('twilio-fpa;v=1')
+      expect(headers['twr']).to eq('foo')
     end
 
     it 'identity should exist in the grants' do

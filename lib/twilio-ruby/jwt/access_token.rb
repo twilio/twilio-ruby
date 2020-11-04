@@ -20,7 +20,8 @@ module Twilio
                     :grants,
                     :nbf,
                     :ttl,
-                    :valid_until
+                    :valid_until,
+                    :region
 
       def initialize(
         account_sid,
@@ -30,7 +31,8 @@ module Twilio
         identity: nil,
         nbf: nil,
         ttl: 3600,
-        valid_until: nil
+        valid_until: nil,
+        region: nil
       )
         super(secret_key: secret,
               issuer: signing_key_sid,
@@ -46,6 +48,7 @@ module Twilio
         @grants = grants
         @ttl = ttl
         @valid_until = valid_until
+        @region = region
       end
 
       def add_grant(grant)
@@ -75,6 +78,8 @@ module Twilio
         headers = {
           cty: 'twilio-fpa;v=1'
         }
+
+        headers[:twr] = region unless region&.nil?
 
         headers
       end
