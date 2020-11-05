@@ -14,8 +14,8 @@ module Twilio
       def initialize(twilio)
         super
 
-        @base_url = 'https://chat.twilio.com'
-        @host = 'chat.twilio.com'
+        @base_url = 'https://ip-messaging.twilio.com'
+        @host = 'ip-messaging.twilio.com'
         @port = 443
 
         # Versions
@@ -36,19 +36,17 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The unique string that we created to identify the Credential
-      #   resource.
-      # @return [Twilio::REST::Chat::V2::CredentialInstance] if sid was passed.
-      # @return [Twilio::REST::Chat::V2::CredentialList]
+      # @param [String] sid The sid
+      # @return [Twilio::REST::Ip_messaging::V2::CredentialInstance] if sid was passed.
+      # @return [Twilio::REST::Ip_messaging::V2::CredentialList]
       def credentials(sid=:unset)
         self.v2.credentials(sid)
       end
 
       ##
-      # @param [String] sid The unique string that we created to identify the Service
-      #   resource.
-      # @return [Twilio::REST::Chat::V2::ServiceInstance] if sid was passed.
-      # @return [Twilio::REST::Chat::V2::ServiceList]
+      # @param [String] sid The sid
+      # @return [Twilio::REST::Ip_messaging::V2::ServiceInstance] if sid was passed.
+      # @return [Twilio::REST::Ip_messaging::V2::ServiceList]
       def services(sid=:unset)
         self.v2.services(sid)
       end

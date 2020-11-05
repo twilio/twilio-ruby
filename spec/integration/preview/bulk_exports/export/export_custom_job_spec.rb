@@ -91,13 +91,15 @@ describe 'ExportCustomJob' do
 
     expect {
       @client.preview.bulk_exports.exports('resource_type') \
-                                  .export_custom_jobs.create()
+                                  .export_custom_jobs.create(start_day: 'start_day', end_day: 'end_day', friendly_name: 'friendly_name')
     }.to raise_exception(Twilio::REST::TwilioError)
 
+    values = {'StartDay' => 'start_day', 'EndDay' => 'end_day', 'FriendlyName' => 'friendly_name', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://preview.twilio.com/BulkExports/Exports/resource_type/Jobs',
+        data: values,
     ))).to eq(true)
   end
 
@@ -120,7 +122,7 @@ describe 'ExportCustomJob' do
     ))
 
     actual = @client.preview.bulk_exports.exports('resource_type') \
-                                         .export_custom_jobs.create()
+                                         .export_custom_jobs.create(start_day: 'start_day', end_day: 'end_day', friendly_name: 'friendly_name')
 
     expect(actual).to_not eq(nil)
   end

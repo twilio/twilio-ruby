@@ -15,9 +15,7 @@ module Twilio
             ##
             # Initialize the ChannelList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The SID of the
-            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Channel
-            #   resource is associated with.
+            # @param [String] service_sid The service_sid
             # @return [ChannelList] ChannelList
             def initialize(version, service_sid: nil)
               super(version)
@@ -29,28 +27,13 @@ module Twilio
 
             ##
             # Create the ChannelInstance
-            # @param [String] friendly_name A descriptive string that you create to describe
-            #   the new resource. It can be up to 64 characters long.
-            # @param [String] unique_name An application-defined string that uniquely
-            #   identifies the resource. It can be used to address the resource in place of the
-            #   Channel resource's `sid` in the URL. This value must be 64 characters or less in
-            #   length and be unique within the Service.
-            # @param [String] attributes A valid JSON string that contains
-            #   application-specific data.
-            # @param [channel.ChannelType] type The visibility of the channel. Can be:
-            #   `public` or `private` and defaults to `public`.
-            # @param [Time] date_created The date, specified in {ISO
-            #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
-            #   as the date it was created. The default value is the current time set by the
-            #   Chat service.  Note that this should only be used in cases where a Channel is
-            #   being recreated from a backup/separate source.
-            # @param [Time] date_updated The date, specified in {ISO
-            #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
-            #   as the date it was last updated. The default value is `null`. Note that this
-            #   parameter should only be used in cases where a Channel is being recreated from a
-            #   backup/separate source  and where a Message was previously updated.
-            # @param [String] created_by The `identity` of the User that created the channel.
-            #   Default is: `system`.
+            # @param [String] friendly_name The friendly_name
+            # @param [String] unique_name The unique_name
+            # @param [String] attributes The attributes
+            # @param [channel.ChannelType] type The type
+            # @param [Time] date_created The date_created
+            # @param [Time] date_updated The date_updated
+            # @param [String] created_by The created_by
             # @param [channel.WebhookEnabledType] x_twilio_webhook_enabled The
             #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ChannelInstance] Created ChannelInstance
@@ -75,8 +58,7 @@ module Twilio
             # Lists ChannelInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [channel.ChannelType] type The visibility of the Channels to read. Can
-            #   be: `public` or `private` and defaults to `public`.
+            # @param [channel.ChannelType] type The type
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -92,8 +74,7 @@ module Twilio
             # Streams ChannelInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [channel.ChannelType] type The visibility of the Channels to read. Can
-            #   be: `public` or `private` and defaults to `public`.
+            # @param [channel.ChannelType] type The type
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -126,8 +107,7 @@ module Twilio
             ##
             # Retrieve a single page of ChannelInstance records from the API.
             # Request is executed immediately.
-            # @param [channel.ChannelType] type The visibility of the Channels to read. Can
-            #   be: `public` or `private` and defaults to `public`.
+            # @param [channel.ChannelType] type The type
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -198,11 +178,8 @@ module Twilio
             ##
             # Initialize the ChannelContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The SID of the
-            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to fetch the
-            #   Channel resource from.
-            # @param [String] sid The SID of the Channel resource to fetch. This value can be
-            #   either the `sid` or the `unique_name` of the Channel resource to fetch.
+            # @param [String] service_sid The service_sid
+            # @param [String] sid The sid
             # @return [ChannelContext] ChannelContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -240,24 +217,12 @@ module Twilio
 
             ##
             # Update the ChannelInstance
-            # @param [String] friendly_name A descriptive string that you create to describe
-            #   the resource. It can be up to 256 characters long.
-            # @param [String] unique_name An application-defined string that uniquely
-            #   identifies the resource. It can be used to address the resource in place of the
-            #   resource's `sid` in the URL. This value must be 256 characters or less in length
-            #   and unique within the Service.
-            # @param [String] attributes A valid JSON string that contains
-            #   application-specific data.
-            # @param [Time] date_created The date, specified in {ISO
-            #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
-            #   as the date it was created. The default value is the current time set by the
-            #   Chat service.  Note that this should only be used in cases where a Channel is
-            #   being recreated from a backup/separate source.
-            # @param [Time] date_updated The date, specified in {ISO
-            #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
-            #   as the date it was last updated.
-            # @param [String] created_by The `identity` of the User that created the channel.
-            #   Default is: `system`.
+            # @param [String] friendly_name The friendly_name
+            # @param [String] unique_name The unique_name
+            # @param [String] attributes The attributes
+            # @param [Time] date_created The date_created
+            # @param [Time] date_updated The date_updated
+            # @param [String] created_by The created_by
             # @param [channel.WebhookEnabledType] x_twilio_webhook_enabled The
             #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ChannelInstance] Updated ChannelInstance
@@ -385,11 +350,8 @@ module Twilio
             # Initialize the ChannelInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The SID of the
-            #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Channel
-            #   resource is associated with.
-            # @param [String] sid The SID of the Channel resource to fetch. This value can be
-            #   either the `sid` or the `unique_name` of the Channel resource to fetch.
+            # @param [String] service_sid The service_sid
+            # @param [String] sid The sid
             # @return [ChannelInstance] ChannelInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -429,85 +391,85 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique string that identifies the resource
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The SID of the Account that created the resource
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The SID of the Service that the resource is associated with
+            # @return [String] The service_sid
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The string that you assigned to describe the resource
+            # @return [String] The friendly_name
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [String] An application-defined string that uniquely identifies the resource
+            # @return [String] The unique_name
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] The JSON string that stores application-specific data
+            # @return [String] The attributes
             def attributes
               @properties['attributes']
             end
 
             ##
-            # @return [channel.ChannelType] The visibility of the channel. Can be: `public` or `private`
+            # @return [channel.ChannelType] The type
             def type
               @properties['type']
             end
 
             ##
-            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The identity of the User that created the channel
+            # @return [String] The created_by
             def created_by
               @properties['created_by']
             end
 
             ##
-            # @return [String] The number of Members in the Channel
+            # @return [String] The members_count
             def members_count
               @properties['members_count']
             end
 
             ##
-            # @return [String] The number of Messages that have been passed in the Channel
+            # @return [String] The messages_count
             def messages_count
               @properties['messages_count']
             end
 
             ##
-            # @return [String] The absolute URL of the Channel resource
+            # @return [String] The url
             def url
               @properties['url']
             end
 
             ##
-            # @return [String] Absolute URLs to access the Members, Messages , Invites and, if it exists, the last Message for the Channel
+            # @return [String] The links
             def links
               @properties['links']
             end
@@ -530,24 +492,12 @@ module Twilio
 
             ##
             # Update the ChannelInstance
-            # @param [String] friendly_name A descriptive string that you create to describe
-            #   the resource. It can be up to 256 characters long.
-            # @param [String] unique_name An application-defined string that uniquely
-            #   identifies the resource. It can be used to address the resource in place of the
-            #   resource's `sid` in the URL. This value must be 256 characters or less in length
-            #   and unique within the Service.
-            # @param [String] attributes A valid JSON string that contains
-            #   application-specific data.
-            # @param [Time] date_created The date, specified in {ISO
-            #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
-            #   as the date it was created. The default value is the current time set by the
-            #   Chat service.  Note that this should only be used in cases where a Channel is
-            #   being recreated from a backup/separate source.
-            # @param [Time] date_updated The date, specified in {ISO
-            #   8601}[https://en.wikipedia.org/wiki/ISO_8601] format, to assign to the resource
-            #   as the date it was last updated.
-            # @param [String] created_by The `identity` of the User that created the channel.
-            #   Default is: `system`.
+            # @param [String] friendly_name The friendly_name
+            # @param [String] unique_name The unique_name
+            # @param [String] attributes The attributes
+            # @param [Time] date_created The date_created
+            # @param [Time] date_updated The date_updated
+            # @param [String] created_by The created_by
             # @param [channel.WebhookEnabledType] x_twilio_webhook_enabled The
             #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ChannelInstance] Updated ChannelInstance

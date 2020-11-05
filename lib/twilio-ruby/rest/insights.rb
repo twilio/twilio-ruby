@@ -37,6 +37,14 @@ module Twilio
       end
 
       ##
+      # @param [String] room_sid The room_sid
+      # @return [Twilio::REST::Insights::V1::RoomInstance] if room_sid was passed.
+      # @return [Twilio::REST::Insights::V1::RoomList]
+      def rooms(room_sid=:unset)
+        self.v1.rooms(room_sid)
+      end
+
+      ##
       # Provide a user friendly representation
       def to_s
         '#<Twilio::REST::Insights>'

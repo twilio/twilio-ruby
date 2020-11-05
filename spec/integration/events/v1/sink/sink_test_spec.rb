@@ -29,7 +29,7 @@ describe 'SinkTest' do
         201,
       %q[
       {
-          "result": "valid"
+          "result": "submitted"
       }
       ]
     ))

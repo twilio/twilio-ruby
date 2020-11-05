@@ -13,7 +13,7 @@ module Twilio
         class ServiceContext < InstanceContext
           class EntityContext < InstanceContext
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class FactorList < ListResource
               ##
               # Initialize the FactorList
@@ -51,9 +51,8 @@ module Twilio
               #   `factor_type` is `push`
               # @param [String] config_sdk_version The Verify Push SDK version used to configure
               #   the factor
-              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [FactorInstance] Created FactorInstance
-              def create(friendly_name: nil, factor_type: nil, binding_alg: :unset, binding_public_key: :unset, config_app_id: :unset, config_notification_platform: :unset, config_notification_token: :unset, config_sdk_version: :unset, twilio_sandbox_mode: :unset)
+              def create(friendly_name: nil, factor_type: nil, binding_alg: :unset, binding_public_key: :unset, config_app_id: :unset, config_notification_platform: :unset, config_notification_token: :unset, config_sdk_version: :unset)
                 data = Twilio::Values.of({
                     'FriendlyName' => friendly_name,
                     'FactorType' => factor_type,
@@ -64,9 +63,8 @@ module Twilio
                     'Config.NotificationToken' => config_notification_token,
                     'Config.SdkVersion' => config_sdk_version,
                 })
-                headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
-                payload = @version.create('POST', @uri, data: data, headers: headers)
+                payload = @version.create('POST', @uri, data: data)
 
                 FactorInstance.new(
                     @version,
@@ -80,7 +78,6 @@ module Twilio
               # Lists FactorInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -88,15 +85,14 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(twilio_sandbox_mode: :unset, limit: nil, page_size: nil)
-                self.stream(twilio_sandbox_mode: twilio_sandbox_mode, limit: limit, page_size: page_size).entries
+              def list(limit: nil, page_size: nil)
+                self.stream(limit: limit, page_size: page_size).entries
               end
 
               ##
               # Streams FactorInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -104,10 +100,10 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(twilio_sandbox_mode: :unset, limit: nil, page_size: nil)
+              def stream(limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(twilio_sandbox_mode: twilio_sandbox_mode, page_size: limits[:page_size], )
+                page = self.page(page_size: limits[:page_size], )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -129,20 +125,18 @@ module Twilio
               ##
               # Retrieve a single page of FactorInstance records from the API.
               # Request is executed immediately.
-              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of FactorInstance
-              def page(twilio_sandbox_mode: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              def page(page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
                 })
-                headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
-                response = @version.page('GET', @uri, params: params, headers: headers)
+                response = @version.page('GET', @uri, params: params)
 
                 FactorPage.new(@version, response, @solution)
               end
@@ -168,7 +162,7 @@ module Twilio
             end
 
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class FactorPage < Page
               ##
               # Initialize the FactorPage
@@ -204,7 +198,7 @@ module Twilio
             end
 
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class FactorContext < InstanceContext
               ##
               # Initialize the FactorContext
@@ -224,22 +218,16 @@ module Twilio
 
               ##
               # Delete the FactorInstance
-              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete(twilio_sandbox_mode: :unset)
-                headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
-
-                 @version.delete('DELETE', @uri, headers: headers)
+              def delete
+                 @version.delete('DELETE', @uri)
               end
 
               ##
               # Fetch the FactorInstance
-              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [FactorInstance] Fetched FactorInstance
-              def fetch(twilio_sandbox_mode: :unset)
-                headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
-
-                payload = @version.fetch('GET', @uri, headers: headers)
+              def fetch
+                payload = @version.fetch('GET', @uri)
 
                 FactorInstance.new(
                     @version,
@@ -260,18 +248,16 @@ module Twilio
               #   `factor_type` is `push`
               # @param [String] config_sdk_version The Verify Push SDK version used to configure
               #   the factor
-              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [FactorInstance] Updated FactorInstance
-              def update(auth_payload: :unset, friendly_name: :unset, config_notification_token: :unset, config_sdk_version: :unset, twilio_sandbox_mode: :unset)
+              def update(auth_payload: :unset, friendly_name: :unset, config_notification_token: :unset, config_sdk_version: :unset)
                 data = Twilio::Values.of({
                     'AuthPayload' => auth_payload,
                     'FriendlyName' => friendly_name,
                     'Config.NotificationToken' => config_notification_token,
                     'Config.SdkVersion' => config_sdk_version,
                 })
-                headers = Twilio::Values.of({'Twilio-Sandbox-Mode' => twilio_sandbox_mode, })
 
-                payload = @version.update('POST', @uri, data: data, headers: headers)
+                payload = @version.update('POST', @uri, data: data)
 
                 FactorInstance.new(
                     @version,
@@ -298,7 +284,7 @@ module Twilio
             end
 
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class FactorInstance < InstanceResource
               ##
               # Initialize the FactorInstance
@@ -411,7 +397,7 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The config
+              # @return [Hash] Configurations for a `factor_type`.
               def config
                 @properties['config']
               end
@@ -424,18 +410,16 @@ module Twilio
 
               ##
               # Delete the FactorInstance
-              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete(twilio_sandbox_mode: :unset)
-                context.delete(twilio_sandbox_mode: twilio_sandbox_mode, )
+              def delete
+                context.delete
               end
 
               ##
               # Fetch the FactorInstance
-              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [FactorInstance] Fetched FactorInstance
-              def fetch(twilio_sandbox_mode: :unset)
-                context.fetch(twilio_sandbox_mode: twilio_sandbox_mode, )
+              def fetch
+                context.fetch
               end
 
               ##
@@ -448,15 +432,13 @@ module Twilio
               #   `factor_type` is `push`
               # @param [String] config_sdk_version The Verify Push SDK version used to configure
               #   the factor
-              # @param [String] twilio_sandbox_mode The Twilio-Sandbox-Mode HTTP request header
               # @return [FactorInstance] Updated FactorInstance
-              def update(auth_payload: :unset, friendly_name: :unset, config_notification_token: :unset, config_sdk_version: :unset, twilio_sandbox_mode: :unset)
+              def update(auth_payload: :unset, friendly_name: :unset, config_notification_token: :unset, config_sdk_version: :unset)
                 context.update(
                     auth_payload: auth_payload,
                     friendly_name: friendly_name,
                     config_notification_token: config_notification_token,
                     config_sdk_version: config_sdk_version,
-                    twilio_sandbox_mode: twilio_sandbox_mode,
                 )
               end
 

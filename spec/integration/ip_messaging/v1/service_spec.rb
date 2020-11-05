@@ -19,7 +19,7 @@ describe 'Service' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -74,7 +74,7 @@ describe 'Service' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
-        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 
@@ -100,7 +100,7 @@ describe 'Service' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://chat.twilio.com/v1/Services',
+        url: 'https://ip-messaging.twilio.com/v1/Services',
         data: values,
     ))).to eq(true)
   end
@@ -156,7 +156,7 @@ describe 'Service' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://chat.twilio.com/v1/Services',
+        url: 'https://ip-messaging.twilio.com/v1/Services',
     ))).to eq(true)
   end
 
@@ -166,13 +166,13 @@ describe 'Service' do
       %q[
       {
           "meta": {
-              "first_page_url": "https://chat.twilio.com/v1/Services?Page=0&PageSize=50",
+              "first_page_url": "https://ip-messaging.twilio.com/v1/Services?Page=0&PageSize=50",
               "key": "services",
               "next_page_url": null,
               "page": 0,
               "page_size": 0,
               "previous_page_url": null,
-              "url": "https://chat.twilio.com/v1/Services"
+              "url": "https://ip-messaging.twilio.com/v1/Services"
           },
           "services": []
       }
@@ -190,13 +190,13 @@ describe 'Service' do
       %q[
       {
           "meta": {
-              "first_page_url": "https://chat.twilio.com/v1/Services?Page=0&PageSize=50",
+              "first_page_url": "https://ip-messaging.twilio.com/v1/Services?Page=0&PageSize=50",
               "key": "services",
               "next_page_url": null,
               "page": 0,
               "page_size": 1,
               "previous_page_url": null,
-              "url": "https://chat.twilio.com/v1/Services"
+              "url": "https://ip-messaging.twilio.com/v1/Services"
           },
           "services": [
               {
@@ -248,7 +248,7 @@ describe 'Service' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
-        url: 'https://chat.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        url: 'https://ip-messaging.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
     ))).to eq(true)
   end
 

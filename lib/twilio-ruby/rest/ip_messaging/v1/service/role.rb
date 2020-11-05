@@ -15,9 +15,7 @@ module Twilio
             ##
             # Initialize the RoleList
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The SID of the
-            #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] the resource is
-            #   associated with.
+            # @param [String] service_sid The service_sid
             # @return [RoleList] RoleList
             def initialize(version, service_sid: nil)
               super(version)
@@ -29,15 +27,9 @@ module Twilio
 
             ##
             # Create the RoleInstance
-            # @param [String] friendly_name A descriptive string that you create to describe
-            #   the new resource. It can be up to 64 characters long.
-            # @param [role.RoleType] type The type of role. Can be: `channel` for
-            #   {Channel}[https://www.twilio.com/docs/chat/api/channels] roles or `deployment`
-            #   for {Service}[https://www.twilio.com/docs/chat/api/services] roles.
-            # @param [String] permission A permission that you grant to the new role. Only one
-            #   permission can be granted per parameter. To assign more than one permission,
-            #   repeat this parameter for each permission value. The values for this parameter
-            #   depend on the role's `type` and are described in the documentation.
+            # @param [String] friendly_name The friendly_name
+            # @param [role.RoleType] type The type
+            # @param [String] permission The permission
             # @return [RoleInstance] Created RoleInstance
             def create(friendly_name: nil, type: nil, permission: nil)
               data = Twilio::Values.of({
@@ -171,11 +163,8 @@ module Twilio
             ##
             # Initialize the RoleContext
             # @param [Version] version Version that contains the resource
-            # @param [String] service_sid The SID of the
-            #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] to fetch the
-            #   resource from.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the Role
-            #   resource to fetch.
+            # @param [String] service_sid The service_sid
+            # @param [String] sid The sid
             # @return [RoleContext] RoleContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -203,10 +192,7 @@ module Twilio
 
             ##
             # Update the RoleInstance
-            # @param [String] permission A permission that you grant to the role. Only one
-            #   permission can be granted per parameter. To assign more than one permission,
-            #   repeat this parameter for each permission value. The values for this parameter
-            #   depend on the role's `type` and are described in the documentation.
+            # @param [String] permission The permission
             # @return [RoleInstance] Updated RoleInstance
             def update(permission: nil)
               data = Twilio::Values.of({'Permission' => Twilio.serialize_list(permission) { |e| e }, })
@@ -236,11 +222,8 @@ module Twilio
             # Initialize the RoleInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] service_sid The SID of the
-            #   {Service}[https://www.twilio.com/docs/api/chat/rest/services] the resource is
-            #   associated with.
-            # @param [String] sid The Twilio-provided string that uniquely identifies the Role
-            #   resource to fetch.
+            # @param [String] service_sid The service_sid
+            # @param [String] sid The sid
             # @return [RoleInstance] RoleInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -275,55 +258,55 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique string that identifies the resource
+            # @return [String] The sid
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [String] The SID of the Account that created the resource
+            # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The SID of the Service that the resource is associated with
+            # @return [String] The service_sid
             def service_sid
               @properties['service_sid']
             end
 
             ##
-            # @return [String] The string that you assigned to describe the resource
+            # @return [String] The friendly_name
             def friendly_name
               @properties['friendly_name']
             end
 
             ##
-            # @return [role.RoleType] The type of role
+            # @return [role.RoleType] The type
             def type
               @properties['type']
             end
 
             ##
-            # @return [String] An array of the permissions the role has been granted
+            # @return [String] The permissions
             def permissions
               @properties['permissions']
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
+            # @return [Time] The date_created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
+            # @return [Time] The date_updated
             def date_updated
               @properties['date_updated']
             end
 
             ##
-            # @return [String] The absolute URL of the Role resource
+            # @return [String] The url
             def url
               @properties['url']
             end
@@ -344,10 +327,7 @@ module Twilio
 
             ##
             # Update the RoleInstance
-            # @param [String] permission A permission that you grant to the role. Only one
-            #   permission can be granted per parameter. To assign more than one permission,
-            #   repeat this parameter for each permission value. The values for this parameter
-            #   depend on the role's `type` and are described in the documentation.
+            # @param [String] permission The permission
             # @return [RoleInstance] Updated RoleInstance
             def update(permission: nil)
               context.update(permission: permission, )

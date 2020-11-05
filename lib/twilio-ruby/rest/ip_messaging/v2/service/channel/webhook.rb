@@ -16,12 +16,8 @@ module Twilio
               ##
               # Initialize the WebhookList
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the
-              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Channel
-              #   Webhook resource is associated with.
-              # @param [String] channel_sid The SID of the
-              #   {Channel}[https://www.twilio.com/docs/chat/channels] the Channel Webhook
-              #   resource belongs to.
+              # @param [String] service_sid The service_sid
+              # @param [String] channel_sid The channel_sid
               # @return [WebhookList] WebhookList
               def initialize(version, service_sid: nil, channel_sid: nil)
                 super(version)
@@ -113,27 +109,13 @@ module Twilio
 
               ##
               # Create the WebhookInstance
-              # @param [webhook.Type] type The type of webhook. Can be: `webhook`, `studio`, or
-              #   `trigger`.
-              # @param [String] configuration_url The URL of the webhook to call using the
-              #   `configuration.method`.
-              # @param [webhook.Method] configuration_method The HTTP method used to call
-              #   `configuration.url`. Can be: `GET` or `POST` and the default is `POST`.
-              # @param [String] configuration_filters The events that cause us to call the
-              #   Channel Webhook. Used when `type` is `webhook`. This parameter takes only one
-              #   event. To specify more than one event, repeat this parameter for each event. For
-              #   the list of possible events, see {Webhook Event
-              #   Triggers}[https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger].
-              # @param [String] configuration_triggers A string that will cause us to call the
-              #   webhook when it is present in a message body. This parameter takes only one
-              #   trigger string. To specify more than one, repeat this parameter for each trigger
-              #   string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
-              # @param [String] configuration_flow_sid The SID of the Studio
-              #   {Flow}[https://www.twilio.com/docs/studio/rest-api/flow] to call when an event
-              #   in `configuration.filters` occurs. Used only when `type` is `studio`.
-              # @param [String] configuration_retry_count The number of times to retry the
-              #   webhook if the first attempt fails. Can be an integer between 0 and 3,
-              #   inclusive, and the default is 0.
+              # @param [webhook.Type] type The type
+              # @param [String] configuration_url The configuration.url
+              # @param [webhook.Method] configuration_method The configuration.method
+              # @param [String] configuration_filters The configuration.filters
+              # @param [String] configuration_triggers The configuration.triggers
+              # @param [String] configuration_flow_sid The configuration.flow_sid
+              # @param [String] configuration_retry_count The configuration.retry_count
               # @return [WebhookInstance] Created WebhookInstance
               def create(type: nil, configuration_url: :unset, configuration_method: :unset, configuration_filters: :unset, configuration_triggers: :unset, configuration_flow_sid: :unset, configuration_retry_count: :unset)
                 data = Twilio::Values.of({
@@ -201,14 +183,9 @@ module Twilio
               ##
               # Initialize the WebhookContext
               # @param [Version] version Version that contains the resource
-              # @param [String] service_sid The SID of the
-              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] with the
-              #   Channel to fetch the Webhook resource from.
-              # @param [String] channel_sid The SID of the
-              #   {Channel}[https://www.twilio.com/docs/chat/channels] the Channel Webhook
-              #   resource to fetch belongs to. This value can be the Channel resource's `sid` or
-              #   `unique_name`.
-              # @param [String] sid The SID of the Channel Webhook resource to fetch.
+              # @param [String] service_sid The service_sid
+              # @param [String] channel_sid The channel_sid
+              # @param [String] sid The sid
               # @return [WebhookContext] WebhookContext
               def initialize(version, service_sid, channel_sid, sid)
                 super(version)
@@ -235,25 +212,12 @@ module Twilio
 
               ##
               # Update the WebhookInstance
-              # @param [String] configuration_url The URL of the webhook to call using the
-              #   `configuration.method`.
-              # @param [webhook.Method] configuration_method The HTTP method used to call
-              #   `configuration.url`. Can be: `GET` or `POST` and the default is `POST`.
-              # @param [String] configuration_filters The events that cause us to call the
-              #   Channel Webhook. Used when `type` is `webhook`. This parameter takes only one
-              #   event. To specify more than one event, repeat this parameter for each event. For
-              #   the list of possible events, see {Webhook Event
-              #   Triggers}[https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger].
-              # @param [String] configuration_triggers A string that will cause us to call the
-              #   webhook when it is present in a message body. This parameter takes only one
-              #   trigger string. To specify more than one, repeat this parameter for each trigger
-              #   string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
-              # @param [String] configuration_flow_sid The SID of the Studio
-              #   {Flow}[https://www.twilio.com/docs/studio/rest-api/flow] to call when an event
-              #   in `configuration.filters` occurs. Used only when `type` = `studio`.
-              # @param [String] configuration_retry_count The number of times to retry the
-              #   webhook if the first attempt fails. Can be an integer between 0 and 3,
-              #   inclusive, and the default is 0.
+              # @param [String] configuration_url The configuration.url
+              # @param [webhook.Method] configuration_method The configuration.method
+              # @param [String] configuration_filters The configuration.filters
+              # @param [String] configuration_triggers The configuration.triggers
+              # @param [String] configuration_flow_sid The configuration.flow_sid
+              # @param [String] configuration_retry_count The configuration.retry_count
               # @return [WebhookInstance] Updated WebhookInstance
               def update(configuration_url: :unset, configuration_method: :unset, configuration_filters: :unset, configuration_triggers: :unset, configuration_flow_sid: :unset, configuration_retry_count: :unset)
                 data = Twilio::Values.of({
@@ -303,13 +267,9 @@ module Twilio
               # Initialize the WebhookInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] service_sid The SID of the
-              #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] the Channel
-              #   Webhook resource is associated with.
-              # @param [String] channel_sid The SID of the
-              #   {Channel}[https://www.twilio.com/docs/chat/channels] the Channel Webhook
-              #   resource belongs to.
-              # @param [String] sid The SID of the Channel Webhook resource to fetch.
+              # @param [String] service_sid The service_sid
+              # @param [String] channel_sid The channel_sid
+              # @param [String] sid The sid
               # @return [WebhookInstance] WebhookInstance
               def initialize(version, payload, service_sid: nil, channel_sid: nil, sid: nil)
                 super(version)
@@ -353,55 +313,55 @@ module Twilio
               end
 
               ##
-              # @return [String] The unique string that identifies the resource
+              # @return [String] The sid
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The SID of the Account that created the resource
+              # @return [String] The account_sid
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] The SID of the Service that the Channel Webhook resource is associated with
+              # @return [String] The service_sid
               def service_sid
                 @properties['service_sid']
               end
 
               ##
-              # @return [String] The SID of the Channel the Channel Webhook resource belongs to
+              # @return [String] The channel_sid
               def channel_sid
                 @properties['channel_sid']
               end
 
               ##
-              # @return [String] The type of webhook
+              # @return [String] The type
               def type
                 @properties['type']
               end
 
               ##
-              # @return [String] The absolute URL of the Channel Webhook resource
+              # @return [String] The url
               def url
                 @properties['url']
               end
 
               ##
-              # @return [Hash] The JSON string that describes the configuration object for the channel webhook
+              # @return [Hash] The configuration
               def configuration
                 @properties['configuration']
               end
 
               ##
-              # @return [Time] The ISO 8601 date and time in GMT when the resource was created
+              # @return [Time] The date_created
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
+              # @return [Time] The date_updated
               def date_updated
                 @properties['date_updated']
               end
@@ -415,25 +375,12 @@ module Twilio
 
               ##
               # Update the WebhookInstance
-              # @param [String] configuration_url The URL of the webhook to call using the
-              #   `configuration.method`.
-              # @param [webhook.Method] configuration_method The HTTP method used to call
-              #   `configuration.url`. Can be: `GET` or `POST` and the default is `POST`.
-              # @param [String] configuration_filters The events that cause us to call the
-              #   Channel Webhook. Used when `type` is `webhook`. This parameter takes only one
-              #   event. To specify more than one event, repeat this parameter for each event. For
-              #   the list of possible events, see {Webhook Event
-              #   Triggers}[https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger].
-              # @param [String] configuration_triggers A string that will cause us to call the
-              #   webhook when it is present in a message body. This parameter takes only one
-              #   trigger string. To specify more than one, repeat this parameter for each trigger
-              #   string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
-              # @param [String] configuration_flow_sid The SID of the Studio
-              #   {Flow}[https://www.twilio.com/docs/studio/rest-api/flow] to call when an event
-              #   in `configuration.filters` occurs. Used only when `type` = `studio`.
-              # @param [String] configuration_retry_count The number of times to retry the
-              #   webhook if the first attempt fails. Can be an integer between 0 and 3,
-              #   inclusive, and the default is 0.
+              # @param [String] configuration_url The configuration.url
+              # @param [webhook.Method] configuration_method The configuration.method
+              # @param [String] configuration_filters The configuration.filters
+              # @param [String] configuration_triggers The configuration.triggers
+              # @param [String] configuration_flow_sid The configuration.flow_sid
+              # @param [String] configuration_retry_count The configuration.retry_count
               # @return [WebhookInstance] Updated WebhookInstance
               def update(configuration_url: :unset, configuration_method: :unset, configuration_filters: :unset, configuration_triggers: :unset, configuration_flow_sid: :unset, configuration_retry_count: :unset)
                 context.update(

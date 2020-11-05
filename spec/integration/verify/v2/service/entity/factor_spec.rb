@@ -15,17 +15,15 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors.create(friendly_name: 'friendly_name', factor_type: 'push', twilio_sandbox_mode: 'twilio_sandbox_mode')
+                       .factors.create(friendly_name: 'friendly_name', factor_type: 'push')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {'FriendlyName' => 'friendly_name', 'FactorType' => 'push', }
-    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors',
         data: values,
-        headers: headers,
     ))).to eq(true)
   end
 
@@ -68,15 +66,13 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete(twilio_sandbox_mode: 'twilio_sandbox_mode')
+                       .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors/YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        headers: headers,
     ))).to eq(true)
   end
 
@@ -99,15 +95,13 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch(twilio_sandbox_mode: 'twilio_sandbox_mode')
+                       .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors/YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        headers: headers,
     ))).to eq(true)
   end
 
@@ -150,15 +144,13 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors.list(twilio_sandbox_mode: 'twilio_sandbox_mode')
+                       .factors.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors',
-        headers: headers,
     ))).to eq(true)
   end
 
@@ -240,15 +232,13 @@ describe 'Factor' do
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .entities('identity') \
-                       .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(twilio_sandbox_mode: 'twilio_sandbox_mode')
+                       .factors('YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    headers = {'Twilio-Sandbox-Mode' => 'twilio_sandbox_mode', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/identity/Factors/YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        headers: headers,
     ))).to eq(true)
   end
 

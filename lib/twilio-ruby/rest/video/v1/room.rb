@@ -244,6 +244,7 @@ module Twilio
             # Dependents
             @recordings = nil
             @participants = nil
+            @recording_rules = nil
           end
 
           ##
@@ -302,6 +303,18 @@ module Twilio
             end
 
             @participants
+          end
+
+          ##
+          # Access the recording_rules
+          # @return [RecordingRulesList]
+          # @return [RecordingRulesContext]
+          def recording_rules
+            unless @recording_rules
+              @recording_rules = RecordingRulesList.new(@version, room_sid: @solution[:sid], )
+            end
+
+            @recording_rules
           end
 
           ##
@@ -503,6 +516,13 @@ module Twilio
           # @return [participants] participants
           def participants
             context.participants
+          end
+
+          ##
+          # Access the recording_rules
+          # @return [recording_rules] recording_rules
+          def recording_rules
+            context.recording_rules
           end
 
           ##

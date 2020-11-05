@@ -20,10 +20,9 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The Twilio-provided string that uniquely identifies the
-        #   Credential resource to fetch.
-        # @return [Twilio::REST::Chat::V1::CredentialContext] if sid was passed.
-        # @return [Twilio::REST::Chat::V1::CredentialList]
+        # @param [String] sid The sid
+        # @return [Twilio::REST::Ip_messaging::V1::CredentialContext] if sid was passed.
+        # @return [Twilio::REST::Ip_messaging::V1::CredentialList]
         def credentials(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'
@@ -35,10 +34,9 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The Twilio-provided string that uniquely identifies the
-        #   Service resource to fetch.
-        # @return [Twilio::REST::Chat::V1::ServiceContext] if sid was passed.
-        # @return [Twilio::REST::Chat::V1::ServiceList]
+        # @param [String] sid The sid
+        # @return [Twilio::REST::Ip_messaging::V1::ServiceContext] if sid was passed.
+        # @return [Twilio::REST::Ip_messaging::V1::ServiceList]
         def services(sid=:unset)
           if sid.nil?
             raise ArgumentError, 'sid cannot be nil'

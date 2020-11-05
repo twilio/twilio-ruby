@@ -31,10 +31,6 @@ module Twilio
             # Lists ExportCustomJobInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] next_token The token for the next page of job results, and may
-            #   be null if there are no more pages
-            # @param [String] previous_token The token for the previous page of results, and
-            #   may be null if this is the first page
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -42,23 +38,14 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(next_token: :unset, previous_token: :unset, limit: nil, page_size: nil)
-              self.stream(
-                  next_token: next_token,
-                  previous_token: previous_token,
-                  limit: limit,
-                  page_size: page_size
-              ).entries
+            def list(limit: nil, page_size: nil)
+              self.stream(limit: limit, page_size: page_size).entries
             end
 
             ##
             # Streams ExportCustomJobInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] next_token The token for the next page of job results, and may
-            #   be null if there are no more pages
-            # @param [String] previous_token The token for the previous page of results, and
-            #   may be null if this is the first page
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -66,14 +53,10 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(next_token: :unset, previous_token: :unset, limit: nil, page_size: nil)
+            def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(
-                  next_token: next_token,
-                  previous_token: previous_token,
-                  page_size: limits[:page_size],
-              )
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -95,18 +78,12 @@ module Twilio
             ##
             # Retrieve a single page of ExportCustomJobInstance records from the API.
             # Request is executed immediately.
-            # @param [String] next_token The token for the next page of job results, and may
-            #   be null if there are no more pages
-            # @param [String] previous_token The token for the previous page of results, and
-            #   may be null if this is the first page
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of ExportCustomJobInstance
-            def page(next_token: :unset, previous_token: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
-                  'NextToken' => next_token,
-                  'PreviousToken' => previous_token,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
@@ -132,18 +109,26 @@ module Twilio
 
             ##
             # Create the ExportCustomJobInstance
-            # @param [String] friendly_name The friendly_name
-            # @param [String] start_day The start_day
-            # @param [String] end_day The end_day
-            # @param [String] webhook_url The webhook_url
-            # @param [String] webhook_method The webhook_method
-            # @param [String] email The email
+            # @param [String] start_day The start day for the custom export specified as a
+            #   string in the format of yyyy-mm-dd
+            # @param [String] end_day The end day for the custom export specified as a string
+            #   in the format of yyyy-mm-dd. End day is inclusive and must be 2 days earlier
+            #   than the current UTC day.
+            # @param [String] friendly_name The friendly name specified when creating the job
+            # @param [String] webhook_url The optional webhook url called on completion of the
+            #   job. If this is supplied, `WebhookMethod` must also be supplied. If you set
+            #   neither webhook nor email, you will have to check your job's status manually.
+            # @param [String] webhook_method This is the method used to call the webhook on
+            #   completion of the job. If this is supplied, `WebhookUrl` must also be supplied.
+            # @param [String] email The optional email to send the completion notification to.
+            #   You can set both webhook, and email, or one or the other. If you set neither,
+            #   the job will run but you will have to query to determine your job's status.
             # @return [ExportCustomJobInstance] Created ExportCustomJobInstance
-            def create(friendly_name: :unset, start_day: :unset, end_day: :unset, webhook_url: :unset, webhook_method: :unset, email: :unset)
+            def create(start_day: nil, end_day: nil, friendly_name: nil, webhook_url: :unset, webhook_method: :unset, email: :unset)
               data = Twilio::Values.of({
-                  'FriendlyName' => friendly_name,
                   'StartDay' => start_day,
                   'EndDay' => end_day,
+                  'FriendlyName' => friendly_name,
                   'WebhookUrl' => webhook_url,
                   'WebhookMethod' => webhook_method,
                   'Email' => email,
@@ -231,13 +216,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The start time for the export specified when creating the job
+            # @return [String] The start day for the custom export specified as a string in the format of yyyy-MM-dd
             def start_day
               @properties['start_day']
             end
 
             ##
-            # @return [String] The end time for the export specified when creating the job
+            # @return [String] The end day for the custom export specified as a string in the format of yyyy-MM-dd. This will be the last day exported. For instance, to export a single day, choose the same day for start and end day. To export the first 4 days of July, you would set the start date to 2020-07-01 and the end date to 2020-07-04. The end date must be the UTC day before yesterday.
             def end_day
               @properties['end_day']
             end
@@ -261,13 +246,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The job_sid returned when the export was created
+            # @return [String] The unique job_sid returned when the custom export was created. This can be used to look up the status of the job.
             def job_sid
               @properties['job_sid']
             end
 
             ##
-            # @return [Hash] The details
+            # @return [Hash] The details of a job state which is an object that contains a status string, a day count integer, and list of days in the job
             def details
               @properties['details']
             end

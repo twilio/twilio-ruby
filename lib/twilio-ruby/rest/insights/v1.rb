@@ -16,6 +16,7 @@ module Twilio
           super
           @version = 'v1'
           @calls = nil
+          @rooms = nil
         end
 
         ##
@@ -29,6 +30,20 @@ module Twilio
             @calls ||= CallList.new self
           else
             CallContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] room_sid The room_sid
+        # @return [Twilio::REST::Insights::V1::RoomContext] if room_sid was passed.
+        # @return [Twilio::REST::Insights::V1::RoomList]
+        def rooms(room_sid=:unset)
+          if room_sid.nil?
+            raise ArgumentError, 'room_sid cannot be nil'
+          elsif room_sid == :unset
+            @rooms ||= RoomList.new self
+          else
+            RoomContext.new(self, room_sid)
           end
         end
 
