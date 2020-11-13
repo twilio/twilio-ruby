@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'logger'
 
 describe Twilio::REST::ObsoleteClient do
   it 'raise an exception' do
@@ -57,6 +58,7 @@ describe Twilio::REST::Client do
         config.http_client = 'someClient'
         config.region = 'someRegion'
         config.edge = 'someEdge'
+        config.log_level = 'someLogLevel'
       end
     end
 
@@ -67,16 +69,18 @@ describe Twilio::REST::Client do
       expect(@client.http_client).to eq('someClient')
       expect(@client.region).to eq('someRegion')
       expect(@client.edge).to eq('someEdge')
+      expect(@client.log_level).to eq('someLogLevel')
     end
 
     it 'uses the arguments over global configuration' do
-      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'myRegion', 'myClient')
+      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'myRegion', 'myClient', 'debug')
       @client.edge = 'myEdge'
       expect(@client.account_sid).to eq('myUser')
       expect(@client.auth_token).to eq('myPassword')
       expect(@client.http_client).to eq('myClient')
       expect(@client.region).to eq('myRegion')
       expect(@client.edge).to eq('myEdge')
+      expect(@client.log_level).to eq('debug')
     end
 
     class MyVersion < Twilio::REST::Version
@@ -139,6 +143,30 @@ describe Twilio::REST::Client do
         expect(error.error_message).to eq('Bad request')
         expect(error.more_info).to eq('https://www.twilio.com/docs/errors/20001')
       }
+    end
+  end
+
+  context 'logging' do
+    before do
+      ENV['TWILIO_LOG_LEVEL'] = 'debug'
+    end
+    it 'logs the details' do
+      @client.log_level = 'debug'
+      @holodeck.mock Twilio::Response.new(200, {})
+      expect {
+        @client.request('host', 'port', 'GET', 'http://foobar.com')
+      }.to output(/Host:foobar.com/).to_stdout_from_any_process
+    end
+
+    it 'uses the arguments over environment variable' do
+      @client = Twilio::REST::Client.new
+      @client.log_level = 'nodebug'
+      expect(@client.log_level).to eq('nodebug')
+    end
+
+    it 'uses the environment variable when the log_level is not available' do
+      @client = Twilio::REST::Client.new
+      expect(@client.log_level).to eq('debug')
     end
   end
 
