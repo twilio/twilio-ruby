@@ -3,7 +3,7 @@
 module Twilio
   module Util
     class Configuration
-      attr_accessor :account_sid, :auth_token, :http_client, :region, :edge, :log_level
+      attr_accessor :account_sid, :auth_token, :http_client, :region, :edge, :logger
 
       def account_sid=(value)
         @account_sid = value
@@ -25,8 +25,8 @@ module Twilio
         @edge = value
       end
 
-      def log_level=(value)
-        @log_level = value
+      def logger=(value)
+        @logger = value
       end
     end
   end

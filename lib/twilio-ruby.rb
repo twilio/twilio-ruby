@@ -38,7 +38,7 @@ module Twilio
   autoload :JWT, File.join(File.dirname(__FILE__), 'twilio-ruby', 'jwt', 'jwt.rb')
   autoload :TwiML, File.join(File.dirname(__FILE__), 'twilio-ruby', 'twiml', 'twiml.rb')
 
-  def_delegators :configuration, :account_sid, :auth_token, :http_client, :region, :edge, :log_level
+  def_delegators :configuration, :account_sid, :auth_token, :http_client, :region, :edge, :logger
 
   ##
   # Pre-configure with account SID and auth token so that you don't need to

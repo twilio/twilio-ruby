@@ -58,7 +58,7 @@ describe Twilio::REST::Client do
         config.http_client = 'someClient'
         config.region = 'someRegion'
         config.edge = 'someEdge'
-        config.log_level = 'someLogLevel'
+        config.logger = 'someLogger'
       end
     end
 
@@ -69,18 +69,18 @@ describe Twilio::REST::Client do
       expect(@client.http_client).to eq('someClient')
       expect(@client.region).to eq('someRegion')
       expect(@client.edge).to eq('someEdge')
-      expect(@client.log_level).to eq('someLogLevel')
+      expect(@client.logger).to eq('someLogger')
     end
 
     it 'uses the arguments over global configuration' do
-      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'myRegion', 'myClient', 'debug')
+      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'myRegion', 'myClient', 'myLogger')
       @client.edge = 'myEdge'
       expect(@client.account_sid).to eq('myUser')
       expect(@client.auth_token).to eq('myPassword')
       expect(@client.http_client).to eq('myClient')
       expect(@client.region).to eq('myRegion')
       expect(@client.edge).to eq('myEdge')
-      expect(@client.log_level).to eq('debug')
+      expect(@client.logger).to eq('myLogger')
     end
 
     class MyVersion < Twilio::REST::Version
@@ -108,6 +108,8 @@ describe Twilio::REST::Client do
         config.http_client = 'someClient'
         config.region = nil
         config.edge = nil
+        config.logger = nil
+        @client.logger = nil
       end
     end
 
@@ -147,26 +149,19 @@ describe Twilio::REST::Client do
   end
 
   context 'logging' do
-    before do
-      ENV['TWILIO_LOG_LEVEL'] = 'debug'
-    end
-    it 'logs the details' do
-      @client.log_level = 'debug'
+    it 'logs the call details' do
+      @client.logger = Logger.new(STDOUT)
       @holodeck.mock Twilio::Response.new(200, {})
       expect {
         @client.request('host', 'port', 'GET', 'http://foobar.com')
       }.to output(/Host:foobar.com/).to_stdout_from_any_process
     end
 
-    it 'uses the arguments over environment variable' do
-      @client = Twilio::REST::Client.new
-      @client.log_level = 'nodebug'
-      expect(@client.log_level).to eq('nodebug')
-    end
-
-    it 'uses the environment variable when the log_level is not available' do
-      @client = Twilio::REST::Client.new
-      expect(@client.log_level).to eq('debug')
+    it 'does not log when the logger instance is not passed' do
+      @holodeck.mock Twilio::Response.new(200, {})
+      expect {
+        @client.request('host', 'port', 'GET', 'http://foobar.com')
+      }.to_not output(/Host:foobar.com/).to_stdout_from_any_process
     end
   end
 

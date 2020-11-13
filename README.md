@@ -83,11 +83,18 @@ To take advantage of Twilio's [Global Infrastructure](https://www.twilio.com/doc
 
 ### Enable Debug logging
 
-There are two ways to enable debug logging in the default HTTP client. You can create an environment variable called `TWILIO_LOG_LEVEL` and set it to `debug` or you can set the log_level variable on the client as debug:
+In order to enable debug logging, pass in a 'logger' instance to the client with the level set to 'DEBUG'
 
 ```ruby
 @client = Twilio::REST::Client.new account_sid, auth_token
-@client.log_level = 'debug'
+myLogger = Logger.new(STDOUT)
+myLogger.level = Logger::DEBUG
+@client.logger = myLogger
+
+@client = Twilio::REST::Client.new account_sid, auth_token
+myLogger = Logger.new('my_log.log')
+myLogger.level = Logger::DEBUG
+@client.logger = myLogger
 ```
 
 This will result in the `hostname` transforming from `api.twilio.com` to `api.sydney.au1.twilio.com`.
