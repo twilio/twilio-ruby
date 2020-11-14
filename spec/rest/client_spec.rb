@@ -109,8 +109,8 @@ describe Twilio::REST::Client do
         config.region = nil
         config.edge = nil
         config.logger = nil
-        @client.logger = nil
       end
+      @client.logger = nil
     end
 
     it 'successfully validates the working SSL certificate' do
