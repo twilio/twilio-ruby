@@ -101,7 +101,7 @@ describe Twilio::REST::Client do
   end
 
   context 'validation' do
-    before do
+    before :all do
       Twilio.configure do |config|
         config.account_sid = 'someSid'
         config.auth_token = 'someToken'
@@ -110,7 +110,6 @@ describe Twilio::REST::Client do
         config.edge = nil
         config.logger = nil
       end
-      @client.logger = nil
     end
 
     it 'successfully validates the working SSL certificate' do
