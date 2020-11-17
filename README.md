@@ -83,7 +83,7 @@ To take advantage of Twilio's [Global Infrastructure](https://www.twilio.com/doc
 
 ### Enable Debug logging
 
-In order to enable debug logging, pass in a 'logger' instance to the client with the level set to 'DEBUG'
+In order to enable debug logging, pass in a 'logger' instance to the client with the level set to at least 'DEBUG'
 
 ```ruby
 @client = Twilio::REST::Client.new account_sid, auth_token
