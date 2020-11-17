@@ -81,6 +81,22 @@ To take advantage of Twilio's [Global Infrastructure](https://www.twilio.com/doc
 @client.edge = 'sydney'
 ```
 
+### Enable Debug logging
+
+In order to enable debug logging, pass in a 'logger' instance to the client with the level set to at least 'DEBUG'
+
+```ruby
+@client = Twilio::REST::Client.new account_sid, auth_token
+myLogger = Logger.new(STDOUT)
+myLogger.level = Logger::DEBUG
+@client.logger = myLogger
+
+@client = Twilio::REST::Client.new account_sid, auth_token
+myLogger = Logger.new('my_log.log')
+myLogger.level = Logger::DEBUG
+@client.logger = myLogger
+```
+
 This will result in the `hostname` transforming from `api.twilio.com` to `api.sydney.au1.twilio.com`.
 
 ### Make a Call

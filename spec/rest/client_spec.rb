@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'logger'
 
 describe Twilio::REST::ObsoleteClient do
   it 'raise an exception' do
@@ -57,6 +58,7 @@ describe Twilio::REST::Client do
         config.http_client = 'someClient'
         config.region = 'someRegion'
         config.edge = 'someEdge'
+        config.logger = 'someLogger'
       end
     end
 
@@ -67,16 +69,18 @@ describe Twilio::REST::Client do
       expect(@client.http_client).to eq('someClient')
       expect(@client.region).to eq('someRegion')
       expect(@client.edge).to eq('someEdge')
+      expect(@client.logger).to eq('someLogger')
     end
 
     it 'uses the arguments over global configuration' do
-      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'myRegion', 'myClient')
+      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'myRegion', 'myClient', 'myLogger')
       @client.edge = 'myEdge'
       expect(@client.account_sid).to eq('myUser')
       expect(@client.auth_token).to eq('myPassword')
       expect(@client.http_client).to eq('myClient')
       expect(@client.region).to eq('myRegion')
       expect(@client.edge).to eq('myEdge')
+      expect(@client.logger).to eq('myLogger')
     end
 
     class MyVersion < Twilio::REST::Version
@@ -97,13 +101,14 @@ describe Twilio::REST::Client do
   end
 
   context 'validation' do
-    before do
+    before :all do
       Twilio.configure do |config|
         config.account_sid = 'someSid'
         config.auth_token = 'someToken'
         config.http_client = 'someClient'
         config.region = nil
         config.edge = nil
+        config.logger = nil
       end
     end
 
@@ -139,6 +144,23 @@ describe Twilio::REST::Client do
         expect(error.error_message).to eq('Bad request')
         expect(error.more_info).to eq('https://www.twilio.com/docs/errors/20001')
       }
+    end
+  end
+
+  context 'logging' do
+    it 'logs the call details' do
+      @client.logger = Logger.new(STDOUT)
+      @holodeck.mock Twilio::Response.new(200, {})
+      expect {
+        @client.request('host', 'port', 'GET', 'http://foobar.com')
+      }.to output(/Host:foobar.com/).to_stdout_from_any_process
+    end
+
+    it 'does not log when the logger instance is not passed' do
+      @holodeck.mock Twilio::Response.new(200, {})
+      expect {
+        @client.request('host', 'port', 'GET', 'http://foobar.com')
+      }.to_not output(/Host:foobar.com/).to_stdout_from_any_process
     end
   end
 
