@@ -15,8 +15,8 @@ module Twilio
             ##
             # Initialize the TaskChannelList
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The SID of the Workspace that contains the
-            #   TaskChannel.
+            # @param [String] workspace_sid The SID of the Workspace that contains the Task
+            #   Channel.
             # @return [TaskChannelList] TaskChannelList
             def initialize(version, workspace_sid: nil)
               super(version)
@@ -109,10 +109,10 @@ module Twilio
             ##
             # Create the TaskChannelInstance
             # @param [String] friendly_name A descriptive string that you create to describe
-            #   the TaskChannel. It can be up to 64 characters long.
+            #   the Task Channel. It can be up to 64 characters long.
             # @param [String] unique_name An application-defined string that uniquely
-            #   identifies the TaskChannel, such as `voice` or `sms`.
-            # @param [Boolean] channel_optimized_routing Whether the TaskChannel should
+            #   identifies the Task Channel, such as `voice` or `sms`.
+            # @param [Boolean] channel_optimized_routing Whether the Task Channel should
             #   prioritize Workers that have been idle. If `true`, Workers that have been idle
             #   the longest are prioritized.
             # @return [TaskChannelInstance] Created TaskChannelInstance
@@ -168,9 +168,9 @@ module Twilio
             ##
             # Initialize the TaskChannelContext
             # @param [Version] version Version that contains the resource
-            # @param [String] workspace_sid The SID of the Workspace with the TaskChannel to
+            # @param [String] workspace_sid The SID of the Workspace with the Task Channel to
             #   fetch.
-            # @param [String] sid The SID of the TaskChannel resource to fetch.
+            # @param [String] sid The SID of the Task Channel resource to fetch.
             # @return [TaskChannelContext] TaskChannelContext
             def initialize(version, workspace_sid, sid)
               super(version)
@@ -197,7 +197,7 @@ module Twilio
             ##
             # Update the TaskChannelInstance
             # @param [String] friendly_name A descriptive string that you create to describe
-            #   the TaskChannel. It can be up to 64 characters long.
+            #   the Task Channel. It can be up to 64 characters long.
             # @param [Boolean] channel_optimized_routing Whether the TaskChannel should
             #   prioritize Workers that have been idle. If `true`, Workers that have been idle
             #   the longest are prioritized.
@@ -245,9 +245,9 @@ module Twilio
             # Initialize the TaskChannelInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] workspace_sid The SID of the Workspace that contains the
-            #   TaskChannel.
-            # @param [String] sid The SID of the TaskChannel resource to fetch.
+            # @param [String] workspace_sid The SID of the Workspace that contains the Task
+            #   Channel.
+            # @param [String] sid The SID of the Task Channel resource to fetch.
             # @return [TaskChannelInstance] TaskChannelInstance
             def initialize(version, payload, workspace_sid: nil, sid: nil)
               super(version)
@@ -313,25 +313,25 @@ module Twilio
             end
 
             ##
-            # @return [String] An application-defined string that uniquely identifies the TaskChannel
+            # @return [String] An application-defined string that uniquely identifies the Task Channel
             def unique_name
               @properties['unique_name']
             end
 
             ##
-            # @return [String] The SID of the Workspace that contains the TaskChannel
+            # @return [String] The SID of the Workspace that contains the Task Channel
             def workspace_sid
               @properties['workspace_sid']
             end
 
             ##
-            # @return [Boolean] Whether the TaskChannel will prioritize Workers that have been idle
+            # @return [Boolean] Whether the Task Channel will prioritize Workers that have been idle
             def channel_optimized_routing
               @properties['channel_optimized_routing']
             end
 
             ##
-            # @return [String] The absolute URL of the TaskChannel resource
+            # @return [String] The absolute URL of the Task Channel resource
             def url
               @properties['url']
             end
@@ -352,7 +352,7 @@ module Twilio
             ##
             # Update the TaskChannelInstance
             # @param [String] friendly_name A descriptive string that you create to describe
-            #   the TaskChannel. It can be up to 64 characters long.
+            #   the Task Channel. It can be up to 64 characters long.
             # @param [Boolean] channel_optimized_routing Whether the TaskChannel should
             #   prioritize Workers that have been idle. If `true`, Workers that have been idle
             #   the longest are prioritized.

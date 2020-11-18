@@ -33,8 +33,10 @@ module Twilio
               ##
               # Create the ChallengeInstance
               # @param [String] factor_sid The unique SID identifier of the Factor.
-              # @param [Time] expiration_date The future date in which this Challenge will
-              #   expire, given in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format.
+              # @param [Time] expiration_date The date-time when this Challenge expires, given
+              #   in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format. The default value
+              #   is five (5) minutes after Challenge creation. The max value is sixty (60)
+              #   minutes after creation.
               # @param [String] details_message Shown to the user when the push notification
               #   arrives. Required when `factor_type` is `push`
               # @param [Hash] details_fields A list of objects that describe the Fields included
@@ -379,7 +381,7 @@ module Twilio
               end
 
               ##
-              # @return [Time] The date this Challenge is expired
+              # @return [Time] The date-time when this Challenge expires
               def expiration_date
                 @properties['expiration_date']
               end

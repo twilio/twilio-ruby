@@ -67,8 +67,8 @@ module Twilio
         auth ||= @auth
 
         headers['User-Agent'] = "twilio-ruby/#{Twilio::VERSION}" +
-            " (#{RUBY_ENGINE}/#{RUBY_PLATFORM}" +
-            " #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL})"
+                                " (#{RUBY_ENGINE}/#{RUBY_PLATFORM}" +
+                                " #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL})"
         headers['Accept-Charset'] = 'utf-8'
 
         if method == 'POST' && !headers['Content-Type']
@@ -99,15 +99,15 @@ module Twilio
         end
 
         response = @http_client.request(
-            host,
-            port,
-            method,
-            uri,
-            params,
-            data,
-            headers,
-            auth,
-            timeout
+          host,
+          port,
+          method,
+          uri,
+          params,
+          data,
+          headers,
+          auth,
+          timeout
         )
 
         if @logger

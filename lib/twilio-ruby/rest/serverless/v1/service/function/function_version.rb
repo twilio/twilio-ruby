@@ -13,7 +13,7 @@ module Twilio
         class ServiceContext < InstanceContext
           class FunctionContext < InstanceContext
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class FunctionVersionList < ListResource
               ##
               # Initialize the FunctionVersionList
@@ -119,7 +119,7 @@ module Twilio
             end
 
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class FunctionVersionPage < Page
               ##
               # Initialize the FunctionVersionPage
@@ -155,7 +155,7 @@ module Twilio
             end
 
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class FunctionVersionContext < InstanceContext
               ##
               # Initialize the FunctionVersionContext
@@ -221,7 +221,7 @@ module Twilio
             end
 
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class FunctionVersionInstance < InstanceResource
               ##
               # Initialize the FunctionVersionInstance

@@ -12,7 +12,7 @@ module Twilio
       class V1 < Version
         class ServiceContext < InstanceContext
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class FunctionList < ListResource
             ##
             # Initialize the FunctionList
@@ -129,7 +129,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class FunctionPage < Page
             ##
             # Initialize the FunctionPage
@@ -160,7 +160,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class FunctionContext < InstanceContext
             ##
             # Initialize the FunctionContext
@@ -247,7 +247,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class FunctionInstance < InstanceResource
             ##
             # Initialize the FunctionInstance

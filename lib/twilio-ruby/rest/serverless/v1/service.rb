@@ -11,7 +11,7 @@ module Twilio
     class Serverless < Domain
       class V1 < Version
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ServiceList < ListResource
           ##
           # Initialize the ServiceList
@@ -114,7 +114,7 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the Service resource. It can be a maximum of 255 characters.
           # @param [Boolean] include_credentials Whether to inject Account credentials into
-          #   a function invocation context. The default value is `false`.
+          #   a function invocation context. The default value is `true`.
           # @param [Boolean] ui_editable Whether the Service's properties and subresources
           #   can be edited via the UI. The default value is `false`.
           # @return [ServiceInstance] Created ServiceInstance
@@ -139,7 +139,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ServicePage < Page
           ##
           # Initialize the ServicePage
@@ -170,7 +170,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ServiceContext < InstanceContext
           ##
           # Initialize the ServiceContext
@@ -316,7 +316,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ServiceInstance < InstanceResource
           ##
           # Initialize the ServiceInstance

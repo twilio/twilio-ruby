@@ -96,6 +96,55 @@ describe 'Subscription' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives read_results_filtered_by_sink_sid responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "subscriptions": [
+              {
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "date_created": "2015-07-30T20:00:00Z",
+                  "date_updated": "2015-07-30T20:01:33Z",
+                  "sid": "DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "sink_sid": "DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "description": "A subscription",
+                  "url": "https://events.twilio.com/v1/Subscriptions/DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "links": {
+                      "subscribed_events": "https://events.twilio.com/v1/Subscriptions/DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SubscribedEvents"
+                  }
+              },
+              {
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "date_created": "2015-07-30T20:00:00Z",
+                  "date_updated": "2015-07-30T20:01:33Z",
+                  "sid": "DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                  "sink_sid": "DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "description": "Another subscription",
+                  "url": "https://events.twilio.com/v1/Subscriptions/DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                  "links": {
+                      "subscribed_events": "https://events.twilio.com/v1/Subscriptions/DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab/SubscribedEvents"
+                  }
+              }
+          ],
+          "meta": {
+              "page": 0,
+              "page_size": 10,
+              "first_page_url": "https://events.twilio.com/v1/Subscriptions?SinkSid=DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&PageSize=10&Page=0",
+              "previous_page_url": null,
+              "url": "https://events.twilio.com/v1/Subscriptions?SinkSid=DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&PageSize=10&Page=0",
+              "next_page_url": null,
+              "key": "subscriptions"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.events.v1.subscriptions.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can fetch" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

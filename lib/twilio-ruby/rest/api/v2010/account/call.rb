@@ -426,6 +426,7 @@ module Twilio
               @recordings = nil
               @notifications = nil
               @feedback = nil
+              @events = nil
               @payments = nil
             end
 
@@ -544,6 +545,18 @@ module Twilio
             # @return [FeedbackContext]
             def feedback
               FeedbackContext.new(@version, @solution[:account_sid], @solution[:sid], )
+            end
+
+            ##
+            # Access the events
+            # @return [EventList]
+            # @return [EventContext]
+            def events
+              unless @events
+                @events = EventList.new(@version, account_sid: @solution[:account_sid], call_sid: @solution[:sid], )
+              end
+
+              @events
             end
 
             ##
@@ -883,6 +896,13 @@ module Twilio
             # @return [feedback] feedback
             def feedback
               context.feedback
+            end
+
+            ##
+            # Access the events
+            # @return [events] events
+            def events
+              context.events
             end
 
             ##

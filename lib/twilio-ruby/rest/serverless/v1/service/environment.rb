@@ -12,7 +12,7 @@ module Twilio
       class V1 < Version
         class ServiceContext < InstanceContext
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class EnvironmentList < ListResource
             ##
             # Initialize the EnvironmentList
@@ -132,7 +132,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class EnvironmentPage < Page
             ##
             # Initialize the EnvironmentPage
@@ -163,7 +163,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class EnvironmentContext < InstanceContext
             ##
             # Initialize the EnvironmentContext
@@ -288,7 +288,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class EnvironmentInstance < InstanceResource
             ##
             # Initialize the EnvironmentInstance

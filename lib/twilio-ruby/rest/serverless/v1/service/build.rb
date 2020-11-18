@@ -12,7 +12,7 @@ module Twilio
       class V1 < Version
         class ServiceContext < InstanceContext
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class BuildList < ListResource
             ##
             # Initialize the BuildList
@@ -138,7 +138,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class BuildPage < Page
             ##
             # Initialize the BuildPage
@@ -169,7 +169,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class BuildContext < InstanceContext
             ##
             # Initialize the BuildContext
@@ -229,7 +229,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class BuildInstance < InstanceResource
             ##
             # Initialize the BuildInstance

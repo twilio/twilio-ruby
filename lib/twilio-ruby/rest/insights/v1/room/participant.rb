@@ -211,7 +211,6 @@ module Twilio
                   'join_time' => Twilio.deserialize_iso8601_datetime(payload['join_time']),
                   'leave_time' => Twilio.deserialize_iso8601_datetime(payload['leave_time']),
                   'duration_sec' => payload['duration_sec'].to_i,
-                  'call_sid' => payload['call_sid'],
                   'account_sid' => payload['account_sid'],
                   'room_sid' => payload['room_sid'],
                   'status' => payload['status'],
@@ -280,12 +279,6 @@ module Twilio
             end
 
             ##
-            # @return [String] The call_sid
-            def call_sid
-              @properties['call_sid']
-            end
-
-            ##
             # @return [String] The account_sid
             def account_sid
               @properties['account_sid']
@@ -310,7 +303,7 @@ module Twilio
             end
 
             ##
-            # @return [participant.EndReason] The end_reason
+            # @return [String] The end_reason
             def end_reason
               @properties['end_reason']
             end

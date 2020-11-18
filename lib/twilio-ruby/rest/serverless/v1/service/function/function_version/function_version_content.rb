@@ -14,7 +14,7 @@ module Twilio
           class FunctionContext < InstanceContext
             class FunctionVersionContext < InstanceContext
               ##
-              # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+              # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
               class FunctionVersionContentList < ListResource
                 ##
                 # Initialize the FunctionVersionContentList
@@ -41,7 +41,7 @@ module Twilio
               end
 
               ##
-              # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+              # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
               class FunctionVersionContentPage < Page
                 ##
                 # Initialize the FunctionVersionContentPage
@@ -78,7 +78,7 @@ module Twilio
               end
 
               ##
-              # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+              # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
               class FunctionVersionContentContext < InstanceContext
                 ##
                 # Initialize the FunctionVersionContentContext
@@ -128,7 +128,7 @@ module Twilio
               end
 
               ##
-              # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+              # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
               class FunctionVersionContentInstance < InstanceResource
                 ##
                 # Initialize the FunctionVersionContentInstance

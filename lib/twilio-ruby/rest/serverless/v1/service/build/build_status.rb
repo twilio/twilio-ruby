@@ -13,7 +13,7 @@ module Twilio
         class ServiceContext < InstanceContext
           class BuildContext < InstanceContext
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class BuildStatusList < ListResource
               ##
               # Initialize the BuildStatusList
@@ -38,7 +38,7 @@ module Twilio
             end
 
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class BuildStatusPage < Page
               ##
               # Initialize the BuildStatusPage
@@ -74,7 +74,7 @@ module Twilio
             end
 
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class BuildStatusContext < InstanceContext
               ##
               # Initialize the BuildStatusContext
@@ -121,7 +121,7 @@ module Twilio
             end
 
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class BuildStatusInstance < InstanceResource
               ##
               # Initialize the BuildStatusInstance

@@ -31,9 +31,10 @@ module Twilio
             # memory before returning.
             # @param [String] priority The priority value of the Tasks to read. Returns the
             #   list of all Tasks in the Workspace with the specified priority.
-            # @param [String] assignment_status The `assignment_status` of the Tasks to read.
-            #   Can be: `pending`, `reserved`, `assigned`, `canceled`, and `completed`. Returns
-            #   all Tasks in the Workspace with the specified `assignment_status`.
+            # @param [String] assignment_status The `assignment_status` of the Tasks you want
+            #   to read. Can be: `pending`, `reserved`, `assigned`, `canceled`, `wrapping`, or
+            #   `completed`. Returns all Tasks in the Workspace with the specified
+            #   `assignment_status`.
             # @param [String] workflow_sid The SID of the Workflow with the Tasks to read.
             #   Returns the Tasks controlled by the Workflow identified by this SID.
             # @param [String] workflow_name The friendly name of the Workflow with the Tasks
@@ -85,9 +86,10 @@ module Twilio
             # is reached.
             # @param [String] priority The priority value of the Tasks to read. Returns the
             #   list of all Tasks in the Workspace with the specified priority.
-            # @param [String] assignment_status The `assignment_status` of the Tasks to read.
-            #   Can be: `pending`, `reserved`, `assigned`, `canceled`, and `completed`. Returns
-            #   all Tasks in the Workspace with the specified `assignment_status`.
+            # @param [String] assignment_status The `assignment_status` of the Tasks you want
+            #   to read. Can be: `pending`, `reserved`, `assigned`, `canceled`, `wrapping`, or
+            #   `completed`. Returns all Tasks in the Workspace with the specified
+            #   `assignment_status`.
             # @param [String] workflow_sid The SID of the Workflow with the Tasks to read.
             #   Returns the Tasks controlled by the Workflow identified by this SID.
             # @param [String] workflow_name The friendly name of the Workflow with the Tasks
@@ -155,9 +157,10 @@ module Twilio
             # Request is executed immediately.
             # @param [String] priority The priority value of the Tasks to read. Returns the
             #   list of all Tasks in the Workspace with the specified priority.
-            # @param [String] assignment_status The `assignment_status` of the Tasks to read.
-            #   Can be: `pending`, `reserved`, `assigned`, `canceled`, and `completed`. Returns
-            #   all Tasks in the Workspace with the specified `assignment_status`.
+            # @param [String] assignment_status The `assignment_status` of the Tasks you want
+            #   to read. Can be: `pending`, `reserved`, `assigned`, `canceled`, `wrapping`, or
+            #   `completed`. Returns all Tasks in the Workspace with the specified
+            #   `assignment_status`.
             # @param [String] workflow_sid The SID of the Workflow with the Tasks to read.
             #   Returns the Tasks controlled by the Workflow identified by this SID.
             # @param [String] workflow_name The friendly name of the Workflow with the Tasks

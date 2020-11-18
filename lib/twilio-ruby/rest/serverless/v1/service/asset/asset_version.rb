@@ -13,7 +13,7 @@ module Twilio
         class ServiceContext < InstanceContext
           class AssetContext < InstanceContext
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class AssetVersionList < ListResource
               ##
               # Initialize the AssetVersionList
@@ -119,7 +119,7 @@ module Twilio
             end
 
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class AssetVersionPage < Page
               ##
               # Initialize the AssetVersionPage
@@ -155,7 +155,7 @@ module Twilio
             end
 
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class AssetVersionContext < InstanceContext
               ##
               # Initialize the AssetVersionContext
@@ -205,7 +205,7 @@ module Twilio
             end
 
             ##
-            # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class AssetVersionInstance < InstanceResource
               ##
               # Initialize the AssetVersionInstance
