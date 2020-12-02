@@ -46,6 +46,7 @@ describe 'Recording' do
           "status": "in-progress",
           "error_code": null,
           "encryption_details": null,
+          "track": "both",
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings/REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
@@ -97,6 +98,7 @@ describe 'Recording' do
           "status": "paused",
           "error_code": null,
           "encryption_details": null,
+          "track": "both",
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings/REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
@@ -150,6 +152,7 @@ describe 'Recording' do
           "source": "StartCallRecordingAPI",
           "status": "completed",
           "error_code": null,
+          "track": "both",
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings/REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
@@ -239,6 +242,7 @@ describe 'Recording' do
                   },
                   "source": "StartCallRecordingAPI",
                   "status": "completed",
+                  "track": "both",
                   "error_code": null,
                   "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Recordings/REaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
               }

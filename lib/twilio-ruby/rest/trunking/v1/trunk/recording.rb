@@ -15,7 +15,8 @@ module Twilio
             ##
             # Initialize the RecordingList
             # @param [Version] version Version that contains the resource
-            # @param [String] trunk_sid The trunk_sid
+            # @param [String] trunk_sid The unique string that we created to identify the
+            #   Trunk resource.
             # @return [RecordingList] RecordingList
             def initialize(version, trunk_sid: nil)
               super(version)
@@ -86,9 +87,16 @@ module Twilio
 
             ##
             # Update the RecordingInstance
+            # @param [recording.RecordingMode] mode The recording mode for the trunk. Can be
+            #   do-not-record (default), record-from-ringing, record-from-answer,
+            #   record-from-ringing-dual, or record-from-answer-dual.
+            # @param [recording.RecordingTrim] trim The recording trim setting for the trunk.
+            #   Can be do-not-trim (default) or trim-silence.
             # @return [RecordingInstance] Updated RecordingInstance
-            def update
-              payload = @version.update('POST', @uri)
+            def update(mode: :unset, trim: :unset)
+              data = Twilio::Values.of({'Mode' => mode, 'Trim' => trim, })
+
+              payload = @version.update('POST', @uri, data: data)
 
               RecordingInstance.new(@version, payload, trunk_sid: @solution[:trunk_sid], )
             end
@@ -113,18 +121,14 @@ module Twilio
             # Initialize the RecordingInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] trunk_sid The trunk_sid
+            # @param [String] trunk_sid The unique string that we created to identify the
+            #   Trunk resource.
             # @return [RecordingInstance] RecordingInstance
             def initialize(version, payload, trunk_sid: nil)
               super(version)
 
               # Marshaled Properties
-              @properties = {
-                  'mode' => payload['mode'],
-                  'trim' => payload['trim'],
-                  'url' => payload['url'],
-                  'trunk_sid' => payload['trunk_sid'],
-              }
+              @properties = {'mode' => payload['mode'], 'trim' => payload['trim'], }
 
               # Context
               @instance_context = nil
@@ -155,18 +159,6 @@ module Twilio
             end
 
             ##
-            # @return [String] The url
-            def url
-              @properties['url']
-            end
-
-            ##
-            # @return [String] The trunk_sid
-            def trunk_sid
-              @properties['trunk_sid']
-            end
-
-            ##
             # Fetch the RecordingInstance
             # @return [RecordingInstance] Fetched RecordingInstance
             def fetch
@@ -175,9 +167,14 @@ module Twilio
 
             ##
             # Update the RecordingInstance
+            # @param [recording.RecordingMode] mode The recording mode for the trunk. Can be
+            #   do-not-record (default), record-from-ringing, record-from-answer,
+            #   record-from-ringing-dual, or record-from-answer-dual.
+            # @param [recording.RecordingTrim] trim The recording trim setting for the trunk.
+            #   Can be do-not-trim (default) or trim-silence.
             # @return [RecordingInstance] Updated RecordingInstance
-            def update
-              context.update
+            def update(mode: :unset, trim: :unset)
+              context.update(mode: mode, trim: trim, )
             end
 
             ##

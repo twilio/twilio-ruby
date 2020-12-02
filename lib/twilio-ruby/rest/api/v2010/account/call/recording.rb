@@ -335,6 +335,7 @@ module Twilio
                     'channels' => payload['channels'].to_i,
                     'source' => payload['source'],
                     'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
+                    'track' => payload['track'],
                 }
 
                 # Context
@@ -458,6 +459,12 @@ module Twilio
               # @return [String] More information about why the recording is missing, if status is `absent`.
               def error_code
                 @properties['error_code']
+              end
+
+              ##
+              # @return [String] The recorded track. Can be: `inbound`, `outbound`, or `both`.
+              def track
+                @properties['track']
               end
 
               ##
