@@ -181,12 +181,6 @@ module Twilio
       end
 
       ##
-      # @return [Twilio::REST::Preview::TrustedComms::BrandedCallInstance]
-      def branded_calls
-        self.trusted_comms.branded_calls()
-      end
-
-      ##
       # @param [String] sid The unique SID identifier of the Branded Channel.
       # @return [Twilio::REST::Preview::TrustedComms::BrandedChannelInstance] if sid was passed.
       # @return [Twilio::REST::Preview::TrustedComms::BrandedChannelList]
@@ -201,15 +195,6 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
-      #   Business.
-      # @return [Twilio::REST::Preview::TrustedComms::BusinessInstance] if sid was passed.
-      # @return [Twilio::REST::Preview::TrustedComms::BusinessList]
-      def businesses(sid=:unset)
-        self.trusted_comms.businesses(sid)
-      end
-
-      ##
       # @return [Twilio::REST::Preview::TrustedComms::CpsInstance]
       def cps
         self.trusted_comms.cps()
@@ -219,12 +204,6 @@ module Twilio
       # @return [Twilio::REST::Preview::TrustedComms::CurrentCallInstance]
       def current_calls
         self.trusted_comms.current_calls()
-      end
-
-      ##
-      # @return [Twilio::REST::Preview::TrustedComms::PhoneCallInstance]
-      def phone_calls
-        self.trusted_comms.phone_calls()
       end
 
       ##
