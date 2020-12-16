@@ -44,7 +44,7 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The unique string that we created to identify the FlexFlow
+      # @param [String] sid The unique string that we created to identify the Flex Flow
       #   resource.
       # @return [Twilio::REST::Flex_api::V1::FlexFlowInstance] if sid was passed.
       # @return [Twilio::REST::Flex_api::V1::FlexFlowList]

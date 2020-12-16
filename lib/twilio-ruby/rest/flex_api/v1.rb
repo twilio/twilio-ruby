@@ -42,7 +42,7 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The SID of the FlexFlow resource to fetch.
+        # @param [String] sid The SID of the Flex Flow resource to fetch.
         # @return [Twilio::REST::Flex_api::V1::FlexFlowContext] if sid was passed.
         # @return [Twilio::REST::Flex_api::V1::FlexFlowList]
         def flex_flow(sid=:unset)

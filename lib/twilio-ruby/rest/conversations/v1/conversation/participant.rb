@@ -230,10 +230,16 @@ module Twilio
             #   User}[https://www.twilio.com/docs/conversations/api/user-resource]. This
             #   parameter is non-null if (and only if) the participant is using the
             #   Conversations SDK to communicate. Limited to 256 characters.
+            # @param [String] last_read_message_index Index of last “read” message in the
+            #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
+            #   for the Participant.
+            # @param [String] last_read_timestamp Timestamp of last “read” message in the
+            #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
+            #   for the Participant.
             # @param [participant.WebhookEnabledType] x_twilio_webhook_enabled The
             #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ParticipantInstance] Updated ParticipantInstance
-            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, messaging_binding_proxy_address: :unset, messaging_binding_projected_address: :unset, identity: :unset, x_twilio_webhook_enabled: :unset)
+            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, messaging_binding_proxy_address: :unset, messaging_binding_projected_address: :unset, identity: :unset, last_read_message_index: :unset, last_read_timestamp: :unset, x_twilio_webhook_enabled: :unset)
               data = Twilio::Values.of({
                   'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
                   'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
@@ -242,6 +248,8 @@ module Twilio
                   'MessagingBinding.ProxyAddress' => messaging_binding_proxy_address,
                   'MessagingBinding.ProjectedAddress' => messaging_binding_projected_address,
                   'Identity' => identity,
+                  'LastReadMessageIndex' => last_read_message_index,
+                  'LastReadTimestamp' => last_read_timestamp,
               })
               headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
@@ -321,6 +329,8 @@ module Twilio
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
+                  'last_read_message_index' => payload['last_read_message_index'] == nil ? payload['last_read_message_index'] : payload['last_read_message_index'].to_i,
+                  'last_read_timestamp' => payload['last_read_timestamp'],
               }
 
               # Context
@@ -400,6 +410,18 @@ module Twilio
             end
 
             ##
+            # @return [String] Index of last “read” message in the Conversation for the Participant.
+            def last_read_message_index
+              @properties['last_read_message_index']
+            end
+
+            ##
+            # @return [String] Timestamp of last “read” message in the Conversation for the Participant.
+            def last_read_timestamp
+              @properties['last_read_timestamp']
+            end
+
+            ##
             # Update the ParticipantInstance
             # @param [Time] date_created The date that this resource was created.
             # @param [Time] date_updated The date that this resource was last updated.
@@ -419,10 +441,16 @@ module Twilio
             #   User}[https://www.twilio.com/docs/conversations/api/user-resource]. This
             #   parameter is non-null if (and only if) the participant is using the
             #   Conversations SDK to communicate. Limited to 256 characters.
+            # @param [String] last_read_message_index Index of last “read” message in the
+            #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
+            #   for the Participant.
+            # @param [String] last_read_timestamp Timestamp of last “read” message in the
+            #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
+            #   for the Participant.
             # @param [participant.WebhookEnabledType] x_twilio_webhook_enabled The
             #   X-Twilio-Webhook-Enabled HTTP request header
             # @return [ParticipantInstance] Updated ParticipantInstance
-            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, messaging_binding_proxy_address: :unset, messaging_binding_projected_address: :unset, identity: :unset, x_twilio_webhook_enabled: :unset)
+            def update(date_created: :unset, date_updated: :unset, attributes: :unset, role_sid: :unset, messaging_binding_proxy_address: :unset, messaging_binding_projected_address: :unset, identity: :unset, last_read_message_index: :unset, last_read_timestamp: :unset, x_twilio_webhook_enabled: :unset)
               context.update(
                   date_created: date_created,
                   date_updated: date_updated,
@@ -431,6 +459,8 @@ module Twilio
                   messaging_binding_proxy_address: messaging_binding_proxy_address,
                   messaging_binding_projected_address: messaging_binding_projected_address,
                   identity: identity,
+                  last_read_message_index: last_read_message_index,
+                  last_read_timestamp: last_read_timestamp,
                   x_twilio_webhook_enabled: x_twilio_webhook_enabled,
               )
             end

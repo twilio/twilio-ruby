@@ -105,7 +105,7 @@ module Twilio
 
           ##
           # Create the WebChannelInstance
-          # @param [String] flex_flow_sid The SID of the FlexFlow.
+          # @param [String] flex_flow_sid The SID of the Flex Flow.
           # @param [String] identity The chat identity.
           # @param [String] customer_friendly_name The chat participant's friendly name.
           # @param [String] chat_friendly_name The chat channel's friendly name.
@@ -268,7 +268,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The SID of the FlexFlow
+          # @return [String] The SID of the Flex Flow
           def flex_flow_sid
             @properties['flex_flow_sid']
           end

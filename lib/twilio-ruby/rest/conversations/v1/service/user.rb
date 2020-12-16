@@ -285,6 +285,7 @@ module Twilio
                   'friendly_name' => payload['friendly_name'],
                   'attributes' => payload['attributes'],
                   'is_online' => payload['is_online'],
+                  'is_notifiable' => payload['is_notifiable'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
@@ -349,9 +350,15 @@ module Twilio
             end
 
             ##
-            # @return [Boolean] Whether the User is actively connected to the Service instance and online
+            # @return [Boolean] Whether the User is actively connected to this Conversations Service and online
             def is_online
               @properties['is_online']
+            end
+
+            ##
+            # @return [Boolean] Whether the User has a potentially valid Push Notification registration for this Conversations Service
+            def is_notifiable
+              @properties['is_notifiable']
             end
 
             ##

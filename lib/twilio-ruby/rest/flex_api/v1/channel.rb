@@ -105,7 +105,7 @@ module Twilio
 
           ##
           # Create the ChannelInstance
-          # @param [String] flex_flow_sid The SID of the FlexFlow.
+          # @param [String] flex_flow_sid The SID of the Flex Flow.
           # @param [String] identity The `identity` value that uniquely identifies the new
           #   resource's chat User.
           # @param [String] chat_user_friendly_name The chat participant's friendly name.
@@ -114,9 +114,9 @@ module Twilio
           #   of an SMS.
           # @param [String] chat_unique_name The chat channel's unique name.
           # @param [String] pre_engagement_data The pre-engagement data.
-          # @param [String] task_sid The SID of the TaskRouter task. Only valid when
+          # @param [String] task_sid The SID of the TaskRouter Task. Only valid when
           #   integration type is `task`. `null` for integration types `studio` & `external`
-          # @param [String] task_attributes The task attributes to be added for the
+          # @param [String] task_attributes The Task attributes to be added for the
           #   TaskRouter Task.
           # @param [Boolean] long_lived Whether to create the channel as long-lived.
           # @return [ChannelInstance] Created ChannelInstance
@@ -265,7 +265,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The SID of the FlexFlow
+          # @return [String] The SID of the Flex Flow
           def flex_flow_sid
             @properties['flex_flow_sid']
           end
@@ -283,7 +283,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The SID of the TaskRouter task
+          # @return [String] The SID of the TaskRouter Task
           def task_sid
             @properties['task_sid']
           end

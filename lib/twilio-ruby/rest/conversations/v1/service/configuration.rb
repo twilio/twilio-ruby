@@ -103,12 +103,16 @@ module Twilio
             #   users when they are added to the service. See the {Conversation
             #   Role}[https://www.twilio.com/docs/conversations/api/role-resource] for more info
             #   about roles.
+            # @param [Boolean] reachability_enabled Whether the {Reachability
+            #   Indicator}[https://www.twilio.com/docs/chat/reachability-indicator] is enabled
+            #   for this Conversations Service. The default is `false`.
             # @return [ConfigurationInstance] Updated ConfigurationInstance
-            def update(default_conversation_creator_role_sid: :unset, default_conversation_role_sid: :unset, default_chat_service_role_sid: :unset)
+            def update(default_conversation_creator_role_sid: :unset, default_conversation_role_sid: :unset, default_chat_service_role_sid: :unset, reachability_enabled: :unset)
               data = Twilio::Values.of({
                   'DefaultConversationCreatorRoleSid' => default_conversation_creator_role_sid,
                   'DefaultConversationRoleSid' => default_conversation_role_sid,
                   'DefaultChatServiceRoleSid' => default_chat_service_role_sid,
+                  'ReachabilityEnabled' => reachability_enabled,
               })
 
               payload = @version.update('POST', @uri, data: data)
@@ -157,6 +161,7 @@ module Twilio
                   'default_chat_service_role_sid' => payload['default_chat_service_role_sid'],
                   'url' => payload['url'],
                   'links' => payload['links'],
+                  'reachability_enabled' => payload['reachability_enabled'],
               }
 
               # Context
@@ -212,6 +217,12 @@ module Twilio
             end
 
             ##
+            # @return [Boolean] Whether the Reachability Indicator feature is enabled for this Conversations Service
+            def reachability_enabled
+              @properties['reachability_enabled']
+            end
+
+            ##
             # Fetch the ConfigurationInstance
             # @return [ConfigurationInstance] Fetched ConfigurationInstance
             def fetch
@@ -233,12 +244,16 @@ module Twilio
             #   users when they are added to the service. See the {Conversation
             #   Role}[https://www.twilio.com/docs/conversations/api/role-resource] for more info
             #   about roles.
+            # @param [Boolean] reachability_enabled Whether the {Reachability
+            #   Indicator}[https://www.twilio.com/docs/chat/reachability-indicator] is enabled
+            #   for this Conversations Service. The default is `false`.
             # @return [ConfigurationInstance] Updated ConfigurationInstance
-            def update(default_conversation_creator_role_sid: :unset, default_conversation_role_sid: :unset, default_chat_service_role_sid: :unset)
+            def update(default_conversation_creator_role_sid: :unset, default_conversation_role_sid: :unset, default_chat_service_role_sid: :unset, reachability_enabled: :unset)
               context.update(
                   default_conversation_creator_role_sid: default_conversation_creator_role_sid,
                   default_conversation_role_sid: default_conversation_role_sid,
                   default_chat_service_role_sid: default_chat_service_role_sid,
+                  reachability_enabled: reachability_enabled,
               )
             end
 

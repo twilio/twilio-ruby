@@ -27,7 +27,7 @@ module Twilio
           # Lists FlexFlowInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] friendly_name The `friendly_name` of the FlexFlow resources to
+          # @param [String] friendly_name The `friendly_name` of the Flex Flow resources to
           #   read.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
@@ -44,7 +44,7 @@ module Twilio
           # Streams FlexFlowInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] friendly_name The `friendly_name` of the FlexFlow resources to
+          # @param [String] friendly_name The `friendly_name` of the Flex Flow resources to
           #   read.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
@@ -78,7 +78,7 @@ module Twilio
           ##
           # Retrieve a single page of FlexFlowInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name The `friendly_name` of the FlexFlow resources to
+          # @param [String] friendly_name The `friendly_name` of the Flex Flow resources to
           #   read.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
@@ -113,33 +113,36 @@ module Twilio
           ##
           # Create the FlexFlowInstance
           # @param [String] friendly_name A descriptive string that you create to describe
-          #   the FlexFlow resource.
+          #   the Flex Flow resource.
           # @param [String] chat_service_sid The SID of the chat service.
           # @param [flex_flow.ChannelType] channel_type The channel type. Can be: `web`,
           #   `facebook`, `sms`, `whatsapp`, `line` or `custom`.
           # @param [String] contact_identity The channel contact's Identity.
-          # @param [Boolean] enabled Whether the new FlexFlow is enabled.
+          # @param [Boolean] enabled Whether the new Flex Flow is enabled.
           # @param [flex_flow.IntegrationType] integration_type The integration type. Can
           #   be: `studio`, `external`, or `task`.
-          # @param [String] integration_flow_sid The SID of the Flow when `integration_type`
-          #   is `studio`.
-          # @param [String] integration_url The External Webhook URL when `integration_type`
-          #   is `external`.
-          # @param [String] integration_workspace_sid The Workspace SID for a new task for
-          #   Task `integration_type`.
-          # @param [String] integration_workflow_sid The Workflow SID for a new task when
-          #   `integration_type` is `task`.
-          # @param [String] integration_channel The task channel for a new task when
-          #   `integration_type` is `task`. The default is `default`.
-          # @param [String] integration_timeout The task timeout in seconds for a new task
-          #   when `integration_type` is `task`. The default is `86,400` seconds (24 hours).
-          # @param [String] integration_priority The task priority of a new task when
-          #   `integration_type` is `task`. The default priority is `0`.
-          # @param [Boolean] integration_creation_on_message Whether to create a task when
-          #   the first message arrives when `integration_type` is `task`. If `false`, the
-          #   task is created with the channel. **Note** that does not apply when channel type
-          #   is `web`. Setting the value to `true` for channel type `web` will result in
-          #   misconfigured Flex Flow and no tasks will be created.
+          # @param [String] integration_flow_sid The SID of the Studio Flow. Required when
+          #   `integrationType` is `studio`.
+          # @param [String] integration_url The URL of the external webhook. Required when
+          #   `integrationType` is `external`.
+          # @param [String] integration_workspace_sid The Workspace SID for a new Task.
+          #   Required when `integrationType` is `task`.
+          # @param [String] integration_workflow_sid The Workflow SID for a new Task.
+          #   Required when `integrationType` is `task`.
+          # @param [String] integration_channel The Task Channel for the TaskRouter Task
+          #   that will be created. Applicable and required when integrationType is `task`.
+          #   Set to `sms` for SMS, and to `chat` otherwise. The default value is `default`
+          # @param [String] integration_timeout The Task timeout in seconds for a new Task.
+          #   Default is 86,400 seconds (24 hours). Optional when `integrationType` is `task`,
+          #   not applicable otherwise.
+          # @param [String] integration_priority The Task priority of a new Task. The
+          #   default priority is 0. Optional when `integrationType` is `task`, not applicable
+          #   otherwise.
+          # @param [Boolean] integration_creation_on_message In the context of outbound
+          #   messaging, defines whether to create a Task immediately (and therefore reserve
+          #   the conversation to current agent), or delay Task creation until the customer
+          #   sends the first response. Set to false to create immediately, true to delay Task
+          #   creation. This setting is only applicable for outbound messaging.
           # @param [Boolean] long_lived When enabled, Flex will keep the chat channel active
           #   so that it may be used for subsequent interactions with a contact identity.
           #   Defaults to `false`.
@@ -147,8 +150,9 @@ module Twilio
           #   will remove active Proxy sessions if the associated Task is deleted outside of
           #   the Flex UI. Defaults to `false`.
           # @param [String] integration_retry_count The number of times to retry the webhook
-          #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
-          #   the default is 0.
+          #   if the first attempt fails. Can be an integer between 0 and 3 (included),
+          #   default is 0. Optional when integrationType is `external`, not applicable
+          #   otherwise.
           # @return [FlexFlowInstance] Created FlexFlowInstance
           def create(friendly_name: nil, chat_service_sid: nil, channel_type: nil, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
             data = Twilio::Values.of({
@@ -216,7 +220,7 @@ module Twilio
           ##
           # Initialize the FlexFlowContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The SID of the FlexFlow resource to fetch.
+          # @param [String] sid The SID of the Flex Flow resource to fetch.
           # @return [FlexFlowContext] FlexFlowContext
           def initialize(version, sid)
             super(version)
@@ -238,33 +242,36 @@ module Twilio
           ##
           # Update the FlexFlowInstance
           # @param [String] friendly_name A descriptive string that you create to describe
-          #   the FlexFlow resource.
+          #   the Flex Flow resource.
           # @param [String] chat_service_sid The SID of the chat service.
           # @param [flex_flow.ChannelType] channel_type The channel type. Can be: `web`,
           #   `facebook`, `sms`, `whatsapp`, `line` or `custom`.
           # @param [String] contact_identity The channel contact's Identity.
-          # @param [Boolean] enabled Whether the FlexFlow is enabled.
+          # @param [Boolean] enabled Whether the new Flex Flow is enabled.
           # @param [flex_flow.IntegrationType] integration_type The integration type. Can
           #   be: `studio`, `external`, or `task`.
-          # @param [String] integration_flow_sid The SID of the Flow when `integration_type`
-          #   is `studio`.
-          # @param [String] integration_url The External Webhook URL when `integration_type`
-          #   is `external`.
-          # @param [String] integration_workspace_sid The Workspace SID for a new task when
-          #   `integration_type` is `task`.
-          # @param [String] integration_workflow_sid The Workflow SID for a new task when
-          #   `integration_type` is `task`.
-          # @param [String] integration_channel The task channel for a new task when
-          #   `integration_type` is `task`. The default is `default`.
-          # @param [String] integration_timeout The task timeout in seconds for a new task
-          #   when `integration_type` is `task`. The default is `86,400` seconds (24 hours).
-          # @param [String] integration_priority The task priority of a new task when
-          #   `integration_type` is `task`. The default priority is `0`.
-          # @param [Boolean] integration_creation_on_message Whether to create a task when
-          #   the first message arrives when `integration_type` is `task`. If `false`, the
-          #   task is created with the channel. **Note** that does not apply when channel type
-          #   is `web`. Setting the value to `true` for channel type `web` will result in
-          #   misconfigured Flex Flow and no tasks will be created.
+          # @param [String] integration_flow_sid The SID of the Studio Flow. Required when
+          #   `integrationType` is `studio`.
+          # @param [String] integration_url The URL of the external webhook. Required when
+          #   `integrationType` is `external`.
+          # @param [String] integration_workspace_sid The Workspace SID for a new Task.
+          #   Required when `integrationType` is `task`.
+          # @param [String] integration_workflow_sid The Workflow SID for a new Task.
+          #   Required when `integrationType` is `task`.
+          # @param [String] integration_channel The Task Channel for the TaskRouter Task
+          #   that will be created. Applicable and required when integrationType is `task`.
+          #   Set to `sms` for SMS, and to `chat` otherwise. The default value is `default`
+          # @param [String] integration_timeout The Task timeout in seconds for a new Task.
+          #   Default is 86,400 seconds (24 hours). Optional when `integrationType` is `task`,
+          #   not applicable otherwise.
+          # @param [String] integration_priority The Task priority of a new Task. The
+          #   default priority is 0. Optional when `integrationType` is `task`, not applicable
+          #   otherwise.
+          # @param [Boolean] integration_creation_on_message In the context of outbound
+          #   messaging, defines whether to create a Task immediately (and therefore reserve
+          #   the conversation to current agent), or delay Task creation until the customer
+          #   sends the first response. Set to false to create immediately, true to delay Task
+          #   creation. This setting is only applicable for outbound messaging.
           # @param [Boolean] long_lived When enabled, Flex will keep the chat channel active
           #   so that it may be used for subsequent interactions with a contact identity.
           #   Defaults to `false`.
@@ -272,8 +279,9 @@ module Twilio
           #   will remove active Proxy sessions if the associated Task is deleted outside of
           #   the Flex UI. Defaults to `false`.
           # @param [String] integration_retry_count The number of times to retry the webhook
-          #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
-          #   the default is 0.
+          #   if the first attempt fails. Can be an integer between 0 and 3 (included),
+          #   default is 0. Optional when integrationType is `external`, not applicable
+          #   otherwise.
           # @return [FlexFlowInstance] Updated FlexFlowInstance
           def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
             data = Twilio::Values.of({
@@ -328,7 +336,7 @@ module Twilio
           # Initialize the FlexFlowInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The SID of the FlexFlow resource to fetch.
+          # @param [String] sid The SID of the Flex Flow resource to fetch.
           # @return [FlexFlowInstance] FlexFlowInstance
           def initialize(version, payload, sid: nil)
             super(version)
@@ -416,7 +424,7 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] Whether the FlexFlow is enabled
+          # @return [Boolean] Whether the Flex Flow is enabled
           def enabled
             @properties['enabled']
           end
@@ -446,7 +454,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The absolute URL of the FlexFlow resource
+          # @return [String] The absolute URL of the Flex Flow resource
           def url
             @properties['url']
           end
@@ -461,33 +469,36 @@ module Twilio
           ##
           # Update the FlexFlowInstance
           # @param [String] friendly_name A descriptive string that you create to describe
-          #   the FlexFlow resource.
+          #   the Flex Flow resource.
           # @param [String] chat_service_sid The SID of the chat service.
           # @param [flex_flow.ChannelType] channel_type The channel type. Can be: `web`,
           #   `facebook`, `sms`, `whatsapp`, `line` or `custom`.
           # @param [String] contact_identity The channel contact's Identity.
-          # @param [Boolean] enabled Whether the FlexFlow is enabled.
+          # @param [Boolean] enabled Whether the new Flex Flow is enabled.
           # @param [flex_flow.IntegrationType] integration_type The integration type. Can
           #   be: `studio`, `external`, or `task`.
-          # @param [String] integration_flow_sid The SID of the Flow when `integration_type`
-          #   is `studio`.
-          # @param [String] integration_url The External Webhook URL when `integration_type`
-          #   is `external`.
-          # @param [String] integration_workspace_sid The Workspace SID for a new task when
-          #   `integration_type` is `task`.
-          # @param [String] integration_workflow_sid The Workflow SID for a new task when
-          #   `integration_type` is `task`.
-          # @param [String] integration_channel The task channel for a new task when
-          #   `integration_type` is `task`. The default is `default`.
-          # @param [String] integration_timeout The task timeout in seconds for a new task
-          #   when `integration_type` is `task`. The default is `86,400` seconds (24 hours).
-          # @param [String] integration_priority The task priority of a new task when
-          #   `integration_type` is `task`. The default priority is `0`.
-          # @param [Boolean] integration_creation_on_message Whether to create a task when
-          #   the first message arrives when `integration_type` is `task`. If `false`, the
-          #   task is created with the channel. **Note** that does not apply when channel type
-          #   is `web`. Setting the value to `true` for channel type `web` will result in
-          #   misconfigured Flex Flow and no tasks will be created.
+          # @param [String] integration_flow_sid The SID of the Studio Flow. Required when
+          #   `integrationType` is `studio`.
+          # @param [String] integration_url The URL of the external webhook. Required when
+          #   `integrationType` is `external`.
+          # @param [String] integration_workspace_sid The Workspace SID for a new Task.
+          #   Required when `integrationType` is `task`.
+          # @param [String] integration_workflow_sid The Workflow SID for a new Task.
+          #   Required when `integrationType` is `task`.
+          # @param [String] integration_channel The Task Channel for the TaskRouter Task
+          #   that will be created. Applicable and required when integrationType is `task`.
+          #   Set to `sms` for SMS, and to `chat` otherwise. The default value is `default`
+          # @param [String] integration_timeout The Task timeout in seconds for a new Task.
+          #   Default is 86,400 seconds (24 hours). Optional when `integrationType` is `task`,
+          #   not applicable otherwise.
+          # @param [String] integration_priority The Task priority of a new Task. The
+          #   default priority is 0. Optional when `integrationType` is `task`, not applicable
+          #   otherwise.
+          # @param [Boolean] integration_creation_on_message In the context of outbound
+          #   messaging, defines whether to create a Task immediately (and therefore reserve
+          #   the conversation to current agent), or delay Task creation until the customer
+          #   sends the first response. Set to false to create immediately, true to delay Task
+          #   creation. This setting is only applicable for outbound messaging.
           # @param [Boolean] long_lived When enabled, Flex will keep the chat channel active
           #   so that it may be used for subsequent interactions with a contact identity.
           #   Defaults to `false`.
@@ -495,8 +506,9 @@ module Twilio
           #   will remove active Proxy sessions if the associated Task is deleted outside of
           #   the Flex UI. Defaults to `false`.
           # @param [String] integration_retry_count The number of times to retry the webhook
-          #   if the first attempt fails. Can be an integer between 0 and 3, inclusive, and
-          #   the default is 0.
+          #   if the first attempt fails. Can be an integer between 0 and 3 (included),
+          #   default is 0. Optional when integrationType is `external`, not applicable
+          #   otherwise.
           # @return [FlexFlowInstance] Updated FlexFlowInstance
           def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
             context.update(
