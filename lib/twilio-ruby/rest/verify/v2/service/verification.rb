@@ -296,7 +296,7 @@ module Twilio
             end
 
             ##
-            # @return [Hash] An array of verification attempt objects.
+            # @return [Array[Hash]] An array of verification attempt objects.
             def send_code_attempts
               @properties['send_code_attempts']
             end

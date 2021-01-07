@@ -29,7 +29,7 @@ module Twilio
             # Create the RoleInstance
             # @param [String] friendly_name The friendly_name
             # @param [role.RoleType] type The type
-            # @param [String] permission The permission
+            # @param [Array[String]] permission The permission
             # @return [RoleInstance] Created RoleInstance
             def create(friendly_name: nil, type: nil, permission: nil)
               data = Twilio::Values.of({
@@ -192,7 +192,7 @@ module Twilio
 
             ##
             # Update the RoleInstance
-            # @param [String] permission The permission
+            # @param [Array[String]] permission The permission
             # @return [RoleInstance] Updated RoleInstance
             def update(permission: nil)
               data = Twilio::Values.of({'Permission' => Twilio.serialize_list(permission) { |e| e }, })
@@ -288,7 +288,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The permissions
+            # @return [Array[String]] The permissions
             def permissions
               @properties['permissions']
             end
@@ -327,7 +327,7 @@ module Twilio
 
             ##
             # Update the RoleInstance
-            # @param [String] permission The permission
+            # @param [Array[String]] permission The permission
             # @return [RoleInstance] Updated RoleInstance
             def update(permission: nil)
               context.update(permission: permission, )

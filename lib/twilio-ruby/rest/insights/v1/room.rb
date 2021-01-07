@@ -29,8 +29,8 @@ module Twilio
           # Lists RoomInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [room.RoomType] room_type The room_type
-          # @param [room.Codec] codec The codec
+          # @param [Array[room.RoomType]] room_type The room_type
+          # @param [Array[room.Codec]] codec The codec
           # @param [String] room_name The room_name
           # @param [Time] created_after The created_after
           # @param [Time] created_before The created_before
@@ -57,8 +57,8 @@ module Twilio
           # Streams RoomInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [room.RoomType] room_type The room_type
-          # @param [room.Codec] codec The codec
+          # @param [Array[room.RoomType]] room_type The room_type
+          # @param [Array[room.Codec]] codec The codec
           # @param [String] room_name The room_name
           # @param [Time] created_after The created_after
           # @param [Time] created_before The created_before
@@ -101,8 +101,8 @@ module Twilio
           ##
           # Retrieve a single page of RoomInstance records from the API.
           # Request is executed immediately.
-          # @param [room.RoomType] room_type The room_type
-          # @param [room.Codec] codec The codec
+          # @param [Array[room.RoomType]] room_type The room_type
+          # @param [Array[room.Codec]] codec The codec
           # @param [String] room_name The room_name
           # @param [Time] created_after The created_after
           # @param [Time] created_before The created_before
@@ -394,7 +394,7 @@ module Twilio
           end
 
           ##
-          # @return [room.Codec] The codecs
+          # @return [Array[room.Codec]] The codecs
           def codecs
             @properties['codecs']
           end

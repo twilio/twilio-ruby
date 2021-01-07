@@ -149,7 +149,7 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The number of current Workers by Activity
+              # @return [Array[Hash]] The number of current Workers by Activity
               def activity_statistics
                 @properties['activity_statistics']
               end

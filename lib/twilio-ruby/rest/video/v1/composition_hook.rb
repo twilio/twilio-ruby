@@ -167,17 +167,17 @@ module Twilio
           #   composition hook in terms of regions. See {Specifying Video
           #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
-          # @param [String] audio_sources An array of track names from the same group room
-          #   to merge into the compositions created by the composition hook. Can include zero
-          #   or more track names. A composition triggered by the composition hook includes
-          #   all audio sources specified in `audio_sources` except those specified in
-          #   `audio_sources_excluded`. The track names in this parameter can include an
+          # @param [Array[String]] audio_sources An array of track names from the same group
+          #   room to merge into the compositions created by the composition hook. Can include
+          #   zero or more track names. A composition triggered by the composition hook
+          #   includes all audio sources specified in `audio_sources` except those specified
+          #   in `audio_sources_excluded`. The track names in this parameter can include an
           #   asterisk as a wild card character, which matches zero or more characters in a
           #   track name. For example, `student*` includes tracks named `student` as well as
           #   `studentTeam`.
-          # @param [String] audio_sources_excluded An array of track names to exclude. A
-          #   composition triggered by the composition hook includes all audio sources
-          #   specified in `audio_sources` except for those specified in
+          # @param [Array[String]] audio_sources_excluded An array of track names to
+          #   exclude. A composition triggered by the composition hook includes all audio
+          #   sources specified in `audio_sources` except for those specified in
           #   `audio_sources_excluded`. The track names in this parameter can include an
           #   asterisk as a wild card character, which matches zero or more characters in a
           #   track name. For example, `student*` excludes `student` as well as `studentTeam`.
@@ -323,17 +323,17 @@ module Twilio
           #   composition hook in terms of regions. See {Specifying Video
           #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
-          # @param [String] audio_sources An array of track names from the same group room
-          #   to merge into the compositions created by the composition hook. Can include zero
-          #   or more track names. A composition triggered by the composition hook includes
-          #   all audio sources specified in `audio_sources` except those specified in
-          #   `audio_sources_excluded`. The track names in this parameter can include an
+          # @param [Array[String]] audio_sources An array of track names from the same group
+          #   room to merge into the compositions created by the composition hook. Can include
+          #   zero or more track names. A composition triggered by the composition hook
+          #   includes all audio sources specified in `audio_sources` except those specified
+          #   in `audio_sources_excluded`. The track names in this parameter can include an
           #   asterisk as a wild card character, which matches zero or more characters in a
           #   track name. For example, `student*` includes tracks named `student` as well as
           #   `studentTeam`.
-          # @param [String] audio_sources_excluded An array of track names to exclude. A
-          #   composition triggered by the composition hook includes all audio sources
-          #   specified in `audio_sources` except for those specified in
+          # @param [Array[String]] audio_sources_excluded An array of track names to
+          #   exclude. A composition triggered by the composition hook includes all audio
+          #   sources specified in `audio_sources` except for those specified in
           #   `audio_sources_excluded`. The track names in this parameter can include an
           #   asterisk as a wild card character, which matches zero or more characters in a
           #   track name. For example, `student*` excludes `student` as well as `studentTeam`.
@@ -496,13 +496,13 @@ module Twilio
           end
 
           ##
-          # @return [String] The array of track names to include in the compositions created by the composition hook
+          # @return [Array[String]] The array of track names to include in the compositions created by the composition hook
           def audio_sources
             @properties['audio_sources']
           end
 
           ##
-          # @return [String] The array of track names to exclude from the compositions created by the composition hook
+          # @return [Array[String]] The array of track names to exclude from the compositions created by the composition hook
           def audio_sources_excluded
             @properties['audio_sources_excluded']
           end
@@ -575,17 +575,17 @@ module Twilio
           #   composition hook in terms of regions. See {Specifying Video
           #   Layouts}[https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts]
           #   for more info.
-          # @param [String] audio_sources An array of track names from the same group room
-          #   to merge into the compositions created by the composition hook. Can include zero
-          #   or more track names. A composition triggered by the composition hook includes
-          #   all audio sources specified in `audio_sources` except those specified in
-          #   `audio_sources_excluded`. The track names in this parameter can include an
+          # @param [Array[String]] audio_sources An array of track names from the same group
+          #   room to merge into the compositions created by the composition hook. Can include
+          #   zero or more track names. A composition triggered by the composition hook
+          #   includes all audio sources specified in `audio_sources` except those specified
+          #   in `audio_sources_excluded`. The track names in this parameter can include an
           #   asterisk as a wild card character, which matches zero or more characters in a
           #   track name. For example, `student*` includes tracks named `student` as well as
           #   `studentTeam`.
-          # @param [String] audio_sources_excluded An array of track names to exclude. A
-          #   composition triggered by the composition hook includes all audio sources
-          #   specified in `audio_sources` except for those specified in
+          # @param [Array[String]] audio_sources_excluded An array of track names to
+          #   exclude. A composition triggered by the composition hook includes all audio
+          #   sources specified in `audio_sources` except for those specified in
           #   `audio_sources_excluded`. The track names in this parameter can include an
           #   asterisk as a wild card character, which matches zero or more characters in a
           #   track name. For example, `student*` excludes `student` as well as `studentTeam`.

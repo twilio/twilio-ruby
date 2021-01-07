@@ -30,8 +30,8 @@ module Twilio
           # @param [String] unique_name An application-defined string that uniquely
           #   identifies the resource. It can be used in place of the resource's `sid` in the
           #   URL to address the resource.
-          # @param [String] networks List of Network SIDs that this Network Access Profile
-          #   will allow connections to.
+          # @param [Array[String]] networks List of Network SIDs that this Network Access
+          #   Profile will allow connections to.
           # @return [NetworkAccessProfileInstance] Created NetworkAccessProfileInstance
           def create(unique_name: :unset, networks: :unset)
             data = Twilio::Values.of({

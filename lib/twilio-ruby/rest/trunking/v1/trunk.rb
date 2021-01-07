@@ -476,7 +476,7 @@ module Twilio
           end
 
           ##
-          # @return [String] Reserved
+          # @return [Array[String]] Reserved
           def auth_type_set
             @properties['auth_type_set']
           end

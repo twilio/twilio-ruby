@@ -246,8 +246,8 @@ module Twilio
               #   `status_callback_method` to send status information to your application.
               # @param [String] status_callback_method The HTTP method we should use to call
               #   `status_callback`. Can be: `POST` or `GET` and the default is `POST`.
-              # @param [reservation.CallStatus] status_callback_event The call progress events
-              #   that we will send to `status_callback`. Can be: `initiated`, `ringing`,
+              # @param [Array[reservation.CallStatus]] status_callback_event The call progress
+              #   events that we will send to `status_callback`. Can be: `initiated`, `ringing`,
               #   `answered`, or `completed`.
               # @param [String] timeout The timeout for a call when executing a Conference
               #   instruction.
@@ -286,7 +286,7 @@ module Twilio
               # @param [String] conference_status_callback_method The HTTP method we should use
               #   to call `conference_status_callback`. Can be: `GET` or `POST` and defaults to
               #   `POST`.
-              # @param [reservation.ConferenceEvent] conference_status_callback_event The
+              # @param [Array[reservation.ConferenceEvent]] conference_status_callback_event The
               #   conference status events that we will send to `conference_status_callback`. Can
               #   be: `start`, `end`, `join`, `leave`, `mute`, `hold`, `speaker`.
               # @param [String] conference_record Whether to record the conference the
@@ -314,8 +314,8 @@ module Twilio
               #   `br1`, `au1`, or `jp1`.
               # @param [String] sip_auth_username The SIP username used for authentication.
               # @param [String] sip_auth_password The SIP password for authentication.
-              # @param [String] dequeue_status_callback_event The call progress events sent via
-              #   webhooks as a result of a Dequeue instruction.
+              # @param [Array[String]] dequeue_status_callback_event The call progress events
+              #   sent via webhooks as a result of a Dequeue instruction.
               # @param [String] post_work_activity_sid The new worker activity SID after
               #   executing a Conference instruction.
               # @param [Boolean] end_conference_on_customer_exit Whether to end the conference
@@ -584,8 +584,8 @@ module Twilio
               #   `status_callback_method` to send status information to your application.
               # @param [String] status_callback_method The HTTP method we should use to call
               #   `status_callback`. Can be: `POST` or `GET` and the default is `POST`.
-              # @param [reservation.CallStatus] status_callback_event The call progress events
-              #   that we will send to `status_callback`. Can be: `initiated`, `ringing`,
+              # @param [Array[reservation.CallStatus]] status_callback_event The call progress
+              #   events that we will send to `status_callback`. Can be: `initiated`, `ringing`,
               #   `answered`, or `completed`.
               # @param [String] timeout The timeout for a call when executing a Conference
               #   instruction.
@@ -624,7 +624,7 @@ module Twilio
               # @param [String] conference_status_callback_method The HTTP method we should use
               #   to call `conference_status_callback`. Can be: `GET` or `POST` and defaults to
               #   `POST`.
-              # @param [reservation.ConferenceEvent] conference_status_callback_event The
+              # @param [Array[reservation.ConferenceEvent]] conference_status_callback_event The
               #   conference status events that we will send to `conference_status_callback`. Can
               #   be: `start`, `end`, `join`, `leave`, `mute`, `hold`, `speaker`.
               # @param [String] conference_record Whether to record the conference the
@@ -652,8 +652,8 @@ module Twilio
               #   `br1`, `au1`, or `jp1`.
               # @param [String] sip_auth_username The SIP username used for authentication.
               # @param [String] sip_auth_password The SIP password for authentication.
-              # @param [String] dequeue_status_callback_event The call progress events sent via
-              #   webhooks as a result of a Dequeue instruction.
+              # @param [Array[String]] dequeue_status_callback_event The call progress events
+              #   sent via webhooks as a result of a Dequeue instruction.
               # @param [String] post_work_activity_sid The new worker activity SID after
               #   executing a Conference instruction.
               # @param [Boolean] end_conference_on_customer_exit Whether to end the conference

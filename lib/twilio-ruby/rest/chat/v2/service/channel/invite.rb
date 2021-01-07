@@ -58,7 +58,7 @@ module Twilio
               # Lists InviteInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] identity The
+              # @param [Array[String]] identity The
               #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
               #   of the resources to read. See {access
               #   tokens}[https://www.twilio.com/docs/chat/create-tokens] for more details.
@@ -77,7 +77,7 @@ module Twilio
               # Streams InviteInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] identity The
+              # @param [Array[String]] identity The
               #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
               #   of the resources to read. See {access
               #   tokens}[https://www.twilio.com/docs/chat/create-tokens] for more details.
@@ -113,7 +113,7 @@ module Twilio
               ##
               # Retrieve a single page of InviteInstance records from the API.
               # Request is executed immediately.
-              # @param [String] identity The
+              # @param [Array[String]] identity The
               #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
               #   of the resources to read. See {access
               #   tokens}[https://www.twilio.com/docs/chat/create-tokens] for more details.

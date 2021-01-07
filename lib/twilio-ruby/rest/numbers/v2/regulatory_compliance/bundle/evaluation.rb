@@ -263,7 +263,7 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The results of the Evaluation resource
+              # @return [Array[Hash]] The results of the Evaluation resource
               def results
                 @properties['results']
               end

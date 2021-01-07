@@ -35,10 +35,10 @@ module Twilio
             #   {Conversation}[https://www.twilio.com/docs/conversations/api/conversation-resource]
             #   roles or `service` for {Conversation
             #   Service}[https://www.twilio.com/docs/conversations/api/service-resource] roles.
-            # @param [String] permission A permission that you grant to the new role. Only one
-            #   permission can be granted per parameter. To assign more than one permission,
-            #   repeat this parameter for each permission value. The values for this parameter
-            #   depend on the role's `type`.
+            # @param [Array[String]] permission A permission that you grant to the new role.
+            #   Only one permission can be granted per parameter. To assign more than one
+            #   permission, repeat this parameter for each permission value. The values for this
+            #   parameter depend on the role's `type`.
             # @return [RoleInstance] Created RoleInstance
             def create(friendly_name: nil, type: nil, permission: nil)
               data = Twilio::Values.of({
@@ -187,8 +187,8 @@ module Twilio
 
             ##
             # Update the RoleInstance
-            # @param [String] permission A permission that you grant to the role. Only one
-            #   permission can be granted per parameter. To assign more than one permission,
+            # @param [Array[String]] permission A permission that you grant to the role. Only
+            #   one permission can be granted per parameter. To assign more than one permission,
             #   repeat this parameter for each permission value. Note that the update action
             #   replaces all previously assigned permissions with those defined in the update
             #   action. To remove a permission, do not include it in the subsequent update
@@ -316,7 +316,7 @@ module Twilio
             end
 
             ##
-            # @return [String] An array of the permissions the role has been granted
+            # @return [Array[String]] An array of the permissions the role has been granted
             def permissions
               @properties['permissions']
             end
@@ -341,8 +341,8 @@ module Twilio
 
             ##
             # Update the RoleInstance
-            # @param [String] permission A permission that you grant to the role. Only one
-            #   permission can be granted per parameter. To assign more than one permission,
+            # @param [Array[String]] permission A permission that you grant to the role. Only
+            #   one permission can be granted per parameter. To assign more than one permission,
             #   repeat this parameter for each permission value. Note that the update action
             #   replaces all previously assigned permissions with those defined in the update
             #   action. To remove a permission, do not include it in the subsequent update

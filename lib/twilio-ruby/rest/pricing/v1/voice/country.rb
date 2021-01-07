@@ -231,13 +231,13 @@ module Twilio
             end
 
             ##
-            # @return [String] The list of OutboundPrefixPrice records
+            # @return [Array[String]] The list of OutboundPrefixPrice records
             def outbound_prefix_prices
               @properties['outbound_prefix_prices']
             end
 
             ##
-            # @return [String] The list of InboundCallPrice records
+            # @return [Array[String]] The list of InboundCallPrice records
             def inbound_call_prices
               @properties['inbound_call_prices']
             end

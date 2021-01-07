@@ -52,10 +52,10 @@ module Twilio
             #   `status_callback_event` is specified, we will send the `completed` status. If an
             #   `application_sid` parameter is present, this parameter is ignored. URLs must
             #   contain a valid hostname (underscores are not permitted).
-            # @param [String] status_callback_event The call progress events that we will send
-            #   to the `status_callback` URL. Can be: `initiated`, `ringing`, `answered`, and
-            #   `completed`. If no event is specified, we send the `completed` status. If you
-            #   want to receive multiple events, specify each one in a separate
+            # @param [Array[String]] status_callback_event The call progress events that we
+            #   will send to the `status_callback` URL. Can be: `initiated`, `ringing`,
+            #   `answered`, and `completed`. If no event is specified, we send the `completed`
+            #   status. If you want to receive multiple events, specify each one in a separate
             #   `status_callback_event` parameter. See the code sample for {monitoring call
             #   progress}[https://www.twilio.com/docs/voice/api/call-resource?code-sample=code-create-a-call-resource-and-specify-a-statuscallbackevent&code-sdk-version=json].
             #   If an `application_sid` is present, this parameter is ignored.
@@ -106,10 +106,10 @@ module Twilio
             # @param [String] machine_detection_timeout The number of seconds that we should
             #   attempt to detect an answering machine before timing out and sending a voice
             #   request with `AnsweredBy` of `unknown`. The default timeout is 30 seconds.
-            # @param [String] recording_status_callback_event The recording status events that
-            #   will trigger calls to the URL specified in `recording_status_callback`. Can be:
-            #   `in-progress`, `completed` and `absent`. Defaults to `completed`. Separate
-            #   multiple values with a space.
+            # @param [Array[String]] recording_status_callback_event The recording status
+            #   events that will trigger calls to the URL specified in
+            #   `recording_status_callback`. Can be: `in-progress`, `completed` and `absent`.
+            #   Defaults to `completed`. Separate  multiple values with a space.
             # @param [String] trim Whether to trim any leading and trailing silence from the
             #   recording. Can be: `trim-silence` or `do-not-trim` and the default is
             #   `trim-silence`.

@@ -250,7 +250,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The tags
+            # @return [Array[String]] The tags
             def tags
               @properties['tags']
             end

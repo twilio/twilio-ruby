@@ -31,7 +31,7 @@ module Twilio
               # Lists UserBindingInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [user_binding.BindingType] binding_type The binding_type
+              # @param [Array[user_binding.BindingType]] binding_type The binding_type
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -47,7 +47,7 @@ module Twilio
               # Streams UserBindingInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [user_binding.BindingType] binding_type The binding_type
+              # @param [Array[user_binding.BindingType]] binding_type The binding_type
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -80,7 +80,7 @@ module Twilio
               ##
               # Retrieve a single page of UserBindingInstance records from the API.
               # Request is executed immediately.
-              # @param [user_binding.BindingType] binding_type The binding_type
+              # @param [Array[user_binding.BindingType]] binding_type The binding_type
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
@@ -315,7 +315,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The message_types
+              # @return [Array[String]] The message_types
               def message_types
                 @properties['message_types']
               end
