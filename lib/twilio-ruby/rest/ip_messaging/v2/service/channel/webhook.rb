@@ -112,8 +112,8 @@ module Twilio
               # @param [webhook.Type] type The type
               # @param [String] configuration_url The configuration.url
               # @param [webhook.Method] configuration_method The configuration.method
-              # @param [String] configuration_filters The configuration.filters
-              # @param [String] configuration_triggers The configuration.triggers
+              # @param [Array[String]] configuration_filters The configuration.filters
+              # @param [Array[String]] configuration_triggers The configuration.triggers
               # @param [String] configuration_flow_sid The configuration.flow_sid
               # @param [String] configuration_retry_count The configuration.retry_count
               # @return [WebhookInstance] Created WebhookInstance
@@ -214,8 +214,8 @@ module Twilio
               # Update the WebhookInstance
               # @param [String] configuration_url The configuration.url
               # @param [webhook.Method] configuration_method The configuration.method
-              # @param [String] configuration_filters The configuration.filters
-              # @param [String] configuration_triggers The configuration.triggers
+              # @param [Array[String]] configuration_filters The configuration.filters
+              # @param [Array[String]] configuration_triggers The configuration.triggers
               # @param [String] configuration_flow_sid The configuration.flow_sid
               # @param [String] configuration_retry_count The configuration.retry_count
               # @return [WebhookInstance] Updated WebhookInstance
@@ -377,8 +377,8 @@ module Twilio
               # Update the WebhookInstance
               # @param [String] configuration_url The configuration.url
               # @param [webhook.Method] configuration_method The configuration.method
-              # @param [String] configuration_filters The configuration.filters
-              # @param [String] configuration_triggers The configuration.triggers
+              # @param [Array[String]] configuration_filters The configuration.filters
+              # @param [Array[String]] configuration_triggers The configuration.triggers
               # @param [String] configuration_flow_sid The configuration.flow_sid
               # @param [String] configuration_retry_count The configuration.retry_count
               # @return [WebhookInstance] Updated WebhookInstance

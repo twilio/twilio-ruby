@@ -31,9 +31,9 @@ module Twilio
             # Create the WebhookInstance
             # @param [String] friendly_name The string that you assigned to describe the
             #   webhook. **This value should not contain PII.**
-            # @param [String] event_types The array of events that this Webhook is subscribed
-            #   to. Possible event types: `*, factor.deleted, factor.created, factor.verified,
-            #   challenge.approved, challenge.denied`
+            # @param [Array[String]] event_types The array of events that this Webhook is
+            #   subscribed to. Possible event types: `*, factor.deleted, factor.created,
+            #   factor.verified, challenge.approved, challenge.denied`
             # @param [String] webhook_url The URL associated with this Webhook.
             # @param [webhook.Status] status The webhook status. Default value is `enabled`.
             #   One of: `enabled` or `disabled`
@@ -191,9 +191,9 @@ module Twilio
             # Update the WebhookInstance
             # @param [String] friendly_name The string that you assigned to describe the
             #   webhook. **This value should not contain PII.**
-            # @param [String] event_types The array of events that this Webhook is subscribed
-            #   to. Possible event types: `*, factor.deleted, factor.created, factor.verified,
-            #   challenge.approved, challenge.denied`
+            # @param [Array[String]] event_types The array of events that this Webhook is
+            #   subscribed to. Possible event types: `*, factor.deleted, factor.created,
+            #   factor.verified, challenge.approved, challenge.denied`
             # @param [String] webhook_url The URL associated with this Webhook.
             # @param [webhook.Status] status The webhook status. Default value is `enabled`.
             #   One of: `enabled` or `disabled`
@@ -312,7 +312,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The array of events that this Webhook is subscribed to.
+            # @return [Array[String]] The array of events that this Webhook is subscribed to.
             def event_types
               @properties['event_types']
             end
@@ -357,9 +357,9 @@ module Twilio
             # Update the WebhookInstance
             # @param [String] friendly_name The string that you assigned to describe the
             #   webhook. **This value should not contain PII.**
-            # @param [String] event_types The array of events that this Webhook is subscribed
-            #   to. Possible event types: `*, factor.deleted, factor.created, factor.verified,
-            #   challenge.approved, challenge.denied`
+            # @param [Array[String]] event_types The array of events that this Webhook is
+            #   subscribed to. Possible event types: `*, factor.deleted, factor.created,
+            #   factor.verified, challenge.approved, challenge.denied`
             # @param [String] webhook_url The URL associated with this Webhook.
             # @param [webhook.Status] status The webhook status. Default value is `enabled`.
             #   One of: `enabled` or `disabled`

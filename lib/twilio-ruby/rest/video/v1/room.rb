@@ -48,8 +48,8 @@ module Twilio
           # @param [Boolean] record_participants_on_connect Whether to start recording when
           #   Participants connect. ***This feature is not available in `peer-to-peer`
           #   rooms.***
-          # @param [room.VideoCodec] video_codecs An array of the video codecs that are
-          #   supported when publishing a track in the room.  Can be: `VP8` and `H264`.
+          # @param [Array[room.VideoCodec]] video_codecs An array of the video codecs that
+          #   are supported when publishing a track in the room.  Can be: `VP8` and `H264`.
           #   ***This feature is not available in `peer-to-peer` rooms***
           # @param [String] media_region The region for the media server in Group Rooms.
           #   Can be: one of the {available Media
@@ -465,7 +465,7 @@ module Twilio
           end
 
           ##
-          # @return [room.VideoCodec] An array of the video codecs that are supported when publishing a track in the room
+          # @return [Array[room.VideoCodec]] An array of the video codecs that are supported when publishing a track in the room
           def video_codecs
             @properties['video_codecs']
           end

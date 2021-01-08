@@ -232,13 +232,13 @@ module Twilio
           end
 
           ##
-          # @return [Hash] The list of TaskRouter TaskQueues
+          # @return [Array[Hash]] The list of TaskRouter TaskQueues
           def taskrouter_taskqueues
             @properties['taskrouter_taskqueues']
           end
 
           ##
-          # @return [Hash] The Skill description for TaskRouter workers
+          # @return [Array[Hash]] The Skill description for TaskRouter workers
           def taskrouter_skills
             @properties['taskrouter_skills']
           end
@@ -376,7 +376,7 @@ module Twilio
           end
 
           ##
-          # @return [Hash] A list of objects that contain the configurations for the Integrations supported in this configuration
+          # @return [Array[Hash]] A list of objects that contain the configurations for the Integrations supported in this configuration
           def integrations
             @properties['integrations']
           end
@@ -388,7 +388,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The list of serverless service SIDs
+          # @return [Array[String]] The list of serverless service SIDs
           def serverless_service_sids
             @properties['serverless_service_sids']
           end

@@ -52,8 +52,8 @@ module Twilio
               #   `status_callback_method` to send status information to your application.
               # @param [String] status_callback_method The HTTP method we should use to call
               #   `status_callback`. Can be: `GET` and `POST` and defaults to `POST`.
-              # @param [String] status_callback_event The conference state changes that should
-              #   generate a call to `status_callback`. Can be: `initiated`, `ringing`,
+              # @param [Array[String]] status_callback_event The conference state changes that
+              #   should generate a call to `status_callback`. Can be: `initiated`, `ringing`,
               #   `answered`, and `completed`. Separate multiple values with a space. The default
               #   value is `completed`.
               # @param [String] label A label for this participant. If one is supplied, it may
@@ -105,10 +105,10 @@ module Twilio
               # @param [String] conference_status_callback_method The HTTP method we should use
               #   to call `conference_status_callback`. Can be: `GET` or `POST` and defaults to
               #   `POST`.
-              # @param [String] conference_status_callback_event The conference state changes
-              #   that should generate a call to `conference_status_callback`. Can be: `start`,
-              #   `end`, `join`, `leave`, `mute`, `hold`, and `speaker`. Separate multiple values
-              #   with a space. Defaults to `start end`.
+              # @param [Array[String]] conference_status_callback_event The conference state
+              #   changes that should generate a call to `conference_status_callback`. Can be:
+              #   `start`, `end`, `join`, `leave`, `mute`, `hold`, and `speaker`. Separate
+              #   multiple values with a space. Defaults to `start end`.
               # @param [String] recording_channels The recording channels for the final
               #   recording. Can be: `mono` or `dual` and the default is `mono`.
               # @param [String] recording_status_callback The URL that we should call using the
@@ -128,11 +128,11 @@ module Twilio
               # @param [String] conference_recording_status_callback_method The HTTP method we
               #   should use to call `conference_recording_status_callback`. Can be: `GET` or
               #   `POST` and defaults to `POST`.
-              # @param [String] recording_status_callback_event The recording state changes that
-              #   should generate a call to `recording_status_callback`. Can be: `in-progress`,
-              #   `completed`, and `failed`. Separate multiple values with a space. The default
-              #   value is `in-progress completed failed`.
-              # @param [String] conference_recording_status_callback_event The conference
+              # @param [Array[String]] recording_status_callback_event The recording state
+              #   changes that should generate a call to `recording_status_callback`. Can be:
+              #   `in-progress`, `completed`, and `failed`. Separate multiple values with a space.
+              #   The default value is `in-progress completed failed`.
+              # @param [Array[String]] conference_recording_status_callback_event The conference
               #   recording state changes that generate a call to
               #   `conference_recording_status_callback`. Can be: `in-progress`, `completed`, and
               #   `failed`. Separate multiple values with a space. The default value is

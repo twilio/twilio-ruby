@@ -85,10 +85,10 @@ module Twilio
             # Update the WebhookInstance
             # @param [String] method The HTTP method to be used when sending a webhook
             #   request.
-            # @param [String] filters The list of webhook event triggers that are enabled for
-            #   this Service: `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`,
-            #   `onConversationUpdated`, `onConversationRemoved`, `onParticipantAdded`,
-            #   `onParticipantUpdated`, `onParticipantRemoved`
+            # @param [Array[String]] filters The list of webhook event triggers that are
+            #   enabled for this Service: `onMessageAdded`, `onMessageUpdated`,
+            #   `onMessageRemoved`, `onConversationUpdated`, `onConversationRemoved`,
+            #   `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`
             # @param [String] pre_webhook_url The absolute url the pre-event webhook request
             #   should be sent to.
             # @param [String] post_webhook_url The absolute url the post-event webhook request
@@ -173,7 +173,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The list of webhook event triggers that are enabled for this Service.
+            # @return [Array[String]] The list of webhook event triggers that are enabled for this Service.
             def filters
               @properties['filters']
             end
@@ -213,10 +213,10 @@ module Twilio
             # Update the WebhookInstance
             # @param [String] method The HTTP method to be used when sending a webhook
             #   request.
-            # @param [String] filters The list of webhook event triggers that are enabled for
-            #   this Service: `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`,
-            #   `onConversationUpdated`, `onConversationRemoved`, `onParticipantAdded`,
-            #   `onParticipantUpdated`, `onParticipantRemoved`
+            # @param [Array[String]] filters The list of webhook event triggers that are
+            #   enabled for this Service: `onMessageAdded`, `onMessageUpdated`,
+            #   `onMessageRemoved`, `onConversationUpdated`, `onConversationRemoved`,
+            #   `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`
             # @param [String] pre_webhook_url The absolute url the pre-event webhook request
             #   should be sent to.
             # @param [String] post_webhook_url The absolute url the post-event webhook request

@@ -234,7 +234,7 @@ module Twilio
             end
 
             ##
-            # @return [Hash] The required information for creating an End-User.
+            # @return [Array[Hash]] The required information for creating an End-User.
             def fields
               @properties['fields']
             end

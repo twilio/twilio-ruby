@@ -275,7 +275,7 @@ module Twilio
           end
 
           ##
-          # @return [Hash] The MCC/MNCs included in the Network resource
+          # @return [Array[Hash]] The MCC/MNCs included in the Network resource
           def identifiers
             @properties['identifiers']
           end

@@ -180,7 +180,7 @@ module Twilio
               end
 
               ##
-              # @return [Hash] The minimum, average, maximum, and total time that Workers spent in each Activity
+              # @return [Array[Hash]] The minimum, average, maximum, and total time that Workers spent in each Activity
               def activity_durations
                 @properties['activity_durations']
               end

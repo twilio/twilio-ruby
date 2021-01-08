@@ -234,7 +234,7 @@ module Twilio
             end
 
             ##
-            # @return [Hash] The required information for creating a Supporting Document
+            # @return [Array[Hash]] The required information for creating a Supporting Document
             def fields
               @properties['fields']
             end

@@ -37,7 +37,7 @@ module Twilio
                 ##
                 # Create the MessageInteractionInstance
                 # @param [String] body The message to send to the participant
-                # @param [String] media_url Reserved. Not currently supported.
+                # @param [Array[String]] media_url Reserved. Not currently supported.
                 # @return [MessageInteractionInstance] Created MessageInteractionInstance
                 def create(body: :unset, media_url: :unset)
                   data = Twilio::Values.of({'Body' => body, 'MediaUrl' => Twilio.serialize_list(media_url) { |e| e }, })

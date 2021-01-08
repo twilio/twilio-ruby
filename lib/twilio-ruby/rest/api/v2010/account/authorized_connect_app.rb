@@ -288,7 +288,7 @@ module Twilio
             end
 
             ##
-            # @return [authorized_connect_app.Permission] Permissions authorized to the app
+            # @return [Array[authorized_connect_app.Permission]] Permissions authorized to the app
             def permissions
               @properties['permissions']
             end

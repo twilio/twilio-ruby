@@ -116,7 +116,7 @@ module Twilio
           # @param [Boolean] voice_enabled The voice_enabled
           # @param [Boolean] commands_enabled The commands_enabled
           # @param [Boolean] national_roaming_enabled The national_roaming_enabled
-          # @param [String] international_roaming The international_roaming
+          # @param [Array[String]] international_roaming The international_roaming
           # @return [RatePlanInstance] Created RatePlanInstance
           def create(unique_name: :unset, friendly_name: :unset, data_enabled: :unset, data_limit: :unset, data_metering: :unset, messaging_enabled: :unset, voice_enabled: :unset, commands_enabled: :unset, national_roaming_enabled: :unset, international_roaming: :unset)
             data = Twilio::Values.of({
@@ -342,7 +342,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The international_roaming
+          # @return [Array[String]] The international_roaming
           def international_roaming
             @properties['international_roaming']
           end

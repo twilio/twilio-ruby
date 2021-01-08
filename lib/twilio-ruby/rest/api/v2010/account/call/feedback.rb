@@ -92,8 +92,8 @@ module Twilio
               # @param [String] quality_score The call quality expressed as an integer from `1`
               #   to `5` where `1` represents very poor call quality and `5` represents a perfect
               #   call.
-              # @param [feedback.Issues] issue A list of one or more issues experienced during
-              #   the call. Issues can be: `imperfect-audio`, `dropped-call`,
+              # @param [Array[feedback.Issues]] issue A list of one or more issues experienced
+              #   during the call. Issues can be: `imperfect-audio`, `dropped-call`,
               #   `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`,
               #   `audio-latency`, `unsolicited-call`, or `one-way-audio`.
               # @return [FeedbackInstance] Created FeedbackInstance
@@ -132,10 +132,10 @@ module Twilio
               # @param [String] quality_score The call quality expressed as an integer from `1`
               #   to `5` where `1` represents very poor call quality and `5` represents a perfect
               #   call.
-              # @param [feedback.Issues] issue One or more issues experienced during the call.
-              #   The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`,
-              #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, `unsolicited-call`,
-              #   or `one-way-audio`.
+              # @param [Array[feedback.Issues]] issue One or more issues experienced during the
+              #   call. The issues can be: `imperfect-audio`, `dropped-call`,
+              #   `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`,
+              #   `audio-latency`, `unsolicited-call`, or `one-way-audio`.
               # @return [FeedbackInstance] Updated FeedbackInstance
               def update(quality_score: nil, issue: :unset)
                 data = Twilio::Values.of({
@@ -227,7 +227,7 @@ module Twilio
               end
 
               ##
-              # @return [feedback.Issues] Issues experienced during the call
+              # @return [Array[feedback.Issues]] Issues experienced during the call
               def issues
                 @properties['issues']
               end
@@ -249,8 +249,8 @@ module Twilio
               # @param [String] quality_score The call quality expressed as an integer from `1`
               #   to `5` where `1` represents very poor call quality and `5` represents a perfect
               #   call.
-              # @param [feedback.Issues] issue A list of one or more issues experienced during
-              #   the call. Issues can be: `imperfect-audio`, `dropped-call`,
+              # @param [Array[feedback.Issues]] issue A list of one or more issues experienced
+              #   during the call. Issues can be: `imperfect-audio`, `dropped-call`,
               #   `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`,
               #   `audio-latency`, `unsolicited-call`, or `one-way-audio`.
               # @return [FeedbackInstance] Created FeedbackInstance
@@ -270,10 +270,10 @@ module Twilio
               # @param [String] quality_score The call quality expressed as an integer from `1`
               #   to `5` where `1` represents very poor call quality and `5` represents a perfect
               #   call.
-              # @param [feedback.Issues] issue One or more issues experienced during the call.
-              #   The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`,
-              #   `post-dial-delay`, `digits-not-captured`, `audio-latency`, `unsolicited-call`,
-              #   or `one-way-audio`.
+              # @param [Array[feedback.Issues]] issue One or more issues experienced during the
+              #   call. The issues can be: `imperfect-audio`, `dropped-call`,
+              #   `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`,
+              #   `audio-latency`, `unsolicited-call`, or `one-way-audio`.
               # @return [FeedbackInstance] Updated FeedbackInstance
               def update(quality_score: nil, issue: :unset)
                 context.update(quality_score: quality_score, issue: issue, )

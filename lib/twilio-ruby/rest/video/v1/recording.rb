@@ -30,8 +30,8 @@ module Twilio
           # @param [recording.Status] status Read only the recordings that have this status.
           #   Can be: `processing`, `completed`, or `deleted`.
           # @param [String] source_sid Read only the recordings that have this `source_sid`.
-          # @param [String] grouping_sid Read only recordings with this `grouping_sid`,
-          #   which may include a `participant_sid` and/or a `room_sid`.
+          # @param [Array[String]] grouping_sid Read only recordings with this
+          #   `grouping_sid`, which may include a `participant_sid` and/or a `room_sid`.
           # @param [Time] date_created_after Read only recordings that started on or after
           #   this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time with time
           #   zone.
@@ -67,8 +67,8 @@ module Twilio
           # @param [recording.Status] status Read only the recordings that have this status.
           #   Can be: `processing`, `completed`, or `deleted`.
           # @param [String] source_sid Read only the recordings that have this `source_sid`.
-          # @param [String] grouping_sid Read only recordings with this `grouping_sid`,
-          #   which may include a `participant_sid` and/or a `room_sid`.
+          # @param [Array[String]] grouping_sid Read only recordings with this
+          #   `grouping_sid`, which may include a `participant_sid` and/or a `room_sid`.
           # @param [Time] date_created_after Read only recordings that started on or after
           #   this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time with time
           #   zone.
@@ -120,8 +120,8 @@ module Twilio
           # @param [recording.Status] status Read only the recordings that have this status.
           #   Can be: `processing`, `completed`, or `deleted`.
           # @param [String] source_sid Read only the recordings that have this `source_sid`.
-          # @param [String] grouping_sid Read only recordings with this `grouping_sid`,
-          #   which may include a `participant_sid` and/or a `room_sid`.
+          # @param [Array[String]] grouping_sid Read only recordings with this
+          #   `grouping_sid`, which may include a `participant_sid` and/or a `room_sid`.
           # @param [Time] date_created_after Read only recordings that started on or after
           #   this {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] date-time with time
           #   zone.

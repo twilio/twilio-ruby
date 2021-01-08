@@ -107,24 +107,24 @@ module Twilio
             #   FCM also {reserves certain
             #   keys}[https://firebase.google.com/docs/cloud-messaging/http-server-ref], which
             #   cannot be used in that channel.
-            # @param [String] segment The Segment resource is deprecated. Use the `tag`
+            # @param [Array[String]] segment The Segment resource is deprecated. Use the `tag`
             #   parameter, instead.
             # @param [Hash] alexa Deprecated.
-            # @param [String] to_binding The destination address specified as a JSON string.
-            #   Multiple `to_binding` parameters can be included but the total size of the
-            #   request entity should not exceed 1MB. This is typically sufficient for 10,000
-            #   phone numbers.
+            # @param [Array[String]] to_binding The destination address specified as a JSON
+            #   string.  Multiple `to_binding` parameters can be included but the total size of
+            #   the request entity should not exceed 1MB. This is typically sufficient for
+            #   10,000 phone numbers.
             # @param [String] delivery_callback_url URL to send webhooks.
-            # @param [String] identity The `identity` value that uniquely identifies the new
-            #   resource's {User}[https://www.twilio.com/docs/chat/rest/user-resource] within
-            #   the {Service}[https://www.twilio.com/docs/notify/api/service-resource]. Delivery
-            #   will be attempted only to Bindings with an Identity in this list. No more than
-            #   20 items are allowed in this list.
-            # @param [String] tag A tag that selects the Bindings to notify. Repeat this
-            #   parameter to specify more than one tag, up to a total of 5 tags. The implicit
-            #   tag `all` is available to notify all Bindings in a Service instance. Similarly,
-            #   the implicit tags `apn`, `fcm`, `gcm`, `sms` and `facebook-messenger` are
-            #   available to notify all Bindings in a specific channel.
+            # @param [Array[String]] identity The `identity` value that uniquely identifies
+            #   the new resource's {User}[https://www.twilio.com/docs/chat/rest/user-resource]
+            #   within the {Service}[https://www.twilio.com/docs/notify/api/service-resource].
+            #   Delivery will be attempted only to Bindings with an Identity in this list. No
+            #   more than 20 items are allowed in this list.
+            # @param [Array[String]] tag A tag that selects the Bindings to notify. Repeat
+            #   this parameter to specify more than one tag, up to a total of 5 tags. The
+            #   implicit tag `all` is available to notify all Bindings in a Service instance.
+            #   Similarly, the implicit tags `apn`, `fcm`, `gcm`, `sms` and `facebook-messenger`
+            #   are available to notify all Bindings in a specific channel.
             # @return [NotificationInstance] Created NotificationInstance
             def create(body: :unset, priority: :unset, ttl: :unset, title: :unset, sound: :unset, action: :unset, data: :unset, apn: :unset, gcm: :unset, sms: :unset, facebook_messenger: :unset, fcm: :unset, segment: :unset, alexa: :unset, to_binding: :unset, delivery_callback_url: :unset, identity: :unset, tag: :unset)
               data = Twilio::Values.of({
@@ -255,19 +255,19 @@ module Twilio
             end
 
             ##
-            # @return [String] The list of identity values of the Users to notify
+            # @return [Array[String]] The list of identity values of the Users to notify
             def identities
               @properties['identities']
             end
 
             ##
-            # @return [String] The tags that select the Bindings to notify
+            # @return [Array[String]] The tags that select the Bindings to notify
             def tags
               @properties['tags']
             end
 
             ##
-            # @return [String] The list of Segments to notify
+            # @return [Array[String]] The list of Segments to notify
             def segments
               @properties['segments']
             end

@@ -31,12 +31,12 @@ module Twilio
             # Lists BindingInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [binding.BindingType] binding_type The push technology used by the
+            # @param [Array[binding.BindingType]] binding_type The push technology used by the
             #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See {push
             #   notification
             #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
             #   for more info.
-            # @param [String] identity The
+            # @param [Array[String]] identity The
             #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
             #   of the resources to read. See {access
             #   tokens}[https://www.twilio.com/docs/chat/create-tokens] for more details.
@@ -60,12 +60,12 @@ module Twilio
             # Streams BindingInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [binding.BindingType] binding_type The push technology used by the
+            # @param [Array[binding.BindingType]] binding_type The push technology used by the
             #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See {push
             #   notification
             #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
             #   for more info.
-            # @param [String] identity The
+            # @param [Array[String]] identity The
             #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
             #   of the resources to read. See {access
             #   tokens}[https://www.twilio.com/docs/chat/create-tokens] for more details.
@@ -101,12 +101,12 @@ module Twilio
             ##
             # Retrieve a single page of BindingInstance records from the API.
             # Request is executed immediately.
-            # @param [binding.BindingType] binding_type The push technology used by the
+            # @param [Array[binding.BindingType]] binding_type The push technology used by the
             #   Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See {push
             #   notification
             #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
             #   for more info.
-            # @param [String] identity The
+            # @param [Array[String]] identity The
             #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
             #   of the resources to read. See {access
             #   tokens}[https://www.twilio.com/docs/chat/create-tokens] for more details.
@@ -325,7 +325,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The Programmable Chat message types the binding is subscribed to
+            # @return [Array[String]] The Programmable Chat message types the binding is subscribed to
             def message_types
               @properties['message_types']
             end

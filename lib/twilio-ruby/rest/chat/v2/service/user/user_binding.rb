@@ -37,9 +37,9 @@ module Twilio
               # Lists UserBindingInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [user_binding.BindingType] binding_type The push technology used by the
-              #   User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See {push
-              #   notification
+              # @param [Array[user_binding.BindingType]] binding_type The push technology used
+              #   by the User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See
+              #   {push notification
               #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
               #   for more info.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -57,9 +57,9 @@ module Twilio
               # Streams UserBindingInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [user_binding.BindingType] binding_type The push technology used by the
-              #   User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See {push
-              #   notification
+              # @param [Array[user_binding.BindingType]] binding_type The push technology used
+              #   by the User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See
+              #   {push notification
               #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
               #   for more info.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -94,9 +94,9 @@ module Twilio
               ##
               # Retrieve a single page of UserBindingInstance records from the API.
               # Request is executed immediately.
-              # @param [user_binding.BindingType] binding_type The push technology used by the
-              #   User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See {push
-              #   notification
+              # @param [Array[user_binding.BindingType]] binding_type The push technology used
+              #   by the User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See
+              #   {push notification
               #   configuration}[https://www.twilio.com/docs/chat/push-notification-configuration]
               #   for more info.
               # @param [String] page_token PageToken provided by the API
@@ -345,7 +345,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The Programmable Chat message types the binding is subscribed to
+              # @return [Array[String]] The Programmable Chat message types the binding is subscribed to
               def message_types
                 @properties['message_types']
               end

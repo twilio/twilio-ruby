@@ -125,7 +125,7 @@ module Twilio
             # @param [session.Status] status The initial status of the Session. Can be:
             #   `open`, `in-progress`, `closed`, `failed`, or `unknown`. The default is `open`
             #   on create.
-            # @param [Hash] participants The Participant objects to include in the new
+            # @param [Array[Hash]] participants The Participant objects to include in the new
             #   session.
             # @param [Boolean] fail_on_participant_conflict [Experimental] For accounts with
             #   the ProxyAllowParticipantConflict account flag, setting to true enables

@@ -138,7 +138,7 @@ module Twilio
               end
 
               ##
-              # @return [String] A collection of Subscribe Rules that describe how to include or exclude matching tracks
+              # @return [Array[String]] A collection of Subscribe Rules that describe how to include or exclude matching tracks
               def rules
                 @properties['rules']
               end

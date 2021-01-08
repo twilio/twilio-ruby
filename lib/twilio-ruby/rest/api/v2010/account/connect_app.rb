@@ -189,7 +189,7 @@ module Twilio
             #   the resource. It can be up to 64 characters long.
             # @param [String] homepage_url A public URL where users can obtain more
             #   information about this Connect App.
-            # @param [connect_app.Permission] permissions A comma-separated list of the
+            # @param [Array[connect_app.Permission]] permissions A comma-separated list of the
             #   permissions you will request from the users of this ConnectApp.  Can include:
             #   `get-all` and `post-all`.
             # @return [ConnectAppInstance] Updated ConnectAppInstance
@@ -331,7 +331,7 @@ module Twilio
             end
 
             ##
-            # @return [connect_app.Permission] The set of permissions that your ConnectApp requests
+            # @return [Array[connect_app.Permission]] The set of permissions that your ConnectApp requests
             def permissions
               @properties['permissions']
             end
@@ -369,7 +369,7 @@ module Twilio
             #   the resource. It can be up to 64 characters long.
             # @param [String] homepage_url A public URL where users can obtain more
             #   information about this Connect App.
-            # @param [connect_app.Permission] permissions A comma-separated list of the
+            # @param [Array[connect_app.Permission]] permissions A comma-separated list of the
             #   permissions you will request from the users of this ConnectApp.  Can include:
             #   `get-all` and `post-all`.
             # @return [ConnectAppInstance] Updated ConnectAppInstance

@@ -237,7 +237,7 @@ module Twilio
               end
 
               ##
-              # @return [String] Issues experienced during the call
+              # @return [Array[String]] Issues experienced during the call
               def issues
                 @properties['issues']
               end

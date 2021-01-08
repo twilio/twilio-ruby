@@ -284,7 +284,7 @@ module Twilio
             end
 
             ##
-            # @return [Hash] List of error in the flow definition
+            # @return [Array[Hash]] List of error in the flow definition
             def errors
               @properties['errors']
             end

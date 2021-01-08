@@ -227,7 +227,7 @@ module Twilio
           # @param [String] pre_webhook_url The pre_webhook_url
           # @param [String] post_webhook_url The post_webhook_url
           # @param [String] webhook_method The webhook_method
-          # @param [String] webhook_filters The webhook_filters
+          # @param [Array[String]] webhook_filters The webhook_filters
           # @param [String] limits_channel_members The limits.channel_members
           # @param [String] limits_user_channels The limits.user_channels
           # @param [String] media_compatibility_message The media.compatibility_message
@@ -512,7 +512,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The webhook_filters
+          # @return [Array[String]] The webhook_filters
           def webhook_filters
             @properties['webhook_filters']
           end
@@ -607,7 +607,7 @@ module Twilio
           # @param [String] pre_webhook_url The pre_webhook_url
           # @param [String] post_webhook_url The post_webhook_url
           # @param [String] webhook_method The webhook_method
-          # @param [String] webhook_filters The webhook_filters
+          # @param [Array[String]] webhook_filters The webhook_filters
           # @param [String] limits_channel_members The limits.channel_members
           # @param [String] limits_user_channels The limits.user_channels
           # @param [String] media_compatibility_message The media.compatibility_message
