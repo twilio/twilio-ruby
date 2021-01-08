@@ -575,7 +575,7 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       enqueue_elem = Twilio::TwiML::Enqueue.new(name: nil, workflow_sid: '123123123')
-      enqueue_elem.task(account_sid: 'AC123123123')
+      enqueue_elem.task({ account_sid: 'AC123123123' })
 
       response = Twilio::TwiML::VoiceResponse.new
       response.append(enqueue_elem)
