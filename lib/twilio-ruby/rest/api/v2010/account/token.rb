@@ -119,7 +119,7 @@ module Twilio
             end
 
             ##
-            # @return [String] An array representing the ephemeral credentials
+            # @return [Array[String]] An array representing the ephemeral credentials
             def ice_servers
               @properties['ice_servers']
             end

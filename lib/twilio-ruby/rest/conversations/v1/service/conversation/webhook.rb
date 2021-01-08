@@ -39,10 +39,10 @@ module Twilio
               #   sent to.
               # @param [webhook.Method] configuration_method The HTTP method to be used when
               #   sending a webhook request.
-              # @param [String] configuration_filters The list of events, firing webhook event
-              #   for this Conversation.
-              # @param [String] configuration_triggers The list of keywords, firing webhook
+              # @param [Array[String]] configuration_filters The list of events, firing webhook
               #   event for this Conversation.
+              # @param [Array[String]] configuration_triggers The list of keywords, firing
+              #   webhook event for this Conversation.
               # @param [String] configuration_flow_sid The studio flow SID, where the webhook
               #   should be sent to.
               # @param [String] configuration_replay_after The message index for which and it's
@@ -217,10 +217,10 @@ module Twilio
               #   sent to.
               # @param [webhook.Method] configuration_method The HTTP method to be used when
               #   sending a webhook request.
-              # @param [String] configuration_filters The list of events, firing webhook event
-              #   for this Conversation.
-              # @param [String] configuration_triggers The list of keywords, firing webhook
+              # @param [Array[String]] configuration_filters The list of events, firing webhook
               #   event for this Conversation.
+              # @param [Array[String]] configuration_triggers The list of keywords, firing
+              #   webhook event for this Conversation.
               # @param [String] configuration_flow_sid The studio flow SID, where the webhook
               #   should be sent to.
               # @return [WebhookInstance] Updated WebhookInstance
@@ -396,10 +396,10 @@ module Twilio
               #   sent to.
               # @param [webhook.Method] configuration_method The HTTP method to be used when
               #   sending a webhook request.
-              # @param [String] configuration_filters The list of events, firing webhook event
-              #   for this Conversation.
-              # @param [String] configuration_triggers The list of keywords, firing webhook
+              # @param [Array[String]] configuration_filters The list of events, firing webhook
               #   event for this Conversation.
+              # @param [Array[String]] configuration_triggers The list of keywords, firing
+              #   webhook event for this Conversation.
               # @param [String] configuration_flow_sid The studio flow SID, where the webhook
               #   should be sent to.
               # @return [WebhookInstance] Updated WebhookInstance

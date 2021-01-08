@@ -127,9 +127,9 @@ module Twilio
           # @param [Boolean] national_roaming_enabled Whether SIMs can roam on networks
           #   other than the home network (T-Mobile USA) in the United States. See {national
           #   roaming}[https://www.twilio.com/docs/wireless/api/rateplan-resource#national-roaming].
-          # @param [String] international_roaming The list of services that SIMs capable of
-          #   using GPRS/3G/4G/LTE data connectivity can use outside of the United States. Can
-          #   be: `data`, `voice`, and `messaging`.
+          # @param [Array[String]] international_roaming The list of services that SIMs
+          #   capable of using GPRS/3G/4G/LTE data connectivity can use outside of the United
+          #   States. Can be: `data`, `voice`, and `messaging`.
           # @param [String] national_roaming_data_limit The total data usage (download and
           #   upload combined) in Megabytes that the Network allows during one month on
           #   non-home networks in the United States. The metering period begins the day of
@@ -371,7 +371,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The services that SIMs capable of using GPRS/3G/4G/LTE data connectivity can use outside of the United States
+          # @return [Array[String]] The services that SIMs capable of using GPRS/3G/4G/LTE data connectivity can use outside of the United States
           def international_roaming
             @properties['international_roaming']
           end

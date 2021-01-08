@@ -246,8 +246,8 @@ module Twilio
           #   `pre_webhook_url` and `post_webhook_url` webhooks.  Can be: `POST` or `GET` and
           #   the default is `POST`. See {Webhook
           #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
-          # @param [String] webhook_filters The list of WebHook events that are enabled for
-          #   this Service instance. See {Webhook
+          # @param [Array[String]] webhook_filters The list of WebHook events that are
+          #   enabled for this Service instance. See {Webhook
           #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
           # @param [String] webhooks_on_message_send_url The URL of the webhook to call in
           #   response to the `on_message_send` event using the
@@ -621,7 +621,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The list of WebHook events that are enabled for this Service instance
+          # @return [Array[String]] The list of WebHook events that are enabled for this Service instance
           def webhook_filters
             @properties['webhook_filters']
           end
@@ -716,8 +716,8 @@ module Twilio
           #   `pre_webhook_url` and `post_webhook_url` webhooks.  Can be: `POST` or `GET` and
           #   the default is `POST`. See {Webhook
           #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
-          # @param [String] webhook_filters The list of WebHook events that are enabled for
-          #   this Service instance. See {Webhook
+          # @param [Array[String]] webhook_filters The list of WebHook events that are
+          #   enabled for this Service instance. See {Webhook
           #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
           # @param [String] webhooks_on_message_send_url The URL of the webhook to call in
           #   response to the `on_message_send` event using the

@@ -41,8 +41,9 @@ module Twilio
             #   token. For FCM and GCM, the registration token. For SMS, a phone number in E.164
             #   format. For Facebook Messenger, the Messenger ID of the user or a phone number
             #   in E.164 format.
-            # @param [String] tag A tag that can be used to select the Bindings to notify.
-            #   Repeat this parameter to specify more than one tag, up to a total of 20 tags.
+            # @param [Array[String]] tag A tag that can be used to select the Bindings to
+            #   notify. Repeat this parameter to specify more than one tag, up to a total of 20
+            #   tags.
             # @param [String] notification_protocol_version The protocol version to use to
             #   send the notification. This defaults to the value of
             #   `default_xxxx_notification_protocol_version` for the protocol in the
@@ -81,12 +82,12 @@ module Twilio
             #   date. Specify the date in GMT and format as `YYYY-MM-DD`.
             # @param [Date] end_date Only include usage that occurred on or before this date.
             #   Specify the date in GMT and format as `YYYY-MM-DD`.
-            # @param [String] identity The
+            # @param [Array[String]] identity The
             #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
             #   of the resources to read.
-            # @param [String] tag Only list Bindings that have all of the specified Tags. The
-            #   following implicit tags are available: `all`, `apn`, `fcm`, `gcm`, `sms`,
-            #   `facebook-messenger`. Up to 5 tags are allowed.
+            # @param [Array[String]] tag Only list Bindings that have all of the specified
+            #   Tags. The following implicit tags are available: `all`, `apn`, `fcm`, `gcm`,
+            #   `sms`, `facebook-messenger`. Up to 5 tags are allowed.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -113,12 +114,12 @@ module Twilio
             #   date. Specify the date in GMT and format as `YYYY-MM-DD`.
             # @param [Date] end_date Only include usage that occurred on or before this date.
             #   Specify the date in GMT and format as `YYYY-MM-DD`.
-            # @param [String] identity The
+            # @param [Array[String]] identity The
             #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
             #   of the resources to read.
-            # @param [String] tag Only list Bindings that have all of the specified Tags. The
-            #   following implicit tags are available: `all`, `apn`, `fcm`, `gcm`, `sms`,
-            #   `facebook-messenger`. Up to 5 tags are allowed.
+            # @param [Array[String]] tag Only list Bindings that have all of the specified
+            #   Tags. The following implicit tags are available: `all`, `apn`, `fcm`, `gcm`,
+            #   `sms`, `facebook-messenger`. Up to 5 tags are allowed.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -161,12 +162,12 @@ module Twilio
             #   date. Specify the date in GMT and format as `YYYY-MM-DD`.
             # @param [Date] end_date Only include usage that occurred on or before this date.
             #   Specify the date in GMT and format as `YYYY-MM-DD`.
-            # @param [String] identity The
+            # @param [Array[String]] identity The
             #   {User}[https://www.twilio.com/docs/chat/rest/user-resource]'s `identity` value
             #   of the resources to read.
-            # @param [String] tag Only list Bindings that have all of the specified Tags. The
-            #   following implicit tags are available: `all`, `apn`, `fcm`, `gcm`, `sms`,
-            #   `facebook-messenger`. Up to 5 tags are allowed.
+            # @param [Array[String]] tag Only list Bindings that have all of the specified
+            #   Tags. The following implicit tags are available: `all`, `apn`, `fcm`, `gcm`,
+            #   `sms`, `facebook-messenger`. Up to 5 tags are allowed.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -406,7 +407,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The list of tags associated with this Binding
+            # @return [Array[String]] The list of tags associated with this Binding
             def tags
               @properties['tags']
             end

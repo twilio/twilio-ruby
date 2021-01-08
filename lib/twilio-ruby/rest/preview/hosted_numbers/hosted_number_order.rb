@@ -175,8 +175,8 @@ module Twilio
           # @param [String] unique_name Optional. Provides a unique and addressable name to
           #   be assigned to this HostedNumberOrder, assigned by the developer, to be
           #   optionally used in addition to SID.
-          # @param [String] cc_emails Optional. A list of emails that the LOA document for
-          #   this HostedNumberOrder will be carbon copied to.
+          # @param [Array[String]] cc_emails Optional. A list of emails that the LOA
+          #   document for this HostedNumberOrder will be carbon copied to.
           # @param [String] sms_url The URL that Twilio should request when somebody sends
           #   an SMS to the phone number. This will be copied onto the IncomingPhoneNumber
           #   resource.
@@ -315,8 +315,8 @@ module Twilio
           #   used in addition to SID.
           # @param [String] email Email of the owner of this phone number that is being
           #   hosted.
-          # @param [String] cc_emails Optional. A list of emails that LOA document for this
-          #   HostedNumberOrder will be carbon copied to.
+          # @param [Array[String]] cc_emails Optional. A list of emails that LOA document
+          #   for this HostedNumberOrder will be carbon copied to.
           # @param [hosted_number_order.Status] status User can only post to
           #   `pending-verification` status to transition the HostedNumberOrder to initiate a
           #   verification call or verification of ownership with a copy of a phone bill.
@@ -513,7 +513,7 @@ module Twilio
           end
 
           ##
-          # @return [String] A list of emails.
+          # @return [Array[String]] A list of emails.
           def cc_emails
             @properties['cc_emails']
           end
@@ -555,7 +555,7 @@ module Twilio
           end
 
           ##
-          # @return [String] List of IDs for ownership verification calls.
+          # @return [Array[String]] List of IDs for ownership verification calls.
           def verification_call_sids
             @properties['verification_call_sids']
           end
@@ -583,8 +583,8 @@ module Twilio
           #   used in addition to SID.
           # @param [String] email Email of the owner of this phone number that is being
           #   hosted.
-          # @param [String] cc_emails Optional. A list of emails that LOA document for this
-          #   HostedNumberOrder will be carbon copied to.
+          # @param [Array[String]] cc_emails Optional. A list of emails that LOA document
+          #   for this HostedNumberOrder will be carbon copied to.
           # @param [hosted_number_order.Status] status User can only post to
           #   `pending-verification` status to transition the HostedNumberOrder to initiate a
           #   verification call or verification of ownership with a copy of a phone bill.

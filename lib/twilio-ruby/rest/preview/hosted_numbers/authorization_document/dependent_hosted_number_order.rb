@@ -343,7 +343,7 @@ module Twilio
             end
 
             ##
-            # @return [String] A list of emails.
+            # @return [Array[String]] A list of emails.
             def cc_emails
               @properties['cc_emails']
             end
@@ -379,7 +379,7 @@ module Twilio
             end
 
             ##
-            # @return [String] List of IDs for ownership verification calls.
+            # @return [Array[String]] List of IDs for ownership verification calls.
             def verification_call_sids
               @properties['verification_call_sids']
             end

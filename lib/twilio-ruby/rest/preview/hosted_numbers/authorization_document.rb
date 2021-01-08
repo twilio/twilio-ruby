@@ -130,9 +130,9 @@ module Twilio
 
           ##
           # Create the AuthorizationDocumentInstance
-          # @param [String] hosted_number_order_sids A list of HostedNumberOrder sids that
-          #   this AuthorizationDocument will authorize for hosting phone number capabilities
-          #   on Twilio's platform.
+          # @param [Array[String]] hosted_number_order_sids A list of HostedNumberOrder sids
+          #   that this AuthorizationDocument will authorize for hosting phone number
+          #   capabilities on Twilio's platform.
           # @param [String] address_sid A 34 character string that uniquely identifies the
           #   Address resource that is associated with this AuthorizationDocument.
           # @param [String] email Email that this AuthorizationDocument will be sent to for
@@ -141,7 +141,7 @@ module Twilio
           #   Authorization Document for this phone number.
           # @param [String] contact_phone_number The contact phone number of the person
           #   authorized to sign the Authorization Document.
-          # @param [String] cc_emails Email recipients who will be informed when an
+          # @param [Array[String]] cc_emails Email recipients who will be informed when an
           #   Authorization Document has been sent and signed.
           # @return [AuthorizationDocumentInstance] Created AuthorizationDocumentInstance
           def create(hosted_number_order_sids: nil, address_sid: nil, email: nil, contact_title: nil, contact_phone_number: nil, cc_emails: :unset)
@@ -228,14 +228,14 @@ module Twilio
 
           ##
           # Update the AuthorizationDocumentInstance
-          # @param [String] hosted_number_order_sids A list of HostedNumberOrder sids that
-          #   this AuthorizationDocument will authorize for hosting phone number capabilities
-          #   on Twilio's platform.
+          # @param [Array[String]] hosted_number_order_sids A list of HostedNumberOrder sids
+          #   that this AuthorizationDocument will authorize for hosting phone number
+          #   capabilities on Twilio's platform.
           # @param [String] address_sid A 34 character string that uniquely identifies the
           #   Address resource that is associated with this AuthorizationDocument.
           # @param [String] email Email that this AuthorizationDocument will be sent to for
           #   signing.
-          # @param [String] cc_emails Email recipients who will be informed when an
+          # @param [Array[String]] cc_emails Email recipients who will be informed when an
           #   Authorization Document has been sent and signed
           # @param [authorization_document.Status] status Status of an instance resource. It
           #   can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5.
@@ -360,7 +360,7 @@ module Twilio
           end
 
           ##
-          # @return [String] A list of emails.
+          # @return [Array[String]] A list of emails.
           def cc_emails
             @properties['cc_emails']
           end
@@ -398,14 +398,14 @@ module Twilio
 
           ##
           # Update the AuthorizationDocumentInstance
-          # @param [String] hosted_number_order_sids A list of HostedNumberOrder sids that
-          #   this AuthorizationDocument will authorize for hosting phone number capabilities
-          #   on Twilio's platform.
+          # @param [Array[String]] hosted_number_order_sids A list of HostedNumberOrder sids
+          #   that this AuthorizationDocument will authorize for hosting phone number
+          #   capabilities on Twilio's platform.
           # @param [String] address_sid A 34 character string that uniquely identifies the
           #   Address resource that is associated with this AuthorizationDocument.
           # @param [String] email Email that this AuthorizationDocument will be sent to for
           #   signing.
-          # @param [String] cc_emails Email recipients who will be informed when an
+          # @param [Array[String]] cc_emails Email recipients who will be informed when an
           #   Authorization Document has been sent and signed
           # @param [authorization_document.Status] status Status of an instance resource. It
           #   can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5.

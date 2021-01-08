@@ -334,7 +334,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The E.164 assigned country codes(s)
+            # @return [Array[String]] The E.164 assigned country codes(s)
             def country_codes
               @properties['country_codes']
             end

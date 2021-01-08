@@ -114,7 +114,7 @@ module Twilio
             end
 
             ##
-            # @return [String] A collection of recording Rules that describe how to include or exclude matching tracks for recording
+            # @return [Array[String]] A collection of recording Rules that describe how to include or exclude matching tracks for recording
             def rules
               @properties['rules']
             end

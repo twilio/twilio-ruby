@@ -91,7 +91,7 @@ module Twilio
 
             ##
             # Update the FlowTestUserInstance
-            # @param [String] test_users The test_users
+            # @param [Array[String]] test_users The test_users
             # @return [FlowTestUserInstance] Updated FlowTestUserInstance
             def update(test_users: nil)
               data = Twilio::Values.of({'TestUsers' => Twilio.serialize_list(test_users) { |e| e }, })
@@ -158,7 +158,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The test_users
+            # @return [Array[String]] The test_users
             def test_users
               @properties['test_users']
             end
@@ -178,7 +178,7 @@ module Twilio
 
             ##
             # Update the FlowTestUserInstance
-            # @param [String] test_users The test_users
+            # @param [Array[String]] test_users The test_users
             # @return [FlowTestUserInstance] Updated FlowTestUserInstance
             def update(test_users: nil)
               context.update(test_users: test_users, )

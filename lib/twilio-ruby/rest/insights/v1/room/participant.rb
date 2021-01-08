@@ -297,7 +297,7 @@ module Twilio
             end
 
             ##
-            # @return [participant.Codec] The codecs
+            # @return [Array[participant.Codec]] The codecs
             def codecs
               @properties['codecs']
             end

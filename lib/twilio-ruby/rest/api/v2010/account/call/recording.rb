@@ -33,10 +33,10 @@ module Twilio
 
               ##
               # Create the RecordingInstance
-              # @param [String] recording_status_callback_event The recording status events on
-              #   which we should call the `recording_status_callback` URL. Can be: `in-progress`,
-              #   `completed` and `absent` and the default is `completed`. Separate multiple event
-              #   values with a space.
+              # @param [Array[String]] recording_status_callback_event The recording status
+              #   events on which we should call the `recording_status_callback` URL. Can be:
+              #   `in-progress`, `completed` and `absent` and the default is `completed`. Separate
+              #   multiple event values with a space.
               # @param [String] recording_status_callback The URL we should call using the
               #   `recording_status_callback_method` on each recording event specified in
               #   `recording_status_callback_event`. For more information, see

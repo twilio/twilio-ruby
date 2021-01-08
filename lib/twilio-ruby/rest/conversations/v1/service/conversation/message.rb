@@ -423,7 +423,7 @@ module Twilio
               end
 
               ##
-              # @return [Hash] An array of objects that describe the Message's media if attached, otherwise, null.
+              # @return [Array[Hash]] An array of objects that describe the Message's media if attached, otherwise, null.
               def media
                 @properties['media']
               end

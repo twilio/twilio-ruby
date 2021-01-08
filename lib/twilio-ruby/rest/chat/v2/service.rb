@@ -260,8 +260,8 @@ module Twilio
           #   `pre_webhook_url` and `post_webhook_url` webhooks.  Can be: `POST` or `GET` and
           #   the default is `POST`. See {Webhook
           #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
-          # @param [String] webhook_filters The list of webhook events that are enabled for
-          #   this Service instance. See {Webhook
+          # @param [Array[String]] webhook_filters The list of webhook events that are
+          #   enabled for this Service instance. See {Webhook
           #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
           # @param [String] limits_channel_members The maximum number of Members that can be
           #   added to Channels within this Service. Can be up to 1,000.
@@ -557,7 +557,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The list of webhook events that are enabled for this Service instance
+          # @return [Array[String]] The list of webhook events that are enabled for this Service instance
           def webhook_filters
             @properties['webhook_filters']
           end
@@ -684,8 +684,8 @@ module Twilio
           #   `pre_webhook_url` and `post_webhook_url` webhooks.  Can be: `POST` or `GET` and
           #   the default is `POST`. See {Webhook
           #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
-          # @param [String] webhook_filters The list of webhook events that are enabled for
-          #   this Service instance. See {Webhook
+          # @param [Array[String]] webhook_filters The list of webhook events that are
+          #   enabled for this Service instance. See {Webhook
           #   Events}[https://www.twilio.com/docs/chat/webhook-events] for more details.
           # @param [String] limits_channel_members The maximum number of Members that can be
           #   added to Channels within this Service. Can be up to 1,000.

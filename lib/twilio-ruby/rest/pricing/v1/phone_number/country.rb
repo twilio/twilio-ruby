@@ -230,7 +230,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The list of PhoneNumberPrices records
+            # @return [Array[String]] The list of PhoneNumberPrices records
             def phone_number_prices
               @properties['phone_number_prices']
             end

@@ -172,7 +172,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The list of OutboundCallPriceWithOrigin records
+            # @return [Array[String]] The list of OutboundCallPriceWithOrigin records
             def outbound_call_prices
               @properties['outbound_call_prices']
             end

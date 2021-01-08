@@ -65,7 +65,7 @@ module Twilio
               # Lists MemberInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.
-              # @param [String] identity The identity
+              # @param [Array[String]] identity The identity
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -81,7 +81,7 @@ module Twilio
               # Streams MemberInstance records from the API as an Enumerable.
               # This operation lazily loads records as efficiently as possible until the limit
               # is reached.
-              # @param [String] identity The identity
+              # @param [Array[String]] identity The identity
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -114,7 +114,7 @@ module Twilio
               ##
               # Retrieve a single page of MemberInstance records from the API.
               # Request is executed immediately.
-              # @param [String] identity The identity
+              # @param [Array[String]] identity The identity
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50

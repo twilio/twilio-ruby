@@ -39,9 +39,9 @@ module Twilio
               #   minutes after creation.
               # @param [String] details_message Shown to the user when the push notification
               #   arrives. Required when `factor_type` is `push`
-              # @param [Hash] details_fields A list of objects that describe the Fields included
-              #   in the Challenge. Each object contains the label and value of the field. Used
-              #   when `factor_type` is `push`.
+              # @param [Array[Hash]] details_fields A list of objects that describe the Fields
+              #   included in the Challenge. Each object contains the label and value of the
+              #   field. Used when `factor_type` is `push`.
               # @param [Hash] hidden_details Details provided to give context about the
               #   Challenge. Not shown to the end user. It must be a stringified JSON with only
               #   strings values eg. `{"ip": "172.168.1.234"}`

@@ -216,7 +216,7 @@ module Twilio
           # @param [String] pre_webhook_url The pre_webhook_url
           # @param [String] post_webhook_url The post_webhook_url
           # @param [String] webhook_method The webhook_method
-          # @param [String] webhook_filters The webhook_filters
+          # @param [Array[String]] webhook_filters The webhook_filters
           # @param [String] webhooks_on_message_send_url The webhooks.on_message_send.url
           # @param [String] webhooks_on_message_send_method The
           #   webhooks.on_message_send.method
@@ -562,7 +562,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The webhook_filters
+          # @return [Array[String]] The webhook_filters
           def webhook_filters
             @properties['webhook_filters']
           end
@@ -629,7 +629,7 @@ module Twilio
           # @param [String] pre_webhook_url The pre_webhook_url
           # @param [String] post_webhook_url The post_webhook_url
           # @param [String] webhook_method The webhook_method
-          # @param [String] webhook_filters The webhook_filters
+          # @param [Array[String]] webhook_filters The webhook_filters
           # @param [String] webhooks_on_message_send_url The webhooks.on_message_send.url
           # @param [String] webhooks_on_message_send_method The
           #   webhooks.on_message_send.method

@@ -119,15 +119,16 @@ module Twilio
               #   `configuration.method`.
               # @param [webhook.Method] configuration_method The HTTP method used to call
               #   `configuration.url`. Can be: `GET` or `POST` and the default is `POST`.
-              # @param [String] configuration_filters The events that cause us to call the
-              #   Channel Webhook. Used when `type` is `webhook`. This parameter takes only one
-              #   event. To specify more than one event, repeat this parameter for each event. For
-              #   the list of possible events, see {Webhook Event
+              # @param [Array[String]] configuration_filters The events that cause us to call
+              #   the Channel Webhook. Used when `type` is `webhook`. This parameter takes only
+              #   one event. To specify more than one event, repeat this parameter for each event.
+              #   For the list of possible events, see {Webhook Event
               #   Triggers}[https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger].
-              # @param [String] configuration_triggers A string that will cause us to call the
-              #   webhook when it is present in a message body. This parameter takes only one
-              #   trigger string. To specify more than one, repeat this parameter for each trigger
-              #   string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
+              # @param [Array[String]] configuration_triggers A string that will cause us to
+              #   call the webhook when it is present in a message body. This parameter takes only
+              #   one trigger string. To specify more than one, repeat this parameter for each
+              #   trigger string up to a total of 5 trigger strings. Used only when `type` =
+              #   `trigger`.
               # @param [String] configuration_flow_sid The SID of the Studio
               #   {Flow}[https://www.twilio.com/docs/studio/rest-api/flow] to call when an event
               #   in `configuration.filters` occurs. Used only when `type` is `studio`.
@@ -239,15 +240,16 @@ module Twilio
               #   `configuration.method`.
               # @param [webhook.Method] configuration_method The HTTP method used to call
               #   `configuration.url`. Can be: `GET` or `POST` and the default is `POST`.
-              # @param [String] configuration_filters The events that cause us to call the
-              #   Channel Webhook. Used when `type` is `webhook`. This parameter takes only one
-              #   event. To specify more than one event, repeat this parameter for each event. For
-              #   the list of possible events, see {Webhook Event
+              # @param [Array[String]] configuration_filters The events that cause us to call
+              #   the Channel Webhook. Used when `type` is `webhook`. This parameter takes only
+              #   one event. To specify more than one event, repeat this parameter for each event.
+              #   For the list of possible events, see {Webhook Event
               #   Triggers}[https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger].
-              # @param [String] configuration_triggers A string that will cause us to call the
-              #   webhook when it is present in a message body. This parameter takes only one
-              #   trigger string. To specify more than one, repeat this parameter for each trigger
-              #   string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
+              # @param [Array[String]] configuration_triggers A string that will cause us to
+              #   call the webhook when it is present in a message body. This parameter takes only
+              #   one trigger string. To specify more than one, repeat this parameter for each
+              #   trigger string up to a total of 5 trigger strings. Used only when `type` =
+              #   `trigger`.
               # @param [String] configuration_flow_sid The SID of the Studio
               #   {Flow}[https://www.twilio.com/docs/studio/rest-api/flow] to call when an event
               #   in `configuration.filters` occurs. Used only when `type` = `studio`.
@@ -419,15 +421,16 @@ module Twilio
               #   `configuration.method`.
               # @param [webhook.Method] configuration_method The HTTP method used to call
               #   `configuration.url`. Can be: `GET` or `POST` and the default is `POST`.
-              # @param [String] configuration_filters The events that cause us to call the
-              #   Channel Webhook. Used when `type` is `webhook`. This parameter takes only one
-              #   event. To specify more than one event, repeat this parameter for each event. For
-              #   the list of possible events, see {Webhook Event
+              # @param [Array[String]] configuration_filters The events that cause us to call
+              #   the Channel Webhook. Used when `type` is `webhook`. This parameter takes only
+              #   one event. To specify more than one event, repeat this parameter for each event.
+              #   For the list of possible events, see {Webhook Event
               #   Triggers}[https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger].
-              # @param [String] configuration_triggers A string that will cause us to call the
-              #   webhook when it is present in a message body. This parameter takes only one
-              #   trigger string. To specify more than one, repeat this parameter for each trigger
-              #   string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
+              # @param [Array[String]] configuration_triggers A string that will cause us to
+              #   call the webhook when it is present in a message body. This parameter takes only
+              #   one trigger string. To specify more than one, repeat this parameter for each
+              #   trigger string up to a total of 5 trigger strings. Used only when `type` =
+              #   `trigger`.
               # @param [String] configuration_flow_sid The SID of the Studio
               #   {Flow}[https://www.twilio.com/docs/studio/rest-api/flow] to call when an event
               #   in `configuration.filters` occurs. Used only when `type` = `studio`.
