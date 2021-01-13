@@ -1,6 +1,30 @@
 twilio-ruby changelog
 =====================
 
+[2021-01-13] Version 5.46.0
+---------------------------
+**Library - Docs**
+- [PR #546](https://github.com/twilio/twilio-ruby/pull/546): Fixing docs for list parameter types. Thanks to [@shwetha-manvinkurke](https://github.com/shwetha-manvinkurke)!
+
+**Library - Fix**
+- [PR #545](https://github.com/twilio/twilio-ruby/pull/545): Adds Ruby 3.0 to Travis. Fixes test. Thanks to [@philnash](https://github.com/philnash)!
+
+**Api**
+- Add 'Electric Imp v1 Usage' to usage categories
+
+**Conversations**
+- Changed `last_read_message_index` type in Participant's resource **(breaking change)**
+
+**Insights**
+- Added `created_time` to call summary.
+
+**Sync**
+- Remove HideExpired query parameter for filtering Sync Documents with expired **(breaking change)**
+
+**Video**
+- [Rooms] Expose maxConcurrentPublishedTracks property in Room resource
+
+
 [2020-12-16] Version 5.45.1
 ---------------------------
 **Api**

@@ -11,8 +11,6 @@ module Twilio
     class Insights < Domain
       class V1 < Version
         class CallContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
           class CallSummaryList < ListResource
             ##
             # Initialize the CallSummaryList
@@ -33,8 +31,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
           class CallSummaryPage < Page
             ##
             # Initialize the CallSummaryPage
@@ -64,8 +60,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
           class CallSummaryContext < InstanceContext
             ##
             # Initialize the CallSummaryContext
@@ -107,8 +101,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
           class CallSummaryInstance < InstanceResource
             ##
             # Initialize the CallSummaryInstance
@@ -126,6 +118,7 @@ module Twilio
                   'call_type' => payload['call_type'],
                   'call_state' => payload['call_state'],
                   'processing_state' => payload['processing_state'],
+                  'created_time' => Twilio.deserialize_iso8601_datetime(payload['created_time']),
                   'start_time' => Twilio.deserialize_iso8601_datetime(payload['start_time']),
                   'end_time' => Twilio.deserialize_iso8601_datetime(payload['end_time']),
                   'duration' => payload['duration'] == nil ? payload['duration'] : payload['duration'].to_i,
@@ -187,6 +180,12 @@ module Twilio
             # @return [call_summary.ProcessingState] The processing_state
             def processing_state
               @properties['processing_state']
+            end
+
+            ##
+            # @return [Time] The created_time
+            def created_time
+              @properties['created_time']
             end
 
             ##

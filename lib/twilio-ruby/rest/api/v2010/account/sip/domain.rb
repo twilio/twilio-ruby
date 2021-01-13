@@ -110,7 +110,8 @@ module Twilio
               ##
               # Create the DomainInstance
               # @param [String] domain_name The unique address you reserve on Twilio to which
-              #   you route your SIP traffic. Domain names can contain letters, digits, and "-".
+              #   you route your SIP traffic. Domain names can contain letters, digits, and "-"
+              #   and must end with `sip.twilio.com`.
               # @param [String] friendly_name A descriptive string that you created to describe
               #   the resource. It can be up to 64 characters long.
               # @param [String] voice_url The URL we should when the domain receives a call.
@@ -248,7 +249,8 @@ module Twilio
               #   with the domain to receive calls. Can be `true` or `false`. `true` allows SIP
               #   Endpoints to register with the domain to receive calls, `false` does not.
               # @param [String] domain_name The unique address you reserve on Twilio to which
-              #   you route your SIP traffic. Domain names can contain letters, digits, and "-".
+              #   you route your SIP traffic. Domain names can contain letters, digits, and "-"
+              #   and must end with `sip.twilio.com`.
               # @param [Boolean] emergency_calling_enabled Whether emergency calling is enabled
               #   for the domain. If enabled, allows emergency calls on the domain from phone
               #   numbers with validated addresses.
@@ -576,7 +578,8 @@ module Twilio
               #   with the domain to receive calls. Can be `true` or `false`. `true` allows SIP
               #   Endpoints to register with the domain to receive calls, `false` does not.
               # @param [String] domain_name The unique address you reserve on Twilio to which
-              #   you route your SIP traffic. Domain names can contain letters, digits, and "-".
+              #   you route your SIP traffic. Domain names can contain letters, digits, and "-"
+              #   and must end with `sip.twilio.com`.
               # @param [Boolean] emergency_calling_enabled Whether emergency calling is enabled
               #   for the domain. If enabled, allows emergency calls on the domain from phone
               #   numbers with validated addresses.

@@ -357,6 +357,7 @@ module Twilio
                 'duration' => payload['duration'] == nil ? payload['duration'] : payload['duration'].to_i,
                 'type' => payload['type'],
                 'max_participants' => payload['max_participants'].to_i,
+                'max_concurrent_published_tracks' => payload['max_concurrent_published_tracks'] == nil ? payload['max_concurrent_published_tracks'] : payload['max_concurrent_published_tracks'].to_i,
                 'record_participants_on_connect' => payload['record_participants_on_connect'],
                 'video_codecs' => payload['video_codecs'],
                 'media_region' => payload['media_region'],
@@ -456,6 +457,12 @@ module Twilio
           # @return [String] The maximum number of concurrent Participants allowed in the room
           def max_participants
             @properties['max_participants']
+          end
+
+          ##
+          # @return [String] The maximum number of published tracks allowed in the room at the same time
+          def max_concurrent_published_tracks
+            @properties['max_concurrent_published_tracks']
           end
 
           ##

@@ -34,7 +34,7 @@ module Twilio
               ##
               # Create the SyncListItemInstance
               # @param [Hash] data A JSON string that represents an arbitrary, schema-less
-              #   object that the List Item stores. Can be up to 16KB in length.
+              #   object that the List Item stores. Can be up to 16 KiB in length.
               # @param [String] ttl An alias for `item_ttl`. If both parameters are provided,
               #   this value is ignored.
               # @param [String] item_ttl How long, in seconds, before the List Item expires
@@ -80,9 +80,6 @@ module Twilio
               #   Item referenced by the `from` parameter. Can be: `inclusive` to include the List
               #   Item referenced by the `from` parameter or `exclusive` to start with the next
               #   List Item. The default value is `inclusive`.
-              # @param [sync_list_item.HideExpiredType] hide_expired The default list of Sync
-              #   List items will show both active and expired items. It is possible to filter
-              #   only the active ones by hiding the expired ones.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -90,15 +87,8 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(order: :unset, from: :unset, bounds: :unset, hide_expired: :unset, limit: nil, page_size: nil)
-                self.stream(
-                    order: order,
-                    from: from,
-                    bounds: bounds,
-                    hide_expired: hide_expired,
-                    limit: limit,
-                    page_size: page_size
-                ).entries
+              def list(order: :unset, from: :unset, bounds: :unset, limit: nil, page_size: nil)
+                self.stream(order: order, from: from, bounds: bounds, limit: limit, page_size: page_size).entries
               end
 
               ##
@@ -114,9 +104,6 @@ module Twilio
               #   Item referenced by the `from` parameter. Can be: `inclusive` to include the List
               #   Item referenced by the `from` parameter or `exclusive` to start with the next
               #   List Item. The default value is `inclusive`.
-              # @param [sync_list_item.HideExpiredType] hide_expired The default list of Sync
-              #   List items will show both active and expired items. It is possible to filter
-              #   only the active ones by hiding the expired ones.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -124,16 +111,10 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(order: :unset, from: :unset, bounds: :unset, hide_expired: :unset, limit: nil, page_size: nil)
+              def stream(order: :unset, from: :unset, bounds: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(
-                    order: order,
-                    from: from,
-                    bounds: bounds,
-                    hide_expired: hide_expired,
-                    page_size: limits[:page_size],
-                )
+                page = self.page(order: order, from: from, bounds: bounds, page_size: limits[:page_size], )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -164,19 +145,15 @@ module Twilio
               #   Item referenced by the `from` parameter. Can be: `inclusive` to include the List
               #   Item referenced by the `from` parameter or `exclusive` to start with the next
               #   List Item. The default value is `inclusive`.
-              # @param [sync_list_item.HideExpiredType] hide_expired The default list of Sync
-              #   List items will show both active and expired items. It is possible to filter
-              #   only the active ones by hiding the expired ones.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of SyncListItemInstance
-              def page(order: :unset, from: :unset, bounds: :unset, hide_expired: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              def page(order: :unset, from: :unset, bounds: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'Order' => order,
                     'From' => from,
                     'Bounds' => bounds,
-                    'HideExpired' => hide_expired,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,
@@ -292,7 +269,7 @@ module Twilio
               ##
               # Update the SyncListItemInstance
               # @param [Hash] data A JSON string that represents an arbitrary, schema-less
-              #   object that the List Item stores. Can be up to 16KB in length.
+              #   object that the List Item stores. Can be up to 16 KiB in length.
               # @param [String] ttl An alias for `item_ttl`. If both parameters are provided,
               #   this value is ignored.
               # @param [String] item_ttl How long, in seconds, before the List Item expires
@@ -483,7 +460,7 @@ module Twilio
               ##
               # Update the SyncListItemInstance
               # @param [Hash] data A JSON string that represents an arbitrary, schema-less
-              #   object that the List Item stores. Can be up to 16KB in length.
+              #   object that the List Item stores. Can be up to 16 KiB in length.
               # @param [String] ttl An alias for `item_ttl`. If both parameters are provided,
               #   this value is ignored.
               # @param [String] item_ttl How long, in seconds, before the List Item expires

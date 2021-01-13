@@ -68,7 +68,8 @@ module Twilio
           ##
           # Initialize the ExportConfigurationContext
           # @param [Version] version Version that contains the resource
-          # @param [String] resource_type The type of communication – Messages, Calls
+          # @param [String] resource_type The type of communication – Messages, Calls,
+          #   Conferences, and Participants
           # @return [ExportConfigurationContext] ExportConfigurationContext
           def initialize(version, resource_type)
             super(version)
@@ -131,7 +132,8 @@ module Twilio
           # Initialize the ExportConfigurationInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] resource_type The type of communication – Messages, Calls
+          # @param [String] resource_type The type of communication – Messages, Calls,
+          #   Conferences, and Participants
           # @return [ExportConfigurationInstance] ExportConfigurationInstance
           def initialize(version, payload, resource_type: nil)
             super(version)
@@ -180,7 +182,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The type of communication – Messages, Calls
+          # @return [String] The type of communication – Messages, Calls, Conferences, and Participants
           def resource_type
             @properties['resource_type']
           end

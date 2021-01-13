@@ -164,7 +164,7 @@ module Twilio
               #   Service}[https://www.twilio.com/docs/sync/api/service] with the Sync Map
               #   Permission resource to fetch. Can be the Service's `sid` value or `default`.
               # @param [String] map_sid The SID of the Sync Map with the Sync Map Permission
-              #   resource to fetch. Can be the Sync Map's `sid` or its `unique_name`.
+              #   resource to fetch. Can be the Sync Map resource's `sid` or its `unique_name`.
               # @param [String] identity The application-defined string that uniquely identifies
               #   the User's Sync Map Permission resource to fetch.
               # @return [SyncMapPermissionContext] SyncMapPermissionContext

@@ -17,7 +17,8 @@ module Twilio
             ##
             # Initialize the ExportCustomJobList
             # @param [Version] version Version that contains the resource
-            # @param [String] resource_type The type of communication – Messages, Calls
+            # @param [String] resource_type The type of communication – Messages, Calls,
+            #   Conferences, and Participants
             # @return [ExportCustomJobList] ExportCustomJobList
             def initialize(version, resource_type: nil)
               super(version)
@@ -184,7 +185,8 @@ module Twilio
             # Initialize the ExportCustomJobInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] resource_type The type of communication – Messages, Calls
+            # @param [String] resource_type The type of communication – Messages, Calls,
+            #   Conferences, and Participants
             # @return [ExportCustomJobInstance] ExportCustomJobInstance
             def initialize(version, payload, resource_type: nil)
               super(version)
@@ -210,7 +212,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The type of communication – Messages, Calls
+            # @return [String] The type of communication – Messages, Calls, Conferences, and Participants
             def resource_type
               @properties['resource_type']
             end

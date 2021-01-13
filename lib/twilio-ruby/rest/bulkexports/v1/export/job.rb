@@ -69,7 +69,8 @@ module Twilio
             ##
             # Initialize the JobContext
             # @param [Version] version Version that contains the resource
-            # @param [String] job_sid The job_sid
+            # @param [String] job_sid The unique string that that we created to identify the
+            #   Bulk Export job
             # @return [JobContext] JobContext
             def initialize(version, job_sid)
               super(version)
@@ -117,7 +118,8 @@ module Twilio
             # Initialize the JobInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] job_sid The job_sid
+            # @param [String] job_sid The unique string that that we created to identify the
+            #   Bulk Export job
             # @return [JobInstance] JobInstance
             def initialize(version, payload, job_sid: nil)
               super(version)
@@ -153,7 +155,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The type of communication – Messages, Calls
+            # @return [String] The type of communication – Messages, Calls, Conferences, and Participants
             def resource_type
               @properties['resource_type']
             end

@@ -17,7 +17,8 @@ module Twilio
             ##
             # Initialize the DayList
             # @param [Version] version Version that contains the resource
-            # @param [String] resource_type The type of communication – Messages, Calls
+            # @param [String] resource_type The type of communication – Messages, Calls,
+            #   Conferences, and Participants
             # @return [DayList] DayList
             def initialize(version, resource_type: nil)
               super(version)
@@ -151,7 +152,8 @@ module Twilio
             ##
             # Initialize the DayContext
             # @param [Version] version Version that contains the resource
-            # @param [String] resource_type The type of communication – Messages, Calls
+            # @param [String] resource_type The type of communication – Messages, Calls,
+            #   Conferences, and Participants
             # @param [String] day The ISO 8601 format date of the resources in the file, for a
             #   UTC day
             # @return [DayContext] DayContext
@@ -194,7 +196,8 @@ module Twilio
             # Initialize the DayInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] resource_type The type of communication – Messages, Calls
+            # @param [String] resource_type The type of communication – Messages, Calls,
+            #   Conferences, and Participants
             # @param [String] day The ISO 8601 format date of the resources in the file, for a
             #   UTC day
             # @return [DayInstance] DayInstance
@@ -258,7 +261,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The type of communication – Messages, Calls
+            # @return [String] The type of communication – Messages, Calls, Conferences, and Participants
             def resource_type
               @properties['resource_type']
             end

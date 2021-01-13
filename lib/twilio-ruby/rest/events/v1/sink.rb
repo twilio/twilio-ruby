@@ -30,7 +30,8 @@ module Twilio
           # @param [String] description A human readable description for the Sink
           # @param [Hash] sink_configuration The information required for Twilio to connect
           #   to the provided Sink encoded as JSON.
-          # @param [sink.SinkType] sink_type The Sink type. Can only be "kinesis" currently.
+          # @param [sink.SinkType] sink_type The Sink type. Can only be "kinesis" or
+          #   "webhook" currently.
           # @return [SinkInstance] Created SinkInstance
           def create(description: nil, sink_configuration: nil, sink_type: nil)
             data = Twilio::Values.of({

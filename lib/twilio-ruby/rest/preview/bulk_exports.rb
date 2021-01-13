@@ -20,7 +20,8 @@ module Twilio
         end
 
         ##
-        # @param [String] resource_type The type of communication – Messages, Calls
+        # @param [String] resource_type The type of communication – Messages, Calls,
+        #   Conferences, and Participants
         # @return [Twilio::REST::Preview::BulkExports::ExportContext] if resource_type was passed.
         # @return [Twilio::REST::Preview::BulkExports::ExportList]
         def exports(resource_type=:unset)
@@ -34,7 +35,8 @@ module Twilio
         end
 
         ##
-        # @param [String] resource_type The type of communication – Messages, Calls
+        # @param [String] resource_type The type of communication – Messages, Calls,
+        #   Conferences, and Participants
         # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationContext] if resource_type was passed.
         # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationList]
         def export_configuration(resource_type=:unset)

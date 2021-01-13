@@ -59,9 +59,6 @@ module Twilio
             # Lists SyncListInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [sync_list.HideExpiredType] hide_expired The default list of Sync Lists
-            #   will show both active and expired items. It is possible to filter only the
-            #   active ones by hiding the expired ones.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -69,17 +66,14 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(hide_expired: :unset, limit: nil, page_size: nil)
-              self.stream(hide_expired: hide_expired, limit: limit, page_size: page_size).entries
+            def list(limit: nil, page_size: nil)
+              self.stream(limit: limit, page_size: page_size).entries
             end
 
             ##
             # Streams SyncListInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [sync_list.HideExpiredType] hide_expired The default list of Sync Lists
-            #   will show both active and expired items. It is possible to filter only the
-            #   active ones by hiding the expired ones.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -87,10 +81,10 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(hide_expired: :unset, limit: nil, page_size: nil)
+            def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(hide_expired: hide_expired, page_size: limits[:page_size], )
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -112,16 +106,12 @@ module Twilio
             ##
             # Retrieve a single page of SyncListInstance records from the API.
             # Request is executed immediately.
-            # @param [sync_list.HideExpiredType] hide_expired The default list of Sync Lists
-            #   will show both active and expired items. It is possible to filter only the
-            #   active ones by hiding the expired ones.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of SyncListInstance
-            def page(hide_expired: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
-                  'HideExpired' => hide_expired,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
@@ -192,7 +182,8 @@ module Twilio
             # @param [String] service_sid The SID of the {Sync
             #   Service}[https://www.twilio.com/docs/sync/api/service] with the Sync List
             #   resource to fetch.
-            # @param [String] sid The SID of the Sync List resource to fetch.
+            # @param [String] sid The SID of the Sync List resource to fetch. Can be the Sync
+            #   List resource's `sid` or its `unique_name`.
             # @return [SyncListContext] SyncListContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -309,7 +300,8 @@ module Twilio
             # @param [String] service_sid The SID of the {Sync
             #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
             #   associated with.
-            # @param [String] sid The SID of the Sync List resource to fetch.
+            # @param [String] sid The SID of the Sync List resource to fetch. Can be the Sync
+            #   List resource's `sid` or its `unique_name`.
             # @return [SyncListInstance] SyncListInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)

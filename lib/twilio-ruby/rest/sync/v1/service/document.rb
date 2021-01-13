@@ -34,7 +34,7 @@ module Twilio
             # @param [String] unique_name An application-defined string that uniquely
             #   identifies the Sync Document
             # @param [Hash] data A JSON string that represents an arbitrary, schema-less
-            #   object that the Sync Document stores. Can be up to 16KB in length.
+            #   object that the Sync Document stores. Can be up to 16 KiB in length.
             # @param [String] ttl How long, in seconds, before the Sync Document expires and
             #   is deleted (the Sync Document's time-to-live). Can be an integer from 0 to
             #   31,536,000 (1 year). The default value is `0`, which means the Sync Document
@@ -58,9 +58,6 @@ module Twilio
             # Lists DocumentInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [document.HideExpiredType] hide_expired The default list of Sync
-            #   Documents will show both active and expired items. It is possible to filter only
-            #   the active ones by hiding the expired ones.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -68,17 +65,14 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(hide_expired: :unset, limit: nil, page_size: nil)
-              self.stream(hide_expired: hide_expired, limit: limit, page_size: page_size).entries
+            def list(limit: nil, page_size: nil)
+              self.stream(limit: limit, page_size: page_size).entries
             end
 
             ##
             # Streams DocumentInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [document.HideExpiredType] hide_expired The default list of Sync
-            #   Documents will show both active and expired items. It is possible to filter only
-            #   the active ones by hiding the expired ones.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -86,10 +80,10 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(hide_expired: :unset, limit: nil, page_size: nil)
+            def stream(limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
-              page = self.page(hide_expired: hide_expired, page_size: limits[:page_size], )
+              page = self.page(page_size: limits[:page_size], )
 
               @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
             end
@@ -111,16 +105,12 @@ module Twilio
             ##
             # Retrieve a single page of DocumentInstance records from the API.
             # Request is executed immediately.
-            # @param [document.HideExpiredType] hide_expired The default list of Sync
-            #   Documents will show both active and expired items. It is possible to filter only
-            #   the active ones by hiding the expired ones.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of DocumentInstance
-            def page(hide_expired: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
-                  'HideExpired' => hide_expired,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,
@@ -191,7 +181,8 @@ module Twilio
             # @param [String] service_sid The SID of the {Sync
             #   Service}[https://www.twilio.com/docs/sync/api/service] with the Document
             #   resource to fetch.
-            # @param [String] sid The SID of the Document resource to fetch.
+            # @param [String] sid The SID of the Document resource to fetch. Can be the
+            #   Document resource's `sid` or its `unique_name`.
             # @return [DocumentContext] DocumentContext
             def initialize(version, service_sid, sid)
               super(version)
@@ -226,7 +217,7 @@ module Twilio
             ##
             # Update the DocumentInstance
             # @param [Hash] data A JSON string that represents an arbitrary, schema-less
-            #   object that the Sync Document stores. Can be up to 16KB in length.
+            #   object that the Sync Document stores. Can be up to 16 KiB in length.
             # @param [String] ttl How long, in seconds, before the Sync Document expires and
             #   is deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
             #   default value is `0`, which means the Document resource does not expire. The
@@ -290,7 +281,8 @@ module Twilio
             # @param [String] service_sid The SID of the {Sync
             #   Service}[https://www.twilio.com/docs/sync/api/service] the resource is
             #   associated with.
-            # @param [String] sid The SID of the Document resource to fetch.
+            # @param [String] sid The SID of the Document resource to fetch. Can be the
+            #   Document resource's `sid` or its `unique_name`.
             # @return [DocumentInstance] DocumentInstance
             def initialize(version, payload, service_sid: nil, sid: nil)
               super(version)
@@ -417,7 +409,7 @@ module Twilio
             ##
             # Update the DocumentInstance
             # @param [Hash] data A JSON string that represents an arbitrary, schema-less
-            #   object that the Sync Document stores. Can be up to 16KB in length.
+            #   object that the Sync Document stores. Can be up to 16 KiB in length.
             # @param [String] ttl How long, in seconds, before the Sync Document expires and
             #   is deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
             #   default value is `0`, which means the Document resource does not expire. The
