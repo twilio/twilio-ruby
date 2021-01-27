@@ -1,6 +1,21 @@
 twilio-ruby changelog
 =====================
 
+[2021-01-27] Version 5.46.1
+---------------------------
+**Library - Docs**
+- [PR #547](https://github.com/twilio/twilio-ruby/pull/547): Document how to use an API Key. Thanks to [@davetron5000](https://github.com/davetron5000)!
+
+**Studio**
+- Studio V2 API is now GA
+
+**Supersim**
+- Allow updating `CommandsUrl` and `CommandsMethod` on a Fleet
+
+**Twiml**
+- Add `status_callback` and `status_callback_method` to `Stream`.
+
+
 [2021-01-13] Version 5.46.0
 ---------------------------
 **Library - Docs**

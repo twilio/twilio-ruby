@@ -11,13 +11,11 @@ module Twilio
     class Studio < Domain
       class V2 < Version
         class FlowContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class FlowTestUserList < ListResource
             ##
             # Initialize the FlowTestUserList
             # @param [Version] version Version that contains the resource
-            # @param [String] sid The sid
+            # @param [String] sid Unique identifier of the flow.
             # @return [FlowTestUserList] FlowTestUserList
             def initialize(version, sid: nil)
               super(version)
@@ -33,8 +31,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class FlowTestUserPage < Page
             ##
             # Initialize the FlowTestUserPage
@@ -64,13 +60,11 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class FlowTestUserContext < InstanceContext
             ##
             # Initialize the FlowTestUserContext
             # @param [Version] version Version that contains the resource
-            # @param [String] sid The sid
+            # @param [String] sid Unique identifier of the flow.
             # @return [FlowTestUserContext] FlowTestUserContext
             def initialize(version, sid)
               super(version)
@@ -91,7 +85,8 @@ module Twilio
 
             ##
             # Update the FlowTestUserInstance
-            # @param [Array[String]] test_users The test_users
+            # @param [Array[String]] test_users List of test user identities that can test
+            #   draft versions of the flow.
             # @return [FlowTestUserInstance] Updated FlowTestUserInstance
             def update(test_users: nil)
               data = Twilio::Values.of({'TestUsers' => Twilio.serialize_list(test_users) { |e| e }, })
@@ -116,14 +111,12 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class FlowTestUserInstance < InstanceResource
             ##
             # Initialize the FlowTestUserInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] sid The sid
+            # @param [String] sid Unique identifier of the flow.
             # @return [FlowTestUserInstance] FlowTestUserInstance
             def initialize(version, payload, sid: nil)
               super(version)
@@ -152,19 +145,19 @@ module Twilio
             end
 
             ##
-            # @return [String] The sid
+            # @return [String] Unique identifier of the flow.
             def sid
               @properties['sid']
             end
 
             ##
-            # @return [Array[String]] The test_users
+            # @return [Array[String]] List of test user identities that can test draft versions of the flow.
             def test_users
               @properties['test_users']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] The URL of this resource.
             def url
               @properties['url']
             end
@@ -178,7 +171,8 @@ module Twilio
 
             ##
             # Update the FlowTestUserInstance
-            # @param [Array[String]] test_users The test_users
+            # @param [Array[String]] test_users List of test user identities that can test
+            #   draft versions of the flow.
             # @return [FlowTestUserInstance] Updated FlowTestUserInstance
             def update(test_users: nil)
               context.update(test_users: test_users, )

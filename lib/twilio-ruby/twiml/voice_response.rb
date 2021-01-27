@@ -337,9 +337,11 @@ module Twilio
       # connector_name:: Unique name for Stream Connector
       # url:: URL of the remote service where the Stream is routed
       # track:: Track to be streamed to remote service
+      # status_callback:: Status Callback URL
+      # status_callback_method:: Status Callback URL method
       # keyword_args:: additional attributes
-      def stream(name: nil, connector_name: nil, url: nil, track: nil, **keyword_args)
-        stream = Stream.new(name: name, connector_name: connector_name, url: url, track: track, **keyword_args)
+      def stream(name: nil, connector_name: nil, url: nil, track: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
+        stream = Stream.new(name: name, connector_name: connector_name, url: url, track: track, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args)
 
         yield(stream) if block_given?
         append(stream)
@@ -426,9 +428,11 @@ module Twilio
       # connector_name:: Unique name for Stream Connector
       # url:: URL of the remote service where the Stream is routed
       # track:: Track to be streamed to remote service
+      # status_callback:: Status Callback URL
+      # status_callback_method:: Status Callback URL method
       # keyword_args:: additional attributes
-      def stream(name: nil, connector_name: nil, url: nil, track: nil, **keyword_args)
-        stream = Stream.new(name: name, connector_name: connector_name, url: url, track: track, **keyword_args)
+      def stream(name: nil, connector_name: nil, url: nil, track: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
+        stream = Stream.new(name: name, connector_name: connector_name, url: url, track: track, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args)
 
         yield(stream) if block_given?
         append(stream)
@@ -1144,9 +1148,11 @@ module Twilio
       # connector_name:: Unique name for Stream Connector
       # url:: URL of the remote service where the Stream is routed
       # track:: Track to be streamed to remote service
+      # status_callback:: Status Callback URL
+      # status_callback_method:: Status Callback URL method
       # keyword_args:: additional attributes
-      def stream(name: nil, connector_name: nil, url: nil, track: nil, **keyword_args)
-        stream = Stream.new(name: name, connector_name: connector_name, url: url, track: track, **keyword_args)
+      def stream(name: nil, connector_name: nil, url: nil, track: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
+        stream = Stream.new(name: name, connector_name: connector_name, url: url, track: track, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args)
 
         yield(stream) if block_given?
         append(stream)
