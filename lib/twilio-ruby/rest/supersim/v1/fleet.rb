@@ -11,7 +11,7 @@ module Twilio
     class Supersim < Domain
       class V1 < Version
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FleetList < ListResource
           ##
           # Initialize the FleetList
@@ -43,9 +43,9 @@ module Twilio
           #   of sending and receiving machine-to-machine SMS via Commands. Defaults to
           #   `true`.
           # @param [String] commands_url The URL that will receive a webhook when a SIM in
-          #   the Fleet originates a machine-to-machine SMS via Commands. Your server should
-          #   respond with an HTTP status code in the 200 range; any response body will be
-          #   ignored.
+          #   the Fleet is used to send an SMS from your device (mobile originated) to the
+          #   Commands number. Your server should respond with an HTTP status code in the 200
+          #   range; any response body will be ignored.
           # @param [String] commands_method A string representing the HTTP method to use
           #   when making a request to `commands_url`. Can be one of `POST` or `GET`. Defaults
           #   to `POST`.
@@ -168,7 +168,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FleetPage < Page
           ##
           # Initialize the FleetPage
@@ -199,7 +199,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FleetContext < InstanceContext
           ##
           # Initialize the FleetContext
@@ -231,11 +231,20 @@ module Twilio
           # @param [String] network_access_profile The SID or unique name of the Network
           #   Access Profile that will control which cellular networks the Fleet's SIMs can
           #   connect to.
+          # @param [String] commands_url The URL that will receive a webhook when a SIM in
+          #   the Fleet is used to send an SMS from your device (mobile originated) to the
+          #   Commands number. Your server should respond with an HTTP status code in the 200
+          #   range; any response body will be ignored.
+          # @param [String] commands_method A string representing the HTTP method to use
+          #   when making a request to `commands_url`. Can be one of `POST` or `GET`. Defaults
+          #   to `POST`.
           # @return [FleetInstance] Updated FleetInstance
-          def update(unique_name: :unset, network_access_profile: :unset)
+          def update(unique_name: :unset, network_access_profile: :unset, commands_url: :unset, commands_method: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'NetworkAccessProfile' => network_access_profile,
+                'CommandsUrl' => commands_url,
+                'CommandsMethod' => commands_method,
             })
 
             payload = @version.update('POST', @uri, data: data)
@@ -259,7 +268,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FleetInstance < InstanceResource
           ##
           # Initialize the FleetInstance
@@ -364,7 +373,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The URL that will receive a webhook when a SIM in the Fleet originates a machine-to-machine SMS via Commands
+          # @return [String] The URL that will receive a webhook when a SIM in the Fleet is used to send an SMS from your device (mobile originated) to the Commands number
           def commands_url
             @properties['commands_url']
           end
@@ -396,9 +405,21 @@ module Twilio
           # @param [String] network_access_profile The SID or unique name of the Network
           #   Access Profile that will control which cellular networks the Fleet's SIMs can
           #   connect to.
+          # @param [String] commands_url The URL that will receive a webhook when a SIM in
+          #   the Fleet is used to send an SMS from your device (mobile originated) to the
+          #   Commands number. Your server should respond with an HTTP status code in the 200
+          #   range; any response body will be ignored.
+          # @param [String] commands_method A string representing the HTTP method to use
+          #   when making a request to `commands_url`. Can be one of `POST` or `GET`. Defaults
+          #   to `POST`.
           # @return [FleetInstance] Updated FleetInstance
-          def update(unique_name: :unset, network_access_profile: :unset)
-            context.update(unique_name: unique_name, network_access_profile: network_access_profile, )
+          def update(unique_name: :unset, network_access_profile: :unset, commands_url: :unset, commands_method: :unset)
+            context.update(
+                unique_name: unique_name,
+                network_access_profile: network_access_profile,
+                commands_url: commands_url,
+                commands_method: commands_method,
+            )
           end
 
           ##

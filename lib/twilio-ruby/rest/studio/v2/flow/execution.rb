@@ -11,8 +11,6 @@ module Twilio
     class Studio < Domain
       class V2 < Version
         class FlowContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class ExecutionList < ListResource
             ##
             # Initialize the ExecutionList
@@ -169,8 +167,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class ExecutionPage < Page
             ##
             # Initialize the ExecutionPage
@@ -200,8 +196,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class ExecutionContext < InstanceContext
             ##
             # Initialize the ExecutionContext
@@ -296,8 +290,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class ExecutionInstance < InstanceResource
             ##
             # Initialize the ExecutionInstance

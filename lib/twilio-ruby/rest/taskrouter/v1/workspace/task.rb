@@ -223,10 +223,10 @@ module Twilio
 
             ##
             # Create the TaskInstance
-            # @param [String] timeout The amount of time in seconds the new task is allowed to
-            #   live. Can be up to a maximum of 2 weeks (1,209,600 seconds). The default value
-            #   is 24 hours (86,400 seconds). On timeout, the `task.canceled` event will fire
-            #   with description `Task TTL Exceeded`.
+            # @param [String] timeout The amount of time in seconds the new task can live
+            #   before being assigned. Can be up to a maximum of 2 weeks (1,209,600 seconds).
+            #   The default value is 24 hours (86,400 seconds). On timeout, the `task.canceled`
+            #   event will fire with description `Task TTL Exceeded`.
             # @param [String] priority The priority to assign the new task and override the
             #   default. When supplied, the new Task will have this priority unless it matches a
             #   Workflow Target with a Priority set. When not supplied, the new Task will have
@@ -539,7 +539,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The amount of time in seconds that the Task is allowed to live
+            # @return [String] The amount of time in seconds that the Task can live before being assigned
             def timeout
               @properties['timeout']
             end

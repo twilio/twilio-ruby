@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Studio < Domain
       class V2 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FlowValidateList < ListResource
           ##
           # Initialize the FlowValidateList
@@ -27,10 +25,11 @@ module Twilio
 
           ##
           # Update the FlowValidateInstance
-          # @param [String] friendly_name The friendly_name
-          # @param [flow_validate.Status] status The status
-          # @param [Hash] definition The definition
-          # @param [String] commit_message The commit_message
+          # @param [String] friendly_name The string that you assigned to describe the Flow.
+          # @param [flow_validate.Status] status The status of the Flow. Can be: `draft` or
+          #   `published`.
+          # @param [Hash] definition JSON representation of flow definition.
+          # @param [String] commit_message Description of change made in the revision.
           # @return [FlowValidateInstance] Updated FlowValidateInstance
           def update(friendly_name: nil, status: nil, definition: nil, commit_message: :unset)
             data = Twilio::Values.of({
@@ -52,8 +51,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FlowValidatePage < Page
           ##
           # Initialize the FlowValidatePage
@@ -83,8 +80,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FlowValidateInstance < InstanceResource
           ##
           # Initialize the FlowValidateInstance
@@ -99,7 +94,7 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] The valid
+          # @return [Boolean] Boolean if the flow definition is valid
           def valid
             @properties['valid']
           end

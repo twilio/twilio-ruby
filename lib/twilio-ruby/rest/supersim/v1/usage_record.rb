@@ -11,7 +11,7 @@ module Twilio
     class Supersim < Domain
       class V1 < Version
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class UsageRecordList < ListResource
           ##
           # Initialize the UsageRecordList
@@ -211,7 +211,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class UsageRecordPage < Page
           ##
           # Initialize the UsageRecordPage
@@ -242,7 +242,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class UsageRecordInstance < InstanceResource
           ##
           # Initialize the UsageRecordInstance

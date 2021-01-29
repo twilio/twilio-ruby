@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Studio < Domain
       class V2 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FlowList < ListResource
           ##
           # Initialize the FlowList
@@ -31,7 +29,7 @@ module Twilio
           # @param [flow.Status] status The status of the Flow. Can be: `draft` or
           #   `published`.
           # @param [Hash] definition JSON representation of flow definition.
-          # @param [String] commit_message Description on change made in the revision.
+          # @param [String] commit_message Description of change made in the revision.
           # @return [FlowInstance] Created FlowInstance
           def create(friendly_name: nil, status: nil, definition: nil, commit_message: :unset)
             data = Twilio::Values.of({
@@ -133,8 +131,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FlowPage < Page
           ##
           # Initialize the FlowPage
@@ -164,8 +160,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FlowContext < InstanceContext
           ##
           # Initialize the FlowContext
@@ -191,7 +185,7 @@ module Twilio
           #   `published`.
           # @param [String] friendly_name The string that you assigned to describe the Flow.
           # @param [Hash] definition JSON representation of flow definition.
-          # @param [String] commit_message Description on change made in the revision.
+          # @param [String] commit_message Description of change made in the revision.
           # @return [FlowInstance] Updated FlowInstance
           def update(status: nil, friendly_name: :unset, definition: :unset, commit_message: :unset)
             data = Twilio::Values.of({
@@ -281,8 +275,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class FlowInstance < InstanceResource
           ##
           # Initialize the FlowInstance
@@ -365,7 +357,7 @@ module Twilio
           end
 
           ##
-          # @return [String] Description on change made in the revision
+          # @return [String] Description of change made in the revision
           def commit_message
             @properties['commit_message']
           end
@@ -424,7 +416,7 @@ module Twilio
           #   `published`.
           # @param [String] friendly_name The string that you assigned to describe the Flow.
           # @param [Hash] definition JSON representation of flow definition.
-          # @param [String] commit_message Description on change made in the revision.
+          # @param [String] commit_message Description of change made in the revision.
           # @return [FlowInstance] Updated FlowInstance
           def update(status: nil, friendly_name: :unset, definition: :unset, commit_message: :unset)
             context.update(

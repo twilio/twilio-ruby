@@ -11,8 +11,6 @@ module Twilio
     class Studio < Domain
       class V2 < Version
         class FlowContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class FlowRevisionList < ListResource
             ##
             # Initialize the FlowRevisionList
@@ -115,8 +113,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class FlowRevisionPage < Page
             ##
             # Initialize the FlowRevisionPage
@@ -146,8 +142,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class FlowRevisionContext < InstanceContext
             ##
             # Initialize the FlowRevisionContext
@@ -188,8 +182,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class FlowRevisionInstance < InstanceResource
             ##
             # Initialize the FlowRevisionInstance
@@ -272,7 +264,7 @@ module Twilio
             end
 
             ##
-            # @return [String] Description on change made in the revision
+            # @return [String] Description of change made in the revision
             def commit_message
               @properties['commit_message']
             end
