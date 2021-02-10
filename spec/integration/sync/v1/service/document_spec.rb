@@ -58,15 +58,13 @@ describe 'Document' do
 
     expect {
       @client.sync.v1.services('ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                     .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete(if_match: 'if_match')
+                     .documents('ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://sync.twilio.com/v1/Services/ISXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Documents/ETXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-        headers: headers,
     ))).to eq(true)
   end
 

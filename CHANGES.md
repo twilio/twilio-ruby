@@ -1,6 +1,37 @@
 twilio-ruby changelog
 =====================
 
+[2021-02-10] Version 5.47.0
+---------------------------
+**Library - Fix**
+- [PR #548](https://github.com/twilio/twilio-ruby/pull/548): shortcut syntax for new non-GA versions. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+
+**Api**
+- Revert change that conference participant create `from` and `to` param to be endpoint type for supporting client identifier and sip address
+- Update the conference participant create `from` and `to` param to be endpoint type for supporting client identifier and sip address
+
+**Events**
+- Documentation should state that no fields are PII
+
+**Flex**
+- Adding `notifications` and `markdown` to Flex Configuration
+
+**Messaging**
+- Add A2P use cases API
+- Add Brand Registrations API
+- Add Campaigns API
+
+**Serverless**
+- Add runtime field to Build response and as an optional parameter to the Build create endpoint.
+- Add @twilio/runtime-handler dependency to Build response example.
+
+**Sync**
+- Remove If-Match header for Document **(breaking change)**
+
+**Twiml**
+- Add `refer_url` and `refer_method` to `Dial`.
+
+
 [2021-01-27] Version 5.46.1
 ---------------------------
 **Library - Docs**

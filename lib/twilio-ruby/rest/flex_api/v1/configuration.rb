@@ -164,6 +164,8 @@ module Twilio
                 'outbound_call_flows' => payload['outbound_call_flows'],
                 'serverless_service_sids' => payload['serverless_service_sids'],
                 'queue_stats_configuration' => payload['queue_stats_configuration'],
+                'notifications' => payload['notifications'],
+                'markdown' => payload['markdown'],
                 'url' => payload['url'],
             }
 
@@ -397,6 +399,18 @@ module Twilio
           # @return [Hash] Configurable parameters for Queues Statistics
           def queue_stats_configuration
             @properties['queue_stats_configuration']
+          end
+
+          ##
+          # @return [Hash] Configurable parameters for Notifications
+          def notifications
+            @properties['notifications']
+          end
+
+          ##
+          # @return [Hash] Configurable parameters for Markdown
+          def markdown
+            @properties['markdown']
           end
 
           ##

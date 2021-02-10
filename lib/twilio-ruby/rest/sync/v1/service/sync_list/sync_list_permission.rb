@@ -12,8 +12,6 @@ module Twilio
       class V1 < Version
         class ServiceContext < InstanceContext
           class SyncListContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class SyncListPermissionList < ListResource
               ##
               # Initialize the SyncListPermissionList
@@ -119,8 +117,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class SyncListPermissionPage < Page
               ##
               # Initialize the SyncListPermissionPage
@@ -155,8 +151,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class SyncListPermissionContext < InstanceContext
               ##
               # Initialize the SyncListPermissionContext
@@ -237,8 +231,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class SyncListPermissionInstance < InstanceResource
               ##
               # Initialize the SyncListPermissionInstance

@@ -38,10 +38,10 @@ module Twilio
       ##
       # @param [String] sid The unique string that we created to identify the Flow
       #   resource.
-      # @return [Twilio::REST::Studio::V1::FlowInstance] if sid was passed.
-      # @return [Twilio::REST::Studio::V1::FlowList]
+      # @return [Twilio::REST::Studio::V2::FlowInstance] if sid was passed.
+      # @return [Twilio::REST::Studio::V2::FlowList]
       def flows(sid=:unset)
-        self.v1.flows(sid)
+        self.v2.flows(sid)
       end
 
       ##

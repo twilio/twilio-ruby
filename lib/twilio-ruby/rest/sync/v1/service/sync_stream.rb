@@ -11,8 +11,6 @@ module Twilio
     class Sync < Domain
       class V1 < Version
         class ServiceContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class SyncStreamList < ListResource
             ##
             # Initialize the SyncStreamList
@@ -136,8 +134,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class SyncStreamPage < Page
             ##
             # Initialize the SyncStreamPage
@@ -167,8 +163,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class SyncStreamContext < InstanceContext
             ##
             # Initialize the SyncStreamContext
@@ -262,8 +256,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class SyncStreamInstance < InstanceResource
             ##
             # Initialize the SyncStreamInstance

@@ -12,8 +12,6 @@ module Twilio
       class V1 < Version
         class ServiceContext < InstanceContext
           class SyncMapContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class SyncMapItemList < ListResource
               ##
               # Initialize the SyncMapItemList
@@ -193,8 +191,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class SyncMapItemPage < Page
               ##
               # Initialize the SyncMapItemPage
@@ -229,8 +225,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class SyncMapItemContext < InstanceContext
               ##
               # Initialize the SyncMapItemContext
@@ -267,7 +261,10 @@ module Twilio
 
               ##
               # Delete the SyncMapItemInstance
-              # @param [String] if_match The If-Match HTTP request header
+              # @param [String] if_match If provided, applies this mutation if (and only if) the
+              #   “revision” field of this {map item] matches the provided value. This matches the
+              #   semantics of (and is implemented with) the HTTP [If-Match
+              #   header}[https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match].
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete(if_match: :unset)
                 headers = Twilio::Values.of({'If-Match' => if_match, })
@@ -293,7 +290,10 @@ module Twilio
               #   or `ttl` is updated in the same request. The Sync Map will be deleted
               #   automatically after it expires, but there can be a delay between the expiration
               #   time and the resources's deletion.
-              # @param [String] if_match The If-Match HTTP request header
+              # @param [String] if_match If provided, applies this mutation if (and only if) the
+              #   “revision” field of this {map item] matches the provided value. This matches the
+              #   semantics of (and is implemented with) the HTTP [If-Match
+              #   header}[https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match].
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset, if_match: :unset)
                 data = Twilio::Values.of({
@@ -330,8 +330,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class SyncMapItemInstance < InstanceResource
               ##
               # Initialize the SyncMapItemInstance
@@ -457,7 +455,10 @@ module Twilio
 
               ##
               # Delete the SyncMapItemInstance
-              # @param [String] if_match The If-Match HTTP request header
+              # @param [String] if_match If provided, applies this mutation if (and only if) the
+              #   “revision” field of this {map item] matches the provided value. This matches the
+              #   semantics of (and is implemented with) the HTTP [If-Match
+              #   header}[https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match].
               # @return [Boolean] true if delete succeeds, false otherwise
               def delete(if_match: :unset)
                 context.delete(if_match: if_match, )
@@ -481,7 +482,10 @@ module Twilio
               #   or `ttl` is updated in the same request. The Sync Map will be deleted
               #   automatically after it expires, but there can be a delay between the expiration
               #   time and the resources's deletion.
-              # @param [String] if_match The If-Match HTTP request header
+              # @param [String] if_match If provided, applies this mutation if (and only if) the
+              #   “revision” field of this {map item] matches the provided value. This matches the
+              #   semantics of (and is implemented with) the HTTP [If-Match
+              #   header}[https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match].
               # @return [SyncMapItemInstance] Updated SyncMapItemInstance
               def update(data: :unset, ttl: :unset, item_ttl: :unset, collection_ttl: :unset, if_match: :unset)
                 context.update(

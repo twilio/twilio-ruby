@@ -42,10 +42,10 @@ module Twilio
           # @param [Boolean] commands_enabled Defines whether SIMs in the Fleet are capable
           #   of sending and receiving machine-to-machine SMS via Commands. Defaults to
           #   `true`.
-          # @param [String] commands_url The URL that will receive a webhook when a SIM in
-          #   the Fleet is used to send an SMS from your device (mobile originated) to the
-          #   Commands number. Your server should respond with an HTTP status code in the 200
-          #   range; any response body will be ignored.
+          # @param [String] commands_url The URL that will receive a webhook when a Super
+          #   SIM in the Fleet is used to send an SMS from your device to the Commands number.
+          #   Your server should respond with an HTTP status code in the 200 range; any
+          #   response body will be ignored.
           # @param [String] commands_method A string representing the HTTP method to use
           #   when making a request to `commands_url`. Can be one of `POST` or `GET`. Defaults
           #   to `POST`.
@@ -231,10 +231,10 @@ module Twilio
           # @param [String] network_access_profile The SID or unique name of the Network
           #   Access Profile that will control which cellular networks the Fleet's SIMs can
           #   connect to.
-          # @param [String] commands_url The URL that will receive a webhook when a SIM in
-          #   the Fleet is used to send an SMS from your device (mobile originated) to the
-          #   Commands number. Your server should respond with an HTTP status code in the 200
-          #   range; any response body will be ignored.
+          # @param [String] commands_url The URL that will receive a webhook when a Super
+          #   SIM in the Fleet is used to send an SMS from your device to the Commands number.
+          #   Your server should respond with an HTTP status code in the 200 range; any
+          #   response body will be ignored.
           # @param [String] commands_method A string representing the HTTP method to use
           #   when making a request to `commands_url`. Can be one of `POST` or `GET`. Defaults
           #   to `POST`.
@@ -373,7 +373,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The URL that will receive a webhook when a SIM in the Fleet is used to send an SMS from your device (mobile originated) to the Commands number
+          # @return [String] The URL that will receive a webhook when a Super SIM in the Fleet is used to send an SMS from your device to the Commands number
           def commands_url
             @properties['commands_url']
           end
@@ -405,10 +405,10 @@ module Twilio
           # @param [String] network_access_profile The SID or unique name of the Network
           #   Access Profile that will control which cellular networks the Fleet's SIMs can
           #   connect to.
-          # @param [String] commands_url The URL that will receive a webhook when a SIM in
-          #   the Fleet is used to send an SMS from your device (mobile originated) to the
-          #   Commands number. Your server should respond with an HTTP status code in the 200
-          #   range; any response body will be ignored.
+          # @param [String] commands_url The URL that will receive a webhook when a Super
+          #   SIM in the Fleet is used to send an SMS from your device to the Commands number.
+          #   Your server should respond with an HTTP status code in the 200 range; any
+          #   response body will be ignored.
           # @param [String] commands_method A string representing the HTTP method to use
           #   when making a request to `commands_url`. Can be one of `POST` or `GET`. Defaults
           #   to `POST`.

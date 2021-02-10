@@ -48,9 +48,11 @@ module Twilio
       # ring_tone:: Ringtone allows you to override the ringback tone that Twilio will play back to the caller while executing the Dial
       # recording_track:: To indicate which audio track should be recorded
       # sequential:: Used to determine if child TwiML nouns should be dialed in order, one after the other (sequential) or dial all at once (parallel). Default is false, parallel
+      # refer_url:: Webhook that will receive future SIP REFER requests
+      # refer_method:: The HTTP method to use for the refer Webhook
       # keyword_args:: additional attributes
-      def dial(number: nil, action: nil, method: nil, timeout: nil, hangup_on_star: nil, time_limit: nil, caller_id: nil, record: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, answer_on_bridge: nil, ring_tone: nil, recording_track: nil, sequential: nil, **keyword_args)
-        dial = Dial.new(number: number, action: action, method: method, timeout: timeout, hangup_on_star: hangup_on_star, time_limit: time_limit, caller_id: caller_id, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, answer_on_bridge: answer_on_bridge, ring_tone: ring_tone, recording_track: recording_track, sequential: sequential, **keyword_args)
+      def dial(number: nil, action: nil, method: nil, timeout: nil, hangup_on_star: nil, time_limit: nil, caller_id: nil, record: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, answer_on_bridge: nil, ring_tone: nil, recording_track: nil, sequential: nil, refer_url: nil, refer_method: nil, **keyword_args)
+        dial = Dial.new(number: number, action: action, method: method, timeout: timeout, hangup_on_star: hangup_on_star, time_limit: time_limit, caller_id: caller_id, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, answer_on_bridge: answer_on_bridge, ring_tone: ring_tone, recording_track: recording_track, sequential: sequential, refer_url: refer_url, refer_method: refer_method, **keyword_args)
 
         yield(dial) if block_given?
         append(dial)

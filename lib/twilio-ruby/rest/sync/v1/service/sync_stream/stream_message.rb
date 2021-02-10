@@ -12,8 +12,6 @@ module Twilio
       class V1 < Version
         class ServiceContext < InstanceContext
           class SyncStreamContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class StreamMessageList < ListResource
               ##
               # Initialize the StreamMessageList
@@ -57,8 +55,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class StreamMessagePage < Page
               ##
               # Initialize the StreamMessagePage
@@ -93,8 +89,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class StreamMessageInstance < InstanceResource
               ##
               # Initialize the StreamMessageInstance

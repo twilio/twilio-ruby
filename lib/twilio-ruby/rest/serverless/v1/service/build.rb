@@ -117,12 +117,15 @@ module Twilio
             # @param [String] dependencies A list of objects that describe the Dependencies
             #   included in the Build. Each object contains the `name` and `version` of the
             #   dependency.
+            # @param [String] runtime The Runtime version that will be used to run the Build
+            #   resource when it is deployed.
             # @return [BuildInstance] Created BuildInstance
-            def create(asset_versions: :unset, function_versions: :unset, dependencies: :unset)
+            def create(asset_versions: :unset, function_versions: :unset, dependencies: :unset, runtime: :unset)
               data = Twilio::Values.of({
                   'AssetVersions' => Twilio.serialize_list(asset_versions) { |e| e },
                   'FunctionVersions' => Twilio.serialize_list(function_versions) { |e| e },
                   'Dependencies' => dependencies,
+                  'Runtime' => runtime,
               })
 
               payload = @version.create('POST', @uri, data: data)
@@ -251,6 +254,7 @@ module Twilio
                   'asset_versions' => payload['asset_versions'],
                   'function_versions' => payload['function_versions'],
                   'dependencies' => payload['dependencies'],
+                  'runtime' => payload['runtime'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
@@ -313,6 +317,12 @@ module Twilio
             # @return [Array[Hash]] A list of objects that describe the Dependencies included in the Build
             def dependencies
               @properties['dependencies']
+            end
+
+            ##
+            # @return [build.Runtime] The Runtime version that will be used to run the Build.
+            def runtime
+              @properties['runtime']
             end
 
             ##

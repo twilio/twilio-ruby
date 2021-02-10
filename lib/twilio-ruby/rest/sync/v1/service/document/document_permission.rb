@@ -12,8 +12,6 @@ module Twilio
       class V1 < Version
         class ServiceContext < InstanceContext
           class DocumentContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class DocumentPermissionList < ListResource
               ##
               # Initialize the DocumentPermissionList
@@ -119,8 +117,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class DocumentPermissionPage < Page
               ##
               # Initialize the DocumentPermissionPage
@@ -155,8 +151,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class DocumentPermissionContext < InstanceContext
               ##
               # Initialize the DocumentPermissionContext
@@ -238,8 +232,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class DocumentPermissionInstance < InstanceResource
               ##
               # Initialize the DocumentPermissionInstance

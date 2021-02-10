@@ -8,46 +8,25 @@
 
 module Twilio
   module REST
-    class Events < Domain
+    class Messaging < Domain
       class V1 < Version
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class SinkList < ListResource
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        class CampaignList < ListResource
           ##
-          # Initialize the SinkList
+          # Initialize the CampaignList
           # @param [Version] version Version that contains the resource
-          # @return [SinkList] SinkList
+          # @return [CampaignList] CampaignList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/Sinks"
+            @uri = "/a2p/Campaigns"
           end
 
           ##
-          # Create the SinkInstance
-          # @param [String] description A human readable description for the Sink **This
-          #   value should not contain PII.**
-          # @param [Hash] sink_configuration The information required for Twilio to connect
-          #   to the provided Sink encoded as JSON.
-          # @param [sink.SinkType] sink_type The Sink type. Can only be "kinesis" or
-          #   "webhook" currently.
-          # @return [SinkInstance] Created SinkInstance
-          def create(description: nil, sink_configuration: nil, sink_type: nil)
-            data = Twilio::Values.of({
-                'Description' => description,
-                'SinkConfiguration' => Twilio.serialize_object(sink_configuration),
-                'SinkType' => sink_type,
-            })
-
-            payload = @version.create('POST', @uri, data: data)
-
-            SinkInstance.new(@version, payload, )
-          end
-
-          ##
-          # Lists SinkInstance records from the API as a list.
+          # Lists CampaignInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -62,7 +41,7 @@ module Twilio
           end
 
           ##
-          # Streams SinkInstance records from the API as an Enumerable.
+          # Streams CampaignInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -81,7 +60,7 @@ module Twilio
           end
 
           ##
-          # When passed a block, yields SinkInstance records from the API.
+          # When passed a block, yields CampaignInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -95,12 +74,12 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of SinkInstance records from the API.
+          # Retrieve a single page of CampaignInstance records from the API.
           # Request is executed immediately.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of SinkInstance
+          # @return [Page] Page of CampaignInstance
           def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
@@ -110,38 +89,71 @@ module Twilio
 
             response = @version.page('GET', @uri, params: params)
 
-            SinkPage.new(@version, response, @solution)
+            CampaignPage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of SinkInstance records from the API.
+          # Retrieve a single page of CampaignInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of SinkInstance
+          # @return [Page] Page of CampaignInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            SinkPage.new(@version, response, @solution)
+            CampaignPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Create the CampaignInstance
+          # @param [String] brand_registration_sid A2P BrandRegistration Sid
+          # @param [String] use_case A2P Campaign UseCase. One of [ 2FA, EMERGENCY,
+          #   MARKETING ]
+          # @param [String] description A short description of what this SMS campaign does.
+          # @param [Array[String]] message_samples Message samples, up to 5 sample messages,
+          #   <=255 chars each. Example: [ "EXPRESS: Denim Days Event is ON", "LAST CHANCE:
+          #   Book your next flight for just 1 (ONE) EUR" ]
+          # @param [Boolean] has_embedded_links Indicate that this SMS campaign will send
+          #   messages that contain links.
+          # @param [Boolean] has_embedded_phone Indicates that this SMS campaign will send
+          #   messages that contain phone numbers.
+          # @param [String] messaging_service_sid The SID of the
+          #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to read the
+          #   resources from.
+          # @return [CampaignInstance] Created CampaignInstance
+          def create(brand_registration_sid: nil, use_case: nil, description: nil, message_samples: nil, has_embedded_links: nil, has_embedded_phone: nil, messaging_service_sid: nil)
+            data = Twilio::Values.of({
+                'BrandRegistrationSid' => brand_registration_sid,
+                'UseCase' => use_case,
+                'Description' => description,
+                'MessageSamples' => Twilio.serialize_list(message_samples) { |e| e },
+                'HasEmbeddedLinks' => has_embedded_links,
+                'HasEmbeddedPhone' => has_embedded_phone,
+                'MessagingServiceSid' => messaging_service_sid,
+            })
+
+            payload = @version.create('POST', @uri, data: data)
+
+            CampaignInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Events.V1.SinkList>'
+            '#<Twilio.Messaging.V1.CampaignList>'
           end
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class SinkPage < Page
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        class CampaignPage < Page
           ##
-          # Initialize the SinkPage
+          # Initialize the CampaignPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [SinkPage] SinkPage
+          # @return [CampaignPage] CampaignPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -150,118 +162,95 @@ module Twilio
           end
 
           ##
-          # Build an instance of SinkInstance
+          # Build an instance of CampaignInstance
           # @param [Hash] payload Payload response from the API
-          # @return [SinkInstance] SinkInstance
+          # @return [CampaignInstance] CampaignInstance
           def get_instance(payload)
-            SinkInstance.new(@version, payload, )
+            CampaignInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Events.V1.SinkPage>'
+            '<Twilio.Messaging.V1.CampaignPage>'
           end
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class SinkContext < InstanceContext
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        class CampaignContext < InstanceContext
           ##
-          # Initialize the SinkContext
+          # Initialize the CampaignContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34 character string that uniquely identifies this Sink.
-          # @return [SinkContext] SinkContext
+          # @param [String] sid The SID of the Campaign resource to fetch.
+          # @return [CampaignContext] CampaignContext
           def initialize(version, sid)
             super(version)
 
             # Path Solution
             @solution = {sid: sid, }
-            @uri = "/Sinks/#{@solution[:sid]}"
-
-            # Dependents
-            @sink_test = nil
-            @sink_validate = nil
+            @uri = "/a2p/Campaigns/#{@solution[:sid]}"
           end
 
           ##
-          # Fetch the SinkInstance
-          # @return [SinkInstance] Fetched SinkInstance
+          # Fetch the CampaignInstance
+          # @return [CampaignInstance] Fetched CampaignInstance
           def fetch
             payload = @version.fetch('GET', @uri)
 
-            SinkInstance.new(@version, payload, sid: @solution[:sid], )
+            CampaignInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Delete the SinkInstance
+          # Delete the CampaignInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
              @version.delete('DELETE', @uri)
           end
 
           ##
-          # Access the sink_test
-          # @return [SinkTestList]
-          # @return [SinkTestContext]
-          def sink_test
-            unless @sink_test
-              @sink_test = SinkTestList.new(@version, sid: @solution[:sid], )
-            end
-
-            @sink_test
-          end
-
-          ##
-          # Access the sink_validate
-          # @return [SinkValidateList]
-          # @return [SinkValidateContext]
-          def sink_validate
-            unless @sink_validate
-              @sink_validate = SinkValidateList.new(@version, sid: @solution[:sid], )
-            end
-
-            @sink_validate
-          end
-
-          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Events.V1.SinkContext #{context}>"
+            "#<Twilio.Messaging.V1.CampaignContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Events.V1.SinkContext #{context}>"
+            "#<Twilio.Messaging.V1.CampaignContext #{context}>"
           end
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class SinkInstance < InstanceResource
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        class CampaignInstance < InstanceResource
           ##
-          # Initialize the SinkInstance
+          # Initialize the CampaignInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34 character string that uniquely identifies this Sink.
-          # @return [SinkInstance] SinkInstance
+          # @param [String] sid The SID of the Campaign resource to fetch.
+          # @return [CampaignInstance] CampaignInstance
           def initialize(version, payload, sid: nil)
             super(version)
 
             # Marshaled Properties
             @properties = {
+                'account_sid' => payload['account_sid'],
+                'messaging_service_sid' => payload['messaging_service_sid'],
+                'brand_registration_sid' => payload['brand_registration_sid'],
+                'sid' => payload['sid'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'description' => payload['description'],
-                'sid' => payload['sid'],
-                'sink_configuration' => payload['sink_configuration'],
-                'sink_type' => payload['sink_type'],
+                'message_samples' => payload['message_samples'],
                 'status' => payload['status'],
+                'failure_reason' => payload['failure_reason'],
+                'use_case' => payload['use_case'],
+                'has_embedded_links' => payload['has_embedded_links'],
+                'has_embedded_phone' => payload['has_embedded_phone'],
                 'url' => payload['url'],
-                'links' => payload['links'],
             }
 
             # Context
@@ -272,108 +261,124 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [SinkContext] SinkContext for this SinkInstance
+          # @return [CampaignContext] CampaignContext for this CampaignInstance
           def context
             unless @instance_context
-              @instance_context = SinkContext.new(@version, @params['sid'], )
+              @instance_context = CampaignContext.new(@version, @params['sid'], )
             end
             @instance_context
           end
 
           ##
-          # @return [Time] The date this Sink was created
-          def date_created
-            @properties['date_created']
+          # @return [String] The SID of the Account that created the resource
+          def account_sid
+            @properties['account_sid']
           end
 
           ##
-          # @return [Time] The date this Sink was updated
-          def date_updated
-            @properties['date_updated']
+          # @return [String] MessagingService SID
+          def messaging_service_sid
+            @properties['messaging_service_sid']
           end
 
           ##
-          # @return [String] Sink Description
-          def description
-            @properties['description']
+          # @return [String] A2P BrandRegistration Sid
+          def brand_registration_sid
+            @properties['brand_registration_sid']
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Sink.
+          # @return [String] Campaign sid
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [Hash] JSON Sink configuration.
-          def sink_configuration
-            @properties['sink_configuration']
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
+          def date_created
+            @properties['date_created']
           end
 
           ##
-          # @return [sink.SinkType] Sink type.
-          def sink_type
-            @properties['sink_type']
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
+          def date_updated
+            @properties['date_updated']
           end
 
           ##
-          # @return [sink.Status] The Status of this Sink
+          # @return [String] A short description of what this SMS campaign does
+          def description
+            @properties['description']
+          end
+
+          ##
+          # @return [Array[String]] Message samples
+          def message_samples
+            @properties['message_samples']
+          end
+
+          ##
+          # @return [campaign.Status] Campaign status
           def status
             @properties['status']
           end
 
           ##
-          # @return [String] The URL of this resource.
+          # @return [String] A reason why campaign registration has failed
+          def failure_reason
+            @properties['failure_reason']
+          end
+
+          ##
+          # @return [String] A2P Campaign UseCase.
+          def use_case
+            @properties['use_case']
+          end
+
+          ##
+          # @return [Boolean] Indicate that this SMS campaign will send messages that contain links
+          def has_embedded_links
+            @properties['has_embedded_links']
+          end
+
+          ##
+          # @return [Boolean] Indicates that this SMS campaign will send messages that contain phone numbers
+          def has_embedded_phone
+            @properties['has_embedded_phone']
+          end
+
+          ##
+          # @return [String] The absolute URL of the Campaign resource
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] Nested resource URLs.
-          def links
-            @properties['links']
-          end
-
-          ##
-          # Fetch the SinkInstance
-          # @return [SinkInstance] Fetched SinkInstance
+          # Fetch the CampaignInstance
+          # @return [CampaignInstance] Fetched CampaignInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Delete the SinkInstance
+          # Delete the CampaignInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete
           end
 
           ##
-          # Access the sink_test
-          # @return [sink_test] sink_test
-          def sink_test
-            context.sink_test
-          end
-
-          ##
-          # Access the sink_validate
-          # @return [sink_validate] sink_validate
-          def sink_validate
-            context.sink_validate
-          end
-
-          ##
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Events.V1.SinkInstance #{values}>"
+            "<Twilio.Messaging.V1.CampaignInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Events.V1.SinkInstance #{values}>"
+            "<Twilio.Messaging.V1.CampaignInstance #{values}>"
           end
         end
       end

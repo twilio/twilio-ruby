@@ -189,12 +189,9 @@ module Twilio
 
             ##
             # Delete the DocumentInstance
-            # @param [String] if_match The If-Match HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete(if_match: :unset)
-              headers = Twilio::Values.of({'If-Match' => if_match, })
-
-               @version.delete('DELETE', @uri, headers: headers)
+            def delete
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -367,10 +364,9 @@ module Twilio
 
             ##
             # Delete the DocumentInstance
-            # @param [String] if_match The If-Match HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete(if_match: :unset)
-              context.delete(if_match: if_match, )
+            def delete
+              context.delete
             end
 
             ##

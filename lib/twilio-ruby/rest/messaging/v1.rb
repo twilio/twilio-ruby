@@ -15,8 +15,39 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @brand_registrations = nil
+          @campaigns = nil
           @deactivations = nil
           @services = nil
+          @use_cases = nil
+        end
+
+        ##
+        # @param [String] sid The SID of the Brand Registration resource to fetch.
+        # @return [Twilio::REST::Messaging::V1::BrandRegistrationContext] if sid was passed.
+        # @return [Twilio::REST::Messaging::V1::BrandRegistrationList]
+        def brand_registrations(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @brand_registrations ||= BrandRegistrationList.new self
+          else
+            BrandRegistrationContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The SID of the Campaign resource to fetch.
+        # @return [Twilio::REST::Messaging::V1::CampaignContext] if sid was passed.
+        # @return [Twilio::REST::Messaging::V1::CampaignList]
+        def campaigns(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @campaigns ||= CampaignList.new self
+          else
+            CampaignContext.new(self, sid)
+          end
         end
 
         ##
@@ -37,6 +68,12 @@ module Twilio
           else
             ServiceContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Messaging::V1::UseCaseContext]
+        def use_cases
+          @use_cases ||= UseCaseList.new self
         end
 
         ##

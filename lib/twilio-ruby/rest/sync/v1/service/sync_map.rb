@@ -11,8 +11,6 @@ module Twilio
     class Sync < Domain
       class V1 < Version
         class ServiceContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class SyncMapList < ListResource
             ##
             # Initialize the SyncMapList
@@ -141,8 +139,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class SyncMapPage < Page
             ##
             # Initialize the SyncMapPage
@@ -172,8 +168,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class SyncMapContext < InstanceContext
             ##
             # Initialize the SyncMapContext
@@ -289,8 +283,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class SyncMapInstance < InstanceResource
             ##
             # Initialize the SyncMapInstance

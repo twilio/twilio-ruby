@@ -8,46 +8,25 @@
 
 module Twilio
   module REST
-    class Events < Domain
+    class Messaging < Domain
       class V1 < Version
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class SinkList < ListResource
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        class BrandRegistrationList < ListResource
           ##
-          # Initialize the SinkList
+          # Initialize the BrandRegistrationList
           # @param [Version] version Version that contains the resource
-          # @return [SinkList] SinkList
+          # @return [BrandRegistrationList] BrandRegistrationList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/Sinks"
+            @uri = "/a2p/BrandRegistrations"
           end
 
           ##
-          # Create the SinkInstance
-          # @param [String] description A human readable description for the Sink **This
-          #   value should not contain PII.**
-          # @param [Hash] sink_configuration The information required for Twilio to connect
-          #   to the provided Sink encoded as JSON.
-          # @param [sink.SinkType] sink_type The Sink type. Can only be "kinesis" or
-          #   "webhook" currently.
-          # @return [SinkInstance] Created SinkInstance
-          def create(description: nil, sink_configuration: nil, sink_type: nil)
-            data = Twilio::Values.of({
-                'Description' => description,
-                'SinkConfiguration' => Twilio.serialize_object(sink_configuration),
-                'SinkType' => sink_type,
-            })
-
-            payload = @version.create('POST', @uri, data: data)
-
-            SinkInstance.new(@version, payload, )
-          end
-
-          ##
-          # Lists SinkInstance records from the API as a list.
+          # Lists BrandRegistrationInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -62,7 +41,7 @@ module Twilio
           end
 
           ##
-          # Streams SinkInstance records from the API as an Enumerable.
+          # Streams BrandRegistrationInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -81,7 +60,7 @@ module Twilio
           end
 
           ##
-          # When passed a block, yields SinkInstance records from the API.
+          # When passed a block, yields BrandRegistrationInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -95,12 +74,12 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of SinkInstance records from the API.
+          # Retrieve a single page of BrandRegistrationInstance records from the API.
           # Request is executed immediately.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of SinkInstance
+          # @return [Page] Page of BrandRegistrationInstance
           def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
@@ -110,38 +89,54 @@ module Twilio
 
             response = @version.page('GET', @uri, params: params)
 
-            SinkPage.new(@version, response, @solution)
+            BrandRegistrationPage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of SinkInstance records from the API.
+          # Retrieve a single page of BrandRegistrationInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of SinkInstance
+          # @return [Page] Page of BrandRegistrationInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            SinkPage.new(@version, response, @solution)
+            BrandRegistrationPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Create the BrandRegistrationInstance
+          # @param [String] customer_profile_bundle_sid Customer Profile Bundle Sid.
+          # @param [String] a2p_profile_bundle_sid A2P Messaging Profile Bundle Sid.
+          # @return [BrandRegistrationInstance] Created BrandRegistrationInstance
+          def create(customer_profile_bundle_sid: nil, a2p_profile_bundle_sid: nil)
+            data = Twilio::Values.of({
+                'CustomerProfileBundleSid' => customer_profile_bundle_sid,
+                'A2PProfileBundleSid' => a2p_profile_bundle_sid,
+            })
+
+            payload = @version.create('POST', @uri, data: data)
+
+            BrandRegistrationInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Events.V1.SinkList>'
+            '#<Twilio.Messaging.V1.BrandRegistrationList>'
           end
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class SinkPage < Page
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        class BrandRegistrationPage < Page
           ##
-          # Initialize the SinkPage
+          # Initialize the BrandRegistrationPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [SinkPage] SinkPage
+          # @return [BrandRegistrationPage] BrandRegistrationPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -150,118 +145,84 @@ module Twilio
           end
 
           ##
-          # Build an instance of SinkInstance
+          # Build an instance of BrandRegistrationInstance
           # @param [Hash] payload Payload response from the API
-          # @return [SinkInstance] SinkInstance
+          # @return [BrandRegistrationInstance] BrandRegistrationInstance
           def get_instance(payload)
-            SinkInstance.new(@version, payload, )
+            BrandRegistrationInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Events.V1.SinkPage>'
+            '<Twilio.Messaging.V1.BrandRegistrationPage>'
           end
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class SinkContext < InstanceContext
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        class BrandRegistrationContext < InstanceContext
           ##
-          # Initialize the SinkContext
+          # Initialize the BrandRegistrationContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34 character string that uniquely identifies this Sink.
-          # @return [SinkContext] SinkContext
+          # @param [String] sid The SID of the Brand Registration resource to fetch.
+          # @return [BrandRegistrationContext] BrandRegistrationContext
           def initialize(version, sid)
             super(version)
 
             # Path Solution
             @solution = {sid: sid, }
-            @uri = "/Sinks/#{@solution[:sid]}"
-
-            # Dependents
-            @sink_test = nil
-            @sink_validate = nil
+            @uri = "/a2p/BrandRegistrations/#{@solution[:sid]}"
           end
 
           ##
-          # Fetch the SinkInstance
-          # @return [SinkInstance] Fetched SinkInstance
+          # Fetch the BrandRegistrationInstance
+          # @return [BrandRegistrationInstance] Fetched BrandRegistrationInstance
           def fetch
             payload = @version.fetch('GET', @uri)
 
-            SinkInstance.new(@version, payload, sid: @solution[:sid], )
-          end
-
-          ##
-          # Delete the SinkInstance
-          # @return [Boolean] true if delete succeeds, false otherwise
-          def delete
-             @version.delete('DELETE', @uri)
-          end
-
-          ##
-          # Access the sink_test
-          # @return [SinkTestList]
-          # @return [SinkTestContext]
-          def sink_test
-            unless @sink_test
-              @sink_test = SinkTestList.new(@version, sid: @solution[:sid], )
-            end
-
-            @sink_test
-          end
-
-          ##
-          # Access the sink_validate
-          # @return [SinkValidateList]
-          # @return [SinkValidateContext]
-          def sink_validate
-            unless @sink_validate
-              @sink_validate = SinkValidateList.new(@version, sid: @solution[:sid], )
-            end
-
-            @sink_validate
+            BrandRegistrationInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Events.V1.SinkContext #{context}>"
+            "#<Twilio.Messaging.V1.BrandRegistrationContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Events.V1.SinkContext #{context}>"
+            "#<Twilio.Messaging.V1.BrandRegistrationContext #{context}>"
           end
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class SinkInstance < InstanceResource
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        class BrandRegistrationInstance < InstanceResource
           ##
-          # Initialize the SinkInstance
+          # Initialize the BrandRegistrationInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34 character string that uniquely identifies this Sink.
-          # @return [SinkInstance] SinkInstance
+          # @param [String] sid The SID of the Brand Registration resource to fetch.
+          # @return [BrandRegistrationInstance] BrandRegistrationInstance
           def initialize(version, payload, sid: nil)
             super(version)
 
             # Marshaled Properties
             @properties = {
+                'sid' => payload['sid'],
+                'account_sid' => payload['account_sid'],
+                'customer_profile_bundle_sid' => payload['customer_profile_bundle_sid'],
+                'a2p_profile_bundle_sid' => payload['a2p_profile_bundle_sid'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                'description' => payload['description'],
-                'sid' => payload['sid'],
-                'sink_configuration' => payload['sink_configuration'],
-                'sink_type' => payload['sink_type'],
                 'status' => payload['status'],
+                'tcr_id' => payload['tcr_id'],
+                'failure_reason' => payload['failure_reason'],
                 'url' => payload['url'],
-                'links' => payload['links'],
             }
 
             # Context
@@ -272,108 +233,93 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [SinkContext] SinkContext for this SinkInstance
+          # @return [BrandRegistrationContext] BrandRegistrationContext for this BrandRegistrationInstance
           def context
             unless @instance_context
-              @instance_context = SinkContext.new(@version, @params['sid'], )
+              @instance_context = BrandRegistrationContext.new(@version, @params['sid'], )
             end
             @instance_context
           end
 
           ##
-          # @return [Time] The date this Sink was created
-          def date_created
-            @properties['date_created']
-          end
-
-          ##
-          # @return [Time] The date this Sink was updated
-          def date_updated
-            @properties['date_updated']
-          end
-
-          ##
-          # @return [String] Sink Description
-          def description
-            @properties['description']
-          end
-
-          ##
-          # @return [String] A string that uniquely identifies this Sink.
+          # @return [String] A2P BrandRegistration Sid
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [Hash] JSON Sink configuration.
-          def sink_configuration
-            @properties['sink_configuration']
+          # @return [String] The SID of the Account that created the resource
+          def account_sid
+            @properties['account_sid']
           end
 
           ##
-          # @return [sink.SinkType] Sink type.
-          def sink_type
-            @properties['sink_type']
+          # @return [String] A2P Messaging Profile Bundle BundleSid
+          def customer_profile_bundle_sid
+            @properties['customer_profile_bundle_sid']
           end
 
           ##
-          # @return [sink.Status] The Status of this Sink
+          # @return [String] A2P Messaging Profile Bundle BundleSid
+          def a2p_profile_bundle_sid
+            @properties['a2p_profile_bundle_sid']
+          end
+
+          ##
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was created
+          def date_created
+            @properties['date_created']
+          end
+
+          ##
+          # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
+          def date_updated
+            @properties['date_updated']
+          end
+
+          ##
+          # @return [brand_registration.Status] Brand Registration status
           def status
             @properties['status']
           end
 
           ##
-          # @return [String] The URL of this resource.
+          # @return [String] Campaign Registry (TCR) Brand ID
+          def tcr_id
+            @properties['tcr_id']
+          end
+
+          ##
+          # @return [String] A reason why brand registration has failed
+          def failure_reason
+            @properties['failure_reason']
+          end
+
+          ##
+          # @return [String] The absolute URL of the Brand Registration
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] Nested resource URLs.
-          def links
-            @properties['links']
-          end
-
-          ##
-          # Fetch the SinkInstance
-          # @return [SinkInstance] Fetched SinkInstance
+          # Fetch the BrandRegistrationInstance
+          # @return [BrandRegistrationInstance] Fetched BrandRegistrationInstance
           def fetch
             context.fetch
-          end
-
-          ##
-          # Delete the SinkInstance
-          # @return [Boolean] true if delete succeeds, false otherwise
-          def delete
-            context.delete
-          end
-
-          ##
-          # Access the sink_test
-          # @return [sink_test] sink_test
-          def sink_test
-            context.sink_test
-          end
-
-          ##
-          # Access the sink_validate
-          # @return [sink_validate] sink_validate
-          def sink_validate
-            context.sink_validate
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Events.V1.SinkInstance #{values}>"
+            "<Twilio.Messaging.V1.BrandRegistrationInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Events.V1.SinkInstance #{values}>"
+            "<Twilio.Messaging.V1.BrandRegistrationInstance #{values}>"
           end
         end
       end

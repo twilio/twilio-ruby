@@ -11,8 +11,6 @@ module Twilio
     class Sync < Domain
       class V1 < Version
         class ServiceContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class DocumentList < ListResource
             ##
             # Initialize the DocumentList
@@ -141,8 +139,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class DocumentPage < Page
             ##
             # Initialize the DocumentPage
@@ -172,8 +168,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class DocumentContext < InstanceContext
             ##
             # Initialize the DocumentContext
@@ -206,12 +200,9 @@ module Twilio
 
             ##
             # Delete the DocumentInstance
-            # @param [String] if_match The If-Match HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete(if_match: :unset)
-              headers = Twilio::Values.of({'If-Match' => if_match, })
-
-               @version.delete('DELETE', @uri, headers: headers)
+            def delete
+               @version.delete('DELETE', @uri)
             end
 
             ##
@@ -271,8 +262,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class DocumentInstance < InstanceResource
             ##
             # Initialize the DocumentInstance
@@ -400,10 +389,9 @@ module Twilio
 
             ##
             # Delete the DocumentInstance
-            # @param [String] if_match The If-Match HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete(if_match: :unset)
-              context.delete(if_match: if_match, )
+            def delete
+              context.delete
             end
 
             ##
