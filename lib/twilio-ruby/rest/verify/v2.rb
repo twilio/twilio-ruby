@@ -17,6 +17,7 @@ module Twilio
           @version = 'v2'
           @forms = nil
           @services = nil
+          @verification_attempts = nil
         end
 
         ##
@@ -46,6 +47,20 @@ module Twilio
             @services ||= ServiceList.new self
           else
             ServiceContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The unique SID identifier of a Verification Attempt
+        # @return [Twilio::REST::Verify::V2::VerificationAttemptContext] if sid was passed.
+        # @return [Twilio::REST::Verify::V2::VerificationAttemptList]
+        def verification_attempts(sid=:unset)
+          if sid.nil?
+            raise ArgumentError, 'sid cannot be nil'
+          elsif sid == :unset
+            @verification_attempts ||= VerificationAttemptList.new self
+          else
+            VerificationAttemptContext.new(self, sid)
           end
         end
 

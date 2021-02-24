@@ -37,14 +37,6 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The unique string that we created to identify the campaign.
-      # @return [Twilio::REST::Messaging::V1::CampaignInstance] if sid was passed.
-      # @return [Twilio::REST::Messaging::V1::CampaignList]
-      def campaigns(sid=:unset)
-        self.v1.campaigns(sid)
-      end
-
-      ##
       # @return [Twilio::REST::Messaging::V1::DeactivationsInstance]
       def deactivations
         self.v1.deactivations()
@@ -57,12 +49,6 @@ module Twilio
       # @return [Twilio::REST::Messaging::V1::ServiceList]
       def services(sid=:unset)
         self.v1.services(sid)
-      end
-
-      ##
-      # @return [Twilio::REST::Messaging::V1::UseCaseInstance]
-      def use_cases
-        self.v1.use_cases()
       end
 
       ##

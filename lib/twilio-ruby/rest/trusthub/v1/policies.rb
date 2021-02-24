@@ -8,25 +8,23 @@
 
 module Twilio
   module REST
-    class Messaging < Domain
+    class Trusthub < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-        class UseCaseList < ListResource
+        class PoliciesList < ListResource
           ##
-          # Initialize the UseCaseList
+          # Initialize the PoliciesList
           # @param [Version] version Version that contains the resource
-          # @return [UseCaseList] UseCaseList
+          # @return [PoliciesList] PoliciesList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/a2p/UseCases"
+            @uri = "/Policies"
           end
 
           ##
-          # Lists UseCaseInstance records from the API as a list.
+          # Lists PoliciesInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -41,7 +39,7 @@ module Twilio
           end
 
           ##
-          # Streams UseCaseInstance records from the API as an Enumerable.
+          # Streams PoliciesInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -60,7 +58,7 @@ module Twilio
           end
 
           ##
-          # When passed a block, yields UseCaseInstance records from the API.
+          # When passed a block, yields PoliciesInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -74,12 +72,12 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of UseCaseInstance records from the API.
+          # Retrieve a single page of PoliciesInstance records from the API.
           # Request is executed immediately.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of UseCaseInstance
+          # @return [Page] Page of PoliciesInstance
           def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
@@ -89,38 +87,36 @@ module Twilio
 
             response = @version.page('GET', @uri, params: params)
 
-            UseCasePage.new(@version, response, @solution)
+            PoliciesPage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of UseCaseInstance records from the API.
+          # Retrieve a single page of PoliciesInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of UseCaseInstance
+          # @return [Page] Page of PoliciesInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            UseCasePage.new(@version, response, @solution)
+            PoliciesPage.new(@version, response, @solution)
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Messaging.V1.UseCaseList>'
+            '#<Twilio.Trusthub.V1.PoliciesList>'
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-        class UseCasePage < Page
+        class PoliciesPage < Page
           ##
-          # Initialize the UseCasePage
+          # Initialize the PoliciesPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [UseCasePage] UseCasePage
+          # @return [PoliciesPage] PoliciesPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -129,67 +125,135 @@ module Twilio
           end
 
           ##
-          # Build an instance of UseCaseInstance
+          # Build an instance of PoliciesInstance
           # @param [Hash] payload Payload response from the API
-          # @return [UseCaseInstance] UseCaseInstance
+          # @return [PoliciesInstance] PoliciesInstance
           def get_instance(payload)
-            UseCaseInstance.new(@version, payload, )
+            PoliciesInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Messaging.V1.UseCasePage>'
+            '<Twilio.Trusthub.V1.PoliciesPage>'
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-        class UseCaseInstance < InstanceResource
+        class PoliciesContext < InstanceContext
           ##
-          # Initialize the UseCaseInstance
+          # Initialize the PoliciesContext
           # @param [Version] version Version that contains the resource
-          # @param [Hash] payload payload that contains response from Twilio
-          # @return [UseCaseInstance] UseCaseInstance
-          def initialize(version, payload)
+          # @param [String] sid The unique string that identifies the Policy resource.
+          # @return [PoliciesContext] PoliciesContext
+          def initialize(version, sid)
             super(version)
 
-            # Marshaled Properties
-            @properties = {
-                'name' => payload['name'],
-                'code' => payload['code'],
-                'description' => payload['description'],
-            }
+            # Path Solution
+            @solution = {sid: sid, }
+            @uri = "/Policies/#{@solution[:sid]}"
           end
 
           ##
-          # @return [String] Human readable name
-          def name
-            @properties['name']
-          end
+          # Fetch the PoliciesInstance
+          # @return [PoliciesInstance] Fetched PoliciesInstance
+          def fetch
+            payload = @version.fetch('GET', @uri)
 
-          ##
-          # @return [String] Unique Use Case code
-          def code
-            @properties['code']
-          end
-
-          ##
-          # @return [String] Description of Use Case
-          def description
-            @properties['description']
+            PoliciesInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            "<Twilio.Messaging.V1.UseCaseInstance>"
+            context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+            "#<Twilio.Trusthub.V1.PoliciesContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
-            "<Twilio.Messaging.V1.UseCaseInstance>"
+            context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+            "#<Twilio.Trusthub.V1.PoliciesContext #{context}>"
+          end
+        end
+
+        class PoliciesInstance < InstanceResource
+          ##
+          # Initialize the PoliciesInstance
+          # @param [Version] version Version that contains the resource
+          # @param [Hash] payload payload that contains response from Twilio
+          # @param [String] sid The unique string that identifies the Policy resource.
+          # @return [PoliciesInstance] PoliciesInstance
+          def initialize(version, payload, sid: nil)
+            super(version)
+
+            # Marshaled Properties
+            @properties = {
+                'sid' => payload['sid'],
+                'friendly_name' => payload['friendly_name'],
+                'requirements' => payload['requirements'],
+                'url' => payload['url'],
+            }
+
+            # Context
+            @instance_context = nil
+            @params = {'sid' => sid || @properties['sid'], }
+          end
+
+          ##
+          # Generate an instance context for the instance, the context is capable of
+          # performing various actions.  All instance actions are proxied to the context
+          # @return [PoliciesContext] PoliciesContext for this PoliciesInstance
+          def context
+            unless @instance_context
+              @instance_context = PoliciesContext.new(@version, @params['sid'], )
+            end
+            @instance_context
+          end
+
+          ##
+          # @return [String] The unique string that identifies the Policy resource
+          def sid
+            @properties['sid']
+          end
+
+          ##
+          # @return [String] A human-readable description of the Policy resource
+          def friendly_name
+            @properties['friendly_name']
+          end
+
+          ##
+          # @return [Hash] The sid of a Policy object that dictates requirements
+          def requirements
+            @properties['requirements']
+          end
+
+          ##
+          # @return [String] The absolute URL of the Policy resource
+          def url
+            @properties['url']
+          end
+
+          ##
+          # Fetch the PoliciesInstance
+          # @return [PoliciesInstance] Fetched PoliciesInstance
+          def fetch
+            context.fetch
+          end
+
+          ##
+          # Provide a user friendly representation
+          def to_s
+            values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Trusthub.V1.PoliciesInstance #{values}>"
+          end
+
+          ##
+          # Provide a detailed, user friendly representation
+          def inspect
+            values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+            "<Twilio.Trusthub.V1.PoliciesInstance #{values}>"
           end
         end
       end

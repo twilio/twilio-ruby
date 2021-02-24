@@ -52,6 +52,7 @@ module Twilio
         @sync = nil
         @taskrouter = nil
         @trunking = nil
+        @trusthub = nil
         @verify = nil
         @video = nil
         @voice = nil
@@ -293,6 +294,12 @@ module Twilio
       # Access the Trunking Twilio Domain
       def trunking
         @trunking ||= Trunking.new self
+      end
+
+      ##
+      # Access the Trusthub Twilio Domain
+      def trusthub
+        @trusthub ||= Trusthub.new self
       end
 
       ##

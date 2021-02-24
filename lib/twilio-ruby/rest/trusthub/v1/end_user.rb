@@ -8,25 +8,44 @@
 
 module Twilio
   module REST
-    class Messaging < Domain
+    class Trusthub < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-        class CampaignList < ListResource
+        class EndUserList < ListResource
           ##
-          # Initialize the CampaignList
+          # Initialize the EndUserList
           # @param [Version] version Version that contains the resource
-          # @return [CampaignList] CampaignList
+          # @return [EndUserList] EndUserList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/a2p/Campaigns"
+            @uri = "/EndUsers"
           end
 
           ##
-          # Lists CampaignInstance records from the API as a list.
+          # Create the EndUserInstance
+          # @param [String] friendly_name The string that you assigned to describe the
+          #   resource.
+          # @param [String] type The type of end user of the Bundle resource - can be
+          #   `individual` or `business`.
+          # @param [Hash] attributes The set of parameters that are the attributes of the
+          #   End User resource which are derived End User Types.
+          # @return [EndUserInstance] Created EndUserInstance
+          def create(friendly_name: nil, type: nil, attributes: :unset)
+            data = Twilio::Values.of({
+                'FriendlyName' => friendly_name,
+                'Type' => type,
+                'Attributes' => Twilio.serialize_object(attributes),
+            })
+
+            payload = @version.create('POST', @uri, data: data)
+
+            EndUserInstance.new(@version, payload, )
+          end
+
+          ##
+          # Lists EndUserInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -41,7 +60,7 @@ module Twilio
           end
 
           ##
-          # Streams CampaignInstance records from the API as an Enumerable.
+          # Streams EndUserInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -60,7 +79,7 @@ module Twilio
           end
 
           ##
-          # When passed a block, yields CampaignInstance records from the API.
+          # When passed a block, yields EndUserInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -74,12 +93,12 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of CampaignInstance records from the API.
+          # Retrieve a single page of EndUserInstance records from the API.
           # Request is executed immediately.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of CampaignInstance
+          # @return [Page] Page of EndUserInstance
           def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
@@ -89,71 +108,36 @@ module Twilio
 
             response = @version.page('GET', @uri, params: params)
 
-            CampaignPage.new(@version, response, @solution)
+            EndUserPage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of CampaignInstance records from the API.
+          # Retrieve a single page of EndUserInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of CampaignInstance
+          # @return [Page] Page of EndUserInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            CampaignPage.new(@version, response, @solution)
-          end
-
-          ##
-          # Create the CampaignInstance
-          # @param [String] brand_registration_sid A2P BrandRegistration Sid
-          # @param [String] use_case A2P Campaign UseCase. One of [ 2FA, EMERGENCY,
-          #   MARKETING ]
-          # @param [String] description A short description of what this SMS campaign does.
-          # @param [Array[String]] message_samples Message samples, up to 5 sample messages,
-          #   <=255 chars each. Example: [ "EXPRESS: Denim Days Event is ON", "LAST CHANCE:
-          #   Book your next flight for just 1 (ONE) EUR" ]
-          # @param [Boolean] has_embedded_links Indicate that this SMS campaign will send
-          #   messages that contain links.
-          # @param [Boolean] has_embedded_phone Indicates that this SMS campaign will send
-          #   messages that contain phone numbers.
-          # @param [String] messaging_service_sid The SID of the
-          #   {Service}[https://www.twilio.com/docs/chat/rest/service-resource] to read the
-          #   resources from.
-          # @return [CampaignInstance] Created CampaignInstance
-          def create(brand_registration_sid: nil, use_case: nil, description: nil, message_samples: nil, has_embedded_links: nil, has_embedded_phone: nil, messaging_service_sid: nil)
-            data = Twilio::Values.of({
-                'BrandRegistrationSid' => brand_registration_sid,
-                'UseCase' => use_case,
-                'Description' => description,
-                'MessageSamples' => Twilio.serialize_list(message_samples) { |e| e },
-                'HasEmbeddedLinks' => has_embedded_links,
-                'HasEmbeddedPhone' => has_embedded_phone,
-                'MessagingServiceSid' => messaging_service_sid,
-            })
-
-            payload = @version.create('POST', @uri, data: data)
-
-            CampaignInstance.new(@version, payload, )
+            EndUserPage.new(@version, response, @solution)
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Messaging.V1.CampaignList>'
+            '#<Twilio.Trusthub.V1.EndUserList>'
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-        class CampaignPage < Page
+        class EndUserPage < Page
           ##
-          # Initialize the CampaignPage
+          # Initialize the EndUserPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [CampaignPage] CampaignPage
+          # @return [EndUserPage] EndUserPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -162,47 +146,64 @@ module Twilio
           end
 
           ##
-          # Build an instance of CampaignInstance
+          # Build an instance of EndUserInstance
           # @param [Hash] payload Payload response from the API
-          # @return [CampaignInstance] CampaignInstance
+          # @return [EndUserInstance] EndUserInstance
           def get_instance(payload)
-            CampaignInstance.new(@version, payload, )
+            EndUserInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Messaging.V1.CampaignPage>'
+            '<Twilio.Trusthub.V1.EndUserPage>'
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-        class CampaignContext < InstanceContext
+        class EndUserContext < InstanceContext
           ##
-          # Initialize the CampaignContext
+          # Initialize the EndUserContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The SID of the Campaign resource to fetch.
-          # @return [CampaignContext] CampaignContext
+          # @param [String] sid The unique string created by Twilio to identify the End User
+          #   resource.
+          # @return [EndUserContext] EndUserContext
           def initialize(version, sid)
             super(version)
 
             # Path Solution
             @solution = {sid: sid, }
-            @uri = "/a2p/Campaigns/#{@solution[:sid]}"
+            @uri = "/EndUsers/#{@solution[:sid]}"
           end
 
           ##
-          # Fetch the CampaignInstance
-          # @return [CampaignInstance] Fetched CampaignInstance
+          # Fetch the EndUserInstance
+          # @return [EndUserInstance] Fetched EndUserInstance
           def fetch
             payload = @version.fetch('GET', @uri)
 
-            CampaignInstance.new(@version, payload, sid: @solution[:sid], )
+            EndUserInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
-          # Delete the CampaignInstance
+          # Update the EndUserInstance
+          # @param [String] friendly_name The string that you assigned to describe the
+          #   resource.
+          # @param [Hash] attributes The set of parameters that are the attributes of the
+          #   End User resource which are derived End User Types.
+          # @return [EndUserInstance] Updated EndUserInstance
+          def update(friendly_name: :unset, attributes: :unset)
+            data = Twilio::Values.of({
+                'FriendlyName' => friendly_name,
+                'Attributes' => Twilio.serialize_object(attributes),
+            })
+
+            payload = @version.update('POST', @uri, data: data)
+
+            EndUserInstance.new(@version, payload, sid: @solution[:sid], )
+          end
+
+          ##
+          # Delete the EndUserInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
              @version.delete('DELETE', @uri)
@@ -212,44 +213,37 @@ module Twilio
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Messaging.V1.CampaignContext #{context}>"
+            "#<Twilio.Trusthub.V1.EndUserContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Messaging.V1.CampaignContext #{context}>"
+            "#<Twilio.Trusthub.V1.EndUserContext #{context}>"
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-        class CampaignInstance < InstanceResource
+        class EndUserInstance < InstanceResource
           ##
-          # Initialize the CampaignInstance
+          # Initialize the EndUserInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The SID of the Campaign resource to fetch.
-          # @return [CampaignInstance] CampaignInstance
+          # @param [String] sid The unique string created by Twilio to identify the End User
+          #   resource.
+          # @return [EndUserInstance] EndUserInstance
           def initialize(version, payload, sid: nil)
             super(version)
 
             # Marshaled Properties
             @properties = {
-                'account_sid' => payload['account_sid'],
-                'messaging_service_sid' => payload['messaging_service_sid'],
-                'brand_registration_sid' => payload['brand_registration_sid'],
                 'sid' => payload['sid'],
+                'account_sid' => payload['account_sid'],
+                'friendly_name' => payload['friendly_name'],
+                'type' => payload['type'],
+                'attributes' => payload['attributes'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                'description' => payload['description'],
-                'message_samples' => payload['message_samples'],
-                'status' => payload['status'],
-                'failure_reason' => payload['failure_reason'],
-                'use_case' => payload['use_case'],
-                'has_embedded_links' => payload['has_embedded_links'],
-                'has_embedded_phone' => payload['has_embedded_phone'],
                 'url' => payload['url'],
             }
 
@@ -261,12 +255,18 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [CampaignContext] CampaignContext for this CampaignInstance
+          # @return [EndUserContext] EndUserContext for this EndUserInstance
           def context
             unless @instance_context
-              @instance_context = CampaignContext.new(@version, @params['sid'], )
+              @instance_context = EndUserContext.new(@version, @params['sid'], )
             end
             @instance_context
+          end
+
+          ##
+          # @return [String] The unique string that identifies the resource
+          def sid
+            @properties['sid']
           end
 
           ##
@@ -276,21 +276,21 @@ module Twilio
           end
 
           ##
-          # @return [String] MessagingService SID
-          def messaging_service_sid
-            @properties['messaging_service_sid']
+          # @return [String] The string that you assigned to describe the resource
+          def friendly_name
+            @properties['friendly_name']
           end
 
           ##
-          # @return [String] A2P BrandRegistration Sid
-          def brand_registration_sid
-            @properties['brand_registration_sid']
+          # @return [String] The type of end user of the Bundle resource
+          def type
+            @properties['type']
           end
 
           ##
-          # @return [String] Campaign sid
-          def sid
-            @properties['sid']
+          # @return [Hash] The set of parameters that compose the End Users resource
+          def attributes
+            @properties['attributes']
           end
 
           ##
@@ -306,62 +306,31 @@ module Twilio
           end
 
           ##
-          # @return [String] A short description of what this SMS campaign does
-          def description
-            @properties['description']
-          end
-
-          ##
-          # @return [Array[String]] Message samples
-          def message_samples
-            @properties['message_samples']
-          end
-
-          ##
-          # @return [campaign.Status] Campaign status
-          def status
-            @properties['status']
-          end
-
-          ##
-          # @return [String] A reason why campaign registration has failed
-          def failure_reason
-            @properties['failure_reason']
-          end
-
-          ##
-          # @return [String] A2P Campaign UseCase.
-          def use_case
-            @properties['use_case']
-          end
-
-          ##
-          # @return [Boolean] Indicate that this SMS campaign will send messages that contain links
-          def has_embedded_links
-            @properties['has_embedded_links']
-          end
-
-          ##
-          # @return [Boolean] Indicates that this SMS campaign will send messages that contain phone numbers
-          def has_embedded_phone
-            @properties['has_embedded_phone']
-          end
-
-          ##
-          # @return [String] The absolute URL of the Campaign resource
+          # @return [String] The absolute URL of the End User resource
           def url
             @properties['url']
           end
 
           ##
-          # Fetch the CampaignInstance
-          # @return [CampaignInstance] Fetched CampaignInstance
+          # Fetch the EndUserInstance
+          # @return [EndUserInstance] Fetched EndUserInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Delete the CampaignInstance
+          # Update the EndUserInstance
+          # @param [String] friendly_name The string that you assigned to describe the
+          #   resource.
+          # @param [Hash] attributes The set of parameters that are the attributes of the
+          #   End User resource which are derived End User Types.
+          # @return [EndUserInstance] Updated EndUserInstance
+          def update(friendly_name: :unset, attributes: :unset)
+            context.update(friendly_name: friendly_name, attributes: attributes, )
+          end
+
+          ##
+          # Delete the EndUserInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete
@@ -371,14 +340,14 @@ module Twilio
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Messaging.V1.CampaignInstance #{values}>"
+            "<Twilio.Trusthub.V1.EndUserInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Messaging.V1.CampaignInstance #{values}>"
+            "<Twilio.Trusthub.V1.EndUserInstance #{values}>"
           end
         end
       end

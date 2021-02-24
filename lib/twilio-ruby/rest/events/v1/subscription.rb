@@ -119,8 +119,8 @@ module Twilio
           # @param [String] sink_sid The SID of the sink that events selected by this
           #   subscription should be sent to. Sink must be active for the subscription to be
           #   created.
-          # @param [Array[Hash]] types Contains a dictionary of URL links to nested
-          #   resources of this Subscription.
+          # @param [Array[Hash]] types An array of objects containing the subscribed Event
+          #   Types
           # @return [SubscriptionInstance] Created SubscriptionInstance
           def create(description: nil, sink_sid: nil, types: nil)
             data = Twilio::Values.of({
