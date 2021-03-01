@@ -24,11 +24,12 @@ module Twilio
         # @return [Twilio::REST::Studio::V1::FlowList]
         def flows(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @flows ||= FlowList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @flows ||= FlowList.new self
           else
-            FlowContext.new(self, sid)
+              FlowContext.new(self, sid)
           end
         end
 

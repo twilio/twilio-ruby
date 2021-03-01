@@ -25,11 +25,12 @@ module Twilio
         # @return [Twilio::REST::Preview::Marketplace::AvailableAddOnList]
         def available_add_ons(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @available_add_ons ||= AvailableAddOnList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @available_add_ons ||= AvailableAddOnList.new self
           else
-            AvailableAddOnContext.new(self, sid)
+              AvailableAddOnContext.new(self, sid)
           end
         end
 
@@ -39,11 +40,12 @@ module Twilio
         # @return [Twilio::REST::Preview::Marketplace::InstalledAddOnList]
         def installed_add_ons(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @installed_add_ons ||= InstalledAddOnList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @installed_add_ons ||= InstalledAddOnList.new self
           else
-            InstalledAddOnContext.new(self, sid)
+              InstalledAddOnContext.new(self, sid)
           end
         end
 

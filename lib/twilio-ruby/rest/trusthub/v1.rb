@@ -31,11 +31,12 @@ module Twilio
         # @return [Twilio::REST::Trusthub::V1::CustomerProfilesList]
         def customer_profiles(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @customer_profiles ||= CustomerProfilesList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @customer_profiles ||= CustomerProfilesList.new self
           else
-            CustomerProfilesContext.new(self, sid)
+              CustomerProfilesContext.new(self, sid)
           end
         end
 
@@ -46,11 +47,12 @@ module Twilio
         # @return [Twilio::REST::Trusthub::V1::EndUserList]
         def end_users(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @end_users ||= EndUserList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @end_users ||= EndUserList.new self
           else
-            EndUserContext.new(self, sid)
+              EndUserContext.new(self, sid)
           end
         end
 
@@ -61,11 +63,12 @@ module Twilio
         # @return [Twilio::REST::Trusthub::V1::EndUserTypeList]
         def end_user_types(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @end_user_types ||= EndUserTypeList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @end_user_types ||= EndUserTypeList.new self
           else
-            EndUserTypeContext.new(self, sid)
+              EndUserTypeContext.new(self, sid)
           end
         end
 
@@ -75,11 +78,12 @@ module Twilio
         # @return [Twilio::REST::Trusthub::V1::PoliciesList]
         def policies(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @policies ||= PoliciesList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @policies ||= PoliciesList.new self
           else
-            PoliciesContext.new(self, sid)
+              PoliciesContext.new(self, sid)
           end
         end
 
@@ -90,11 +94,12 @@ module Twilio
         # @return [Twilio::REST::Trusthub::V1::SupportingDocumentList]
         def supporting_documents(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @supporting_documents ||= SupportingDocumentList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @supporting_documents ||= SupportingDocumentList.new self
           else
-            SupportingDocumentContext.new(self, sid)
+              SupportingDocumentContext.new(self, sid)
           end
         end
 
@@ -105,11 +110,12 @@ module Twilio
         # @return [Twilio::REST::Trusthub::V1::SupportingDocumentTypeList]
         def supporting_document_types(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @supporting_document_types ||= SupportingDocumentTypeList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @supporting_document_types ||= SupportingDocumentTypeList.new self
           else
-            SupportingDocumentTypeContext.new(self, sid)
+              SupportingDocumentTypeContext.new(self, sid)
           end
         end
 
@@ -120,11 +126,12 @@ module Twilio
         # @return [Twilio::REST::Trusthub::V1::TrustProductsList]
         def trust_products(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @trust_products ||= TrustProductsList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @trust_products ||= TrustProductsList.new self
           else
-            TrustProductsContext.new(self, sid)
+              TrustProductsContext.new(self, sid)
           end
         end
 

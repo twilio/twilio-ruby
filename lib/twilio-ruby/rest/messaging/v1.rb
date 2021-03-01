@@ -26,11 +26,12 @@ module Twilio
         # @return [Twilio::REST::Messaging::V1::BrandRegistrationList]
         def brand_registrations(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @brand_registrations ||= BrandRegistrationList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @brand_registrations ||= BrandRegistrationList.new self
           else
-            BrandRegistrationContext.new(self, sid)
+              BrandRegistrationContext.new(self, sid)
           end
         end
 
@@ -46,11 +47,12 @@ module Twilio
         # @return [Twilio::REST::Messaging::V1::ServiceList]
         def services(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @services ||= ServiceList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @services ||= ServiceList.new self
           else
-            ServiceContext.new(self, sid)
+              ServiceContext.new(self, sid)
           end
         end
 

@@ -25,11 +25,12 @@ module Twilio
         # @return [Twilio::REST::Monitor::V1::AlertList]
         def alerts(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @alerts ||= AlertList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @alerts ||= AlertList.new self
           else
-            AlertContext.new(self, sid)
+              AlertContext.new(self, sid)
           end
         end
 
@@ -39,11 +40,12 @@ module Twilio
         # @return [Twilio::REST::Monitor::V1::EventList]
         def events(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @events ||= EventList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @events ||= EventList.new self
           else
-            EventContext.new(self, sid)
+              EventContext.new(self, sid)
           end
         end
 

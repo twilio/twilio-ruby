@@ -33,11 +33,12 @@ module Twilio
         # @return [Twilio::REST::Wireless::V1::CommandList]
         def commands(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @commands ||= CommandList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @commands ||= CommandList.new self
           else
-            CommandContext.new(self, sid)
+              CommandContext.new(self, sid)
           end
         end
 
@@ -47,11 +48,12 @@ module Twilio
         # @return [Twilio::REST::Wireless::V1::RatePlanList]
         def rate_plans(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @rate_plans ||= RatePlanList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @rate_plans ||= RatePlanList.new self
           else
-            RatePlanContext.new(self, sid)
+              RatePlanContext.new(self, sid)
           end
         end
 
@@ -61,11 +63,12 @@ module Twilio
         # @return [Twilio::REST::Wireless::V1::SimList]
         def sims(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @sims ||= SimList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @sims ||= SimList.new self
           else
-            SimContext.new(self, sid)
+              SimContext.new(self, sid)
           end
         end
 

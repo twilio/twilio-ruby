@@ -26,11 +26,12 @@ module Twilio
         # @return [Twilio::REST::Lookups::V1::PhoneNumberList]
         def phone_numbers(phone_number=:unset)
           if phone_number.nil?
-            raise ArgumentError, 'phone_number cannot be nil'
-          elsif phone_number == :unset
-            @phone_numbers ||= PhoneNumberList.new self
+              raise ArgumentError, 'phone_number cannot be nil'
+          end
+          if phone_number == :unset
+              @phone_numbers ||= PhoneNumberList.new self
           else
-            PhoneNumberContext.new(self, phone_number)
+              PhoneNumberContext.new(self, phone_number)
           end
         end
 

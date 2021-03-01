@@ -26,11 +26,12 @@ module Twilio
         # @return [Twilio::REST::Preview::BulkExports::ExportList]
         def exports(resource_type=:unset)
           if resource_type.nil?
-            raise ArgumentError, 'resource_type cannot be nil'
-          elsif resource_type == :unset
-            @exports ||= ExportList.new self
+              raise ArgumentError, 'resource_type cannot be nil'
+          end
+          if resource_type == :unset
+              @exports ||= ExportList.new self
           else
-            ExportContext.new(self, resource_type)
+              ExportContext.new(self, resource_type)
           end
         end
 
@@ -41,11 +42,12 @@ module Twilio
         # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationList]
         def export_configuration(resource_type=:unset)
           if resource_type.nil?
-            raise ArgumentError, 'resource_type cannot be nil'
-          elsif resource_type == :unset
-            @export_configuration ||= ExportConfigurationList.new self
+              raise ArgumentError, 'resource_type cannot be nil'
+          end
+          if resource_type == :unset
+              @export_configuration ||= ExportConfigurationList.new self
           else
-            ExportConfigurationContext.new(self, resource_type)
+              ExportConfigurationContext.new(self, resource_type)
           end
         end
 

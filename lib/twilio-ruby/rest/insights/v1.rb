@@ -25,11 +25,12 @@ module Twilio
         # @return [Twilio::REST::Insights::V1::CallList]
         def calls(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @calls ||= CallList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @calls ||= CallList.new self
           else
-            CallContext.new(self, sid)
+              CallContext.new(self, sid)
           end
         end
 
@@ -39,11 +40,12 @@ module Twilio
         # @return [Twilio::REST::Insights::V1::RoomList]
         def rooms(room_sid=:unset)
           if room_sid.nil?
-            raise ArgumentError, 'room_sid cannot be nil'
-          elsif room_sid == :unset
-            @rooms ||= RoomList.new self
+              raise ArgumentError, 'room_sid cannot be nil'
+          end
+          if room_sid == :unset
+              @rooms ||= RoomList.new self
           else
-            RoomContext.new(self, room_sid)
+              RoomContext.new(self, room_sid)
           end
         end
 

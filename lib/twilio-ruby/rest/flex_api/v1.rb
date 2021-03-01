@@ -27,11 +27,12 @@ module Twilio
         # @return [Twilio::REST::Flex_api::V1::ChannelList]
         def channel(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @channel ||= ChannelList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @channel ||= ChannelList.new self
           else
-            ChannelContext.new(self, sid)
+              ChannelContext.new(self, sid)
           end
         end
 
@@ -47,11 +48,12 @@ module Twilio
         # @return [Twilio::REST::Flex_api::V1::FlexFlowList]
         def flex_flow(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @flex_flow ||= FlexFlowList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @flex_flow ||= FlexFlowList.new self
           else
-            FlexFlowContext.new(self, sid)
+              FlexFlowContext.new(self, sid)
           end
         end
 
@@ -61,11 +63,12 @@ module Twilio
         # @return [Twilio::REST::Flex_api::V1::WebChannelList]
         def web_channel(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @web_channel ||= WebChannelList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @web_channel ||= WebChannelList.new self
           else
-            WebChannelContext.new(self, sid)
+              WebChannelContext.new(self, sid)
           end
         end
 

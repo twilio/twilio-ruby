@@ -29,11 +29,12 @@ module Twilio
         # @return [Twilio::REST::Video::V1::CompositionList]
         def compositions(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @compositions ||= CompositionList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @compositions ||= CompositionList.new self
           else
-            CompositionContext.new(self, sid)
+              CompositionContext.new(self, sid)
           end
         end
 
@@ -43,11 +44,12 @@ module Twilio
         # @return [Twilio::REST::Video::V1::CompositionHookList]
         def composition_hooks(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @composition_hooks ||= CompositionHookList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @composition_hooks ||= CompositionHookList.new self
           else
-            CompositionHookContext.new(self, sid)
+              CompositionHookContext.new(self, sid)
           end
         end
 
@@ -63,11 +65,12 @@ module Twilio
         # @return [Twilio::REST::Video::V1::RecordingList]
         def recordings(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @recordings ||= RecordingList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @recordings ||= RecordingList.new self
           else
-            RecordingContext.new(self, sid)
+              RecordingContext.new(self, sid)
           end
         end
 
@@ -83,11 +86,12 @@ module Twilio
         # @return [Twilio::REST::Video::V1::RoomList]
         def rooms(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @rooms ||= RoomList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @rooms ||= RoomList.new self
           else
-            RoomContext.new(self, sid)
+              RoomContext.new(self, sid)
           end
         end
 

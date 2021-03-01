@@ -29,11 +29,12 @@ module Twilio
         # @return [Twilio::REST::Voice::V1::ByocTrunkList]
         def byoc_trunks(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @byoc_trunks ||= ByocTrunkList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @byoc_trunks ||= ByocTrunkList.new self
           else
-            ByocTrunkContext.new(self, sid)
+              ByocTrunkContext.new(self, sid)
           end
         end
 
@@ -44,11 +45,12 @@ module Twilio
         # @return [Twilio::REST::Voice::V1::ConnectionPolicyList]
         def connection_policies(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @connection_policies ||= ConnectionPolicyList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @connection_policies ||= ConnectionPolicyList.new self
           else
-            ConnectionPolicyContext.new(self, sid)
+              ConnectionPolicyContext.new(self, sid)
           end
         end
 
@@ -65,11 +67,12 @@ module Twilio
         # @return [Twilio::REST::Voice::V1::IpRecordList]
         def ip_records(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @ip_records ||= IpRecordList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @ip_records ||= IpRecordList.new self
           else
-            IpRecordContext.new(self, sid)
+              IpRecordContext.new(self, sid)
           end
         end
 
@@ -80,11 +83,12 @@ module Twilio
         # @return [Twilio::REST::Voice::V1::SourceIpMappingList]
         def source_ip_mappings(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @source_ip_mappings ||= SourceIpMappingList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @source_ip_mappings ||= SourceIpMappingList.new self
           else
-            SourceIpMappingContext.new(self, sid)
+              SourceIpMappingContext.new(self, sid)
           end
         end
 
