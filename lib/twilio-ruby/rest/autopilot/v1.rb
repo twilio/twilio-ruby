@@ -26,11 +26,12 @@ module Twilio
         # @return [Twilio::REST::Autopilot::V1::AssistantList]
         def assistants(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @assistants ||= AssistantList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @assistants ||= AssistantList.new self
           else
-            AssistantContext.new(self, sid)
+              AssistantContext.new(self, sid)
           end
         end
 

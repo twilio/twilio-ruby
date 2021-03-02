@@ -27,11 +27,12 @@ module Twilio
         # @return [Twilio::REST::Preview::TrustedComms::BrandedChannelList]
         def branded_channels(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @branded_channels ||= BrandedChannelList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @branded_channels ||= BrandedChannelList.new self
           else
-            BrandedChannelContext.new(self, sid)
+              BrandedChannelContext.new(self, sid)
           end
         end
 

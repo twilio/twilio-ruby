@@ -27,11 +27,12 @@ module Twilio
         # @return [Twilio::REST::Events::V1::EventTypeList]
         def event_types(type=:unset)
           if type.nil?
-            raise ArgumentError, 'type cannot be nil'
-          elsif type == :unset
-            @event_types ||= EventTypeList.new self
+              raise ArgumentError, 'type cannot be nil'
+          end
+          if type == :unset
+              @event_types ||= EventTypeList.new self
           else
-            EventTypeContext.new(self, type)
+              EventTypeContext.new(self, type)
           end
         end
 
@@ -42,11 +43,12 @@ module Twilio
         # @return [Twilio::REST::Events::V1::SchemaList]
         def schemas(id=:unset)
           if id.nil?
-            raise ArgumentError, 'id cannot be nil'
-          elsif id == :unset
-            @schemas ||= SchemaList.new self
+              raise ArgumentError, 'id cannot be nil'
+          end
+          if id == :unset
+              @schemas ||= SchemaList.new self
           else
-            SchemaContext.new(self, id)
+              SchemaContext.new(self, id)
           end
         end
 
@@ -56,11 +58,12 @@ module Twilio
         # @return [Twilio::REST::Events::V1::SinkList]
         def sinks(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @sinks ||= SinkList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @sinks ||= SinkList.new self
           else
-            SinkContext.new(self, sid)
+              SinkContext.new(self, sid)
           end
         end
 
@@ -71,11 +74,12 @@ module Twilio
         # @return [Twilio::REST::Events::V1::SubscriptionList]
         def subscriptions(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @subscriptions ||= SubscriptionList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @subscriptions ||= SubscriptionList.new self
           else
-            SubscriptionContext.new(self, sid)
+              SubscriptionContext.new(self, sid)
           end
         end
 

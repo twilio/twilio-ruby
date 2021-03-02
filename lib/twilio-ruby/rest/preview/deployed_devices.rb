@@ -25,11 +25,12 @@ module Twilio
         # @return [Twilio::REST::Preview::DeployedDevices::FleetList]
         def fleets(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @fleets ||= FleetList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @fleets ||= FleetList.new self
           else
-            FleetContext.new(self, sid)
+              FleetContext.new(self, sid)
           end
         end
 

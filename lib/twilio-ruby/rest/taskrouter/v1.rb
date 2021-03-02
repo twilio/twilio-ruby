@@ -24,11 +24,12 @@ module Twilio
         # @return [Twilio::REST::Taskrouter::V1::WorkspaceList]
         def workspaces(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @workspaces ||= WorkspaceList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @workspaces ||= WorkspaceList.new self
           else
-            WorkspaceContext.new(self, sid)
+              WorkspaceContext.new(self, sid)
           end
         end
 

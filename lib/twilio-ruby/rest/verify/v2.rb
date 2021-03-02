@@ -27,11 +27,12 @@ module Twilio
         # @return [Twilio::REST::Verify::V2::FormList]
         def forms(form_type=:unset)
           if form_type.nil?
-            raise ArgumentError, 'form_type cannot be nil'
-          elsif form_type == :unset
-            @forms ||= FormList.new self
+              raise ArgumentError, 'form_type cannot be nil'
+          end
+          if form_type == :unset
+              @forms ||= FormList.new self
           else
-            FormContext.new(self, form_type)
+              FormContext.new(self, form_type)
           end
         end
 
@@ -42,11 +43,12 @@ module Twilio
         # @return [Twilio::REST::Verify::V2::ServiceList]
         def services(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @services ||= ServiceList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @services ||= ServiceList.new self
           else
-            ServiceContext.new(self, sid)
+              ServiceContext.new(self, sid)
           end
         end
 
@@ -56,11 +58,12 @@ module Twilio
         # @return [Twilio::REST::Verify::V2::VerificationAttemptList]
         def verification_attempts(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @verification_attempts ||= VerificationAttemptList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @verification_attempts ||= VerificationAttemptList.new self
           else
-            VerificationAttemptContext.new(self, sid)
+              VerificationAttemptContext.new(self, sid)
           end
         end
 

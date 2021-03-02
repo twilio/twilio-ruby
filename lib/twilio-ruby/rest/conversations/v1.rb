@@ -36,11 +36,12 @@ module Twilio
         # @return [Twilio::REST::Conversations::V1::ConversationList]
         def conversations(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @conversations ||= ConversationList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @conversations ||= ConversationList.new self
           else
-            ConversationContext.new(self, sid)
+              ConversationContext.new(self, sid)
           end
         end
 
@@ -51,11 +52,12 @@ module Twilio
         # @return [Twilio::REST::Conversations::V1::CredentialList]
         def credentials(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @credentials ||= CredentialList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @credentials ||= CredentialList.new self
           else
-            CredentialContext.new(self, sid)
+              CredentialContext.new(self, sid)
           end
         end
 
@@ -65,11 +67,12 @@ module Twilio
         # @return [Twilio::REST::Conversations::V1::RoleList]
         def roles(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @roles ||= RoleList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @roles ||= RoleList.new self
           else
-            RoleContext.new(self, sid)
+              RoleContext.new(self, sid)
           end
         end
 
@@ -80,11 +83,12 @@ module Twilio
         # @return [Twilio::REST::Conversations::V1::ServiceList]
         def services(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @services ||= ServiceList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @services ||= ServiceList.new self
           else
-            ServiceContext.new(self, sid)
+              ServiceContext.new(self, sid)
           end
         end
 
@@ -95,11 +99,12 @@ module Twilio
         # @return [Twilio::REST::Conversations::V1::UserList]
         def users(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @users ||= UserList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @users ||= UserList.new self
           else
-            UserContext.new(self, sid)
+              UserContext.new(self, sid)
           end
         end
 

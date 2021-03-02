@@ -25,11 +25,12 @@ module Twilio
         # @return [Twilio::REST::Proxy::V1::ServiceList]
         def services(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @services ||= ServiceList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @services ||= ServiceList.new self
           else
-            ServiceContext.new(self, sid)
+              ServiceContext.new(self, sid)
           end
         end
 

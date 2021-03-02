@@ -25,11 +25,12 @@ module Twilio
         # @return [Twilio::REST::Fax::V1::FaxList]
         def faxes(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @faxes ||= FaxList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @faxes ||= FaxList.new self
           else
-            FaxContext.new(self, sid)
+              FaxContext.new(self, sid)
           end
         end
 

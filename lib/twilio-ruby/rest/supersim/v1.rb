@@ -29,11 +29,12 @@ module Twilio
         # @return [Twilio::REST::Supersim::V1::CommandList]
         def commands(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @commands ||= CommandList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @commands ||= CommandList.new self
           else
-            CommandContext.new(self, sid)
+              CommandContext.new(self, sid)
           end
         end
 
@@ -43,11 +44,12 @@ module Twilio
         # @return [Twilio::REST::Supersim::V1::FleetList]
         def fleets(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @fleets ||= FleetList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @fleets ||= FleetList.new self
           else
-            FleetContext.new(self, sid)
+              FleetContext.new(self, sid)
           end
         end
 
@@ -57,11 +59,12 @@ module Twilio
         # @return [Twilio::REST::Supersim::V1::NetworkList]
         def networks(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @networks ||= NetworkList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @networks ||= NetworkList.new self
           else
-            NetworkContext.new(self, sid)
+              NetworkContext.new(self, sid)
           end
         end
 
@@ -71,11 +74,12 @@ module Twilio
         # @return [Twilio::REST::Supersim::V1::NetworkAccessProfileList]
         def network_access_profiles(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @network_access_profiles ||= NetworkAccessProfileList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @network_access_profiles ||= NetworkAccessProfileList.new self
           else
-            NetworkAccessProfileContext.new(self, sid)
+              NetworkAccessProfileContext.new(self, sid)
           end
         end
 
@@ -85,11 +89,12 @@ module Twilio
         # @return [Twilio::REST::Supersim::V1::SimList]
         def sims(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @sims ||= SimList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @sims ||= SimList.new self
           else
-            SimContext.new(self, sid)
+              SimContext.new(self, sid)
           end
         end
 

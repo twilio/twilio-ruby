@@ -25,11 +25,12 @@ module Twilio
         # @return [Twilio::REST::Ip_messaging::V1::CredentialList]
         def credentials(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @credentials ||= CredentialList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @credentials ||= CredentialList.new self
           else
-            CredentialContext.new(self, sid)
+              CredentialContext.new(self, sid)
           end
         end
 
@@ -39,11 +40,12 @@ module Twilio
         # @return [Twilio::REST::Ip_messaging::V1::ServiceList]
         def services(sid=:unset)
           if sid.nil?
-            raise ArgumentError, 'sid cannot be nil'
-          elsif sid == :unset
-            @services ||= ServiceList.new self
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @services ||= ServiceList.new self
           else
-            ServiceContext.new(self, sid)
+              ServiceContext.new(self, sid)
           end
         end
 
