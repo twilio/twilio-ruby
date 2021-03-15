@@ -12,7 +12,7 @@ module Twilio
       class V1 < Version
         class SinkContext < InstanceContext
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class SinkTestList < ListResource
             ##
             # Initialize the SinkTestList
@@ -44,7 +44,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class SinkTestPage < Page
             ##
             # Initialize the SinkTestPage
@@ -75,7 +75,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class SinkTestInstance < InstanceResource
             ##
             # Initialize the SinkTestInstance

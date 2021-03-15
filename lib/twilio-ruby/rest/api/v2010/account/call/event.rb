@@ -19,8 +19,8 @@ module Twilio
               # @param [String] account_sid The SID of the
               #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Call
               #   resource.
-              # @param [String] call_sid The unique string that that we created to identify this
-              #   Call resource.
+              # @param [String] call_sid The unique string that we created to identify this Call
+              #   resource.
               # @return [EventList] EventList
               def initialize(version, account_sid: nil, call_sid: nil)
                 super(version)
@@ -159,8 +159,8 @@ module Twilio
               # @param [String] account_sid The SID of the
               #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Call
               #   resource.
-              # @param [String] call_sid The unique string that that we created to identify this
-              #   Call resource.
+              # @param [String] call_sid The unique string that we created to identify this Call
+              #   resource.
               # @return [EventInstance] EventInstance
               def initialize(version, payload, account_sid: nil, call_sid: nil)
                 super(version)

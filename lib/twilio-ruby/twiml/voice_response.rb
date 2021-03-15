@@ -1159,6 +1159,28 @@ module Twilio
         yield(stream) if block_given?
         append(stream)
       end
+
+      ##
+      # Create a new <VirtualAgent> element
+      # connector_name:: Defines the conversation profile Dialogflow needs to use
+      # language:: Language to be used by Dialogflow to transcribe speech
+      # sentiment_analysis:: Whether sentiment analysis needs to be enabled or not
+      # status_callback:: URL to post status callbacks from Twilio
+      # keyword_args:: additional attributes
+      def virtual_agent(connector_name: nil, language: nil, sentiment_analysis: nil, status_callback: nil, **keyword_args)
+        append(VirtualAgent.new(connector_name: connector_name, language: language, sentiment_analysis: sentiment_analysis, status_callback: status_callback, **keyword_args))
+      end
+    end
+
+    ##
+    # <VirtualAgent> TwiML Noun
+    class VirtualAgent < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'VirtualAgent'
+
+        yield(self) if block_given?
+      end
     end
 
     ##

@@ -378,7 +378,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The phone number of the Participant
+              # @return [String] The phone number or channel identifier of the Participant
               def identifier
                 @properties['identifier']
               end

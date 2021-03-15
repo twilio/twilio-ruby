@@ -33,12 +33,9 @@ module Twilio
             #   identifies the Sync Document
             # @param [Hash] data A JSON string that represents an arbitrary, schema-less
             #   object that the Sync Document stores. Can be up to 16 KiB in length.
-            # @param [String] ttl How long, in seconds, before the Sync Document expires and
-            #   is deleted (the Sync Document's time-to-live). Can be an integer from 0 to
-            #   31,536,000 (1 year). The default value is `0`, which means the Sync Document
-            #   does not expire. The Sync Document will be deleted automatically after it
-            #   expires, but there can be a delay between the expiration time and the
-            #   resources's deletion.
+            # @param [String] ttl How long, {in
+            #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+            #   the Sync Document expires and is deleted (the Sync Document's time-to-live).
             # @return [DocumentInstance] Created DocumentInstance
             def create(unique_name: :unset, data: :unset, ttl: :unset)
               data = Twilio::Values.of({
@@ -209,11 +206,9 @@ module Twilio
             # Update the DocumentInstance
             # @param [Hash] data A JSON string that represents an arbitrary, schema-less
             #   object that the Sync Document stores. Can be up to 16 KiB in length.
-            # @param [String] ttl How long, in seconds, before the Sync Document expires and
-            #   is deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
-            #   default value is `0`, which means the Document resource does not expire. The
-            #   Document resource will be deleted automatically after it expires, but there can
-            #   be a delay between the expiration time and the resources's deletion.
+            # @param [String] ttl How long, {in
+            #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+            #   the Sync Document expires and is deleted (time-to-live).
             # @param [String] if_match The If-Match HTTP request header
             # @return [DocumentInstance] Updated DocumentInstance
             def update(data: :unset, ttl: :unset, if_match: :unset)
@@ -398,11 +393,9 @@ module Twilio
             # Update the DocumentInstance
             # @param [Hash] data A JSON string that represents an arbitrary, schema-less
             #   object that the Sync Document stores. Can be up to 16 KiB in length.
-            # @param [String] ttl How long, in seconds, before the Sync Document expires and
-            #   is deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
-            #   default value is `0`, which means the Document resource does not expire. The
-            #   Document resource will be deleted automatically after it expires, but there can
-            #   be a delay between the expiration time and the resources's deletion.
+            # @param [String] ttl How long, {in
+            #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+            #   the Sync Document expires and is deleted (time-to-live).
             # @param [String] if_match The If-Match HTTP request header
             # @return [DocumentInstance] Updated DocumentInstance
             def update(data: :unset, ttl: :unset, if_match: :unset)

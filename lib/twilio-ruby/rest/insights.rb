@@ -37,7 +37,7 @@ module Twilio
       end
 
       ##
-      # @param [String] room_sid The room_sid
+      # @param [String] room_sid Unique identifier for the room.
       # @return [Twilio::REST::Insights::V1::RoomInstance] if room_sid was passed.
       # @return [Twilio::REST::Insights::V1::RoomList]
       def rooms(room_sid=:unset)

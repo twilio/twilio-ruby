@@ -29,11 +29,15 @@ module Twilio
           # Lists RoomInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [Array[room.RoomType]] room_type The room_type
-          # @param [Array[room.Codec]] codec The codec
-          # @param [String] room_name The room_name
-          # @param [Time] created_after The created_after
-          # @param [Time] created_before The created_before
+          # @param [Array[room.RoomType]] room_type Type of room. Can be `go`,
+          #   `peer_to_peer`, `group`, or `group_small`.
+          # @param [Array[room.Codec]] codec Codecs used by participants in the room. Can be
+          #   `VP8`, `H264`, or `VP9`.
+          # @param [String] room_name Room friendly name.
+          # @param [Time] created_after Only read rooms that started on or after this ISO
+          #   8601 timestamp.
+          # @param [Time] created_before Only read rooms that started before this ISO 8601
+          #   timestamp.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -57,11 +61,15 @@ module Twilio
           # Streams RoomInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [Array[room.RoomType]] room_type The room_type
-          # @param [Array[room.Codec]] codec The codec
-          # @param [String] room_name The room_name
-          # @param [Time] created_after The created_after
-          # @param [Time] created_before The created_before
+          # @param [Array[room.RoomType]] room_type Type of room. Can be `go`,
+          #   `peer_to_peer`, `group`, or `group_small`.
+          # @param [Array[room.Codec]] codec Codecs used by participants in the room. Can be
+          #   `VP8`, `H264`, or `VP9`.
+          # @param [String] room_name Room friendly name.
+          # @param [Time] created_after Only read rooms that started on or after this ISO
+          #   8601 timestamp.
+          # @param [Time] created_before Only read rooms that started before this ISO 8601
+          #   timestamp.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -101,11 +109,15 @@ module Twilio
           ##
           # Retrieve a single page of RoomInstance records from the API.
           # Request is executed immediately.
-          # @param [Array[room.RoomType]] room_type The room_type
-          # @param [Array[room.Codec]] codec The codec
-          # @param [String] room_name The room_name
-          # @param [Time] created_after The created_after
-          # @param [Time] created_before The created_before
+          # @param [Array[room.RoomType]] room_type Type of room. Can be `go`,
+          #   `peer_to_peer`, `group`, or `group_small`.
+          # @param [Array[room.Codec]] codec Codecs used by participants in the room. Can be
+          #   `VP8`, `H264`, or `VP9`.
+          # @param [String] room_name Room friendly name.
+          # @param [Time] created_after Only read rooms that started on or after this ISO
+          #   8601 timestamp.
+          # @param [Time] created_before Only read rooms that started before this ISO 8601
+          #   timestamp.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -184,7 +196,7 @@ module Twilio
           ##
           # Initialize the RoomContext
           # @param [Version] version Version that contains the resource
-          # @param [String] room_sid The room_sid
+          # @param [String] room_sid The SID of the Room resource.
           # @return [RoomContext] RoomContext
           def initialize(version, room_sid)
             super(version)
@@ -246,7 +258,7 @@ module Twilio
           # Initialize the RoomInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] room_sid The room_sid
+          # @param [String] room_sid The SID of the Room resource.
           # @return [RoomInstance] RoomInstance
           def initialize(version, payload, room_sid: nil)
             super(version)
@@ -298,157 +310,157 @@ module Twilio
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] Account SID associated with this room.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The room_sid
+          # @return [String] Unique identifier for the room.
           def room_sid
             @properties['room_sid']
           end
 
           ##
-          # @return [String] The room_name
+          # @return [String] room friendly name.
           def room_name
             @properties['room_name']
           end
 
           ##
-          # @return [Time] The create_time
+          # @return [Time] Creation time of the room.
           def create_time
             @properties['create_time']
           end
 
           ##
-          # @return [Time] The end_time
+          # @return [Time] End time for the room.
           def end_time
             @properties['end_time']
           end
 
           ##
-          # @return [room.RoomType] The room_type
+          # @return [room.RoomType] Type of room.
           def room_type
             @properties['room_type']
           end
 
           ##
-          # @return [room.RoomStatus] The room_status
+          # @return [room.RoomStatus] Status of the room.
           def room_status
             @properties['room_status']
           end
 
           ##
-          # @return [String] The status_callback
+          # @return [String] Webhook provided for status callbacks.
           def status_callback
             @properties['status_callback']
           end
 
           ##
-          # @return [String] The status_callback_method
+          # @return [String] HTTP method provided for status callback URL.
           def status_callback_method
             @properties['status_callback_method']
           end
 
           ##
-          # @return [room.CreatedMethod] The created_method
+          # @return [room.CreatedMethod] How the room was created.
           def created_method
             @properties['created_method']
           end
 
           ##
-          # @return [room.EndReason] The end_reason
+          # @return [room.EndReason] Reason the room ended.
           def end_reason
             @properties['end_reason']
           end
 
           ##
-          # @return [String] The max_participants
+          # @return [String] Max number of total participants allowed by the application settings.
           def max_participants
             @properties['max_participants']
           end
 
           ##
-          # @return [String] The unique_participants
+          # @return [String] Number of participants. May include duplicate identities for participants who left and rejoined.
           def unique_participants
             @properties['unique_participants']
           end
 
           ##
-          # @return [String] The unique_participant_identities
+          # @return [String] Unique number of participant identities.
           def unique_participant_identities
             @properties['unique_participant_identities']
           end
 
           ##
-          # @return [String] The concurrent_participants
+          # @return [String] Actual number of concurrent participants.
           def concurrent_participants
             @properties['concurrent_participants']
           end
 
           ##
-          # @return [String] The max_concurrent_participants
+          # @return [String] Maximum number of participants allowed in the room at the same time allowed by the application settings.
           def max_concurrent_participants
             @properties['max_concurrent_participants']
           end
 
           ##
-          # @return [Array[room.Codec]] The codecs
+          # @return [Array[room.Codec]] Codecs used by participants in the room.
           def codecs
             @properties['codecs']
           end
 
           ##
-          # @return [room.TwilioRealm] The media_region
+          # @return [room.TwilioRealm] Region of Twilio media servers for the room.
           def media_region
             @properties['media_region']
           end
 
           ##
-          # @return [String] The duration_sec
+          # @return [String] Total room duration from create time to end time.
           def duration_sec
             @properties['duration_sec']
           end
 
           ##
-          # @return [String] The total_participant_duration_sec
+          # @return [String] Combined amount of participant time in the room.
           def total_participant_duration_sec
             @properties['total_participant_duration_sec']
           end
 
           ##
-          # @return [String] The total_recording_duration_sec
+          # @return [String] Combined amount of recorded seconds for participants in the room.
           def total_recording_duration_sec
             @properties['total_recording_duration_sec']
           end
 
           ##
-          # @return [room.ProcessingState] The processing_state
+          # @return [room.ProcessingState] Video Log Analyzer resource state. Will be either `in-progress` or `complete`.
           def processing_state
             @properties['processing_state']
           end
 
           ##
-          # @return [Boolean] The recording_enabled
+          # @return [Boolean] Boolean indicating if recording is enabled for the room.
           def recording_enabled
             @properties['recording_enabled']
           end
 
           ##
-          # @return [room.EdgeLocation] The edge_location
+          # @return [room.EdgeLocation] Edge location of Twilio media servers for the room.
           def edge_location
             @properties['edge_location']
           end
 
           ##
-          # @return [String] The url
+          # @return [String] URL for the room resource.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] Room subresources.
           def links
             @properties['links']
           end

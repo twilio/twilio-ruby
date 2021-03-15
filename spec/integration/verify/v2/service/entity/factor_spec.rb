@@ -27,7 +27,7 @@ describe 'Factor' do
     ))).to eq(true)
   end
 
-  it "receives create responses" do
+  it "receives create_push responses" do
     @holodeck.mock(Twilio::Response.new(
         201,
       %q[
@@ -105,7 +105,7 @@ describe 'Factor' do
     ))).to eq(true)
   end
 
-  it "receives fetch responses" do
+  it "receives fetch_push responses" do
     @holodeck.mock(Twilio::Response.new(
         200,
       %q[
@@ -242,7 +242,7 @@ describe 'Factor' do
     ))).to eq(true)
   end
 
-  it "receives verify responses" do
+  it "receives verify_push responses" do
     @holodeck.mock(Twilio::Response.new(
         200,
       %q[

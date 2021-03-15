@@ -137,6 +137,43 @@ describe 'Message' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives create_with_queued_status responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "api_version": "2010-04-01",
+          "body": "Hello! \ud83d\udc4d",
+          "date_created": "Thu, 30 Jul 2015 20:12:31 +0000",
+          "date_sent": "Thu, 30 Jul 2015 20:12:33 +0000",
+          "date_updated": "Thu, 30 Jul 2015 20:12:33 +0000",
+          "direction": "outbound-api",
+          "error_code": null,
+          "error_message": null,
+          "from": "+14155552345",
+          "messaging_service_sid": "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "num_media": "0",
+          "num_segments": "1",
+          "price": null,
+          "price_unit": null,
+          "sid": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "status": "queued",
+          "subresource_uris": {
+              "media": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media.json"
+          },
+          "to": "+14155552345",
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+      ]
+    ))
+
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .messages.create(to: '+15558675310')
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

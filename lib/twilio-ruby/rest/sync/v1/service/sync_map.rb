@@ -34,11 +34,9 @@ module Twilio
             #   URL path to address the resource.
             # @param [String] ttl An alias for `collection_ttl`. If both parameters are
             #   provided, this value is ignored.
-            # @param [String] collection_ttl How long, in seconds, before the Sync Map expires
-            #   (time-to-live) and is deleted. Can be an integer from 0 to 31,536,000 (1 year).
-            #   The default value is `0`, which means the Sync Map does not expire. The Sync Map
-            #   will be deleted automatically after it expires, but there can be a delay between
-            #   the expiration time and the resources's deletion.
+            # @param [String] collection_ttl How long, {in
+            #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+            #   the Sync Map expires (time-to-live) and is deleted.
             # @return [SyncMapInstance] Created SyncMapInstance
             def create(unique_name: :unset, ttl: :unset, collection_ttl: :unset)
               data = Twilio::Values.of({
@@ -210,11 +208,9 @@ module Twilio
             # Update the SyncMapInstance
             # @param [String] ttl An alias for `collection_ttl`. If both parameters are
             #   provided, this value is ignored.
-            # @param [String] collection_ttl How long, in seconds, before the Sync Map expires
-            #   (time-to-live) and is deleted. Can be an integer from 0 to 31,536,000 (1 year).
-            #   The default value is `0`, which means the Sync Map does not expire. The Sync Map
-            #   will be deleted automatically after it expires, but there can be a delay between
-            #   the expiration time and the resources's deletion.
+            # @param [String] collection_ttl How long, {in
+            #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+            #   the Sync Map expires (time-to-live) and is deleted.
             # @return [SyncMapInstance] Updated SyncMapInstance
             def update(ttl: :unset, collection_ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, 'CollectionTtl' => collection_ttl, })
@@ -412,11 +408,9 @@ module Twilio
             # Update the SyncMapInstance
             # @param [String] ttl An alias for `collection_ttl`. If both parameters are
             #   provided, this value is ignored.
-            # @param [String] collection_ttl How long, in seconds, before the Sync Map expires
-            #   (time-to-live) and is deleted. Can be an integer from 0 to 31,536,000 (1 year).
-            #   The default value is `0`, which means the Sync Map does not expire. The Sync Map
-            #   will be deleted automatically after it expires, but there can be a delay between
-            #   the expiration time and the resources's deletion.
+            # @param [String] collection_ttl How long, {in
+            #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+            #   the Sync Map expires (time-to-live) and is deleted.
             # @return [SyncMapInstance] Updated SyncMapInstance
             def update(ttl: :unset, collection_ttl: :unset)
               context.update(ttl: ttl, collection_ttl: collection_ttl, )

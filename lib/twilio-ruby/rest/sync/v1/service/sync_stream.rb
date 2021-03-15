@@ -33,11 +33,9 @@ module Twilio
             #   identifies the resource. This value must be unique within its Service and it can
             #   be up to 320 characters long. The `unique_name` value can be used as an
             #   alternative to the `sid` in the URL path to address the resource.
-            # @param [String] ttl How long, in seconds, before the Stream expires and is
-            #   deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
-            #   default value is `0`, which means the Stream does not expire. The Stream will be
-            #   deleted automatically after it expires, but there can be a delay between the
-            #   expiration time and the resources's deletion.
+            # @param [String] ttl How long, {in
+            #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+            #   the Stream expires and is deleted (time-to-live).
             # @return [SyncStreamInstance] Created SyncStreamInstance
             def create(unique_name: :unset, ttl: :unset)
               data = Twilio::Values.of({'UniqueName' => unique_name, 'Ttl' => ttl, })
@@ -206,11 +204,9 @@ module Twilio
 
             ##
             # Update the SyncStreamInstance
-            # @param [String] ttl How long, in seconds, before the Stream expires and is
-            #   deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
-            #   default value is `0`, which means the Stream does not expire. The Stream will be
-            #   deleted automatically after it expires, but there can be a delay between the
-            #   expiration time and the resources's deletion.
+            # @param [String] ttl How long, {in
+            #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+            #   the Stream expires and is deleted (time-to-live).
             # @return [SyncStreamInstance] Updated SyncStreamInstance
             def update(ttl: :unset)
               data = Twilio::Values.of({'Ttl' => ttl, })
@@ -375,11 +371,9 @@ module Twilio
 
             ##
             # Update the SyncStreamInstance
-            # @param [String] ttl How long, in seconds, before the Stream expires and is
-            #   deleted (time-to-live). Can be an integer from 0 to 31,536,000 (1 year). The
-            #   default value is `0`, which means the Stream does not expire. The Stream will be
-            #   deleted automatically after it expires, but there can be a delay between the
-            #   expiration time and the resources's deletion.
+            # @param [String] ttl How long, {in
+            #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+            #   the Stream expires and is deleted (time-to-live).
             # @return [SyncStreamInstance] Updated SyncStreamInstance
             def update(ttl: :unset)
               context.update(ttl: ttl, )

@@ -12,7 +12,7 @@ module Twilio
       class V1 < Version
         class SchemaContext < InstanceContext
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class VersionList < ListResource
             ##
             # Initialize the VersionList
@@ -116,7 +116,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class VersionPage < Page
             ##
             # Initialize the VersionPage
@@ -147,7 +147,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class VersionContext < InstanceContext
             ##
             # Initialize the VersionContext
@@ -194,7 +194,7 @@ module Twilio
           end
 
           ##
-          # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class VersionInstance < InstanceResource
             ##
             # Initialize the VersionInstance

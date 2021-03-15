@@ -35,7 +35,7 @@ module Twilio
         end
 
         ##
-        # @param [String] room_sid The room_sid
+        # @param [String] room_sid The SID of the Room resource.
         # @return [Twilio::REST::Insights::V1::RoomContext] if room_sid was passed.
         # @return [Twilio::REST::Insights::V1::RoomList]
         def rooms(room_sid=:unset)

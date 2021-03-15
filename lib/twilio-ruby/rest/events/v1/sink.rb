@@ -11,7 +11,7 @@ module Twilio
     class Events < Domain
       class V1 < Version
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class SinkList < ListResource
           ##
           # Initialize the SinkList
@@ -134,7 +134,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class SinkPage < Page
           ##
           # Initialize the SinkPage
@@ -165,7 +165,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class SinkContext < InstanceContext
           ##
           # Initialize the SinkContext
@@ -240,7 +240,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class SinkInstance < InstanceResource
           ##
           # Initialize the SinkInstance

@@ -1,6 +1,27 @@
 twilio-ruby changelog
 =====================
 
+[2021-03-15] Version 5.49.0
+---------------------------
+**Library - Fix**
+- [PR #550](https://github.com/twilio/twilio-ruby/pull/550): regenerating with the path parameter fix. Thanks to [@shwetha-manvinkurke](https://github.com/shwetha-manvinkurke)!
+
+**Events**
+- Set maturity to beta
+
+**Messaging**
+- Adjust A2P brand registration status enum **(breaking change)**
+
+**Studio**
+- Remove internal safeguards for Studio V2 API usage now that it's GA
+
+**Verify**
+- Add support for creating and verifying totp factors. Support for totp factors is behind the `api.verify.totp` beta feature.
+
+**Twiml**
+- Add support for `<VirtualAgent>` noun
+
+
 [2021-02-24] Version 5.48.0
 ---------------------------
 **Events**

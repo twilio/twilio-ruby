@@ -11,7 +11,7 @@ module Twilio
     class Events < Domain
       class V1 < Version
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class EventTypeList < ListResource
           ##
           # Initialize the EventTypeList
@@ -113,7 +113,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class EventTypePage < Page
           ##
           # Initialize the EventTypePage
@@ -144,7 +144,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class EventTypeContext < InstanceContext
           ##
           # Initialize the EventTypeContext
@@ -184,7 +184,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class EventTypeInstance < InstanceResource
           ##
           # Initialize the EventTypeInstance

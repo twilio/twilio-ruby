@@ -11,7 +11,7 @@ module Twilio
     class Events < Domain
       class V1 < Version
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class SubscriptionList < ListResource
           ##
           # Initialize the SubscriptionList
@@ -142,7 +142,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class SubscriptionPage < Page
           ##
           # Initialize the SubscriptionPage
@@ -173,7 +173,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class SubscriptionContext < InstanceContext
           ##
           # Initialize the SubscriptionContext
@@ -251,7 +251,7 @@ module Twilio
         end
 
         ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class SubscriptionInstance < InstanceResource
           ##
           # Initialize the SubscriptionInstance

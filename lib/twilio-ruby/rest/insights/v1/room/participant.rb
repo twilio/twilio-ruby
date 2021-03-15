@@ -17,7 +17,7 @@ module Twilio
             ##
             # Initialize the ParticipantList
             # @param [Version] version Version that contains the resource
-            # @param [String] room_sid The room_sid
+            # @param [String] room_sid Unique identifier for the room.
             # @return [ParticipantList] ParticipantList
             def initialize(version, room_sid: nil)
               super(version)
@@ -151,8 +151,8 @@ module Twilio
             ##
             # Initialize the ParticipantContext
             # @param [Version] version Version that contains the resource
-            # @param [String] room_sid The room_sid
-            # @param [String] participant_sid The participant_sid
+            # @param [String] room_sid The SID of the Room resource.
+            # @param [String] participant_sid The SID of the Participant resource.
             # @return [ParticipantContext] ParticipantContext
             def initialize(version, room_sid, participant_sid)
               super(version)
@@ -198,8 +198,8 @@ module Twilio
             # Initialize the ParticipantInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] room_sid The room_sid
-            # @param [String] participant_sid The participant_sid
+            # @param [String] room_sid Unique identifier for the room.
+            # @param [String] participant_sid The SID of the Participant resource.
             # @return [ParticipantInstance] ParticipantInstance
             def initialize(version, payload, room_sid: nil, participant_sid: nil)
               super(version)
@@ -249,103 +249,103 @@ module Twilio
             end
 
             ##
-            # @return [String] The participant_sid
+            # @return [String] Unique identifier for the participant.
             def participant_sid
               @properties['participant_sid']
             end
 
             ##
-            # @return [String] The participant_identity
+            # @return [String] The application-defined string that uniquely identifies the participant within a Room.
             def participant_identity
               @properties['participant_identity']
             end
 
             ##
-            # @return [Time] The join_time
+            # @return [Time] When the participant joined the room.
             def join_time
               @properties['join_time']
             end
 
             ##
-            # @return [Time] The leave_time
+            # @return [Time] When the participant left the room
             def leave_time
               @properties['leave_time']
             end
 
             ##
-            # @return [String] The duration_sec
+            # @return [String] Amount of time in seconds the participant was in the room.
             def duration_sec
               @properties['duration_sec']
             end
 
             ##
-            # @return [String] The account_sid
+            # @return [String] Account SID associated with the room.
             def account_sid
               @properties['account_sid']
             end
 
             ##
-            # @return [String] The room_sid
+            # @return [String] Unique identifier for the room.
             def room_sid
               @properties['room_sid']
             end
 
             ##
-            # @return [participant.RoomStatus] The status
+            # @return [participant.RoomStatus] Status of the room.
             def status
               @properties['status']
             end
 
             ##
-            # @return [Array[participant.Codec]] The codecs
+            # @return [Array[participant.Codec]] Codecs detected from the participant.
             def codecs
               @properties['codecs']
             end
 
             ##
-            # @return [String] The end_reason
+            # @return [String] Reason the participant left the room.
             def end_reason
               @properties['end_reason']
             end
 
             ##
-            # @return [String] The error_code
+            # @return [String] Errors encountered by the participant.
             def error_code
               @properties['error_code']
             end
 
             ##
-            # @return [String] The error_code_url
+            # @return [String] Twilio error code dictionary link.
             def error_code_url
               @properties['error_code_url']
             end
 
             ##
-            # @return [participant.TwilioRealm] The media_region
+            # @return [participant.TwilioRealm] Twilio media region the participant connected to.
             def media_region
               @properties['media_region']
             end
 
             ##
-            # @return [Hash] The properties
+            # @return [Hash] Object containing information about the participant's data from the room.
             def properties
               @properties['properties']
             end
 
             ##
-            # @return [participant.EdgeLocation] The edge_location
+            # @return [participant.EdgeLocation] Name of the edge location the participant connected to.
             def edge_location
               @properties['edge_location']
             end
 
             ##
-            # @return [Hash] The publisher_info
+            # @return [Hash] Object containing information about the SDK name and version.
             def publisher_info
               @properties['publisher_info']
             end
 
             ##
-            # @return [String] The url
+            # @return [String] URL of the participant resource.
             def url
               @properties['url']
             end

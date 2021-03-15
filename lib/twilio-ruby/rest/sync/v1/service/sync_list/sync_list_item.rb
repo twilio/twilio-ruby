@@ -35,17 +35,12 @@ module Twilio
               #   object that the List Item stores. Can be up to 16 KiB in length.
               # @param [String] ttl An alias for `item_ttl`. If both parameters are provided,
               #   this value is ignored.
-              # @param [String] item_ttl How long, in seconds, before the List Item expires
-              #   (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000 (1 year).
-              #   The default value is `0`, which means the List Item does not expire. The List
-              #   Item will be deleted automatically after it expires, but there can be a delay
-              #   between the expiration time and the resources's deletion.
-              # @param [String] collection_ttl How long, in seconds, before the List Item's
-              #   parent Sync List expires (time-to-live) and is deleted.  Can be an integer from
-              #   0 to 31,536,000 (1 year). The default value is `0`, which means the parent Sync
-              #   List does not expire. The Sync List will be deleted automatically after it
-              #   expires, but there can be a delay between the expiration time and the
-              #   resources's deletion.
+              # @param [String] item_ttl How long, {in
+              #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+              #   the List Item expires (time-to-live) and is deleted.
+              # @param [String] collection_ttl How long, {in
+              #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+              #   the List Item's parent Sync List expires (time-to-live) and is deleted.
               # @return [SyncListItemInstance] Created SyncListItemInstance
               def create(data: nil, ttl: :unset, item_ttl: :unset, collection_ttl: :unset)
                 data = Twilio::Values.of({
@@ -269,17 +264,14 @@ module Twilio
               #   object that the List Item stores. Can be up to 16 KiB in length.
               # @param [String] ttl An alias for `item_ttl`. If both parameters are provided,
               #   this value is ignored.
-              # @param [String] item_ttl How long, in seconds, before the List Item expires
-              #   (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000 (1 year).
-              #   The default value is `0`, which means the List Item does not expire. The List
-              #   Item will be deleted automatically after it expires, but there can be a delay
-              #   between the expiration time and the resources's deletion.
-              # @param [String] collection_ttl How long, in seconds, before the List Item's
-              #   parent Sync List expires (time-to-live) and is deleted.  Can be an integer from
-              #   0 to 31,536,000 (1 year). The default value is `0`, which means the parent Sync
-              #   List does not expire. The Sync List will be deleted automatically after it
-              #   expires, but there can be a delay between the expiration time and the
-              #   resources's deletion.
+              # @param [String] item_ttl How long, {in
+              #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+              #   the List Item expires (time-to-live) and is deleted.
+              # @param [String] collection_ttl How long, {in
+              #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+              #   the List Item's parent Sync List expires (time-to-live) and is deleted. This
+              #   parameter can only be used when the List Item's `data` or `ttl` is updated in
+              #   the same request.
               # @param [String] if_match If provided, applies this mutation if (and only if) the
               #   “revision” field of this {map item] matches the provided value. This matches the
               #   semantics of (and is implemented with) the HTTP [If-Match
@@ -464,17 +456,14 @@ module Twilio
               #   object that the List Item stores. Can be up to 16 KiB in length.
               # @param [String] ttl An alias for `item_ttl`. If both parameters are provided,
               #   this value is ignored.
-              # @param [String] item_ttl How long, in seconds, before the List Item expires
-              #   (time-to-live) and is deleted.  Can be an integer from 0 to 31,536,000 (1 year).
-              #   The default value is `0`, which means the List Item does not expire. The List
-              #   Item will be deleted automatically after it expires, but there can be a delay
-              #   between the expiration time and the resources's deletion.
-              # @param [String] collection_ttl How long, in seconds, before the List Item's
-              #   parent Sync List expires (time-to-live) and is deleted.  Can be an integer from
-              #   0 to 31,536,000 (1 year). The default value is `0`, which means the parent Sync
-              #   List does not expire. The Sync List will be deleted automatically after it
-              #   expires, but there can be a delay between the expiration time and the
-              #   resources's deletion.
+              # @param [String] item_ttl How long, {in
+              #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+              #   the List Item expires (time-to-live) and is deleted.
+              # @param [String] collection_ttl How long, {in
+              #   seconds}[https://www.twilio.com/docs/sync/limits#sync-payload-limits], before
+              #   the List Item's parent Sync List expires (time-to-live) and is deleted. This
+              #   parameter can only be used when the List Item's `data` or `ttl` is updated in
+              #   the same request.
               # @param [String] if_match If provided, applies this mutation if (and only if) the
               #   “revision” field of this {map item] matches the provided value. This matches the
               #   semantics of (and is implemented with) the HTTP [If-Match
