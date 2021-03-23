@@ -248,7 +248,7 @@ If you've instead found a bug in the library or would like new features added, g
 [bundler]: https://bundler.io
 [rubygems]: https://rubygems.org
 [gem]: https://rubygems.org/gems/twilio
-[travis]: https://travis-ci.org/twilio/twilio-ruby
+[travis]: https://travis-ci.com/twilio/twilio-ruby
 [upgrade]: https://github.com/twilio/twilio-ruby/wiki/Ruby-Version-5.x-Upgrade-Guide
 [issues]: https://github.com/twilio/twilio-ruby/issues
 [faraday]: https://github.com/lostisland/faraday
