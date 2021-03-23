@@ -95,6 +95,8 @@ To take advantage of Twilio's [Global Infrastructure](https://www.twilio.com/doc
 @client.edge = 'sydney'
 ```
 
+This will result in the `hostname` transforming from `api.twilio.com` to `api.sydney.au1.twilio.com`.
+
 ### Enable Debug logging
 
 In order to enable debug logging, pass in a 'logger' instance to the client with the level set to at least 'DEBUG'
@@ -110,8 +112,6 @@ myLogger = Logger.new('my_log.log')
 myLogger.level = Logger::DEBUG
 @client.logger = myLogger
 ```
-
-This will result in the `hostname` transforming from `api.twilio.com` to `api.sydney.au1.twilio.com`.
 
 ### Make a Call
 
