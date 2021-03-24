@@ -11,8 +11,6 @@ module Twilio
     class Video < Domain
       class V1 < Version
         class RoomContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class RecordingRulesList < ListResource
             ##
             # Initialize the RecordingRulesList
@@ -55,8 +53,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class RecordingRulesPage < Page
             ##
             # Initialize the RecordingRulesPage
@@ -86,8 +82,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class RecordingRulesInstance < InstanceResource
             ##
             # Initialize the RecordingRulesInstance

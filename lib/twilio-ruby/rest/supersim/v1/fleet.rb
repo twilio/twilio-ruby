@@ -49,8 +49,18 @@ module Twilio
           # @param [String] commands_method A string representing the HTTP method to use
           #   when making a request to `commands_url`. Can be one of `POST` or `GET`. Defaults
           #   to `POST`.
+          # @param [Boolean] sms_commands_enabled Defines whether SIMs in the Fleet are
+          #   capable of sending and receiving machine-to-machine SMS via Commands. Defaults
+          #   to `true`.
+          # @param [String] sms_commands_url The URL that will receive a webhook when a
+          #   Super SIM in the Fleet is used to send an SMS from your device to the SMS
+          #   Commands number. Your server should respond with an HTTP status code in the 200
+          #   range; any response body will be ignored.
+          # @param [String] sms_commands_method A string representing the HTTP method to use
+          #   when making a request to `sms_commands_url`. Can be one of `POST` or `GET`.
+          #   Defaults to `POST`.
           # @return [FleetInstance] Created FleetInstance
-          def create(network_access_profile: nil, unique_name: :unset, data_enabled: :unset, data_limit: :unset, commands_enabled: :unset, commands_url: :unset, commands_method: :unset)
+          def create(network_access_profile: nil, unique_name: :unset, data_enabled: :unset, data_limit: :unset, commands_enabled: :unset, commands_url: :unset, commands_method: :unset, sms_commands_enabled: :unset, sms_commands_url: :unset, sms_commands_method: :unset)
             data = Twilio::Values.of({
                 'NetworkAccessProfile' => network_access_profile,
                 'UniqueName' => unique_name,
@@ -59,6 +69,9 @@ module Twilio
                 'CommandsEnabled' => commands_enabled,
                 'CommandsUrl' => commands_url,
                 'CommandsMethod' => commands_method,
+                'SmsCommandsEnabled' => sms_commands_enabled,
+                'SmsCommandsUrl' => sms_commands_url,
+                'SmsCommandsMethod' => sms_commands_method,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -238,13 +251,22 @@ module Twilio
           # @param [String] commands_method A string representing the HTTP method to use
           #   when making a request to `commands_url`. Can be one of `POST` or `GET`. Defaults
           #   to `POST`.
+          # @param [String] sms_commands_url The URL that will receive a webhook when a
+          #   Super SIM in the Fleet is used to send an SMS from your device to the SMS
+          #   Commands number. Your server should respond with an HTTP status code in the 200
+          #   range; any response body will be ignored.
+          # @param [String] sms_commands_method A string representing the HTTP method to use
+          #   when making a request to `sms_commands_url`. Can be one of `POST` or `GET`.
+          #   Defaults to `POST`.
           # @return [FleetInstance] Updated FleetInstance
-          def update(unique_name: :unset, network_access_profile: :unset, commands_url: :unset, commands_method: :unset)
+          def update(unique_name: :unset, network_access_profile: :unset, commands_url: :unset, commands_method: :unset, sms_commands_url: :unset, sms_commands_method: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'NetworkAccessProfile' => network_access_profile,
                 'CommandsUrl' => commands_url,
                 'CommandsMethod' => commands_method,
+                'SmsCommandsUrl' => sms_commands_url,
+                'SmsCommandsMethod' => sms_commands_method,
             })
 
             payload = @version.update('POST', @uri, data: data)
@@ -293,6 +315,9 @@ module Twilio
                 'commands_enabled' => payload['commands_enabled'],
                 'commands_url' => payload['commands_url'],
                 'commands_method' => payload['commands_method'],
+                'sms_commands_enabled' => payload['sms_commands_enabled'],
+                'sms_commands_url' => payload['sms_commands_url'],
+                'sms_commands_method' => payload['sms_commands_method'],
                 'network_access_profile_sid' => payload['network_access_profile_sid'],
             }
 
@@ -385,6 +410,24 @@ module Twilio
           end
 
           ##
+          # @return [Boolean] Defines whether SIMs in the Fleet are capable of sending and receiving machine-to-machine SMS via Commands
+          def sms_commands_enabled
+            @properties['sms_commands_enabled']
+          end
+
+          ##
+          # @return [String] The URL that will receive a webhook when a Super SIM in the Fleet is used to send an SMS from your device to the SMS Commands number
+          def sms_commands_url
+            @properties['sms_commands_url']
+          end
+
+          ##
+          # @return [String] A string representing the HTTP method to use when making a request to `sms_commands_url`
+          def sms_commands_method
+            @properties['sms_commands_method']
+          end
+
+          ##
           # @return [String] The SID of the Network Access Profile of the Fleet
           def network_access_profile_sid
             @properties['network_access_profile_sid']
@@ -412,13 +455,22 @@ module Twilio
           # @param [String] commands_method A string representing the HTTP method to use
           #   when making a request to `commands_url`. Can be one of `POST` or `GET`. Defaults
           #   to `POST`.
+          # @param [String] sms_commands_url The URL that will receive a webhook when a
+          #   Super SIM in the Fleet is used to send an SMS from your device to the SMS
+          #   Commands number. Your server should respond with an HTTP status code in the 200
+          #   range; any response body will be ignored.
+          # @param [String] sms_commands_method A string representing the HTTP method to use
+          #   when making a request to `sms_commands_url`. Can be one of `POST` or `GET`.
+          #   Defaults to `POST`.
           # @return [FleetInstance] Updated FleetInstance
-          def update(unique_name: :unset, network_access_profile: :unset, commands_url: :unset, commands_method: :unset)
+          def update(unique_name: :unset, network_access_profile: :unset, commands_url: :unset, commands_method: :unset, sms_commands_url: :unset, sms_commands_method: :unset)
             context.update(
                 unique_name: unique_name,
                 network_access_profile: network_access_profile,
                 commands_url: commands_url,
                 commands_method: commands_method,
+                sms_commands_url: sms_commands_url,
+                sms_commands_method: sms_commands_method,
             )
           end
 

@@ -226,8 +226,14 @@ module Twilio
           ##
           # Access the subscribed_events
           # @return [SubscribedEventList]
-          # @return [SubscribedEventContext]
-          def subscribed_events
+          # @return [SubscribedEventContext] if type was passed.
+          def subscribed_events(type=:unset)
+            raise ArgumentError, 'type cannot be nil' if type.nil?
+
+            if type != :unset
+              return SubscribedEventContext.new(@version, @solution[:sid], type, )
+            end
+
             unless @subscribed_events
               @subscribed_events = SubscribedEventList.new(@version, subscription_sid: @solution[:sid], )
             end

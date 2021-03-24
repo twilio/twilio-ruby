@@ -108,6 +108,19 @@ module Twilio
             end
 
             ##
+            # Create the SubscribedEventInstance
+            # @param [String] type Type of event being subscribed to.
+            # @param [String] version The schema version that the subscription should use.
+            # @return [SubscribedEventInstance] Created SubscribedEventInstance
+            def create(type: nil, version: :unset)
+              data = Twilio::Values.of({'Type' => type, 'Version' => version, })
+
+              payload = @version.create('POST', @uri, data: data)
+
+              SubscribedEventInstance.new(@version, payload, subscription_sid: @solution[:subscription_sid], )
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               '#<Twilio.Events.V1.SubscribedEventList>'
@@ -147,14 +160,85 @@ module Twilio
 
           ##
           # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+          class SubscribedEventContext < InstanceContext
+            ##
+            # Initialize the SubscribedEventContext
+            # @param [Version] version Version that contains the resource
+            # @param [String] subscription_sid The unique SID identifier of the Subscription.
+            # @param [String] type Type of event being subscribed to.
+            # @return [SubscribedEventContext] SubscribedEventContext
+            def initialize(version, subscription_sid, type)
+              super(version)
+
+              # Path Solution
+              @solution = {subscription_sid: subscription_sid, type: type, }
+              @uri = "/Subscriptions/#{@solution[:subscription_sid]}/SubscribedEvents/#{@solution[:type]}"
+            end
+
+            ##
+            # Fetch the SubscribedEventInstance
+            # @return [SubscribedEventInstance] Fetched SubscribedEventInstance
+            def fetch
+              payload = @version.fetch('GET', @uri)
+
+              SubscribedEventInstance.new(
+                  @version,
+                  payload,
+                  subscription_sid: @solution[:subscription_sid],
+                  type: @solution[:type],
+              )
+            end
+
+            ##
+            # Update the SubscribedEventInstance
+            # @param [String] version The schema version that the subscription should use.
+            # @return [SubscribedEventInstance] Updated SubscribedEventInstance
+            def update(version: :unset)
+              data = Twilio::Values.of({'Version' => version, })
+
+              payload = @version.update('POST', @uri, data: data)
+
+              SubscribedEventInstance.new(
+                  @version,
+                  payload,
+                  subscription_sid: @solution[:subscription_sid],
+                  type: @solution[:type],
+              )
+            end
+
+            ##
+            # Delete the SubscribedEventInstance
+            # @return [Boolean] true if delete succeeds, false otherwise
+            def delete
+               @version.delete('DELETE', @uri)
+            end
+
+            ##
+            # Provide a user friendly representation
+            def to_s
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Events.V1.SubscribedEventContext #{context}>"
+            end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Events.V1.SubscribedEventContext #{context}>"
+            end
+          end
+
+          ##
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class SubscribedEventInstance < InstanceResource
             ##
             # Initialize the SubscribedEventInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] subscription_sid The unique SID identifier of the Subscription.
+            # @param [String] type Type of event being subscribed to.
             # @return [SubscribedEventInstance] SubscribedEventInstance
-            def initialize(version, payload, subscription_sid: nil)
+            def initialize(version, payload, subscription_sid: nil, type: nil)
               super(version)
 
               # Marshaled Properties
@@ -165,6 +249,25 @@ module Twilio
                   'subscription_sid' => payload['subscription_sid'],
                   'url' => payload['url'],
               }
+
+              # Context
+              @instance_context = nil
+              @params = {'subscription_sid' => subscription_sid, 'type' => type || @properties['type'], }
+            end
+
+            ##
+            # Generate an instance context for the instance, the context is capable of
+            # performing various actions.  All instance actions are proxied to the context
+            # @return [SubscribedEventContext] SubscribedEventContext for this SubscribedEventInstance
+            def context
+              unless @instance_context
+                @instance_context = SubscribedEventContext.new(
+                    @version,
+                    @params['subscription_sid'],
+                    @params['type'],
+                )
+              end
+              @instance_context
             end
 
             ##
@@ -198,15 +301,39 @@ module Twilio
             end
 
             ##
+            # Fetch the SubscribedEventInstance
+            # @return [SubscribedEventInstance] Fetched SubscribedEventInstance
+            def fetch
+              context.fetch
+            end
+
+            ##
+            # Update the SubscribedEventInstance
+            # @param [String] version The schema version that the subscription should use.
+            # @return [SubscribedEventInstance] Updated SubscribedEventInstance
+            def update(version: :unset)
+              context.update(version: version, )
+            end
+
+            ##
+            # Delete the SubscribedEventInstance
+            # @return [Boolean] true if delete succeeds, false otherwise
+            def delete
+              context.delete
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
-              "<Twilio.Events.V1.SubscribedEventInstance>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Events.V1.SubscribedEventInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
-              "<Twilio.Events.V1.SubscribedEventInstance>"
+              values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Events.V1.SubscribedEventInstance #{values}>"
             end
           end
         end

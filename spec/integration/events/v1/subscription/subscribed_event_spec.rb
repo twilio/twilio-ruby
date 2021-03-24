@@ -88,4 +88,138 @@ describe 'SubscribedEvent' do
 
     expect(actual).to_not eq(nil)
   end
+
+  it "can create" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.events.v1.subscriptions('DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .subscribed_events.create(type: 'type')
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {'Type' => 'type', }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://events.twilio.com/v1/Subscriptions/DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SubscribedEvents',
+        data: values,
+    ))).to eq(true)
+  end
+
+  it "receives create responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "subscription_sid": "DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "event.type",
+          "version": 2,
+          "url": "https://events.twilio.com/v1/Subscriptions/DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SubscribedEvents/event.type"
+      }
+      ]
+    ))
+
+    actual = @client.events.v1.subscriptions('DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .subscribed_events.create(type: 'type')
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "can fetch" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.events.v1.subscriptions('DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .subscribed_events('type').fetch()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'get',
+        url: 'https://events.twilio.com/v1/Subscriptions/DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SubscribedEvents/type',
+    ))).to eq(true)
+  end
+
+  it "receives fetch responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "subscription_sid": "DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "event.type",
+          "version": 2,
+          "url": "https://events.twilio.com/v1/Subscriptions/DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SubscribedEvents/event.type"
+      }
+      ]
+    ))
+
+    actual = @client.events.v1.subscriptions('DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .subscribed_events('type').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "can update" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.events.v1.subscriptions('DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .subscribed_events('type').update()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://events.twilio.com/v1/Subscriptions/DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SubscribedEvents/type',
+    ))).to eq(true)
+  end
+
+  it "receives update responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "subscription_sid": "DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "type": "event.type",
+          "version": 2,
+          "url": "https://events.twilio.com/v1/Subscriptions/DFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SubscribedEvents/event.type"
+      }
+      ]
+    ))
+
+    actual = @client.events.v1.subscriptions('DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .subscribed_events('type').update()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "can delete" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.events.v1.subscriptions('DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                       .subscribed_events('type').delete()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'delete',
+        url: 'https://events.twilio.com/v1/Subscriptions/DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/SubscribedEvents/type',
+    ))).to eq(true)
+  end
+
+  it "receives delete responses" do
+    @holodeck.mock(Twilio::Response.new(
+        204,
+      nil,
+    ))
+
+    actual = @client.events.v1.subscriptions('DFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .subscribed_events('type').delete()
+
+    expect(actual).to eq(true)
+  end
 end

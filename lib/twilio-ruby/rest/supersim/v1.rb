@@ -20,6 +20,7 @@ module Twilio
           @networks = nil
           @network_access_profiles = nil
           @sims = nil
+          @sms_commands = nil
           @usage_records = nil
         end
 
@@ -95,6 +96,21 @@ module Twilio
               @sims ||= SimList.new self
           else
               SimContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The SID of the SMS Command resource to fetch.
+        # @return [Twilio::REST::Supersim::V1::SmsCommandContext] if sid was passed.
+        # @return [Twilio::REST::Supersim::V1::SmsCommandList]
+        def sms_commands(sid=:unset)
+          if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @sms_commands ||= SmsCommandList.new self
+          else
+              SmsCommandContext.new(self, sid)
           end
         end
 

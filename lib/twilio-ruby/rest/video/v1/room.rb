@@ -55,8 +55,10 @@ module Twilio
           #   Can be: one of the {available Media
           #   Regions}[https://www.twilio.com/docs/video/ip-address-whitelisting#group-rooms-media-servers].
           #   ***This feature is not available in `peer-to-peer` rooms.***
+          # @param [Hash] recording_rules A collection of Recording Rules that describe how
+          #   to include or exclude matching tracks for recording
           # @return [RoomInstance] Created RoomInstance
-          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset)
+          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset, recording_rules: :unset)
             data = Twilio::Values.of({
                 'EnableTurn' => enable_turn,
                 'Type' => type,
@@ -67,6 +69,7 @@ module Twilio
                 'RecordParticipantsOnConnect' => record_participants_on_connect,
                 'VideoCodecs' => Twilio.serialize_list(video_codecs) { |e| e },
                 'MediaRegion' => media_region,
+                'RecordingRules' => Twilio.serialize_object(recording_rules),
             })
 
             payload = @version.create('POST', @uri, data: data)

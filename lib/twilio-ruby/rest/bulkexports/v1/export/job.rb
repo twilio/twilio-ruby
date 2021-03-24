@@ -136,6 +136,8 @@ module Twilio
                   'webhook_method' => payload['webhook_method'],
                   'email' => payload['email'],
                   'url' => payload['url'],
+                  'job_queue_position' => payload['job_queue_position'],
+                  'estimated_completion_time' => payload['estimated_completion_time'],
               }
 
               # Context
@@ -212,6 +214,18 @@ module Twilio
             # @return [String] The url
             def url
               @properties['url']
+            end
+
+            ##
+            # @return [String] This is the job position from the 1st in line. Your queue position will never increase. As jobs ahead of yours in the queue are processed, the queue position number will decrease
+            def job_queue_position
+              @properties['job_queue_position']
+            end
+
+            ##
+            # @return [String] this is the time estimated until your job is complete. This is calculated each time you request the job list. The time is calculated based on the current rate of job completion (which may vary) and your job queue position
+            def estimated_completion_time
+              @properties['estimated_completion_time']
             end
 
             ##

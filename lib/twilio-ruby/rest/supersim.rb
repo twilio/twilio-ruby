@@ -73,6 +73,15 @@ module Twilio
       end
 
       ##
+      # @param [String] sid The unique string that we created to identify the SMS
+      #   Command resource.
+      # @return [Twilio::REST::Supersim::V1::SmsCommandInstance] if sid was passed.
+      # @return [Twilio::REST::Supersim::V1::SmsCommandList]
+      def sms_commands(sid=:unset)
+        self.v1.sms_commands(sid)
+      end
+
+      ##
       # @return [Twilio::REST::Supersim::V1::UsageRecordInstance]
       def usage_records
         self.v1.usage_records()

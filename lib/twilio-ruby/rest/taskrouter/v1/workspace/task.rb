@@ -337,8 +337,9 @@ module Twilio
             # @param [String] task_channel When MultiTasking is enabled, specify the
             #   TaskChannel with the task to update. Can be the TaskChannel's SID or its
             #   `unique_name`, such as `voice`, `sms`, or `default`.
+            # @param [String] if_match The If-Match HTTP request header
             # @return [TaskInstance] Updated TaskInstance
-            def update(attributes: :unset, assignment_status: :unset, reason: :unset, priority: :unset, task_channel: :unset)
+            def update(attributes: :unset, assignment_status: :unset, reason: :unset, priority: :unset, task_channel: :unset, if_match: :unset)
               data = Twilio::Values.of({
                   'Attributes' => attributes,
                   'AssignmentStatus' => assignment_status,
@@ -346,8 +347,9 @@ module Twilio
                   'Priority' => priority,
                   'TaskChannel' => task_channel,
               })
+              headers = Twilio::Values.of({'If-Match' => if_match, })
 
-              payload = @version.update('POST', @uri, data: data)
+              payload = @version.update('POST', @uri, data: data, headers: headers)
 
               TaskInstance.new(@version, payload, workspace_sid: @solution[:workspace_sid], sid: @solution[:sid], )
             end
@@ -598,14 +600,16 @@ module Twilio
             # @param [String] task_channel When MultiTasking is enabled, specify the
             #   TaskChannel with the task to update. Can be the TaskChannel's SID or its
             #   `unique_name`, such as `voice`, `sms`, or `default`.
+            # @param [String] if_match The If-Match HTTP request header
             # @return [TaskInstance] Updated TaskInstance
-            def update(attributes: :unset, assignment_status: :unset, reason: :unset, priority: :unset, task_channel: :unset)
+            def update(attributes: :unset, assignment_status: :unset, reason: :unset, priority: :unset, task_channel: :unset, if_match: :unset)
               context.update(
                   attributes: attributes,
                   assignment_status: assignment_status,
                   reason: reason,
                   priority: priority,
                   task_channel: task_channel,
+                  if_match: if_match,
               )
             end
 
