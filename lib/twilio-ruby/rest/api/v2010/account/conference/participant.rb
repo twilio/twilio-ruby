@@ -107,8 +107,8 @@ module Twilio
               #   `POST`.
               # @param [Array[String]] conference_status_callback_event The conference state
               #   changes that should generate a call to `conference_status_callback`. Can be:
-              #   `start`, `end`, `join`, `leave`, `mute`, `hold`, and `speaker`. Separate
-              #   multiple values with a space. Defaults to `start end`.
+              #   `start`, `end`, `join`, `leave`, `mute`, `hold`, `speaker`, and `announcement`.
+              #   Separate multiple values with a space. Defaults to `start end`.
               # @param [String] recording_channels The recording channels for the final
               #   recording. Can be: `mono` or `dual` and the default is `mono`.
               # @param [String] recording_status_callback The URL that we should call using the

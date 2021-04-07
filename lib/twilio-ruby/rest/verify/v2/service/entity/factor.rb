@@ -33,68 +33,6 @@ module Twilio
               end
 
               ##
-              # Create the FactorInstance
-              # @param [String] friendly_name The friendly name of this Factor. It can be up to
-              #   64 characters.
-              # @param [factor.FactorTypes] factor_type The Type of this Factor. Currently only
-              #   `push` is supported
-              # @param [String] binding_alg The algorithm used when `factor_type` is `push`.
-              #   Algorithm supported: `ES256`
-              # @param [String] binding_public_key The Ecdsa public key in PKIX, ASN.1 DER
-              #   format encoded in Base64
-              # @param [String] config_app_id The ID that uniquely identifies your app in the
-              #   Google or Apple store, such as `com.example.myapp`. Required when `factor_type`
-              #   is `push`. If specified, it can be up to 100 characters long.
-              # @param [factor.NotificationPlatforms] config_notification_platform The transport
-              #   technology used to generate the Notification Token. Can be `apn` or `fcm`.
-              #   Required when `factor_type` is `push`
-              # @param [String] config_notification_token For APN, the device token. For FCM the
-              #   registration token. It used to send the push notifications. Required when
-              #   `factor_type` is `push`. If specified, this value must be between 32 and 255
-              #   characters long.
-              # @param [String] config_sdk_version The Verify Push SDK version used to configure
-              #   the factor
-              # @param [String] binding_secret The shared secret for TOTP factors encoded in
-              #   Base32
-              # @param [String] config_time_step Defines how often, in seconds, are TOTP codes
-              #   generated. i.e, a new TOTP code is generated every time_step seconds. Must be
-              #   between 20 and 60 seconds, inclusive. Defaults to 30 seconds
-              # @param [String] config_skew The number of time-steps, past and future, that are
-              #   valid for validation of TOTP codes. Must be between 0 and 2, inclusive. Defaults
-              #   to 1
-              # @param [String] config_code_length Number of digits for generated TOTP codes.
-              #   Must be between 3 and 8, inclusive. Defaults to 6
-              # @param [factor.TotpAlgorithms] config_alg The algorithm used to derive the TOTP
-              #   codes. Can be `sha1`, `sha256` or `sha512`. Defaults to `sha1`
-              # @return [FactorInstance] Created FactorInstance
-              def create(friendly_name: nil, factor_type: nil, binding_alg: :unset, binding_public_key: :unset, config_app_id: :unset, config_notification_platform: :unset, config_notification_token: :unset, config_sdk_version: :unset, binding_secret: :unset, config_time_step: :unset, config_skew: :unset, config_code_length: :unset, config_alg: :unset)
-                data = Twilio::Values.of({
-                    'FriendlyName' => friendly_name,
-                    'FactorType' => factor_type,
-                    'Binding.Alg' => binding_alg,
-                    'Binding.PublicKey' => binding_public_key,
-                    'Config.AppId' => config_app_id,
-                    'Config.NotificationPlatform' => config_notification_platform,
-                    'Config.NotificationToken' => config_notification_token,
-                    'Config.SdkVersion' => config_sdk_version,
-                    'Binding.Secret' => binding_secret,
-                    'Config.TimeStep' => config_time_step,
-                    'Config.Skew' => config_skew,
-                    'Config.CodeLength' => config_code_length,
-                    'Config.Alg' => config_alg,
-                })
-
-                payload = @version.create('POST', @uri, data: data)
-
-                FactorInstance.new(
-                    @version,
-                    payload,
-                    service_sid: @solution[:service_sid],
-                    identity: @solution[:identity],
-                )
-              end
-
-              ##
               # Lists FactorInstance records from the API as a list.
               # Unlike stream(), this operation is eager and will load `limit` records into
               # memory before returning.

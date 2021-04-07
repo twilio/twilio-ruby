@@ -26,6 +26,22 @@ module Twilio
           end
 
           ##
+          # Create the SimInstance
+          # @param [String] iccid The
+          #   {ICCID}[https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID] of the
+          #   Super SIM to be added to your Account.
+          # @param [String] registration_code The 10 digit code required to claim the Super
+          #   SIM for your Account.
+          # @return [SimInstance] Created SimInstance
+          def create(iccid: nil, registration_code: nil)
+            data = Twilio::Values.of({'Iccid' => iccid, 'RegistrationCode' => registration_code, })
+
+            payload = @version.create('POST', @uri, data: data)
+
+            SimInstance.new(@version, payload, )
+          end
+
+          ##
           # Lists SimInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.

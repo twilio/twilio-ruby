@@ -9,6 +9,45 @@
 require 'spec_helper.rb'
 
 describe 'Sim' do
+  it "can create" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.supersim.v1.sims.create(iccid: 'iccid', registration_code: 'registration_code')
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {'Iccid' => 'iccid', 'RegistrationCode' => 'registration_code', }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://supersim.twilio.com/v1/Sims',
+        data: values,
+    ))).to eq(true)
+  end
+
+  it "receives create responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "sid": "HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "unique_name": "MySIM",
+          "status": "new",
+          "fleet_sid": null,
+          "iccid": "iccid",
+          "date_created": "2015-07-30T20:00:00Z",
+          "date_updated": "2015-07-30T20:00:00Z",
+          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.supersim.v1.sims.create(iccid: 'iccid', registration_code: 'registration_code')
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can fetch" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

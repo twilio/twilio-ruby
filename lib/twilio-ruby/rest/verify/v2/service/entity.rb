@@ -179,6 +179,7 @@ module Twilio
 
               # Dependents
               @factors = nil
+              @new_factors = nil
               @challenges = nil
             end
 
@@ -223,6 +224,22 @@ module Twilio
               end
 
               @factors
+            end
+
+            ##
+            # Access the new_factors
+            # @return [NewFactorList]
+            # @return [NewFactorContext]
+            def new_factors
+              unless @new_factors
+                @new_factors = NewFactorList.new(
+                    @version,
+                    service_sid: @solution[:service_sid],
+                    identity: @solution[:identity],
+                )
+              end
+
+              @new_factors
             end
 
             ##
@@ -371,6 +388,13 @@ module Twilio
             # @return [factors] factors
             def factors
               context.factors
+            end
+
+            ##
+            # Access the new_factors
+            # @return [new_factors] new_factors
+            def new_factors
+              context.new_factors
             end
 
             ##

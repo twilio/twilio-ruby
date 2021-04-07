@@ -223,6 +223,8 @@ module Twilio
             @phone_numbers = nil
             @short_codes = nil
             @alpha_senders = nil
+            @us_app_to_person = nil
+            @us_app_to_person_usecases = nil
           end
 
           ##
@@ -354,6 +356,33 @@ module Twilio
             end
 
             @alpha_senders
+          end
+
+          ##
+          # Access the us_app_to_person
+          # @return [UsAppToPersonList]
+          # @return [UsAppToPersonContext]
+          def us_app_to_person
+            unless @us_app_to_person
+              @us_app_to_person = UsAppToPersonList.new(@version, messaging_service_sid: @solution[:sid], )
+            end
+
+            @us_app_to_person
+          end
+
+          ##
+          # Access the us_app_to_person_usecases
+          # @return [UsAppToPersonUsecaseList]
+          # @return [UsAppToPersonUsecaseContext]
+          def us_app_to_person_usecases
+            unless @us_app_to_person_usecases
+              @us_app_to_person_usecases = UsAppToPersonUsecaseList.new(
+                  @version,
+                  messaging_service_sid: @solution[:sid],
+              )
+            end
+
+            @us_app_to_person_usecases
           end
 
           ##
@@ -633,6 +662,20 @@ module Twilio
           # @return [alpha_senders] alpha_senders
           def alpha_senders
             context.alpha_senders
+          end
+
+          ##
+          # Access the us_app_to_person
+          # @return [us_app_to_person] us_app_to_person
+          def us_app_to_person
+            context.us_app_to_person
+          end
+
+          ##
+          # Access the us_app_to_person_usecases
+          # @return [us_app_to_person_usecases] us_app_to_person_usecases
+          def us_app_to_person_usecases
+            context.us_app_to_person_usecases
           end
 
           ##

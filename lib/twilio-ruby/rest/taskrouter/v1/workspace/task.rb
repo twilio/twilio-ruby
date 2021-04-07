@@ -337,7 +337,11 @@ module Twilio
             # @param [String] task_channel When MultiTasking is enabled, specify the
             #   TaskChannel with the task to update. Can be the TaskChannel's SID or its
             #   `unique_name`, such as `voice`, `sms`, or `default`.
-            # @param [String] if_match The If-Match HTTP request header
+            # @param [String] if_match If provided, applies this mutation if (and only if) the
+            #   {ETag}[https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag] header of
+            #   the Task matches the provided value. This matches the semantics of (and is
+            #   implemented with) the HTTP {If-Match
+            #   header}[https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match].
             # @return [TaskInstance] Updated TaskInstance
             def update(attributes: :unset, assignment_status: :unset, reason: :unset, priority: :unset, task_channel: :unset, if_match: :unset)
               data = Twilio::Values.of({
@@ -600,7 +604,11 @@ module Twilio
             # @param [String] task_channel When MultiTasking is enabled, specify the
             #   TaskChannel with the task to update. Can be the TaskChannel's SID or its
             #   `unique_name`, such as `voice`, `sms`, or `default`.
-            # @param [String] if_match The If-Match HTTP request header
+            # @param [String] if_match If provided, applies this mutation if (and only if) the
+            #   {ETag}[https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag] header of
+            #   the Task matches the provided value. This matches the semantics of (and is
+            #   implemented with) the HTTP {If-Match
+            #   header}[https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match].
             # @return [TaskInstance] Updated TaskInstance
             def update(attributes: :unset, assignment_status: :unset, reason: :unset, priority: :unset, task_channel: :unset, if_match: :unset)
               context.update(

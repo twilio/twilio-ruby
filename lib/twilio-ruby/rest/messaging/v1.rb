@@ -17,7 +17,9 @@ module Twilio
           @version = 'v1'
           @brand_registrations = nil
           @deactivations = nil
+          @external_campaign = nil
           @services = nil
+          @usecases = nil
         end
 
         ##
@@ -42,6 +44,12 @@ module Twilio
         end
 
         ##
+        # @return [Twilio::REST::Messaging::V1::ExternalCampaignContext]
+        def external_campaign
+          @external_campaign ||= ExternalCampaignList.new self
+        end
+
+        ##
         # @param [String] sid The SID of the Service resource to fetch.
         # @return [Twilio::REST::Messaging::V1::ServiceContext] if sid was passed.
         # @return [Twilio::REST::Messaging::V1::ServiceList]
@@ -54,6 +62,12 @@ module Twilio
           else
               ServiceContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Messaging::V1::UsecaseContext]
+        def usecases
+          @usecases ||= UsecaseList.new self
         end
 
         ##

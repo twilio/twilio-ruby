@@ -43,12 +43,24 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Messaging::V1::ExternalCampaignInstance]
+      def external_campaign
+        self.v1.external_campaign()
+      end
+
+      ##
       # @param [String] sid The unique string that we created to identify the Service
       #   resource.
       # @return [Twilio::REST::Messaging::V1::ServiceInstance] if sid was passed.
       # @return [Twilio::REST::Messaging::V1::ServiceList]
       def services(sid=:unset)
         self.v1.services(sid)
+      end
+
+      ##
+      # @return [Twilio::REST::Messaging::V1::UsecaseInstance]
+      def usecases
+        self.v1.usecases()
       end
 
       ##
