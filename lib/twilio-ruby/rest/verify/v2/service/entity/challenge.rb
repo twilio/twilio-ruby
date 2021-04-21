@@ -45,14 +45,18 @@ module Twilio
               # @param [Hash] hidden_details Details provided to give context about the
               #   Challenge. Not shown to the end user. It must be a stringified JSON with only
               #   strings values eg. `{"ip": "172.168.1.234"}`
+              # @param [String] auth_payload Optional payload used to verify the Challenge upon
+              #   creation. Only used with a Factor of type `totp` to carry an OTP used in the
+              #   verification.
               # @return [ChallengeInstance] Created ChallengeInstance
-              def create(factor_sid: nil, expiration_date: :unset, details_message: :unset, details_fields: :unset, hidden_details: :unset)
+              def create(factor_sid: nil, expiration_date: :unset, details_message: :unset, details_fields: :unset, hidden_details: :unset, auth_payload: :unset)
                 data = Twilio::Values.of({
                     'FactorSid' => factor_sid,
                     'ExpirationDate' => Twilio.serialize_iso8601_datetime(expiration_date),
                     'Details.Message' => details_message,
                     'Details.Fields' => Twilio.serialize_list(details_fields) { |e| Twilio.serialize_object(e) },
                     'HiddenDetails' => Twilio.serialize_object(hidden_details),
+                    'AuthPayload' => auth_payload,
                 })
 
                 payload = @version.create('POST', @uri, data: data)
@@ -219,6 +223,9 @@ module Twilio
                 # Path Solution
                 @solution = {service_sid: service_sid, identity: identity, sid: sid, }
                 @uri = "/Services/#{@solution[:service_sid]}/Entities/#{@solution[:identity]}/Challenges/#{@solution[:sid]}"
+
+                # Dependents
+                @notifications = nil
               end
 
               ##
@@ -253,6 +260,23 @@ module Twilio
                     identity: @solution[:identity],
                     sid: @solution[:sid],
                 )
+              end
+
+              ##
+              # Access the notifications
+              # @return [NotificationList]
+              # @return [NotificationContext]
+              def notifications
+                unless @notifications
+                  @notifications = NotificationList.new(
+                      @version,
+                      service_sid: @solution[:service_sid],
+                      identity: @solution[:identity],
+                      challenge_sid: @solution[:sid],
+                  )
+                end
+
+                @notifications
               end
 
               ##
@@ -304,6 +328,7 @@ module Twilio
                     'hidden_details' => payload['hidden_details'],
                     'factor_type' => payload['factor_type'],
                     'url' => payload['url'],
+                    'links' => payload['links'],
                 }
 
                 # Context
@@ -424,6 +449,12 @@ module Twilio
               end
 
               ##
+              # @return [String] Nested resource URLs.
+              def links
+                @properties['links']
+              end
+
+              ##
               # Fetch the ChallengeInstance
               # @return [ChallengeInstance] Fetched ChallengeInstance
               def fetch
@@ -437,6 +468,13 @@ module Twilio
               # @return [ChallengeInstance] Updated ChallengeInstance
               def update(auth_payload: :unset)
                 context.update(auth_payload: auth_payload, )
+              end
+
+              ##
+              # Access the notifications
+              # @return [notifications] notifications
+              def notifications
+                context.notifications
               end
 
               ##

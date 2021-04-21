@@ -169,7 +169,7 @@ module Twilio
             end
 
             ##
-            # @return [Hash] This is a list of the completed, pending, or errored dates within the export time range, with one entry for each status with more than one day in that status
+            # @return [Hash] The details of a job state which is an object that contains a `status` string, a day count integer, and list of days in the job
             def details
               @properties['details']
             end

@@ -128,13 +128,15 @@ describe 'Task' do
 
     expect {
       @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                           .tasks('WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete()
+                           .tasks('WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete(if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
+    headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'delete',
         url: 'https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 

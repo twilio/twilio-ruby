@@ -53,8 +53,8 @@ module Twilio
           # Lists SmsCommandInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] sim The SID or unique name of the Sim that SMS Command was sent
-          #   to or from.
+          # @param [String] sim The SID or unique name of the Sim resource that SMS Command
+          #   was sent to or from.
           # @param [sms_command.Status] status The status of the SMS Command. Can be:
           #   `queued`, `sent`, `delivered`, `received` or `failed`. See the {SMS Command
           #   Status
@@ -85,8 +85,8 @@ module Twilio
           # Streams SmsCommandInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] sim The SID or unique name of the Sim that SMS Command was sent
-          #   to or from.
+          # @param [String] sim The SID or unique name of the Sim resource that SMS Command
+          #   was sent to or from.
           # @param [sms_command.Status] status The status of the SMS Command. Can be:
           #   `queued`, `sent`, `delivered`, `received` or `failed`. See the {SMS Command
           #   Status
@@ -128,8 +128,8 @@ module Twilio
           ##
           # Retrieve a single page of SmsCommandInstance records from the API.
           # Request is executed immediately.
-          # @param [String] sim The SID or unique name of the Sim that SMS Command was sent
-          #   to or from.
+          # @param [String] sim The SID or unique name of the Sim resource that SMS Command
+          #   was sent to or from.
           # @param [sms_command.Status] status The status of the SMS Command. Can be:
           #   `queued`, `sent`, `delivered`, `received` or `failed`. See the {SMS Command
           #   Status

@@ -93,17 +93,17 @@ module Twilio
 
           ##
           # Access the versions
-          # @return [VersionList]
-          # @return [VersionContext] if schema_version was passed.
+          # @return [SchemaVersionList]
+          # @return [SchemaVersionContext] if schema_version was passed.
           def versions(schema_version=:unset)
             raise ArgumentError, 'schema_version cannot be nil' if schema_version.nil?
 
             if schema_version != :unset
-              return VersionContext.new(@version, @solution[:id], schema_version, )
+              return SchemaVersionContext.new(@version, @solution[:id], schema_version, )
             end
 
             unless @versions
-              @versions = VersionList.new(@version, id: @solution[:id], )
+              @versions = SchemaVersionList.new(@version, id: @solution[:id], )
             end
 
             @versions
@@ -142,8 +142,8 @@ module Twilio
                 'id' => payload['id'],
                 'url' => payload['url'],
                 'links' => payload['links'],
-                'last_created' => Twilio.deserialize_iso8601_datetime(payload['last_created']),
-                'last_version' => payload['last_version'].to_i,
+                'latest_version_date_created' => Twilio.deserialize_iso8601_datetime(payload['latest_version_date_created']),
+                'latest_version' => payload['latest_version'].to_i,
             }
 
             # Context
@@ -181,15 +181,15 @@ module Twilio
           end
 
           ##
-          # @return [Time] The date that the last schema version was created.
-          def last_created
-            @properties['last_created']
+          # @return [Time] The date that the latest schema version was created.
+          def latest_version_date_created
+            @properties['latest_version_date_created']
           end
 
           ##
-          # @return [String] Last schema version.
-          def last_version
-            @properties['last_version']
+          # @return [String] Latest schema version.
+          def latest_version
+            @properties['latest_version']
           end
 
           ##

@@ -110,10 +110,11 @@ module Twilio
             ##
             # Create the SubscribedEventInstance
             # @param [String] type Type of event being subscribed to.
-            # @param [String] version The schema version that the subscription should use.
+            # @param [String] schema_version The schema version that the subscription should
+            #   use.
             # @return [SubscribedEventInstance] Created SubscribedEventInstance
-            def create(type: nil, version: :unset)
-              data = Twilio::Values.of({'Type' => type, 'Version' => version, })
+            def create(type: nil, schema_version: :unset)
+              data = Twilio::Values.of({'Type' => type, 'SchemaVersion' => schema_version, })
 
               payload = @version.create('POST', @uri, data: data)
 
@@ -191,10 +192,11 @@ module Twilio
 
             ##
             # Update the SubscribedEventInstance
-            # @param [String] version The schema version that the subscription should use.
+            # @param [String] schema_version The schema version that the subscription should
+            #   use.
             # @return [SubscribedEventInstance] Updated SubscribedEventInstance
-            def update(version: :unset)
-              data = Twilio::Values.of({'Version' => version, })
+            def update(schema_version: :unset)
+              data = Twilio::Values.of({'SchemaVersion' => schema_version, })
 
               payload = @version.update('POST', @uri, data: data)
 
@@ -245,7 +247,7 @@ module Twilio
               @properties = {
                   'account_sid' => payload['account_sid'],
                   'type' => payload['type'],
-                  'version' => payload['version'].to_i,
+                  'schema_version' => payload['schema_version'].to_i,
                   'subscription_sid' => payload['subscription_sid'],
                   'url' => payload['url'],
               }
@@ -284,8 +286,8 @@ module Twilio
 
             ##
             # @return [String] The schema version that the subscription should use.
-            def version
-              @properties['version']
+            def schema_version
+              @properties['schema_version']
             end
 
             ##
@@ -309,10 +311,11 @@ module Twilio
 
             ##
             # Update the SubscribedEventInstance
-            # @param [String] version The schema version that the subscription should use.
+            # @param [String] schema_version The schema version that the subscription should
+            #   use.
             # @return [SubscribedEventInstance] Updated SubscribedEventInstance
-            def update(version: :unset)
-              context.update(version: version, )
+            def update(schema_version: :unset)
+              context.update(schema_version: schema_version, )
             end
 
             ##

@@ -13,13 +13,13 @@ module Twilio
         class SchemaContext < InstanceContext
           ##
           # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-          class VersionList < ListResource
+          class SchemaVersionList < ListResource
             ##
-            # Initialize the VersionList
+            # Initialize the SchemaVersionList
             # @param [Version] version Version that contains the resource
             # @param [String] id The unique identifier of the schema. Each schema can have
             #   multiple versions, that share the same id.
-            # @return [VersionList] VersionList
+            # @return [SchemaVersionList] SchemaVersionList
             def initialize(version, id: nil)
               super(version)
 
@@ -29,7 +29,7 @@ module Twilio
             end
 
             ##
-            # Lists VersionInstance records from the API as a list.
+            # Lists SchemaVersionInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -44,7 +44,7 @@ module Twilio
             end
 
             ##
-            # Streams VersionInstance records from the API as an Enumerable.
+            # Streams SchemaVersionInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -63,7 +63,7 @@ module Twilio
             end
 
             ##
-            # When passed a block, yields VersionInstance records from the API.
+            # When passed a block, yields SchemaVersionInstance records from the API.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             def each
@@ -77,12 +77,12 @@ module Twilio
             end
 
             ##
-            # Retrieve a single page of VersionInstance records from the API.
+            # Retrieve a single page of SchemaVersionInstance records from the API.
             # Request is executed immediately.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
-            # @return [Page] Page of VersionInstance
+            # @return [Page] Page of SchemaVersionInstance
             def page(page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'PageToken' => page_token,
@@ -92,38 +92,38 @@ module Twilio
 
               response = @version.page('GET', @uri, params: params)
 
-              VersionPage.new(@version, response, @solution)
+              SchemaVersionPage.new(@version, response, @solution)
             end
 
             ##
-            # Retrieve a single page of VersionInstance records from the API.
+            # Retrieve a single page of SchemaVersionInstance records from the API.
             # Request is executed immediately.
             # @param [String] target_url API-generated URL for the requested results page
-            # @return [Page] Page of VersionInstance
+            # @return [Page] Page of SchemaVersionInstance
             def get_page(target_url)
               response = @version.domain.request(
                   'GET',
                   target_url
               )
-              VersionPage.new(@version, response, @solution)
+              SchemaVersionPage.new(@version, response, @solution)
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '#<Twilio.Events.V1.VersionList>'
+              '#<Twilio.Events.V1.SchemaVersionList>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-          class VersionPage < Page
+          class SchemaVersionPage < Page
             ##
-            # Initialize the VersionPage
+            # Initialize the SchemaVersionPage
             # @param [Version] version Version that contains the resource
             # @param [Response] response Response from the API
             # @param [Hash] solution Path solution for the resource
-            # @return [VersionPage] VersionPage
+            # @return [SchemaVersionPage] SchemaVersionPage
             def initialize(version, response, solution)
               super(version, response)
 
@@ -132,30 +132,30 @@ module Twilio
             end
 
             ##
-            # Build an instance of VersionInstance
+            # Build an instance of SchemaVersionInstance
             # @param [Hash] payload Payload response from the API
-            # @return [VersionInstance] VersionInstance
+            # @return [SchemaVersionInstance] SchemaVersionInstance
             def get_instance(payload)
-              VersionInstance.new(@version, payload, id: @solution[:id], )
+              SchemaVersionInstance.new(@version, payload, id: @solution[:id], )
             end
 
             ##
             # Provide a user friendly representation
             def to_s
-              '<Twilio.Events.V1.VersionPage>'
+              '<Twilio.Events.V1.SchemaVersionPage>'
             end
           end
 
           ##
           # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-          class VersionContext < InstanceContext
+          class SchemaVersionContext < InstanceContext
             ##
-            # Initialize the VersionContext
+            # Initialize the SchemaVersionContext
             # @param [Version] version Version that contains the resource
             # @param [String] id The unique identifier of the schema. Each schema can have
             #   multiple versions, that share the same id.
             # @param [String] schema_version The version of the schema
-            # @return [VersionContext] VersionContext
+            # @return [SchemaVersionContext] SchemaVersionContext
             def initialize(version, id, schema_version)
               super(version)
 
@@ -165,12 +165,12 @@ module Twilio
             end
 
             ##
-            # Fetch the VersionInstance
-            # @return [VersionInstance] Fetched VersionInstance
+            # Fetch the SchemaVersionInstance
+            # @return [SchemaVersionInstance] Fetched SchemaVersionInstance
             def fetch
               payload = @version.fetch('GET', @uri)
 
-              VersionInstance.new(
+              SchemaVersionInstance.new(
                   @version,
                   payload,
                   id: @solution[:id],
@@ -182,28 +182,28 @@ module Twilio
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Events.V1.VersionContext #{context}>"
+              "#<Twilio.Events.V1.SchemaVersionContext #{context}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-              "#<Twilio.Events.V1.VersionContext #{context}>"
+              "#<Twilio.Events.V1.SchemaVersionContext #{context}>"
             end
           end
 
           ##
           # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-          class VersionInstance < InstanceResource
+          class SchemaVersionInstance < InstanceResource
             ##
-            # Initialize the VersionInstance
+            # Initialize the SchemaVersionInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] id The unique identifier of the schema. Each schema can have
             #   multiple versions, that share the same id.
             # @param [String] schema_version The version of the schema
-            # @return [VersionInstance] VersionInstance
+            # @return [SchemaVersionInstance] SchemaVersionInstance
             def initialize(version, payload, id: nil, schema_version: nil)
               super(version)
 
@@ -224,10 +224,10 @@ module Twilio
             ##
             # Generate an instance context for the instance, the context is capable of
             # performing various actions.  All instance actions are proxied to the context
-            # @return [VersionContext] VersionContext for this VersionInstance
+            # @return [SchemaVersionContext] SchemaVersionContext for this SchemaVersionInstance
             def context
               unless @instance_context
-                @instance_context = VersionContext.new(@version, @params['id'], @params['schema_version'], )
+                @instance_context = SchemaVersionContext.new(@version, @params['id'], @params['schema_version'], )
               end
               @instance_context
             end
@@ -263,8 +263,8 @@ module Twilio
             end
 
             ##
-            # Fetch the VersionInstance
-            # @return [VersionInstance] Fetched VersionInstance
+            # Fetch the SchemaVersionInstance
+            # @return [SchemaVersionInstance] Fetched SchemaVersionInstance
             def fetch
               context.fetch
             end
@@ -273,14 +273,14 @@ module Twilio
             # Provide a user friendly representation
             def to_s
               values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Events.V1.VersionInstance #{values}>"
+              "<Twilio.Events.V1.SchemaVersionInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
               values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-              "<Twilio.Events.V1.VersionInstance #{values}>"
+              "<Twilio.Events.V1.SchemaVersionInstance #{values}>"
             end
           end
         end

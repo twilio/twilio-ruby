@@ -29,15 +29,20 @@ module Twilio
           # Create the ServiceInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource. It can be up to 64 characters long.
-          # @param [String] inbound_request_url The URL we should call using
-          #   `inbound_method` when a message is received by any phone number or short code in
-          #   the Service. When this property is `null`, receiving inbound messages is
-          #   disabled.
+          # @param [String] inbound_request_url The URL we call using `inbound_method` when
+          #   a message is received by any phone number or short code in the Service. When
+          #   this property is `null`, receiving inbound messages is disabled. All messages
+          #   sent to the Twilio phone number or short code will not be logged and received on
+          #   the Account. If the `use_inbound_webhook_on_number` field is enabled then the
+          #   webhook url defined on the phone number will override the `inbound_request_url`
+          #   defined for the Messaging Service.
           # @param [String] inbound_method The HTTP method we should use to call
           #   `inbound_request_url`. Can be `GET` or `POST` and the default is `POST`.
-          # @param [String] fallback_url The URL that we should call using `fallback_method`
-          #   if an error occurs while retrieving or executing the TwiML from the Inbound
-          #   Request URL.
+          # @param [String] fallback_url The URL that we call using `fallback_method` if an
+          #   error occurs while retrieving or executing the TwiML from the Inbound Request
+          #   URL. If the `use_inbound_webhook_on_number` field is enabled then the webhook
+          #   url defined on the phone number will override the `fallback_url` defined for the
+          #   Messaging Service.
           # @param [String] fallback_method The HTTP method we should use to call
           #   `fallback_url`. Can be: `GET` or `POST`.
           # @param [String] status_callback The URL we should call to {pass status
@@ -62,8 +67,14 @@ module Twilio
           # @param [String] validity_period How long, in seconds, messages sent from the
           #   Service are valid. Can be an integer from `1` to `14,400`.
           # @param [Boolean] synchronous_validation Reserved.
+          # @param [Boolean] use_inbound_webhook_on_number A boolean value that indicates
+          #   either the webhook url configured on the phone number will be used or
+          #   `inbound_request_url`/`fallback_url` url will be called when a message is
+          #   received from the phone number. If this field is enabled then the webhook url
+          #   defined on the phone number will override the
+          #   `inbound_request_url`/`fallback_url` defined for the Messaging Service.
           # @return [ServiceInstance] Created ServiceInstance
-          def create(friendly_name: nil, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset)
+          def create(friendly_name: nil, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset, use_inbound_webhook_on_number: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'InboundRequestUrl' => inbound_request_url,
@@ -79,6 +90,7 @@ module Twilio
                 'AreaCodeGeomatch' => area_code_geomatch,
                 'ValidityPeriod' => validity_period,
                 'SynchronousValidation' => synchronous_validation,
+                'UseInboundWebhookOnNumber' => use_inbound_webhook_on_number,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -231,15 +243,20 @@ module Twilio
           # Update the ServiceInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource. It can be up to 64 characters long.
-          # @param [String] inbound_request_url The URL we should call using
-          #   `inbound_method` when a message is received by any phone number or short code in
-          #   the Service. When this property is `null`, receiving inbound messages is
-          #   disabled.
+          # @param [String] inbound_request_url The URL we call using `inbound_method` when
+          #   a message is received by any phone number or short code in the Service. When
+          #   this property is `null`, receiving inbound messages is disabled. All messages
+          #   sent to the Twilio phone number or short code will not be logged and received on
+          #   the Account. If the `use_inbound_webhook_on_number` field is enabled then the
+          #   webhook url defined on the phone number will override the `inbound_request_url`
+          #   defined for the Messaging Service.
           # @param [String] inbound_method The HTTP method we should use to call
           #   `inbound_request_url`. Can be `GET` or `POST` and the default is `POST`.
-          # @param [String] fallback_url The URL that we should call using `fallback_method`
-          #   if an error occurs while retrieving or executing the TwiML from the Inbound
-          #   Request URL.
+          # @param [String] fallback_url The URL that we call using `fallback_method` if an
+          #   error occurs while retrieving or executing the TwiML from the Inbound Request
+          #   URL. If the `use_inbound_webhook_on_number` field is enabled then the webhook
+          #   url defined on the phone number will override the `fallback_url` defined for the
+          #   Messaging Service.
           # @param [String] fallback_method The HTTP method we should use to call
           #   `fallback_url`. Can be: `GET` or `POST`.
           # @param [String] status_callback The URL we should call to {pass status
@@ -264,8 +281,14 @@ module Twilio
           # @param [String] validity_period How long, in seconds, messages sent from the
           #   Service are valid. Can be an integer from `1` to `14,400`.
           # @param [Boolean] synchronous_validation Reserved.
+          # @param [Boolean] use_inbound_webhook_on_number A boolean value that indicates
+          #   either the webhook url configured on the phone number will be used or
+          #   `inbound_request_url`/`fallback_url` url will be called when a message is
+          #   received from the phone number. If this field is enabled then the webhook url
+          #   defined on the phone number will override the
+          #   `inbound_request_url`/`fallback_url` defined for the Messaging Service.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset)
+          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset, use_inbound_webhook_on_number: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'InboundRequestUrl' => inbound_request_url,
@@ -281,6 +304,7 @@ module Twilio
                 'AreaCodeGeomatch' => area_code_geomatch,
                 'ValidityPeriod' => validity_period,
                 'SynchronousValidation' => synchronous_validation,
+                'UseInboundWebhookOnNumber' => use_inbound_webhook_on_number,
             })
 
             payload = @version.update('POST', @uri, data: data)
@@ -434,6 +458,7 @@ module Twilio
                 'validity_period' => payload['validity_period'].to_i,
                 'url' => payload['url'],
                 'links' => payload['links'],
+                'use_inbound_webhook_on_number' => payload['use_inbound_webhook_on_number'],
             }
 
             # Context
@@ -483,7 +508,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The URL we call using inbound_method when a message is received by any phone number or short code in the Service
+          # @return [String] The URL we call using inbound_method when a message is received by any phone number or short code in the Service. This field will be overridden if the `use_inbound_webhook_on_number` field is enabled.
           def inbound_request_url
             @properties['inbound_request_url']
           end
@@ -495,7 +520,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The URL that we call using fallback_method if an error occurs while retrieving or executing the TwiML from the Inbound Request URL
+          # @return [String] The URL that we call using fallback_method if an error occurs while retrieving or executing the TwiML from the Inbound Request URL. This field will be overridden if the `use_inbound_webhook_on_number` field is enabled.
           def fallback_url
             @properties['fallback_url']
           end
@@ -573,18 +598,29 @@ module Twilio
           end
 
           ##
+          # @return [Boolean] If enabled, the webhook url configured on the phone number will be used and will override the `inbound_request_url`/`fallback_url` url called when an inbound message is received.
+          def use_inbound_webhook_on_number
+            @properties['use_inbound_webhook_on_number']
+          end
+
+          ##
           # Update the ServiceInstance
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the resource. It can be up to 64 characters long.
-          # @param [String] inbound_request_url The URL we should call using
-          #   `inbound_method` when a message is received by any phone number or short code in
-          #   the Service. When this property is `null`, receiving inbound messages is
-          #   disabled.
+          # @param [String] inbound_request_url The URL we call using `inbound_method` when
+          #   a message is received by any phone number or short code in the Service. When
+          #   this property is `null`, receiving inbound messages is disabled. All messages
+          #   sent to the Twilio phone number or short code will not be logged and received on
+          #   the Account. If the `use_inbound_webhook_on_number` field is enabled then the
+          #   webhook url defined on the phone number will override the `inbound_request_url`
+          #   defined for the Messaging Service.
           # @param [String] inbound_method The HTTP method we should use to call
           #   `inbound_request_url`. Can be `GET` or `POST` and the default is `POST`.
-          # @param [String] fallback_url The URL that we should call using `fallback_method`
-          #   if an error occurs while retrieving or executing the TwiML from the Inbound
-          #   Request URL.
+          # @param [String] fallback_url The URL that we call using `fallback_method` if an
+          #   error occurs while retrieving or executing the TwiML from the Inbound Request
+          #   URL. If the `use_inbound_webhook_on_number` field is enabled then the webhook
+          #   url defined on the phone number will override the `fallback_url` defined for the
+          #   Messaging Service.
           # @param [String] fallback_method The HTTP method we should use to call
           #   `fallback_url`. Can be: `GET` or `POST`.
           # @param [String] status_callback The URL we should call to {pass status
@@ -609,8 +645,14 @@ module Twilio
           # @param [String] validity_period How long, in seconds, messages sent from the
           #   Service are valid. Can be an integer from `1` to `14,400`.
           # @param [Boolean] synchronous_validation Reserved.
+          # @param [Boolean] use_inbound_webhook_on_number A boolean value that indicates
+          #   either the webhook url configured on the phone number will be used or
+          #   `inbound_request_url`/`fallback_url` url will be called when a message is
+          #   received from the phone number. If this field is enabled then the webhook url
+          #   defined on the phone number will override the
+          #   `inbound_request_url`/`fallback_url` defined for the Messaging Service.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset)
+          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset, use_inbound_webhook_on_number: :unset)
             context.update(
                 friendly_name: friendly_name,
                 inbound_request_url: inbound_request_url,
@@ -626,6 +668,7 @@ module Twilio
                 area_code_geomatch: area_code_geomatch,
                 validity_period: validity_period,
                 synchronous_validation: synchronous_validation,
+                use_inbound_webhook_on_number: use_inbound_webhook_on_number,
             )
           end
 

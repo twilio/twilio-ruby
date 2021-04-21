@@ -60,8 +60,21 @@ module Twilio
           #   factors. Set the FCM Credential for this service. This will allow to send push
           #   notifications to Android devices. See {Credential
           #   Resource}[https://www.twilio.com/docs/notify/api/credential-resource]
+          # @param [String] totp_issuer Optional configuration for the TOTP factors. Set
+          #   TOTP Issuer for this service. This will allow to configure the issuer of the
+          #   TOTP URI. Defaults to the service friendly name if not provided.
+          # @param [String] totp_time_step Optional configuration for the TOTP factors.
+          #   Defines how often, in seconds, are TOTP codes generated. i.e, a new TOTP code is
+          #   generated every time_step seconds. Must be between 20 and 60 seconds, inclusive.
+          #   Defaults to 30 seconds
+          # @param [String] totp_code_length Optional configuration for the TOTP factors.
+          #   Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive.
+          #   Defaults to 6
+          # @param [String] totp_skew Optional configuration for the TOTP factors. The
+          #   number of time-steps, past and future, that are valid for validation of TOTP
+          #   codes. Must be between 0 and 2, inclusive. Defaults to 1
           # @return [ServiceInstance] Created ServiceInstance
-          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset)
+          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset, totp_issuer: :unset, totp_time_step: :unset, totp_code_length: :unset, totp_skew: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -75,6 +88,10 @@ module Twilio
                 'Push.IncludeDate' => push_include_date,
                 'Push.ApnCredentialSid' => push_apn_credential_sid,
                 'Push.FcmCredentialSid' => push_fcm_credential_sid,
+                'Totp.Issuer' => totp_issuer,
+                'Totp.TimeStep' => totp_time_step,
+                'Totp.CodeLength' => totp_code_length,
+                'Totp.Skew' => totp_skew,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -273,8 +290,21 @@ module Twilio
           #   factors. Set the FCM Credential for this service. This will allow to send push
           #   notifications to Android devices. See {Credential
           #   Resource}[https://www.twilio.com/docs/notify/api/credential-resource]
+          # @param [String] totp_issuer Optional configuration for the TOTP factors. Set
+          #   TOTP Issuer for this service. This will allow to configure the issuer of the
+          #   TOTP URI.
+          # @param [String] totp_time_step Optional configuration for the TOTP factors.
+          #   Defines how often, in seconds, are TOTP codes generated. i.e, a new TOTP code is
+          #   generated every time_step seconds. Must be between 20 and 60 seconds, inclusive.
+          #   Defaults to 30 seconds
+          # @param [String] totp_code_length Optional configuration for the TOTP factors.
+          #   Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive.
+          #   Defaults to 6
+          # @param [String] totp_skew Optional configuration for the TOTP factors. The
+          #   number of time-steps, past and future, that are valid for validation of TOTP
+          #   codes. Must be between 0 and 2, inclusive. Defaults to 1
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset, totp_issuer: :unset, totp_time_step: :unset, totp_code_length: :unset, totp_skew: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -288,6 +318,10 @@ module Twilio
                 'Push.IncludeDate' => push_include_date,
                 'Push.ApnCredentialSid' => push_apn_credential_sid,
                 'Push.FcmCredentialSid' => push_fcm_credential_sid,
+                'Totp.Issuer' => totp_issuer,
+                'Totp.TimeStep' => totp_time_step,
+                'Totp.CodeLength' => totp_code_length,
+                'Totp.Skew' => totp_skew,
             })
 
             payload = @version.update('POST', @uri, data: data)
@@ -449,6 +483,7 @@ module Twilio
                 'do_not_share_warning_enabled' => payload['do_not_share_warning_enabled'],
                 'custom_code_enabled' => payload['custom_code_enabled'],
                 'push' => payload['push'],
+                'totp' => payload['totp'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -544,6 +579,12 @@ module Twilio
           end
 
           ##
+          # @return [Hash] The service level configuration of factor TOTP type.
+          def totp
+            @properties['totp']
+          end
+
+          ##
           # @return [Time] The RFC 2822 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
@@ -616,8 +657,21 @@ module Twilio
           #   factors. Set the FCM Credential for this service. This will allow to send push
           #   notifications to Android devices. See {Credential
           #   Resource}[https://www.twilio.com/docs/notify/api/credential-resource]
+          # @param [String] totp_issuer Optional configuration for the TOTP factors. Set
+          #   TOTP Issuer for this service. This will allow to configure the issuer of the
+          #   TOTP URI.
+          # @param [String] totp_time_step Optional configuration for the TOTP factors.
+          #   Defines how often, in seconds, are TOTP codes generated. i.e, a new TOTP code is
+          #   generated every time_step seconds. Must be between 20 and 60 seconds, inclusive.
+          #   Defaults to 30 seconds
+          # @param [String] totp_code_length Optional configuration for the TOTP factors.
+          #   Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive.
+          #   Defaults to 6
+          # @param [String] totp_skew Optional configuration for the TOTP factors. The
+          #   number of time-steps, past and future, that are valid for validation of TOTP
+          #   codes. Must be between 0 and 2, inclusive. Defaults to 1
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset, totp_issuer: :unset, totp_time_step: :unset, totp_code_length: :unset, totp_skew: :unset)
             context.update(
                 friendly_name: friendly_name,
                 code_length: code_length,
@@ -631,6 +685,10 @@ module Twilio
                 push_include_date: push_include_date,
                 push_apn_credential_sid: push_apn_credential_sid,
                 push_fcm_credential_sid: push_fcm_credential_sid,
+                totp_issuer: totp_issuer,
+                totp_time_step: totp_time_step,
+                totp_code_length: totp_code_length,
+                totp_skew: totp_skew,
             )
           end
 

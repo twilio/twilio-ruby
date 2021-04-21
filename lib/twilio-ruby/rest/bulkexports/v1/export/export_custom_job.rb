@@ -256,7 +256,7 @@ module Twilio
             end
 
             ##
-            # @return [Hash] The details of a job state which is an object that contains a status string, a day count integer, and list of days in the job
+            # @return [Hash] The details of a job state which is an object that contains a `status` string, a day count integer, and list of days in the job
             def details
               @properties['details']
             end

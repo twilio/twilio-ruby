@@ -37,7 +37,8 @@ module Twilio
               # @param [String] friendly_name The friendly name of this Factor. It can be up to
               #   64 characters.
               # @param [new_factor.FactorTypes] factor_type The Type of this Factor. Currently
-              #   only `push` is supported
+              #   `push` and `totp` are supported. For `totp` to work, you need to contact Twilio
+              #   sales first to have the Verify TOTP feature enabled for your Twilio account.
               # @param [String] binding_alg The algorithm used when `factor_type` is `push`.
               #   Algorithm supported: `ES256`
               # @param [String] binding_public_key The Ecdsa public key in PKIX, ASN.1 DER
@@ -58,12 +59,16 @@ module Twilio
               #   Base32
               # @param [String] config_time_step Defines how often, in seconds, are TOTP codes
               #   generated. i.e, a new TOTP code is generated every time_step seconds. Must be
-              #   between 20 and 60 seconds, inclusive. Defaults to 30 seconds
+              #   between 20 and 60 seconds, inclusive. The default value is defined at the
+              #   service level in the property totp.time_step. If not configured defaults to 30
+              #   seconds
               # @param [String] config_skew The number of time-steps, past and future, that are
-              #   valid for validation of TOTP codes. Must be between 0 and 2, inclusive. Defaults
-              #   to 1
+              #   valid for validation of TOTP codes. Must be between 0 and 2, inclusive. The
+              #   default value is defined at the service level in the property totp.skew. If not
+              #   configured defaults to 1
               # @param [String] config_code_length Number of digits for generated TOTP codes.
-              #   Must be between 3 and 8, inclusive. Defaults to 6
+              #   Must be between 3 and 8, inclusive. The default value is defined at the service
+              #   level in the property totp.code_length. If not configured defaults to 6
               # @param [new_factor.TotpAlgorithms] config_alg The algorithm used to derive the
               #   TOTP codes. Can be `sha1`, `sha256` or `sha512`. Defaults to `sha1`
               # @return [NewFactorInstance] Created NewFactorInstance
