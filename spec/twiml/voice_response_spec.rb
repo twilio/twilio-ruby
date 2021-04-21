@@ -843,5 +843,22 @@ describe Twilio::TwiML::VoiceResponse do
 
       expect(parse(response)).to be_equivalent_to(expected_doc).respecting_element_order
     end
+
+    it 'should selectively capitlize some keys' do
+      expected_doc = parse <<-XML
+        <Response>
+          <Connect>
+            <Autopilot TargetTask="foobar">UAfoobar</Autopilot>
+          </Connect>
+        </Response>
+      XML
+
+      response = Twilio::TwiML::VoiceResponse.new
+      response.connect do |c|
+        c.autopilot('UAfoobar', target_task: 'foobar')
+      end
+
+      expect(parse(response)).to be_equivalent_to(expected_doc).respecting_element_order
+    end
   end
 end

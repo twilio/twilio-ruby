@@ -29,6 +29,8 @@ module Twilio
     class TwiML
         attr_accessor :name
 
+        CAPITALIZED_KEYS = [:target_task, :memory]
+
         def initialize(**keyword_args)
           @overrides = {
               aliasAttribute: 'alias',
@@ -53,7 +55,12 @@ module Twilio
           if result.include? '_'
             result = result.split('_').map(&:capitalize).join
           end
-          result[0].downcase + result[1..result.length]
+          # fix for potentially capitalized keys
+          if CAPITALIZED_KEYS.include? symbol
+            result
+          else
+            result[0].downcase + result[1..result.length]
+          end
         end
 
         def to_s(xml_declaration = true)
