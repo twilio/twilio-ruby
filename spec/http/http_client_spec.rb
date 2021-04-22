@@ -119,4 +119,20 @@ describe Twilio::HTTP::Client do
     expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Twilio::REST::TwilioError)
     expect(@client.last_response).to be_nil
   end
+
+  context 'when the response returns a timeout' do
+    let(:twilio_response) { @client.request('host', 'port', 'GET', 'url') }
+
+    before do
+      faraday_connection = Faraday::Connection.new
+
+      allow(Faraday).to receive(:new).and_return(faraday_connection)
+      allow(faraday_connection).to receive(:send).and_return(double('response', status: 504, body: { message: 'any message' }, headers: {}))
+    end
+
+    it 'adds a Request timeout message to the response and avoids non-JSON response to raise Json::ParserError' do
+      expect(twilio_response.body).to eq({ 'message' => 'Request timeout', 'code' => 504 })
+      expect(twilio_response.status_code).to eq 504
+    end
+  end
 end
