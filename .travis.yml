@@ -1,40 +1,34 @@
 language: ruby
 cache: bundler
-bundler_args: --without development
-
+bundler_args: "--without development"
 rvm:
-  - ruby-head
-  - 3.0
-  - 2.7
-  - 2.6
-  - 2.5
-  - 2.4
-  - jruby-9.2
-
+- ruby-head
+- 3.0
+- 2.7
+- 2.6
+- 2.5
+- 2.4
+- jruby-9.2
 services:
-  - docker
-
+- docker
 install: make install
 script: make test
-
 matrix:
   allow_failures:
-    - rvm: ruby-head
+  - rvm: ruby-head
   fast_finish: true
-
 deploy:
-  - provider: script
-    script: make docker-build && make docker-push
-    skip_cleanup: true
-    on:
-      tags: true
-      rvm: "2.4"
-  - provider: rubygems
-    api_key: $RUBYGEMS_APIKEY
-    on:
-      tags: true
-      rvm: "2.4"
-
+- provider: script
+  script: make docker-build && make docker-push
+  skip_cleanup: true
+  on:
+    tags: true
+    rvm: '2.4'
+- provider: rubygems
+  api_key: "$RUBYGEMS_APIKEY"
+  on:
+    tags: true
+    rvm: '2.4'
 notifications:
   slack:
     if: branch = main
@@ -42,4 +36,4 @@ notifications:
     on_success: never
     on_failure: change
     rooms:
-      - secure: AxzkBxp8izIXqkOEDiUaGjjym60GvuJeV1sBAHnLXqujDDpvdCeM+G8r274Xp48l7YqFz72PR2prFrAl8qMY5IVVFBolH1BtXqa7MsgclFKXXhq87y7OqzrUHVwdB1TAhse7k/wkeVN+mFPZswzSYqDzR3WmAbBG0iT6d1szO6c=
+      secure: OkXuxf75AYfH919/hhfY3IZOb6IzN3p74ouG2U860Vdwku1WzXjIutq0PnTeL7frqd+jbQgJmKcc3lbVXFZM0r96t8EsAuvXXx9ZWl7GuxpNUKAxwOqAY80m1b6Os7175MKeRyGnfvW8HTX14O7UmyYIJp5HrfN9dU1D1ZMUTDw=
