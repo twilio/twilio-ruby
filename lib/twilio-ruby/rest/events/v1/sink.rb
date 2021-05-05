@@ -201,6 +201,19 @@ module Twilio
           end
 
           ##
+          # Update the SinkInstance
+          # @param [String] description A human readable description for the Sink **This
+          #   value should not contain PII.**
+          # @return [SinkInstance] Updated SinkInstance
+          def update(description: nil)
+            data = Twilio::Values.of({'Description' => description, })
+
+            payload = @version.update('POST', @uri, data: data)
+
+            SinkInstance.new(@version, payload, sid: @solution[:sid], )
+          end
+
+          ##
           # Access the sink_test
           # @return [SinkTestList]
           # @return [SinkTestContext]
@@ -346,6 +359,15 @@ module Twilio
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete
+          end
+
+          ##
+          # Update the SinkInstance
+          # @param [String] description A human readable description for the Sink **This
+          #   value should not contain PII.**
+          # @return [SinkInstance] Updated SinkInstance
+          def update(description: nil)
+            context.update(description: description, )
           end
 
           ##

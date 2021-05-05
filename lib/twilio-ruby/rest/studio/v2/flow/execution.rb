@@ -140,7 +140,7 @@ module Twilio
             #   available as variable `{{contact.channel.address}}`.
             # @param [String] from The Twilio phone number to send messages or initiate calls
             #   from during the Flow's Execution. Available as variable
-            #   `{{flow.channel.address}}`.
+            #   `{{flow.channel.address}}`. For SMS, this can also be a Messaging Service SID.
             # @param [Hash] parameters JSON data that will be added to the Flow's context and
             #   that can be accessed as variables inside your Flow. For example, if you pass in
             #   `Parameters={"name":"Zeke"}`, a widget in your Flow can reference the variable

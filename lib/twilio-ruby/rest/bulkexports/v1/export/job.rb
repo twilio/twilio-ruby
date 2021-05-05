@@ -11,8 +11,6 @@ module Twilio
     class Bulkexports < Domain
       class V1 < Version
         class ExportList < ListResource
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class JobList < ListResource
             ##
             # Initialize the JobList
@@ -32,8 +30,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class JobPage < Page
             ##
             # Initialize the JobPage
@@ -63,8 +59,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class JobContext < InstanceContext
             ##
             # Initialize the JobContext
@@ -111,8 +105,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class JobInstance < InstanceResource
             ##
             # Initialize the JobInstance

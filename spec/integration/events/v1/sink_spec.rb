@@ -29,8 +29,12 @@ describe 'Sink' do
       %q[
       {
           "status": "initialized",
-          "sink_configuration": {},
-          "description": "description",
+          "sink_configuration": {
+              "arn": "arn:aws:kinesis:us-east-1:111111111:stream/test",
+              "role_arn": "arn:aws:iam::111111111:role/Role",
+              "external_id": "1234567890"
+          },
+          "description": "A Sink",
           "sid": "DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2015-07-30T20:00:00Z",
           "sink_type": "kinesis",
@@ -76,11 +80,11 @@ describe 'Sink' do
       {
           "status": "initialized",
           "sink_configuration": {
-              "arn": "4242",
-              "role_arn": "abc123",
-              "external_id": "010101"
+              "arn": "arn:aws:kinesis:us-east-1:111111111:stream/test",
+              "role_arn": "arn:aws:iam::111111111:role/Role",
+              "external_id": "1234567890"
           },
-          "description": "description",
+          "description": "My Kinesis Sink",
           "sid": "DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "date_created": "2015-07-30T20:00:00Z",
           "sink_type": "kinesis",
@@ -170,12 +174,16 @@ describe 'Sink' do
           "sinks": [
               {
                   "status": "initialized",
-                  "sink_configuration": {},
+                  "sink_configuration": {
+                      "arn": "arn:aws:kinesis:us-east-1:111111111:stream/test",
+                      "role_arn": "arn:aws:iam::111111111:role/Role",
+                      "external_id": "1234567890"
+                  },
                   "description": "A Sink",
                   "sid": "DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  "date_created": "2015-07-30T20:00:00Z",
+                  "date_created": "2015-07-30T19:00:00Z",
                   "sink_type": "kinesis",
-                  "date_updated": "2015-07-30T20:00:00Z",
+                  "date_updated": "2015-07-30T19:00:00Z",
                   "url": "https://events.twilio.com/v1/Sinks/DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "links": {
                       "sink_test": "https://events.twilio.com/v1/Sinks/DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Test",
@@ -184,7 +192,11 @@ describe 'Sink' do
               },
               {
                   "status": "initialized",
-                  "sink_configuration": {},
+                  "sink_configuration": {
+                      "arn": "arn:aws:kinesis:us-east-1:222222222:stream/test",
+                      "role_arn": "arn:aws:iam::111111111:role/Role",
+                      "external_id": "1234567890"
+                  },
                   "description": "ANOTHER Sink",
                   "sid": "DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
                   "date_created": "2015-07-30T20:00:00Z",
@@ -198,12 +210,16 @@ describe 'Sink' do
               },
               {
                   "status": "active",
-                  "sink_configuration": {},
+                  "sink_configuration": {
+                      "destination": "http://example.org/webhook",
+                      "method": "POST",
+                      "batch_events": true
+                  },
                   "description": "A webhook Sink",
                   "sid": "DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac",
-                  "date_created": "2015-07-30T20:00:00Z",
+                  "date_created": "2015-07-30T21:00:00Z",
                   "sink_type": "webhook",
-                  "date_updated": "2015-07-30T20:00:00Z",
+                  "date_updated": "2015-07-30T21:00:00Z",
                   "url": "https://events.twilio.com/v1/Sinks/DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac",
                   "links": {
                       "sink_test": "https://events.twilio.com/v1/Sinks/DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac/Test",
@@ -225,6 +241,52 @@ describe 'Sink' do
     ))
 
     actual = @client.events.v1.sinks.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "can update" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.events.v1.sinks('DGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(description: 'description')
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {'Description' => 'description', }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://events.twilio.com/v1/Sinks/DGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        data: values,
+    ))).to eq(true)
+  end
+
+  it "receives update responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "status": "initialized",
+          "sink_configuration": {
+              "arn": "arn:aws:kinesis:us-east-1:111111111:stream/test",
+              "role_arn": "arn:aws:iam::111111111:role/Role",
+              "external_id": "1234567890"
+          },
+          "description": "My Kinesis Sink",
+          "sid": "DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_created": "2015-07-30T20:00:00Z",
+          "sink_type": "kinesis",
+          "date_updated": "2015-07-30T20:00:00Z",
+          "url": "https://events.twilio.com/v1/Sinks/DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "sink_test": "https://events.twilio.com/v1/Sinks/DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Test",
+              "sink_validate": "https://events.twilio.com/v1/Sinks/DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Validate"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.events.v1.sinks('DGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(description: 'description')
 
     expect(actual).to_not eq(nil)
   end

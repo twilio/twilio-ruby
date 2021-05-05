@@ -34,43 +34,68 @@ module Twilio
 
               ##
               # Create the NewFactorInstance
-              # @param [String] friendly_name The friendly name of this Factor. It can be up to
-              #   64 characters.
+              # @param [String] friendly_name The friendly name of this Factor. This can be any
+              #   string up to 64 characters, meant for humans to distinguish between Factors.
+              #   For `factor_type` `push`, this could be a device name.
+              #   For `factor_type` `totp`, this value is used as the “account name” in
+              #   constructing the `binding.uri` property.
+              #   At the same time, we recommend avoiding providing PII.
               # @param [new_factor.FactorTypes] factor_type The Type of this Factor. Currently
-              #   `push` and `totp` are supported. For `totp` to work, you need to contact Twilio
-              #   sales first to have the Verify TOTP feature enabled for your Twilio account.
+              #   `push` and `totp` are supported. For `totp` to work, you need to contact {Twilio
+              #   sales}[https://www.twilio.com/help/sales] first to have the Verify TOTP feature
+              #   enabled for your Twilio account.
               # @param [String] binding_alg The algorithm used when `factor_type` is `push`.
               #   Algorithm supported: `ES256`
               # @param [String] binding_public_key The Ecdsa public key in PKIX, ASN.1 DER
-              #   format encoded in Base64
+              #   format encoded in Base64.
+              #
+              #   Required when `factor_type` is `push`
               # @param [String] config_app_id The ID that uniquely identifies your app in the
-              #   Google or Apple store, such as `com.example.myapp`. Required when `factor_type`
-              #   is `push`. If specified, it can be up to 100 characters long.
+              #   Google or Apple store, such as `com.example.myapp`.
+              #
+              #   Required when `factor_type` is `push`. If specified, it can be up to 100
+              #   characters long.
               # @param [new_factor.NotificationPlatforms] config_notification_platform The
               #   transport technology used to generate the Notification Token. Can be `apn` or
-              #   `fcm`. Required when `factor_type` is `push`
+              #   `fcm`.
+              #
+              #   Required when `factor_type` is `push`
               # @param [String] config_notification_token For APN, the device token. For FCM the
-              #   registration token. It used to send the push notifications. Required when
-              #   `factor_type` is `push`. If specified, this value must be between 32 and 255
+              #   registration token. It used to send the push notifications.
+              #
+              #   Used when `factor_type` is `push`. If specified, must be between 32 and 255
               #   characters long.
               # @param [String] config_sdk_version The Verify Push SDK version used to configure
               #   the factor
+              #
+              #   Used when `factor_type` is `push`
               # @param [String] binding_secret The shared secret for TOTP factors encoded in
-              #   Base32
+              #   Base32. This can be provided when creating the Factor, otherwise it will be
+              #   generated.
+              #
+              #   Used when `factor_type` is `totp`
               # @param [String] config_time_step Defines how often, in seconds, are TOTP codes
               #   generated. i.e, a new TOTP code is generated every time_step seconds. Must be
               #   between 20 and 60 seconds, inclusive. The default value is defined at the
-              #   service level in the property totp.time_step. If not configured defaults to 30
-              #   seconds
+              #   service level in the property `totp.time_step`. Defaults to 30 seconds if not
+              #   configured.
+              #
+              #   Used when `factor_type` is `totp`
               # @param [String] config_skew The number of time-steps, past and future, that are
               #   valid for validation of TOTP codes. Must be between 0 and 2, inclusive. The
-              #   default value is defined at the service level in the property totp.skew. If not
-              #   configured defaults to 1
+              #   default value is defined at the service level in the property `totp.skew`. If
+              #   not configured defaults to 1.
+              #
+              #   Used when `factor_type` is `totp`
               # @param [String] config_code_length Number of digits for generated TOTP codes.
               #   Must be between 3 and 8, inclusive. The default value is defined at the service
-              #   level in the property totp.code_length. If not configured defaults to 6
+              #   level in the property `totp.code_length`. If not configured defaults to 6.
+              #
+              #   Used when `factor_type` is `totp`
               # @param [new_factor.TotpAlgorithms] config_alg The algorithm used to derive the
-              #   TOTP codes. Can be `sha1`, `sha256` or `sha512`. Defaults to `sha1`
+              #   TOTP codes. Can be `sha1`, `sha256` or `sha512`. Defaults to `sha1`.
+              #
+              #   Used when `factor_type` is `totp`
               # @return [NewFactorInstance] Created NewFactorInstance
               def create(friendly_name: nil, factor_type: nil, binding_alg: :unset, binding_public_key: :unset, config_app_id: :unset, config_notification_platform: :unset, config_notification_token: :unset, config_sdk_version: :unset, binding_secret: :unset, config_time_step: :unset, config_skew: :unset, config_code_length: :unset, config_alg: :unset)
                 data = Twilio::Values.of({

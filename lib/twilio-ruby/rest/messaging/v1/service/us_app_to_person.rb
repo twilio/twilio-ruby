@@ -147,7 +147,7 @@ module Twilio
                   'us_app_to_person_usecase' => payload['us_app_to_person_usecase'],
                   'has_embedded_links' => payload['has_embedded_links'],
                   'has_embedded_phone' => payload['has_embedded_phone'],
-                  'status' => payload['status'],
+                  'campaign_status' => payload['campaign_status'],
                   'campaign_id' => payload['campaign_id'],
                   'is_externally_registered' => payload['is_externally_registered'],
                   'rate_limits' => payload['rate_limits'],
@@ -207,8 +207,8 @@ module Twilio
 
             ##
             # @return [String] Campaign status
-            def status
-              @properties['status']
+            def campaign_status
+              @properties['campaign_status']
             end
 
             ##

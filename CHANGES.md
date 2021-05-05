@@ -1,6 +1,29 @@
 twilio-ruby changelog
 =====================
 
+[2021-05-05] Version 5.53.0
+---------------------------
+**Library - Fix**
+- [PR #554](https://github.com/twilio/twilio-ruby/pull/554): JSON parser error on timeout response. Thanks to [@Maychell](https://github.com/Maychell)!
+
+**Api**
+- Corrected the data types for feedback summary fields **(breaking change)**
+- Update the conference participant create `from` and `to` param to be endpoint type for supporting client identifier and sip address
+
+**Bulkexports**
+- promoting API maturity to GA
+
+**Events**
+- Add endpoint to update description in sink
+- Remove beta-feature account flag
+
+**Messaging**
+- Update `status` field in us_app_to_person api to `campaign_status` **(breaking change)**
+
+**Verify**
+- Improve documentation regarding `push` factor and include extra information about `totp` factor.
+
+
 [2021-04-21] Version 5.52.0
 ---------------------------
 **Api**

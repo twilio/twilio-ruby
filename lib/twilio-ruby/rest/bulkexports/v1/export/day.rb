@@ -11,8 +11,6 @@ module Twilio
     class Bulkexports < Domain
       class V1 < Version
         class ExportContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class DayList < ListResource
             ##
             # Initialize the DayList
@@ -115,8 +113,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class DayPage < Page
             ##
             # Initialize the DayPage
@@ -146,8 +142,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class DayContext < InstanceContext
             ##
             # Initialize the DayContext
@@ -189,8 +183,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class DayInstance < InstanceResource
             ##
             # Initialize the DayInstance

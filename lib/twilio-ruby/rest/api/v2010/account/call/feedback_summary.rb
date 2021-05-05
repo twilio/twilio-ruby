@@ -167,14 +167,14 @@ module Twilio
                     'call_feedback_count' => payload['call_feedback_count'].to_i,
                     'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-                    'end_date' => Twilio.deserialize_iso8601_datetime(payload['end_date']),
+                    'end_date' => Twilio.deserialize_iso8601_date(payload['end_date']),
                     'include_subaccounts' => payload['include_subaccounts'],
                     'issues' => payload['issues'],
                     'quality_score_average' => payload['quality_score_average'].to_f,
                     'quality_score_median' => payload['quality_score_median'].to_f,
                     'quality_score_standard_deviation' => payload['quality_score_standard_deviation'].to_f,
                     'sid' => payload['sid'],
-                    'start_date' => Twilio.deserialize_iso8601_datetime(payload['start_date']),
+                    'start_date' => Twilio.deserialize_iso8601_date(payload['start_date']),
                     'status' => payload['status'],
                 }
 
@@ -225,7 +225,7 @@ module Twilio
               end
 
               ##
-              # @return [Time] The latest feedback entry date in the summary
+              # @return [Date] The latest feedback entry date in the summary
               def end_date
                 @properties['end_date']
               end
@@ -237,7 +237,7 @@ module Twilio
               end
 
               ##
-              # @return [Array[String]] Issues experienced during the call
+              # @return [Array[Hash]] Issues experienced during the call
               def issues
                 @properties['issues']
               end
@@ -267,7 +267,7 @@ module Twilio
               end
 
               ##
-              # @return [Time] The earliest feedback entry date in the summary
+              # @return [Date] The earliest feedback entry date in the summary
               def start_date
                 @properties['start_date']
               end

@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Bulkexports < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ExportList < ListResource
           ##
           # Initialize the ExportList
@@ -50,8 +48,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ExportPage < Page
           ##
           # Initialize the ExportPage
@@ -81,8 +77,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ExportContext < InstanceContext
           ##
           # Initialize the ExportContext
@@ -156,8 +150,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
         class ExportInstance < InstanceResource
           ##
           # Initialize the ExportInstance
