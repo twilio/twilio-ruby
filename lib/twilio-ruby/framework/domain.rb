@@ -31,6 +31,10 @@ module Twilio
           timeout
         )
       end
+
+      def as_json(*)
+        @properties
+      end
     end
   end
 end
