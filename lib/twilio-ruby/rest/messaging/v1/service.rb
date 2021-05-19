@@ -385,8 +385,14 @@ module Twilio
           ##
           # Access the us_app_to_person
           # @return [UsAppToPersonList]
-          # @return [UsAppToPersonContext]
-          def us_app_to_person
+          # @return [UsAppToPersonContext] if sid was passed.
+          def us_app_to_person(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return UsAppToPersonContext.new(@version, @solution[:sid], sid, )
+            end
+
             unless @us_app_to_person
               @us_app_to_person = UsAppToPersonList.new(@version, messaging_service_sid: @solution[:sid], )
             end

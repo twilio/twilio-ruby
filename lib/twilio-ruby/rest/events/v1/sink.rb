@@ -50,6 +50,10 @@ module Twilio
           # Lists SinkInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
+          # @param [Boolean] in_use A boolean query parameter filtering the results to
+          #   return sinks used/not used by a subscription.
+          # @param [String] status A String query parameter filtering the results by status
+          #   `initialized`, `validating`, `active` or `failed`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -57,14 +61,18 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(limit: nil, page_size: nil)
-            self.stream(limit: limit, page_size: page_size).entries
+          def list(in_use: :unset, status: :unset, limit: nil, page_size: nil)
+            self.stream(in_use: in_use, status: status, limit: limit, page_size: page_size).entries
           end
 
           ##
           # Streams SinkInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
+          # @param [Boolean] in_use A boolean query parameter filtering the results to
+          #   return sinks used/not used by a subscription.
+          # @param [String] status A String query parameter filtering the results by status
+          #   `initialized`, `validating`, `active` or `failed`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -72,10 +80,10 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(limit: nil, page_size: nil)
+          def stream(in_use: :unset, status: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(page_size: limits[:page_size], )
+            page = self.page(in_use: in_use, status: status, page_size: limits[:page_size], )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -97,12 +105,18 @@ module Twilio
           ##
           # Retrieve a single page of SinkInstance records from the API.
           # Request is executed immediately.
+          # @param [Boolean] in_use A boolean query parameter filtering the results to
+          #   return sinks used/not used by a subscription.
+          # @param [String] status A String query parameter filtering the results by status
+          #   `initialized`, `validating`, `active` or `failed`.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of SinkInstance
-          def page(page_token: :unset, page_number: :unset, page_size: :unset)
+          def page(in_use: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
+                'InUse' => in_use,
+                'Status' => status,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
