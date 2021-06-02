@@ -34,11 +34,10 @@ module Twilio
 
                 ##
                 # Create the NotificationInstance
-                # @param [String] ttl How long, in seconds, the Notification is valid. Delivery
-                #   will be attempted if the device is offline until the TTL elapses. 0 means that
-                #   the notification delivery is attempted immediately, only once, and is not stored
-                #   for future delivery. Must be an integer between 0 and 300 seconds, inclusive.
-                #   Defaults to 300 seconds.
+                # @param [String] ttl How long, in seconds, the notification is valid. Can be an
+                #   integer between 0 and 300. Default is 300. Delivery is attempted until the TTL
+                #   elapses, even if the device is offline. 0 means that the notification delivery
+                #   is attempted immediately, only once, and is not stored for future delivery.
                 # @return [NotificationInstance] Created NotificationInstance
                 def create(ttl: :unset)
                   data = Twilio::Values.of({'Ttl' => ttl, })
@@ -164,13 +163,13 @@ module Twilio
                 end
 
                 ##
-                # @return [String] The priority of the Notification.
+                # @return [String] The priority of the notification.
                 def priority
                   @properties['priority']
                 end
 
                 ##
-                # @return [String] How long, in seconds, the Notification is valid.
+                # @return [String] How long, in seconds, the notification is valid.
                 def ttl
                   @properties['ttl']
                 end
