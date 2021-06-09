@@ -16,27 +16,20 @@ require 'twilio-ruby/util'
 require 'twilio-ruby/security/request_validator'
 require 'twilio-ruby/util/configuration'
 
-Dir[File.dirname(__FILE__) + '/twilio-ruby/http/**/*.rb'].sort.each do |file|
+Dir[File.join(__dir__, 'twilio-ruby/compatibility/**/*.rb')].sort.each do |file|
   require file
 end
-Dir[File.dirname(__FILE__) + '/twilio-ruby/framework/**/*.rb'].sort.each do |file|
-  require file
-end
-Dir[File.dirname(__FILE__) + '/twilio-ruby/rest/*.rb'].sort.each do |file|
-  require file
-end
-Dir[File.dirname(__FILE__) + '/twilio-ruby/rest/**/*.rb'].sort.each do |file|
-  require file
-end
-Dir[File.dirname(__FILE__) + '/twilio-ruby/compatibility/**/*.rb'].sort.each do |file|
+Dir[File.join(__dir__, 'twilio-ruby/framework/*.rb')].sort.each do |file|
   require file
 end
 
 module Twilio
   extend SingleForwardable
 
-  autoload :JWT, File.join(File.dirname(__FILE__), 'twilio-ruby', 'jwt', 'jwt.rb')
-  autoload :TwiML, File.join(File.dirname(__FILE__), 'twilio-ruby', 'twiml', 'twiml.rb')
+  autoload :JWT, File.join(__dir__, 'twilio-ruby', 'jwt', 'jwt.rb')
+  autoload :TwiML, File.join(__dir__, 'twilio-ruby', 'twiml', 'twiml.rb')
+  autoload :HTTP, File.join(__dir__, 'twilio-ruby', 'http.rb')
+  autoload :REST, File.join(__dir__, 'twilio-ruby', 'rest.rb')
 
   def_delegators :configuration, :account_sid, :auth_token, :http_client, :region, :edge, :logger
 
