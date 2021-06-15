@@ -158,6 +158,14 @@ message_sid = 'SMxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
 To use a custom HTTP client with this helper library, please see the [Twilio documentation](https://www.twilio.com/docs/libraries/ruby/custom-http-clients).
 
+To apply customizations such as middleware, you can use the `configure_connection` method like so:
+
+```ruby
+@client.http_client.configure_connection do |faraday|
+  faraday.use SomeMiddleware
+end
+```
+
 ### Handling Errors
 
 ```ruby
