@@ -16,6 +16,14 @@ module Twilio
         @ssl_ca_file = ssl_ca_file
         @timeout = timeout
         @adapter = Faraday.default_adapter
+        @configure_connection_blocks = []
+      end
+
+      def configure_connection(&block)
+        raise ArgumentError, "#{__method__} must be given a block!" unless block_given?
+
+        @configure_connection_blocks << block
+        nil
       end
 
       def _request(request)
@@ -27,6 +35,8 @@ module Twilio
           f.proxy = "#{@proxy_prot}://#{@proxy_auth}#{@proxy_path}" if @proxy_prot && @proxy_path
           f.options.open_timeout = request.timeout || @timeout
           f.options.timeout = request.timeout || @timeout
+
+          @configure_connection_blocks.each { |block| block.call(f) }
           f.adapter @adapter
         end
 

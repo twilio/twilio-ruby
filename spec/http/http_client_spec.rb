@@ -6,6 +6,29 @@ describe Twilio::HTTP::Client do
     @client = Twilio::HTTP::Client.new
   end
 
+  it 'should allow adding a request configuration block' do
+    @client = Twilio::HTTP::Client.new
+    @connection = Faraday::Connection.new
+
+    blocks_spy = spy('blocks')
+
+    @client.configure_connection do |f|
+      blocks_spy.first_block_called(f)
+    end
+
+    @client.configure_connection do |f|
+      blocks_spy.second_block_called(f)
+    end
+
+    expect(Faraday).to receive(:new).and_yield(@connection).and_return(@connection)
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: {}))
+
+    @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])
+
+    expect(blocks_spy).to have_received(:first_block_called).with(@connection)
+    expect(blocks_spy).to have_received(:second_block_called).with(@connection)
+  end
+
   it 'should allow setting a global timeout' do
     @client = Twilio::HTTP::Client.new(timeout: 10)
     @connection = Faraday::Connection.new
