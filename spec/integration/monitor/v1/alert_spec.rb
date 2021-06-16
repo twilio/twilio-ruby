@@ -40,7 +40,7 @@ describe 'Alert' do
           "request_method": "GET",
           "request_url": "http://www.example.com",
           "request_variables": "request_variables",
-          "resource_sid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "resource_sid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "response_body": "response_body",
           "response_headers": "response_headers",
           "request_headers": "request_headers",
@@ -112,7 +112,7 @@ describe 'Alert' do
                   "more_info": "more_info",
                   "request_method": "GET",
                   "request_url": "http://www.example.com",
-                  "resource_sid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "resource_sid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "sid": "NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "url": "https://monitor.twilio.com/v1/Alerts/NOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "service_sid": "PNe2cd757cd5257b0217a447933a0290d2"

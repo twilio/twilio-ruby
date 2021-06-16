@@ -38,16 +38,21 @@ module Twilio
               #   is five (5) minutes after Challenge creation. The max value is sixty (60)
               #   minutes after creation.
               # @param [String] details_message Shown to the user when the push notification
-              #   arrives. Required when `factor_type` is `push`
+              #   arrives. Required when `factor_type` is `push`. Can be up to 256 characters in
+              #   length
               # @param [Array[Hash]] details_fields A list of objects that describe the Fields
               #   included in the Challenge. Each object contains the label and value of the
-              #   field. Used when `factor_type` is `push`.
+              #   field, the label can be up to 36 characters in length and the value can be up to
+              #   128 characters in length. Used when `factor_type` is `push`. There can be up to
+              #   20 details fields.
               # @param [Hash] hidden_details Details provided to give context about the
               #   Challenge. Not shown to the end user. It must be a stringified JSON with only
-              #   strings values eg. `{"ip": "172.168.1.234"}`
+              #   strings values eg. `{"ip": "172.168.1.234"}`. Can be up to 1024 characters in
+              #   length
               # @param [String] auth_payload Optional payload used to verify the Challenge upon
               #   creation. Only used with a Factor of type `totp` to carry the TOTP code that
-              #   needs to be verified.
+              #   needs to be verified. For `TOTP` this value must be between 3 and 8 characters
+              #   long.
               # @return [ChallengeInstance] Created ChallengeInstance
               def create(factor_sid: nil, expiration_date: :unset, details_message: :unset, details_fields: :unset, hidden_details: :unset, auth_payload: :unset)
                 data = Twilio::Values.of({
@@ -246,7 +251,9 @@ module Twilio
               ##
               # Update the ChallengeInstance
               # @param [String] auth_payload The optional payload needed to verify the
-              #   Challenge. E.g., a TOTP would use the numeric code.
+              #   Challenge. E.g., a TOTP would use the numeric code. For `TOTP` this value must
+              #   be between 3 and 8 characters long. For `Push` this value can be up to 5456
+              #   characters in length
               # @return [ChallengeInstance] Updated ChallengeInstance
               def update(auth_payload: :unset)
                 data = Twilio::Values.of({'AuthPayload' => auth_payload, })
@@ -464,7 +471,9 @@ module Twilio
               ##
               # Update the ChallengeInstance
               # @param [String] auth_payload The optional payload needed to verify the
-              #   Challenge. E.g., a TOTP would use the numeric code.
+              #   Challenge. E.g., a TOTP would use the numeric code. For `TOTP` this value must
+              #   be between 3 and 8 characters long. For `Push` this value can be up to 5456
+              #   characters in length
               # @return [ChallengeInstance] Updated ChallengeInstance
               def update(auth_payload: :unset)
                 context.update(auth_payload: auth_payload, )

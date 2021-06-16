@@ -33,6 +33,7 @@ describe 'ExternalCampaign' do
         201,
       %q[
       {
+          "sid": "QE2c6890da8086d771620e9b13fadeba0b",
           "messaging_service_sid": "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "campaign_id": "CMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",

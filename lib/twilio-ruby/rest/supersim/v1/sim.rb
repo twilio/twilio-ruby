@@ -30,7 +30,7 @@ module Twilio
           # @param [String] iccid The
           #   {ICCID}[https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID] of the
           #   Super SIM to be added to your Account.
-          # @param [String] registration_code The 10 digit code required to claim the Super
+          # @param [String] registration_code The 10-digit code required to claim the Super
           #   SIM for your Account.
           # @return [SimInstance] Created SimInstance
           def create(iccid: nil, registration_code: nil)

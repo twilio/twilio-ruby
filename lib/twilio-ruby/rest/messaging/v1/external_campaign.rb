@@ -94,11 +94,18 @@ module Twilio
 
             # Marshaled Properties
             @properties = {
+                'sid' => payload['sid'],
                 'account_sid' => payload['account_sid'],
                 'campaign_id' => payload['campaign_id'],
                 'messaging_service_sid' => payload['messaging_service_sid'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
             }
+          end
+
+          ##
+          # @return [String] The unique string that identifies a US A2P Compliance resource
+          def sid
+            @properties['sid']
           end
 
           ##
