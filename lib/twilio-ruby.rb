@@ -16,9 +16,6 @@ require 'twilio-ruby/util'
 require 'twilio-ruby/security/request_validator'
 require 'twilio-ruby/util/configuration'
 
-Dir[File.join(__dir__, 'twilio-ruby/compatibility/**/*.rb')].sort.each do |file|
-  require file
-end
 Dir[File.join(__dir__, 'twilio-ruby/framework/*.rb')].sort.each do |file|
   require file
 end
