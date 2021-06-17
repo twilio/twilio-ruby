@@ -14,10 +14,10 @@ describe 'CustomerProfilesEvaluations' do
 
     expect {
       @client.trusthub.v1.customer_profiles('BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                         .customer_profiles_evaluations.create(policy_sid: 'BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+                         .customer_profiles_evaluations.create(policy_sid: 'RNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PolicySid' => 'BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
+    values = {'PolicySid' => 'RNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -194,7 +194,7 @@ describe 'CustomerProfilesEvaluations' do
     ))
 
     actual = @client.trusthub.v1.customer_profiles('BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .customer_profiles_evaluations.create(policy_sid: 'BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+                                .customer_profiles_evaluations.create(policy_sid: 'RNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)
   end
