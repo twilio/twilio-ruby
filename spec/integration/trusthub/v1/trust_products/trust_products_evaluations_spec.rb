@@ -14,10 +14,10 @@ describe 'TrustProductsEvaluations' do
 
     expect {
       @client.trusthub.v1.trust_products('BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                         .trust_products_evaluations.create(policy_sid: 'BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+                         .trust_products_evaluations.create(policy_sid: 'RNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'PolicySid' => 'BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
+    values = {'PolicySid' => 'RNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -194,7 +194,7 @@ describe 'TrustProductsEvaluations' do
     ))
 
     actual = @client.trusthub.v1.trust_products('BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .trust_products_evaluations.create(policy_sid: 'BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+                                .trust_products_evaluations.create(policy_sid: 'RNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
     expect(actual).to_not eq(nil)
   end

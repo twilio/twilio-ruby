@@ -37,6 +37,7 @@ module Twilio
         @events = nil
         @fax = nil
         @flex_api = nil
+        @frontline_api = nil
         @insights = nil
         @ip_messaging = nil
         @lookups = nil
@@ -204,6 +205,12 @@ module Twilio
       # Access the FlexApi Twilio Domain
       def flex_api
         @flex_api ||= FlexApi.new self
+      end
+
+      ##
+      # Access the FrontlineApi Twilio Domain
+      def frontline_api
+        @frontline_api ||= FrontlineApi.new self
       end
 
       ##
