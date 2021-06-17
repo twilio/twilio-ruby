@@ -51,24 +51,24 @@ module Twilio
               #
               #   Required when `factor_type` is `push`
               # @param [String] config_app_id The ID that uniquely identifies your app in the
-              #   Google or Apple store, such as `com.example.myapp`.
-              #
-              #   Required when `factor_type` is `push`. If specified, it can be up to 100
+              #   Google or Apple store, such as `com.example.myapp`. It can be up to 100
               #   characters long.
+              #
+              #   Required when `factor_type` is `push`.
               # @param [new_factor.NotificationPlatforms] config_notification_platform The
               #   transport technology used to generate the Notification Token. Can be `apn` or
               #   `fcm`.
               #
-              #   Required when `factor_type` is `push`
+              #   Required when `factor_type` is `push`.
               # @param [String] config_notification_token For APN, the device token. For FCM the
-              #   registration token. It used to send the push notifications.
+              #   registration token. It used to send the push notifications. Must be between 32
+              #   and 255 characters long.
               #
-              #   Used when `factor_type` is `push`. If specified, must be between 32 and 255
-              #   characters long.
+              #   Required when `factor_type` is `push`.
               # @param [String] config_sdk_version The Verify Push SDK version used to configure
               #   the factor
               #
-              #   Used when `factor_type` is `push`
+              #   Required when `factor_type` is `push`
               # @param [String] binding_secret The shared secret for TOTP factors encoded in
               #   Base32. This can be provided when creating the Factor, otherwise it will be
               #   generated.

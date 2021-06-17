@@ -119,8 +119,10 @@ module Twilio
           #   `facebook`, `sms`, `whatsapp`, `line` or `custom`.
           # @param [String] contact_identity The channel contact's Identity.
           # @param [Boolean] enabled Whether the new Flex Flow is enabled.
-          # @param [flex_flow.IntegrationType] integration_type The integration type. Can
-          #   be: `studio`, `external`, or `task`.
+          # @param [flex_flow.IntegrationType] integration_type The software that will
+          #   handle inbound messages. {Integration
+          #   Type}[https://www.twilio.com/docs/flex/developer/messaging/manage-flows#integration-types]
+          #   can be: `studio`, `external`, or `task`.
           # @param [String] integration_flow_sid The SID of the Studio Flow. Required when
           #   `integrationType` is `studio`.
           # @param [String] integration_url The URL of the external webhook. Required when
@@ -129,9 +131,9 @@ module Twilio
           #   Required when `integrationType` is `task`.
           # @param [String] integration_workflow_sid The Workflow SID for a new Task.
           #   Required when `integrationType` is `task`.
-          # @param [String] integration_channel The Task Channel for the TaskRouter Task
-          #   that will be created. Applicable and required when integrationType is `task`.
-          #   Set to `sms` for SMS, and to `chat` otherwise. The default value is `default`
+          # @param [String] integration_channel The Task Channel SID (TCXXXX) or unique name
+          #   (e.g., `sms`) to use for the Task that will be created. Applicable and required
+          #   when `integrationType` is `task`. The default value is `default`.
           # @param [String] integration_timeout The Task timeout in seconds for a new Task.
           #   Default is 86,400 seconds (24 hours). Optional when `integrationType` is `task`,
           #   not applicable otherwise.
@@ -150,8 +152,8 @@ module Twilio
           #   will remove active Proxy sessions if the associated Task is deleted outside of
           #   the Flex UI. Defaults to `false`.
           # @param [String] integration_retry_count The number of times to retry the webhook
-          #   if the first attempt fails. Can be an integer between 0 and 3 (included),
-          #   default is 0. Optional when integrationType is `external`, not applicable
+          #   if the first attempt fails. Can be an integer between 0 and 3 (inclusive),
+          #   default is 3. Optional when `integrationType` is `external`, not applicable
           #   otherwise.
           # @return [FlexFlowInstance] Created FlexFlowInstance
           def create(friendly_name: nil, chat_service_sid: nil, channel_type: nil, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
@@ -248,8 +250,10 @@ module Twilio
           #   `facebook`, `sms`, `whatsapp`, `line` or `custom`.
           # @param [String] contact_identity The channel contact's Identity.
           # @param [Boolean] enabled Whether the new Flex Flow is enabled.
-          # @param [flex_flow.IntegrationType] integration_type The integration type. Can
-          #   be: `studio`, `external`, or `task`.
+          # @param [flex_flow.IntegrationType] integration_type The software that will
+          #   handle inbound messages. {Integration
+          #   Type}[https://www.twilio.com/docs/flex/developer/messaging/manage-flows#integration-types]
+          #   can be: `studio`, `external`, or `task`.
           # @param [String] integration_flow_sid The SID of the Studio Flow. Required when
           #   `integrationType` is `studio`.
           # @param [String] integration_url The URL of the external webhook. Required when
@@ -258,9 +262,9 @@ module Twilio
           #   Required when `integrationType` is `task`.
           # @param [String] integration_workflow_sid The Workflow SID for a new Task.
           #   Required when `integrationType` is `task`.
-          # @param [String] integration_channel The Task Channel for the TaskRouter Task
-          #   that will be created. Applicable and required when integrationType is `task`.
-          #   Set to `sms` for SMS, and to `chat` otherwise. The default value is `default`
+          # @param [String] integration_channel The Task Channel SID (TCXXXX) or unique name
+          #   (e.g., `sms`) to use for the Task that will be created. Applicable and required
+          #   when `integrationType` is `task`. The default value is `default`.
           # @param [String] integration_timeout The Task timeout in seconds for a new Task.
           #   Default is 86,400 seconds (24 hours). Optional when `integrationType` is `task`,
           #   not applicable otherwise.
@@ -279,8 +283,8 @@ module Twilio
           #   will remove active Proxy sessions if the associated Task is deleted outside of
           #   the Flex UI. Defaults to `false`.
           # @param [String] integration_retry_count The number of times to retry the webhook
-          #   if the first attempt fails. Can be an integer between 0 and 3 (included),
-          #   default is 0. Optional when integrationType is `external`, not applicable
+          #   if the first attempt fails. Can be an integer between 0 and 3 (inclusive),
+          #   default is 3. Optional when `integrationType` is `external`, not applicable
           #   otherwise.
           # @return [FlexFlowInstance] Updated FlexFlowInstance
           def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
@@ -430,7 +434,7 @@ module Twilio
           end
 
           ##
-          # @return [flex_flow.IntegrationType] The integration type
+          # @return [flex_flow.IntegrationType] The software that will handle inbound messages.
           def integration_type
             @properties['integration_type']
           end
@@ -475,8 +479,10 @@ module Twilio
           #   `facebook`, `sms`, `whatsapp`, `line` or `custom`.
           # @param [String] contact_identity The channel contact's Identity.
           # @param [Boolean] enabled Whether the new Flex Flow is enabled.
-          # @param [flex_flow.IntegrationType] integration_type The integration type. Can
-          #   be: `studio`, `external`, or `task`.
+          # @param [flex_flow.IntegrationType] integration_type The software that will
+          #   handle inbound messages. {Integration
+          #   Type}[https://www.twilio.com/docs/flex/developer/messaging/manage-flows#integration-types]
+          #   can be: `studio`, `external`, or `task`.
           # @param [String] integration_flow_sid The SID of the Studio Flow. Required when
           #   `integrationType` is `studio`.
           # @param [String] integration_url The URL of the external webhook. Required when
@@ -485,9 +491,9 @@ module Twilio
           #   Required when `integrationType` is `task`.
           # @param [String] integration_workflow_sid The Workflow SID for a new Task.
           #   Required when `integrationType` is `task`.
-          # @param [String] integration_channel The Task Channel for the TaskRouter Task
-          #   that will be created. Applicable and required when integrationType is `task`.
-          #   Set to `sms` for SMS, and to `chat` otherwise. The default value is `default`
+          # @param [String] integration_channel The Task Channel SID (TCXXXX) or unique name
+          #   (e.g., `sms`) to use for the Task that will be created. Applicable and required
+          #   when `integrationType` is `task`. The default value is `default`.
           # @param [String] integration_timeout The Task timeout in seconds for a new Task.
           #   Default is 86,400 seconds (24 hours). Optional when `integrationType` is `task`,
           #   not applicable otherwise.
@@ -506,8 +512,8 @@ module Twilio
           #   will remove active Proxy sessions if the associated Task is deleted outside of
           #   the Flex UI. Defaults to `false`.
           # @param [String] integration_retry_count The number of times to retry the webhook
-          #   if the first attempt fails. Can be an integer between 0 and 3 (included),
-          #   default is 0. Optional when integrationType is `external`, not applicable
+          #   if the first attempt fails. Can be an integer between 0 and 3 (inclusive),
+          #   default is 3. Optional when `integrationType` is `external`, not applicable
           #   otherwise.
           # @return [FlexFlowInstance] Updated FlexFlowInstance
           def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
