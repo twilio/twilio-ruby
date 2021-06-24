@@ -66,7 +66,7 @@ Lint/UnusedBlockArgument:
 Lint/UnusedMethodArgument:
   Exclude:
     - 'lib/twilio-ruby.rb'
-    - 'lib/twilio-ruby/framework/page.rb'
+    - 'lib/twilio-ruby/framework/rest/page.rb'
     - 'spec/holodeck/holodeck.rb'
 
 # Offense count: 1
@@ -130,7 +130,7 @@ Style/FrozenStringLiteralComment:
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Exclude:
-    - 'lib/twilio-ruby/framework/page.rb'
+    - 'lib/twilio-ruby/framework/rest/page.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -144,8 +144,8 @@ Style/HashSyntax:
 # Cop supports --auto-correct.
 Style/IfUnlessModifier:
   Exclude:
-    - 'lib/twilio-ruby/framework/page.rb'
-    - 'lib/twilio-ruby/framework/version.rb'
+    - 'lib/twilio-ruby/framework/rest/page.rb'
+    - 'lib/twilio-ruby/framework/rest/version.rb'
     - 'lib/twilio-ruby/jwt/access_token.rb'
     - 'lib/twilio-ruby/jwt/client_capability.rb'
     - 'lib/twilio-ruby/jwt/jwt.rb'
@@ -168,9 +168,9 @@ Style/RedundantSelf:
 # SupportedStyles: slashes, percent_r, mixed
 Style/RegexpLiteral:
   Exclude:
-    - 'lib/twilio-ruby/framework/domain.rb'
-    - 'lib/twilio-ruby/framework/helper.rb'
-    - 'lib/twilio-ruby/framework/version.rb'
+    - 'lib/twilio-ruby/framework/rest/domain.rb'
+    - 'lib/twilio-ruby/framework/rest/helper.rb'
+    - 'lib/twilio-ruby/framework/rest/version.rb'
     - 'spec/rack/twilio_webhook_authentication_spec.rb'
 
 # Offense count: 5
