@@ -493,15 +493,13 @@ describe 'Message' do
 
     expect {
       @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .messages('MMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(body: 'body')
+                       .messages('MMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Body' => 'body', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Messages/MMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json',
-        data: values,
     ))).to eq(true)
   end
 
@@ -538,7 +536,45 @@ describe 'Message' do
     ))
 
     actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .messages('MMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(body: 'body')
+                              .messages('MMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives cancel_message responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "api_version": "2010-04-01",
+          "body": "",
+          "date_created": "Fri, 24 May 2019 17:18:27 +0000",
+          "date_sent": "Fri, 24 May 2019 17:18:28 +0000",
+          "date_updated": "Fri, 24 May 2019 17:18:28 +0000",
+          "direction": "outbound-api",
+          "error_code": 30007,
+          "error_message": "Carrier violation",
+          "from": "+12019235161",
+          "messaging_service_sid": "MGdeadbeefdeadbeefdeadbeefdeadbeef",
+          "num_media": "0",
+          "num_segments": "1",
+          "price": "-0.00750",
+          "price_unit": "USD",
+          "sid": "SMb7c0a2ce80504485a6f653a7110836f5",
+          "status": "canceled",
+          "subresource_uris": {
+              "media": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/SMb7c0a2ce80504485a6f653a7110836f5/Media.json",
+              "feedback": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/SMb7c0a2ce80504485a6f653a7110836f5/Feedback.json"
+          },
+          "to": "+18182008801",
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/SMb7c0a2ce80504485a6f653a7110836f5.json"
+      }
+      ]
+    ))
+
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .messages('MMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

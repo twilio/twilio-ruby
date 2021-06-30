@@ -107,8 +107,8 @@ module Twilio
               #   `POST`.
               # @param [Array[String]] conference_status_callback_event The conference state
               #   changes that should generate a call to `conference_status_callback`. Can be:
-              #   `start`, `end`, `join`, `leave`, `mute`, `hold`, `speaker`, and `announcement`.
-              #   Separate multiple values with a space. Defaults to `start end`.
+              #   `start`, `end`, `join`, `leave`, `mute`, `hold`, `modify`, `speaker`, and
+              #   `announcement`. Separate multiple values with a space. Defaults to `start end`.
               # @param [String] recording_channels The recording channels for the final
               #   recording. Can be: `mono` or `dual` and the default is `mono`.
               # @param [String] recording_status_callback The URL that we should call using the
@@ -130,13 +130,14 @@ module Twilio
               #   `POST` and defaults to `POST`.
               # @param [Array[String]] recording_status_callback_event The recording state
               #   changes that should generate a call to `recording_status_callback`. Can be:
-              #   `in-progress`, `completed`, and `failed`. Separate multiple values with a space.
-              #   The default value is `in-progress completed failed`.
+              #   `started`, `in-progress`, `paused`, `resumed`, `stopped`, `completed`, `failed`,
+              #   and `absent`. Separate multiple values with a space, ex: `'in-progress completed
+              #   failed'`.
               # @param [Array[String]] conference_recording_status_callback_event The conference
               #   recording state changes that generate a call to
-              #   `conference_recording_status_callback`. Can be: `in-progress`, `completed`, and
-              #   `failed`. Separate multiple values with a space. The default value is
-              #   `in-progress completed failed`.
+              #   `conference_recording_status_callback`. Can be: `in-progress`, `completed`,
+              #   `failed`, and `absent`. Separate multiple values with a space, ex: `'in-progress
+              #   completed failed'`
               # @param [Boolean] coaching Whether the participant is coaching another call. Can
               #   be: `true` or `false`. If not present, defaults to `false` unless
               #   `call_sid_to_coach` is defined. If `true`, `call_sid_to_coach` must be defined.

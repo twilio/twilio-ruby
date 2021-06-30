@@ -200,6 +200,9 @@ module Twilio
             # Path Solution
             @solution = {sid: sid, }
             @uri = "/Sims/#{@solution[:sid]}"
+
+            # Dependents
+            @billing_periods = nil
           end
 
           ##
@@ -247,6 +250,18 @@ module Twilio
           end
 
           ##
+          # Access the billing_periods
+          # @return [BillingPeriodList]
+          # @return [BillingPeriodContext]
+          def billing_periods
+            unless @billing_periods
+              @billing_periods = BillingPeriodList.new(@version, sim_sid: @solution[:sid], )
+            end
+
+            @billing_periods
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -284,6 +299,7 @@ module Twilio
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
+                'links' => payload['links'],
             }
 
             # Context
@@ -357,6 +373,12 @@ module Twilio
           end
 
           ##
+          # @return [String] The links
+          def links
+            @properties['links']
+          end
+
+          ##
           # Fetch the SimInstance
           # @return [SimInstance] Fetched SimInstance
           def fetch
@@ -392,6 +414,13 @@ module Twilio
                 callback_method: callback_method,
                 account_sid: account_sid,
             )
+          end
+
+          ##
+          # Access the billing_periods
+          # @return [billing_periods] billing_periods
+          def billing_periods
+            context.billing_periods
           end
 
           ##

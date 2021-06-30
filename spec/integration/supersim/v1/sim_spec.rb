@@ -38,7 +38,10 @@ describe 'Sim' do
           "iccid": "89883070000123456789",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
-          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "billing_periods": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/BillingPeriods"
+          }
       }
       ]
     ))
@@ -75,7 +78,10 @@ describe 'Sim' do
           "iccid": "89883070000123456789",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
-          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "billing_periods": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/BillingPeriods"
+          }
       }
       ]
     ))
@@ -112,7 +118,10 @@ describe 'Sim' do
           "iccid": "89883070000123456789",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
-          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "billing_periods": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/BillingPeriods"
+          }
       }
       ]
     ))
@@ -135,7 +144,10 @@ describe 'Sim' do
           "iccid": "89883070000123456789",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
-          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "billing_periods": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/BillingPeriods"
+          }
       }
       ]
     ))
@@ -158,7 +170,10 @@ describe 'Sim' do
           "iccid": "89883070000123456789",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
-          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "billing_periods": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/BillingPeriods"
+          }
       }
       ]
     ))
@@ -181,7 +196,10 @@ describe 'Sim' do
           "iccid": "89883070000123456789",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
-          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "billing_periods": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/BillingPeriods"
+          }
       }
       ]
     ))
@@ -204,7 +222,10 @@ describe 'Sim' do
           "iccid": "89883070000123456789",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
-          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "billing_periods": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/BillingPeriods"
+          }
       }
       ]
     ))
@@ -276,7 +297,10 @@ describe 'Sim' do
                   "iccid": "89883070000123456789",
                   "date_created": "2015-07-30T20:00:00Z",
                   "date_updated": "2015-07-30T20:00:00Z",
-                  "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "links": {
+                      "billing_periods": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/BillingPeriods"
+                  }
               }
           ]
       }
@@ -312,7 +336,10 @@ describe 'Sim' do
                   "iccid": "89883070000123456789",
                   "date_created": "2015-07-30T20:00:00Z",
                   "date_updated": "2015-07-30T20:00:00Z",
-                  "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "links": {
+                      "billing_periods": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/BillingPeriods"
+                  }
               }
           ]
       }
@@ -348,7 +375,10 @@ describe 'Sim' do
                   "iccid": "89883070000123456789",
                   "date_created": "2015-07-30T20:00:00Z",
                   "date_updated": "2015-07-30T20:00:00Z",
-                  "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  "url": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "links": {
+                      "billing_periods": "https://supersim.twilio.com/v1/Sims/HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/BillingPeriods"
+                  }
               }
           ]
       }

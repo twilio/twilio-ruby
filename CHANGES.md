@@ -1,6 +1,28 @@
 twilio-ruby changelog
 =====================
 
+[2021-06-30] Version 5.56.0
+---------------------------
+**Library - Feature**
+- [PR #559](https://github.com/twilio/twilio-ruby/pull/559): Add `Twilio::HTTP::Client#configure_connection`. Thanks to [@darwinShopify](https://github.com/darwinShopify)!
+- [PR #558](https://github.com/twilio/twilio-ruby/pull/558): Autoload Twilio::REST and Twilio::HTTP. Thanks to [@gmcgibbon](https://github.com/gmcgibbon)!
+
+**Conversations**
+- Read-only Conversation Email Binding property `binding`
+
+**Supersim**
+- Add Billing Period resource for the Super Sim Pilot
+- Add List endpoint to Billing Period resource for Super Sim Pilot
+- Add Fetch endpoint to Billing Period resource for Super Sim Pilot
+
+**Taskrouter**
+- Update `transcribe` & `transcription_configuration` form params in Reservation update endpoint to have private visibility **(breaking change)**
+- Add `transcribe` & `transcription_configuration` form params to Reservation update endpoint
+
+**Twiml**
+- Add `modify` event to `statusCallbackEvent` for `<Conference>`.
+
+
 [2021-06-16] Version 5.55.0
 ---------------------------
 **Api**

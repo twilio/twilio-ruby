@@ -362,6 +362,7 @@ module Twilio
                 'timers' => payload['timers'],
                 'url' => payload['url'],
                 'links' => payload['links'],
+                'bindings' => payload['bindings'],
             }
 
             # Context
@@ -456,6 +457,12 @@ module Twilio
           # @return [String] Absolute URLs to access the participants, messages and webhooks of this conversation.
           def links
             @properties['links']
+          end
+
+          ##
+          # @return [Hash] The bindings
+          def bindings
+            @properties['bindings']
           end
 
           ##

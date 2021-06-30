@@ -330,7 +330,7 @@ module Twilio
             # @param [String] body The text of the message you want to send. Can be up to
             #   1,600 characters long.
             # @return [MessageInstance] Updated MessageInstance
-            def update(body: nil)
+            def update(body: :unset)
               data = Twilio::Values.of({'Body' => body, })
 
               payload = @version.update('POST', @uri, data: data)
@@ -580,7 +580,7 @@ module Twilio
             # @param [String] body The text of the message you want to send. Can be up to
             #   1,600 characters long.
             # @return [MessageInstance] Updated MessageInstance
-            def update(body: nil)
+            def update(body: :unset)
               context.update(body: body, )
             end
 

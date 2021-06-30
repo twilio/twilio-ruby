@@ -44,6 +44,7 @@ describe 'Conversation' do
               "date_inactive": "2015-12-16T22:19:38Z",
               "date_closed": "2015-12-16T22:28:38Z"
           },
+          "bindings": {},
           "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "participants": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants",
@@ -75,6 +76,7 @@ describe 'Conversation' do
           "date_updated": "2020-07-01T22:18:37Z",
           "state": "active",
           "timers": {},
+          "bindings": {},
           "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "participants": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants",
@@ -125,6 +127,7 @@ describe 'Conversation' do
               "date_inactive": "2015-12-16T22:19:38Z",
               "date_closed": "2015-12-16T22:28:38Z"
           },
+          "bindings": {},
           "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "participants": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants",
@@ -200,6 +203,7 @@ describe 'Conversation' do
               "date_inactive": "2015-12-16T22:19:38Z",
               "date_closed": "2015-12-16T22:28:38Z"
           },
+          "bindings": {},
           "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "links": {
               "participants": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants",
@@ -250,6 +254,7 @@ describe 'Conversation' do
                       "date_inactive": "2015-12-16T22:19:38Z",
                       "date_closed": "2015-12-16T22:28:38Z"
                   },
+                  "bindings": {},
                   "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "links": {
                       "participants": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Participants",
