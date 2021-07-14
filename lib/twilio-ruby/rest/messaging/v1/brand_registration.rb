@@ -223,6 +223,7 @@ module Twilio
                 'tcr_id' => payload['tcr_id'],
                 'failure_reason' => payload['failure_reason'],
                 'url' => payload['url'],
+                'brand_score' => payload['brand_score'] == nil ? payload['brand_score'] : payload['brand_score'].to_i,
             }
 
             # Context
@@ -299,6 +300,12 @@ module Twilio
           # @return [String] The absolute URL of the Brand Registration
           def url
             @properties['url']
+          end
+
+          ##
+          # @return [String] Brand score
+          def brand_score
+            @properties['brand_score']
           end
 
           ##

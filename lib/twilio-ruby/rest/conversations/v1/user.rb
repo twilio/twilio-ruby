@@ -182,6 +182,9 @@ module Twilio
             # Path Solution
             @solution = {sid: sid, }
             @uri = "/Users/#{@solution[:sid]}"
+
+            # Dependents
+            @user_conversations = nil
           end
 
           ##
@@ -230,6 +233,24 @@ module Twilio
           end
 
           ##
+          # Access the user_conversations
+          # @return [UserConversationList]
+          # @return [UserConversationContext] if conversation_sid was passed.
+          def user_conversations(conversation_sid=:unset)
+            raise ArgumentError, 'conversation_sid cannot be nil' if conversation_sid.nil?
+
+            if conversation_sid != :unset
+              return UserConversationContext.new(@version, @solution[:sid], conversation_sid, )
+            end
+
+            unless @user_conversations
+              @user_conversations = UserConversationList.new(@version, user_sid: @solution[:sid], )
+            end
+
+            @user_conversations
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -269,6 +290,7 @@ module Twilio
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
+                'links' => payload['links'],
             }
 
             # Context
@@ -360,6 +382,12 @@ module Twilio
           end
 
           ##
+          # @return [String] The links
+          def links
+            @properties['links']
+          end
+
+          ##
           # Update the UserInstance
           # @param [String] friendly_name The string that you assigned to describe the
           #   resource.
@@ -394,6 +422,13 @@ module Twilio
           # @return [UserInstance] Fetched UserInstance
           def fetch
             context.fetch
+          end
+
+          ##
+          # Access the user_conversations
+          # @return [user_conversations] user_conversations
+          def user_conversations
+            context.user_conversations
           end
 
           ##

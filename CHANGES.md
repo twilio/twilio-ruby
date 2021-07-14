@@ -1,6 +1,16 @@
 twilio-ruby changelog
 =====================
 
+[2021-07-14] Version 5.57.0
+---------------------------
+**Conversations**
+- Changed `last_read_message_index` and `unread_messages_count` type in User Conversation's resource **(breaking change)**
+- Expose UserConversations resource
+
+**Messaging**
+- Add brand_score field to brand registration responses
+
+
 [2021-06-30] Version 5.56.0
 ---------------------------
 **Library - Feature**
