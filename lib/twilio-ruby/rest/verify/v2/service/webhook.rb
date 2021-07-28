@@ -37,13 +37,17 @@ module Twilio
             # @param [String] webhook_url The URL associated with this Webhook.
             # @param [webhook.Status] status The webhook status. Default value is `enabled`.
             #   One of: `enabled` or `disabled`
+            # @param [webhook.Version] version The webhook version. Default value is `v2`
+            #   which includes all the latest fields. Version `v1` is legacy and may be removed
+            #   in the future.
             # @return [WebhookInstance] Created WebhookInstance
-            def create(friendly_name: nil, event_types: nil, webhook_url: nil, status: :unset)
+            def create(friendly_name: nil, event_types: nil, webhook_url: nil, status: :unset, version: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'EventTypes' => Twilio.serialize_list(event_types) { |e| e },
                   'WebhookUrl' => webhook_url,
                   'Status' => status,
+                  'Version' => version,
               })
 
               payload = @version.create('POST', @uri, data: data)
@@ -197,13 +201,17 @@ module Twilio
             # @param [String] webhook_url The URL associated with this Webhook.
             # @param [webhook.Status] status The webhook status. Default value is `enabled`.
             #   One of: `enabled` or `disabled`
+            # @param [webhook.Version] version The webhook version. Default value is `v2`
+            #   which includes all the latest fields. Version `v1` is legacy and may be removed
+            #   in the future.
             # @return [WebhookInstance] Updated WebhookInstance
-            def update(friendly_name: :unset, event_types: :unset, webhook_url: :unset, status: :unset)
+            def update(friendly_name: :unset, event_types: :unset, webhook_url: :unset, status: :unset, version: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'EventTypes' => Twilio.serialize_list(event_types) { |e| e },
                   'WebhookUrl' => webhook_url,
                   'Status' => status,
+                  'Version' => version,
               })
 
               payload = @version.update('POST', @uri, data: data)
@@ -264,6 +272,7 @@ module Twilio
                   'friendly_name' => payload['friendly_name'],
                   'event_types' => payload['event_types'],
                   'status' => payload['status'],
+                  'version' => payload['version'],
                   'webhook_url' => payload['webhook_url'],
                   'webhook_method' => payload['webhook_method'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
@@ -324,6 +333,12 @@ module Twilio
             end
 
             ##
+            # @return [webhook.Version] The webhook version
+            def version
+              @properties['version']
+            end
+
+            ##
             # @return [String] The URL associated with this Webhook.
             def webhook_url
               @properties['webhook_url']
@@ -336,13 +351,13 @@ module Twilio
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT when the resource was created
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was created
             def date_created
               @properties['date_created']
             end
 
             ##
-            # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
+            # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
             end
@@ -363,13 +378,17 @@ module Twilio
             # @param [String] webhook_url The URL associated with this Webhook.
             # @param [webhook.Status] status The webhook status. Default value is `enabled`.
             #   One of: `enabled` or `disabled`
+            # @param [webhook.Version] version The webhook version. Default value is `v2`
+            #   which includes all the latest fields. Version `v1` is legacy and may be removed
+            #   in the future.
             # @return [WebhookInstance] Updated WebhookInstance
-            def update(friendly_name: :unset, event_types: :unset, webhook_url: :unset, status: :unset)
+            def update(friendly_name: :unset, event_types: :unset, webhook_url: :unset, status: :unset, version: :unset)
               context.update(
                   friendly_name: friendly_name,
                   event_types: event_types,
                   webhook_url: webhook_url,
                   status: status,
+                  version: version,
               )
             end
 

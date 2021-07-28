@@ -172,6 +172,7 @@ module Twilio
             @users = nil
             @roles = nil
             @configuration = nil
+            @participant_conversations = nil
           end
 
           ##
@@ -268,6 +269,21 @@ module Twilio
           # @return [ConfigurationContext]
           def configuration
             ConfigurationContext.new(@version, @solution[:sid], )
+          end
+
+          ##
+          # Access the participant_conversations
+          # @return [ParticipantConversationList]
+          # @return [ParticipantConversationContext]
+          def participant_conversations
+            unless @participant_conversations
+              @participant_conversations = ParticipantConversationList.new(
+                  @version,
+                  chat_service_sid: @solution[:sid],
+              )
+            end
+
+            @participant_conversations
           end
 
           ##
@@ -412,6 +428,13 @@ module Twilio
           # @return [configuration] configuration
           def configuration
             context.configuration
+          end
+
+          ##
+          # Access the participant_conversations
+          # @return [participant_conversations] participant_conversations
+          def participant_conversations
+            context.participant_conversations
           end
 
           ##

@@ -295,7 +295,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique ID of the Conversation for this message.
+            # @return [String] The unique ID of the Conversation for this User Conversation.
             def conversation_sid
               @properties['conversation_sid']
             end
@@ -373,7 +373,7 @@ module Twilio
             end
 
             ##
-            # @return [String] An application-defined string that uniquely identifies the resource
+            # @return [String] An application-defined string that uniquely identifies the Conversation resource.
             def unique_name
               @properties['unique_name']
             end

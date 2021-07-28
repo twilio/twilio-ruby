@@ -53,6 +53,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Conversations::V1::ParticipantConversationInstance]
+      def participant_conversations
+        self.v1.participant_conversations()
+      end
+
+      ##
       # @param [String] sid The unique string that we created to identify the Role
       #   resource.
       # @return [Twilio::REST::Conversations::V1::RoleInstance] if sid was passed.

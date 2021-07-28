@@ -282,6 +282,7 @@ module Twilio
                   'sid' => payload['sid'],
                   'workspace_sid' => payload['workspace_sid'],
                   'url' => payload['url'],
+                  'links' => payload['links'],
               }
 
               # Context
@@ -346,6 +347,12 @@ module Twilio
             # @return [String] The absolute URL of the Activity resource
             def url
               @properties['url']
+            end
+
+            ##
+            # @return [String] The links
+            def links
+              @properties['links']
             end
 
             ##

@@ -18,6 +18,7 @@ module Twilio
           @configuration = nil
           @conversations = nil
           @credentials = nil
+          @participant_conversations = nil
           @roles = nil
           @services = nil
           @users = nil
@@ -59,6 +60,12 @@ module Twilio
           else
               CredentialContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Conversations::V1::ParticipantConversationContext]
+        def participant_conversations
+          @participant_conversations ||= ParticipantConversationList.new self
         end
 
         ##
