@@ -12,14 +12,18 @@ rvm:
 services:
 - docker
 install: make install
-script: make test
+script:
+- make test
+- if [[ "$TRAVIS_BRANCH" == "main"  ||  "$TRAVIS_BRANCH" == "travis" ]] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+  echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin;
+  fi
 matrix:
   allow_failures:
   - rvm: ruby-head
   fast_finish: true
 deploy:
 - provider: script
-  script: echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin && make docker-build && make docker-push
+  script: make docker-build && make docker-push
   skip_cleanup: true
   on:
     tags: true
