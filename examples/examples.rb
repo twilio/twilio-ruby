@@ -69,7 +69,7 @@ puts @client.messages('SMXXXXXXXX').fetch.body
 @client.messages.create(
   from: '+14159341234',
   to: '+16105557069',
-  media_urls: 'http://example.com/media.png'
+  media_url: 'http://example.com/media.png'
 )
 
 ################ PHONE NUMBERS ################
