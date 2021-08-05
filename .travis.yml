@@ -3,12 +3,12 @@ cache: bundler
 bundler_args: "--without development"
 rvm:
 - ruby-head
-- 3.0
-- 2.7
-- 2.6
-- 2.5
-- 2.4
 - jruby-9.2
+- 2.4
+- 2.5
+- 2.6
+- 2.7
+- 3.0
 services:
 - docker
 install: make install
@@ -18,6 +18,14 @@ script:
   echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin;
   fi
 matrix:
+  include:
+    - language: ruby
+      rvm: '3.0'
+      # The below workaround is necessary because of the branch coverage inclusion in simplecov 0.18+
+      # more discussion here - https://community.sonarsource.com/t/ruby-coverage-simplecov-json-file-does-not-work/20909/7
+      after_success:
+        - ruby -rjson -e 'sqube = JSON.load(File.read("coverage/.resultset.json"))["RSpec"]["coverage"].transform_values {|lines| lines["lines"]}; total = { "RSpec" => { "coverage" => sqube, "timestamp" => Time.now.to_i }}; puts JSON.dump(total)' > coverage/.resultset.sonarqube.json
+        - sonar-scanner
   allow_failures:
   - rvm: ruby-head
   fast_finish: true
@@ -41,3 +49,8 @@ notifications:
     on_failure: change
     rooms:
       secure: HG7rC5VSDOZiLCkpTsC4ZImh1k59OPi6YEjYKhdGXItybLHa6Yh5C42WvSx3kVW3SeyLOm1CiaMv+pbBZUXStXYsl8eH69MbEZimhDWsPs/m+bh+gEISov22WNUs3ZfUqIXMIb6v18oXPp2Qa1gX5LUEAGoSxHWNmCAcHayWl7M=
+addons:
+  sonarcloud:
+    organization: "twilio"
+    token:
+      secure: HfoKeXEgepsrIE/+zRX4nqIV/GwSeU8F9XPEVxJeXQYt+CdI3h0vqZs929m0wzs4LVBgTcZvTaMKuZtHPGOemyF55NjwGkAV8G/SdGWyokigQTgEjEw/2B+qMe+Uv2BVKgIcoH2b0k8DuZY0ICQAbPELaJyHXIS7RSx9gZO//X4=
