@@ -14,9 +14,9 @@ services:
 install: make install
 script:
 - make test
-- if [[ "$TRAVIS_BRANCH" == "main"  ||  "$TRAVIS_BRANCH" == "travis" ]] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-  echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin;
-  fi
+- if [[ "$TRAVIS_BRANCH" == "main"  ||  "$TRAVIS_BRANCH" == "travis" ]] && [ "$TRAVIS_PULL_REQUEST"
+  == "false" ]; then echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}"
+  --password-stdin; fi
 matrix:
   include:
     - language: ruby
@@ -51,6 +51,6 @@ notifications:
       secure: HG7rC5VSDOZiLCkpTsC4ZImh1k59OPi6YEjYKhdGXItybLHa6Yh5C42WvSx3kVW3SeyLOm1CiaMv+pbBZUXStXYsl8eH69MbEZimhDWsPs/m+bh+gEISov22WNUs3ZfUqIXMIb6v18oXPp2Qa1gX5LUEAGoSxHWNmCAcHayWl7M=
 addons:
   sonarcloud:
-    organization: "twilio"
+    organization: twilio
     token:
-      secure: HfoKeXEgepsrIE/+zRX4nqIV/GwSeU8F9XPEVxJeXQYt+CdI3h0vqZs929m0wzs4LVBgTcZvTaMKuZtHPGOemyF55NjwGkAV8G/SdGWyokigQTgEjEw/2B+qMe+Uv2BVKgIcoH2b0k8DuZY0ICQAbPELaJyHXIS7RSx9gZO//X4=
+      secure: OSEahx/yO/r9PdjXbASwJt+ogphxkDDpnlajWNCBTc+hoiEurGP/12CN0oQi7+iishIgIowqo5J9/+m1BQfsAv4fKST+t6mSazx27udiiM9am03lhviW8QSG6STADvtq6uJRqTXMk3WehoSidNRYXamVdCoBbqxCSaMX8MbMsN8=
