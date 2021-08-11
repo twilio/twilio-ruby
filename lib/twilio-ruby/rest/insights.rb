@@ -37,6 +37,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Insights::V1::CallSummariesInstance]
+      def call_summaries
+        self.v1.call_summaries()
+      end
+
+      ##
       # @param [String] room_sid Unique identifier for the room.
       # @return [Twilio::REST::Insights::V1::RoomInstance] if room_sid was passed.
       # @return [Twilio::REST::Insights::V1::RoomList]

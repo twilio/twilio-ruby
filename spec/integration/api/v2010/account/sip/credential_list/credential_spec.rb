@@ -44,14 +44,11 @@ describe 'Credential' do
           ],
           "end": 0,
           "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json?PageSize=50&Page=0",
-          "last_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json?PageSize=50&Page=0",
           "next_page_uri": null,
-          "num_pages": 1,
           "page": 0,
           "page_size": 50,
           "previous_page_uri": null,
           "start": 0,
-          "total": 1,
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json?PageSize=50&Page=0"
       }
       ]
@@ -73,14 +70,11 @@ describe 'Credential' do
           "credentials": [],
           "end": 0,
           "first_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json?PageSize=50&Page=0",
-          "last_page_uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json?PageSize=50&Page=0",
           "next_page_uri": null,
-          "num_pages": 1,
           "page": 0,
           "page_size": 50,
           "previous_page_uri": null,
           "start": 0,
-          "total": 1,
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials.json?PageSize=50&Page=0"
       }
       ]
@@ -206,7 +200,7 @@ describe 'Credential' do
           "date_updated": "Wed, 19 Aug 2015 19:48:45 +0000",
           "sid": "CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/SIP/CredentialLists/CLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Credentials/CRaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
-          "username": "1440013725.28"
+          "username": "username"
       }
       ]
     ))

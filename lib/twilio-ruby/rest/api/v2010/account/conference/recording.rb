@@ -282,7 +282,7 @@ module Twilio
                     'start_time' => Twilio.deserialize_rfc2822(payload['start_time']),
                     'duration' => payload['duration'],
                     'sid' => payload['sid'],
-                    'price' => payload['price'].to_f,
+                    'price' => payload['price'],
                     'price_unit' => payload['price_unit'],
                     'status' => payload['status'],
                     'channels' => payload['channels'].to_i,

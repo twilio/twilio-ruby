@@ -167,8 +167,10 @@ module Twilio
               #   `inbound`, `outbound` or `both`. The default is `both`. `inbound` records the
               #   audio that is received by Twilio. `outbound` records the audio that is sent from
               #   Twilio. `both` records the audio that is received and sent by Twilio.
+              # @param [String] time_limit The maximum duration of the call in seconds.
+              #   Constraints depend on account and configuration.
               # @return [ParticipantInstance] Created ParticipantInstance
-              def create(from: nil, to: nil, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, label: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_record: :unset, conference_trim: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, region: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, recording_status_callback_event: :unset, conference_recording_status_callback_event: :unset, coaching: :unset, call_sid_to_coach: :unset, jitter_buffer_size: :unset, byoc: :unset, caller_id: :unset, call_reason: :unset, recording_track: :unset)
+              def create(from: nil, to: nil, status_callback: :unset, status_callback_method: :unset, status_callback_event: :unset, label: :unset, timeout: :unset, record: :unset, muted: :unset, beep: :unset, start_conference_on_enter: :unset, end_conference_on_exit: :unset, wait_url: :unset, wait_method: :unset, early_media: :unset, max_participants: :unset, conference_record: :unset, conference_trim: :unset, conference_status_callback: :unset, conference_status_callback_method: :unset, conference_status_callback_event: :unset, recording_channels: :unset, recording_status_callback: :unset, recording_status_callback_method: :unset, sip_auth_username: :unset, sip_auth_password: :unset, region: :unset, conference_recording_status_callback: :unset, conference_recording_status_callback_method: :unset, recording_status_callback_event: :unset, conference_recording_status_callback_event: :unset, coaching: :unset, call_sid_to_coach: :unset, jitter_buffer_size: :unset, byoc: :unset, caller_id: :unset, call_reason: :unset, recording_track: :unset, time_limit: :unset)
                 data = Twilio::Values.of({
                     'From' => from,
                     'To' => to,
@@ -208,6 +210,7 @@ module Twilio
                     'CallerId' => caller_id,
                     'CallReason' => call_reason,
                     'RecordingTrack' => recording_track,
+                    'TimeLimit' => time_limit,
                 })
 
                 payload = @version.create('POST', @uri, data: data)

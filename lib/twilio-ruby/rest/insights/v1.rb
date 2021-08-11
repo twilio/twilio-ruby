@@ -16,6 +16,7 @@ module Twilio
           super
           @version = 'v1'
           @calls = nil
+          @call_summaries = nil
           @rooms = nil
         end
 
@@ -32,6 +33,12 @@ module Twilio
           else
               CallContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Insights::V1::CallSummariesContext]
+        def call_summaries
+          @call_summaries ||= CallSummariesList.new self
         end
 
         ##

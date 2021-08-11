@@ -19,8 +19,8 @@ module Twilio
                 # @param [Version] version Version that contains the resource
                 # @param [String] account_sid The unique id of the Account that is responsible for
                 #   this resource.
-                # @param [String] domain_sid The unique string that that we created to identify
-                #   the SipDomain resource.
+                # @param [String] domain_sid The unique string that is created to identify the
+                #   SipDomain resource.
                 # @return [IpAccessControlListMappingList] IpAccessControlListMappingList
                 def initialize(version, account_sid: nil, domain_sid: nil)
                   super(version)
@@ -232,8 +232,8 @@ module Twilio
                 # @param [Hash] payload payload that contains response from Twilio
                 # @param [String] account_sid The unique id of the Account that is responsible for
                 #   this resource.
-                # @param [String] domain_sid The unique string that that we created to identify
-                #   the SipDomain resource.
+                # @param [String] domain_sid The unique string that is created to identify the
+                #   SipDomain resource.
                 # @param [String] sid A 34 character string that uniquely identifies the resource
                 #   to fetch.
                 # @return [IpAccessControlListMappingInstance] IpAccessControlListMappingInstance
@@ -245,10 +245,10 @@ module Twilio
                       'account_sid' => payload['account_sid'],
                       'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                       'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
+                      'domain_sid' => payload['domain_sid'],
                       'friendly_name' => payload['friendly_name'],
                       'sid' => payload['sid'],
                       'uri' => payload['uri'],
-                      'subresource_uris' => payload['subresource_uris'],
                   }
 
                   # Context
@@ -295,6 +295,12 @@ module Twilio
                 end
 
                 ##
+                # @return [String] The unique string that identifies the SipDomain resource.
+                def domain_sid
+                  @properties['domain_sid']
+                end
+
+                ##
                 # @return [String] A human readable descriptive text for this resource, up to 64 characters long.
                 def friendly_name
                   @properties['friendly_name']
@@ -310,12 +316,6 @@ module Twilio
                 # @return [String] The URI for this resource, relative to https://api.twilio.com
                 def uri
                   @properties['uri']
-                end
-
-                ##
-                # @return [String] The list of IP addresses associated with this domain.
-                def subresource_uris
-                  @properties['subresource_uris']
                 end
 
                 ##

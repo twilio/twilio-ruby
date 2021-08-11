@@ -109,11 +109,15 @@ module Twilio
           # Create the BrandRegistrationInstance
           # @param [String] customer_profile_bundle_sid Customer Profile Bundle Sid.
           # @param [String] a2p_profile_bundle_sid A2P Messaging Profile Bundle Sid.
+          # @param [String] brand_type Type of brand being created. One of: "STANDARD",
+          #   "STARTER". STARTER is for low volume, starter use cases. STANDARD is for all
+          #   other use cases.
           # @return [BrandRegistrationInstance] Created BrandRegistrationInstance
-          def create(customer_profile_bundle_sid: nil, a2p_profile_bundle_sid: nil)
+          def create(customer_profile_bundle_sid: nil, a2p_profile_bundle_sid: nil, brand_type: :unset)
             data = Twilio::Values.of({
                 'CustomerProfileBundleSid' => customer_profile_bundle_sid,
                 'A2PProfileBundleSid' => a2p_profile_bundle_sid,
+                'BrandType' => brand_type,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -219,6 +223,7 @@ module Twilio
                 'a2p_profile_bundle_sid' => payload['a2p_profile_bundle_sid'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                'brand_type' => payload['brand_type'],
                 'status' => payload['status'],
                 'tcr_id' => payload['tcr_id'],
                 'failure_reason' => payload['failure_reason'],
@@ -276,6 +281,12 @@ module Twilio
           # @return [Time] The ISO 8601 date and time in GMT when the resource was last updated
           def date_updated
             @properties['date_updated']
+          end
+
+          ##
+          # @return [String] Type of brand. One of: "STANDARD", "STARTER".
+          def brand_type
+            @properties['brand_type']
           end
 
           ##
