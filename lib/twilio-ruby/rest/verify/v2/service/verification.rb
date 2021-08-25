@@ -64,9 +64,8 @@ module Twilio
             #   Hash}[https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string]
             #   to be appended at the end of your verification SMS body. Applies only to SMS.
             #   Example SMS body: `<#> Your AppName verification code is: 1234 He42w354ol9`.
-            # @param [String] template_sid The SID of the custom template to be used.
             # @return [VerificationInstance] Created VerificationInstance
-            def create(to: nil, channel: nil, custom_friendly_name: :unset, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset, app_hash: :unset, template_sid: :unset)
+            def create(to: nil, channel: nil, custom_friendly_name: :unset, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset, app_hash: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'Channel' => channel,
@@ -80,7 +79,6 @@ module Twilio
                   'RateLimits' => Twilio.serialize_object(rate_limits),
                   'ChannelConfiguration' => Twilio.serialize_object(channel_configuration),
                   'AppHash' => app_hash,
-                  'TemplateSid' => template_sid,
               })
 
               payload = @version.create('POST', @uri, data: data)

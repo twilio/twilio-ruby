@@ -15,7 +15,44 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v2'
+          @countries = nil
+          @numbers = nil
           @voice = nil
+        end
+
+        ##
+        # @param [String] iso_country The {ISO country
+        #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the origin-based
+        #   voice pricing information to fetch.
+        # @return [Twilio::REST::Pricing::V2::CountryContext] if iso_country was passed.
+        # @return [Twilio::REST::Pricing::V2::CountryList]
+        def countries(iso_country=:unset)
+          if iso_country.nil?
+              raise ArgumentError, 'iso_country cannot be nil'
+          end
+          if iso_country == :unset
+              @countries ||= CountryList.new self
+          else
+              CountryContext.new(self, iso_country)
+          end
+        end
+
+        ##
+        # @param [String] destination_number The destination phone number, in
+        #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, for which to
+        #   fetch the origin-based voice pricing information. E.164 format consists of a +
+        #   followed by the country code and subscriber number.
+        # @return [Twilio::REST::Pricing::V2::NumberContext] if destination_number was passed.
+        # @return [Twilio::REST::Pricing::V2::NumberList]
+        def numbers(destination_number=:unset)
+          if destination_number.nil?
+              raise ArgumentError, 'destination_number cannot be nil'
+          end
+          if destination_number == :unset
+              @numbers ||= NumberList.new self
+          else
+              NumberContext.new(self, destination_number)
+          end
         end
 
         ##

@@ -350,7 +350,7 @@ describe 'Message' do
                   "attributes": "{ \\"importance\\": \\"high\\" }",
                   "date_created": "2016-03-24T20:38:21Z",
                   "date_updated": "2016-03-24T20:38:21Z",
-                  "index": 0,
+                  "index": 5,
                   "delivery": {
                       "total": 2,
                       "sent": "all",
@@ -382,7 +382,65 @@ describe 'Message' do
                   "attributes": "{ \\"importance\\": \\"high\\" }",
                   "date_created": "2016-03-24T20:38:21Z",
                   "date_updated": "2016-03-24T20:38:21Z",
-                  "index": 0,
+                  "index": 9,
+                  "delivery": {
+                      "total": 2,
+                      "sent": "all",
+                      "delivered": "some",
+                      "read": "some",
+                      "failed": "none",
+                      "undelivered": "none"
+                  },
+                  "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "links": {
+                      "delivery_receipts": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Receipts"
+                  }
+              }
+          ]
+      }
+      ]
+    ))
+
+    actual = @client.conversations.v1.conversations('CHXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                     .messages.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives read_last_message responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "meta": {
+              "page": 0,
+              "page_size": 1,
+              "first_page_url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages?Order=desc&PageSize=1&Page=0",
+              "previous_page_url": null,
+              "url": "https://conversations.twilio.com/v1/Conversations/CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages?Order=desc&PageSize=1&Page=0",
+              "next_page_url": null,
+              "key": "messages"
+          },
+          "messages": [
+              {
+                  "sid": "IMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "conversation_sid": "CHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "body": null,
+                  "media": [
+                      {
+                          "sid": "MEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                          "size": 42056,
+                          "content_type": "image/jpeg",
+                          "filename": "car.jpg"
+                      }
+                  ],
+                  "author": "cake_lover",
+                  "participant_sid": "MBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "attributes": "{ \\"importance\\": \\"high\\" }",
+                  "date_created": "2016-03-24T20:38:21Z",
+                  "date_updated": "2016-03-24T20:38:21Z",
+                  "index": 9,
                   "delivery": {
                       "total": 2,
                       "sent": "all",

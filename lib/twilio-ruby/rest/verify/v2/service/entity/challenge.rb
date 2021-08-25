@@ -81,6 +81,9 @@ module Twilio
               # @param [String] factor_sid The unique SID identifier of the Factor.
               # @param [challenge.ChallengeStatuses] status The Status of the Challenges to
               #   fetch. One of `pending`, `expired`, `approved` or `denied`.
+              # @param [challenge.ListOrders] order The desired sort order of the Challenges
+              #   list. One of `asc` or `desc` for ascending and descending respectively. Defaults
+              #   to `asc`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -88,8 +91,14 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(factor_sid: :unset, status: :unset, limit: nil, page_size: nil)
-                self.stream(factor_sid: factor_sid, status: status, limit: limit, page_size: page_size).entries
+              def list(factor_sid: :unset, status: :unset, order: :unset, limit: nil, page_size: nil)
+                self.stream(
+                    factor_sid: factor_sid,
+                    status: status,
+                    order: order,
+                    limit: limit,
+                    page_size: page_size
+                ).entries
               end
 
               ##
@@ -99,6 +108,9 @@ module Twilio
               # @param [String] factor_sid The unique SID identifier of the Factor.
               # @param [challenge.ChallengeStatuses] status The Status of the Challenges to
               #   fetch. One of `pending`, `expired`, `approved` or `denied`.
+              # @param [challenge.ListOrders] order The desired sort order of the Challenges
+              #   list. One of `asc` or `desc` for ascending and descending respectively. Defaults
+              #   to `asc`.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -106,10 +118,15 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(factor_sid: :unset, status: :unset, limit: nil, page_size: nil)
+              def stream(factor_sid: :unset, status: :unset, order: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(factor_sid: factor_sid, status: status, page_size: limits[:page_size], )
+                page = self.page(
+                    factor_sid: factor_sid,
+                    status: status,
+                    order: order,
+                    page_size: limits[:page_size],
+                )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -134,14 +151,18 @@ module Twilio
               # @param [String] factor_sid The unique SID identifier of the Factor.
               # @param [challenge.ChallengeStatuses] status The Status of the Challenges to
               #   fetch. One of `pending`, `expired`, `approved` or `denied`.
+              # @param [challenge.ListOrders] order The desired sort order of the Challenges
+              #   list. One of `asc` or `desc` for ascending and descending respectively. Defaults
+              #   to `asc`.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of ChallengeInstance
-              def page(factor_sid: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              def page(factor_sid: :unset, status: :unset, order: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'FactorSid' => factor_sid,
                     'Status' => status,
+                    'Order' => order,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,

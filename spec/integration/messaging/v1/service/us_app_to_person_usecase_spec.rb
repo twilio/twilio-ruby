@@ -24,7 +24,34 @@ describe 'UsAppToPersonUsecase' do
     ))).to eq(true)
   end
 
-  it "receives fetch responses" do
+  it "receives fetch_with_brand_registration_sid responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "us_app_to_person_usecases": [
+              {
+                  "code": "MARKETING",
+                  "name": "Marketing",
+                  "description": "Send marketing messages about sales and offers to opted in customers."
+              },
+              {
+                  "code": "DELIVERY_NOTIFICATION",
+                  "name": "Delivery Notification",
+                  "description": "Information about the status of the delivery of a product or service."
+              }
+          ]
+      }
+      ]
+    ))
+
+    actual = @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                 .us_app_to_person_usecases.fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives fetch_without_brand_registration_sid responses" do
     @holodeck.mock(Twilio::Response.new(
         200,
       %q[

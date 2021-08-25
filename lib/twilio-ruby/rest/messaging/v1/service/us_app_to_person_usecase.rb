@@ -30,9 +30,13 @@ module Twilio
 
             ##
             # Fetch the UsAppToPersonUsecaseInstance
+            # @param [String] brand_registration_sid The unique string to identify the A2P
+            #   brand.
             # @return [UsAppToPersonUsecaseInstance] Fetched UsAppToPersonUsecaseInstance
-            def fetch
-              payload = @version.fetch('GET', @uri)
+            def fetch(brand_registration_sid: :unset)
+              params = Twilio::Values.of({'BrandRegistrationSid' => brand_registration_sid, })
+
+              payload = @version.fetch('GET', @uri, params: params)
 
               UsAppToPersonUsecaseInstance.new(
                   @version,
