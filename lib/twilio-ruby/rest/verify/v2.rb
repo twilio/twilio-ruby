@@ -18,6 +18,7 @@ module Twilio
           @forms = nil
           @services = nil
           @verification_attempts = nil
+          @verification_templates = nil
         end
 
         ##
@@ -65,6 +66,12 @@ module Twilio
           else
               VerificationAttemptContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Verify::V2::VerificationTemplateContext]
+        def verification_templates
+          @verification_templates ||= VerificationTemplateList.new self
         end
 
         ##

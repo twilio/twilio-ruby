@@ -1,6 +1,24 @@
 twilio-ruby changelog
 =====================
 
+[2021-09-08] Version 5.58.2
+---------------------------
+**Library - Fix**
+- [PR #568](https://github.com/twilio/twilio-ruby/pull/568): deprecation warning on Faraday. Thanks to [@ngouy](https://github.com/ngouy)!
+
+**Api**
+- Revert adding `siprec` resource
+- Add `siprec` resource
+
+**Messaging**
+- Add 'mock' as an optional field to brand_registration api
+- Add 'mock' as an optional field to us_app_to_person api
+- Adds more Use Cases in us_app_to_person_usecase api transaction and updates us_app_to_person_usecase docs
+
+**Verify**
+- Verify List Templates API endpoint added.
+
+
 [2021-08-25] Version 5.58.1
 ---------------------------
 **Api**

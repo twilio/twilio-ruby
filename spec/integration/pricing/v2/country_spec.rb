@@ -99,12 +99,12 @@ describe 'Country' do
           "country": "United States",
           "originating_call_prices": [
               {
-                  "base_price": "",
+                  "base_price": null,
                   "current_price": "0.0085",
                   "number_type": "local"
               },
               {
-                  "base_price": "",
+                  "base_price": null,
                   "current_price": "0.022",
                   "number_type": "toll free"
               }
@@ -112,7 +112,7 @@ describe 'Country' do
           "iso_country": "US",
           "terminating_prefix_prices": [
               {
-                  "base_price": "",
+                  "base_price": null,
                   "current_price": "0.090",
                   "destination_prefixes": [
                       "1907"
@@ -123,7 +123,7 @@ describe 'Country' do
                   ]
               },
               {
-                  "base_price": "",
+                  "base_price": null,
                   "current_price": "0.013",
                   "destination_prefixes": [
                       "1808"
@@ -134,7 +134,7 @@ describe 'Country' do
                   ]
               },
               {
-                  "base_price": "",
+                  "base_price": null,
                   "current_price": "0.013",
                   "destination_prefixes": [
                       "1800",
@@ -150,7 +150,7 @@ describe 'Country' do
                   ]
               },
               {
-                  "base_price": "",
+                  "base_price": null,
                   "current_price": "0.013",
                   "destination_prefixes": [
                       "1"

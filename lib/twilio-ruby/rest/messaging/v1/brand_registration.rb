@@ -112,12 +112,16 @@ module Twilio
           # @param [String] brand_type Type of brand being created. One of: "STANDARD",
           #   "STARTER". STARTER is for low volume, starter use cases. STANDARD is for all
           #   other use cases.
+          # @param [Boolean] mock A boolean that specifies whether brand should be a mock or
+          #   not. If true, brand will be registered as a mock brand. Defaults to false if no
+          #   value is provided.
           # @return [BrandRegistrationInstance] Created BrandRegistrationInstance
-          def create(customer_profile_bundle_sid: nil, a2p_profile_bundle_sid: nil, brand_type: :unset)
+          def create(customer_profile_bundle_sid: nil, a2p_profile_bundle_sid: nil, brand_type: :unset, mock: :unset)
             data = Twilio::Values.of({
                 'CustomerProfileBundleSid' => customer_profile_bundle_sid,
                 'A2PProfileBundleSid' => a2p_profile_bundle_sid,
                 'BrandType' => brand_type,
+                'Mock' => mock,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -229,6 +233,7 @@ module Twilio
                 'failure_reason' => payload['failure_reason'],
                 'url' => payload['url'],
                 'brand_score' => payload['brand_score'] == nil ? payload['brand_score'] : payload['brand_score'].to_i,
+                'mock' => payload['mock'],
             }
 
             # Context
@@ -317,6 +322,12 @@ module Twilio
           # @return [String] Brand score
           def brand_score
             @properties['brand_score']
+          end
+
+          ##
+          # @return [Boolean] A boolean that specifies whether brand should be a mock or not. If true, brand will be registered as a mock brand. Defaults to false if no value is provided.
+          def mock
+            @properties['mock']
           end
 
           ##

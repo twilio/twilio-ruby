@@ -38,9 +38,9 @@ module Twilio
           # @param [Boolean] has_tag The has_tag
           # @param [String] start_time The start_time
           # @param [String] end_time The end_time
-          # @param [Array[String]] call_type The call_type
-          # @param [Array[String]] call_state The call_state
-          # @param [call_summaries.CallDirection] direction The direction
+          # @param [Array[call_summaries.CallType]] call_type The call_type
+          # @param [Array[call_summaries.CallState]] call_state The call_state
+          # @param [Array[call_summaries.CallDirection]] direction The direction
           # @param [call_summaries.ProcessingStateRequest] processing_state The
           #   processing_state
           # @param [call_summaries.SortBy] sort_by The sort_by
@@ -93,9 +93,9 @@ module Twilio
           # @param [Boolean] has_tag The has_tag
           # @param [String] start_time The start_time
           # @param [String] end_time The end_time
-          # @param [Array[String]] call_type The call_type
-          # @param [Array[String]] call_state The call_state
-          # @param [call_summaries.CallDirection] direction The direction
+          # @param [Array[call_summaries.CallType]] call_type The call_type
+          # @param [Array[call_summaries.CallState]] call_state The call_state
+          # @param [Array[call_summaries.CallDirection]] direction The direction
           # @param [call_summaries.ProcessingStateRequest] processing_state The
           #   processing_state
           # @param [call_summaries.SortBy] sort_by The sort_by
@@ -164,9 +164,9 @@ module Twilio
           # @param [Boolean] has_tag The has_tag
           # @param [String] start_time The start_time
           # @param [String] end_time The end_time
-          # @param [Array[String]] call_type The call_type
-          # @param [Array[String]] call_state The call_state
-          # @param [call_summaries.CallDirection] direction The direction
+          # @param [Array[call_summaries.CallType]] call_type The call_type
+          # @param [Array[call_summaries.CallState]] call_state The call_state
+          # @param [Array[call_summaries.CallDirection]] direction The direction
           # @param [call_summaries.ProcessingStateRequest] processing_state The
           #   processing_state
           # @param [call_summaries.SortBy] sort_by The sort_by
@@ -191,7 +191,7 @@ module Twilio
                 'EndTime' => end_time,
                 'CallType' => Twilio.serialize_list(call_type) { |e| e },
                 'CallState' => Twilio.serialize_list(call_state) { |e| e },
-                'Direction' => direction,
+                'Direction' => Twilio.serialize_list(direction) { |e| e },
                 'ProcessingState' => processing_state,
                 'SortBy' => sort_by,
                 'Subaccount' => subaccount,

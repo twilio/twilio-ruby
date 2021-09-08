@@ -33,8 +33,8 @@ module Twilio
             # Create the UsAppToPersonInstance
             # @param [String] brand_registration_sid A2P Brand Registration SID
             # @param [String] description A short description of what this SMS campaign does.
-            # @param [Array[String]] message_samples Message samples, up to 5 sample messages,
-            #   <=1024 chars each.
+            # @param [Array[String]] message_samples Message samples, at least 2 and up to 5
+            #   sample messages, <=1024 chars each.
             # @param [String] us_app_to_person_usecase A2P Campaign Use Case. Examples: [ 2FA,
             #   EMERGENCY, MARKETING..]
             # @param [Boolean] has_embedded_links Indicates that this SMS campaign will send
@@ -273,6 +273,7 @@ module Twilio
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
+                  'mock' => payload['mock'],
               }
 
               # Context
@@ -389,6 +390,12 @@ module Twilio
             # @return [String] The absolute URL of the US App to Person resource
             def url
               @properties['url']
+            end
+
+            ##
+            # @return [Boolean] A boolean that specifies whether campaign is a mock or not.
+            def mock
+              @properties['mock']
             end
 
             ##

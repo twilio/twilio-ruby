@@ -124,12 +124,14 @@ module Twilio
           #   worker.activity.update`, then TaskRouter will call event_callback_url only when
           #   a task is created, canceled, or a Worker activity is updated.
           # @param [Boolean] multi_task_enabled Whether to enable multi-tasking. Can be:
-          #   `true` to enable multi-tasking, or `false` to disable it. The default is
-          #   `false`. Multi-tasking allows Workers to handle multiple Tasks simultaneously.
-          #   When enabled (`true`), each Worker can receive parallel reservations up to the
-          #   per-channel maximums defined in the Workers section. Otherwise, each Worker will
-          #   only receive a new reservation when the previous task is completed. Learn more
-          #   at {Multitasking}[https://www.twilio.com/docs/taskrouter/multitasking].
+          #   `true` to enable multi-tasking, or `false` to disable it. However, all
+          #   workspaces should be created as multi-tasking. The default is `true`.
+          #   Multi-tasking allows Workers to handle multiple Tasks simultaneously. When
+          #   enabled (`true`), each Worker can receive parallel reservations up to the
+          #   per-channel maximums defined in the Workers section. In single-tasking mode
+          #   (legacy mode), each Worker will only receive a new reservation when the previous
+          #   task is completed. Learn more at
+          #   {Multitasking}[https://www.twilio.com/docs/taskrouter/multitasking].
           # @param [String] template An available template name. Can be: `NONE` or `FIFO`
           #   and the default is `NONE`. Pre-configures the Workspace with the Workflow and
           #   Activities specified in the template. `NONE` will create a Workspace with only a
@@ -243,17 +245,21 @@ module Twilio
           #   the Workspace resource. For example: `Sales Call Center` or `Customer Support
           #   Team`.
           # @param [Boolean] multi_task_enabled Whether to enable multi-tasking. Can be:
-          #   `true` to enable multi-tasking, or `false` to disable it. The default is
-          #   `false`. Multi-tasking allows Workers to handle multiple Tasks simultaneously.
-          #   When enabled (`true`), each Worker can receive parallel reservations up to the
-          #   per-channel maximums defined in the Workers section. Otherwise, each Worker will
-          #   only receive a new reservation when the previous task is completed. Learn more
-          #   at {Multitasking}[https://www.twilio.com/docs/taskrouter/multitasking].
+          #   `true` to enable multi-tasking, or `false` to disable it. However, all
+          #   workspaces should be maintained as multi-tasking. There is no default when
+          #   omitting this parameter. A multi-tasking Workspace can't be updated to
+          #   single-tasking unless it is not a Flex Project and another (legacy)
+          #   single-tasking Workspace exists. Multi-tasking allows Workers to handle multiple
+          #   Tasks simultaneously. In multi-tasking mode, each Worker can receive parallel
+          #   reservations up to the per-channel maximums defined in the Workers section. In
+          #   single-tasking mode (legacy mode), each Worker will only receive a new
+          #   reservation when the previous task is completed. Learn more at
+          #   {Multitasking}[https://www.twilio.com/docs/taskrouter/multitasking].
           # @param [String] timeout_activity_sid The SID of the Activity that will be
           #   assigned to a Worker when a Task reservation times out without a response.
           # @param [workspace.QueueOrder] prioritize_queue_order The type of TaskQueue to
           #   prioritize when Workers are receiving Tasks from both types of TaskQueues. Can
-          #   be: `LIFO` or `FIFO` and the default is `FIFO`. For more information, see {Queue
+          #   be: `LIFO` or `FIFO`. For more information, see {Queue
           #   Ordering}[https://www.twilio.com/docs/taskrouter/queue-ordering-last-first-out-lifo].
           # @return [WorkspaceInstance] Updated WorkspaceInstance
           def update(default_activity_sid: :unset, event_callback_url: :unset, events_filter: :unset, friendly_name: :unset, multi_task_enabled: :unset, timeout_activity_sid: :unset, prioritize_queue_order: :unset)
@@ -602,17 +608,21 @@ module Twilio
           #   the Workspace resource. For example: `Sales Call Center` or `Customer Support
           #   Team`.
           # @param [Boolean] multi_task_enabled Whether to enable multi-tasking. Can be:
-          #   `true` to enable multi-tasking, or `false` to disable it. The default is
-          #   `false`. Multi-tasking allows Workers to handle multiple Tasks simultaneously.
-          #   When enabled (`true`), each Worker can receive parallel reservations up to the
-          #   per-channel maximums defined in the Workers section. Otherwise, each Worker will
-          #   only receive a new reservation when the previous task is completed. Learn more
-          #   at {Multitasking}[https://www.twilio.com/docs/taskrouter/multitasking].
+          #   `true` to enable multi-tasking, or `false` to disable it. However, all
+          #   workspaces should be maintained as multi-tasking. There is no default when
+          #   omitting this parameter. A multi-tasking Workspace can't be updated to
+          #   single-tasking unless it is not a Flex Project and another (legacy)
+          #   single-tasking Workspace exists. Multi-tasking allows Workers to handle multiple
+          #   Tasks simultaneously. In multi-tasking mode, each Worker can receive parallel
+          #   reservations up to the per-channel maximums defined in the Workers section. In
+          #   single-tasking mode (legacy mode), each Worker will only receive a new
+          #   reservation when the previous task is completed. Learn more at
+          #   {Multitasking}[https://www.twilio.com/docs/taskrouter/multitasking].
           # @param [String] timeout_activity_sid The SID of the Activity that will be
           #   assigned to a Worker when a Task reservation times out without a response.
           # @param [workspace.QueueOrder] prioritize_queue_order The type of TaskQueue to
           #   prioritize when Workers are receiving Tasks from both types of TaskQueues. Can
-          #   be: `LIFO` or `FIFO` and the default is `FIFO`. For more information, see {Queue
+          #   be: `LIFO` or `FIFO`. For more information, see {Queue
           #   Ordering}[https://www.twilio.com/docs/taskrouter/queue-ordering-last-first-out-lifo].
           # @return [WorkspaceInstance] Updated WorkspaceInstance
           def update(default_activity_sid: :unset, event_callback_url: :unset, events_filter: :unset, friendly_name: :unset, multi_task_enabled: :unset, timeout_activity_sid: :unset, prioritize_queue_order: :unset)

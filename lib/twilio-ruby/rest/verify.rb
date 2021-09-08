@@ -56,6 +56,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Verify::V2::VerificationTemplateInstance]
+      def verification_templates
+        self.v2.verification_templates()
+      end
+
+      ##
       # Provide a user friendly representation
       def to_s
         '#<Twilio::REST::Verify>'
