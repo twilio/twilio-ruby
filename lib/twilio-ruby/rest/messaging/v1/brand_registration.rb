@@ -115,13 +115,16 @@ module Twilio
           # @param [Boolean] mock A boolean that specifies whether brand should be a mock or
           #   not. If true, brand will be registered as a mock brand. Defaults to false if no
           #   value is provided.
+          # @param [Boolean] skip_automatic_sec_vet A flag to disable automatic secondary
+          #   vetting for brands which it would otherwise be done.
           # @return [BrandRegistrationInstance] Created BrandRegistrationInstance
-          def create(customer_profile_bundle_sid: nil, a2p_profile_bundle_sid: nil, brand_type: :unset, mock: :unset)
+          def create(customer_profile_bundle_sid: nil, a2p_profile_bundle_sid: nil, brand_type: :unset, mock: :unset, skip_automatic_sec_vet: :unset)
             data = Twilio::Values.of({
                 'CustomerProfileBundleSid' => customer_profile_bundle_sid,
                 'A2PProfileBundleSid' => a2p_profile_bundle_sid,
                 'BrandType' => brand_type,
                 'Mock' => mock,
+                'SkipAutomaticSecVet' => skip_automatic_sec_vet,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -233,6 +236,10 @@ module Twilio
                 'failure_reason' => payload['failure_reason'],
                 'url' => payload['url'],
                 'brand_score' => payload['brand_score'] == nil ? payload['brand_score'] : payload['brand_score'].to_i,
+                'identity_status' => payload['identity_status'],
+                'russell_3000' => payload['russell_3000'],
+                'tax_exempt_status' => payload['tax_exempt_status'],
+                'skip_automatic_sec_vet' => payload['skip_automatic_sec_vet'],
                 'mock' => payload['mock'],
             }
 
@@ -322,6 +329,30 @@ module Twilio
           # @return [String] Brand score
           def brand_score
             @properties['brand_score']
+          end
+
+          ##
+          # @return [brand_registration.IdentityStatus] Identity Status
+          def identity_status
+            @properties['identity_status']
+          end
+
+          ##
+          # @return [Boolean] Russell 3000
+          def russell_3000
+            @properties['russell_3000']
+          end
+
+          ##
+          # @return [String] Tax Exempt Status
+          def tax_exempt_status
+            @properties['tax_exempt_status']
+          end
+
+          ##
+          # @return [Boolean] Skip Automatic Secondary Vetting
+          def skip_automatic_sec_vet
+            @properties['skip_automatic_sec_vet']
           end
 
           ##

@@ -103,6 +103,34 @@ describe 'Sink' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives create_segment responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "status": "initialized",
+          "sink_configuration": {
+              "write_key": "MY_WRITEKEY"
+          },
+          "description": "My segment Sink",
+          "sid": "DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "date_created": "2015-07-30T20:00:00Z",
+          "sink_type": "segment",
+          "date_updated": "2015-07-30T20:00:00Z",
+          "url": "https://events.twilio.com/v1/Sinks/DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "sink_test": "https://events.twilio.com/v1/Sinks/DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Test",
+              "sink_validate": "https://events.twilio.com/v1/Sinks/DGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Validate"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.events.v1.sinks.create(description: 'description', sink_configuration: {}, sink_type: 'kinesis')
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

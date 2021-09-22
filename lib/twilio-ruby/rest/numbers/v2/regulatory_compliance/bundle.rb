@@ -34,12 +34,14 @@ module Twilio
             #   status changes.
             # @param [String] regulation_sid The unique string of a regulation that is
             #   associated to the Bundle resource.
-            # @param [String] iso_country The ISO country code of the Bundle's phone number
-            #   country ownership request.
-            # @param [bundle.EndUserType] end_user_type The type of End User of the Bundle
-            #   resource.
+            # @param [String] iso_country The {ISO country
+            #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the Bundle's phone
+            #   number country ownership request.
+            # @param [bundle.EndUserType] end_user_type The {type of End
+            #   User}[https://www.twilio.com/docs/phone-numbers/regulatory/api/end-user-types]
+            #   of the Bundle resource.
             # @param [String] number_type The type of phone number of the Bundle's ownership
-            #   request.
+            #   request. Can be `local`, `mobile`, `national`, or `toll free`.
             # @return [BundleInstance] Created BundleInstance
             def create(friendly_name: nil, email: nil, status_callback: :unset, regulation_sid: :unset, iso_country: :unset, end_user_type: :unset, number_type: :unset)
               data = Twilio::Values.of({
@@ -66,10 +68,11 @@ module Twilio
             #   resource.
             # @param [String] regulation_sid The unique string of a regulation that is
             #   associated to the Bundle resource.
-            # @param [String] iso_country The ISO country code of the Bundle's phone number
-            #   country ownership request.
+            # @param [String] iso_country The {ISO country
+            #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the Bundle's phone
+            #   number country ownership request.
             # @param [String] number_type The type of phone number of the Bundle's ownership
-            #   request.
+            #   request. Can be `local`, `mobile`, `national`, or `toll free`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -98,10 +101,11 @@ module Twilio
             #   resource.
             # @param [String] regulation_sid The unique string of a regulation that is
             #   associated to the Bundle resource.
-            # @param [String] iso_country The ISO country code of the Bundle's phone number
-            #   country ownership request.
+            # @param [String] iso_country The {ISO country
+            #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the Bundle's phone
+            #   number country ownership request.
             # @param [String] number_type The type of phone number of the Bundle's ownership
-            #   request.
+            #   request. Can be `local`, `mobile`, `national`, or `toll free`.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -146,10 +150,11 @@ module Twilio
             #   resource.
             # @param [String] regulation_sid The unique string of a regulation that is
             #   associated to the Bundle resource.
-            # @param [String] iso_country The ISO country code of the Bundle's phone number
-            #   country ownership request.
+            # @param [String] iso_country The {ISO country
+            #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the Bundle's phone
+            #   number country ownership request.
             # @param [String] number_type The type of phone number of the Bundle's ownership
-            #   request.
+            #   request. Can be `local`, `mobile`, `national`, or `toll free`.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
