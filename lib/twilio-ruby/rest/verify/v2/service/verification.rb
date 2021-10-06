@@ -33,7 +33,8 @@ module Twilio
             #   {email}[https://www.twilio.com/docs/verify/email] to verify. Phone numbers must
             #   be in {E.164 format}[https://www.twilio.com/docs/glossary/what-e164].
             # @param [String] channel The verification method to use. Can be:
-            #   {`email`}[https://www.twilio.com/docs/verify/email], `sms` or `call`.
+            #   {`email`}[https://www.twilio.com/docs/verify/email], `sms`, `whatsapp` or
+            #   `call`.
             # @param [String] custom_friendly_name A custom user defined friendly name that
             #   overwrites the existing one in the verification message
             # @param [String] custom_message The text of a custom message to use for the
@@ -42,10 +43,11 @@ module Twilio
             #   for example, to dial an extension. For more information, see the Programmable
             #   Voice documentation of
             #   {sendDigits}[https://www.twilio.com/docs/voice/twiml/number#attributes-sendDigits].
-            # @param [String] locale The locale to use for the verification SMS or call. Can
-            #   be: `af`, `ar`, `ca`, `cs`, `da`, `de`, `el`, `en`, `en-GB`, `es`, `fi`, `fr`,
-            #   `he`, `hi`, `hr`, `hu`, `id`, `it`, `ja`, `ko`, `ms`, `nb`, `nl`, `pl`, `pt`,
-            #   `pr-BR`, `ro`, `ru`, `sv`, `th`, `tl`, `tr`, `vi`, `zh`, `zh-CN`, or `zh-HK.`
+            # @param [String] locale The locale to use for the verification SMS, WhatsApp or
+            #   call. Can be: `af`, `ar`, `ca`, `cs`, `da`, `de`, `el`, `en`, `en-GB`, `es`,
+            #   `fi`, `fr`, `he`, `hi`, `hr`, `hu`, `id`, `it`, `ja`, `ko`, `ms`, `nb`, `nl`,
+            #   `pl`, `pt`, `pr-BR`, `ro`, `ru`, `sv`, `th`, `tl`, `tr`, `vi`, `zh`, `zh-CN`, or
+            #   `zh-HK.`
             # @param [String] custom_code A pre-generated code to use for verification. The
             #   code can be between 4 and 10 characters, inclusive.
             # @param [String] amount The amount of the associated PSD2 compliant transaction.

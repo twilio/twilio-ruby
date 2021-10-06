@@ -10,11 +10,11 @@ module Twilio
   module REST
     class Verify < Domain
       class V2 < Version
-        class VerificationTemplateList < ListResource
+        class TemplateList < ListResource
           ##
-          # Initialize the VerificationTemplateList
+          # Initialize the TemplateList
           # @param [Version] version Version that contains the resource
-          # @return [VerificationTemplateList] VerificationTemplateList
+          # @return [TemplateList] TemplateList
           def initialize(version)
             super(version)
 
@@ -24,7 +24,7 @@ module Twilio
           end
 
           ##
-          # Lists VerificationTemplateInstance records from the API as a list.
+          # Lists TemplateInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [String] friendly_name String filter used to query templates with a given
@@ -41,7 +41,7 @@ module Twilio
           end
 
           ##
-          # Streams VerificationTemplateInstance records from the API as an Enumerable.
+          # Streams TemplateInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [String] friendly_name String filter used to query templates with a given
@@ -62,7 +62,7 @@ module Twilio
           end
 
           ##
-          # When passed a block, yields VerificationTemplateInstance records from the API.
+          # When passed a block, yields TemplateInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -76,14 +76,14 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of VerificationTemplateInstance records from the API.
+          # Retrieve a single page of TemplateInstance records from the API.
           # Request is executed immediately.
           # @param [String] friendly_name String filter used to query templates with a given
           #   friendly name
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of VerificationTemplateInstance
+          # @return [Page] Page of TemplateInstance
           def page(friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
@@ -94,36 +94,36 @@ module Twilio
 
             response = @version.page('GET', @uri, params: params)
 
-            VerificationTemplatePage.new(@version, response, @solution)
+            TemplatePage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of VerificationTemplateInstance records from the API.
+          # Retrieve a single page of TemplateInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of VerificationTemplateInstance
+          # @return [Page] Page of TemplateInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            VerificationTemplatePage.new(@version, response, @solution)
+            TemplatePage.new(@version, response, @solution)
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Verify.V2.VerificationTemplateList>'
+            '#<Twilio.Verify.V2.TemplateList>'
           end
         end
 
-        class VerificationTemplatePage < Page
+        class TemplatePage < Page
           ##
-          # Initialize the VerificationTemplatePage
+          # Initialize the TemplatePage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [VerificationTemplatePage] VerificationTemplatePage
+          # @return [TemplatePage] TemplatePage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -132,26 +132,26 @@ module Twilio
           end
 
           ##
-          # Build an instance of VerificationTemplateInstance
+          # Build an instance of TemplateInstance
           # @param [Hash] payload Payload response from the API
-          # @return [VerificationTemplateInstance] VerificationTemplateInstance
+          # @return [TemplateInstance] TemplateInstance
           def get_instance(payload)
-            VerificationTemplateInstance.new(@version, payload, )
+            TemplateInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Verify.V2.VerificationTemplatePage>'
+            '<Twilio.Verify.V2.TemplatePage>'
           end
         end
 
-        class VerificationTemplateInstance < InstanceResource
+        class TemplateInstance < InstanceResource
           ##
-          # Initialize the VerificationTemplateInstance
+          # Initialize the TemplateInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @return [VerificationTemplateInstance] VerificationTemplateInstance
+          # @return [TemplateInstance] TemplateInstance
           def initialize(version, payload)
             super(version)
 
@@ -191,13 +191,13 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            "<Twilio.Verify.V2.VerificationTemplateInstance>"
+            "<Twilio.Verify.V2.TemplateInstance>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
-            "<Twilio.Verify.V2.VerificationTemplateInstance>"
+            "<Twilio.Verify.V2.TemplateInstance>"
           end
         end
       end

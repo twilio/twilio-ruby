@@ -202,9 +202,9 @@ module Twilio
               # @param [String] address_sid The SID of the Address resource we should associate
               #   with the new phone number. Some regions require addresses to meet local
               #   regulations.
-              # @param [local.EmergencyStatus] emergency_status The configuration status
-              #   parameter that determines whether the new phone number is enabled for emergency
-              #   calling.
+              # @param [local.EmergencyStatus] emergency_status The parameter displays if
+              #   emergency calling is enabled for this number. Active numbers may place emergency
+              #   calls by dialing valid emergency numbers for the country.
               # @param [String] emergency_address_sid The SID of the emergency address
               #   configuration to use for emergency calling from the new phone number.
               # @param [String] trunk_sid The SID of the Trunk we should use to handle calls to
@@ -511,7 +511,7 @@ module Twilio
               end
 
               ##
-              # @return [local.EmergencyStatus] Whether the phone number is enabled for emergency calling
+              # @return [local.EmergencyStatus] Displays if emergency calling is enabled for this number.
               def emergency_status
                 @properties['emergency_status']
               end

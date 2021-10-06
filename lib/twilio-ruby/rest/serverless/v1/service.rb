@@ -335,6 +335,7 @@ module Twilio
                 'unique_name' => payload['unique_name'],
                 'include_credentials' => payload['include_credentials'],
                 'ui_editable' => payload['ui_editable'],
+                'domain_base' => payload['domain_base'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -391,6 +392,12 @@ module Twilio
           # @return [Boolean] Whether the Service resource's properties and subresources can be edited via the UI
           def ui_editable
             @properties['ui_editable']
+          end
+
+          ##
+          # @return [String] The base domain name for this Service, which is a combination of the unique name and a randomly generated string
+          def domain_base
+            @properties['domain_base']
           end
 
           ##

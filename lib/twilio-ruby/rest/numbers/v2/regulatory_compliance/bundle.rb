@@ -242,6 +242,8 @@ module Twilio
               # Dependents
               @evaluations = nil
               @item_assignments = nil
+              @bundle_copies = nil
+              @replace_items = nil
             end
 
             ##
@@ -317,6 +319,30 @@ module Twilio
               end
 
               @item_assignments
+            end
+
+            ##
+            # Access the bundle_copies
+            # @return [BundleCopyList]
+            # @return [BundleCopyContext]
+            def bundle_copies
+              unless @bundle_copies
+                @bundle_copies = BundleCopyList.new(@version, bundle_sid: @solution[:sid], )
+              end
+
+              @bundle_copies
+            end
+
+            ##
+            # Access the replace_items
+            # @return [ReplaceItemsList]
+            # @return [ReplaceItemsContext]
+            def replace_items
+              unless @replace_items
+                @replace_items = ReplaceItemsList.new(@version, bundle_sid: @solution[:sid], )
+              end
+
+              @replace_items
             end
 
             ##
@@ -494,6 +520,20 @@ module Twilio
             # @return [item_assignments] item_assignments
             def item_assignments
               context.item_assignments
+            end
+
+            ##
+            # Access the bundle_copies
+            # @return [bundle_copies] bundle_copies
+            def bundle_copies
+              context.bundle_copies
+            end
+
+            ##
+            # Access the replace_items
+            # @return [replace_items] replace_items
+            def replace_items
+              context.replace_items
             end
 
             ##

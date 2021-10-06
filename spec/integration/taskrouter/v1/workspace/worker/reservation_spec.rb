@@ -148,13 +148,15 @@ describe 'Reservation' do
     expect {
       @client.taskrouter.v1.workspaces('WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                            .workers('WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                           .reservations('WRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+                           .reservations('WRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(if_match: 'if_match')
     }.to raise_exception(Twilio::REST::TwilioError)
 
+    headers = {'If-Match' => 'if_match', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Workers/WKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Reservations/WRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+        headers: headers,
     ))).to eq(true)
   end
 

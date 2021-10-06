@@ -8,12 +8,12 @@
 
 require 'spec_helper.rb'
 
-describe 'VerificationTemplate' do
+describe 'Template' do
   it "can read" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.verify.v2.verification_templates.list()
+      @client.verify.v2.templates.list()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     expect(
@@ -36,7 +36,7 @@ describe 'VerificationTemplate' do
                   "translations": {
                       "en": {
                           "text": "Hello, your code is {code}.",
-                          "locale": "es",
+                          "locale": "en",
                           "status": "approved",
                           "date_created": "2021-07-26T22:30:13.003505841Z",
                           "date_updated": "2021-07-26T22:31:08.750971289Z"
@@ -45,19 +45,19 @@ describe 'VerificationTemplate' do
               }
           ],
           "meta": {
-              "key": "templates",
               "page": 0,
               "page_size": 50,
               "first_page_url": "https://verify.twilio.com/v2/Templates?PageSize=50&Page=0",
               "previous_page_url": null,
               "url": "https://verify.twilio.com/v2/Templates?PageSize=50&Page=0",
-              "next_page_url": null
+              "next_page_url": null,
+              "key": "templates"
           }
       }
       ]
     ))
 
-    actual = @client.verify.v2.verification_templates.list()
+    actual = @client.verify.v2.templates.list()
 
     expect(actual).to_not eq(nil)
   end

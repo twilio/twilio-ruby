@@ -167,6 +167,7 @@ module Twilio
                 'notifications' => payload['notifications'],
                 'markdown' => payload['markdown'],
                 'url' => payload['url'],
+                'flex_insights_hr' => payload['flex_insights_hr'],
             }
 
             # Context
@@ -417,6 +418,12 @@ module Twilio
           # @return [String] The absolute URL of the Configuration resource
           def url
             @properties['url']
+          end
+
+          ##
+          # @return [Hash] Object that controls workspace reporting
+          def flex_insights_hr
+            @properties['flex_insights_hr']
           end
 
           ##

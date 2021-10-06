@@ -56,9 +56,9 @@ module Twilio
       end
 
       ##
-      # @return [Twilio::REST::Verify::V2::VerificationTemplateInstance]
-      def verification_templates
-        self.v2.verification_templates()
+      # @return [Twilio::REST::Verify::V2::TemplateInstance]
+      def templates
+        self.v2.templates()
       end
 
       ##

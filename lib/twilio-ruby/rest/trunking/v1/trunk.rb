@@ -54,8 +54,10 @@ module Twilio
           #   the United States and Canada automatically perform a CNAM Lookup and display
           #   Caller ID data on your phone. See {CNAM
           #   Lookups}[https://www.twilio.com/docs/sip-trunking#CNAM] for more information.
+          # @param [trunk.TransferCallerId] transfer_caller_id Caller Id for transfer
+          #   target. Can be: `from-transferee` (default) or `from-transferor`.
           # @return [TrunkInstance] Created TrunkInstance
-          def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset)
+          def create(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset, transfer_caller_id: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DomainName' => domain_name,
@@ -64,6 +66,7 @@ module Twilio
                 'TransferMode' => transfer_mode,
                 'Secure' => secure,
                 'CnamLookupEnabled' => cnam_lookup_enabled,
+                'TransferCallerId' => transfer_caller_id,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -256,8 +259,10 @@ module Twilio
           #   the United States and Canada automatically perform a CNAM Lookup and display
           #   Caller ID data on your phone. See {CNAM
           #   Lookups}[https://www.twilio.com/docs/sip-trunking#CNAM] for more information.
+          # @param [trunk.TransferCallerId] transfer_caller_id Caller Id for transfer
+          #   target. Can be: `from-transferee` (default) or `from-transferor`.
           # @return [TrunkInstance] Updated TrunkInstance
-          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset)
+          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset, transfer_caller_id: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'DomainName' => domain_name,
@@ -266,6 +271,7 @@ module Twilio
                 'TransferMode' => transfer_mode,
                 'Secure' => secure,
                 'CnamLookupEnabled' => cnam_lookup_enabled,
+                'TransferCallerId' => transfer_caller_id,
             })
 
             payload = @version.update('POST', @uri, data: data)
@@ -389,6 +395,7 @@ module Twilio
                 'secure' => payload['secure'],
                 'recording' => payload['recording'],
                 'transfer_mode' => payload['transfer_mode'],
+                'transfer_caller_id' => payload['transfer_caller_id'],
                 'cnam_lookup_enabled' => payload['cnam_lookup_enabled'],
                 'auth_type' => payload['auth_type'],
                 'auth_type_set' => payload['auth_type_set'],
@@ -461,6 +468,12 @@ module Twilio
           # @return [trunk.TransferSetting] The call transfer settings for the trunk
           def transfer_mode
             @properties['transfer_mode']
+          end
+
+          ##
+          # @return [trunk.TransferCallerId] Caller Id for transfer target
+          def transfer_caller_id
+            @properties['transfer_caller_id']
           end
 
           ##
@@ -556,8 +569,10 @@ module Twilio
           #   the United States and Canada automatically perform a CNAM Lookup and display
           #   Caller ID data on your phone. See {CNAM
           #   Lookups}[https://www.twilio.com/docs/sip-trunking#CNAM] for more information.
+          # @param [trunk.TransferCallerId] transfer_caller_id Caller Id for transfer
+          #   target. Can be: `from-transferee` (default) or `from-transferor`.
           # @return [TrunkInstance] Updated TrunkInstance
-          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset)
+          def update(friendly_name: :unset, domain_name: :unset, disaster_recovery_url: :unset, disaster_recovery_method: :unset, transfer_mode: :unset, secure: :unset, cnam_lookup_enabled: :unset, transfer_caller_id: :unset)
             context.update(
                 friendly_name: friendly_name,
                 domain_name: domain_name,
@@ -566,6 +581,7 @@ module Twilio
                 transfer_mode: transfer_mode,
                 secure: secure,
                 cnam_lookup_enabled: cnam_lookup_enabled,
+                transfer_caller_id: transfer_caller_id,
             )
           end
 

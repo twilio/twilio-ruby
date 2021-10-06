@@ -27,20 +27,20 @@ module Twilio
           # Lists CallSummariesInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [Array[String]] from The from
-          # @param [Array[String]] to The to
-          # @param [Array[String]] from_carrier The from_carrier
-          # @param [Array[String]] to_carrier The to_carrier
-          # @param [Array[String]] from_country_code The from_country_code
-          # @param [Array[String]] to_country_code The to_country_code
+          # @param [String] from The from
+          # @param [String] to The to
+          # @param [String] from_carrier The from_carrier
+          # @param [String] to_carrier The to_carrier
+          # @param [String] from_country_code The from_country_code
+          # @param [String] to_country_code The to_country_code
           # @param [Boolean] branded The branded
           # @param [Boolean] verified_caller The verified_caller
           # @param [Boolean] has_tag The has_tag
           # @param [String] start_time The start_time
           # @param [String] end_time The end_time
-          # @param [Array[call_summaries.CallType]] call_type The call_type
-          # @param [Array[call_summaries.CallState]] call_state The call_state
-          # @param [Array[call_summaries.CallDirection]] direction The direction
+          # @param [String] call_type The call_type
+          # @param [String] call_state The call_state
+          # @param [String] direction The direction
           # @param [call_summaries.ProcessingStateRequest] processing_state The
           #   processing_state
           # @param [call_summaries.SortBy] sort_by The sort_by
@@ -82,20 +82,20 @@ module Twilio
           # Streams CallSummariesInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [Array[String]] from The from
-          # @param [Array[String]] to The to
-          # @param [Array[String]] from_carrier The from_carrier
-          # @param [Array[String]] to_carrier The to_carrier
-          # @param [Array[String]] from_country_code The from_country_code
-          # @param [Array[String]] to_country_code The to_country_code
+          # @param [String] from The from
+          # @param [String] to The to
+          # @param [String] from_carrier The from_carrier
+          # @param [String] to_carrier The to_carrier
+          # @param [String] from_country_code The from_country_code
+          # @param [String] to_country_code The to_country_code
           # @param [Boolean] branded The branded
           # @param [Boolean] verified_caller The verified_caller
           # @param [Boolean] has_tag The has_tag
           # @param [String] start_time The start_time
           # @param [String] end_time The end_time
-          # @param [Array[call_summaries.CallType]] call_type The call_type
-          # @param [Array[call_summaries.CallState]] call_state The call_state
-          # @param [Array[call_summaries.CallDirection]] direction The direction
+          # @param [String] call_type The call_type
+          # @param [String] call_state The call_state
+          # @param [String] direction The direction
           # @param [call_summaries.ProcessingStateRequest] processing_state The
           #   processing_state
           # @param [call_summaries.SortBy] sort_by The sort_by
@@ -153,20 +153,20 @@ module Twilio
           ##
           # Retrieve a single page of CallSummariesInstance records from the API.
           # Request is executed immediately.
-          # @param [Array[String]] from The from
-          # @param [Array[String]] to The to
-          # @param [Array[String]] from_carrier The from_carrier
-          # @param [Array[String]] to_carrier The to_carrier
-          # @param [Array[String]] from_country_code The from_country_code
-          # @param [Array[String]] to_country_code The to_country_code
+          # @param [String] from The from
+          # @param [String] to The to
+          # @param [String] from_carrier The from_carrier
+          # @param [String] to_carrier The to_carrier
+          # @param [String] from_country_code The from_country_code
+          # @param [String] to_country_code The to_country_code
           # @param [Boolean] branded The branded
           # @param [Boolean] verified_caller The verified_caller
           # @param [Boolean] has_tag The has_tag
           # @param [String] start_time The start_time
           # @param [String] end_time The end_time
-          # @param [Array[call_summaries.CallType]] call_type The call_type
-          # @param [Array[call_summaries.CallState]] call_state The call_state
-          # @param [Array[call_summaries.CallDirection]] direction The direction
+          # @param [String] call_type The call_type
+          # @param [String] call_state The call_state
+          # @param [String] direction The direction
           # @param [call_summaries.ProcessingStateRequest] processing_state The
           #   processing_state
           # @param [call_summaries.SortBy] sort_by The sort_by
@@ -178,20 +178,20 @@ module Twilio
           # @return [Page] Page of CallSummariesInstance
           def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
-                'From' => Twilio.serialize_list(from) { |e| e },
-                'To' => Twilio.serialize_list(to) { |e| e },
-                'FromCarrier' => Twilio.serialize_list(from_carrier) { |e| e },
-                'ToCarrier' => Twilio.serialize_list(to_carrier) { |e| e },
-                'FromCountryCode' => Twilio.serialize_list(from_country_code) { |e| e },
-                'ToCountryCode' => Twilio.serialize_list(to_country_code) { |e| e },
+                'From' => from,
+                'To' => to,
+                'FromCarrier' => from_carrier,
+                'ToCarrier' => to_carrier,
+                'FromCountryCode' => from_country_code,
+                'ToCountryCode' => to_country_code,
                 'Branded' => branded,
                 'VerifiedCaller' => verified_caller,
                 'HasTag' => has_tag,
                 'StartTime' => start_time,
                 'EndTime' => end_time,
-                'CallType' => Twilio.serialize_list(call_type) { |e| e },
-                'CallState' => Twilio.serialize_list(call_state) { |e| e },
-                'Direction' => Twilio.serialize_list(direction) { |e| e },
+                'CallType' => call_type,
+                'CallState' => call_state,
+                'Direction' => direction,
                 'ProcessingState' => processing_state,
                 'SortBy' => sort_by,
                 'Subaccount' => subaccount,

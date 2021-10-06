@@ -199,9 +199,9 @@ module Twilio
             # @param [String] voice_url The URL that we should call to answer a call to the
             #   new phone number. The `voice_url` will not be called if a
             #   `voice_application_sid` or a `trunk_sid` is set.
-            # @param [incoming_phone_number.EmergencyStatus] emergency_status The
-            #   configuration status parameter that determines whether the new phone number is
-            #   enabled for emergency calling.
+            # @param [incoming_phone_number.EmergencyStatus] emergency_status The parameter
+            #   displays if emergency calling is enabled for this number. Active numbers may
+            #   place emergency calls by dialing valid emergency numbers for the country.
             # @param [String] emergency_address_sid The SID of the emergency address
             #   configuration to use for emergency calling from the new phone number.
             # @param [String] trunk_sid The SID of the Trunk we should use to handle calls to
@@ -387,9 +387,9 @@ module Twilio
             # @param [String] voice_url The URL that we should call to answer a call to the
             #   phone number. The `voice_url` will not be called if a `voice_application_sid` or
             #   a `trunk_sid` is set.
-            # @param [incoming_phone_number.EmergencyStatus] emergency_status The
-            #   configuration status parameter that determines whether the phone number is
-            #   enabled for emergency calling.
+            # @param [incoming_phone_number.EmergencyStatus] emergency_status The parameter
+            #   displays if emergency calling is enabled for this number. Active numbers may
+            #   place emergency calls by dialing valid emergency numbers for the country.
             # @param [String] emergency_address_sid The SID of the emergency address
             #   configuration to use for emergency calling from this phone number.
             # @param [String] trunk_sid The SID of the Trunk we should use to handle phone
@@ -745,7 +745,7 @@ module Twilio
             end
 
             ##
-            # @return [incoming_phone_number.EmergencyStatus] Whether the phone number is enabled for emergency calling
+            # @return [incoming_phone_number.EmergencyStatus] Displays if emergency calling is enabled for this number.
             def emergency_status
               @properties['emergency_status']
             end
@@ -812,9 +812,9 @@ module Twilio
             # @param [String] voice_url The URL that we should call to answer a call to the
             #   phone number. The `voice_url` will not be called if a `voice_application_sid` or
             #   a `trunk_sid` is set.
-            # @param [incoming_phone_number.EmergencyStatus] emergency_status The
-            #   configuration status parameter that determines whether the phone number is
-            #   enabled for emergency calling.
+            # @param [incoming_phone_number.EmergencyStatus] emergency_status The parameter
+            #   displays if emergency calling is enabled for this number. Active numbers may
+            #   place emergency calls by dialing valid emergency numbers for the country.
             # @param [String] emergency_address_sid The SID of the emergency address
             #   configuration to use for emergency calling from this phone number.
             # @param [String] trunk_sid The SID of the Trunk we should use to handle phone

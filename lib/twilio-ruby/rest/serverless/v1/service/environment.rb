@@ -369,7 +369,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The base domain name for all Functions and Assets deployed in the Environment
+            # @return [String] The domain name for all Functions and Assets deployed in the Environment
             def domain_name
               @properties['domain_name']
             end

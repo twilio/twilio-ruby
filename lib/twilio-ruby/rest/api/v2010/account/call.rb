@@ -160,7 +160,7 @@ module Twilio
             #   section in {Making Calls}[https://www.twilio.com/docs/voice/make-calls].
             # @param [String] twiml TwiML instructions for the call Twilio will use without
             #   fetching Twiml from url parameter. If both `twiml` and `url` are provided then
-            #   `twiml` parameter will be ignored.
+            #   `twiml` parameter will be ignored. Max 4000 characters.
             # @param [String] application_sid The SID of the Application resource that will
             #   handle the call, if the call will be handled by an application.
             # @return [CallInstance] Created CallInstance
@@ -442,6 +442,7 @@ module Twilio
               @feedback = nil
               @events = nil
               @payments = nil
+              @siprec = nil
             end
 
             ##
@@ -596,6 +597,24 @@ module Twilio
               end
 
               @payments
+            end
+
+            ##
+            # Access the siprec
+            # @return [SiprecList]
+            # @return [SiprecContext] if sid was passed.
+            def siprec(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return SiprecContext.new(@version, @solution[:account_sid], @solution[:sid], sid, )
+              end
+
+              unless @siprec
+                @siprec = SiprecList.new(@version, account_sid: @solution[:account_sid], call_sid: @solution[:sid], )
+              end
+
+              @siprec
             end
 
             ##
@@ -930,6 +949,13 @@ module Twilio
             # @return [payments] payments
             def payments
               context.payments
+            end
+
+            ##
+            # Access the siprec
+            # @return [siprec] siprec
+            def siprec
+              context.siprec
             end
 
             ##

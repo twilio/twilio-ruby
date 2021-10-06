@@ -299,18 +299,22 @@ module Twilio
             #   Worker. Defaults to {}.
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the Worker. It can be up to 64 characters long.
-            # @param [Boolean] reject_pending_reservations Whether to reject pending
-            #   reservations.
+            # @param [Boolean] reject_pending_reservations Whether to reject the Worker's
+            #   pending reservations. This option is only valid if the Worker's new
+            #   {Activity}[https://www.twilio.com/docs/taskrouter/api/activity] resource has its
+            #   `availability` property set to `False`.
+            # @param [String] if_match The If-Match HTTP request header
             # @return [WorkerInstance] Updated WorkerInstance
-            def update(activity_sid: :unset, attributes: :unset, friendly_name: :unset, reject_pending_reservations: :unset)
+            def update(activity_sid: :unset, attributes: :unset, friendly_name: :unset, reject_pending_reservations: :unset, if_match: :unset)
               data = Twilio::Values.of({
                   'ActivitySid' => activity_sid,
                   'Attributes' => attributes,
                   'FriendlyName' => friendly_name,
                   'RejectPendingReservations' => reject_pending_reservations,
               })
+              headers = Twilio::Values.of({'If-Match' => if_match, })
 
-              payload = @version.update('POST', @uri, data: data)
+              payload = @version.update('POST', @uri, data: data, headers: headers)
 
               WorkerInstance.new(
                   @version,
@@ -322,9 +326,12 @@ module Twilio
 
             ##
             # Delete the WorkerInstance
+            # @param [String] if_match The If-Match HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete
-               @version.delete('DELETE', @uri)
+            def delete(if_match: :unset)
+              headers = Twilio::Values.of({'If-Match' => if_match, })
+
+               @version.delete('DELETE', @uri, headers: headers)
             end
 
             ##
@@ -551,23 +558,28 @@ module Twilio
             #   Worker. Defaults to {}.
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the Worker. It can be up to 64 characters long.
-            # @param [Boolean] reject_pending_reservations Whether to reject pending
-            #   reservations.
+            # @param [Boolean] reject_pending_reservations Whether to reject the Worker's
+            #   pending reservations. This option is only valid if the Worker's new
+            #   {Activity}[https://www.twilio.com/docs/taskrouter/api/activity] resource has its
+            #   `availability` property set to `False`.
+            # @param [String] if_match The If-Match HTTP request header
             # @return [WorkerInstance] Updated WorkerInstance
-            def update(activity_sid: :unset, attributes: :unset, friendly_name: :unset, reject_pending_reservations: :unset)
+            def update(activity_sid: :unset, attributes: :unset, friendly_name: :unset, reject_pending_reservations: :unset, if_match: :unset)
               context.update(
                   activity_sid: activity_sid,
                   attributes: attributes,
                   friendly_name: friendly_name,
                   reject_pending_reservations: reject_pending_reservations,
+                  if_match: if_match,
               )
             end
 
             ##
             # Delete the WorkerInstance
+            # @param [String] if_match The If-Match HTTP request header
             # @return [Boolean] true if delete succeeds, false otherwise
-            def delete
-              context.delete
+            def delete(if_match: :unset)
+              context.delete(if_match: if_match, )
             end
 
             ##

@@ -107,8 +107,14 @@ module Twilio
               # @param [String] removed_from_conversation_sound The name of the sound to play to
               #   a user when they are removed from a conversation and
               #   `removed_from_conversation.enabled` is `true`.
+              # @param [Boolean] new_message_with_media_enabled Whether to send a notification
+              #   when a new message with media/file attachments is added to a conversation. The
+              #   default is `false`.
+              # @param [String] new_message_with_media_template The template to use to create
+              #   the notification text displayed when a new message with media/file attachments
+              #   is added to a conversation and `new_message.attachments.enabled` is `true`.
               # @return [NotificationInstance] Updated NotificationInstance
-              def update(log_enabled: :unset, new_message_enabled: :unset, new_message_template: :unset, new_message_sound: :unset, new_message_badge_count_enabled: :unset, added_to_conversation_enabled: :unset, added_to_conversation_template: :unset, added_to_conversation_sound: :unset, removed_from_conversation_enabled: :unset, removed_from_conversation_template: :unset, removed_from_conversation_sound: :unset)
+              def update(log_enabled: :unset, new_message_enabled: :unset, new_message_template: :unset, new_message_sound: :unset, new_message_badge_count_enabled: :unset, added_to_conversation_enabled: :unset, added_to_conversation_template: :unset, added_to_conversation_sound: :unset, removed_from_conversation_enabled: :unset, removed_from_conversation_template: :unset, removed_from_conversation_sound: :unset, new_message_with_media_enabled: :unset, new_message_with_media_template: :unset)
                 data = Twilio::Values.of({
                     'LogEnabled' => log_enabled,
                     'NewMessage.Enabled' => new_message_enabled,
@@ -121,6 +127,8 @@ module Twilio
                     'RemovedFromConversation.Enabled' => removed_from_conversation_enabled,
                     'RemovedFromConversation.Template' => removed_from_conversation_template,
                     'RemovedFromConversation.Sound' => removed_from_conversation_sound,
+                    'NewMessage.WithMedia.Enabled' => new_message_with_media_enabled,
+                    'NewMessage.WithMedia.Template' => new_message_with_media_template,
                 })
 
                 payload = @version.update('POST', @uri, data: data)
@@ -261,8 +269,14 @@ module Twilio
               # @param [String] removed_from_conversation_sound The name of the sound to play to
               #   a user when they are removed from a conversation and
               #   `removed_from_conversation.enabled` is `true`.
+              # @param [Boolean] new_message_with_media_enabled Whether to send a notification
+              #   when a new message with media/file attachments is added to a conversation. The
+              #   default is `false`.
+              # @param [String] new_message_with_media_template The template to use to create
+              #   the notification text displayed when a new message with media/file attachments
+              #   is added to a conversation and `new_message.attachments.enabled` is `true`.
               # @return [NotificationInstance] Updated NotificationInstance
-              def update(log_enabled: :unset, new_message_enabled: :unset, new_message_template: :unset, new_message_sound: :unset, new_message_badge_count_enabled: :unset, added_to_conversation_enabled: :unset, added_to_conversation_template: :unset, added_to_conversation_sound: :unset, removed_from_conversation_enabled: :unset, removed_from_conversation_template: :unset, removed_from_conversation_sound: :unset)
+              def update(log_enabled: :unset, new_message_enabled: :unset, new_message_template: :unset, new_message_sound: :unset, new_message_badge_count_enabled: :unset, added_to_conversation_enabled: :unset, added_to_conversation_template: :unset, added_to_conversation_sound: :unset, removed_from_conversation_enabled: :unset, removed_from_conversation_template: :unset, removed_from_conversation_sound: :unset, new_message_with_media_enabled: :unset, new_message_with_media_template: :unset)
                 context.update(
                     log_enabled: log_enabled,
                     new_message_enabled: new_message_enabled,
@@ -275,6 +289,8 @@ module Twilio
                     removed_from_conversation_enabled: removed_from_conversation_enabled,
                     removed_from_conversation_template: removed_from_conversation_template,
                     removed_from_conversation_sound: removed_from_conversation_sound,
+                    new_message_with_media_enabled: new_message_with_media_enabled,
+                    new_message_with_media_template: new_message_with_media_template,
                 )
               end
 
