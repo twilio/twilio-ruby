@@ -1,4 +1,5 @@
 language: ruby
+dist: focal
 cache: bundler
 bundler_args: "--without development"
 rvm:
