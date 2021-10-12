@@ -8,7 +8,7 @@
 
 module Twilio
   module REST
-    class Autopilot
+    class Autopilot < Domain
       class V1 < Version
         ##
         # Initialize the V1 version of Autopilot
