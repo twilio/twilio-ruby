@@ -267,6 +267,19 @@ module Twilio
           payload
         end
       end
+
+      class PlaybackGrant
+        include AccessTokenGrant
+        attr_accessor :grant
+
+        def _key
+          'player'
+        end
+
+        def _generate_payload
+          grant
+        end
+      end
     end
   end
 end
