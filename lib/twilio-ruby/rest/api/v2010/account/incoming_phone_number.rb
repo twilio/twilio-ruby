@@ -550,6 +550,7 @@ module Twilio
                   'voice_url' => payload['voice_url'],
                   'emergency_status' => payload['emergency_status'],
                   'emergency_address_sid' => payload['emergency_address_sid'],
+                  'emergency_address_status' => payload['emergency_address_status'],
                   'bundle_sid' => payload['bundle_sid'],
                   'status' => payload['status'],
               }
@@ -754,6 +755,12 @@ module Twilio
             # @return [String] The emergency address configuration to use for emergency calling
             def emergency_address_sid
               @properties['emergency_address_sid']
+            end
+
+            ##
+            # @return [incoming_phone_number.EmergencyAddressStatus] State of the emergency address configuration for the phone number
+            def emergency_address_status
+              @properties['emergency_address_status']
             end
 
             ##

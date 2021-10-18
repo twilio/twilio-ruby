@@ -41,6 +41,7 @@ module Twilio
         @insights = nil
         @ip_messaging = nil
         @lookups = nil
+        @media = nil
         @messaging = nil
         @monitor = nil
         @notify = nil
@@ -229,6 +230,12 @@ module Twilio
       # Access the Lookups Twilio Domain
       def lookups
         @lookups ||= Lookups.new self
+      end
+
+      ##
+      # Access the Media Twilio Domain
+      def media
+        @media ||= Media.new self
       end
 
       ##

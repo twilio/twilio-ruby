@@ -67,6 +67,9 @@ module Twilio
           # @param [String] validity_period How long, in seconds, messages sent from the
           #   Service are valid. Can be an integer from `1` to `14,400`.
           # @param [Boolean] synchronous_validation Reserved.
+          # @param [String] usecase A string that describes the scenario in which the
+          #   Messaging Service will be used. Examples: [notification, marketing,
+          #   verification, poll ..].
           # @param [Boolean] use_inbound_webhook_on_number A boolean value that indicates
           #   either the webhook url configured on the phone number will be used or
           #   `inbound_request_url`/`fallback_url` url will be called when a message is
@@ -74,7 +77,7 @@ module Twilio
           #   defined on the phone number will override the
           #   `inbound_request_url`/`fallback_url` defined for the Messaging Service.
           # @return [ServiceInstance] Created ServiceInstance
-          def create(friendly_name: nil, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset, use_inbound_webhook_on_number: :unset)
+          def create(friendly_name: nil, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset, usecase: :unset, use_inbound_webhook_on_number: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'InboundRequestUrl' => inbound_request_url,
@@ -90,6 +93,7 @@ module Twilio
                 'AreaCodeGeomatch' => area_code_geomatch,
                 'ValidityPeriod' => validity_period,
                 'SynchronousValidation' => synchronous_validation,
+                'Usecase' => usecase,
                 'UseInboundWebhookOnNumber' => use_inbound_webhook_on_number,
             })
 
@@ -281,6 +285,9 @@ module Twilio
           # @param [String] validity_period How long, in seconds, messages sent from the
           #   Service are valid. Can be an integer from `1` to `14,400`.
           # @param [Boolean] synchronous_validation Reserved.
+          # @param [String] usecase A string that describes the scenario in which the
+          #   Messaging Service will be used. Examples: [notification, marketing,
+          #   verification, poll ..]
           # @param [Boolean] use_inbound_webhook_on_number A boolean value that indicates
           #   either the webhook url configured on the phone number will be used or
           #   `inbound_request_url`/`fallback_url` url will be called when a message is
@@ -288,7 +295,7 @@ module Twilio
           #   defined on the phone number will override the
           #   `inbound_request_url`/`fallback_url` defined for the Messaging Service.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset, use_inbound_webhook_on_number: :unset)
+          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset, usecase: :unset, use_inbound_webhook_on_number: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'InboundRequestUrl' => inbound_request_url,
@@ -304,6 +311,7 @@ module Twilio
                 'AreaCodeGeomatch' => area_code_geomatch,
                 'ValidityPeriod' => validity_period,
                 'SynchronousValidation' => synchronous_validation,
+                'Usecase' => usecase,
                 'UseInboundWebhookOnNumber' => use_inbound_webhook_on_number,
             })
 
@@ -464,6 +472,8 @@ module Twilio
                 'validity_period' => payload['validity_period'].to_i,
                 'url' => payload['url'],
                 'links' => payload['links'],
+                'usecase' => payload['usecase'],
+                'us_app_to_person_registered' => payload['us_app_to_person_registered'],
                 'use_inbound_webhook_on_number' => payload['use_inbound_webhook_on_number'],
             }
 
@@ -604,6 +614,18 @@ module Twilio
           end
 
           ##
+          # @return [String] A string describing the scenario in which the Messaging Service will be used
+          def usecase
+            @properties['usecase']
+          end
+
+          ##
+          # @return [Boolean] Whether US A2P campaign is registered for this Service.
+          def us_app_to_person_registered
+            @properties['us_app_to_person_registered']
+          end
+
+          ##
           # @return [Boolean] If enabled, the webhook url configured on the phone number will be used and will override the `inbound_request_url`/`fallback_url` url called when an inbound message is received.
           def use_inbound_webhook_on_number
             @properties['use_inbound_webhook_on_number']
@@ -651,6 +673,9 @@ module Twilio
           # @param [String] validity_period How long, in seconds, messages sent from the
           #   Service are valid. Can be an integer from `1` to `14,400`.
           # @param [Boolean] synchronous_validation Reserved.
+          # @param [String] usecase A string that describes the scenario in which the
+          #   Messaging Service will be used. Examples: [notification, marketing,
+          #   verification, poll ..]
           # @param [Boolean] use_inbound_webhook_on_number A boolean value that indicates
           #   either the webhook url configured on the phone number will be used or
           #   `inbound_request_url`/`fallback_url` url will be called when a message is
@@ -658,7 +683,7 @@ module Twilio
           #   defined on the phone number will override the
           #   `inbound_request_url`/`fallback_url` defined for the Messaging Service.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset, use_inbound_webhook_on_number: :unset)
+          def update(friendly_name: :unset, inbound_request_url: :unset, inbound_method: :unset, fallback_url: :unset, fallback_method: :unset, status_callback: :unset, sticky_sender: :unset, mms_converter: :unset, smart_encoding: :unset, scan_message_content: :unset, fallback_to_long_code: :unset, area_code_geomatch: :unset, validity_period: :unset, synchronous_validation: :unset, usecase: :unset, use_inbound_webhook_on_number: :unset)
             context.update(
                 friendly_name: friendly_name,
                 inbound_request_url: inbound_request_url,
@@ -674,6 +699,7 @@ module Twilio
                 area_code_geomatch: area_code_geomatch,
                 validity_period: validity_period,
                 synchronous_validation: synchronous_validation,
+                usecase: usecase,
                 use_inbound_webhook_on_number: use_inbound_webhook_on_number,
             )
           end

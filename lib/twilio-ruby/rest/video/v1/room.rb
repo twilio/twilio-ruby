@@ -57,8 +57,11 @@ module Twilio
           #   ***This feature is not available in `peer-to-peer` rooms.***
           # @param [Hash] recording_rules A collection of Recording Rules that describe how
           #   to include or exclude matching tracks for recording
+          # @param [Boolean] audio_only When set to true, indicates that the participants in
+          #   the room will only publish audio. No video tracks will be allowed. Group rooms
+          #   only.
           # @return [RoomInstance] Created RoomInstance
-          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset, recording_rules: :unset)
+          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset, recording_rules: :unset, audio_only: :unset)
             data = Twilio::Values.of({
                 'EnableTurn' => enable_turn,
                 'Type' => type,
@@ -70,6 +73,7 @@ module Twilio
                 'VideoCodecs' => Twilio.serialize_list(video_codecs) { |e| e },
                 'MediaRegion' => media_region,
                 'RecordingRules' => Twilio.serialize_object(recording_rules),
+                'AudioOnly' => audio_only,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -364,6 +368,7 @@ module Twilio
                 'record_participants_on_connect' => payload['record_participants_on_connect'],
                 'video_codecs' => payload['video_codecs'],
                 'media_region' => payload['media_region'],
+                'audio_only' => payload['audio_only'],
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -484,6 +489,12 @@ module Twilio
           # @return [String] The region for the media server in Group Rooms
           def media_region
             @properties['media_region']
+          end
+
+          ##
+          # @return [Boolean] Indicates whether the room will only contain audio track participants for group rooms.
+          def audio_only
+            @properties['audio_only']
           end
 
           ##

@@ -184,6 +184,9 @@ module Twilio
             # Path Solution
             @solution = {sid: sid, }
             @uri = "/a2p/BrandRegistrations/#{@solution[:sid]}"
+
+            # Dependents
+            @brand_vettings = nil
           end
 
           ##
@@ -193,6 +196,18 @@ module Twilio
             payload = @version.fetch('GET', @uri)
 
             BrandRegistrationInstance.new(@version, payload, sid: @solution[:sid], )
+          end
+
+          ##
+          # Access the brand_vettings
+          # @return [BrandVettingList]
+          # @return [BrandVettingContext]
+          def brand_vettings
+            unless @brand_vettings
+              @brand_vettings = BrandVettingList.new(@version, brand_sid: @solution[:sid], )
+            end
+
+            @brand_vettings
           end
 
           ##
@@ -236,11 +251,13 @@ module Twilio
                 'failure_reason' => payload['failure_reason'],
                 'url' => payload['url'],
                 'brand_score' => payload['brand_score'] == nil ? payload['brand_score'] : payload['brand_score'].to_i,
+                'brand_feedback' => payload['brand_feedback'],
                 'identity_status' => payload['identity_status'],
                 'russell_3000' => payload['russell_3000'],
                 'tax_exempt_status' => payload['tax_exempt_status'],
                 'skip_automatic_sec_vet' => payload['skip_automatic_sec_vet'],
                 'mock' => payload['mock'],
+                'links' => payload['links'],
             }
 
             # Context
@@ -332,6 +349,12 @@ module Twilio
           end
 
           ##
+          # @return [Array[brand_registration.BrandFeedback]] Brand feedback
+          def brand_feedback
+            @properties['brand_feedback']
+          end
+
+          ##
           # @return [brand_registration.IdentityStatus] Identity Status
           def identity_status
             @properties['identity_status']
@@ -362,10 +385,23 @@ module Twilio
           end
 
           ##
+          # @return [String] The links
+          def links
+            @properties['links']
+          end
+
+          ##
           # Fetch the BrandRegistrationInstance
           # @return [BrandRegistrationInstance] Fetched BrandRegistrationInstance
           def fetch
             context.fetch
+          end
+
+          ##
+          # Access the brand_vettings
+          # @return [brand_vettings] brand_vettings
+          def brand_vettings
+            context.brand_vettings
           end
 
           ##
