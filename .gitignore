@@ -1,5 +1,4 @@
 *~
-.*
 !.rubocop_todo.yml
 !.rubocop.yml
 !.travis.yml
@@ -12,5 +11,7 @@ bin
 docs/_build
 *.bak
 *.iml
+.bundle
+.rakeTasks
 
 coverage
