@@ -1,0 +1,51 @@
+name: Tests
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run automatically at 8AM PST Monday-Friday
+    - cron: '0 15 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix:
+        ruby: [2.4, 2.5, 2.6, 2.7, '3.0', ruby-head, jruby-9.2]
+    steps:
+      - name: Checkout twilio-ruby
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - run: bundle install --with development
+      - run: bundle exec rake install
+      - name: Run Unit Tests
+        run: make test
+
+  notify-on-failure:
+    name: Slack notify on failure
+    if: ${{ failure() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: ${{ needs.test.status }}
+          SLACK_ICON_EMOJI: ':github:'
+          SLACK_MESSAGE: ${{ format('Build {2} in {1} failed{3} {0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id, ':') }}
+          SLACK_TITLE: Build Failure
+          SLACK_USERNAME: GitHub Actions
+          SLACK_MSG_AUTHOR: twilio-dx
+          SLACK_FOOTER: Posted automatically using GitHub Actions
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          MSG_MINIMAL: true
