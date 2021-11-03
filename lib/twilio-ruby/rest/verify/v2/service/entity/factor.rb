@@ -204,8 +204,8 @@ module Twilio
               #   for the first time. E.g. for a TOTP, the numeric code.
               # @param [String] friendly_name The new friendly name of this Factor. It can be up
               #   to 64 characters.
-              # @param [String] config_notification_token For APN, the device token. For FCM the
-              #   registration token. It used to send the push notifications. Required when
+              # @param [String] config_notification_token For APN, the device token. For FCM,
+              #   the registration token. It is used to send the push notifications. Required when
               #   `factor_type` is `push`. If specified, this value must be between 32 and 255
               #   characters long.
               # @param [String] config_sdk_version The Verify Push SDK version used to configure
@@ -404,8 +404,8 @@ module Twilio
               #   for the first time. E.g. for a TOTP, the numeric code.
               # @param [String] friendly_name The new friendly name of this Factor. It can be up
               #   to 64 characters.
-              # @param [String] config_notification_token For APN, the device token. For FCM the
-              #   registration token. It used to send the push notifications. Required when
+              # @param [String] config_notification_token For APN, the device token. For FCM,
+              #   the registration token. It is used to send the push notifications. Required when
               #   `factor_type` is `push`. If specified, this value must be between 32 and 255
               #   characters long.
               # @param [String] config_sdk_version The Verify Push SDK version used to configure

@@ -319,7 +319,7 @@ module Twilio
           end
 
           ##
-          # @return [brand_registration.Status] Brand Registration status
+          # @return [brand_registration.Status] Brand Registration status.
           def status
             @properties['status']
           end

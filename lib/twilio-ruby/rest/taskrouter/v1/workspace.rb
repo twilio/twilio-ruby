@@ -119,6 +119,8 @@ module Twilio
           #   If provided, the Workspace will publish events to this URL, for example, to
           #   collect data for reporting. See {Workspace
           #   Events}[https://www.twilio.com/docs/taskrouter/api/event] for more information.
+          #   This parameter supports Twilio's {Webhooks (HTTP callbacks) Connection
+          #   Overrides}[https://www.twilio.com/docs/usage/webhooks/webhooks-connection-overrides].
           # @param [String] events_filter The list of Workspace events for which to call
           #   event_callback_url. For example, if `EventsFilter=task.created, task.canceled,
           #   worker.activity.update`, then TaskRouter will call event_callback_url only when
@@ -235,7 +237,9 @@ module Twilio
           #   when new Workers are created in the Workspace.
           # @param [String] event_callback_url The URL we should call when an event occurs.
           #   See {Workspace Events}[https://www.twilio.com/docs/taskrouter/api/event] for
-          #   more information.
+          #   more information. This parameter supports Twilio's {Webhooks (HTTP callbacks)
+          #   Connection
+          #   Overrides}[https://www.twilio.com/docs/usage/webhooks/webhooks-connection-overrides].
           # @param [String] events_filter The list of Workspace events for which to call
           #   event_callback_url. For example if
           #   `EventsFilter=task.created,task.canceled,worker.activity.update`, then
@@ -598,7 +602,9 @@ module Twilio
           #   when new Workers are created in the Workspace.
           # @param [String] event_callback_url The URL we should call when an event occurs.
           #   See {Workspace Events}[https://www.twilio.com/docs/taskrouter/api/event] for
-          #   more information.
+          #   more information. This parameter supports Twilio's {Webhooks (HTTP callbacks)
+          #   Connection
+          #   Overrides}[https://www.twilio.com/docs/usage/webhooks/webhooks-connection-overrides].
           # @param [String] events_filter The list of Workspace events for which to call
           #   event_callback_url. For example if
           #   `EventsFilter=task.created,task.canceled,worker.activity.update`, then

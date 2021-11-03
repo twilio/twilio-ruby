@@ -249,15 +249,10 @@ module Twilio
           # @param [String] sms_url The URL we should call using the `sms_method` when the
           #   SIM-connected device sends an SMS message that is not a
           #   {Command}[https://www.twilio.com/docs/wireless/api/command-resource].
-          # @param [String] voice_fallback_method The HTTP method we should use to call
-          #   `voice_fallback_url`. Can be: `GET` or `POST`.
-          # @param [String] voice_fallback_url The URL we should call using the
-          #   `voice_fallback_method` when an error occurs while retrieving or executing the
-          #   TwiML requested from `voice_url`.
-          # @param [String] voice_method The HTTP method we should use when we call
-          #   `voice_url`. Can be: `GET` or `POST`.
-          # @param [String] voice_url The URL we should call using the `voice_method` when
-          #   the SIM-connected device makes a voice call.
+          # @param [String] voice_fallback_method Deprecated.
+          # @param [String] voice_fallback_url Deprecated.
+          # @param [String] voice_method Deprecated.
+          # @param [String] voice_url Deprecated.
           # @param [sim.ResetStatus] reset_status Initiate a connectivity reset on the SIM.
           #   Set to `resetting` to initiate a connectivity reset on the SIM. No other value
           #   is valid.
@@ -463,49 +458,49 @@ module Twilio
           end
 
           ##
-          # @return [String] The HTTP method we use to call sms_fallback_url
+          # @return [String] Deprecated. The HTTP method we use to call sms_fallback_url
           def sms_fallback_method
             @properties['sms_fallback_method']
           end
 
           ##
-          # @return [String] The URL we call when an error occurs while retrieving or executing the TwiML requested from the sms_url
+          # @return [String] Deprecated. The URL we call when an error occurs while retrieving or executing the TwiML requested from the sms_url
           def sms_fallback_url
             @properties['sms_fallback_url']
           end
 
           ##
-          # @return [String] The HTTP method we use to call sms_url
+          # @return [String] Deprecated. The HTTP method we use to call sms_url
           def sms_method
             @properties['sms_method']
           end
 
           ##
-          # @return [String] The URL we call when the SIM-connected device sends an SMS message that is not a Command
+          # @return [String] Deprecated. The URL we call when the SIM-connected device sends an SMS message that is not a Command
           def sms_url
             @properties['sms_url']
           end
 
           ##
-          # @return [String] The HTTP method we use to call voice_fallback_url
+          # @return [String] Deprecated. The HTTP method we use to call voice_fallback_url
           def voice_fallback_method
             @properties['voice_fallback_method']
           end
 
           ##
-          # @return [String] The URL we call when an error occurs while retrieving or executing the TwiML requested from voice_url
+          # @return [String] Deprecated. The URL we call when an error occurs while retrieving or executing the TwiML requested from voice_url
           def voice_fallback_url
             @properties['voice_fallback_url']
           end
 
           ##
-          # @return [String] The HTTP method we use to call voice_url
+          # @return [String] Deprecated. The HTTP method we use to call voice_url
           def voice_method
             @properties['voice_method']
           end
 
           ##
-          # @return [String] The URL we call when the SIM-connected device makes a voice call
+          # @return [String] Deprecated. The URL we call when the SIM-connected device makes a voice call
           def voice_url
             @properties['voice_url']
           end
@@ -583,15 +578,10 @@ module Twilio
           # @param [String] sms_url The URL we should call using the `sms_method` when the
           #   SIM-connected device sends an SMS message that is not a
           #   {Command}[https://www.twilio.com/docs/wireless/api/command-resource].
-          # @param [String] voice_fallback_method The HTTP method we should use to call
-          #   `voice_fallback_url`. Can be: `GET` or `POST`.
-          # @param [String] voice_fallback_url The URL we should call using the
-          #   `voice_fallback_method` when an error occurs while retrieving or executing the
-          #   TwiML requested from `voice_url`.
-          # @param [String] voice_method The HTTP method we should use when we call
-          #   `voice_url`. Can be: `GET` or `POST`.
-          # @param [String] voice_url The URL we should call using the `voice_method` when
-          #   the SIM-connected device makes a voice call.
+          # @param [String] voice_fallback_method Deprecated.
+          # @param [String] voice_fallback_url Deprecated.
+          # @param [String] voice_method Deprecated.
+          # @param [String] voice_url Deprecated.
           # @param [sim.ResetStatus] reset_status Initiate a connectivity reset on the SIM.
           #   Set to `resetting` to initiate a connectivity reset on the SIM. No other value
           #   is valid.

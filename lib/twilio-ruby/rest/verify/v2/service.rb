@@ -73,8 +73,11 @@ module Twilio
           # @param [String] totp_skew Optional configuration for the TOTP factors. The
           #   number of time-steps, past and future, that are valid for validation of TOTP
           #   codes. Must be between 0 and 2, inclusive. Defaults to 1
+          # @param [String] default_template_sid The default message
+          #   {template}[https://www.twilio.com/docs/verify/api/templates]. Will be used for
+          #   all SMS verifications unless explicitly overriden. SMS channel only.
           # @return [ServiceInstance] Created ServiceInstance
-          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset, totp_issuer: :unset, totp_time_step: :unset, totp_code_length: :unset, totp_skew: :unset)
+          def create(friendly_name: nil, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset, totp_issuer: :unset, totp_time_step: :unset, totp_code_length: :unset, totp_skew: :unset, default_template_sid: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -92,6 +95,7 @@ module Twilio
                 'Totp.TimeStep' => totp_time_step,
                 'Totp.CodeLength' => totp_code_length,
                 'Totp.Skew' => totp_skew,
+                'DefaultTemplateSid' => default_template_sid,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -303,8 +307,11 @@ module Twilio
           # @param [String] totp_skew Optional configuration for the TOTP factors. The
           #   number of time-steps, past and future, that are valid for validation of TOTP
           #   codes. Must be between 0 and 2, inclusive. Defaults to 1
+          # @param [String] default_template_sid The default message
+          #   {template}[https://www.twilio.com/docs/verify/api/templates]. Will be used for
+          #   all SMS verifications unless explicitly overriden. SMS channel only.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset, totp_issuer: :unset, totp_time_step: :unset, totp_code_length: :unset, totp_skew: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset, totp_issuer: :unset, totp_time_step: :unset, totp_code_length: :unset, totp_skew: :unset, default_template_sid: :unset)
             data = Twilio::Values.of({
                 'FriendlyName' => friendly_name,
                 'CodeLength' => code_length,
@@ -322,6 +329,7 @@ module Twilio
                 'Totp.TimeStep' => totp_time_step,
                 'Totp.CodeLength' => totp_code_length,
                 'Totp.Skew' => totp_skew,
+                'DefaultTemplateSid' => default_template_sid,
             })
 
             payload = @version.update('POST', @uri, data: data)
@@ -484,6 +492,7 @@ module Twilio
                 'custom_code_enabled' => payload['custom_code_enabled'],
                 'push' => payload['push'],
                 'totp' => payload['totp'],
+                'default_template_sid' => payload['default_template_sid'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -585,6 +594,12 @@ module Twilio
           end
 
           ##
+          # @return [String] The default_template_sid
+          def default_template_sid
+            @properties['default_template_sid']
+          end
+
+          ##
           # @return [Time] The RFC 2822 date and time in GMT when the resource was created
           def date_created
             @properties['date_created']
@@ -670,8 +685,11 @@ module Twilio
           # @param [String] totp_skew Optional configuration for the TOTP factors. The
           #   number of time-steps, past and future, that are valid for validation of TOTP
           #   codes. Must be between 0 and 2, inclusive. Defaults to 1
+          # @param [String] default_template_sid The default message
+          #   {template}[https://www.twilio.com/docs/verify/api/templates]. Will be used for
+          #   all SMS verifications unless explicitly overriden. SMS channel only.
           # @return [ServiceInstance] Updated ServiceInstance
-          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset, totp_issuer: :unset, totp_time_step: :unset, totp_code_length: :unset, totp_skew: :unset)
+          def update(friendly_name: :unset, code_length: :unset, lookup_enabled: :unset, skip_sms_to_landlines: :unset, dtmf_input_required: :unset, tts_name: :unset, psd2_enabled: :unset, do_not_share_warning_enabled: :unset, custom_code_enabled: :unset, push_include_date: :unset, push_apn_credential_sid: :unset, push_fcm_credential_sid: :unset, totp_issuer: :unset, totp_time_step: :unset, totp_code_length: :unset, totp_skew: :unset, default_template_sid: :unset)
             context.update(
                 friendly_name: friendly_name,
                 code_length: code_length,
@@ -689,6 +707,7 @@ module Twilio
                 totp_time_step: totp_time_step,
                 totp_code_length: totp_code_length,
                 totp_skew: totp_skew,
+                default_template_sid: default_template_sid,
             )
           end
 

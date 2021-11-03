@@ -60,9 +60,9 @@ module Twilio
               #   `fcm`.
               #
               #   Required when `factor_type` is `push`.
-              # @param [String] config_notification_token For APN, the device token. For FCM the
-              #   registration token. It used to send the push notifications. Must be between 32
-              #   and 255 characters long.
+              # @param [String] config_notification_token For APN, the device token. For FCM,
+              #   the registration token. It is used to send the push notifications. Must be
+              #   between 32 and 255 characters long.
               #
               #   Required when `factor_type` is `push`.
               # @param [String] config_sdk_version The Verify Push SDK version used to configure
