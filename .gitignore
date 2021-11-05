@@ -13,5 +13,6 @@ docs/_build
 *.iml
 .bundle
 .rakeTasks
+.yardoc
 
 coverage
