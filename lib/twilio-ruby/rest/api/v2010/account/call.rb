@@ -144,9 +144,9 @@ module Twilio
             #   Calls Beta)
             # @param [String] call_token A token string needed to invoke a forwarded call. A
             #   call_token is generated when an incoming call is received on a Twilio number.
-            #   this field should be populated by the incoming call's call_token to make this
-            #   outgoing call as a forwarded call of incoming call. A forwarded call should bear
-            #   the same caller-id of incoming call.
+            #   Pass an incoming call's call_token value to a forwarded call via the call_token
+            #   parameter when creating a new call. A forwarded call should bear the same
+            #   CallerID of the original incoming call.
             # @param [String] recording_track The audio track to record for the call. Can be:
             #   `inbound`, `outbound` or `both`. The default is `both`. `inbound` records the
             #   audio that is received by Twilio. `outbound` records the audio that is generated

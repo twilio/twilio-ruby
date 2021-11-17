@@ -168,14 +168,64 @@ module Twilio
 
           ##
           # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+          class BrandVettingContext < InstanceContext
+            ##
+            # Initialize the BrandVettingContext
+            # @param [Version] version Version that contains the resource
+            # @param [String] brand_sid The SID of the Brand Registration resource of the
+            #   vettings to read .
+            # @param [String] brand_vetting_sid The Twilio SID of the third-party vetting
+            #   record.
+            # @return [BrandVettingContext] BrandVettingContext
+            def initialize(version, brand_sid, brand_vetting_sid)
+              super(version)
+
+              # Path Solution
+              @solution = {brand_sid: brand_sid, brand_vetting_sid: brand_vetting_sid, }
+              @uri = "/a2p/BrandRegistrations/#{@solution[:brand_sid]}/Vettings/#{@solution[:brand_vetting_sid]}"
+            end
+
+            ##
+            # Fetch the BrandVettingInstance
+            # @return [BrandVettingInstance] Fetched BrandVettingInstance
+            def fetch
+              payload = @version.fetch('GET', @uri)
+
+              BrandVettingInstance.new(
+                  @version,
+                  payload,
+                  brand_sid: @solution[:brand_sid],
+                  brand_vetting_sid: @solution[:brand_vetting_sid],
+              )
+            end
+
+            ##
+            # Provide a user friendly representation
+            def to_s
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Messaging.V1.BrandVettingContext #{context}>"
+            end
+
+            ##
+            # Provide a detailed, user friendly representation
+            def inspect
+              context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+              "#<Twilio.Messaging.V1.BrandVettingContext #{context}>"
+            end
+          end
+
+          ##
+          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class BrandVettingInstance < InstanceResource
             ##
             # Initialize the BrandVettingInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
             # @param [String] brand_sid The unique string to identify Brand Registration.
+            # @param [String] brand_vetting_sid The Twilio SID of the third-party vetting
+            #   record.
             # @return [BrandVettingInstance] BrandVettingInstance
-            def initialize(version, payload, brand_sid: nil)
+            def initialize(version, payload, brand_sid: nil, brand_vetting_sid: nil)
               super(version)
 
               # Marshaled Properties
@@ -191,6 +241,28 @@ module Twilio
                   'vetting_provider' => payload['vetting_provider'],
                   'url' => payload['url'],
               }
+
+              # Context
+              @instance_context = nil
+              @params = {
+                  'brand_sid' => brand_sid,
+                  'brand_vetting_sid' => brand_vetting_sid || @properties['brand_vetting_sid'],
+              }
+            end
+
+            ##
+            # Generate an instance context for the instance, the context is capable of
+            # performing various actions.  All instance actions are proxied to the context
+            # @return [BrandVettingContext] BrandVettingContext for this BrandVettingInstance
+            def context
+              unless @instance_context
+                @instance_context = BrandVettingContext.new(
+                    @version,
+                    @params['brand_sid'],
+                    @params['brand_vetting_sid'],
+                )
+              end
+              @instance_context
             end
 
             ##
@@ -254,15 +326,24 @@ module Twilio
             end
 
             ##
+            # Fetch the BrandVettingInstance
+            # @return [BrandVettingInstance] Fetched BrandVettingInstance
+            def fetch
+              context.fetch
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
-              "<Twilio.Messaging.V1.BrandVettingInstance>"
+              values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Messaging.V1.BrandVettingInstance #{values}>"
             end
 
             ##
             # Provide a detailed, user friendly representation
             def inspect
-              "<Twilio.Messaging.V1.BrandVettingInstance>"
+              values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+              "<Twilio.Messaging.V1.BrandVettingInstance #{values}>"
             end
           end
         end

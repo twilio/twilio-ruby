@@ -219,8 +219,12 @@ module Twilio
               #   Must be between 3 and 8, inclusive
               # @param [factor.TotpAlgorithms] config_alg The algorithm used to derive the TOTP
               #   codes. Can be `sha1`, `sha256` or `sha512`
+              # @param [String] config_notification_platform The transport technology used to
+              #   generate the Notification Token. Can be `apn`, `fcm` or `none`.
+              #
+              #   Required when `factor_type` is `push`.
               # @return [FactorInstance] Updated FactorInstance
-              def update(auth_payload: :unset, friendly_name: :unset, config_notification_token: :unset, config_sdk_version: :unset, config_time_step: :unset, config_skew: :unset, config_code_length: :unset, config_alg: :unset)
+              def update(auth_payload: :unset, friendly_name: :unset, config_notification_token: :unset, config_sdk_version: :unset, config_time_step: :unset, config_skew: :unset, config_code_length: :unset, config_alg: :unset, config_notification_platform: :unset)
                 data = Twilio::Values.of({
                     'AuthPayload' => auth_payload,
                     'FriendlyName' => friendly_name,
@@ -230,6 +234,7 @@ module Twilio
                     'Config.Skew' => config_skew,
                     'Config.CodeLength' => config_code_length,
                     'Config.Alg' => config_alg,
+                    'Config.NotificationPlatform' => config_notification_platform,
                 })
 
                 payload = @version.update('POST', @uri, data: data)
@@ -419,8 +424,12 @@ module Twilio
               #   Must be between 3 and 8, inclusive
               # @param [factor.TotpAlgorithms] config_alg The algorithm used to derive the TOTP
               #   codes. Can be `sha1`, `sha256` or `sha512`
+              # @param [String] config_notification_platform The transport technology used to
+              #   generate the Notification Token. Can be `apn`, `fcm` or `none`.
+              #
+              #   Required when `factor_type` is `push`.
               # @return [FactorInstance] Updated FactorInstance
-              def update(auth_payload: :unset, friendly_name: :unset, config_notification_token: :unset, config_sdk_version: :unset, config_time_step: :unset, config_skew: :unset, config_code_length: :unset, config_alg: :unset)
+              def update(auth_payload: :unset, friendly_name: :unset, config_notification_token: :unset, config_sdk_version: :unset, config_time_step: :unset, config_skew: :unset, config_code_length: :unset, config_alg: :unset, config_notification_platform: :unset)
                 context.update(
                     auth_payload: auth_payload,
                     friendly_name: friendly_name,
@@ -430,6 +439,7 @@ module Twilio
                     config_skew: config_skew,
                     config_code_length: config_code_length,
                     config_alg: config_alg,
+                    config_notification_platform: config_notification_platform,
                 )
               end
 

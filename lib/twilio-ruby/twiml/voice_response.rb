@@ -543,8 +543,11 @@ module Twilio
       # words:: Words to emphasize
       # level:: Specify the degree of emphasis
       # keyword_args:: additional attributes
-      def emphasis(words, level: nil, **keyword_args)
-        append(SsmlEmphasis.new(words, level: level, **keyword_args))
+      def emphasis(words: nil, level: nil, **keyword_args)
+        emphasis = SsmlEmphasis.new(words: words, level: level, **keyword_args)
+
+        yield(emphasis) if block_given?
+        append(emphasis)
       end
 
       ##
@@ -552,16 +555,22 @@ module Twilio
       # words:: Words to speak
       # xmlLang:: Specify the language
       # keyword_args:: additional attributes
-      def lang(words, xmlLang: nil, **keyword_args)
-        append(SsmlLang.new(words, xmlLang: xmlLang, **keyword_args))
+      def lang(words: nil, xmlLang: nil, **keyword_args)
+        lang = SsmlLang.new(words: words, xmlLang: xmlLang, **keyword_args)
+
+        yield(lang) if block_given?
+        append(lang)
       end
 
       ##
       # Create a new <P> element
       # words:: Words to speak
       # keyword_args:: additional attributes
-      def p(words, **keyword_args)
-        append(SsmlP.new(words, **keyword_args))
+      def p(words: nil, **keyword_args)
+        p = SsmlP.new(words: words, **keyword_args)
+
+        yield(p) if block_given?
+        append(p)
       end
 
       ##
@@ -581,16 +590,22 @@ module Twilio
       # rate:: Specify the rate, available values: x-slow, slow, medium, fast, x-fast, n%
       # pitch:: Specify the pitch, available values: default, x-low, low, medium, high, x-high, +n%, -n%
       # keyword_args:: additional attributes
-      def prosody(words, volume: nil, rate: nil, pitch: nil, **keyword_args)
-        append(SsmlProsody.new(words, volume: volume, rate: rate, pitch: pitch, **keyword_args))
+      def prosody(words: nil, volume: nil, rate: nil, pitch: nil, **keyword_args)
+        prosody = SsmlProsody.new(words: words, volume: volume, rate: rate, pitch: pitch, **keyword_args)
+
+        yield(prosody) if block_given?
+        append(prosody)
       end
 
       ##
       # Create a new <S> element
       # words:: Words to speak
       # keyword_args:: additional attributes
-      def s(words, **keyword_args)
-        append(SsmlS.new(words, **keyword_args))
+      def s(words: nil, **keyword_args)
+        s = SsmlS.new(words: words, **keyword_args)
+
+        yield(s) if block_given?
+        append(s)
       end
 
       ##
@@ -617,19 +632,86 @@ module Twilio
       # words:: Words to speak
       # role:: Customize the pronunciation of words by specifying the word’s part of speech or alternate meaning
       # keyword_args:: additional attributes
-      def w(words, role: nil, **keyword_args)
-        append(SsmlW.new(words, role: role, **keyword_args))
+      def w(words: nil, role: nil, **keyword_args)
+        w = SsmlW.new(words: words, role: role, **keyword_args)
+
+        yield(w) if block_given?
+        append(w)
       end
     end
 
     ##
     # Improving Pronunciation by Specifying Parts of Speech in <Say>
     class SsmlW < TwiML
-      def initialize(words, **keyword_args)
+      def initialize(words: nil, **keyword_args)
         super(**keyword_args)
         @name = 'w'
-        @value = words
+        @value = words unless words.nil?
         yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Break> element
+      # strength:: Set a pause based on strength
+      # time:: Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+      # keyword_args:: additional attributes
+      def break(strength: nil, time: nil, **keyword_args)
+        append(SsmlBreak.new(strength: strength, time: time, **keyword_args))
+      end
+
+      ##
+      # Create a new <Emphasis> element
+      # words:: Words to emphasize
+      # level:: Specify the degree of emphasis
+      # keyword_args:: additional attributes
+      def emphasis(words: nil, level: nil, **keyword_args)
+        emphasis = SsmlEmphasis.new(words: words, level: level, **keyword_args)
+
+        yield(emphasis) if block_given?
+        append(emphasis)
+      end
+
+      ##
+      # Create a new <Phoneme> element
+      # words:: Words to speak
+      # alphabet:: Specify the phonetic alphabet
+      # ph:: Specifiy the phonetic symbols for pronunciation
+      # keyword_args:: additional attributes
+      def phoneme(words, alphabet: nil, ph: nil, **keyword_args)
+        append(SsmlPhoneme.new(words, alphabet: alphabet, ph: ph, **keyword_args))
+      end
+
+      ##
+      # Create a new <Prosody> element
+      # words:: Words to speak
+      # volume:: Specify the volume, available values: default, silent, x-soft, soft, medium, loud, x-loud, +ndB, -ndB
+      # rate:: Specify the rate, available values: x-slow, slow, medium, fast, x-fast, n%
+      # pitch:: Specify the pitch, available values: default, x-low, low, medium, high, x-high, +n%, -n%
+      # keyword_args:: additional attributes
+      def prosody(words: nil, volume: nil, rate: nil, pitch: nil, **keyword_args)
+        prosody = SsmlProsody.new(words: words, volume: volume, rate: rate, pitch: pitch, **keyword_args)
+
+        yield(prosody) if block_given?
+        append(prosody)
+      end
+
+      ##
+      # Create a new <Say-As> element
+      # words:: Words to be interpreted
+      # interpretAs:: Specify the type of words are spoken
+      # role:: Specify the format of the date when interpret-as is set to date
+      # keyword_args:: additional attributes
+      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      end
+
+      ##
+      # Create a new <Sub> element
+      # words:: Words to be substituted
+      # aliasAttribute:: Substitute a different word (or pronunciation) for selected text such as an acronym or abbreviation
+      # keyword_args:: additional attributes
+      def sub(words, aliasAttribute: nil, **keyword_args)
+        append(SsmlSub.new(words, aliasAttribute: aliasAttribute, **keyword_args))
       end
     end
 
@@ -656,24 +738,222 @@ module Twilio
     end
 
     ##
-    # Adding A Pause Between Sentences in <Say>
-    class SsmlS < TwiML
-      def initialize(words, **keyword_args)
+    # Controling Volume, Speaking Rate, and Pitch in <Say>
+    class SsmlProsody < TwiML
+      def initialize(words: nil, **keyword_args)
         super(**keyword_args)
-        @name = 's'
-        @value = words
+        @name = 'prosody'
+        @value = words unless words.nil?
         yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Break> element
+      # strength:: Set a pause based on strength
+      # time:: Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+      # keyword_args:: additional attributes
+      def break(strength: nil, time: nil, **keyword_args)
+        append(SsmlBreak.new(strength: strength, time: time, **keyword_args))
+      end
+
+      ##
+      # Create a new <Emphasis> element
+      # words:: Words to emphasize
+      # level:: Specify the degree of emphasis
+      # keyword_args:: additional attributes
+      def emphasis(words: nil, level: nil, **keyword_args)
+        emphasis = SsmlEmphasis.new(words: words, level: level, **keyword_args)
+
+        yield(emphasis) if block_given?
+        append(emphasis)
+      end
+
+      ##
+      # Create a new <Lang> element
+      # words:: Words to speak
+      # xmlLang:: Specify the language
+      # keyword_args:: additional attributes
+      def lang(words: nil, xmlLang: nil, **keyword_args)
+        lang = SsmlLang.new(words: words, xmlLang: xmlLang, **keyword_args)
+
+        yield(lang) if block_given?
+        append(lang)
+      end
+
+      ##
+      # Create a new <P> element
+      # words:: Words to speak
+      # keyword_args:: additional attributes
+      def p(words: nil, **keyword_args)
+        p = SsmlP.new(words: words, **keyword_args)
+
+        yield(p) if block_given?
+        append(p)
+      end
+
+      ##
+      # Create a new <Phoneme> element
+      # words:: Words to speak
+      # alphabet:: Specify the phonetic alphabet
+      # ph:: Specifiy the phonetic symbols for pronunciation
+      # keyword_args:: additional attributes
+      def phoneme(words, alphabet: nil, ph: nil, **keyword_args)
+        append(SsmlPhoneme.new(words, alphabet: alphabet, ph: ph, **keyword_args))
+      end
+
+      ##
+      # Create a new <Prosody> element
+      # words:: Words to speak
+      # volume:: Specify the volume, available values: default, silent, x-soft, soft, medium, loud, x-loud, +ndB, -ndB
+      # rate:: Specify the rate, available values: x-slow, slow, medium, fast, x-fast, n%
+      # pitch:: Specify the pitch, available values: default, x-low, low, medium, high, x-high, +n%, -n%
+      # keyword_args:: additional attributes
+      def prosody(words: nil, volume: nil, rate: nil, pitch: nil, **keyword_args)
+        prosody = SsmlProsody.new(words: words, volume: volume, rate: rate, pitch: pitch, **keyword_args)
+
+        yield(prosody) if block_given?
+        append(prosody)
+      end
+
+      ##
+      # Create a new <S> element
+      # words:: Words to speak
+      # keyword_args:: additional attributes
+      def s(words: nil, **keyword_args)
+        s = SsmlS.new(words: words, **keyword_args)
+
+        yield(s) if block_given?
+        append(s)
+      end
+
+      ##
+      # Create a new <Say-As> element
+      # words:: Words to be interpreted
+      # interpretAs:: Specify the type of words are spoken
+      # role:: Specify the format of the date when interpret-as is set to date
+      # keyword_args:: additional attributes
+      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      end
+
+      ##
+      # Create a new <Sub> element
+      # words:: Words to be substituted
+      # aliasAttribute:: Substitute a different word (or pronunciation) for selected text such as an acronym or abbreviation
+      # keyword_args:: additional attributes
+      def sub(words, aliasAttribute: nil, **keyword_args)
+        append(SsmlSub.new(words, aliasAttribute: aliasAttribute, **keyword_args))
+      end
+
+      ##
+      # Create a new <W> element
+      # words:: Words to speak
+      # role:: Customize the pronunciation of words by specifying the word’s part of speech or alternate meaning
+      # keyword_args:: additional attributes
+      def w(words: nil, role: nil, **keyword_args)
+        w = SsmlW.new(words: words, role: role, **keyword_args)
+
+        yield(w) if block_given?
+        append(w)
       end
     end
 
     ##
-    # Controling Volume, Speaking Rate, and Pitch in <Say>
-    class SsmlProsody < TwiML
-      def initialize(words, **keyword_args)
+    # Adding A Pause Between Sentences in <Say>
+    class SsmlS < TwiML
+      def initialize(words: nil, **keyword_args)
         super(**keyword_args)
-        @name = 'prosody'
-        @value = words
+        @name = 's'
+        @value = words unless words.nil?
         yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Break> element
+      # strength:: Set a pause based on strength
+      # time:: Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+      # keyword_args:: additional attributes
+      def break(strength: nil, time: nil, **keyword_args)
+        append(SsmlBreak.new(strength: strength, time: time, **keyword_args))
+      end
+
+      ##
+      # Create a new <Emphasis> element
+      # words:: Words to emphasize
+      # level:: Specify the degree of emphasis
+      # keyword_args:: additional attributes
+      def emphasis(words: nil, level: nil, **keyword_args)
+        emphasis = SsmlEmphasis.new(words: words, level: level, **keyword_args)
+
+        yield(emphasis) if block_given?
+        append(emphasis)
+      end
+
+      ##
+      # Create a new <Lang> element
+      # words:: Words to speak
+      # xmlLang:: Specify the language
+      # keyword_args:: additional attributes
+      def lang(words: nil, xmlLang: nil, **keyword_args)
+        lang = SsmlLang.new(words: words, xmlLang: xmlLang, **keyword_args)
+
+        yield(lang) if block_given?
+        append(lang)
+      end
+
+      ##
+      # Create a new <Phoneme> element
+      # words:: Words to speak
+      # alphabet:: Specify the phonetic alphabet
+      # ph:: Specifiy the phonetic symbols for pronunciation
+      # keyword_args:: additional attributes
+      def phoneme(words, alphabet: nil, ph: nil, **keyword_args)
+        append(SsmlPhoneme.new(words, alphabet: alphabet, ph: ph, **keyword_args))
+      end
+
+      ##
+      # Create a new <Prosody> element
+      # words:: Words to speak
+      # volume:: Specify the volume, available values: default, silent, x-soft, soft, medium, loud, x-loud, +ndB, -ndB
+      # rate:: Specify the rate, available values: x-slow, slow, medium, fast, x-fast, n%
+      # pitch:: Specify the pitch, available values: default, x-low, low, medium, high, x-high, +n%, -n%
+      # keyword_args:: additional attributes
+      def prosody(words: nil, volume: nil, rate: nil, pitch: nil, **keyword_args)
+        prosody = SsmlProsody.new(words: words, volume: volume, rate: rate, pitch: pitch, **keyword_args)
+
+        yield(prosody) if block_given?
+        append(prosody)
+      end
+
+      ##
+      # Create a new <Say-As> element
+      # words:: Words to be interpreted
+      # interpretAs:: Specify the type of words are spoken
+      # role:: Specify the format of the date when interpret-as is set to date
+      # keyword_args:: additional attributes
+      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      end
+
+      ##
+      # Create a new <Sub> element
+      # words:: Words to be substituted
+      # aliasAttribute:: Substitute a different word (or pronunciation) for selected text such as an acronym or abbreviation
+      # keyword_args:: additional attributes
+      def sub(words, aliasAttribute: nil, **keyword_args)
+        append(SsmlSub.new(words, aliasAttribute: aliasAttribute, **keyword_args))
+      end
+
+      ##
+      # Create a new <W> element
+      # words:: Words to speak
+      # role:: Customize the pronunciation of words by specifying the word’s part of speech or alternate meaning
+      # keyword_args:: additional attributes
+      def w(words: nil, role: nil, **keyword_args)
+        w = SsmlW.new(words: words, role: role, **keyword_args)
+
+        yield(w) if block_given?
+        append(w)
       end
     end
 
@@ -689,35 +969,332 @@ module Twilio
     end
 
     ##
-    # Adding a Pause Between Paragraphs in <Say>
-    class SsmlP < TwiML
-      def initialize(words, **keyword_args)
+    # Specifying Another Language for Specific Words in <Say>
+    class SsmlLang < TwiML
+      def initialize(words: nil, **keyword_args)
         super(**keyword_args)
-        @name = 'p'
-        @value = words
+        @name = 'lang'
+        @value = words unless words.nil?
         yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Break> element
+      # strength:: Set a pause based on strength
+      # time:: Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+      # keyword_args:: additional attributes
+      def break(strength: nil, time: nil, **keyword_args)
+        append(SsmlBreak.new(strength: strength, time: time, **keyword_args))
+      end
+
+      ##
+      # Create a new <Emphasis> element
+      # words:: Words to emphasize
+      # level:: Specify the degree of emphasis
+      # keyword_args:: additional attributes
+      def emphasis(words: nil, level: nil, **keyword_args)
+        emphasis = SsmlEmphasis.new(words: words, level: level, **keyword_args)
+
+        yield(emphasis) if block_given?
+        append(emphasis)
+      end
+
+      ##
+      # Create a new <Lang> element
+      # words:: Words to speak
+      # xmlLang:: Specify the language
+      # keyword_args:: additional attributes
+      def lang(words: nil, xmlLang: nil, **keyword_args)
+        lang = SsmlLang.new(words: words, xmlLang: xmlLang, **keyword_args)
+
+        yield(lang) if block_given?
+        append(lang)
+      end
+
+      ##
+      # Create a new <P> element
+      # words:: Words to speak
+      # keyword_args:: additional attributes
+      def p(words: nil, **keyword_args)
+        p = SsmlP.new(words: words, **keyword_args)
+
+        yield(p) if block_given?
+        append(p)
+      end
+
+      ##
+      # Create a new <Phoneme> element
+      # words:: Words to speak
+      # alphabet:: Specify the phonetic alphabet
+      # ph:: Specifiy the phonetic symbols for pronunciation
+      # keyword_args:: additional attributes
+      def phoneme(words, alphabet: nil, ph: nil, **keyword_args)
+        append(SsmlPhoneme.new(words, alphabet: alphabet, ph: ph, **keyword_args))
+      end
+
+      ##
+      # Create a new <Prosody> element
+      # words:: Words to speak
+      # volume:: Specify the volume, available values: default, silent, x-soft, soft, medium, loud, x-loud, +ndB, -ndB
+      # rate:: Specify the rate, available values: x-slow, slow, medium, fast, x-fast, n%
+      # pitch:: Specify the pitch, available values: default, x-low, low, medium, high, x-high, +n%, -n%
+      # keyword_args:: additional attributes
+      def prosody(words: nil, volume: nil, rate: nil, pitch: nil, **keyword_args)
+        prosody = SsmlProsody.new(words: words, volume: volume, rate: rate, pitch: pitch, **keyword_args)
+
+        yield(prosody) if block_given?
+        append(prosody)
+      end
+
+      ##
+      # Create a new <S> element
+      # words:: Words to speak
+      # keyword_args:: additional attributes
+      def s(words: nil, **keyword_args)
+        s = SsmlS.new(words: words, **keyword_args)
+
+        yield(s) if block_given?
+        append(s)
+      end
+
+      ##
+      # Create a new <Say-As> element
+      # words:: Words to be interpreted
+      # interpretAs:: Specify the type of words are spoken
+      # role:: Specify the format of the date when interpret-as is set to date
+      # keyword_args:: additional attributes
+      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      end
+
+      ##
+      # Create a new <Sub> element
+      # words:: Words to be substituted
+      # aliasAttribute:: Substitute a different word (or pronunciation) for selected text such as an acronym or abbreviation
+      # keyword_args:: additional attributes
+      def sub(words, aliasAttribute: nil, **keyword_args)
+        append(SsmlSub.new(words, aliasAttribute: aliasAttribute, **keyword_args))
+      end
+
+      ##
+      # Create a new <W> element
+      # words:: Words to speak
+      # role:: Customize the pronunciation of words by specifying the word’s part of speech or alternate meaning
+      # keyword_args:: additional attributes
+      def w(words: nil, role: nil, **keyword_args)
+        w = SsmlW.new(words: words, role: role, **keyword_args)
+
+        yield(w) if block_given?
+        append(w)
       end
     end
 
     ##
-    # Specifying Another Language for Specific Words in <Say>
-    class SsmlLang < TwiML
-      def initialize(words, **keyword_args)
+    # Adding a Pause Between Paragraphs in <Say>
+    class SsmlP < TwiML
+      def initialize(words: nil, **keyword_args)
         super(**keyword_args)
-        @name = 'lang'
-        @value = words
+        @name = 'p'
+        @value = words unless words.nil?
         yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Break> element
+      # strength:: Set a pause based on strength
+      # time:: Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+      # keyword_args:: additional attributes
+      def break(strength: nil, time: nil, **keyword_args)
+        append(SsmlBreak.new(strength: strength, time: time, **keyword_args))
+      end
+
+      ##
+      # Create a new <Emphasis> element
+      # words:: Words to emphasize
+      # level:: Specify the degree of emphasis
+      # keyword_args:: additional attributes
+      def emphasis(words: nil, level: nil, **keyword_args)
+        emphasis = SsmlEmphasis.new(words: words, level: level, **keyword_args)
+
+        yield(emphasis) if block_given?
+        append(emphasis)
+      end
+
+      ##
+      # Create a new <Lang> element
+      # words:: Words to speak
+      # xmlLang:: Specify the language
+      # keyword_args:: additional attributes
+      def lang(words: nil, xmlLang: nil, **keyword_args)
+        lang = SsmlLang.new(words: words, xmlLang: xmlLang, **keyword_args)
+
+        yield(lang) if block_given?
+        append(lang)
+      end
+
+      ##
+      # Create a new <Phoneme> element
+      # words:: Words to speak
+      # alphabet:: Specify the phonetic alphabet
+      # ph:: Specifiy the phonetic symbols for pronunciation
+      # keyword_args:: additional attributes
+      def phoneme(words, alphabet: nil, ph: nil, **keyword_args)
+        append(SsmlPhoneme.new(words, alphabet: alphabet, ph: ph, **keyword_args))
+      end
+
+      ##
+      # Create a new <Prosody> element
+      # words:: Words to speak
+      # volume:: Specify the volume, available values: default, silent, x-soft, soft, medium, loud, x-loud, +ndB, -ndB
+      # rate:: Specify the rate, available values: x-slow, slow, medium, fast, x-fast, n%
+      # pitch:: Specify the pitch, available values: default, x-low, low, medium, high, x-high, +n%, -n%
+      # keyword_args:: additional attributes
+      def prosody(words: nil, volume: nil, rate: nil, pitch: nil, **keyword_args)
+        prosody = SsmlProsody.new(words: words, volume: volume, rate: rate, pitch: pitch, **keyword_args)
+
+        yield(prosody) if block_given?
+        append(prosody)
+      end
+
+      ##
+      # Create a new <S> element
+      # words:: Words to speak
+      # keyword_args:: additional attributes
+      def s(words: nil, **keyword_args)
+        s = SsmlS.new(words: words, **keyword_args)
+
+        yield(s) if block_given?
+        append(s)
+      end
+
+      ##
+      # Create a new <Say-As> element
+      # words:: Words to be interpreted
+      # interpretAs:: Specify the type of words are spoken
+      # role:: Specify the format of the date when interpret-as is set to date
+      # keyword_args:: additional attributes
+      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      end
+
+      ##
+      # Create a new <Sub> element
+      # words:: Words to be substituted
+      # aliasAttribute:: Substitute a different word (or pronunciation) for selected text such as an acronym or abbreviation
+      # keyword_args:: additional attributes
+      def sub(words, aliasAttribute: nil, **keyword_args)
+        append(SsmlSub.new(words, aliasAttribute: aliasAttribute, **keyword_args))
+      end
+
+      ##
+      # Create a new <W> element
+      # words:: Words to speak
+      # role:: Customize the pronunciation of words by specifying the word’s part of speech or alternate meaning
+      # keyword_args:: additional attributes
+      def w(words: nil, role: nil, **keyword_args)
+        w = SsmlW.new(words: words, role: role, **keyword_args)
+
+        yield(w) if block_given?
+        append(w)
       end
     end
 
     ##
     # Emphasizing Words in <Say>
     class SsmlEmphasis < TwiML
-      def initialize(words, **keyword_args)
+      def initialize(words: nil, **keyword_args)
         super(**keyword_args)
         @name = 'emphasis'
-        @value = words
+        @value = words unless words.nil?
         yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Break> element
+      # strength:: Set a pause based on strength
+      # time:: Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
+      # keyword_args:: additional attributes
+      def break(strength: nil, time: nil, **keyword_args)
+        append(SsmlBreak.new(strength: strength, time: time, **keyword_args))
+      end
+
+      ##
+      # Create a new <Emphasis> element
+      # words:: Words to emphasize
+      # level:: Specify the degree of emphasis
+      # keyword_args:: additional attributes
+      def emphasis(words: nil, level: nil, **keyword_args)
+        emphasis = SsmlEmphasis.new(words: words, level: level, **keyword_args)
+
+        yield(emphasis) if block_given?
+        append(emphasis)
+      end
+
+      ##
+      # Create a new <Lang> element
+      # words:: Words to speak
+      # xmlLang:: Specify the language
+      # keyword_args:: additional attributes
+      def lang(words: nil, xmlLang: nil, **keyword_args)
+        lang = SsmlLang.new(words: words, xmlLang: xmlLang, **keyword_args)
+
+        yield(lang) if block_given?
+        append(lang)
+      end
+
+      ##
+      # Create a new <Phoneme> element
+      # words:: Words to speak
+      # alphabet:: Specify the phonetic alphabet
+      # ph:: Specifiy the phonetic symbols for pronunciation
+      # keyword_args:: additional attributes
+      def phoneme(words, alphabet: nil, ph: nil, **keyword_args)
+        append(SsmlPhoneme.new(words, alphabet: alphabet, ph: ph, **keyword_args))
+      end
+
+      ##
+      # Create a new <Prosody> element
+      # words:: Words to speak
+      # volume:: Specify the volume, available values: default, silent, x-soft, soft, medium, loud, x-loud, +ndB, -ndB
+      # rate:: Specify the rate, available values: x-slow, slow, medium, fast, x-fast, n%
+      # pitch:: Specify the pitch, available values: default, x-low, low, medium, high, x-high, +n%, -n%
+      # keyword_args:: additional attributes
+      def prosody(words: nil, volume: nil, rate: nil, pitch: nil, **keyword_args)
+        prosody = SsmlProsody.new(words: words, volume: volume, rate: rate, pitch: pitch, **keyword_args)
+
+        yield(prosody) if block_given?
+        append(prosody)
+      end
+
+      ##
+      # Create a new <Say-As> element
+      # words:: Words to be interpreted
+      # interpretAs:: Specify the type of words are spoken
+      # role:: Specify the format of the date when interpret-as is set to date
+      # keyword_args:: additional attributes
+      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      end
+
+      ##
+      # Create a new <Sub> element
+      # words:: Words to be substituted
+      # aliasAttribute:: Substitute a different word (or pronunciation) for selected text such as an acronym or abbreviation
+      # keyword_args:: additional attributes
+      def sub(words, aliasAttribute: nil, **keyword_args)
+        append(SsmlSub.new(words, aliasAttribute: aliasAttribute, **keyword_args))
+      end
+
+      ##
+      # Create a new <W> element
+      # words:: Words to speak
+      # role:: Customize the pronunciation of words by specifying the word’s part of speech or alternate meaning
+      # keyword_args:: additional attributes
+      def w(words: nil, role: nil, **keyword_args)
+        w = SsmlW.new(words: words, role: role, **keyword_args)
+
+        yield(w) if block_given?
+        append(w)
       end
     end
 

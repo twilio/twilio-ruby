@@ -94,10 +94,19 @@ module Twilio
           # @param [String] avatar The avatar URL which will be shown in Frontline
           #   application.
           # @param [user.StateType] state Current state of this user. Can be either `active`
-          #   or `deactivated` and defaults to `active`
+          #   or `deactivated`.
+          # @param [Boolean] is_available Whether the User is available for new
+          #   conversations. Set to `false` to prevent User from receiving new inbound
+          #   conversations if you are using {Pool
+          #   Routing}[https://www.twilio.com/docs/frontline/handle-incoming-conversations#3-pool-routing].
           # @return [UserInstance] Updated UserInstance
-          def update(friendly_name: :unset, avatar: :unset, state: :unset)
-            data = Twilio::Values.of({'FriendlyName' => friendly_name, 'Avatar' => avatar, 'State' => state, })
+          def update(friendly_name: :unset, avatar: :unset, state: :unset, is_available: :unset)
+            data = Twilio::Values.of({
+                'FriendlyName' => friendly_name,
+                'Avatar' => avatar,
+                'State' => state,
+                'IsAvailable' => is_available,
+            })
 
             payload = @version.update('POST', @uri, data: data)
 
@@ -139,6 +148,7 @@ module Twilio
                 'friendly_name' => payload['friendly_name'],
                 'avatar' => payload['avatar'],
                 'state' => payload['state'],
+                'is_available' => payload['is_available'],
                 'url' => payload['url'],
             }
 
@@ -189,6 +199,12 @@ module Twilio
           end
 
           ##
+          # @return [Boolean] Whether the User is available for new conversations
+          def is_available
+            @properties['is_available']
+          end
+
+          ##
           # @return [String] An absolute URL for this user.
           def url
             @properties['url']
@@ -207,10 +223,19 @@ module Twilio
           # @param [String] avatar The avatar URL which will be shown in Frontline
           #   application.
           # @param [user.StateType] state Current state of this user. Can be either `active`
-          #   or `deactivated` and defaults to `active`
+          #   or `deactivated`.
+          # @param [Boolean] is_available Whether the User is available for new
+          #   conversations. Set to `false` to prevent User from receiving new inbound
+          #   conversations if you are using {Pool
+          #   Routing}[https://www.twilio.com/docs/frontline/handle-incoming-conversations#3-pool-routing].
           # @return [UserInstance] Updated UserInstance
-          def update(friendly_name: :unset, avatar: :unset, state: :unset)
-            context.update(friendly_name: friendly_name, avatar: avatar, state: state, )
+          def update(friendly_name: :unset, avatar: :unset, state: :unset, is_available: :unset)
+            context.update(
+                friendly_name: friendly_name,
+                avatar: avatar,
+                state: state,
+                is_available: is_available,
+            )
           end
 
           ##

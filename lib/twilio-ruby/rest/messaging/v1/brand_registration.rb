@@ -201,8 +201,14 @@ module Twilio
           ##
           # Access the brand_vettings
           # @return [BrandVettingList]
-          # @return [BrandVettingContext]
-          def brand_vettings
+          # @return [BrandVettingContext] if brand_vetting_sid was passed.
+          def brand_vettings(brand_vetting_sid=:unset)
+            raise ArgumentError, 'brand_vetting_sid cannot be nil' if brand_vetting_sid.nil?
+
+            if brand_vetting_sid != :unset
+              return BrandVettingContext.new(@version, @solution[:sid], brand_vetting_sid, )
+            end
+
             unless @brand_vettings
               @brand_vettings = BrandVettingList.new(@version, brand_sid: @solution[:sid], )
             end

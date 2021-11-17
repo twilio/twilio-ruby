@@ -56,8 +56,8 @@ module Twilio
               #
               #   Required when `factor_type` is `push`.
               # @param [new_factor.NotificationPlatforms] config_notification_platform The
-              #   transport technology used to generate the Notification Token. Can be `apn` or
-              #   `fcm`.
+              #   transport technology used to generate the Notification Token. Can be `apn`,
+              #   `fcm` or `none`.
               #
               #   Required when `factor_type` is `push`.
               # @param [String] config_notification_token For APN, the device token. For FCM,

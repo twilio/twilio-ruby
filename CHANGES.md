@@ -1,6 +1,29 @@
 twilio-ruby changelog
 =====================
 
+[2021-11-17] Version 5.61.1
+---------------------------
+**Library - Chore**
+- [PR #578](https://github.com/twilio/twilio-ruby/pull/578): remove yardoc files. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+
+**Library - Fix**
+- [PR #576](https://github.com/twilio/twilio-ruby/pull/576): git log retrieval issues. Thanks to [@shwetha-manvinkurke](https://github.com/shwetha-manvinkurke)!
+
+**Frontline**
+- Added `is_available` to User's resource
+
+**Messaging**
+- Added GET vetting API
+
+**Verify**
+- Add `WHATSAPP` to the attempts API.
+- Allow to update `config.notification_platform` from `none` to `apn` or `fcm` and viceversa for Verify Push
+- Add `none` as a valid `config.notification_platform` value for Verify Push
+
+**Twiml**
+- Add supported SSML children to `<emphasis>`, `<lang>`, `<p>`, `<prosody>`, `<s>`, and `<w>`.
+
+
 [2021-11-03] Version 5.61.0
 ---------------------------
 **Library - Chore**
