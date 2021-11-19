@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rack', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop', '~> 0.83.0'
+  spec.add_development_dependency 'rubocop', '~> 0.82.0'
   spec.add_development_dependency 'yard', '~> 0.9.9'
   spec.add_development_dependency 'logger', '~> 1.4.2'
 end
