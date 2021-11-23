@@ -17,6 +17,7 @@ jobs:
     strategy:
       matrix:
         ruby: [2.4, 2.5, 2.6, 2.7, '3.0', ruby-head, jruby-9.2]
+    continue-on-error: ${{ matrix.ruby == 'ruby-head' }}
     steps:
       - name: Checkout twilio-ruby
         uses: actions/checkout@v2
