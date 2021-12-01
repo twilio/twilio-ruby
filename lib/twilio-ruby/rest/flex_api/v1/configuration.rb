@@ -168,6 +168,8 @@ module Twilio
                 'markdown' => payload['markdown'],
                 'url' => payload['url'],
                 'flex_insights_hr' => payload['flex_insights_hr'],
+                'flex_insights_drilldown' => payload['flex_insights_drilldown'],
+                'flex_url' => payload['flex_url'],
             }
 
             # Context
@@ -424,6 +426,18 @@ module Twilio
           # @return [Hash] Object that controls workspace reporting
           def flex_insights_hr
             @properties['flex_insights_hr']
+          end
+
+          ##
+          # @return [Boolean] Setting to enable Flex UI redirection
+          def flex_insights_drilldown
+            @properties['flex_insights_drilldown']
+          end
+
+          ##
+          # @return [String] URL to redirect to in case drilldown is enabled.
+          def flex_url
+            @properties['flex_url']
           end
 
           ##

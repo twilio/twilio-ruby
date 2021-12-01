@@ -47,6 +47,15 @@ module Twilio
       end
 
       ##
+      # @param [String] sid The unique string that we created to identify the IP Command
+      #   resource.
+      # @return [Twilio::REST::Supersim::V1::IpCommandInstance] if sid was passed.
+      # @return [Twilio::REST::Supersim::V1::IpCommandList]
+      def ip_commands(sid=:unset)
+        self.v1.ip_commands(sid)
+      end
+
+      ##
       # @param [String] sid The unique string that we created to identify the Network
       #   resource.
       # @return [Twilio::REST::Supersim::V1::NetworkInstance] if sid was passed.

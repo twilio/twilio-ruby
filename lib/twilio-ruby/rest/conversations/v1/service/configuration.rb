@@ -77,6 +77,7 @@ module Twilio
 
               # Components
               @notifications = nil
+              @webhooks = nil
             end
 
             ##
@@ -125,6 +126,13 @@ module Twilio
             # @return [NotificationContext] NotificationContext
             def notifications
               return NotificationContext.new(@version, @solution[:chat_service_sid], )
+            end
+
+            ##
+            # Access the webhooks
+            # @return [WebhookContext] WebhookContext
+            def webhooks
+              return WebhookContext.new(@version, @solution[:chat_service_sid], )
             end
 
             ##

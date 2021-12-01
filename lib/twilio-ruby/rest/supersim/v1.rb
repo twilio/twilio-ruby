@@ -17,6 +17,7 @@ module Twilio
           @version = 'v1'
           @commands = nil
           @fleets = nil
+          @ip_commands = nil
           @networks = nil
           @network_access_profiles = nil
           @sims = nil
@@ -51,6 +52,21 @@ module Twilio
               @fleets ||= FleetList.new self
           else
               FleetContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The SID of the IP Command resource to fetch.
+        # @return [Twilio::REST::Supersim::V1::IpCommandContext] if sid was passed.
+        # @return [Twilio::REST::Supersim::V1::IpCommandList]
+        def ip_commands(sid=:unset)
+          if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @ip_commands ||= IpCommandList.new self
+          else
+              IpCommandContext.new(self, sid)
           end
         end
 

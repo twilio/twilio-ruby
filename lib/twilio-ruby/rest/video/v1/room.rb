@@ -60,8 +60,11 @@ module Twilio
           # @param [Boolean] audio_only When set to true, indicates that the participants in
           #   the room will only publish audio. No video tracks will be allowed. Group rooms
           #   only.
+          # @param [String] max_participant_duration The maximum number of seconds a
+          #   Participant can be connected to the room. The maximum possible value is 86400
+          #   seconds (24 hours). The default is 14400 seconds (4 hours).
           # @return [RoomInstance] Created RoomInstance
-          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset, recording_rules: :unset, audio_only: :unset)
+          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset, recording_rules: :unset, audio_only: :unset, max_participant_duration: :unset)
             data = Twilio::Values.of({
                 'EnableTurn' => enable_turn,
                 'Type' => type,
@@ -74,6 +77,7 @@ module Twilio
                 'MediaRegion' => media_region,
                 'RecordingRules' => Twilio.serialize_object(recording_rules),
                 'AudioOnly' => audio_only,
+                'MaxParticipantDuration' => max_participant_duration,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -364,6 +368,7 @@ module Twilio
                 'duration' => payload['duration'] == nil ? payload['duration'] : payload['duration'].to_i,
                 'type' => payload['type'],
                 'max_participants' => payload['max_participants'].to_i,
+                'max_participant_duration' => payload['max_participant_duration'].to_i,
                 'max_concurrent_published_tracks' => payload['max_concurrent_published_tracks'] == nil ? payload['max_concurrent_published_tracks'] : payload['max_concurrent_published_tracks'].to_i,
                 'record_participants_on_connect' => payload['record_participants_on_connect'],
                 'video_codecs' => payload['video_codecs'],
@@ -465,6 +470,12 @@ module Twilio
           # @return [String] The maximum number of concurrent Participants allowed in the room
           def max_participants
             @properties['max_participants']
+          end
+
+          ##
+          # @return [String] The maximum number of seconds a Participant can be connected to the room
+          def max_participant_duration
+            @properties['max_participant_duration']
           end
 
           ##

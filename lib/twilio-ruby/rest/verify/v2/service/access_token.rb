@@ -35,9 +35,15 @@ module Twilio
             #   external system, such as your user's UUID, GUID, or SID.
             # @param [access_token.FactorTypes] factor_type The Type of this Factor. Eg.
             #   `push`
+            # @param [String] factor_friendly_name The friendly name of the factor that is
+            #   going to be created with this access token
             # @return [AccessTokenInstance] Created AccessTokenInstance
-            def create(identity: nil, factor_type: nil)
-              data = Twilio::Values.of({'Identity' => identity, 'FactorType' => factor_type, })
+            def create(identity: nil, factor_type: nil, factor_friendly_name: :unset)
+              data = Twilio::Values.of({
+                  'Identity' => identity,
+                  'FactorType' => factor_type,
+                  'FactorFriendlyName' => factor_friendly_name,
+              })
 
               payload = @version.create('POST', @uri, data: data)
 

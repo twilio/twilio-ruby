@@ -202,7 +202,9 @@ describe 'Configuration' do
                   }
               ]
           },
-          "url": "https://flex-api.twilio.com/v1/Configuration"
+          "url": "https://flex-api.twilio.com/v1/Configuration",
+          "flex_insights_drilldown": true,
+          "flex_url": "https://flex.twilio.com"
       }
       ]
     ))
@@ -392,7 +394,9 @@ describe 'Configuration' do
               "mode": "readOnly"
           },
           "flex_insights_hr": null,
-          "url": "https://flex-api.twilio.com/v1/Configuration"
+          "url": "https://flex-api.twilio.com/v1/Configuration",
+          "flex_insights_drilldown": false,
+          "flex_url": "https://flex.twilio.com"
       }
       ]
     ))
@@ -595,7 +599,9 @@ describe 'Configuration' do
                   }
               ]
           },
-          "url": "https://flex-api.twilio.com/v1/Configuration"
+          "url": "https://flex-api.twilio.com/v1/Configuration",
+          "flex_insights_drilldown": true,
+          "flex_url": "https://flex.twilio.com"
       }
       ]
     ))
