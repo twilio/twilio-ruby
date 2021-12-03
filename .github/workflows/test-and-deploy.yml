@@ -1,13 +1,43 @@
-name: Deploy
+name: Test and Deploy
 on:
   push:
-    tags:
-      - '*'
+    branches: [ '*' ]
+    tags: [ '*' ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run automatically at 8AM PST Monday-Friday
+    - cron: '0 15 * * 1-5'
   workflow_dispatch:
 
 jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix:
+        ruby: [ 2.4, 2.5, 2.6, 2.7, '3.0', ruby-head, jruby-9.2 ]
+    continue-on-error: ${{ matrix.ruby == 'ruby-head' }}
+    steps:
+      - name: Checkout twilio-ruby
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - run: bundle install --with development
+      - run: bundle exec rake install
+      - name: Run Unit Tests
+        run: make test
+
   deploy:
-    name: Deploy to Rubygems
+    name: Deploy
+    if: success() && github.ref_type == 'tag'
+    needs: [ test ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout twilio-ruby
@@ -38,7 +68,7 @@ jobs:
       - name: Publish to Rubygems
         env:
           GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_AUTH_TOKEN }}
-        run:  |
+        run: |
           mkdir -p $HOME/.gem
           touch $HOME/.gem/credentials
           chmod 0600 $HOME/.gem/credentials
@@ -48,16 +78,16 @@ jobs:
 
   notify-on-failure:
     name: Slack notify on failure
-    if: ${{ failure() }}
-    needs: [deploy]
+    if: failure() && github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref_type == 'tag')
+    needs: [ test, deploy ]
     runs-on: ubuntu-latest
     steps:
       - uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_COLOR: ${{ needs.deploy.status }}
+          SLACK_COLOR: failure
           SLACK_ICON_EMOJI: ':github:'
-          SLACK_MESSAGE: ${{ format('Failed to publish {1} to RubyGems{3} {0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id, ':') }}
-          SLACK_TITLE: Deployment Failure
+          SLACK_MESSAGE: ${{ format('Tests *{0}*, Deploy *{1}*, {2}/{3}/actions/runs/{4}', needs.test.result, needs.deploy.result, github.server_url, github.repository, github.run_id) }}
+          SLACK_TITLE: Action Failure - ${{ github.repository }}
           SLACK_USERNAME: GitHub Actions
           SLACK_MSG_AUTHOR: twilio-dx
           SLACK_FOOTER: Posted automatically using GitHub Actions
