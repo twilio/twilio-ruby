@@ -29,6 +29,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Insights::V1::SettingInstance]
+      def settings
+        self.v1.settings()
+      end
+
+      ##
       # @param [String] sid The sid
       # @return [Twilio::REST::Insights::V1::CallInstance] if sid was passed.
       # @return [Twilio::REST::Insights::V1::CallList]

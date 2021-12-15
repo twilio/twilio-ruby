@@ -15,11 +15,32 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @archived_calls = nil
           @byoc_trunks = nil
           @connection_policies = nil
           @dialing_permissions = nil
           @ip_records = nil
           @source_ip_mappings = nil
+        end
+
+        ##
+        # @param [Date] date The date of the Call in UTC.
+        # @param [String] sid The Twilio-provided Call SID that uniquely identifies the
+        #   Call resource to delete
+        # @return [Twilio::REST::Voice::V1::ArchivedCallContext] if sid was passed.
+        # @return [Twilio::REST::Voice::V1::ArchivedCallList]
+        def archived_calls(date=:unset, sid=:unset)
+          if date.nil?
+              raise ArgumentError, 'date cannot be nil'
+          end
+          if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if date == :unset && sid == :unset
+              @archived_calls ||= ArchivedCallList.new self
+          else
+              ArchivedCallContext.new(self, date, sid)
+          end
         end
 
         ##

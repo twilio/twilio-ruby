@@ -42,14 +42,20 @@ module Twilio
           #   Callbacks}[/docs/live/status-callbacks] for details.
           # @param [String] status_callback_method The HTTP method Twilio should use to call
           #   the `status_callback` URL. Can be `POST` or `GET` and the default is `POST`.
+          # @param [String] max_duration The maximum time, in seconds, that the
+          #   MediaProcessor can run before automatically ends. The default value is 300
+          #   seconds, and the maximum value is 90000 seconds. Once this maximum duration is
+          #   reached, Twilio will end the MediaProcessor, regardless of whether media is
+          #   still streaming.
           # @return [MediaProcessorInstance] Created MediaProcessorInstance
-          def create(extension: nil, extension_context: nil, extension_environment: :unset, status_callback: :unset, status_callback_method: :unset)
+          def create(extension: nil, extension_context: nil, extension_environment: :unset, status_callback: :unset, status_callback_method: :unset, max_duration: :unset)
             data = Twilio::Values.of({
                 'Extension' => extension,
                 'ExtensionContext' => extension_context,
                 'ExtensionEnvironment' => Twilio.serialize_object(extension_environment),
                 'StatusCallback' => status_callback,
                 'StatusCallbackMethod' => status_callback_method,
+                'MaxDuration' => max_duration,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -264,6 +270,7 @@ module Twilio
                 'ended_reason' => payload['ended_reason'],
                 'status_callback' => payload['status_callback'],
                 'status_callback_method' => payload['status_callback_method'],
+                'max_duration' => payload['max_duration'].to_i,
             }
 
             # Context
@@ -346,6 +353,12 @@ module Twilio
           # @return [String] The HTTP method Twilio should use to call the `status_callback` URL
           def status_callback_method
             @properties['status_callback_method']
+          end
+
+          ##
+          # @return [String] Maximum MediaProcessor duration in minutes
+          def max_duration
+            @properties['max_duration']
           end
 
           ##

@@ -15,9 +15,16 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @settings = nil
           @calls = nil
           @call_summaries = nil
           @rooms = nil
+        end
+
+        ##
+        # @return [Twilio::REST::Insights::V1::SettingContext]
+        def settings
+          @settings ||= SettingContext.new self
         end
 
         ##

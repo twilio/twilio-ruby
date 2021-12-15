@@ -78,6 +78,9 @@ module Twilio
             # @param [Boolean] smart_encoded Whether to detect Unicode characters that have a
             #   similar GSM-7 character and replace them. Can be: `true` or `false`.
             # @param [Array[String]] persistent_action Rich actions for Channels Messages.
+            # @param [Boolean] send_as_mms If set to True, Twilio will deliver the message as
+            #   a single MMS message, regardless of the presence of media. This is a Beta
+            #   Feature.
             # @param [String] from A Twilio phone number in
             #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, an {alphanumeric
             #   sender
@@ -108,7 +111,7 @@ module Twilio
             #   parameters in the POST request. You can include up to 10 `media_url` parameters
             #   per message. You can send images in an SMS message in only the US and Canada.
             # @return [MessageInstance] Created MessageInstance
-            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, attempt: :unset, validity_period: :unset, force_delivery: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, persistent_action: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, attempt: :unset, validity_period: :unset, force_delivery: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, persistent_action: :unset, send_as_mms: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -126,6 +129,7 @@ module Twilio
                   'AddressRetention' => address_retention,
                   'SmartEncoded' => smart_encoded,
                   'PersistentAction' => Twilio.serialize_list(persistent_action) { |e| e },
+                  'SendAsMms' => send_as_mms,
               })
 
               payload = @version.create('POST', @uri, data: data)
