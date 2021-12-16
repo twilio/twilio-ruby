@@ -458,25 +458,25 @@ module Twilio
           end
 
           ##
-          # @return [String] Deprecated. The HTTP method we use to call sms_fallback_url
+          # @return [String] Deprecated
           def sms_fallback_method
             @properties['sms_fallback_method']
           end
 
           ##
-          # @return [String] Deprecated. The URL we call when an error occurs while retrieving or executing the TwiML requested from the sms_url
+          # @return [String] Deprecated
           def sms_fallback_url
             @properties['sms_fallback_url']
           end
 
           ##
-          # @return [String] Deprecated. The HTTP method we use to call sms_url
+          # @return [String] Deprecated
           def sms_method
             @properties['sms_method']
           end
 
           ##
-          # @return [String] Deprecated. The URL we call when the SIM-connected device sends an SMS message that is not a Command
+          # @return [String] Deprecated
           def sms_url
             @properties['sms_url']
           end

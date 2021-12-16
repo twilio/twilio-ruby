@@ -84,15 +84,15 @@ module Twilio
               #   should be sent to.
               # @param [String] post_webhook_url The absolute url the post-event webhook request
               #   should be sent to.
-              # @param [Array[String]] filters The list of webhook event triggers that are
-              #   enabled for this Service. Possible values are `onParticipantAdd`,
-              #   `onParticipantAdded`, `onDeliveryUpdated`, `onConversationUpdated`,
-              #   `onConversationRemove`, `onParticipantRemove`, `onConversationUpdate`,
-              #   `onMessageAdd`, `onMessageRemoved`, `onParticipantUpdated`,
-              #   `onConversationAdded`, `onMessageAdded`, `onConversationAdd`,
-              #   `onConversationRemoved`, `onParticipantUpdate`, `onMessageRemove`,
-              #   `onMessageUpdated`, `onParticipantRemoved`, `onMessageUpdate` or
-              #   `onConversationStateUpdated`.
+              # @param [Array[String]] filters The list of events that your configured webhook
+              #   targets will receive. Events not configured here will not fire. Possible values
+              #   are `onParticipantAdd`, `onParticipantAdded`, `onDeliveryUpdated`,
+              #   `onConversationUpdated`, `onConversationRemove`, `onParticipantRemove`,
+              #   `onConversationUpdate`, `onMessageAdd`, `onMessageRemoved`,
+              #   `onParticipantUpdated`, `onConversationAdded`, `onMessageAdded`,
+              #   `onConversationAdd`, `onConversationRemoved`, `onParticipantUpdate`,
+              #   `onMessageRemove`, `onMessageUpdated`, `onParticipantRemoved`, `onMessageUpdate`
+              #   or `onConversationStateUpdated`.
               # @param [String] method The HTTP method to be used when sending a webhook
               #   request. One of `GET` or `POST`.
               # @return [WebhookInstance] Updated WebhookInstance
@@ -178,7 +178,7 @@ module Twilio
               end
 
               ##
-              # @return [String] The chat_service_sid
+              # @return [String] The unique ID of the {Conversation Service}[https://www.twilio.com/docs/conversations/api/service-resource] this conversation belongs to.
               def chat_service_sid
                 @properties['chat_service_sid']
               end
@@ -196,7 +196,7 @@ module Twilio
               end
 
               ##
-              # @return [Array[String]] The list of webhook event triggers that are enabled for this Service.
+              # @return [Array[String]] The list of events that your configured webhook targets will receive. Events not configured here will not fire.
               def filters
                 @properties['filters']
               end
@@ -219,15 +219,15 @@ module Twilio
               #   should be sent to.
               # @param [String] post_webhook_url The absolute url the post-event webhook request
               #   should be sent to.
-              # @param [Array[String]] filters The list of webhook event triggers that are
-              #   enabled for this Service. Possible values are `onParticipantAdd`,
-              #   `onParticipantAdded`, `onDeliveryUpdated`, `onConversationUpdated`,
-              #   `onConversationRemove`, `onParticipantRemove`, `onConversationUpdate`,
-              #   `onMessageAdd`, `onMessageRemoved`, `onParticipantUpdated`,
-              #   `onConversationAdded`, `onMessageAdded`, `onConversationAdd`,
-              #   `onConversationRemoved`, `onParticipantUpdate`, `onMessageRemove`,
-              #   `onMessageUpdated`, `onParticipantRemoved`, `onMessageUpdate` or
-              #   `onConversationStateUpdated`.
+              # @param [Array[String]] filters The list of events that your configured webhook
+              #   targets will receive. Events not configured here will not fire. Possible values
+              #   are `onParticipantAdd`, `onParticipantAdded`, `onDeliveryUpdated`,
+              #   `onConversationUpdated`, `onConversationRemove`, `onParticipantRemove`,
+              #   `onConversationUpdate`, `onMessageAdd`, `onMessageRemoved`,
+              #   `onParticipantUpdated`, `onConversationAdded`, `onMessageAdded`,
+              #   `onConversationAdd`, `onConversationRemoved`, `onParticipantUpdate`,
+              #   `onMessageRemove`, `onMessageUpdated`, `onParticipantRemoved`, `onMessageUpdate`
+              #   or `onConversationStateUpdated`.
               # @param [String] method The HTTP method to be used when sending a webhook
               #   request. One of `GET` or `POST`.
               # @return [WebhookInstance] Updated WebhookInstance
