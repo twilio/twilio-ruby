@@ -13,7 +13,7 @@ lint:
 	bundle exec rubocop -d --cache true --parallel
 
 docs:
-	yard doc --output-dir ./doc
+	bundle exec yard doc --output-dir ./doc
 
 authors:
 	echo "Authors\n=======\n\nA huge thanks to all of our contributors:\n\n" > AUTHORS.md
