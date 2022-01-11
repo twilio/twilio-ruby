@@ -1,7 +1,7 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.5
   Exclude:
     - 'lib/twilio-ruby/rest/**/*'
     - 'spec/integration/**/*'

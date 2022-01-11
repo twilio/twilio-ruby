@@ -6,7 +6,7 @@ githooks:
 install:
 	bundle install --with development; bundle exec rake install
 
-test: lint
+test:
 	bundle exec rake spec
 
 lint:

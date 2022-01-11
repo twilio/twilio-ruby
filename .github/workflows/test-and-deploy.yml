@@ -18,21 +18,59 @@ jobs:
     strategy:
       matrix:
         ruby: [ 2.4, 2.5, 2.6, 2.7, '3.0', ruby-head, jruby-9.2 ]
-    continue-on-error: ${{ matrix.ruby == 'ruby-head' }}
     steps:
       - name: Checkout twilio-ruby
         uses: actions/checkout@v2
+
+      # Excludes rubocop linter for incompatible versions of ruby
+      - name: Set up Ruby without linter
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+        if: ${{ contains(fromJSON('["2.4"]'), matrix.ruby) }}
+        env:
+          NO_LINTER: true
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
+        if: ${{ contains(fromJSON('["2.4"]'), matrix.ruby) != true }}
+
+      # Excludes rubocop linter for incompatible versions of ruby
+      - run: bundle install --with development
+        if: ${{ contains(fromJSON('["2.4"]'), matrix.ruby) }}
+        env:
+          NO_LINTER: true
 
       - run: bundle install --with development
+        if: ${{ contains(fromJSON('["2.4"]'), matrix.ruby) != true }}
+
+      # Excludes rubocop linter for incompatible versions of ruby
       - run: bundle exec rake install
+        if: ${{ contains(fromJSON('["2.4"]'), matrix.ruby) }}
+        env:
+          NO_LINTER: true
+
+      - run: bundle exec rake install
+        if: ${{ contains(fromJSON('["2.4"]'), matrix.ruby) != true }}
+
+      - name: Lint
+        run: make lint
+        if: ${{ contains(fromJSON('["2.4"]'), matrix.ruby) != true }}
+
+      # Excludes rubocop linter for incompatible versions of ruby
       - name: Run Unit Tests
         run: make test
+        if: ${{ contains(fromJSON('["2.4"]'), matrix.ruby) }}
+        env:
+          NO_LINTER: true
+
+      - name: Run Unit Tests
+        run: make test
+        if: ${{ contains(fromJSON('["2.4"]'), matrix.ruby) != true }}
 
   deploy:
     name: Deploy
@@ -52,6 +90,9 @@ jobs:
           bundler-cache: true
 
       - run: bundle install
+        env:
+          # Exclude linter for incompatible version of ruby (2.4)
+          NO_LINTER: true
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
