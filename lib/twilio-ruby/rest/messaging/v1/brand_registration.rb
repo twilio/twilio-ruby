@@ -199,6 +199,15 @@ module Twilio
           end
 
           ##
+          # Update the BrandRegistrationInstance
+          # @return [BrandRegistrationInstance] Updated BrandRegistrationInstance
+          def update
+            payload = @version.update('POST', @uri)
+
+            BrandRegistrationInstance.new(@version, payload, sid: @solution[:sid], )
+          end
+
+          ##
           # Access the brand_vettings
           # @return [BrandVettingList]
           # @return [BrandVettingContext] if brand_vetting_sid was passed.
@@ -401,6 +410,13 @@ module Twilio
           # @return [BrandRegistrationInstance] Fetched BrandRegistrationInstance
           def fetch
             context.fetch
+          end
+
+          ##
+          # Update the BrandRegistrationInstance
+          # @return [BrandRegistrationInstance] Updated BrandRegistrationInstance
+          def update
+            context.update
           end
 
           ##

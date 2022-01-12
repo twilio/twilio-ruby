@@ -43,6 +43,86 @@ module Twilio
               end
 
               ##
+              # Lists BundleCopyInstance records from the API as a list.
+              # Unlike stream(), this operation is eager and will load `limit` records into
+              # memory before returning.
+              # @param [Integer] limit Upper limit for the number of records to return. stream()
+              #    guarantees to never return more than limit.  Default is no limit
+              # @param [Integer] page_size Number of records to fetch per request, when
+              #    not set will use the default value of 50 records.  If no page_size is defined
+              #    but a limit is defined, stream() will attempt to read the limit with the most
+              #    efficient page size, i.e. min(limit, 1000)
+              # @return [Array] Array of up to limit results
+              def list(limit: nil, page_size: nil)
+                self.stream(limit: limit, page_size: page_size).entries
+              end
+
+              ##
+              # Streams BundleCopyInstance records from the API as an Enumerable.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              # @param [Integer] limit Upper limit for the number of records to return. stream()
+              #    guarantees to never return more than limit. Default is no limit.
+              # @param [Integer] page_size Number of records to fetch per request, when
+              #    not set will use the default value of 50 records. If no page_size is defined
+              #    but a limit is defined, stream() will attempt to read the limit with the most
+              #    efficient page size, i.e. min(limit, 1000)
+              # @return [Enumerable] Enumerable that will yield up to limit results
+              def stream(limit: nil, page_size: nil)
+                limits = @version.read_limits(limit, page_size)
+
+                page = self.page(page_size: limits[:page_size], )
+
+                @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+              end
+
+              ##
+              # When passed a block, yields BundleCopyInstance records from the API.
+              # This operation lazily loads records as efficiently as possible until the limit
+              # is reached.
+              def each
+                limits = @version.read_limits
+
+                page = self.page(page_size: limits[:page_size], )
+
+                @version.stream(page,
+                                limit: limits[:limit],
+                                page_limit: limits[:page_limit]).each {|x| yield x}
+              end
+
+              ##
+              # Retrieve a single page of BundleCopyInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] page_token PageToken provided by the API
+              # @param [Integer] page_number Page Number, this value is simply for client state
+              # @param [Integer] page_size Number of records to return, defaults to 50
+              # @return [Page] Page of BundleCopyInstance
+              def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                params = Twilio::Values.of({
+                    'PageToken' => page_token,
+                    'Page' => page_number,
+                    'PageSize' => page_size,
+                })
+
+                response = @version.page('GET', @uri, params: params)
+
+                BundleCopyPage.new(@version, response, @solution)
+              end
+
+              ##
+              # Retrieve a single page of BundleCopyInstance records from the API.
+              # Request is executed immediately.
+              # @param [String] target_url API-generated URL for the requested results page
+              # @return [Page] Page of BundleCopyInstance
+              def get_page(target_url)
+                response = @version.domain.request(
+                    'GET',
+                    target_url
+                )
+                BundleCopyPage.new(@version, response, @solution)
+              end
+
+              ##
               # Provide a user friendly representation
               def to_s
                 '#<Twilio.Numbers.V2.BundleCopyList>'

@@ -334,6 +334,7 @@ module Twilio
                 'bitrate' => payload['bitrate'].to_i,
                 'size' => payload['size'].to_i,
                 'duration' => payload['duration'].to_i,
+                'media_external_location' => payload['media_external_location'],
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -448,6 +449,12 @@ module Twilio
           # @return [String] The duration of the composition's media file in seconds
           def duration
             @properties['duration']
+          end
+
+          ##
+          # @return [String] The URL of the media file associated with the composition when stored externally
+          def media_external_location
+            @properties['media_external_location']
           end
 
           ##

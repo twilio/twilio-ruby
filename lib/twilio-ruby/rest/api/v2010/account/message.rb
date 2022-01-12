@@ -78,6 +78,10 @@ module Twilio
             # @param [Boolean] smart_encoded Whether to detect Unicode characters that have a
             #   similar GSM-7 character and replace them. Can be: `true` or `false`.
             # @param [Array[String]] persistent_action Rich actions for Channels Messages.
+            # @param [message.ScheduleType] schedule_type Indicates your intent to schedule a
+            #   message. Pass the value `fixed` to schedule a message at a fixed time.
+            # @param [Time] send_at The time that Twilio will send the message. Must be in ISO
+            #   8601 format.
             # @param [Boolean] send_as_mms If set to True, Twilio will deliver the message as
             #   a single MMS message, regardless of the presence of media. This is a Beta
             #   Feature.
@@ -111,7 +115,7 @@ module Twilio
             #   parameters in the POST request. You can include up to 10 `media_url` parameters
             #   per message. You can send images in an SMS message in only the US and Canada.
             # @return [MessageInstance] Created MessageInstance
-            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, attempt: :unset, validity_period: :unset, force_delivery: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, persistent_action: :unset, send_as_mms: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, attempt: :unset, validity_period: :unset, force_delivery: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, persistent_action: :unset, schedule_type: :unset, send_at: :unset, send_as_mms: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -129,6 +133,8 @@ module Twilio
                   'AddressRetention' => address_retention,
                   'SmartEncoded' => smart_encoded,
                   'PersistentAction' => Twilio.serialize_list(persistent_action) { |e| e },
+                  'ScheduleType' => schedule_type,
+                  'SendAt' => Twilio.serialize_iso8601_datetime(send_at),
                   'SendAsMms' => send_as_mms,
               })
 
@@ -333,9 +339,11 @@ module Twilio
             # Update the MessageInstance
             # @param [String] body The text of the message you want to send. Can be up to
             #   1,600 characters long.
+            # @param [message.UpdateStatus] status When set as `canceled`, allows a message
+            #   cancelation request if a message has not yet been sent.
             # @return [MessageInstance] Updated MessageInstance
-            def update(body: :unset)
-              data = Twilio::Values.of({'Body' => body, })
+            def update(body: :unset, status: :unset)
+              data = Twilio::Values.of({'Body' => body, 'Status' => status, })
 
               payload = @version.update('POST', @uri, data: data)
 
@@ -583,9 +591,11 @@ module Twilio
             # Update the MessageInstance
             # @param [String] body The text of the message you want to send. Can be up to
             #   1,600 characters long.
+            # @param [message.UpdateStatus] status When set as `canceled`, allows a message
+            #   cancelation request if a message has not yet been sent.
             # @return [MessageInstance] Updated MessageInstance
-            def update(body: :unset)
-              context.update(body: body, )
+            def update(body: :unset, status: :unset)
+              context.update(body: body, status: status, )
             end
 
             ##

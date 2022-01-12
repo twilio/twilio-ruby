@@ -174,6 +174,117 @@ describe 'Message' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives create_scheduled_message_sms responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "api_version": "2010-04-01",
+          "body": "Hello! \ud83d\udc4d",
+          "date_created": "Mon, 29 Nov 2021 22:40:10 +0000",
+          "date_sent": null,
+          "date_updated": "Mon, 29 Nov 2021 22:40:10 +0000",
+          "direction": "outbound-api",
+          "error_code": null,
+          "error_message": null,
+          "from": null,
+          "messaging_service_sid": "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "num_media": "0",
+          "num_segments": "0",
+          "price": null,
+          "price_unit": null,
+          "sid": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "status": "scheduled",
+          "subresource_uris": {
+              "media": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media.json"
+          },
+          "to": "+15558675310",
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+      ]
+    ))
+
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .messages.create(to: '+15558675310')
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives create_scheduled_message_mms responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "api_version": "2010-04-01",
+          "body": "Hello! \ud83d\udc4d",
+          "date_created": "Mon, 29 Nov 2021 22:40:10 +0000",
+          "date_sent": null,
+          "date_updated": "Mon, 29 Nov 2021 22:40:10 +0000",
+          "direction": "outbound-api",
+          "error_code": null,
+          "error_message": null,
+          "from": null,
+          "messaging_service_sid": "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "num_media": "1",
+          "num_segments": "1",
+          "price": null,
+          "price_unit": null,
+          "sid": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "status": "scheduled",
+          "subresource_uris": {
+              "media": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media.json"
+          },
+          "to": "+15558675310",
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+      ]
+    ))
+
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .messages.create(to: '+15558675310')
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives create_scheduled_message_whatsapp responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "api_version": "2010-04-01",
+          "body": "Hello! \ud83d\udc4d",
+          "date_created": "Mon, 29 Nov 2021 22:40:10 +0000",
+          "date_sent": null,
+          "date_updated": "Mon, 29 Nov 2021 22:40:10 +0000",
+          "direction": "outbound-api",
+          "error_code": null,
+          "error_message": null,
+          "from": null,
+          "messaging_service_sid": "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "num_media": "0",
+          "num_segments": "0",
+          "price": null,
+          "price_unit": null,
+          "sid": "SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "status": "scheduled",
+          "subresource_uris": {
+              "media": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Media.json"
+          },
+          "to": "whatsapp:+15558675310",
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Messages/SMaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+      }
+      ]
+    ))
+
+    actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .messages.create(to: '+15558675310')
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

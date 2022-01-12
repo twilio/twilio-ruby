@@ -1,6 +1,28 @@
 twilio-ruby changelog
 =====================
 
+[2022-01-12] Version 5.63.0
+---------------------------
+**Library - Feature**
+- [PR #586](https://github.com/twilio/twilio-ruby/pull/586): add GitHub release step during deploy. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Library - Chore**
+- [PR #584](https://github.com/twilio/twilio-ruby/pull/584): run yard in bundle context. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+- [PR #583](https://github.com/twilio/twilio-ruby/pull/583): remove githook dependency from make install. Thanks to [@JenniferMah](https://github.com/JenniferMah)!
+
+**Api**
+- Make fixed time scheduling parameters public **(breaking change)**
+
+**Messaging**
+- Add update brand registration API
+
+**Numbers**
+- Add API endpoint for List Bundle Copies resource
+
+**Video**
+- Enable external storage for all customers
+
+
 [2021-12-15] Version 5.62.0
 ---------------------------
 **Library - Feature**
