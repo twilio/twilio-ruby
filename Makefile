@@ -6,11 +6,8 @@ githooks:
 install:
 	bundle install --with development; bundle exec rake install
 
-test: lint
+test:
 	bundle exec rake spec
-
-lint:
-	bundle exec rubocop -d --cache true --parallel
 
 docs:
 	bundle exec yard doc --output-dir ./doc
