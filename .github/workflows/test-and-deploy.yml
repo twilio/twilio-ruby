@@ -31,14 +31,14 @@ jobs:
       # Excludes incompatible versions of ruby
       - name: Set up linter
         run: bundle add rubocop --version "~> 1.24.1" --group "development" --skip-install
-        if: ${{ contains(fromJSON('["2.4"]'), matrix.ruby) != true }}
+        if: ${{ matrix.ruby != '2.4' }}
 
       - run: bundle install --with development
       - run: bundle exec rake install
 
       - name: Run linter
         run: bundle exec rubocop -d --cache true --parallel
-        if: ${{ contains(fromJSON('["2.4"]'), matrix.ruby) != true }}
+        if: ${{ matrix.ruby != '2.4' }}
 
       - name: Run Unit Tests
         run: make test
