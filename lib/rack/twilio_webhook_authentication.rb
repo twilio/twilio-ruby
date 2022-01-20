@@ -56,8 +56,7 @@ module Rack
     private def extract_params!(request)
       return {} if !request.post?
 
-      case request.media_type
-      when FORM_URLENCODED_MEDIA_TYPE
+      if request.media_type == FORM_URLENCODED_MEDIA_TYPE
         request.POST
       else
         request.body.rewind
