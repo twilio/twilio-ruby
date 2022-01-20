@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency('jwt', '>= 1.5', '<= 2.5')
   spec.add_dependency('nokogiri', '>= 1.6', '< 2.0')
-  spec.add_dependency('faraday', '>= 0.9', '< 2.0')
+  spec.add_dependency('faraday', '>= 0.9', '< 3.0')
   # Workaround for RBX <= 2.2.1, should be fixed in next version
   spec.add_dependency('rubysl') if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
 
