@@ -31,6 +31,7 @@ describe Rack::TwilioWebhookAuthentication do
       auth_token = 'qwerty'
       account_sid = 12_345
       expect_any_instance_of(Rack::Request).to receive(:post?).and_return(true)
+      expect_any_instance_of(Rack::Request).to receive(:media_type).and_return(Rack::MediaType.type('application/x-www-form-urlencoded'))
       expect_any_instance_of(Rack::Request).to receive(:POST).and_return({ 'AccountSid' => account_sid })
       @middleware = Rack::TwilioWebhookAuthentication.new(@app, nil, /\/voice/) { |asid| auth_token }
       request_validator = double('RequestValidator')
@@ -101,6 +102,94 @@ describe Rack::TwilioWebhookAuthentication do
       request = Rack::MockRequest.env_for('/sms')
       status, headers, body = @middleware.call(request)
       expect(status).to be(403)
+    end
+  end
+
+  describe 'validating non-form-data POST payloads' do
+    it 'should fail if the body does not validate' do
+      middleware = Rack::TwilioWebhookAuthentication.new(@app, 'qwerty', /\/test/)
+      input = StringIO.new('{"message": "a post body that does not match the bodySHA256"}')
+
+      request = Rack::MockRequest.env_for(
+        'https://example.com/test?bodySHA256=79bfb0acaf0045fd30f13d48d4fe296b393d85a3bfbee881a0172b2bd574b11e',
+        method: 'POST',
+        input: input
+      )
+      request['HTTP_X_TWILIO_SIGNATURE'] = '+LYlbGr/VmN84YPJQCuWs+9UA7E='
+      request['CONTENT_TYPE'] = 'application/json'
+
+      status, headers, body = middleware.call(request)
+
+      expect(status).not_to be(200)
+    end
+
+    it 'should validate if the body signature is correct' do
+      middleware = Rack::TwilioWebhookAuthentication.new(@app, 'qwerty', /\/test/)
+      input = StringIO.new('{"message": "a post body"}')
+
+      request = Rack::MockRequest.env_for(
+        'https://example.com/test?bodySHA256=8d90d640c6ba47d595ac56203d7f5c6b511be80fdf44a2055acca75a119b9fd2',
+        method: 'POST',
+        input: input
+      )
+      request['HTTP_X_TWILIO_SIGNATURE'] = 'zR5Oq4f6cijN5oz5bisiVuxYnTU='
+      request['CONTENT_TYPE'] = 'application/json'
+
+      status, headers, body = middleware.call(request)
+
+      expect(status).to be(200)
+    end
+
+    it 'should validate even if a previous middleware read the body first' do
+      middleware = Rack::TwilioWebhookAuthentication.new(@app, 'qwerty', /\/test/)
+      input = StringIO.new('{"message": "a post body"}')
+
+      request = Rack::MockRequest.env_for(
+        'https://example.com/test?bodySHA256=8d90d640c6ba47d595ac56203d7f5c6b511be80fdf44a2055acca75a119b9fd2',
+        method: 'POST',
+        input: input
+      )
+      request['HTTP_X_TWILIO_SIGNATURE'] = 'zR5Oq4f6cijN5oz5bisiVuxYnTU='
+      request['CONTENT_TYPE'] = 'application/json'
+      request['rack.input'].read
+
+      status, headers, body = middleware.call(request)
+
+      expect(status).to be(200)
+    end
+  end
+
+  describe 'validating application/x-www-form-urlencoded POST payloads' do
+    it 'should fail if the body does not validate' do
+      middleware = Rack::TwilioWebhookAuthentication.new(@app, 'qwerty', /\/test/)
+
+      request = Rack::MockRequest.env_for(
+        'https://example.com/test',
+        method: 'POST',
+        params: { 'foo' => 'bar' }
+      )
+      request['HTTP_X_TWILIO_SIGNATURE'] = 'foobarbaz'
+      expect(request['CONTENT_TYPE']).to eq('application/x-www-form-urlencoded')
+
+      status, headers, body = middleware.call(request)
+
+      expect(status).not_to be(200)
+    end
+
+    it 'should validate if the body signature is correct' do
+      middleware = Rack::TwilioWebhookAuthentication.new(@app, 'qwerty', /\/test/)
+
+      request = Rack::MockRequest.env_for(
+        'https://example.com/test',
+        method: 'POST',
+        params: { 'foo' => 'bar' }
+      )
+      request['HTTP_X_TWILIO_SIGNATURE'] = 'TR9Skm9jiF4WVRJznU5glK5I83k='
+      expect(request['CONTENT_TYPE']).to eq('application/x-www-form-urlencoded')
+
+      status, headers, body = middleware.call(request)
+
+      expect(status).to be(200)
     end
   end
 end
