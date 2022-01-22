@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rack/media_type'
 
 module Rack
@@ -53,8 +54,8 @@ module Rack
     # Extract the params from the the request that we can use to determine the
     # signature. This _may_ modify the passed in request since it may read/rewind
     # the body.
-    private def extract_params!(request)
-      return {} if !request.post?
+    def extract_params!(request)
+      return {} unless request.post?
 
       if request.media_type == FORM_URLENCODED_MEDIA_TYPE
         request.POST
@@ -65,5 +66,7 @@ module Rack
         body
       end
     end
+
+    private :extract_params!
   end
 end

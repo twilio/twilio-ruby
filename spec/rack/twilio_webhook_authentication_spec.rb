@@ -166,7 +166,7 @@ describe Rack::TwilioWebhookAuthentication do
       request = Rack::MockRequest.env_for(
         'https://example.com/test',
         method: 'POST',
-        params: {'foo' => 'bar'}
+        params: { 'foo' => 'bar' }
       )
       request['HTTP_X_TWILIO_SIGNATURE'] = 'foobarbaz'
       expect(request['CONTENT_TYPE']).to eq('application/x-www-form-urlencoded')
@@ -182,7 +182,7 @@ describe Rack::TwilioWebhookAuthentication do
       request = Rack::MockRequest.env_for(
         'https://example.com/test',
         method: 'POST',
-        params: {'foo' => 'bar'}
+        params: { 'foo' => 'bar' }
       )
       request['HTTP_X_TWILIO_SIGNATURE'] = 'TR9Skm9jiF4WVRJznU5glK5I83k='
       expect(request['CONTENT_TYPE']).to eq('application/x-www-form-urlencoded')
