@@ -38,6 +38,15 @@ module Twilio
       end
 
       ##
+      # @param [String] sid The unique string that we created to identify the eSIM
+      #   Profile resource.
+      # @return [Twilio::REST::Supersim::V1::EsimProfileInstance] if sid was passed.
+      # @return [Twilio::REST::Supersim::V1::EsimProfileList]
+      def esim_profiles(sid=:unset)
+        self.v1.esim_profiles(sid)
+      end
+
+      ##
       # @param [String] sid The unique string that we created to identify the Fleet
       #   resource.
       # @return [Twilio::REST::Supersim::V1::FleetInstance] if sid was passed.

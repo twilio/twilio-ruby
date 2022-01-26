@@ -269,6 +269,7 @@ module Twilio
                 'brand_feedback' => payload['brand_feedback'],
                 'identity_status' => payload['identity_status'],
                 'russell_3000' => payload['russell_3000'],
+                'government_entity' => payload['government_entity'],
                 'tax_exempt_status' => payload['tax_exempt_status'],
                 'skip_automatic_sec_vet' => payload['skip_automatic_sec_vet'],
                 'mock' => payload['mock'],
@@ -379,6 +380,12 @@ module Twilio
           # @return [Boolean] Russell 3000
           def russell_3000
             @properties['russell_3000']
+          end
+
+          ##
+          # @return [Boolean] Government Entity
+          def government_entity
+            @properties['government_entity']
           end
 
           ##

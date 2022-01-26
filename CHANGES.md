@@ -1,6 +1,27 @@
 twilio-ruby changelog
 =====================
 
+[2022-01-26] Version 5.63.1
+---------------------------
+**Library - Fix**
+- [PR #590](https://github.com/twilio/twilio-ruby/pull/590): Validate signatures in Rack middleware for non-form-data payloads. Thanks to [@gabrielg](https://github.com/gabrielg)!
+
+**Library - Chore**
+- [PR #589](https://github.com/twilio/twilio-ruby/pull/589): Add sonarcloud analysis. Thanks to [@BrimmingDev](https://github.com/BrimmingDev)!
+- [PR #588](https://github.com/twilio/twilio-ruby/pull/588): support for rubocop linting on ruby-head. Thanks to [@Hunga1](https://github.com/Hunga1)!
+
+**Insights**
+- Added new endpoint to fetch Conference Participant Summary
+- Added new endpoint to fetch Conference Summary
+
+**Messaging**
+- Add government_entity parameter to brand apis
+
+**Verify**
+- Add Access Token fetch endpoint to retrieve a previously created token.
+- Add Access Token payload to the Access Token creation endpoint, including a unique Sid, so it's addressable while it's TTL is valid.
+
+
 [2022-01-12] Version 5.63.0
 ---------------------------
 **Library - Feature**

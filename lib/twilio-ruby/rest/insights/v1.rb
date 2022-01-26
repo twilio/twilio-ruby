@@ -18,6 +18,7 @@ module Twilio
           @settings = nil
           @calls = nil
           @call_summaries = nil
+          @conferences = nil
           @rooms = nil
         end
 
@@ -46,6 +47,21 @@ module Twilio
         # @return [Twilio::REST::Insights::V1::CallSummariesContext]
         def call_summaries
           @call_summaries ||= CallSummariesList.new self
+        end
+
+        ##
+        # @param [String] conference_sid The conference_sid
+        # @return [Twilio::REST::Insights::V1::ConferenceContext] if conference_sid was passed.
+        # @return [Twilio::REST::Insights::V1::ConferenceList]
+        def conferences(conference_sid=:unset)
+          if conference_sid.nil?
+              raise ArgumentError, 'conference_sid cannot be nil'
+          end
+          if conference_sid == :unset
+              @conferences ||= ConferenceList.new self
+          else
+              ConferenceContext.new(self, conference_sid)
+          end
         end
 
         ##

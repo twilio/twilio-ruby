@@ -16,6 +16,7 @@ module Twilio
           super
           @version = 'v1'
           @commands = nil
+          @esim_profiles = nil
           @fleets = nil
           @ip_commands = nil
           @networks = nil
@@ -37,6 +38,21 @@ module Twilio
               @commands ||= CommandList.new self
           else
               CommandContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The SID of the eSIM Profile resource to fetch.
+        # @return [Twilio::REST::Supersim::V1::EsimProfileContext] if sid was passed.
+        # @return [Twilio::REST::Supersim::V1::EsimProfileList]
+        def esim_profiles(sid=:unset)
+          if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @esim_profiles ||= EsimProfileList.new self
+          else
+              EsimProfileContext.new(self, sid)
           end
         end
 

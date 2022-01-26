@@ -49,6 +49,14 @@ module Twilio
       end
 
       ##
+      # @param [String] conference_sid The conference_sid
+      # @return [Twilio::REST::Insights::V1::ConferenceInstance] if conference_sid was passed.
+      # @return [Twilio::REST::Insights::V1::ConferenceList]
+      def conferences(conference_sid=:unset)
+        self.v1.conferences(conference_sid)
+      end
+
+      ##
       # @param [String] room_sid Unique identifier for the room.
       # @return [Twilio::REST::Insights::V1::RoomInstance] if room_sid was passed.
       # @return [Twilio::REST::Insights::V1::RoomList]
