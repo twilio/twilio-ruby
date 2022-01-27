@@ -27,13 +27,13 @@ Gem::Specification.new do |spec|
   spec.add_dependency('jwt', '>= 1.5', '<= 2.5')
   spec.add_dependency('nokogiri', '>= 1.6', '< 2.0')
   spec.add_dependency('faraday', '>= 0.9', '< 2.0')
+  spec.add_dependency('rack', '~> 2.0')
   # Workaround for RBX <= 2.2.1, should be fixed in next version
   spec.add_dependency('rubysl') if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
 
   spec.add_development_dependency 'bundler', '>= 1.5', '< 3.0'
   spec.add_development_dependency 'equivalent-xml', '~> 0.6'
   spec.add_development_dependency 'fakeweb', '~> 1.3'
-  spec.add_development_dependency 'rack', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'yard', '~> 0.9.9'
