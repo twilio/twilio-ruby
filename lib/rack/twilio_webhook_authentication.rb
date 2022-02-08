@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'rack/media_type'
-
 module Rack
   # Middleware that authenticates webhooks from Twilio using the request
   # validator.
@@ -23,9 +21,9 @@ module Rack
   class TwilioWebhookAuthentication
     # Rack's FORM_DATA_MEDIA_TYPES can be modified to taste, so we're slightly
     # more conservative in what we consider form data.
-    FORM_URLENCODED_MEDIA_TYPE = Rack::MediaType.type('application/x-www-form-urlencoded')
-
     def initialize(app, auth_token, *paths, &auth_token_lookup)
+      require 'rack/media_type'
+
       @app = app
       @auth_token = auth_token
       define_singleton_method(:get_auth_token, auth_token_lookup) if block_given?
@@ -57,7 +55,7 @@ module Rack
     def extract_params!(request)
       return {} unless request.post?
 
-      if request.media_type == FORM_URLENCODED_MEDIA_TYPE
+      if request.media_type == Rack::MediaType.type('application/x-www-form-urlencoded')
         request.POST
       else
         request.body.rewind
