@@ -443,6 +443,7 @@ module Twilio
               @events = nil
               @payments = nil
               @siprec = nil
+              @streams = nil
             end
 
             ##
@@ -615,6 +616,24 @@ module Twilio
               end
 
               @siprec
+            end
+
+            ##
+            # Access the streams
+            # @return [StreamList]
+            # @return [StreamContext] if sid was passed.
+            def streams(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return StreamContext.new(@version, @solution[:account_sid], @solution[:sid], sid, )
+              end
+
+              unless @streams
+                @streams = StreamList.new(@version, account_sid: @solution[:account_sid], call_sid: @solution[:sid], )
+              end
+
+              @streams
             end
 
             ##
@@ -956,6 +975,13 @@ module Twilio
             # @return [siprec] siprec
             def siprec
               context.siprec
+            end
+
+            ##
+            # Access the streams
+            # @return [streams] streams
+            def streams
+              context.streams
             end
 
             ##

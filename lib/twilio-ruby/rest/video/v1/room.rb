@@ -30,10 +30,13 @@ module Twilio
           #   `group-small`, or `group`. The default value is `group`.
           # @param [String] unique_name An application-defined string that uniquely
           #   identifies the resource. It can be used as a `room_sid` in place of the
-          #   resource's `sid` in the URL to address the resource. This value is unique for
-          #   `in-progress` rooms. SDK clients can use this name to connect to the room. REST
-          #   API clients can use this name in place of the Room SID to interact with the room
-          #   as long as the room is `in-progress`.
+          #   resource's `sid` in the URL to address the resource, assuming it does not
+          #   contain any {reserved
+          #   characters}[https://tools.ietf.org/html/rfc3986#section-2.2] that would need to
+          #   be URL encoded. This value is unique for `in-progress` rooms. SDK clients can
+          #   use this name to connect to the room. REST API clients can use this name in
+          #   place of the Room SID to interact with the room as long as the room is
+          #   `in-progress`.
           # @param [String] status_callback The URL we should call using the
           #   `status_callback_method` to send status information to your application on every
           #   room event. See {Status

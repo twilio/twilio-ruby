@@ -153,57 +153,6 @@ module Twilio
           end
 
           ##
-          # Create the FaxInstance
-          # @param [String] to The phone number to receive the fax in
-          #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format or the
-          #   recipient's SIP URI.
-          # @param [String] media_url The URL of the PDF that contains the fax. See our
-          #   {security}[https://www.twilio.com/docs/usage/security] page for information on
-          #   how to ensure the request for your media comes from Twilio.
-          # @param [fax.Quality] quality The {Fax Quality
-          #   value}[https://www.twilio.com/docs/fax/api/fax-resource#fax-quality-values] that
-          #   describes the fax quality. Can be: `standard`, `fine`, or `superfine` and
-          #   defaults to `fine`.
-          # @param [String] status_callback The URL we should call using the `POST` method
-          #   to send {status
-          #   information}[https://www.twilio.com/docs/fax/api/fax-resource#fax-status-callback]
-          #   to your application when the status of the fax changes.
-          # @param [String] from The number the fax was sent from. Can be the phone number
-          #   in {E.164}[https://www.twilio.com/docs/glossary/what-e164] format or the SIP
-          #   `from` value. The caller ID displayed to the recipient uses this value. If this
-          #   is a phone number, it must be a Twilio number or a verified outgoing caller id
-          #   from your account. If `to` is a SIP address, this can be any alphanumeric string
-          #   (and also the characters `+`, `_`, `.`, and `-`), which will be used in the
-          #   `from` header of the SIP request.
-          # @param [String] sip_auth_username The username to use with the
-          #   `sip_auth_password` to authenticate faxes sent to a SIP address.
-          # @param [String] sip_auth_password The password to use with `sip_auth_username`
-          #   to authenticate faxes sent to a SIP address.
-          # @param [Boolean] store_media Whether to store a copy of the sent media on our
-          #   servers for later retrieval. Can be: `true` or `false` and the default is
-          #   `true`.
-          # @param [String] ttl How long in minutes from when the fax is initiated that we
-          #   should try to send the fax.
-          # @return [FaxInstance] Created FaxInstance
-          def create(to: nil, media_url: nil, quality: :unset, status_callback: :unset, from: :unset, sip_auth_username: :unset, sip_auth_password: :unset, store_media: :unset, ttl: :unset)
-            data = Twilio::Values.of({
-                'To' => to,
-                'MediaUrl' => media_url,
-                'Quality' => quality,
-                'StatusCallback' => status_callback,
-                'From' => from,
-                'SipAuthUsername' => sip_auth_username,
-                'SipAuthPassword' => sip_auth_password,
-                'StoreMedia' => store_media,
-                'Ttl' => ttl,
-            })
-
-            payload = @version.create('POST', @uri, data: data)
-
-            FaxInstance.new(@version, payload, )
-          end
-
-          ##
           # Provide a user friendly representation
           def to_s
             '#<Twilio.Fax.V1.FaxList>'
@@ -266,21 +215,6 @@ module Twilio
           # @return [FaxInstance] Fetched FaxInstance
           def fetch
             payload = @version.fetch('GET', @uri)
-
-            FaxInstance.new(@version, payload, sid: @solution[:sid], )
-          end
-
-          ##
-          # Update the FaxInstance
-          # @param [fax.UpdateStatus] status The new
-          #   {status}[https://www.twilio.com/docs/fax/api/fax-resource#fax-status-values] of
-          #   the resource. Can be only `canceled`. This may fail if transmission has already
-          #   started.
-          # @return [FaxInstance] Updated FaxInstance
-          def update(status: :unset)
-            data = Twilio::Values.of({'Status' => status, })
-
-            payload = @version.update('POST', @uri, data: data)
 
             FaxInstance.new(@version, payload, sid: @solution[:sid], )
           end
@@ -489,17 +423,6 @@ module Twilio
           # @return [FaxInstance] Fetched FaxInstance
           def fetch
             context.fetch
-          end
-
-          ##
-          # Update the FaxInstance
-          # @param [fax.UpdateStatus] status The new
-          #   {status}[https://www.twilio.com/docs/fax/api/fax-resource#fax-status-values] of
-          #   the resource. Can be only `canceled`. This may fail if transmission has already
-          #   started.
-          # @return [FaxInstance] Updated FaxInstance
-          def update(status: :unset)
-            context.update(status: status, )
           end
 
           ##

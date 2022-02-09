@@ -27,16 +27,23 @@ module Twilio
           # Lists ConferenceInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] conference_sid The conference_sid
-          # @param [String] friendly_name The friendly_name
-          # @param [String] status The status
-          # @param [String] created_after The created_after
-          # @param [String] created_before The created_before
-          # @param [String] mixer_region The mixer_region
-          # @param [String] tags The tags
-          # @param [String] subaccount The subaccount
-          # @param [String] detected_issues The detected_issues
-          # @param [String] end_reason The end_reason
+          # @param [String] conference_sid The SID of the conference.
+          # @param [String] friendly_name Custom label for the conference resource, up to 64
+          #   characters.
+          # @param [String] status Conference status.
+          # @param [String] created_after Conferences created after the provided timestamp
+          #   specified in ISO 8601 format
+          # @param [String] created_before Conferences created before the provided timestamp
+          #   specified in ISO 8601 format.
+          # @param [String] mixer_region Twilio region where the conference media was mixed.
+          # @param [String] tags Tags applied by Twilio for common potential configuration,
+          #   quality, or performance issues.
+          # @param [String] subaccount Account SID for the subaccount whose resources you
+          #   wish to retrieve.
+          # @param [String] detected_issues Potential configuration, behavior, or
+          #   performance issues detected during the conference.
+          # @param [String] end_reason Conference end reason; e.g. last participant left,
+          #   modified by API, etc.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -65,16 +72,23 @@ module Twilio
           # Streams ConferenceInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] conference_sid The conference_sid
-          # @param [String] friendly_name The friendly_name
-          # @param [String] status The status
-          # @param [String] created_after The created_after
-          # @param [String] created_before The created_before
-          # @param [String] mixer_region The mixer_region
-          # @param [String] tags The tags
-          # @param [String] subaccount The subaccount
-          # @param [String] detected_issues The detected_issues
-          # @param [String] end_reason The end_reason
+          # @param [String] conference_sid The SID of the conference.
+          # @param [String] friendly_name Custom label for the conference resource, up to 64
+          #   characters.
+          # @param [String] status Conference status.
+          # @param [String] created_after Conferences created after the provided timestamp
+          #   specified in ISO 8601 format
+          # @param [String] created_before Conferences created before the provided timestamp
+          #   specified in ISO 8601 format.
+          # @param [String] mixer_region Twilio region where the conference media was mixed.
+          # @param [String] tags Tags applied by Twilio for common potential configuration,
+          #   quality, or performance issues.
+          # @param [String] subaccount Account SID for the subaccount whose resources you
+          #   wish to retrieve.
+          # @param [String] detected_issues Potential configuration, behavior, or
+          #   performance issues detected during the conference.
+          # @param [String] end_reason Conference end reason; e.g. last participant left,
+          #   modified by API, etc.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -119,16 +133,23 @@ module Twilio
           ##
           # Retrieve a single page of ConferenceInstance records from the API.
           # Request is executed immediately.
-          # @param [String] conference_sid The conference_sid
-          # @param [String] friendly_name The friendly_name
-          # @param [String] status The status
-          # @param [String] created_after The created_after
-          # @param [String] created_before The created_before
-          # @param [String] mixer_region The mixer_region
-          # @param [String] tags The tags
-          # @param [String] subaccount The subaccount
-          # @param [String] detected_issues The detected_issues
-          # @param [String] end_reason The end_reason
+          # @param [String] conference_sid The SID of the conference.
+          # @param [String] friendly_name Custom label for the conference resource, up to 64
+          #   characters.
+          # @param [String] status Conference status.
+          # @param [String] created_after Conferences created after the provided timestamp
+          #   specified in ISO 8601 format
+          # @param [String] created_before Conferences created before the provided timestamp
+          #   specified in ISO 8601 format.
+          # @param [String] mixer_region Twilio region where the conference media was mixed.
+          # @param [String] tags Tags applied by Twilio for common potential configuration,
+          #   quality, or performance issues.
+          # @param [String] subaccount Account SID for the subaccount whose resources you
+          #   wish to retrieve.
+          # @param [String] detected_issues Potential configuration, behavior, or
+          #   performance issues detected during the conference.
+          # @param [String] end_reason Conference end reason; e.g. last participant left,
+          #   modified by API, etc.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
@@ -208,7 +229,7 @@ module Twilio
           ##
           # Initialize the ConferenceContext
           # @param [Version] version Version that contains the resource
-          # @param [String] conference_sid The conference_sid
+          # @param [String] conference_sid The unique SID identifier of the Conference.
           # @return [ConferenceContext] ConferenceContext
           def initialize(version, conference_sid)
             super(version)
@@ -271,7 +292,7 @@ module Twilio
           # Initialize the ConferenceInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] conference_sid The conference_sid
+          # @param [String] conference_sid The unique SID identifier of the Conference.
           # @return [ConferenceInstance] ConferenceInstance
           def initialize(version, payload, conference_sid: nil)
             super(version)
@@ -298,6 +319,7 @@ module Twilio
                 'detected_issues' => payload['detected_issues'],
                 'tags' => payload['tags'],
                 'tag_info' => payload['tag_info'],
+                'processing_state' => payload['processing_state'],
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -319,133 +341,139 @@ module Twilio
           end
 
           ##
-          # @return [String] The conference_sid
+          # @return [String] Conference SID.
           def conference_sid
             @properties['conference_sid']
           end
 
           ##
-          # @return [String] The account_sid
+          # @return [String] Account SID.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The friendly_name
+          # @return [String] Custom label for the conference.
           def friendly_name
             @properties['friendly_name']
           end
 
           ##
-          # @return [Time] The create_time
+          # @return [Time] Conference creation date/time.
           def create_time
             @properties['create_time']
           end
 
           ##
-          # @return [Time] The start_time
+          # @return [Time] Timestamp in ISO 8601 format when the conference started.
           def start_time
             @properties['start_time']
           end
 
           ##
-          # @return [Time] The end_time
+          # @return [Time] Conference end date/time.
           def end_time
             @properties['end_time']
           end
 
           ##
-          # @return [String] The duration_seconds
+          # @return [String] Conference duration in seconds.
           def duration_seconds
             @properties['duration_seconds']
           end
 
           ##
-          # @return [String] The connect_duration_seconds
+          # @return [String] Duration of the conference in seconds.
           def connect_duration_seconds
             @properties['connect_duration_seconds']
           end
 
           ##
-          # @return [conference.ConferenceStatus] The status
+          # @return [conference.ConferenceStatus] Status of conference
           def status
             @properties['status']
           end
 
           ##
-          # @return [String] The max_participants
+          # @return [String] Max participants specified in config.
           def max_participants
             @properties['max_participants']
           end
 
           ##
-          # @return [String] The max_concurrent_participants
+          # @return [String] Actual maximum concurrent participants.
           def max_concurrent_participants
             @properties['max_concurrent_participants']
           end
 
           ##
-          # @return [String] The unique_participants
+          # @return [String] Unique conference participants.
           def unique_participants
             @properties['unique_participants']
           end
 
           ##
-          # @return [conference.ConferenceEndReason] The end_reason
+          # @return [conference.ConferenceEndReason] Conference end reason.
           def end_reason
             @properties['end_reason']
           end
 
           ##
-          # @return [String] The ended_by
+          # @return [String] Call SID that ended the conference.
           def ended_by
             @properties['ended_by']
           end
 
           ##
-          # @return [conference.Region] The mixer_region
+          # @return [conference.Region] Region where the conference was mixed.
           def mixer_region
             @properties['mixer_region']
           end
 
           ##
-          # @return [conference.Region] The mixer_region_requested
+          # @return [conference.Region] Configuration-requested conference mixer region.
           def mixer_region_requested
             @properties['mixer_region_requested']
           end
 
           ##
-          # @return [Boolean] The recording_enabled
+          # @return [Boolean] Boolean. Indicates whether recording was enabled.
           def recording_enabled
             @properties['recording_enabled']
           end
 
           ##
-          # @return [Hash] The detected_issues
+          # @return [Hash] Potential issues detected during the conference.
           def detected_issues
             @properties['detected_issues']
           end
 
           ##
-          # @return [Array[conference.Tag]] The tags
+          # @return [Array[conference.Tag]] Tags for detected conference conditions and participant behaviors.
           def tags
             @properties['tags']
           end
 
           ##
-          # @return [Hash] The tag_info
+          # @return [Hash] Object. Contains details about conference tags.
           def tag_info
             @properties['tag_info']
           end
 
           ##
-          # @return [String] The url
+          # @return [conference.ProcessingState] Processing state for the Conference Summary resource.
+          def processing_state
+            @properties['processing_state']
+          end
+
+          ##
+          # @return [String] The URL of this resource.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
+          # @return [String] Nested resource URLs.
           def links
             @properties['links']
           end

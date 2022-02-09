@@ -64,15 +64,28 @@ module Twilio
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
             # @param [bundle.Status] status The verification status of the Bundle resource.
+            #   Please refer to {Bundle
+            #   Statuses}[https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses]
+            #   for more details.
             # @param [String] friendly_name The string that you assigned to describe the
-            #   resource.
-            # @param [String] regulation_sid The unique string of a regulation that is
-            #   associated to the Bundle resource.
-            # @param [String] iso_country The {ISO country
+            #   resource. The column can contain 255 variable characters.
+            # @param [String] regulation_sid The unique string of a {Regulation
+            #   resource}[https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations]
+            #   that is associated to the Bundle resource.
+            # @param [String] iso_country The 2-digit {ISO country
             #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the Bundle's phone
             #   number country ownership request.
             # @param [String] number_type The type of phone number of the Bundle's ownership
-            #   request. Can be `local`, `mobile`, `national`, or `toll free`.
+            #   request. Can be `local`, `mobile`, `national`, or `tollfree`.
+            # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid
+            #   Bundle until a specified expiration date.
+            # @param [bundle.SortBy] sort_by Can be `ValidUntilDate` or `DateUpdated`.
+            #   Defaults to `DateCreated`
+            # @param [bundle.SortDirection] sort_direction Default is `DESC`. Can be `ASC` or
+            #   `DESC`.
+            # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well.
+            # @param [Time] valid_until_date Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well.
+            # @param [Time] valid_until_date_after Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -80,13 +93,19 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, limit: nil, page_size: nil)
+            def list(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date_before: :unset, valid_until_date: :unset, valid_until_date_after: :unset, limit: nil, page_size: nil)
               self.stream(
                   status: status,
                   friendly_name: friendly_name,
                   regulation_sid: regulation_sid,
                   iso_country: iso_country,
                   number_type: number_type,
+                  has_valid_until_date: has_valid_until_date,
+                  sort_by: sort_by,
+                  sort_direction: sort_direction,
+                  valid_until_date_before: valid_until_date_before,
+                  valid_until_date: valid_until_date,
+                  valid_until_date_after: valid_until_date_after,
                   limit: limit,
                   page_size: page_size
               ).entries
@@ -97,15 +116,28 @@ module Twilio
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
             # @param [bundle.Status] status The verification status of the Bundle resource.
+            #   Please refer to {Bundle
+            #   Statuses}[https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses]
+            #   for more details.
             # @param [String] friendly_name The string that you assigned to describe the
-            #   resource.
-            # @param [String] regulation_sid The unique string of a regulation that is
-            #   associated to the Bundle resource.
-            # @param [String] iso_country The {ISO country
+            #   resource. The column can contain 255 variable characters.
+            # @param [String] regulation_sid The unique string of a {Regulation
+            #   resource}[https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations]
+            #   that is associated to the Bundle resource.
+            # @param [String] iso_country The 2-digit {ISO country
             #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the Bundle's phone
             #   number country ownership request.
             # @param [String] number_type The type of phone number of the Bundle's ownership
-            #   request. Can be `local`, `mobile`, `national`, or `toll free`.
+            #   request. Can be `local`, `mobile`, `national`, or `tollfree`.
+            # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid
+            #   Bundle until a specified expiration date.
+            # @param [bundle.SortBy] sort_by Can be `ValidUntilDate` or `DateUpdated`.
+            #   Defaults to `DateCreated`
+            # @param [bundle.SortDirection] sort_direction Default is `DESC`. Can be `ASC` or
+            #   `DESC`.
+            # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well.
+            # @param [Time] valid_until_date Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well.
+            # @param [Time] valid_until_date_after Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -113,7 +145,7 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, limit: nil, page_size: nil)
+            def stream(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date_before: :unset, valid_until_date: :unset, valid_until_date_after: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -122,6 +154,12 @@ module Twilio
                   regulation_sid: regulation_sid,
                   iso_country: iso_country,
                   number_type: number_type,
+                  has_valid_until_date: has_valid_until_date,
+                  sort_by: sort_by,
+                  sort_direction: sort_direction,
+                  valid_until_date_before: valid_until_date_before,
+                  valid_until_date: valid_until_date,
+                  valid_until_date_after: valid_until_date_after,
                   page_size: limits[:page_size],
               )
 
@@ -146,26 +184,45 @@ module Twilio
             # Retrieve a single page of BundleInstance records from the API.
             # Request is executed immediately.
             # @param [bundle.Status] status The verification status of the Bundle resource.
+            #   Please refer to {Bundle
+            #   Statuses}[https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses]
+            #   for more details.
             # @param [String] friendly_name The string that you assigned to describe the
-            #   resource.
-            # @param [String] regulation_sid The unique string of a regulation that is
-            #   associated to the Bundle resource.
-            # @param [String] iso_country The {ISO country
+            #   resource. The column can contain 255 variable characters.
+            # @param [String] regulation_sid The unique string of a {Regulation
+            #   resource}[https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations]
+            #   that is associated to the Bundle resource.
+            # @param [String] iso_country The 2-digit {ISO country
             #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] of the Bundle's phone
             #   number country ownership request.
             # @param [String] number_type The type of phone number of the Bundle's ownership
-            #   request. Can be `local`, `mobile`, `national`, or `toll free`.
+            #   request. Can be `local`, `mobile`, `national`, or `tollfree`.
+            # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid
+            #   Bundle until a specified expiration date.
+            # @param [bundle.SortBy] sort_by Can be `ValidUntilDate` or `DateUpdated`.
+            #   Defaults to `DateCreated`
+            # @param [bundle.SortDirection] sort_direction Default is `DESC`. Can be `ASC` or
+            #   `DESC`.
+            # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well.
+            # @param [Time] valid_until_date Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well.
+            # @param [Time] valid_until_date_after Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of BundleInstance
-            def page(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date_before: :unset, valid_until_date: :unset, valid_until_date_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'Status' => status,
                   'FriendlyName' => friendly_name,
                   'RegulationSid' => regulation_sid,
                   'IsoCountry' => iso_country,
                   'NumberType' => number_type,
+                  'HasValidUntilDate' => has_valid_until_date,
+                  'SortBy' => sort_by,
+                  'SortDirection' => sort_direction,
+                  'ValidUntilDate<' => Twilio.serialize_iso8601_datetime(valid_until_date_before),
+                  'ValidUntilDate' => Twilio.serialize_iso8601_datetime(valid_until_date),
+                  'ValidUntilDate>' => Twilio.serialize_iso8601_datetime(valid_until_date_after),
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,

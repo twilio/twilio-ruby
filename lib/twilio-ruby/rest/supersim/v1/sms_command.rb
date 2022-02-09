@@ -28,7 +28,7 @@ module Twilio
           ##
           # Create the SmsCommandInstance
           # @param [String] sim The `sid` or `unique_name` of the
-          #   {SIM}[https://www.twilio.com/docs/wireless/api/sim-resource] to send the SMS
+          #   {SIM}[https://www.twilio.com/docs/iot/supersim/api/sim-resource] to send the SMS
           #   Command to.
           # @param [String] payload The message body of the SMS Command.
           # @param [String] callback_method The HTTP method we should use to call

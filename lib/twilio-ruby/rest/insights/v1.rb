@@ -50,7 +50,7 @@ module Twilio
         end
 
         ##
-        # @param [String] conference_sid The conference_sid
+        # @param [String] conference_sid The unique SID identifier of the Conference.
         # @return [Twilio::REST::Insights::V1::ConferenceContext] if conference_sid was passed.
         # @return [Twilio::REST::Insights::V1::ConferenceList]
         def conferences(conference_sid=:unset)

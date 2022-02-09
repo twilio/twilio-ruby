@@ -16,6 +16,7 @@ module Twilio
           super
           @version = 'v1'
           @configuration = nil
+          @address_configurations = nil
           @conversations = nil
           @credentials = nil
           @participant_conversations = nil
@@ -28,6 +29,22 @@ module Twilio
         # @return [Twilio::REST::Conversations::V1::ConfigurationContext]
         def configuration
           @configuration ||= ConfigurationContext.new self
+        end
+
+        ##
+        # @param [String] sid The SID of the Address Configuration resource. This value
+        #   can be either the `sid` or the `address` of the configuration
+        # @return [Twilio::REST::Conversations::V1::AddressConfigurationContext] if sid was passed.
+        # @return [Twilio::REST::Conversations::V1::AddressConfigurationList]
+        def address_configurations(sid=:unset)
+          if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @address_configurations ||= AddressConfigurationList.new self
+          else
+              AddressConfigurationContext.new(self, sid)
+          end
         end
 
         ##
