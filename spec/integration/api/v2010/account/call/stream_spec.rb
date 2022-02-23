@@ -35,7 +35,8 @@ describe 'Stream' do
           "sid": "MZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "name": null,
           "status": "in-progress",
-          "date_updated": "Thu, 30 Jul 2015 20:00:00 +0000"
+          "date_updated": "Thu, 30 Jul 2015 20:00:00 +0000",
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Streams/MZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
     ))
@@ -57,7 +58,8 @@ describe 'Stream' do
           "sid": "MZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "name": "myName",
           "status": "in-progress",
-          "date_updated": "Thu, 30 Jul 2015 20:00:00 +0000"
+          "date_updated": "Thu, 30 Jul 2015 20:00:00 +0000",
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Streams/MZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
     ))
@@ -97,7 +99,8 @@ describe 'Stream' do
           "sid": "MZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "name": null,
           "status": "stopped",
-          "date_updated": "Thu, 30 Jul 2015 20:00:00 +0000"
+          "date_updated": "Thu, 30 Jul 2015 20:00:00 +0000",
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Streams/MZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
     ))
@@ -119,7 +122,8 @@ describe 'Stream' do
           "sid": "MZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "name": "myStream",
           "status": "stopped",
-          "date_updated": "Thu, 30 Jul 2015 20:00:00 +0000"
+          "date_updated": "Thu, 30 Jul 2015 20:00:00 +0000",
+          "uri": "/2010-04-01/Accounts/ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Calls/CAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Streams/MZaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
       }
       ]
     ))

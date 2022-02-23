@@ -578,6 +578,7 @@ module Twilio
                     'name' => payload['name'],
                     'status' => payload['status'],
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
+                    'uri' => payload['uri'],
                 }
 
                 # Context
@@ -635,6 +636,12 @@ module Twilio
               # @return [Time] The RFC 2822 date and time in GMT that this resource was last updated
               def date_updated
                 @properties['date_updated']
+              end
+
+              ##
+              # @return [String] The URI of the resource, relative to `https://api.twilio.com`
+              def uri
+                @properties['uri']
               end
 
               ##

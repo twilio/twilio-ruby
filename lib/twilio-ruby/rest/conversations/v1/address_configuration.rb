@@ -114,7 +114,7 @@ module Twilio
           # @param [Boolean] auto_creation_enabled Enable/Disable auto-creating
           #   conversations for messages to this address
           # @param [address_configuration.AutoCreationType] auto_creation_type Type of Auto
-          #   Creation. Value can be one of `webhook`, `studio`, `default`.
+          #   Creation. Value can be one of `webhook`, `studio` or `default`.
           # @param [String] auto_creation_conversation_service_sid Conversation Service for
           #   the auto-created conversation. If not set, the conversation is created in the
           #   default service.
@@ -123,9 +123,13 @@ module Twilio
           # @param [address_configuration.Method] auto_creation_webhook_method For type
           #   `webhook`, the HTTP method to be used when sending a webhook request.
           # @param [Array[String]] auto_creation_webhook_filters The list of events, firing
-          #   webhook event for this Conversation.
+          #   webhook event for this Conversation. Values can be any of the following:
+          #   `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`,
+          #   `onConversationUpdated`, `onConversationStateUpdated`, `onConversationRemoved`,
+          #   `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`,
+          #   `onDeliveryUpdated`
           # @param [String] auto_creation_studio_flow_sid For type `studio`, the studio flow
-          #   SID, where the webhook should be sent to.
+          #   SID where the webhook should be sent to.
           # @param [String] auto_creation_studio_retry_count For type `studio`, number of
           #   times to retry the webhook request
           # @return [AddressConfigurationInstance] Created AddressConfigurationInstance
@@ -216,7 +220,7 @@ module Twilio
           # @param [Boolean] auto_creation_enabled Enable/Disable auto-creating
           #   conversations for messages to this address
           # @param [address_configuration.AutoCreationType] auto_creation_type Type of Auto
-          #   Creation. Value can be one of `webhook`, `studio`, `default`.
+          #   Creation. Value can be one of `webhook`, `studio` or `default`.
           # @param [String] auto_creation_conversation_service_sid Conversation Service for
           #   the auto-created conversation. If not set, the conversation is created in the
           #   default service.
@@ -225,9 +229,13 @@ module Twilio
           # @param [address_configuration.Method] auto_creation_webhook_method For type
           #   `webhook`, the HTTP method to be used when sending a webhook request.
           # @param [Array[String]] auto_creation_webhook_filters The list of events, firing
-          #   webhook event for this Conversation.
+          #   webhook event for this Conversation. Values can be any of the following:
+          #   `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`,
+          #   `onConversationUpdated`, `onConversationStateUpdated`, `onConversationRemoved`,
+          #   `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`,
+          #   `onDeliveryUpdated`
           # @param [String] auto_creation_studio_flow_sid For type `studio`, the studio flow
-          #   SID, where the webhook should be sent to.
+          #   SID where the webhook should be sent to.
           # @param [String] auto_creation_studio_retry_count For type `studio`, number of
           #   times to retry the webhook request
           # @return [AddressConfigurationInstance] Updated AddressConfigurationInstance
@@ -324,7 +332,7 @@ module Twilio
           end
 
           ##
-          # @return [String] Type of Address, value can be `whatsapp` or `sms`.
+          # @return [String] Type of Address.
           def type
             @properties['type']
           end
@@ -379,7 +387,7 @@ module Twilio
           # @param [Boolean] auto_creation_enabled Enable/Disable auto-creating
           #   conversations for messages to this address
           # @param [address_configuration.AutoCreationType] auto_creation_type Type of Auto
-          #   Creation. Value can be one of `webhook`, `studio`, `default`.
+          #   Creation. Value can be one of `webhook`, `studio` or `default`.
           # @param [String] auto_creation_conversation_service_sid Conversation Service for
           #   the auto-created conversation. If not set, the conversation is created in the
           #   default service.
@@ -388,9 +396,13 @@ module Twilio
           # @param [address_configuration.Method] auto_creation_webhook_method For type
           #   `webhook`, the HTTP method to be used when sending a webhook request.
           # @param [Array[String]] auto_creation_webhook_filters The list of events, firing
-          #   webhook event for this Conversation.
+          #   webhook event for this Conversation. Values can be any of the following:
+          #   `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`,
+          #   `onConversationUpdated`, `onConversationStateUpdated`, `onConversationRemoved`,
+          #   `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`,
+          #   `onDeliveryUpdated`
           # @param [String] auto_creation_studio_flow_sid For type `studio`, the studio flow
-          #   SID, where the webhook should be sent to.
+          #   SID where the webhook should be sent to.
           # @param [String] auto_creation_studio_retry_count For type `studio`, number of
           #   times to retry the webhook request
           # @return [AddressConfigurationInstance] Updated AddressConfigurationInstance

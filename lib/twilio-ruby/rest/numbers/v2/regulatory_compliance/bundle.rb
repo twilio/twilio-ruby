@@ -79,8 +79,8 @@ module Twilio
             #   request. Can be `local`, `mobile`, `national`, or `tollfree`.
             # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid
             #   Bundle until a specified expiration date.
-            # @param [bundle.SortBy] sort_by Can be `ValidUntilDate` or `DateUpdated`.
-            #   Defaults to `DateCreated`
+            # @param [bundle.SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults
+            #   to `date-created`.
             # @param [bundle.SortDirection] sort_direction Default is `DESC`. Can be `ASC` or
             #   `DESC`.
             # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well.
@@ -131,8 +131,8 @@ module Twilio
             #   request. Can be `local`, `mobile`, `national`, or `tollfree`.
             # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid
             #   Bundle until a specified expiration date.
-            # @param [bundle.SortBy] sort_by Can be `ValidUntilDate` or `DateUpdated`.
-            #   Defaults to `DateCreated`
+            # @param [bundle.SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults
+            #   to `date-created`.
             # @param [bundle.SortDirection] sort_direction Default is `DESC`. Can be `ASC` or
             #   `DESC`.
             # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well.
@@ -199,8 +199,8 @@ module Twilio
             #   request. Can be `local`, `mobile`, `national`, or `tollfree`.
             # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid
             #   Bundle until a specified expiration date.
-            # @param [bundle.SortBy] sort_by Can be `ValidUntilDate` or `DateUpdated`.
-            #   Defaults to `DateCreated`
+            # @param [bundle.SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults
+            #   to `date-created`.
             # @param [bundle.SortDirection] sort_direction Default is `DESC`. Can be `ASC` or
             #   `DESC`.
             # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well.

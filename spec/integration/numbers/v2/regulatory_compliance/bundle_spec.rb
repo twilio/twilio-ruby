@@ -125,9 +125,141 @@ describe 'Bundle' do
           "meta": {
               "page": 0,
               "page_size": 50,
-              "first_page_url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles?Status=draft&RegulationSid=RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&HasValidUntilDate=true&IsoCountry=US&FriendlyName=friendly_name&NumberType=mobile&PageSize=50&Page=0",
+              "first_page_url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles?Status=draft&RegulationSid=RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&IsoCountry=US&FriendlyName=friendly_name&NumberType=mobile&PageSize=50&Page=0",
               "previous_page_url": null,
-              "url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles?Status=draft&RegulationSid=RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&HasValidUntilDate=true&IsoCountry=US&FriendlyName=friendly_name&NumberType=mobile&PageSize=50&Page=0",
+              "url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles?Status=draft&RegulationSid=RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&IsoCountry=US&FriendlyName=friendly_name&NumberType=mobile&PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "results"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.numbers.v2.regulatory_compliance \
+                               .bundles.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives read_approved_au_mobile_with_date responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "results": [
+              {
+                  "sid": "BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "regulation_sid": "RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "friendly_name": "friendly_name",
+                  "status": "twilio-approved",
+                  "email": "email",
+                  "status_callback": "http://www.example.com",
+                  "valid_until": "2022-11-29T01:00:00Z",
+                  "date_created": "2021-08-30T22:29:24Z",
+                  "date_updated": "2021-08-31T01:09:00Z",
+                  "url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "links": {
+                      "evaluations": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Evaluations",
+                      "item_assignments": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ItemAssignments",
+                      "bundle_copies": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Copies"
+                  }
+              }
+          ],
+          "meta": {
+              "page": 0,
+              "page_size": 50,
+              "first_page_url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles?Status=twilio-approved&IsoCountry=AU&HasValidUntilDate=true&NumberType=mobile&PageSize=50&Page=0",
+              "previous_page_url": null,
+              "url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles?Status=twilio-approved&IsoCountry=AU&HasValidUntilDate=true&NumberType=mobile&PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "results"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.numbers.v2.regulatory_compliance \
+                               .bundles.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives read_approved_au_mobile_date_less responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "results": [
+              {
+                  "sid": "BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "regulation_sid": "RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "friendly_name": "friendly_name",
+                  "status": "twilio-approved",
+                  "email": "email",
+                  "status_callback": "http://www.example.com",
+                  "valid_until": "2022-11-29T01:00:00Z",
+                  "date_created": "2021-08-30T22:29:24Z",
+                  "date_updated": "2021-08-31T01:09:00Z",
+                  "url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "links": {
+                      "evaluations": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Evaluations",
+                      "item_assignments": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ItemAssignments",
+                      "bundle_copies": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Copies"
+                  }
+              }
+          ],
+          "meta": {
+              "page": 0,
+              "page_size": 50,
+              "first_page_url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles?Status=twilio-approved&IsoCountry=AU&ValidUntilDate%3C=2022-11-29T23%3A59%3A59Z&NumberType=mobile&PageSize=50&Page=0",
+              "previous_page_url": null,
+              "url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles?Status=twilio-approved&IsoCountry=AU&ValidUntilDate%3C=2022-11-29T23%3A59%3A59Z&NumberType=mobile&PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "results"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.numbers.v2.regulatory_compliance \
+                               .bundles.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives read_approved_japan_tollfree_date_between responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "results": [
+              {
+                  "sid": "BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "regulation_sid": "RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "friendly_name": "friendly_name",
+                  "status": "twilio-approved",
+                  "email": "email",
+                  "status_callback": "http://www.example.com",
+                  "valid_until": "2022-11-29T01:00:00Z",
+                  "date_created": "2021-08-30T22:29:24Z",
+                  "date_updated": "2021-08-31T01:09:00Z",
+                  "url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "links": {
+                      "evaluations": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Evaluations",
+                      "item_assignments": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ItemAssignments",
+                      "bundle_copies": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Copies"
+                  }
+              }
+          ],
+          "meta": {
+              "page": 0,
+              "page_size": 50,
+              "first_page_url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles?Status=twilio-approved&IsoCountry=JP&ValidUntilDate%3E=2022-01-01T00%3A00%3A00Z&ValidUntilDate%3C=2022-11-29T23%3A59%3A59Z&NumberType=tollfree&PageSize=50&Page=0",
+              "previous_page_url": null,
+              "url": "https://numbers.twilio.com/v2/RegulatoryCompliance/Bundles?Status=twilio-approved&IsoCountry=JP&ValidUntilDate%3E=2022-01-01T00%3A00%3A00Z&ValidUntilDate%3C=2022-11-29T23%3A59%3A59Z&NumberType=tollfree&PageSize=50&Page=0",
               "next_page_url": null,
               "key": "results"
           }
