@@ -15,8 +15,8 @@ Dir.glob(File.expand_path('../support/**/*.rb', __FILE__)).sort.each(&method(:re
 require_relative './holodeck/holodeck.rb'
 require_relative './holodeck/hologram.rb'
 
-require 'twilio-ruby'
 require 'rack'
+require 'twilio-ruby'
 require 'rspec/matchers'
 require 'equivalent-xml'
 
