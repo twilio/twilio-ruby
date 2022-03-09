@@ -1,6 +1,29 @@
 twilio-ruby changelog
 =====================
 
+[2022-03-09] Version 5.65.1
+---------------------------
+**Library - Fix**
+- [PR #602](https://github.com/twilio/twilio-ruby/pull/602): don't load webhook authentication if Rack not present. Thanks to [@philnash](https://github.com/philnash)!
+
+**Library - Chore**
+- [PR #599](https://github.com/twilio/twilio-ruby/pull/599): push Datadog Release Metric upon deploy success. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+
+**Api**
+- Add optional boolean include_soft_deleted parameter to retrieve soft deleted recordings
+
+**Chat**
+- Add `X-Twilio-Wehook-Enabled` header to `delete` method in UserChannel resource
+
+**Numbers**
+- Expose `failure_reason` in the Supporting Documents resources
+
+**Verify**
+- Add optional `metadata` parameter to "verify challenge" endpoint, so the SDK/App can attach relevant information from the device when responding to challenges.
+- remove beta feature flag to list atempt api operations.
+- Add `ttl` and `date_created` properties to `AccessTokens`.
+
+
 [2022-02-23] Version 5.65.0
 ---------------------------
 **Api**

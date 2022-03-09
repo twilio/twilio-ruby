@@ -38,6 +38,15 @@ module Twilio
       end
 
       ##
+      # @param [String] sid The unique string generated to identify the MediaRecording
+      #   resource.
+      # @return [Twilio::REST::Media::V1::MediaRecordingInstance] if sid was passed.
+      # @return [Twilio::REST::Media::V1::MediaRecordingList]
+      def media_recording(sid=:unset)
+        self.v1.media_recording(sid)
+      end
+
+      ##
       # @param [String] sid The unique string generated to identify the PlayerStreamer
       #   resource.
       # @return [Twilio::REST::Media::V1::PlayerStreamerInstance] if sid was passed.

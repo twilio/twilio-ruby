@@ -36,12 +36,15 @@ module Twilio
             #   `push`
             # @param [String] factor_friendly_name The friendly name of the factor that is
             #   going to be created with this access token
+            # @param [String] ttl How long, in seconds, the access token is valid. Can be an
+            #   integer between 60 and 300. Default is 60.
             # @return [AccessTokenInstance] Created AccessTokenInstance
-            def create(identity: nil, factor_type: nil, factor_friendly_name: :unset)
+            def create(identity: nil, factor_type: nil, factor_friendly_name: :unset, ttl: :unset)
               data = Twilio::Values.of({
                   'Identity' => identity,
                   'FactorType' => factor_type,
                   'FactorFriendlyName' => factor_friendly_name,
+                  'Ttl' => ttl,
               })
 
               payload = @version.create('POST', @uri, data: data)
@@ -158,6 +161,8 @@ module Twilio
                   'factor_friendly_name' => payload['factor_friendly_name'],
                   'token' => payload['token'],
                   'url' => payload['url'],
+                  'ttl' => payload['ttl'].to_i,
+                  'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
               }
 
               # Context
@@ -222,6 +227,18 @@ module Twilio
             # @return [String] The URL of this resource.
             def url
               @properties['url']
+            end
+
+            ##
+            # @return [String] How long, in seconds, the access token is valid.
+            def ttl
+              @properties['ttl']
+            end
+
+            ##
+            # @return [Time] The date this access token was created
+            def date_created
+              @properties['date_created']
             end
 
             ##
