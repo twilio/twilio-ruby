@@ -15,13 +15,15 @@ describe 'Stream' do
     expect {
       @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .streams.create()
+                       .streams.create(url: 'https://example.com')
     }.to raise_exception(Twilio::REST::TwilioError)
 
+    values = {'Url' => 'https://example.com', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Calls/CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Streams.json',
+        data: values,
     ))).to eq(true)
   end
 
@@ -43,7 +45,7 @@ describe 'Stream' do
 
     actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .streams.create()
+                              .streams.create(url: 'https://example.com')
 
     expect(actual).to_not eq(nil)
   end
@@ -66,7 +68,7 @@ describe 'Stream' do
 
     actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .streams.create()
+                              .streams.create(url: 'https://example.com')
 
     expect(actual).to_not eq(nil)
   end

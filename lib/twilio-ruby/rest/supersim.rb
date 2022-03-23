@@ -29,15 +29,6 @@ module Twilio
       end
 
       ##
-      # @param [String] sid The unique string that we created to identify the Command
-      #   resource.
-      # @return [Twilio::REST::Supersim::V1::CommandInstance] if sid was passed.
-      # @return [Twilio::REST::Supersim::V1::CommandList]
-      def commands(sid=:unset)
-        self.v1.commands(sid)
-      end
-
-      ##
       # @param [String] sid The unique string that we created to identify the eSIM
       #   Profile resource.
       # @return [Twilio::REST::Supersim::V1::EsimProfileInstance] if sid was passed.

@@ -40,8 +40,8 @@ module Twilio
             # @param [String] conference_sid The Conference SID that identifies the conference
             #   associated with the recording to read.
             # @param [Boolean] include_soft_deleted A boolean parameter indicating whether to
-            #   retrieve soft deleted recordings or not. Recordings are kept after deletion for
-            #   a retention period of 40 days.
+            #   retrieve soft deleted recordings or not. Recordings metadata are kept after
+            #   deletion for a retention period of 40 days.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -75,8 +75,8 @@ module Twilio
             # @param [String] conference_sid The Conference SID that identifies the conference
             #   associated with the recording to read.
             # @param [Boolean] include_soft_deleted A boolean parameter indicating whether to
-            #   retrieve soft deleted recordings or not. Recordings are kept after deletion for
-            #   a retention period of 40 days.
+            #   retrieve soft deleted recordings or not. Recordings metadata are kept after
+            #   deletion for a retention period of 40 days.
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -126,8 +126,8 @@ module Twilio
             # @param [String] conference_sid The Conference SID that identifies the conference
             #   associated with the recording to read.
             # @param [Boolean] include_soft_deleted A boolean parameter indicating whether to
-            #   retrieve soft deleted recordings or not. Recordings are kept after deletion for
-            #   a retention period of 40 days.
+            #   retrieve soft deleted recordings or not. Recordings metadata are kept after
+            #   deletion for a retention period of 40 days.
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
@@ -224,8 +224,8 @@ module Twilio
             ##
             # Fetch the RecordingInstance
             # @param [Boolean] include_soft_deleted A boolean parameter indicating whether to
-            #   retrieve soft deleted recordings or not. Recordings are kept after deletion for
-            #   a retention period of 40 days.
+            #   retrieve soft deleted recordings or not. Recordings metadata are kept after
+            #   deletion for a retention period of 40 days.
             # @return [RecordingInstance] Fetched RecordingInstance
             def fetch(include_soft_deleted: :unset)
               params = Twilio::Values.of({'IncludeSoftDeleted' => include_soft_deleted, })
@@ -464,8 +464,8 @@ module Twilio
             ##
             # Fetch the RecordingInstance
             # @param [Boolean] include_soft_deleted A boolean parameter indicating whether to
-            #   retrieve soft deleted recordings or not. Recordings are kept after deletion for
-            #   a retention period of 40 days.
+            #   retrieve soft deleted recordings or not. Recordings metadata are kept after
+            #   deletion for a retention period of 40 days.
             # @return [RecordingInstance] Fetched RecordingInstance
             def fetch(include_soft_deleted: :unset)
               context.fetch(include_soft_deleted: include_soft_deleted, )

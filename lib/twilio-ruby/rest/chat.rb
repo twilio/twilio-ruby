@@ -21,6 +21,7 @@ module Twilio
         # Versions
         @v1 = nil
         @v2 = nil
+        @v3 = nil
       end
 
       ##
@@ -33,6 +34,12 @@ module Twilio
       # Version v2 of chat
       def v2
         @v2 ||= V2.new self
+      end
+
+      ##
+      # Version v3 of chat
+      def v3
+        @v3 ||= V3.new self
       end
 
       ##
@@ -51,6 +58,15 @@ module Twilio
       # @return [Twilio::REST::Chat::V2::ServiceList]
       def services(sid=:unset)
         self.v2.services(sid)
+      end
+
+      ##
+      # @param [String] sid The unique string that we created to identify the Channel
+      #   resource.
+      # @return [Twilio::REST::Chat::V3::ChannelInstance] if sid was passed.
+      # @return [Twilio::REST::Chat::V3::ChannelList]
+      def channels(service_sid=:unset, sid=:unset)
+        self.v3.channels(service_sid, sid)
       end
 
       ##

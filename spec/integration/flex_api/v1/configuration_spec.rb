@@ -204,7 +204,46 @@ describe 'Configuration' do
           },
           "url": "https://flex-api.twilio.com/v1/Configuration",
           "flex_insights_drilldown": true,
-          "flex_url": "https://flex.twilio.com"
+          "flex_url": "https://flex.twilio.com",
+          "channel_configs": [
+              {
+                  "address_type": "sms",
+                  "cbm_attachments": {
+                      "enabled": true,
+                      "number_of_attachments": 10,
+                      "max_file_size": 157286400,
+                      "max_total_file_size": 157286400,
+                      "accepted_extensions": [
+                          "jpg",
+                          "jpeg",
+                          "png",
+                          "gif",
+                          "txt",
+                          "pdf"
+                      ]
+                  }
+              },
+              {
+                  "address_type": "whatsapp",
+                  "cbm_attachments": {
+                      "enabled": true,
+                      "number_of_attachments": 1,
+                      "max_file_size": 16777216,
+                      "max_total_file_size": 67108864,
+                      "accepted_extensions": [
+                          "jpg",
+                          "jpeg",
+                          "png",
+                          "amr",
+                          "mp3",
+                          "mp4",
+                          "pdf",
+                          "heic",
+                          "oga"
+                      ]
+                  }
+              }
+          ]
       }
       ]
     ))
@@ -396,7 +435,26 @@ describe 'Configuration' do
           "flex_insights_hr": null,
           "url": "https://flex-api.twilio.com/v1/Configuration",
           "flex_insights_drilldown": false,
-          "flex_url": "https://flex.twilio.com"
+          "flex_url": "https://flex.twilio.com",
+          "channel_configs": [
+              {
+                  "address_type": "sms",
+                  "cbm_attachments": {
+                      "enabled": true,
+                      "number_of_attachments": 10,
+                      "max_file_size": 157286400,
+                      "max_total_file_size": 157286400,
+                      "accepted_extensions": [
+                          "jpg",
+                          "jpeg",
+                          "png",
+                          "gif",
+                          "txt",
+                          "pdf"
+                      ]
+                  }
+              }
+          ]
       }
       ]
     ))
@@ -601,7 +659,26 @@ describe 'Configuration' do
           },
           "url": "https://flex-api.twilio.com/v1/Configuration",
           "flex_insights_drilldown": true,
-          "flex_url": "https://flex.twilio.com"
+          "flex_url": "https://flex.twilio.com",
+          "channel_configs": [
+              {
+                  "address_type": "sms",
+                  "cbm_attachments": {
+                      "enabled": true,
+                      "number_of_attachments": 10,
+                      "max_file_size": 157286400,
+                      "max_total_file_size": 157286400,
+                      "accepted_extensions": [
+                          "jpg",
+                          "jpeg",
+                          "png",
+                          "gif",
+                          "txt",
+                          "pdf"
+                      ]
+                  }
+              }
+          ]
       }
       ]
     ))

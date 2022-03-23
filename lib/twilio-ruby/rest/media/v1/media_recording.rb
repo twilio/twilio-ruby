@@ -34,6 +34,8 @@ module Twilio
           #   the default.
           # @param [media_recording.Status] status Status to filter by, with possible values
           #   `processing`, `completed`, `deleted`, or `failed`.
+          # @param [String] processor_sid SID of a MediaProcessor to filter by.
+          # @param [String] source_sid SID of a MediaRecording source to filter by.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -41,8 +43,15 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(order: :unset, status: :unset, limit: nil, page_size: nil)
-            self.stream(order: order, status: status, limit: limit, page_size: page_size).entries
+          def list(order: :unset, status: :unset, processor_sid: :unset, source_sid: :unset, limit: nil, page_size: nil)
+            self.stream(
+                order: order,
+                status: status,
+                processor_sid: processor_sid,
+                source_sid: source_sid,
+                limit: limit,
+                page_size: page_size
+            ).entries
           end
 
           ##
@@ -54,6 +63,8 @@ module Twilio
           #   the default.
           # @param [media_recording.Status] status Status to filter by, with possible values
           #   `processing`, `completed`, `deleted`, or `failed`.
+          # @param [String] processor_sid SID of a MediaProcessor to filter by.
+          # @param [String] source_sid SID of a MediaRecording source to filter by.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -61,10 +72,16 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(order: :unset, status: :unset, limit: nil, page_size: nil)
+          def stream(order: :unset, status: :unset, processor_sid: :unset, source_sid: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(order: order, status: status, page_size: limits[:page_size], )
+            page = self.page(
+                order: order,
+                status: status,
+                processor_sid: processor_sid,
+                source_sid: source_sid,
+                page_size: limits[:page_size],
+            )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -91,14 +108,18 @@ module Twilio
           #   the default.
           # @param [media_recording.Status] status Status to filter by, with possible values
           #   `processing`, `completed`, `deleted`, or `failed`.
+          # @param [String] processor_sid SID of a MediaProcessor to filter by.
+          # @param [String] source_sid SID of a MediaRecording source to filter by.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of MediaRecordingInstance
-          def page(order: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          def page(order: :unset, status: :unset, processor_sid: :unset, source_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'Order' => order,
                 'Status' => status,
+                'ProcessorSid' => processor_sid,
+                'SourceSid' => source_sid,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,

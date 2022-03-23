@@ -18,6 +18,7 @@ module Twilio
           @channel = nil
           @configuration = nil
           @flex_flow = nil
+          @interaction = nil
           @web_channel = nil
         end
 
@@ -54,6 +55,21 @@ module Twilio
               @flex_flow ||= FlexFlowList.new self
           else
               FlexFlowContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The SID of the Interaction resource to fetch.
+        # @return [Twilio::REST::Flex_api::V1::InteractionContext] if sid was passed.
+        # @return [Twilio::REST::Flex_api::V1::InteractionList]
+        def interaction(sid=:unset)
+          if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @interaction ||= InteractionList.new self
+          else
+              InteractionContext.new(self, sid)
           end
         end
 
