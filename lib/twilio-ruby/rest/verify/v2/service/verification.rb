@@ -61,7 +61,8 @@ module Twilio
             #   may include multiple Rate Limit values in each request.
             # @param [Hash] channel_configuration
             #   {`email`}[https://www.twilio.com/docs/verify/email] channel configuration in
-            #   json format. Must include 'from' and 'from_name'.
+            #   json format. The fields 'from' and 'from_name' are optional but if included the
+            #   'from' field must have a valid email address.
             # @param [String] app_hash Your {App
             #   Hash}[https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string]
             #   to be appended at the end of your verification SMS body. Applies only to SMS.

@@ -137,13 +137,13 @@ describe 'Workspace' do
       %q[
       {
           "meta": {
-              "first_page_url": "https://taskrouter.twilio.com/v1/Workspaces?FriendlyName=friendly_name&PageSize=50&Page=0",
+              "first_page_url": "https://taskrouter.twilio.com/v1/Workspaces?FriendlyName=friendly_name&PageSize=50",
               "key": "workspaces",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://taskrouter.twilio.com/v1/Workspaces?FriendlyName=friendly_name&PageSize=50&Page=0"
+              "url": "https://taskrouter.twilio.com/v1/Workspaces?FriendlyName=friendly_name&PageSize=50"
           },
           "workspaces": [
               {
@@ -190,13 +190,13 @@ describe 'Workspace' do
       %q[
       {
           "meta": {
-              "first_page_url": "https://taskrouter.twilio.com/v1/Workspaces?FriendlyName=friendly_name&PageSize=50&Page=0",
+              "first_page_url": "https://taskrouter.twilio.com/v1/Workspaces?FriendlyName=friendly_name&PageSize=50",
               "key": "workspaces",
               "next_page_url": null,
               "page": 0,
               "page_size": 50,
               "previous_page_url": null,
-              "url": "https://taskrouter.twilio.com/v1/Workspaces?FriendlyName=friendly_name&PageSize=50&Page=0"
+              "url": "https://taskrouter.twilio.com/v1/Workspaces?FriendlyName=friendly_name&PageSize=50"
           },
           "workspaces": []
       }

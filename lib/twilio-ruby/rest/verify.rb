@@ -56,6 +56,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Verify::V2::VerificationAttemptsSummaryInstance]
+      def verification_attempts_summary
+        self.v2.verification_attempts_summary()
+      end
+
+      ##
       # @return [Twilio::REST::Verify::V2::TemplateInstance]
       def templates
         self.v2.templates()

@@ -684,7 +684,6 @@ module Twilio
                   'price_unit' => payload['price_unit'],
                   'direction' => payload['direction'],
                   'answered_by' => payload['answered_by'],
-                  'annotation' => payload['annotation'],
                   'api_version' => payload['api_version'],
                   'forwarded_from' => payload['forwarded_from'],
                   'group_sid' => payload['group_sid'],
@@ -817,12 +816,6 @@ module Twilio
             # @return [String] Either `human` or `machine` if this call was initiated with answering machine detection. Empty otherwise.
             def answered_by
               @properties['answered_by']
-            end
-
-            ##
-            # @return [String] The annotation provided for the call
-            def annotation
-              @properties['annotation']
             end
 
             ##
