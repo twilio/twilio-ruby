@@ -13,11 +13,11 @@ module Twilio
     class Client
       @@default_region = 'us1'
 
-      attr_accessor :http_client, :username, :password, :account_sid, :auth_token, :region, :edge, :logger
+      attr_accessor :http_client, :username, :password, :account_sid, :auth_token, :region, :edge, :logger, :user_agent_extensions
 
       ##
       # Initializes the Twilio Client
-      def initialize(username=nil, password=nil, account_sid=nil, region=nil, http_client=nil, logger=nil)
+      def initialize(username=nil, password=nil, account_sid=nil, region=nil, http_client=nil, logger=nil, user_agent_extensions=nil)
         @username = username || Twilio.account_sid
         @password = password || Twilio.auth_token
         @region = region || Twilio.region
@@ -27,6 +27,7 @@ module Twilio
         @auth = [@username, @password]
         @http_client = http_client || Twilio.http_client || Twilio::HTTP::Client.new
         @logger = logger || Twilio.logger
+        @user_agent_extensions = user_agent_extensions || []
 
         # Domains
         @accounts = nil
@@ -69,10 +70,10 @@ module Twilio
       def request(host, port, method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
         auth ||= @auth
 
-        headers['User-Agent'] = "twilio-ruby/#{Twilio::VERSION}" +
-                                " (#{RUBY_ENGINE}/#{RUBY_PLATFORM}" +
-                                " #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL})"
+        headers['User-Agent'] = "twilio-ruby/#{Twilio::VERSION} (#{`uname -s`.chomp} #{`uname -m`.chomp}) Ruby/#{RUBY_VERSION}"
         headers['Accept-Charset'] = 'utf-8'
+
+        user_agent_extensions.each { |extension| headers['User-Agent'] += " #{extension}" }
 
         if method == 'POST' && !headers['Content-Type']
           headers['Content-Type'] = 'application/x-www-form-urlencoded'

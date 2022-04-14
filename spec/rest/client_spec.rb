@@ -252,4 +252,26 @@ describe Twilio::REST::Client do
       end
     end
   end
+
+  context 'user agent in headers' do
+    before do
+      @client.http_client = Twilio::HTTP::Client.new
+      @connection = Faraday::Connection.new
+      expect(Faraday).to receive(:new).and_yield(@connection).and_return(@connection)
+      allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: {}))
+    end
+
+    it 'use default user agent format' do
+      @client.request('host', 'port', 'GET', 'https://api.twilio.com')
+      expect(@client.http_client.last_request.headers['User-Agent']).to match(/^twilio-ruby\/[0-9.]+\s\(\w+\s\w+\)\sRuby\/[^\s]+$/)
+    end
+
+    it 'add user agent extensions' do
+      extensions = %w(twilio-run/2.0.0-test flex-plugin/3.4.0)
+      @client.user_agent_extensions = extensions
+      @client.request('host', 'port', 'GET', 'https://api.twilio.com')
+      actual_extensions = @client.http_client.last_request.headers['User-Agent'].split(/ /).last(extensions.size)
+      expect(actual_extensions).to match_array(extensions)
+    end
+  end
 end
