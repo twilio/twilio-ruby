@@ -15,9 +15,33 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @settings = nil
+          @annotation = nil
           @calls = nil
           @call_summaries = nil
+          @conferences = nil
           @rooms = nil
+        end
+
+        ##
+        # @return [Twilio::REST::Insights::V1::SettingContext]
+        def settings
+          @settings ||= SettingContext.new self
+        end
+
+        ##
+        # @param [String] call_sid The call_sid
+        # @return [Twilio::REST::Insights::V1::AnnotationContext] if call_sid was passed.
+        # @return [Twilio::REST::Insights::V1::AnnotationList]
+        def annotation(call_sid=:unset)
+          if call_sid.nil?
+              raise ArgumentError, 'call_sid cannot be nil'
+          end
+          if call_sid == :unset
+              @annotation ||= AnnotationList.new self
+          else
+              AnnotationContext.new(self, call_sid)
+          end
         end
 
         ##
@@ -39,6 +63,21 @@ module Twilio
         # @return [Twilio::REST::Insights::V1::CallSummariesContext]
         def call_summaries
           @call_summaries ||= CallSummariesList.new self
+        end
+
+        ##
+        # @param [String] conference_sid The unique SID identifier of the Conference.
+        # @return [Twilio::REST::Insights::V1::ConferenceContext] if conference_sid was passed.
+        # @return [Twilio::REST::Insights::V1::ConferenceList]
+        def conferences(conference_sid=:unset)
+          if conference_sid.nil?
+              raise ArgumentError, 'conference_sid cannot be nil'
+          end
+          if conference_sid == :unset
+              @conferences ||= ConferenceList.new self
+          else
+              ConferenceContext.new(self, conference_sid)
+          end
         end
 
         ##

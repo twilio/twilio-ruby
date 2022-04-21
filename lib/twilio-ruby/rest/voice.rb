@@ -29,6 +29,14 @@ module Twilio
       end
 
       ##
+      # @param [String] sid The call sid
+      # @return [Twilio::REST::Voice::V1::ArchivedCallInstance] if sid was passed.
+      # @return [Twilio::REST::Voice::V1::ArchivedCallList]
+      def archived_calls(date=:unset, sid=:unset)
+        self.v1.archived_calls(date, sid)
+      end
+
+      ##
       # @param [String] sid The unique string that that we created to identify the BYOC
       #   Trunk resource.
       # @return [Twilio::REST::Voice::V1::ByocTrunkInstance] if sid was passed.

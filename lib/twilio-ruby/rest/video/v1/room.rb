@@ -30,10 +30,13 @@ module Twilio
           #   `group-small`, or `group`. The default value is `group`.
           # @param [String] unique_name An application-defined string that uniquely
           #   identifies the resource. It can be used as a `room_sid` in place of the
-          #   resource's `sid` in the URL to address the resource. This value is unique for
-          #   `in-progress` rooms. SDK clients can use this name to connect to the room. REST
-          #   API clients can use this name in place of the Room SID to interact with the room
-          #   as long as the room is `in-progress`.
+          #   resource's `sid` in the URL to address the resource, assuming it does not
+          #   contain any {reserved
+          #   characters}[https://tools.ietf.org/html/rfc3986#section-2.2] that would need to
+          #   be URL encoded. This value is unique for `in-progress` rooms. SDK clients can
+          #   use this name to connect to the room. REST API clients can use this name in
+          #   place of the Room SID to interact with the room as long as the room is
+          #   `in-progress`.
           # @param [String] status_callback The URL we should call using the
           #   `status_callback_method` to send status information to your application on every
           #   room event. See {Status
@@ -63,8 +66,14 @@ module Twilio
           # @param [String] max_participant_duration The maximum number of seconds a
           #   Participant can be connected to the room. The maximum possible value is 86400
           #   seconds (24 hours). The default is 14400 seconds (4 hours).
+          # @param [String] empty_room_timeout Configures how long (in minutes) a room will
+          #   remain active after last participant leaves. Valid values range from 1 to 60
+          #   minutes (no fractions).
+          # @param [String] unused_room_timeout Configures how long (in minutes) a room will
+          #   remain active if no one joins. Valid values range from 1 to 60 minutes (no
+          #   fractions).
           # @return [RoomInstance] Created RoomInstance
-          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset, recording_rules: :unset, audio_only: :unset, max_participant_duration: :unset)
+          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset, recording_rules: :unset, audio_only: :unset, max_participant_duration: :unset, empty_room_timeout: :unset, unused_room_timeout: :unset)
             data = Twilio::Values.of({
                 'EnableTurn' => enable_turn,
                 'Type' => type,
@@ -78,6 +87,8 @@ module Twilio
                 'RecordingRules' => Twilio.serialize_object(recording_rules),
                 'AudioOnly' => audio_only,
                 'MaxParticipantDuration' => max_participant_duration,
+                'EmptyRoomTimeout' => empty_room_timeout,
+                'UnusedRoomTimeout' => unused_room_timeout,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -374,6 +385,8 @@ module Twilio
                 'video_codecs' => payload['video_codecs'],
                 'media_region' => payload['media_region'],
                 'audio_only' => payload['audio_only'],
+                'empty_room_timeout' => payload['empty_room_timeout'].to_i,
+                'unused_room_timeout' => payload['unused_room_timeout'].to_i,
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -506,6 +519,18 @@ module Twilio
           # @return [Boolean] Indicates whether the room will only contain audio track participants for group rooms.
           def audio_only
             @properties['audio_only']
+          end
+
+          ##
+          # @return [String] The time a room will remain active after last participant leaves.
+          def empty_room_timeout
+            @properties['empty_room_timeout']
+          end
+
+          ##
+          # @return [String] The time a room will remain active when no one joins.
+          def unused_room_timeout
+            @properties['unused_room_timeout']
           end
 
           ##

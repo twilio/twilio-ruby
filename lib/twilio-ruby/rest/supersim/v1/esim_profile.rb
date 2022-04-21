@@ -12,57 +12,52 @@ module Twilio
       class V1 < Version
         ##
         # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-        class CommandList < ListResource
+        class EsimProfileList < ListResource
           ##
-          # Initialize the CommandList
+          # Initialize the EsimProfileList
           # @param [Version] version Version that contains the resource
-          # @return [CommandList] CommandList
+          # @return [EsimProfileList] EsimProfileList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/Commands"
+            @uri = "/ESimProfiles"
           end
 
           ##
-          # Create the CommandInstance
-          # @param [String] sim The `sid` or `unique_name` of the
-          #   {SIM}[https://www.twilio.com/docs/wireless/api/sim-resource] to send the Command
-          #   to.
-          # @param [String] command The message body of the command.
+          # Create the EsimProfileInstance
+          # @param [String] eid Identifier of the eUICC that will claim the eSIM Profile.
+          # @param [String] callback_url The URL we should call using the `callback_method`
+          #   when the status of the eSIM Profile changes. At this stage of the eSIM Profile
+          #   pilot, the a request to the URL will only be called when the ESimProfile
+          #   resource changes from `reserving` to `available`.
           # @param [String] callback_method The HTTP method we should use to call
           #   `callback_url`. Can be: `GET` or `POST` and the default is POST.
-          # @param [String] callback_url The URL we should call using the `callback_method`
-          #   after we have sent the command.
-          # @return [CommandInstance] Created CommandInstance
-          def create(sim: nil, command: nil, callback_method: :unset, callback_url: :unset)
+          # @return [EsimProfileInstance] Created EsimProfileInstance
+          def create(eid: nil, callback_url: :unset, callback_method: :unset)
             data = Twilio::Values.of({
-                'Sim' => sim,
-                'Command' => command,
-                'CallbackMethod' => callback_method,
+                'Eid' => eid,
                 'CallbackUrl' => callback_url,
+                'CallbackMethod' => callback_method,
             })
 
             payload = @version.create('POST', @uri, data: data)
 
-            CommandInstance.new(@version, payload, )
+            EsimProfileInstance.new(@version, payload, )
           end
 
           ##
-          # Lists CommandInstance records from the API as a list.
+          # Lists EsimProfileInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] sim The SID or unique name of the Sim that Command was sent to
-          #   or from.
-          # @param [command.Status] status The status of the Command. Can be: `queued`,
-          #   `sent`, `delivered`, `received` or `failed`. See the {Command Status
-          #   Values}[https://www.twilio.com/docs/wireless/api/command-resource#status-values]
-          #   for a description of each.
-          # @param [command.Direction] direction The direction of the Command. Can be
-          #   `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term
-          #   `mobile terminated`, and `from_sim` is synonymous with the term `mobile
-          #   originated`.
+          # @param [String] eid List the eSIM Profiles that have been associated with an
+          #   EId.
+          # @param [String] sim_sid Find the eSIM Profile resource related to a
+          #   {Sim}[https://www.twilio.com/docs/wireless/api/sim-resource] resource by
+          #   providing the SIM SID. Will always return an array with either 1 or 0 records.
+          # @param [esim_profile.Status] status List the eSIM Profiles that are in a given
+          #   status.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -70,30 +65,21 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(sim: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
-            self.stream(
-                sim: sim,
-                status: status,
-                direction: direction,
-                limit: limit,
-                page_size: page_size
-            ).entries
+          def list(eid: :unset, sim_sid: :unset, status: :unset, limit: nil, page_size: nil)
+            self.stream(eid: eid, sim_sid: sim_sid, status: status, limit: limit, page_size: page_size).entries
           end
 
           ##
-          # Streams CommandInstance records from the API as an Enumerable.
+          # Streams EsimProfileInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] sim The SID or unique name of the Sim that Command was sent to
-          #   or from.
-          # @param [command.Status] status The status of the Command. Can be: `queued`,
-          #   `sent`, `delivered`, `received` or `failed`. See the {Command Status
-          #   Values}[https://www.twilio.com/docs/wireless/api/command-resource#status-values]
-          #   for a description of each.
-          # @param [command.Direction] direction The direction of the Command. Can be
-          #   `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term
-          #   `mobile terminated`, and `from_sim` is synonymous with the term `mobile
-          #   originated`.
+          # @param [String] eid List the eSIM Profiles that have been associated with an
+          #   EId.
+          # @param [String] sim_sid Find the eSIM Profile resource related to a
+          #   {Sim}[https://www.twilio.com/docs/wireless/api/sim-resource] resource by
+          #   providing the SIM SID. Will always return an array with either 1 or 0 records.
+          # @param [esim_profile.Status] status List the eSIM Profiles that are in a given
+          #   status.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -101,16 +87,16 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(sim: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
+          def stream(eid: :unset, sim_sid: :unset, status: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(sim: sim, status: status, direction: direction, page_size: limits[:page_size], )
+            page = self.page(eid: eid, sim_sid: sim_sid, status: status, page_size: limits[:page_size], )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
 
           ##
-          # When passed a block, yields CommandInstance records from the API.
+          # When passed a block, yields EsimProfileInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -124,27 +110,24 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of CommandInstance records from the API.
+          # Retrieve a single page of EsimProfileInstance records from the API.
           # Request is executed immediately.
-          # @param [String] sim The SID or unique name of the Sim that Command was sent to
-          #   or from.
-          # @param [command.Status] status The status of the Command. Can be: `queued`,
-          #   `sent`, `delivered`, `received` or `failed`. See the {Command Status
-          #   Values}[https://www.twilio.com/docs/wireless/api/command-resource#status-values]
-          #   for a description of each.
-          # @param [command.Direction] direction The direction of the Command. Can be
-          #   `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term
-          #   `mobile terminated`, and `from_sim` is synonymous with the term `mobile
-          #   originated`.
+          # @param [String] eid List the eSIM Profiles that have been associated with an
+          #   EId.
+          # @param [String] sim_sid Find the eSIM Profile resource related to a
+          #   {Sim}[https://www.twilio.com/docs/wireless/api/sim-resource] resource by
+          #   providing the SIM SID. Will always return an array with either 1 or 0 records.
+          # @param [esim_profile.Status] status List the eSIM Profiles that are in a given
+          #   status.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of CommandInstance
-          def page(sim: :unset, status: :unset, direction: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          # @return [Page] Page of EsimProfileInstance
+          def page(eid: :unset, sim_sid: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
-                'Sim' => sim,
+                'Eid' => eid,
+                'SimSid' => sim_sid,
                 'Status' => status,
-                'Direction' => direction,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -152,38 +135,38 @@ module Twilio
 
             response = @version.page('GET', @uri, params: params)
 
-            CommandPage.new(@version, response, @solution)
+            EsimProfilePage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of CommandInstance records from the API.
+          # Retrieve a single page of EsimProfileInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of CommandInstance
+          # @return [Page] Page of EsimProfileInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            CommandPage.new(@version, response, @solution)
+            EsimProfilePage.new(@version, response, @solution)
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Supersim.V1.CommandList>'
+            '#<Twilio.Supersim.V1.EsimProfileList>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-        class CommandPage < Page
+        class EsimProfilePage < Page
           ##
-          # Initialize the CommandPage
+          # Initialize the EsimProfilePage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [CommandPage] CommandPage
+          # @return [EsimProfilePage] EsimProfilePage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -192,69 +175,69 @@ module Twilio
           end
 
           ##
-          # Build an instance of CommandInstance
+          # Build an instance of EsimProfileInstance
           # @param [Hash] payload Payload response from the API
-          # @return [CommandInstance] CommandInstance
+          # @return [EsimProfileInstance] EsimProfileInstance
           def get_instance(payload)
-            CommandInstance.new(@version, payload, )
+            EsimProfileInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Supersim.V1.CommandPage>'
+            '<Twilio.Supersim.V1.EsimProfilePage>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-        class CommandContext < InstanceContext
+        class EsimProfileContext < InstanceContext
           ##
-          # Initialize the CommandContext
+          # Initialize the EsimProfileContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid The SID of the Command resource to fetch.
-          # @return [CommandContext] CommandContext
+          # @param [String] sid The SID of the eSIM Profile resource to fetch.
+          # @return [EsimProfileContext] EsimProfileContext
           def initialize(version, sid)
             super(version)
 
             # Path Solution
             @solution = {sid: sid, }
-            @uri = "/Commands/#{@solution[:sid]}"
+            @uri = "/ESimProfiles/#{@solution[:sid]}"
           end
 
           ##
-          # Fetch the CommandInstance
-          # @return [CommandInstance] Fetched CommandInstance
+          # Fetch the EsimProfileInstance
+          # @return [EsimProfileInstance] Fetched EsimProfileInstance
           def fetch
             payload = @version.fetch('GET', @uri)
 
-            CommandInstance.new(@version, payload, sid: @solution[:sid], )
+            EsimProfileInstance.new(@version, payload, sid: @solution[:sid], )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Supersim.V1.CommandContext #{context}>"
+            "#<Twilio.Supersim.V1.EsimProfileContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Supersim.V1.CommandContext #{context}>"
+            "#<Twilio.Supersim.V1.EsimProfileContext #{context}>"
           end
         end
 
         ##
         # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-        class CommandInstance < InstanceResource
+        class EsimProfileInstance < InstanceResource
           ##
-          # Initialize the CommandInstance
+          # Initialize the EsimProfileInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid The SID of the Command resource to fetch.
-          # @return [CommandInstance] CommandInstance
+          # @param [String] sid The SID of the eSIM Profile resource to fetch.
+          # @return [EsimProfileInstance] EsimProfileInstance
           def initialize(version, payload, sid: nil)
             super(version)
 
@@ -262,10 +245,13 @@ module Twilio
             @properties = {
                 'sid' => payload['sid'],
                 'account_sid' => payload['account_sid'],
+                'iccid' => payload['iccid'],
                 'sim_sid' => payload['sim_sid'],
-                'command' => payload['command'],
                 'status' => payload['status'],
-                'direction' => payload['direction'],
+                'eid' => payload['eid'],
+                'smdp_plus_address' => payload['smdp_plus_address'],
+                'error_code' => payload['error_code'],
+                'error_message' => payload['error_message'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
@@ -279,10 +265,10 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [CommandContext] CommandContext for this CommandInstance
+          # @return [EsimProfileContext] EsimProfileContext for this EsimProfileInstance
           def context
             unless @instance_context
-              @instance_context = CommandContext.new(@version, @params['sid'], )
+              @instance_context = EsimProfileContext.new(@version, @params['sid'], )
             end
             @instance_context
           end
@@ -294,33 +280,51 @@ module Twilio
           end
 
           ##
-          # @return [String] The SID of the Account that created the resource
+          # @return [String] The SID of the Account to which the eSIM Profile resource belongs
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The SID of the SIM that this Command was sent to or from
+          # @return [String] The ICCID associated with the Sim resource
+          def iccid
+            @properties['iccid']
+          end
+
+          ##
+          # @return [String] The SID of the Sim resource that this eSIM Profile controls
           def sim_sid
             @properties['sim_sid']
           end
 
           ##
-          # @return [String] The message body of the command sent to or from the SIM
-          def command
-            @properties['command']
-          end
-
-          ##
-          # @return [command.Status] The status of the Command
+          # @return [esim_profile.Status] The status of the eSIM Profile
           def status
             @properties['status']
           end
 
           ##
-          # @return [command.Direction] The direction of the Command
-          def direction
-            @properties['direction']
+          # @return [String] Identifier of the eUICC that can claim the eSIM Profile
+          def eid
+            @properties['eid']
+          end
+
+          ##
+          # @return [String] Address of the SM-DP+ server from which the Profile will be downloaded
+          def smdp_plus_address
+            @properties['smdp_plus_address']
+          end
+
+          ##
+          # @return [String] Code indicating the failure if the download of the SIM Profile failed and the eSIM Profile is in `failed` state
+          def error_code
+            @properties['error_code']
+          end
+
+          ##
+          # @return [String] Error message describing the failure if the download of the SIM Profile failed and the eSIM Profile is in `failed` state
+          def error_message
+            @properties['error_message']
           end
 
           ##
@@ -336,14 +340,14 @@ module Twilio
           end
 
           ##
-          # @return [String] The absolute URL of the Command resource
+          # @return [String] The absolute URL of the eSIM Profile resource
           def url
             @properties['url']
           end
 
           ##
-          # Fetch the CommandInstance
-          # @return [CommandInstance] Fetched CommandInstance
+          # Fetch the EsimProfileInstance
+          # @return [EsimProfileInstance] Fetched EsimProfileInstance
           def fetch
             context.fetch
           end
@@ -352,14 +356,14 @@ module Twilio
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Supersim.V1.CommandInstance #{values}>"
+            "<Twilio.Supersim.V1.EsimProfileInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Supersim.V1.CommandInstance #{values}>"
+            "<Twilio.Supersim.V1.EsimProfileInstance #{values}>"
           end
         end
       end

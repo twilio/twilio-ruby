@@ -105,7 +105,8 @@ module Twilio
               #   above and below the specified thresholds in seconds are computed. For example,
               #   `5,30` would show splits of Tasks that were canceled or accepted before and
               #   after 5 seconds and before and after 30 seconds. This can be used to show short
-              #   abandoned Tasks or Tasks that failed to meet an SLA.
+              #   abandoned Tasks or Tasks that failed to meet an SLA. TaskRouter will calculate
+              #   statistics on up to 10,000 Tasks for any given threshold.
               # @return [WorkflowCumulativeStatisticsInstance] Fetched WorkflowCumulativeStatisticsInstance
               def fetch(end_date: :unset, minutes: :unset, start_date: :unset, task_channel: :unset, split_by_wait_time: :unset)
                 params = Twilio::Values.of({
@@ -351,7 +352,8 @@ module Twilio
               #   above and below the specified thresholds in seconds are computed. For example,
               #   `5,30` would show splits of Tasks that were canceled or accepted before and
               #   after 5 seconds and before and after 30 seconds. This can be used to show short
-              #   abandoned Tasks or Tasks that failed to meet an SLA.
+              #   abandoned Tasks or Tasks that failed to meet an SLA. TaskRouter will calculate
+              #   statistics on up to 10,000 Tasks for any given threshold.
               # @return [WorkflowCumulativeStatisticsInstance] Fetched WorkflowCumulativeStatisticsInstance
               def fetch(end_date: :unset, minutes: :unset, start_date: :unset, task_channel: :unset, split_by_wait_time: :unset)
                 context.fetch(

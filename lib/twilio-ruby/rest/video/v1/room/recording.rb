@@ -255,6 +255,7 @@ module Twilio
                   'grouping_sids' => payload['grouping_sids'],
                   'track_name' => payload['track_name'],
                   'offset' => payload['offset'].to_i,
+                  'media_external_location' => payload['media_external_location'],
                   'room_sid' => payload['room_sid'],
                   'links' => payload['links'],
               }
@@ -357,6 +358,12 @@ module Twilio
             # @return [String] The number of milliseconds between a point in time that is common to all rooms in a group and when the source room of the recording started
             def offset
               @properties['offset']
+            end
+
+            ##
+            # @return [String] The URL of the media file associated with the recording when stored externally
+            def media_external_location
+              @properties['media_external_location']
             end
 
             ##

@@ -46,6 +46,7 @@ describe 'BrandRegistration' do
           ],
           "identity_status": "VERIFIED",
           "russell_3000": true,
+          "government_entity": false,
           "tax_exempt_status": "501c3",
           "skip_automatic_sec_vet": false,
           "mock": false,
@@ -110,6 +111,7 @@ describe 'BrandRegistration' do
                   "identity_status": "VERIFIED",
                   "russell_3000": true,
                   "tax_exempt_status": "501c3",
+                  "government_entity": false,
                   "skip_automatic_sec_vet": false,
                   "mock": false,
                   "links": {
@@ -168,6 +170,7 @@ describe 'BrandRegistration' do
           ],
           "identity_status": "VERIFIED",
           "russell_3000": true,
+          "government_entity": false,
           "tax_exempt_status": "501c3",
           "skip_automatic_sec_vet": false,
           "mock": false,
@@ -179,6 +182,59 @@ describe 'BrandRegistration' do
     ))
 
     actual = @client.messaging.v1.brand_registrations.create(customer_profile_bundle_sid: 'BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', a2p_profile_bundle_sid: 'BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "can update" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.messaging.v1.brand_registrations('BNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://messaging.twilio.com/v1/a2p/BrandRegistrations/BNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    ))).to eq(true)
+  end
+
+  it "receives update responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "sid": "BNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "customer_profile_bundle_sid": "BU3344409f7e067e279523808d267e2d85",
+          "a2p_profile_bundle_sid": "BU3344409f7e067e279523808d267e2d85",
+          "date_created": "2021-01-27T14:18:35Z",
+          "date_updated": "2021-01-27T14:18:36Z",
+          "brand_type": "STANDARD",
+          "status": "PENDING",
+          "tcr_id": "BXXXXXX",
+          "failure_reason": "Registration error",
+          "url": "https://messaging.twilio.com/v1/a2p/BrandRegistrations/BNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "brand_score": 42,
+          "brand_feedback": [
+              "TAX_ID",
+              "NONPROFIT"
+          ],
+          "identity_status": "VERIFIED",
+          "russell_3000": false,
+          "government_entity": false,
+          "tax_exempt_status": "501c3",
+          "skip_automatic_sec_vet": false,
+          "mock": false,
+          "links": {
+              "brand_vettings": "https://messaging.twilio.com/v1/a2p/BrandRegistrations/BNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Vettings"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.messaging.v1.brand_registrations('BNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end

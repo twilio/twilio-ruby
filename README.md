@@ -1,10 +1,8 @@
 # twilio-ruby
 
-[![Tests](https://github.com/twilio/twilio-ruby/actions/workflows/test.yml/badge.svg)][github-actions]
+[![Tests](https://github.com/twilio/twilio-ruby/actions/workflows/test-and-deploy.yml/badge.svg)][github-actions]
 [![Gem Version](https://img.shields.io/gem/v/twilio-ruby.svg)](https://rubygems.org/gems/twilio-ruby)
 [![Learn with TwilioQuest](https://img.shields.io/static/v1?label=TwilioQuest&message=Learn%20to%20contribute%21&color=F22F46&labelColor=1f243c&style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAAASFBMVEUAAAAZGRkcHBwjIyMoKCgAAABgYGBoaGiAgICMjIyzs7PJycnMzMzNzc3UoBfd3d3m5ubqrhfrMEDu7u739/f4vSb/3AD///9tbdyEAAAABXRSTlMAAAAAAMJrBrEAAAKoSURBVHgB7ZrRcuI6EESdyxXGYoNFvMD//+l2bSszRgyUYpFAsXOeiJGmj4NkuWx1Qeh+Ekl9DgEXOBwOx+Px5xyQhDykfgq4wG63MxxaR4ddIkg6Ul3g84vCIcjPBA5gmUMeXESrlukuoK33+33uID8TWeLAdOWsKpJYzwVMB7bOzYSGOciyUlXSn0/ABXTosJ1M1SbypZ4O4MbZuIDMU02PMbauhhHMHXbmebmALIiEbbbbbUrpF1gwE9kFfRNAJaP+FQEXCCTGyJ4ngDrjOFo3jEL5JdqjF/pueR4cCeCGgAtwmuRS6gDwaRiGvu+DMFwSBLTE3+jF8JyuV1okPZ+AC4hDFhCHyHQjdjPHUKFDlHSJkHQXMB3KpSwXNGJPcwwTdZiXlRN0gSp0zpWxNtM0beYE0nRH6QIbO7rawwXaBYz0j78gxjokDuv12gVeUuBD0MDi0OQCLvDaAho4juP1Q/jkAncXqIcCfd+7gAu4QLMACCLxpRsSuQh0igu0C9Svhi7weAGZg50L3IE3cai4IfkNZAC8dfdhsUD3CgKBVC9JE5ABAFzg4QL/taYPAAWrHdYcgfLaIgAXWJ7OV38n1LEF8tt2TH29E+QAoDoO5Ve/LtCQDmKM9kPbvCEBApK+IXzbcSJ0cIGF6e8gpcRhUDogWZ8JnaWjPXc/fNnBBUKRngiHgTUSivSzDRDgHZQOLvBQgf8rRt+VdBUUhwkU6VpJ+xcOwQUqZr+mR0kvBUgv6cB4+37hQAkXqE8PwGisGhJtN4xAHMzrsgvI7rccXqSvKh6jltGlrOHA3Xk1At3LC4QiPdX9/0ndHpGVvTjR4bZA1ypAKgVcwE5vx74ulwIugDt8e/X7JgfkucBMIAr26ndnB4UCLnDOqvteQsHlgX9N4A+c4cW3DXSPbwAAAABJRU5ErkJggg==)](https://twil.io/learn-open-source)
-
-**The default branch name for this repository has been changed to `main` as of 07/27/2020.**
 
 ## Documentation
 
@@ -25,6 +23,7 @@ This library supports the following Ruby implementations:
 * Ruby 2.6
 * Ruby 2.7
 * Ruby 3.0
+* Ruby 3.1
 
 ### Migrating from 4.x
 
@@ -35,13 +34,13 @@ This library supports the following Ruby implementations:
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 5.61.2'
+gem 'twilio-ruby', '~> 5.66.2'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 5.61.2
+gem install twilio-ruby -v 5.66.2
 ```
 
 To build and install the development branch yourself from the latest source:
@@ -257,7 +256,7 @@ If you've instead found a bug in the library or would like new features added, g
 [bundler]: https://bundler.io
 [rubygems]: https://rubygems.org
 [gem]: https://rubygems.org/gems/twilio
-[github-actions]: https://github.com/twilio/twilio-ruby/actions/workflows/test.yml
+[github-actions]: https://github.com/twilio/twilio-ruby/actions/workflows/test-and-deploy.yml
 [upgrade]: https://github.com/twilio/twilio-ruby/wiki/Ruby-Version-5.x-Upgrade-Guide
 [issues]: https://github.com/twilio/twilio-ruby/issues
 [faraday]: https://github.com/lostisland/faraday

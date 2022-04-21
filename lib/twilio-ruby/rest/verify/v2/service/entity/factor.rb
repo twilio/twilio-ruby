@@ -293,6 +293,7 @@ module Twilio
                     'status' => payload['status'],
                     'factor_type' => payload['factor_type'],
                     'config' => payload['config'],
+                    'metadata' => payload['metadata'],
                     'url' => payload['url'],
                 }
 
@@ -381,6 +382,12 @@ module Twilio
               # @return [Hash] Configurations for a `factor_type`.
               def config
                 @properties['config']
+              end
+
+              ##
+              # @return [Hash] Metadata of the factor.
+              def metadata
+                @properties['metadata']
               end
 
               ##

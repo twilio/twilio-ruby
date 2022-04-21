@@ -13,10 +13,10 @@ describe 'SmsCommand' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.supersim.v1.sms_commands.create(sim: 'HSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', payload: 'payload')
+      @client.supersim.v1.sms_commands.create(sim: 'sim', payload: 'payload')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Sim' => 'HSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', 'Payload' => 'payload', }
+    values = {'Sim' => 'sim', 'Payload' => 'payload', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -43,7 +43,7 @@ describe 'SmsCommand' do
       ]
     ))
 
-    actual = @client.supersim.v1.sms_commands.create(sim: 'HSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', payload: 'payload')
+    actual = @client.supersim.v1.sms_commands.create(sim: 'sim', payload: 'payload')
 
     expect(actual).to_not eq(nil)
   end
@@ -66,7 +66,7 @@ describe 'SmsCommand' do
       ]
     ))
 
-    actual = @client.supersim.v1.sms_commands.create(sim: 'HSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', payload: 'payload')
+    actual = @client.supersim.v1.sms_commands.create(sim: 'sim', payload: 'payload')
 
     expect(actual).to_not eq(nil)
   end

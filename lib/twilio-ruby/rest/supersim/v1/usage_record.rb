@@ -49,9 +49,9 @@ module Twilio
           # @param [Time] start_time Only include usage that occurred at or after this time,
           #   specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format. Default
           #   is one month before the `end_time`.
-          # @param [Time] end_time Only include usage that occurred before this time,
-          #   specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format. Default
-          #   is the current time.
+          # @param [Time] end_time Only include usage that occurred before this time
+          #   (exclusive), specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601]
+          #   format. Default is the current time.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -98,9 +98,9 @@ module Twilio
           # @param [Time] start_time Only include usage that occurred at or after this time,
           #   specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format. Default
           #   is one month before the `end_time`.
-          # @param [Time] end_time Only include usage that occurred before this time,
-          #   specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format. Default
-          #   is the current time.
+          # @param [Time] end_time Only include usage that occurred before this time
+          #   (exclusive), specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601]
+          #   format. Default is the current time.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -163,9 +163,9 @@ module Twilio
           # @param [Time] start_time Only include usage that occurred at or after this time,
           #   specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format. Default
           #   is one month before the `end_time`.
-          # @param [Time] end_time Only include usage that occurred before this time,
-          #   specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601] format. Default
-          #   is the current time.
+          # @param [Time] end_time Only include usage that occurred before this time
+          #   (exclusive), specified in {ISO 8601}[https://en.wikipedia.org/wiki/ISO_8601]
+          #   format. Default is the current time.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50

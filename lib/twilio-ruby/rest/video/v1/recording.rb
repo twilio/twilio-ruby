@@ -272,6 +272,9 @@ module Twilio
                 'grouping_sids' => payload['grouping_sids'],
                 'track_name' => payload['track_name'],
                 'offset' => payload['offset'].to_i,
+                'media_external_location' => payload['media_external_location'],
+                'status_callback' => payload['status_callback'],
+                'status_callback_method' => payload['status_callback_method'],
                 'links' => payload['links'],
             }
 
@@ -373,6 +376,24 @@ module Twilio
           # @return [String] The number of milliseconds between a point in time that is common to all rooms in a group and when the source room of the recording started
           def offset
             @properties['offset']
+          end
+
+          ##
+          # @return [String] The URL of the media file associated with the recording when stored externally
+          def media_external_location
+            @properties['media_external_location']
+          end
+
+          ##
+          # @return [String] The URL called to send status information on every recording event.
+          def status_callback
+            @properties['status_callback']
+          end
+
+          ##
+          # @return [String] The HTTP method used to call `status_callback`
+          def status_callback_method
+            @properties['status_callback_method']
           end
 
           ##

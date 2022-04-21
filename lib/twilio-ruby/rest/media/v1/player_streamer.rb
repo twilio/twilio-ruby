@@ -32,12 +32,18 @@ module Twilio
           #   Callbacks}[/docs/live/status-callbacks] for more details.
           # @param [String] status_callback_method The HTTP method Twilio should use to call
           #   the `status_callback` URL. Can be `POST` or `GET` and the default is `POST`.
+          # @param [String] max_duration The maximum time, in seconds, that the
+          #   PlayerStreamer can run before automatically ends. The default value is 300
+          #   seconds, and the maximum value is 90000 seconds. Once this maximum duration is
+          #   reached, Twilio will end the PlayerStreamer, regardless of whether media is
+          #   still streaming.
           # @return [PlayerStreamerInstance] Created PlayerStreamerInstance
-          def create(video: :unset, status_callback: :unset, status_callback_method: :unset)
+          def create(video: :unset, status_callback: :unset, status_callback_method: :unset, max_duration: :unset)
             data = Twilio::Values.of({
                 'Video' => video,
                 'StatusCallback' => status_callback,
                 'StatusCallbackMethod' => status_callback_method,
+                'MaxDuration' => max_duration,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -263,6 +269,7 @@ module Twilio
                 'status_callback' => payload['status_callback'],
                 'status_callback_method' => payload['status_callback_method'],
                 'ended_reason' => payload['ended_reason'],
+                'max_duration' => payload['max_duration'].to_i,
             }
 
             # Context
@@ -345,6 +352,12 @@ module Twilio
           # @return [player_streamer.EndedReason] The reason why a PlayerStreamer ended
           def ended_reason
             @properties['ended_reason']
+          end
+
+          ##
+          # @return [String] Maximum PlayerStreamer duration in seconds
+          def max_duration
+            @properties['max_duration']
           end
 
           ##

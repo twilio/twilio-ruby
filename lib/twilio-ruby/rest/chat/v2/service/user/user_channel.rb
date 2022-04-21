@@ -193,9 +193,13 @@ module Twilio
 
               ##
               # Delete the UserChannelInstance
+              # @param [user_channel.WebhookEnabledType] x_twilio_webhook_enabled The
+              #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete
-                 @version.delete('DELETE', @uri)
+              def delete(x_twilio_webhook_enabled: :unset)
+                headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+
+                 @version.delete('DELETE', @uri, headers: headers)
               end
 
               ##
@@ -377,9 +381,11 @@ module Twilio
 
               ##
               # Delete the UserChannelInstance
+              # @param [user_channel.WebhookEnabledType] x_twilio_webhook_enabled The
+              #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [Boolean] true if delete succeeds, false otherwise
-              def delete
-                context.delete
+              def delete(x_twilio_webhook_enabled: :unset)
+                context.delete(x_twilio_webhook_enabled: x_twilio_webhook_enabled, )
               end
 
               ##

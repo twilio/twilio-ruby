@@ -3,17 +3,14 @@
 githooks:
 	ln -sf ../../githooks/pre-commit .git/hooks/pre-commit
 
-install: githooks
+install:
 	bundle install --with development; bundle exec rake install
 
-test: lint
+test:
 	bundle exec rake spec
 
-lint:
-	bundle exec rubocop -d --cache true --parallel
-
 docs:
-	yard doc --output-dir ./doc
+	bundle exec yard doc --output-dir ./doc
 
 authors:
 	echo "Authors\n=======\n\nA huge thanks to all of our contributors:\n\n" > AUTHORS.md

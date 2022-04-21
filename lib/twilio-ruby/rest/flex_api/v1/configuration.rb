@@ -170,6 +170,7 @@ module Twilio
                 'flex_insights_hr' => payload['flex_insights_hr'],
                 'flex_insights_drilldown' => payload['flex_insights_drilldown'],
                 'flex_url' => payload['flex_url'],
+                'channel_configs' => payload['channel_configs'],
             }
 
             # Context
@@ -438,6 +439,12 @@ module Twilio
           # @return [String] URL to redirect to in case drilldown is enabled.
           def flex_url
             @properties['flex_url']
+          end
+
+          ##
+          # @return [Array[Hash]] Flex Conversations channels' attachments configurations
+          def channel_configs
+            @properties['channel_configs']
           end
 
           ##
