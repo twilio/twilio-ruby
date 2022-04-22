@@ -10,7 +10,7 @@ require 'time'
 require 'json'
 
 require 'twilio-ruby/version' unless defined?(Twilio::VERSION)
-require 'rack/twilio_webhook_authentication' if defined?(Rack) && (Gem.loaded_specs["rack"].version > Gem::Version.new("2"))
+require 'rack/twilio_webhook_authentication' if defined?(Rack) && defined?(Rack::MediaType)
 
 require 'twilio-ruby/util'
 require 'twilio-ruby/security/request_validator'
