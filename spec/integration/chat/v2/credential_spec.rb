@@ -42,10 +42,10 @@ describe 'Credential' do
           ],
           "meta": {
               "page": 0,
-              "page_size": 1,
-              "first_page_url": "https://chat.twilio.com/v2/Credentials?PageSize=1&Page=0",
+              "page_size": 50,
+              "first_page_url": "https://chat.twilio.com/v2/Credentials?PageSize=50&Page=0",
               "previous_page_url": null,
-              "url": "https://chat.twilio.com/v2/Credentials?PageSize=1&Page=0",
+              "url": "https://chat.twilio.com/v2/Credentials?PageSize=50&Page=0",
               "next_page_url": null,
               "key": "credentials"
           }
@@ -66,10 +66,10 @@ describe 'Credential' do
           "credentials": [],
           "meta": {
               "page": 0,
-              "page_size": 1,
-              "first_page_url": "https://chat.twilio.com/v2/Credentials?PageSize=1&Page=0",
+              "page_size": 50,
+              "first_page_url": "https://chat.twilio.com/v2/Credentials?PageSize=50&Page=0",
               "previous_page_url": null,
-              "url": "https://chat.twilio.com/v2/Credentials?PageSize=1&Page=0",
+              "url": "https://chat.twilio.com/v2/Credentials?PageSize=50&Page=0",
               "next_page_url": null,
               "key": "credentials"
           }

@@ -28,11 +28,24 @@ module Twilio
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [Time] date_created_after Datetime filter used to query Verification
-          #   Attempts created after this datetime.
+          #   Attempts created after this datetime. Given as GMT in RFC 2822 format.
           # @param [Time] date_created_before Datetime filter used to query Verification
-          #   Attempts created before this datetime.
-          # @param [String] channel_data_to Destination of a verification. Depending on the
-          #   type of channel, it could be a phone number in E.164 format or an email address.
+          #   Attempts created before this datetime. Given as GMT in RFC 2822 format.
+          # @param [String] channel_data_to Destination of a verification. It is phone
+          #   number in E.164 format.
+          # @param [String] country Filter used to query Verification Attempts sent to the
+          #   specified destination country.
+          # @param [verification_attempt.Channels] channel Filter used to query Verification
+          #   Attempts by communication channel. Valid values are `SMS` and `CALL`
+          # @param [String] verify_service_sid Filter used to query Verification Attempts by
+          #   verify service. Only attempts of the provided SID will be returned.
+          # @param [String] verification_sid Filter used to return all the Verification
+          #   Attempts of a single verification. Only attempts of the provided verification
+          #   SID will be returned.
+          # @param [verification_attempt.ConversionStatus] status Filter used to query
+          #   Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for
+          #   attempts that were not converted, and `CONVERTED`, for attempts that were
+          #   confirmed.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -40,11 +53,16 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(date_created_after: :unset, date_created_before: :unset, channel_data_to: :unset, limit: nil, page_size: nil)
+          def list(date_created_after: :unset, date_created_before: :unset, channel_data_to: :unset, country: :unset, channel: :unset, verify_service_sid: :unset, verification_sid: :unset, status: :unset, limit: nil, page_size: nil)
             self.stream(
                 date_created_after: date_created_after,
                 date_created_before: date_created_before,
                 channel_data_to: channel_data_to,
+                country: country,
+                channel: channel,
+                verify_service_sid: verify_service_sid,
+                verification_sid: verification_sid,
+                status: status,
                 limit: limit,
                 page_size: page_size
             ).entries
@@ -55,11 +73,24 @@ module Twilio
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [Time] date_created_after Datetime filter used to query Verification
-          #   Attempts created after this datetime.
+          #   Attempts created after this datetime. Given as GMT in RFC 2822 format.
           # @param [Time] date_created_before Datetime filter used to query Verification
-          #   Attempts created before this datetime.
-          # @param [String] channel_data_to Destination of a verification. Depending on the
-          #   type of channel, it could be a phone number in E.164 format or an email address.
+          #   Attempts created before this datetime. Given as GMT in RFC 2822 format.
+          # @param [String] channel_data_to Destination of a verification. It is phone
+          #   number in E.164 format.
+          # @param [String] country Filter used to query Verification Attempts sent to the
+          #   specified destination country.
+          # @param [verification_attempt.Channels] channel Filter used to query Verification
+          #   Attempts by communication channel. Valid values are `SMS` and `CALL`
+          # @param [String] verify_service_sid Filter used to query Verification Attempts by
+          #   verify service. Only attempts of the provided SID will be returned.
+          # @param [String] verification_sid Filter used to return all the Verification
+          #   Attempts of a single verification. Only attempts of the provided verification
+          #   SID will be returned.
+          # @param [verification_attempt.ConversionStatus] status Filter used to query
+          #   Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for
+          #   attempts that were not converted, and `CONVERTED`, for attempts that were
+          #   confirmed.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -67,13 +98,18 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(date_created_after: :unset, date_created_before: :unset, channel_data_to: :unset, limit: nil, page_size: nil)
+          def stream(date_created_after: :unset, date_created_before: :unset, channel_data_to: :unset, country: :unset, channel: :unset, verify_service_sid: :unset, verification_sid: :unset, status: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
             page = self.page(
                 date_created_after: date_created_after,
                 date_created_before: date_created_before,
                 channel_data_to: channel_data_to,
+                country: country,
+                channel: channel,
+                verify_service_sid: verify_service_sid,
+                verification_sid: verification_sid,
+                status: status,
                 page_size: limits[:page_size],
             )
 
@@ -98,20 +134,38 @@ module Twilio
           # Retrieve a single page of VerificationAttemptInstance records from the API.
           # Request is executed immediately.
           # @param [Time] date_created_after Datetime filter used to query Verification
-          #   Attempts created after this datetime.
+          #   Attempts created after this datetime. Given as GMT in RFC 2822 format.
           # @param [Time] date_created_before Datetime filter used to query Verification
-          #   Attempts created before this datetime.
-          # @param [String] channel_data_to Destination of a verification. Depending on the
-          #   type of channel, it could be a phone number in E.164 format or an email address.
+          #   Attempts created before this datetime. Given as GMT in RFC 2822 format.
+          # @param [String] channel_data_to Destination of a verification. It is phone
+          #   number in E.164 format.
+          # @param [String] country Filter used to query Verification Attempts sent to the
+          #   specified destination country.
+          # @param [verification_attempt.Channels] channel Filter used to query Verification
+          #   Attempts by communication channel. Valid values are `SMS` and `CALL`
+          # @param [String] verify_service_sid Filter used to query Verification Attempts by
+          #   verify service. Only attempts of the provided SID will be returned.
+          # @param [String] verification_sid Filter used to return all the Verification
+          #   Attempts of a single verification. Only attempts of the provided verification
+          #   SID will be returned.
+          # @param [verification_attempt.ConversionStatus] status Filter used to query
+          #   Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for
+          #   attempts that were not converted, and `CONVERTED`, for attempts that were
+          #   confirmed.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of VerificationAttemptInstance
-          def page(date_created_after: :unset, date_created_before: :unset, channel_data_to: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          def page(date_created_after: :unset, date_created_before: :unset, channel_data_to: :unset, country: :unset, channel: :unset, verify_service_sid: :unset, verification_sid: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'DateCreatedAfter' => Twilio.serialize_iso8601_datetime(date_created_after),
                 'DateCreatedBefore' => Twilio.serialize_iso8601_datetime(date_created_before),
                 'ChannelData.To' => channel_data_to,
+                'Country' => country,
+                'Channel' => channel,
+                'VerifyServiceSid' => verify_service_sid,
+                'VerificationSid' => verification_sid,
+                'Status' => status,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -224,10 +278,12 @@ module Twilio
                 'sid' => payload['sid'],
                 'account_sid' => payload['account_sid'],
                 'service_sid' => payload['service_sid'],
+                'verification_sid' => payload['verification_sid'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'conversion_status' => payload['conversion_status'],
                 'channel' => payload['channel'],
+                'price' => payload['price'],
                 'channel_data' => payload['channel_data'],
                 'url' => payload['url'],
             }
@@ -249,21 +305,27 @@ module Twilio
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Verification Attempt
+          # @return [String] The SID that uniquely identifies the verification attempt.
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] Account Sid
+          # @return [String] The SID of the Account that created the verification.
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] The service_sid
+          # @return [String] The SID of the verify service that generated this attempt.
           def service_sid
             @properties['service_sid']
+          end
+
+          ##
+          # @return [String] The SID of the verification that generated this attempt.
+          def verification_sid
+            @properties['verification_sid']
           end
 
           ##
@@ -279,19 +341,25 @@ module Twilio
           end
 
           ##
-          # @return [verification_attempt.ConversionStatus] Status of a conversion
+          # @return [verification_attempt.ConversionStatus] Status of the conversion for the verification.
           def conversion_status
             @properties['conversion_status']
           end
 
           ##
-          # @return [verification_attempt.Channels] Channel used for the attempt
+          # @return [verification_attempt.Channels] Communication channel used for the attempt.
           def channel
             @properties['channel']
           end
 
           ##
-          # @return [Hash] Object with the channel information for an attempt
+          # @return [Hash] An object containing the charge for this verification attempt.
+          def price
+            @properties['price']
+          end
+
+          ##
+          # @return [Hash] An object containing the channel specific information for an attempt.
           def channel_data
             @properties['channel_data']
           end

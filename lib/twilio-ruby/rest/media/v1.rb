@@ -16,6 +16,7 @@ module Twilio
           super
           @version = 'v1'
           @media_processor = nil
+          @media_recording = nil
           @player_streamer = nil
         end
 
@@ -31,6 +32,21 @@ module Twilio
               @media_processor ||= MediaProcessorList.new self
           else
               MediaProcessorContext.new(self, sid)
+          end
+        end
+
+        ##
+        # @param [String] sid The SID of the MediaRecording resource to fetch.
+        # @return [Twilio::REST::Media::V1::MediaRecordingContext] if sid was passed.
+        # @return [Twilio::REST::Media::V1::MediaRecordingList]
+        def media_recording(sid=:unset)
+          if sid.nil?
+              raise ArgumentError, 'sid cannot be nil'
+          end
+          if sid == :unset
+              @media_recording ||= MediaRecordingList.new self
+          else
+              MediaRecordingContext.new(self, sid)
           end
         end
 

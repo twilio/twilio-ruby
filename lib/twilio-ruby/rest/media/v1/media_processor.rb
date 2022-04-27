@@ -356,7 +356,7 @@ module Twilio
           end
 
           ##
-          # @return [String] Maximum MediaProcessor duration in minutes
+          # @return [String] Maximum MediaProcessor duration in seconds
           def max_duration
             @properties['max_duration']
           end

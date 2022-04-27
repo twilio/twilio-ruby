@@ -115,8 +115,13 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the Flex Flow resource.
           # @param [String] chat_service_sid The SID of the chat service.
-          # @param [flex_flow.ChannelType] channel_type The channel type. Can be: `web`,
-          #   `facebook`, `sms`, `whatsapp`, `line` or `custom`.
+          # @param [flex_flow.ChannelType] channel_type The channel type. One of `web`,
+          #   `facebook`, `sms`, `whatsapp`, `line` or `custom`. By default, Studio’s Send to
+          #   Flex widget passes it on to the Task attributes for Tasks created based on this
+          #   Flex Flow. The Task attributes will be used by the Flex UI to render the
+          #   respective Task as appropriate (applying channel-specific design and length
+          #   limits). If `channelType` is `facebook`, `whatsapp` or `line`, the Send to Flex
+          #   widget should set the Task Channel to Programmable Chat.
           # @param [String] contact_identity The channel contact's Identity.
           # @param [Boolean] enabled Whether the new Flex Flow is enabled.
           # @param [flex_flow.IntegrationType] integration_type The software that will
@@ -151,10 +156,10 @@ module Twilio
           # @param [Boolean] janitor_enabled When enabled, the Messaging Channel Janitor
           #   will remove active Proxy sessions if the associated Task is deleted outside of
           #   the Flex UI. Defaults to `false`.
-          # @param [String] integration_retry_count The number of times to retry the webhook
-          #   if the first attempt fails. Can be an integer between 0 and 3 (inclusive),
-          #   default is 3. Optional when `integrationType` is `external`, not applicable
-          #   otherwise.
+          # @param [String] integration_retry_count The number of times to retry the Studio
+          #   Flow or webhook in case of failure. Takes integer values from 0 to 3 with the
+          #   default being 3. Optional when `integrationType` is `studio` or `external`, not
+          #   applicable otherwise.
           # @return [FlexFlowInstance] Created FlexFlowInstance
           def create(friendly_name: nil, chat_service_sid: nil, channel_type: nil, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
             data = Twilio::Values.of({
@@ -246,8 +251,13 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the Flex Flow resource.
           # @param [String] chat_service_sid The SID of the chat service.
-          # @param [flex_flow.ChannelType] channel_type The channel type. Can be: `web`,
-          #   `facebook`, `sms`, `whatsapp`, `line` or `custom`.
+          # @param [flex_flow.ChannelType] channel_type The channel type. One of `web`,
+          #   `facebook`, `sms`, `whatsapp`, `line` or `custom`. By default, Studio’s Send to
+          #   Flex widget passes it on to the Task attributes for Tasks created based on this
+          #   Flex Flow. The Task attributes will be used by the Flex UI to render the
+          #   respective Task as appropriate (applying channel-specific design and length
+          #   limits). If `channelType` is `facebook`, `whatsapp` or `line`, the Send to Flex
+          #   widget should set the Task Channel to Programmable Chat.
           # @param [String] contact_identity The channel contact's Identity.
           # @param [Boolean] enabled Whether the new Flex Flow is enabled.
           # @param [flex_flow.IntegrationType] integration_type The software that will
@@ -282,10 +292,10 @@ module Twilio
           # @param [Boolean] janitor_enabled When enabled, the Messaging Channel Janitor
           #   will remove active Proxy sessions if the associated Task is deleted outside of
           #   the Flex UI. Defaults to `false`.
-          # @param [String] integration_retry_count The number of times to retry the webhook
-          #   if the first attempt fails. Can be an integer between 0 and 3 (inclusive),
-          #   default is 3. Optional when `integrationType` is `external`, not applicable
-          #   otherwise.
+          # @param [String] integration_retry_count The number of times to retry the Studio
+          #   Flow or webhook in case of failure. Takes integer values from 0 to 3 with the
+          #   default being 3. Optional when `integrationType` is `studio` or `external`, not
+          #   applicable otherwise.
           # @return [FlexFlowInstance] Updated FlexFlowInstance
           def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
             data = Twilio::Values.of({
@@ -475,8 +485,13 @@ module Twilio
           # @param [String] friendly_name A descriptive string that you create to describe
           #   the Flex Flow resource.
           # @param [String] chat_service_sid The SID of the chat service.
-          # @param [flex_flow.ChannelType] channel_type The channel type. Can be: `web`,
-          #   `facebook`, `sms`, `whatsapp`, `line` or `custom`.
+          # @param [flex_flow.ChannelType] channel_type The channel type. One of `web`,
+          #   `facebook`, `sms`, `whatsapp`, `line` or `custom`. By default, Studio’s Send to
+          #   Flex widget passes it on to the Task attributes for Tasks created based on this
+          #   Flex Flow. The Task attributes will be used by the Flex UI to render the
+          #   respective Task as appropriate (applying channel-specific design and length
+          #   limits). If `channelType` is `facebook`, `whatsapp` or `line`, the Send to Flex
+          #   widget should set the Task Channel to Programmable Chat.
           # @param [String] contact_identity The channel contact's Identity.
           # @param [Boolean] enabled Whether the new Flex Flow is enabled.
           # @param [flex_flow.IntegrationType] integration_type The software that will
@@ -511,10 +526,10 @@ module Twilio
           # @param [Boolean] janitor_enabled When enabled, the Messaging Channel Janitor
           #   will remove active Proxy sessions if the associated Task is deleted outside of
           #   the Flex UI. Defaults to `false`.
-          # @param [String] integration_retry_count The number of times to retry the webhook
-          #   if the first attempt fails. Can be an integer between 0 and 3 (inclusive),
-          #   default is 3. Optional when `integrationType` is `external`, not applicable
-          #   otherwise.
+          # @param [String] integration_retry_count The number of times to retry the Studio
+          #   Flow or webhook in case of failure. Takes integer values from 0 to 3 with the
+          #   default being 3. Optional when `integrationType` is `studio` or `external`, not
+          #   applicable otherwise.
           # @return [FlexFlowInstance] Updated FlexFlowInstance
           def update(friendly_name: :unset, chat_service_sid: :unset, channel_type: :unset, contact_identity: :unset, enabled: :unset, integration_type: :unset, integration_flow_sid: :unset, integration_url: :unset, integration_workspace_sid: :unset, integration_workflow_sid: :unset, integration_channel: :unset, integration_timeout: :unset, integration_priority: :unset, integration_creation_on_message: :unset, long_lived: :unset, janitor_enabled: :unset, integration_retry_count: :unset)
             context.update(

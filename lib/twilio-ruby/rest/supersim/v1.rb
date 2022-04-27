@@ -15,7 +15,7 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
-          @commands = nil
+          @esim_profiles = nil
           @fleets = nil
           @ip_commands = nil
           @networks = nil
@@ -26,17 +26,17 @@ module Twilio
         end
 
         ##
-        # @param [String] sid The SID of the Command resource to fetch.
-        # @return [Twilio::REST::Supersim::V1::CommandContext] if sid was passed.
-        # @return [Twilio::REST::Supersim::V1::CommandList]
-        def commands(sid=:unset)
+        # @param [String] sid The SID of the eSIM Profile resource to fetch.
+        # @return [Twilio::REST::Supersim::V1::EsimProfileContext] if sid was passed.
+        # @return [Twilio::REST::Supersim::V1::EsimProfileList]
+        def esim_profiles(sid=:unset)
           if sid.nil?
               raise ArgumentError, 'sid cannot be nil'
           end
           if sid == :unset
-              @commands ||= CommandList.new self
+              @esim_profiles ||= EsimProfileList.new self
           else
-              CommandContext.new(self, sid)
+              EsimProfileContext.new(self, sid)
           end
         end
 

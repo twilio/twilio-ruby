@@ -47,12 +47,18 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
-      #   Verification Attempt.
+      # @param [String] sid The SID that uniquely identifies the verification attempt
+      #   resource.
       # @return [Twilio::REST::Verify::V2::VerificationAttemptInstance] if sid was passed.
       # @return [Twilio::REST::Verify::V2::VerificationAttemptList]
       def verification_attempts(sid=:unset)
         self.v2.verification_attempts(sid)
+      end
+
+      ##
+      # @return [Twilio::REST::Verify::V2::VerificationAttemptsSummaryInstance]
+      def verification_attempts_summary
+        self.v2.verification_attempts_summary()
       end
 
       ##

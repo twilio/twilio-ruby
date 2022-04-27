@@ -443,6 +443,7 @@ module Twilio
               @events = nil
               @payments = nil
               @siprec = nil
+              @streams = nil
             end
 
             ##
@@ -618,6 +619,24 @@ module Twilio
             end
 
             ##
+            # Access the streams
+            # @return [StreamList]
+            # @return [StreamContext] if sid was passed.
+            def streams(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return StreamContext.new(@version, @solution[:account_sid], @solution[:sid], sid, )
+              end
+
+              unless @streams
+                @streams = StreamList.new(@version, account_sid: @solution[:account_sid], call_sid: @solution[:sid], )
+              end
+
+              @streams
+            end
+
+            ##
             # Provide a user friendly representation
             def to_s
               context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -665,7 +684,6 @@ module Twilio
                   'price_unit' => payload['price_unit'],
                   'direction' => payload['direction'],
                   'answered_by' => payload['answered_by'],
-                  'annotation' => payload['annotation'],
                   'api_version' => payload['api_version'],
                   'forwarded_from' => payload['forwarded_from'],
                   'group_sid' => payload['group_sid'],
@@ -798,12 +816,6 @@ module Twilio
             # @return [String] Either `human` or `machine` if this call was initiated with answering machine detection. Empty otherwise.
             def answered_by
               @properties['answered_by']
-            end
-
-            ##
-            # @return [String] The annotation provided for the call
-            def annotation
-              @properties['annotation']
             end
 
             ##
@@ -956,6 +968,13 @@ module Twilio
             # @return [siprec] siprec
             def siprec
               context.siprec
+            end
+
+            ##
+            # Access the streams
+            # @return [streams] streams
+            def streams
+              context.streams
             end
 
             ##

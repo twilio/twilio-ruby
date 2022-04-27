@@ -183,7 +183,7 @@ module Twilio
           end
 
           ##
-          # @return [Hash] Ojbect with the template translations.
+          # @return [Hash] Object with the template translations.
           def translations
             @properties['translations']
           end

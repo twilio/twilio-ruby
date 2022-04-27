@@ -35,6 +35,14 @@ module Twilio
       end
 
       ##
+      # @param [String] call_sid The call_sid
+      # @return [Twilio::REST::Insights::V1::AnnotationInstance] if call_sid was passed.
+      # @return [Twilio::REST::Insights::V1::AnnotationList]
+      def annotation(call_sid=:unset)
+        self.v1.annotation(call_sid)
+      end
+
+      ##
       # @param [String] sid The sid
       # @return [Twilio::REST::Insights::V1::CallInstance] if sid was passed.
       # @return [Twilio::REST::Insights::V1::CallList]
@@ -46,6 +54,14 @@ module Twilio
       # @return [Twilio::REST::Insights::V1::CallSummariesInstance]
       def call_summaries
         self.v1.call_summaries()
+      end
+
+      ##
+      # @param [String] conference_sid The unique SID identifier of the Conference.
+      # @return [Twilio::REST::Insights::V1::ConferenceInstance] if conference_sid was passed.
+      # @return [Twilio::REST::Insights::V1::ConferenceList]
+      def conferences(conference_sid=:unset)
+        self.v1.conferences(conference_sid)
       end
 
       ##

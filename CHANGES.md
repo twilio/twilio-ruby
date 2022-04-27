@@ -1,6 +1,155 @@
 twilio-ruby changelog
 =====================
 
+[2022-04-20] Version 5.66.2
+---------------------------
+**Library - Chore**
+- [PR #604](https://github.com/twilio/twilio-ruby/pull/604): update the user agent string for twilio-ruby. Thanks to [@claudiachua](https://github.com/claudiachua)!
+
+
+[2022-04-06] Version 5.66.1
+---------------------------
+**Api**
+- Updated `provider_sid` visibility to private
+
+**Verify**
+- Verify List Attempts API summary endpoint added.
+- Update PII documentation for `AccessTokens` `factor_friendly_name` property.
+
+**Voice**
+- make annotation parameter from /Calls API private
+
+
+[2022-03-23] Version 5.66.0
+---------------------------
+**Api**
+- Change `stream` url parameter to non optional
+- Add `verify-totp` and `verify-whatsapp-conversations-business-initiated` categories to `usage_record` API
+
+**Chat**
+- Added v3 Channel update endpoint to support Public to Private channel migration
+
+**Flex**
+- Private Beta release of the Interactions API to support the upcoming release of Flex Conversations at the end of Q1 2022.
+- Adding `channel_configs` object to Flex Configuration
+
+**Media**
+- Add max_duration param to PlayerStreamer
+
+**Supersim**
+- Remove Commands resource, use SmsCommands resource instead **(breaking change)**
+
+**Taskrouter**
+- Add limits to `split_by_wait_time` for Cumulative Statistics Endpoint
+
+**Video**
+- Change recording `status_callback_method` type from `enum` to `http_method` **(breaking change)**
+- Add `status_callback` and `status_callback_method` to composition
+- Add `status_callback` and `status_callback_method` to recording
+
+
+[2022-03-09] Version 5.65.1
+---------------------------
+**Library - Fix**
+- [PR #602](https://github.com/twilio/twilio-ruby/pull/602): don't load webhook authentication if Rack not present. Thanks to [@philnash](https://github.com/philnash)!
+
+**Library - Chore**
+- [PR #599](https://github.com/twilio/twilio-ruby/pull/599): push Datadog Release Metric upon deploy success. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+
+**Api**
+- Add optional boolean include_soft_deleted parameter to retrieve soft deleted recordings
+
+**Chat**
+- Add `X-Twilio-Wehook-Enabled` header to `delete` method in UserChannel resource
+
+**Numbers**
+- Expose `failure_reason` in the Supporting Documents resources
+
+**Verify**
+- Add optional `metadata` parameter to "verify challenge" endpoint, so the SDK/App can attach relevant information from the device when responding to challenges.
+- remove beta feature flag to list atempt api operations.
+- Add `ttl` and `date_created` properties to `AccessTokens`.
+
+
+[2022-02-23] Version 5.65.0
+---------------------------
+**Api**
+- Add `uri` to `stream` resource
+- Add A2P Registration Fee category (`a2p-registration-fee`) to usage records
+- Detected a bug and removed optional boolean include_soft_deleted parameter to retrieve soft deleted recordings. **(breaking change)**
+- Add optional boolean include_soft_deleted parameter to retrieve soft deleted recordings.
+
+**Numbers**
+- Unrevert valid_until and sort filter params added to List Bundles resource
+- Revert valid_until and sort filter params added to List Bundles resource
+- Update sorting params added to List Bundles resource in the previous release
+
+**Preview**
+- Moved `web_channels` from preview to beta under `flex-api` **(breaking change)**
+
+**Taskrouter**
+- Add `ETag` as Response Header to List of Task, Reservation & Worker
+
+**Verify**
+- Remove outdated documentation commentary to contact sales. Product is already in public beta.
+- Add optional `metadata` to factors.
+
+**Twiml**
+- Add new Polly Neural voices
+
+
+[2022-02-09] Version 5.64.0
+---------------------------
+**Library - Chore**
+- [PR #594](https://github.com/twilio/twilio-ruby/pull/594): upgrade supported language versions. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Api**
+- Add `stream` resource
+
+**Conversations**
+- Fixed DELETE request to accept "sid_like" params in Address Configuration resources **(breaking change)**
+- Expose Address Configuration resource for `sms` and `whatsapp`
+
+**Fax**
+- Removed deprecated Programmable Fax Create and Update methods **(breaking change)**
+
+**Insights**
+- Rename `call_state` to `call_status` and remove `whisper` in conference participant summary **(breaking change)**
+
+**Numbers**
+- Expose valid_until filters as part of provisionally-approved compliance feature on the List Bundles resource
+
+**Supersim**
+- Fix typo in Fleet resource docs
+- Updated documentation for the Fleet resource indicating that fields related to commands have been deprecated and to use sms_command fields instead.
+- Add support for setting and reading `ip_commands_url` and `ip_commands_method` on Fleets resource for helper libraries
+- Changed `sim` property in requests to create an SMS Command made to the /SmsCommands to accept SIM UniqueNames in addition to SIDs
+
+**Verify**
+- Update list attempts API to include new filters and response fields.
+
+
+[2022-01-26] Version 5.63.1
+---------------------------
+**Library - Fix**
+- [PR #590](https://github.com/twilio/twilio-ruby/pull/590): Validate signatures in Rack middleware for non-form-data payloads. Thanks to [@gabrielg](https://github.com/gabrielg)!
+
+**Library - Chore**
+- [PR #589](https://github.com/twilio/twilio-ruby/pull/589): Add sonarcloud analysis. Thanks to [@BrimmingDev](https://github.com/BrimmingDev)!
+- [PR #588](https://github.com/twilio/twilio-ruby/pull/588): support for rubocop linting on ruby-head. Thanks to [@Hunga1](https://github.com/Hunga1)!
+
+**Insights**
+- Added new endpoint to fetch Conference Participant Summary
+- Added new endpoint to fetch Conference Summary
+
+**Messaging**
+- Add government_entity parameter to brand apis
+
+**Verify**
+- Add Access Token fetch endpoint to retrieve a previously created token.
+- Add Access Token payload to the Access Token creation endpoint, including a unique Sid, so it's addressable while it's TTL is valid.
+
+
 [2022-01-12] Version 5.63.0
 ---------------------------
 **Library - Feature**

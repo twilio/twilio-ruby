@@ -335,6 +335,8 @@ module Twilio
                 'size' => payload['size'].to_i,
                 'duration' => payload['duration'].to_i,
                 'media_external_location' => payload['media_external_location'],
+                'status_callback' => payload['status_callback'],
+                'status_callback_method' => payload['status_callback_method'],
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -455,6 +457,18 @@ module Twilio
           # @return [String] The URL of the media file associated with the composition when stored externally
           def media_external_location
             @properties['media_external_location']
+          end
+
+          ##
+          # @return [String] The URL called to send status information on every composition event.
+          def status_callback
+            @properties['status_callback']
+          end
+
+          ##
+          # @return [String] The HTTP method used to call `status_callback`
+          def status_callback_method
+            @properties['status_callback_method']
           end
 
           ##

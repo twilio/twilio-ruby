@@ -242,6 +242,7 @@ module Twilio
                   'friendly_name' => payload['friendly_name'],
                   'mime_type' => payload['mime_type'],
                   'status' => payload['status'],
+                  'failure_reason' => payload['failure_reason'],
                   'type' => payload['type'],
                   'attributes' => payload['attributes'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
@@ -293,6 +294,12 @@ module Twilio
             # @return [supporting_document.Status] The verification status of the Supporting Document resource
             def status
               @properties['status']
+            end
+
+            ##
+            # @return [String] The failure reason of the Supporting Document Resource.
+            def failure_reason
+              @properties['failure_reason']
             end
 
             ##

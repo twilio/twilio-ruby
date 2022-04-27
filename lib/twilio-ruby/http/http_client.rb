@@ -48,8 +48,8 @@ module Twilio
         @last_response = nil
 
         response = send(request)
-        if response.status == 504
-          object = { message: 'Request timeout', code: 504 }.to_json
+        if (500..599).include?(response.status)
+          object = { message: "Server error (#{response.status})", code: response.status }.to_json
         elsif response.body && !response.body.empty?
           object = response.body
         elsif response.status == 400

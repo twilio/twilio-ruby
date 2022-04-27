@@ -277,9 +277,16 @@ module Twilio
               #   Challenge. E.g., a TOTP would use the numeric code. For `TOTP` this value must
               #   be between 3 and 8 characters long. For `Push` this value can be up to 5456
               #   characters in length
+              # @param [Hash] metadata Custom metadata associated with the challenge. This is
+              #   added by the Device/SDK directly to allow for the inclusion of device
+              #   information. It must be a stringified JSON with only strings values eg. `{"os":
+              #   "Android"}`. Can be up to 1024 characters in length.
               # @return [ChallengeInstance] Updated ChallengeInstance
-              def update(auth_payload: :unset)
-                data = Twilio::Values.of({'AuthPayload' => auth_payload, })
+              def update(auth_payload: :unset, metadata: :unset)
+                data = Twilio::Values.of({
+                    'AuthPayload' => auth_payload,
+                    'Metadata' => Twilio.serialize_object(metadata),
+                })
 
                 payload = @version.update('POST', @uri, data: data)
 
@@ -358,6 +365,7 @@ module Twilio
                     'responded_reason' => payload['responded_reason'],
                     'details' => payload['details'],
                     'hidden_details' => payload['hidden_details'],
+                    'metadata' => payload['metadata'],
                     'factor_type' => payload['factor_type'],
                     'url' => payload['url'],
                     'links' => payload['links'],
@@ -469,6 +477,12 @@ module Twilio
               end
 
               ##
+              # @return [Hash] Metadata of the challenge.
+              def metadata
+                @properties['metadata']
+              end
+
+              ##
               # @return [challenge.FactorTypes] The Factor Type of this Challenge
               def factor_type
                 @properties['factor_type']
@@ -499,9 +513,13 @@ module Twilio
               #   Challenge. E.g., a TOTP would use the numeric code. For `TOTP` this value must
               #   be between 3 and 8 characters long. For `Push` this value can be up to 5456
               #   characters in length
+              # @param [Hash] metadata Custom metadata associated with the challenge. This is
+              #   added by the Device/SDK directly to allow for the inclusion of device
+              #   information. It must be a stringified JSON with only strings values eg. `{"os":
+              #   "Android"}`. Can be up to 1024 characters in length.
               # @return [ChallengeInstance] Updated ChallengeInstance
-              def update(auth_payload: :unset)
-                context.update(auth_payload: auth_payload, )
+              def update(auth_payload: :unset, metadata: :unset)
+                context.update(auth_payload: auth_payload, metadata: metadata, )
               end
 
               ##

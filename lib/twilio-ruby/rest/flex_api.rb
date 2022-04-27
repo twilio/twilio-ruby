@@ -53,6 +53,15 @@ module Twilio
       end
 
       ##
+      # @param [String] sid The unique string created by Twilio to identify an
+      #   Interaction resource.
+      # @return [Twilio::REST::Flex_api::V1::InteractionInstance] if sid was passed.
+      # @return [Twilio::REST::Flex_api::V1::InteractionList]
+      def interaction(sid=:unset)
+        self.v1.interaction(sid)
+      end
+
+      ##
       # @param [String] sid The unique string that we created to identify the WebChannel
       #   resource.
       # @return [Twilio::REST::Flex_api::V1::WebChannelInstance] if sid was passed.

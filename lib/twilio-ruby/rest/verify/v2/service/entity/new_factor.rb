@@ -41,9 +41,7 @@ module Twilio
               #   constructing the `binding.uri` property.
               #   At the same time, we recommend avoiding providing PII.
               # @param [new_factor.FactorTypes] factor_type The Type of this Factor. Currently
-              #   `push` and `totp` are supported. For `totp` to work, you need to contact {Twilio
-              #   sales}[https://www.twilio.com/help/sales] first to have the Verify TOTP feature
-              #   enabled for your Twilio account.
+              #   `push` and `totp` are supported.
               # @param [String] binding_alg The algorithm used when `factor_type` is `push`.
               #   Algorithm supported: `ES256`
               # @param [String] binding_public_key The Ecdsa public key in PKIX, ASN.1 DER
@@ -96,8 +94,12 @@ module Twilio
               #   TOTP codes. Can be `sha1`, `sha256` or `sha512`. Defaults to `sha1`.
               #
               #   Used when `factor_type` is `totp`
+              # @param [Hash] metadata Custom metadata associated with the factor. This is added
+              #   by the Device/SDK directly to allow for the inclusion of device information. It
+              #   must be a stringified JSON with only strings values eg. `{"os": "Android"}`. Can
+              #   be up to 1024 characters in length.
               # @return [NewFactorInstance] Created NewFactorInstance
-              def create(friendly_name: nil, factor_type: nil, binding_alg: :unset, binding_public_key: :unset, config_app_id: :unset, config_notification_platform: :unset, config_notification_token: :unset, config_sdk_version: :unset, binding_secret: :unset, config_time_step: :unset, config_skew: :unset, config_code_length: :unset, config_alg: :unset)
+              def create(friendly_name: nil, factor_type: nil, binding_alg: :unset, binding_public_key: :unset, config_app_id: :unset, config_notification_platform: :unset, config_notification_token: :unset, config_sdk_version: :unset, binding_secret: :unset, config_time_step: :unset, config_skew: :unset, config_code_length: :unset, config_alg: :unset, metadata: :unset)
                 data = Twilio::Values.of({
                     'FriendlyName' => friendly_name,
                     'FactorType' => factor_type,
@@ -112,6 +114,7 @@ module Twilio
                     'Config.Skew' => config_skew,
                     'Config.CodeLength' => config_code_length,
                     'Config.Alg' => config_alg,
+                    'Metadata' => Twilio.serialize_object(metadata),
                 })
 
                 payload = @version.create('POST', @uri, data: data)
@@ -197,6 +200,7 @@ module Twilio
                     'status' => payload['status'],
                     'factor_type' => payload['factor_type'],
                     'config' => payload['config'],
+                    'metadata' => payload['metadata'],
                     'url' => payload['url'],
                 }
               end
@@ -232,7 +236,7 @@ module Twilio
               end
 
               ##
-              # @return [Hash] Unique external identifier of the Entity
+              # @return [Hash] Binding of the factor
               def binding
                 @properties['binding']
               end
@@ -268,9 +272,15 @@ module Twilio
               end
 
               ##
-              # @return [Hash] Binding for a `factor_type`.
+              # @return [Hash] Configurations for a `factor_type`.
               def config
                 @properties['config']
+              end
+
+              ##
+              # @return [Hash] Metadata of the factor.
+              def metadata
+                @properties['metadata']
               end
 
               ##

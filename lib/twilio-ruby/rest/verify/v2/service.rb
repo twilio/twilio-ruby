@@ -442,8 +442,14 @@ module Twilio
           ##
           # Access the access_tokens
           # @return [AccessTokenList]
-          # @return [AccessTokenContext]
-          def access_tokens
+          # @return [AccessTokenContext] if sid was passed.
+          def access_tokens(sid=:unset)
+            raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+            if sid != :unset
+              return AccessTokenContext.new(@version, @solution[:sid], sid, )
+            end
+
             unless @access_tokens
               @access_tokens = AccessTokenList.new(@version, service_sid: @solution[:sid], )
             end

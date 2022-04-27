@@ -38,6 +38,7 @@ describe 'PlayerStreamer' do
           "status_callback_method": "POST",
           "ended_reason": null,
           "url": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe",
+          "max_duration": 300,
           "links": {
               "timed_metadata": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe/TimedMetadata",
               "playback_grant": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe/PlaybackGrant"
@@ -80,6 +81,7 @@ describe 'PlayerStreamer' do
           "status_callback_method": "POST",
           "ended_reason": null,
           "url": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe",
+          "max_duration": 300,
           "links": {
               "timed_metadata": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe/TimedMetadata",
               "playback_grant": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe/PlaybackGrant"
@@ -124,6 +126,7 @@ describe 'PlayerStreamer' do
           "status_callback_method": "POST",
           "ended_reason": "ended-via-api",
           "url": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe",
+          "max_duration": 300,
           "links": {
               "timed_metadata": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe/TimedMetadata",
               "playback_grant": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe/PlaybackGrant"
@@ -201,6 +204,7 @@ describe 'PlayerStreamer' do
                   "status_callback_method": "POST",
                   "ended_reason": "ended-via-api",
                   "url": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe",
+                  "max_duration": 300,
                   "links": {
                       "timed_metadata": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe/TimedMetadata",
                       "playback_grant": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe/PlaybackGrant"
@@ -242,6 +246,7 @@ describe 'PlayerStreamer' do
                   "status_callback_method": "POST",
                   "ended_reason": "ended-via-api",
                   "url": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe",
+                  "max_duration": 300,
                   "links": {
                       "timed_metadata": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe/TimedMetadata",
                       "playback_grant": "https://media.twilio.com/v1/PlayerStreamers/VJcafebabecafebabecafebabecafebabe/PlaybackGrant"

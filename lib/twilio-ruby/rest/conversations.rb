@@ -37,6 +37,15 @@ module Twilio
       ##
       # @param [String] sid A 34 character string that uniquely identifies this
       #   resource.
+      # @return [Twilio::REST::Conversations::V1::AddressConfigurationInstance] if sid was passed.
+      # @return [Twilio::REST::Conversations::V1::AddressConfigurationList]
+      def address_configurations(sid=:unset)
+        self.v1.address_configurations(sid)
+      end
+
+      ##
+      # @param [String] sid A 34 character string that uniquely identifies this
+      #   resource.
       # @return [Twilio::REST::Conversations::V1::ConversationInstance] if sid was passed.
       # @return [Twilio::REST::Conversations::V1::ConversationList]
       def conversations(sid=:unset)
