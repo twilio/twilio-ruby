@@ -70,7 +70,8 @@ module Twilio
       def request(host, port, method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
         auth ||= @auth
 
-        headers['User-Agent'] = "twilio-ruby/#{Twilio::VERSION} (#{`uname -s`.chomp} #{`uname -m`.chomp}) Ruby/#{RUBY_VERSION}"
+        ruby_config = RbConfig::CONFIG
+        headers['User-Agent'] = "twilio-ruby/#{Twilio::VERSION} (#{ruby_config["host_os"]} #{ruby_config["host_cpu"]}) Ruby/#{RUBY_VERSION}"
         headers['Accept-Charset'] = 'utf-8'
 
         user_agent_extensions.each { |extension| headers['User-Agent'] += " #{extension}" }
