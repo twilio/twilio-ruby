@@ -263,7 +263,7 @@ describe Twilio::REST::Client do
 
     it 'use default user agent format' do
       @client.request('host', 'port', 'GET', 'https://api.twilio.com')
-      expect(@client.http_client.last_request.headers['User-Agent']).to match %r{^twilio-ruby/[0-9.]+\s\([\w+-]\s\w+\)\sRuby/[^\s]+$}
+      expect(@client.http_client.last_request.headers['User-Agent']).to match %r{^twilio-ruby/[0-9.]+\s\([\w-]+\s\w+\)\sRuby/[^\s]+$}
     end
 
     it 'add user agent extensions' do
