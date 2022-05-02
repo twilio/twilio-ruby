@@ -26,12 +26,16 @@ module Twilio
         nil
       end
 
-      def _request(request)
+      def _request(request) # rubocop:disable Metrics/MethodLength
         @connection = Faraday.new(url: request.host + ':' + request.port.to_s, ssl: { verify: true }) do |f|
           f.options.params_encoder = Faraday::FlatParamsEncoder
           f.request :url_encoded
           f.headers = request.headers
-          f.request(:basic_auth, request.auth[0], request.auth[1])
+          if Faraday::VERSION.start_with?('2.')
+            f.request(:authorization, :basic, request.auth[0], request.auth[1])
+          else
+            f.request(:basic_auth, request.auth[0], request.auth[1])
+          end
           f.proxy = "#{@proxy_prot}://#{@proxy_auth}#{@proxy_path}" if @proxy_prot && @proxy_path
           f.options.open_timeout = request.timeout || @timeout
           f.options.timeout = request.timeout || @timeout
@@ -44,8 +48,8 @@ module Twilio
         @last_response = nil
 
         response = send(request)
-        if response.status == 504
-          object = { message: 'Request timeout', code: 504 }.to_json
+        if (500..599).include?(response.status)
+          object = { message: "Server error (#{response.status})", code: response.status }.to_json
         elsif response.body && !response.body.empty?
           object = response.body
         elsif response.status == 400

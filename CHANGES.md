@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+[2022-04-20] Version 5.66.2
+---------------------------
+**Library - Chore**
+- [PR #604](https://github.com/twilio/twilio-ruby/pull/604): update the user agent string for twilio-ruby. Thanks to [@claudiachua](https://github.com/claudiachua)!
+
+
 [2022-04-06] Version 5.66.1
 ---------------------------
 **Api**
