@@ -83,8 +83,7 @@ module Twilio
             # @param [Time] send_at The time that Twilio will send the message. Must be in ISO
             #   8601 format.
             # @param [Boolean] send_as_mms If set to True, Twilio will deliver the message as
-            #   a single MMS message, regardless of the presence of media. This is a Beta
-            #   Feature.
+            #   a single MMS message, regardless of the presence of media.
             # @param [String] from A Twilio phone number in
             #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, an {alphanumeric
             #   sender

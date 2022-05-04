@@ -72,8 +72,10 @@ module Twilio
           # @param [String] unused_room_timeout Configures how long (in minutes) a room will
           #   remain active if no one joins. Valid values range from 1 to 60 minutes (no
           #   fractions).
+          # @param [Boolean] large_room When set to true, indicated that this is the large
+          #   room.
           # @return [RoomInstance] Created RoomInstance
-          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset, recording_rules: :unset, audio_only: :unset, max_participant_duration: :unset, empty_room_timeout: :unset, unused_room_timeout: :unset)
+          def create(enable_turn: :unset, type: :unset, unique_name: :unset, status_callback: :unset, status_callback_method: :unset, max_participants: :unset, record_participants_on_connect: :unset, video_codecs: :unset, media_region: :unset, recording_rules: :unset, audio_only: :unset, max_participant_duration: :unset, empty_room_timeout: :unset, unused_room_timeout: :unset, large_room: :unset)
             data = Twilio::Values.of({
                 'EnableTurn' => enable_turn,
                 'Type' => type,
@@ -89,6 +91,7 @@ module Twilio
                 'MaxParticipantDuration' => max_participant_duration,
                 'EmptyRoomTimeout' => empty_room_timeout,
                 'UnusedRoomTimeout' => unused_room_timeout,
+                'LargeRoom' => large_room,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -387,6 +390,7 @@ module Twilio
                 'audio_only' => payload['audio_only'],
                 'empty_room_timeout' => payload['empty_room_timeout'].to_i,
                 'unused_room_timeout' => payload['unused_room_timeout'].to_i,
+                'large_room' => payload['large_room'],
                 'url' => payload['url'],
                 'links' => payload['links'],
             }
@@ -531,6 +535,12 @@ module Twilio
           # @return [String] The time a room will remain active when no one joins.
           def unused_room_timeout
             @properties['unused_room_timeout']
+          end
+
+          ##
+          # @return [Boolean] Indicates if this is a large room.
+          def large_room
+            @properties['large_room']
           end
 
           ##

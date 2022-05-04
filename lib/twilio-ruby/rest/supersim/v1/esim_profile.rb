@@ -27,19 +27,19 @@ module Twilio
 
           ##
           # Create the EsimProfileInstance
-          # @param [String] eid Identifier of the eUICC that will claim the eSIM Profile.
           # @param [String] callback_url The URL we should call using the `callback_method`
           #   when the status of the eSIM Profile changes. At this stage of the eSIM Profile
           #   pilot, the a request to the URL will only be called when the ESimProfile
           #   resource changes from `reserving` to `available`.
           # @param [String] callback_method The HTTP method we should use to call
           #   `callback_url`. Can be: `GET` or `POST` and the default is POST.
+          # @param [String] eid Identifier of the eUICC that will claim the eSIM Profile.
           # @return [EsimProfileInstance] Created EsimProfileInstance
-          def create(eid: nil, callback_url: :unset, callback_method: :unset)
+          def create(callback_url: :unset, callback_method: :unset, eid: :unset)
             data = Twilio::Values.of({
-                'Eid' => eid,
                 'CallbackUrl' => callback_url,
                 'CallbackMethod' => callback_method,
+                'Eid' => eid,
             })
 
             payload = @version.create('POST', @uri, data: data)

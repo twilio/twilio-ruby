@@ -48,10 +48,12 @@ module Twilio
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
           # @param [Boolean] push_include_date Optional configuration for the Push factors.
-          #   If true, include the date in the Challenge's reponse. Otherwise, the date is
+          #   If true, include the date in the Challenge's response. Otherwise, the date is
           #   omitted from the response. See
           #   {Challenge}[https://www.twilio.com/docs/verify/api/challenge] resource’s details
-          #   parameter for more info. Default: true
+          #   parameter for more info. Default: false. **Deprecated** do not use this
+          #   parameter. This timestamp value is the same one as the one found in
+          #   `date_created`, please use that one instead.
           # @param [String] push_apn_credential_sid Optional configuration for the Push
           #   factors. Set the APN Credential for this service. This will allow to send push
           #   notifications to iOS devices. See {Credential
@@ -282,10 +284,11 @@ module Twilio
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
           # @param [Boolean] push_include_date Optional configuration for the Push factors.
-          #   If true, include the date in the Challenge's reponse. Otherwise, the date is
+          #   If true, include the date in the Challenge's response. Otherwise, the date is
           #   omitted from the response. See
           #   {Challenge}[https://www.twilio.com/docs/verify/api/challenge] resource’s details
-          #   parameter for more info. Default: true
+          #   parameter for more info. Default: false. **Deprecated** do not use this
+          #   parameter.
           # @param [String] push_apn_credential_sid Optional configuration for the Push
           #   factors. Set the APN Credential for this service. This will allow to send push
           #   notifications to iOS devices. See {Credential
@@ -666,10 +669,11 @@ module Twilio
           #   a custom code instead of a randomly generated one. Not available for all
           #   customers.
           # @param [Boolean] push_include_date Optional configuration for the Push factors.
-          #   If true, include the date in the Challenge's reponse. Otherwise, the date is
+          #   If true, include the date in the Challenge's response. Otherwise, the date is
           #   omitted from the response. See
           #   {Challenge}[https://www.twilio.com/docs/verify/api/challenge] resource’s details
-          #   parameter for more info. Default: true
+          #   parameter for more info. Default: false. **Deprecated** do not use this
+          #   parameter.
           # @param [String] push_apn_credential_sid Optional configuration for the Push
           #   factors. Set the APN Credential for this service. This will allow to send push
           #   notifications to iOS devices. See {Credential

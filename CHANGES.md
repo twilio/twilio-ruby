@@ -1,6 +1,27 @@
 twilio-ruby changelog
 =====================
 
+[2022-05-04] Version 5.67.0
+---------------------------
+**Library - Fix**
+- [PR #607](https://github.com/twilio/twilio-ruby/pull/607): Retrieval of OS Info with Ruby Config for User Agent string. Thanks to [@claudiachua](https://github.com/claudiachua)!
+- [PR #606](https://github.com/twilio/twilio-ruby/pull/606): Only require twilio_webhook_authentication if Rack version > 2. Thanks to [@jasonnoble](https://github.com/jasonnoble)!
+- [PR #582](https://github.com/twilio/twilio-ruby/pull/582): avoid JSON::ParserError for all server errors. Thanks to [@dan-jensen](https://github.com/dan-jensen)!
+
+**Library - Feature**
+- [PR #591](https://github.com/twilio/twilio-ruby/pull/591): Add Faraday 2.0 support. Thanks to [@tconst](https://github.com/tconst)!
+
+**Conversations**
+- Expose query parameter `type` in list operation on Address Configurations resource
+
+**Supersim**
+- Add `data_total_billed` and `billed_units` fields to Super SIM UsageRecords API response.
+- Change ESimProfiles `Eid` parameter to optional to enable Activation Code download method support **(breaking change)**
+
+**Verify**
+- Deprecate `push.include_date` parameter in create and update service.
+
+
 [2022-04-20] Version 5.66.2
 ---------------------------
 **Library - Chore**

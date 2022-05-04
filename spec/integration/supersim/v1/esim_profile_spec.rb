@@ -13,15 +13,13 @@ describe 'EsimProfile' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.supersim.v1.esim_profiles.create(eid: 'eid')
+      @client.supersim.v1.esim_profiles.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Eid' => 'eid', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://supersim.twilio.com/v1/ESimProfiles',
-        data: values,
     ))).to eq(true)
   end
 
@@ -34,9 +32,11 @@ describe 'EsimProfile' do
           "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "iccid": null,
           "sim_sid": null,
-          "status": "reserving",
+          "status": "new",
           "eid": "89049032005008882600033489aaaaaa",
           "smdp_plus_address": null,
+          "matching_id": null,
+          "activation_code": null,
           "error_code": null,
           "error_message": null,
           "date_created": "2020-09-01T20:00:00Z",
@@ -46,7 +46,35 @@ describe 'EsimProfile' do
       ]
     ))
 
-    actual = @client.supersim.v1.esim_profiles.create(eid: 'eid')
+    actual = @client.supersim.v1.esim_profiles.create()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives create_activation_code responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "sid": "HPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "iccid": null,
+          "sim_sid": null,
+          "status": "new",
+          "eid": null,
+          "smdp_plus_address": null,
+          "matching_id": null,
+          "activation_code": null,
+          "error_code": null,
+          "error_message": null,
+          "date_created": "2020-09-01T20:00:00Z",
+          "date_updated": "2020-09-01T20:00:00Z",
+          "url": "https://supersim.twilio.com/v1/ESimProfiles/HPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.supersim.v1.esim_profiles.create()
 
     expect(actual).to_not eq(nil)
   end
@@ -63,6 +91,8 @@ describe 'EsimProfile' do
           "status": "reserving",
           "eid": "89049032005008882600033489aaaaaa",
           "smdp_plus_address": null,
+          "matching_id": null,
+          "activation_code": null,
           "error_code": null,
           "error_message": null,
           "date_created": "2020-09-01T20:00:00Z",
@@ -72,7 +102,7 @@ describe 'EsimProfile' do
       ]
     ))
 
-    actual = @client.supersim.v1.esim_profiles.create(eid: 'eid')
+    actual = @client.supersim.v1.esim_profiles.create()
 
     expect(actual).to_not eq(nil)
   end
@@ -91,7 +121,7 @@ describe 'EsimProfile' do
     ))).to eq(true)
   end
 
-  it "receives fetch responses" do
+  it "receives fetch_default_smdp responses" do
     @holodeck.mock(Twilio::Response.new(
         200,
       %q[
@@ -102,7 +132,37 @@ describe 'EsimProfile' do
           "sim_sid": "HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "status": "available",
           "eid": "89049032005008882600033489aaaaaa",
-          "smdp_plus_address": "https://sm-dp-plus.twilio.com",
+          "smdp_plus_address": "sm-dp-plus.twilio.com",
+          "matching_id": null,
+          "activation_code": null,
+          "error_code": null,
+          "error_message": null,
+          "date_created": "2020-09-01T20:00:00Z",
+          "date_updated": "2020-09-01T20:00:00Z",
+          "url": "https://supersim.twilio.com/v1/ESimProfiles/HPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+      ]
+    ))
+
+    actual = @client.supersim.v1.esim_profiles('HPXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives fetch_activation_code responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "sid": "HPaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "iccid": "8988307aaaaaaaaaaaaa",
+          "sim_sid": "HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "status": "available",
+          "eid": null,
+          "smdp_plus_address": "sm-dp-plus.twilio.com",
+          "matching_id": "AAAAA-BBBBB-CCCCC-DDDDD-EEEEE",
+          "activation_code": "1$SM-DP-PLUS.TWILIO.COM$AAAAA-BBBBB-CCCCC-DDDDD-EEEEE",
           "error_code": null,
           "error_message": null,
           "date_created": "2020-09-01T20:00:00Z",
@@ -144,7 +204,9 @@ describe 'EsimProfile' do
                   "sim_sid": "HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "status": "available",
                   "eid": "89049032005008882600033489aaaaaa",
-                  "smdp_plus_address": "https://sm-dp-plus.twilio.com",
+                  "smdp_plus_address": "sm-dp-plus.twilio.com",
+                  "matching_id": null,
+                  "activation_code": null,
                   "error_code": null,
                   "error_message": null,
                   "date_created": "2020-09-01T20:00:00Z",
@@ -183,7 +245,9 @@ describe 'EsimProfile' do
                   "sim_sid": "HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "status": "available",
                   "eid": "89049032005008882600033489aaaaaa",
-                  "smdp_plus_address": "https://sm-dp-plus.twilio.com",
+                  "smdp_plus_address": "sm-dp-plus.twilio.com",
+                  "matching_id": null,
+                  "activation_code": null,
                   "error_code": null,
                   "error_message": null,
                   "date_created": "2020-09-01T20:00:00Z",
@@ -222,7 +286,9 @@ describe 'EsimProfile' do
                   "sim_sid": "HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "status": "available",
                   "eid": "89049032005008882600033489aaaaaa",
-                  "smdp_plus_address": "https://sm-dp-plus.twilio.com",
+                  "smdp_plus_address": "sm-dp-plus.twilio.com",
+                  "matching_id": null,
+                  "activation_code": null,
                   "error_code": null,
                   "error_message": null,
                   "date_created": "2020-09-01T20:00:00Z",
@@ -261,7 +327,9 @@ describe 'EsimProfile' do
                   "sim_sid": "HSaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "status": "downloaded",
                   "eid": "89049032005008882600033489aaaaaa",
-                  "smdp_plus_address": "https://sm-dp-plus.twilio.com",
+                  "smdp_plus_address": "sm-dp-plus.twilio.com",
+                  "matching_id": null,
+                  "activation_code": null,
                   "error_code": null,
                   "error_message": null,
                   "date_created": "2020-09-01T20:00:00Z",

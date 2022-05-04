@@ -263,6 +263,8 @@ module Twilio
                 'data_upload' => payload['data_upload'].to_i,
                 'data_download' => payload['data_download'].to_i,
                 'data_total' => payload['data_total'].to_i,
+                'data_total_billed' => payload['data_total_billed'].to_f,
+                'billed_unit' => payload['billed_unit'],
             }
           end
 
@@ -318,6 +320,18 @@ module Twilio
           # @return [String] Total of data_upload and data_download.
           def data_total
             @properties['data_total']
+          end
+
+          ##
+          # @return [String] Total amount in the `billed_unit` that was charged for the data uploaded or downloaded.
+          def data_total_billed
+            @properties['data_total_billed']
+          end
+
+          ##
+          # @return [String] The currency in which the billed amounts are measured, specified in the 3 letter ISO 4127 format (e.g. `USD`, `EUR`, `JPY`).
+          def billed_unit
+            @properties['billed_unit']
           end
 
           ##
