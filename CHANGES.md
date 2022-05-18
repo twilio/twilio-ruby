@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2022-05-18] Version 5.67.1
+---------------------------
+**Api**
+- Add property `media_url` to the recording resources
+
+**Verify**
+- Include `silent` as a channel type in the verifications API.
+
+
 [2022-05-04] Version 5.67.0
 ---------------------------
 **Library - Fix**

@@ -335,6 +335,7 @@ module Twilio
                   'uri' => payload['uri'],
                   'encryption_details' => payload['encryption_details'],
                   'subresource_uris' => payload['subresource_uris'],
+                  'media_url' => payload['media_url'],
               }
 
               # Context
@@ -459,6 +460,12 @@ module Twilio
             # @return [String] A list of related resources identified by their relative URIs
             def subresource_uris
               @properties['subresource_uris']
+            end
+
+            ##
+            # @return [String] The URL of the media file.
+            def media_url
+              @properties['media_url']
             end
 
             ##
