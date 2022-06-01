@@ -36,7 +36,6 @@ module Twilio
         @chat = nil
         @conversations = nil
         @events = nil
-        @fax = nil
         @flex_api = nil
         @frontline_api = nil
         @insights = nil
@@ -196,12 +195,6 @@ module Twilio
       # Access the Events Twilio Domain
       def events
         @events ||= Events.new self
-      end
-
-      ##
-      # Access the Fax Twilio Domain
-      def fax
-        @fax ||= Fax.new self
       end
 
       ##

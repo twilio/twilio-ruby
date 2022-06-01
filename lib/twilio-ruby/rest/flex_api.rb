@@ -54,7 +54,7 @@ module Twilio
 
       ##
       # @param [String] sid The unique string created by Twilio to identify an
-      #   Interaction resource.
+      #   Interaction resource, prefixed with KD.
       # @return [Twilio::REST::Flex_api::V1::InteractionInstance] if sid was passed.
       # @return [Twilio::REST::Flex_api::V1::InteractionList]
       def interaction(sid=:unset)

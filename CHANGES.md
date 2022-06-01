@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+[2022-06-01] Version 5.67.2
+---------------------------
+**Library - Chore**
+- [PR #608](https://github.com/twilio/twilio-ruby/pull/608): use Docker 'rc' tag for release candidate images. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+
 [2022-05-18] Version 5.67.1
 ---------------------------
 **Api**

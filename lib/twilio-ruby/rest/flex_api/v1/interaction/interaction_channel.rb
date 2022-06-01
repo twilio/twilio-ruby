@@ -15,7 +15,8 @@ module Twilio
             ##
             # Initialize the InteractionChannelList
             # @param [Version] version Version that contains the resource
-            # @param [String] interaction_sid The Interaction Sid for this channel.
+            # @param [String] interaction_sid The unique string created by Twilio to identify
+            #   an Interaction resource, prefixed with KD.
             # @return [InteractionChannelList] InteractionChannelList
             def initialize(version, interaction_sid: nil)
               super(version)
@@ -145,8 +146,10 @@ module Twilio
             ##
             # Initialize the InteractionChannelContext
             # @param [Version] version Version that contains the resource
-            # @param [String] interaction_sid The Interaction Sid for this channel.
-            # @param [String] sid The Channel Sid for this Participant.
+            # @param [String] interaction_sid The unique string created by Twilio to identify
+            #   an Interaction resource, prefixed with KD.
+            # @param [String] sid The unique string created by Twilio to identify an
+            #   Interaction Channel resource, prefixed with UO.
             # @return [InteractionChannelContext] InteractionChannelContext
             def initialize(version, interaction_sid, sid)
               super(version)
@@ -176,11 +179,12 @@ module Twilio
 
             ##
             # Update the InteractionChannelInstance
-            # @param [interaction_channel.Status] status The Interaction Channel's status. Can
-            #   be: `closed` or `wrapup`.
-            # @param [Hash] routing The Interaction Channel's routing parameters.  Optional,
-            #   may contain `status` to set the agent's Reservation state to either `closed` or
-            #   `wrapup`.  Default is `wrapup` if unspecified.
+            # @param [interaction_channel.Status] status Required. Indicates the Interaction
+            #   channel's status. When a channel is set to `closed`, all tasks are put in the
+            #   `wrapping` state by default unless the Routing status is set to `closed` in
+            #   which case the tasks will be `completed`. Value: `closed`.
+            # @param [Hash] routing Optional. The state of associated tasks. If not specified,
+            #   all tasks will be set to `wrapping`.
             # @return [InteractionChannelInstance] Updated InteractionChannelInstance
             def update(status: nil, routing: :unset)
               data = Twilio::Values.of({'Status' => status, 'Routing' => Twilio.serialize_object(routing), })
@@ -258,8 +262,10 @@ module Twilio
             # Initialize the InteractionChannelInstance
             # @param [Version] version Version that contains the resource
             # @param [Hash] payload payload that contains response from Twilio
-            # @param [String] interaction_sid The Interaction Sid for this channel.
-            # @param [String] sid The Channel Sid for this Participant.
+            # @param [String] interaction_sid The unique string created by Twilio to identify
+            #   an Interaction resource, prefixed with KD.
+            # @param [String] sid The unique string created by Twilio to identify an
+            #   Interaction Channel resource, prefixed with UO.
             # @return [InteractionChannelInstance] InteractionChannelInstance
             def initialize(version, payload, interaction_sid: nil, sid: nil)
               super(version)
@@ -300,7 +306,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The Interaction Sid for this channel.
+            # @return [String] The unique string that identifies the resource
             def interaction_sid
               @properties['interaction_sid']
             end
@@ -332,11 +338,12 @@ module Twilio
 
             ##
             # Update the InteractionChannelInstance
-            # @param [interaction_channel.Status] status The Interaction Channel's status. Can
-            #   be: `closed` or `wrapup`.
-            # @param [Hash] routing The Interaction Channel's routing parameters.  Optional,
-            #   may contain `status` to set the agent's Reservation state to either `closed` or
-            #   `wrapup`.  Default is `wrapup` if unspecified.
+            # @param [interaction_channel.Status] status Required. Indicates the Interaction
+            #   channel's status. When a channel is set to `closed`, all tasks are put in the
+            #   `wrapping` state by default unless the Routing status is set to `closed` in
+            #   which case the tasks will be `completed`. Value: `closed`.
+            # @param [Hash] routing Optional. The state of associated tasks. If not specified,
+            #   all tasks will be set to `wrapping`.
             # @return [InteractionChannelInstance] Updated InteractionChannelInstance
             def update(status: nil, routing: :unset)
               context.update(status: status, routing: routing, )

@@ -16,8 +16,8 @@ module Twilio
               ##
               # Initialize the InteractionChannelInviteList
               # @param [Version] version Version that contains the resource
-              # @param [String] interaction_sid The interaction_sid
-              # @param [String] channel_sid The channel_sid
+              # @param [String] interaction_sid The Interaction SID for this Channel.
+              # @param [String] channel_sid The Channel SID for this Invite.
               # @return [InteractionChannelInviteList] InteractionChannelInviteList
               def initialize(version, interaction_sid: nil, channel_sid: nil)
                 super(version)
@@ -29,7 +29,7 @@ module Twilio
 
               ##
               # Create the InteractionChannelInviteInstance
-              # @param [Hash] routing The routing
+              # @param [Hash] routing The Interaction's routing logic.
               # @return [InteractionChannelInviteInstance] Created InteractionChannelInviteInstance
               def create(routing: nil)
                 data = Twilio::Values.of({'Routing' => Twilio.serialize_object(routing), })
@@ -170,8 +170,8 @@ module Twilio
               # Initialize the InteractionChannelInviteInstance
               # @param [Version] version Version that contains the resource
               # @param [Hash] payload payload that contains response from Twilio
-              # @param [String] interaction_sid The interaction_sid
-              # @param [String] channel_sid The channel_sid
+              # @param [String] interaction_sid The Interaction SID for this Channel.
+              # @param [String] channel_sid The Channel SID for this Invite.
               # @return [InteractionChannelInviteInstance] InteractionChannelInviteInstance
               def initialize(version, payload, interaction_sid: nil, channel_sid: nil)
                 super(version)
@@ -187,25 +187,25 @@ module Twilio
               end
 
               ##
-              # @return [String] The sid
+              # @return [String] The unique string that identifies the resource
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [String] The interaction_sid
+              # @return [String] The Interaction SID for this Channel
               def interaction_sid
                 @properties['interaction_sid']
               end
 
               ##
-              # @return [String] The channel_sid
+              # @return [String] The Channel SID for this Invite
               def channel_sid
                 @properties['channel_sid']
               end
 
               ##
-              # @return [Hash] The routing
+              # @return [Hash] A JSON object representing the routing rules for the Interaction Channel
               def routing
                 @properties['routing']
               end

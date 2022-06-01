@@ -182,7 +182,7 @@ module Twilio
           end
 
           ##
-          # @return [Hash] The Interaction's routing logic
+          # @return [Hash] A JSON Object representing the routing rules for the Interaction Channel
           def routing
             @properties['routing']
           end

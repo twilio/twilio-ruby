@@ -227,6 +227,7 @@ module Twilio
                   'send_code_attempts' => payload['send_code_attempts'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                  'sna' => payload['sna'],
                   'url' => payload['url'],
               }
 
@@ -322,6 +323,12 @@ module Twilio
             # @return [Time] The RFC 2822 date and time in GMT when the resource was last updated
             def date_updated
               @properties['date_updated']
+            end
+
+            ##
+            # @return [Hash] The set of fields used for a silent network auth (`sna`) verification
+            def sna
+              @properties['sna']
             end
 
             ##
