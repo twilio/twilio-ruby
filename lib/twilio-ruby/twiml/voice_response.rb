@@ -194,7 +194,7 @@ module Twilio
       # message:: Message to say
       # voice:: Voice to use
       # loop:: Times to loop message
-      # language:: Message langauge
+      # language:: Message language
       # keyword_args:: additional attributes
       def say(message: nil, voice: nil, loop: nil, language: nil, **keyword_args)
         say = Say.new(message: message, voice: voice, loop: loop, language: language, **keyword_args)
@@ -469,7 +469,7 @@ module Twilio
       # message:: Message to say
       # voice:: Voice to use
       # loop:: Times to loop message
-      # language:: Message langauge
+      # language:: Message language
       # keyword_args:: additional attributes
       def say(message: nil, voice: nil, loop: nil, language: nil, **keyword_args)
         say = Say.new(message: message, voice: voice, loop: loop, language: language, **keyword_args)
@@ -1435,7 +1435,7 @@ module Twilio
       # message:: Message to say
       # voice:: Voice to use
       # loop:: Times to loop message
-      # language:: Message langauge
+      # language:: Message language
       # keyword_args:: additional attributes
       def say(message: nil, voice: nil, loop: nil, language: nil, **keyword_args)
         say = Say.new(message: message, voice: voice, loop: loop, language: language, **keyword_args)
@@ -1743,9 +1743,43 @@ module Twilio
       # language:: Language to be used by Dialogflow to transcribe speech
       # sentiment_analysis:: Whether sentiment analysis needs to be enabled or not
       # status_callback:: URL to post status callbacks from Twilio
+      # status_callback_method:: HTTP method to use when requesting the status callback URL
       # keyword_args:: additional attributes
-      def virtual_agent(connector_name: nil, language: nil, sentiment_analysis: nil, status_callback: nil, **keyword_args)
-        append(VirtualAgent.new(connector_name: connector_name, language: language, sentiment_analysis: sentiment_analysis, status_callback: status_callback, **keyword_args))
+      def virtual_agent(connector_name: nil, language: nil, sentiment_analysis: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
+        virtual_agent = VirtualAgent.new(connector_name: connector_name, language: language, sentiment_analysis: sentiment_analysis, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args)
+
+        yield(virtual_agent) if block_given?
+        append(virtual_agent)
+      end
+
+      ##
+      # Create a new <Conversation> element
+      # service_instance_sid:: Service instance Sid
+      # inbound_autocreation:: Inbound autocreation
+      # routing_assignment_timeout:: Routing assignment timeout
+      # inbound_timeout:: Inbound timeout
+      # record:: Record
+      # trim:: Trim
+      # recording_status_callback:: Recording status callback URL
+      # recording_status_callback_method:: Recording status callback URL method
+      # recording_status_callback_event:: Recording status callback events
+      # status_callback:: Status callback URL
+      # status_callback_method:: Status callback URL method
+      # status_callback_event:: Events to call status callback URL
+      # keyword_args:: additional attributes
+      def conversation(service_instance_sid: nil, inbound_autocreation: nil, routing_assignment_timeout: nil, inbound_timeout: nil, record: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, status_callback: nil, status_callback_method: nil, status_callback_event: nil, **keyword_args)
+        append(Conversation.new(service_instance_sid: service_instance_sid, inbound_autocreation: inbound_autocreation, routing_assignment_timeout: routing_assignment_timeout, inbound_timeout: inbound_timeout, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, status_callback_event: status_callback_event, **keyword_args))
+      end
+    end
+
+    ##
+    # <Conversation> TwiML Noun
+    class Conversation < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Conversation'
+
+        yield(self) if block_given?
       end
     end
 
@@ -1755,6 +1789,35 @@ module Twilio
       def initialize(**keyword_args)
         super(**keyword_args)
         @name = 'VirtualAgent'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Config> element
+      # name:: The name of the custom config
+      # value:: The value of the custom config
+      # keyword_args:: additional attributes
+      def config(name: nil, value: nil, **keyword_args)
+        append(Config.new(name: name, value: value, **keyword_args))
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
+    end
+
+    ##
+    # <Config> TwiML Noun
+    class Config < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Config'
 
         yield(self) if block_given?
       end

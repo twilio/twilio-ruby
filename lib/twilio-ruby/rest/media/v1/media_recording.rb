@@ -253,7 +253,7 @@ module Twilio
                 'resolution' => payload['resolution'],
                 'source_sid' => payload['source_sid'],
                 'sid' => payload['sid'],
-                'size' => payload['size'].to_i,
+                'media_size' => payload['media_size'].to_i,
                 'status' => payload['status'],
                 'status_callback' => payload['status_callback'],
                 'status_callback_method' => payload['status_callback_method'],
@@ -343,9 +343,9 @@ module Twilio
           end
 
           ##
-          # @return [String] The size of the recording
-          def size
-            @properties['size']
+          # @return [String] The size of the recording media
+          def media_size
+            @properties['media_size']
           end
 
           ##

@@ -20,12 +20,19 @@ module Twilio
 
         # Versions
         @v1 = nil
+        @v2 = nil
       end
 
       ##
       # Version v1 of lookups
       def v1
         @v1 ||= V1.new self
+      end
+
+      ##
+      # Version v2 of lookups
+      def v2
+        @v2 ||= V2.new self
       end
 
       ##

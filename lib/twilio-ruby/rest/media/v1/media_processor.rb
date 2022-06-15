@@ -27,7 +27,7 @@ module Twilio
           # Create the MediaProcessorInstance
           # @param [String] extension The {Media
           #   Extension}[/docs/live/api/media-extensions-overview] name or URL. Ex:
-          #   `video-composer-v1`
+          #   `video-composer-v2`
           # @param [String] extension_context The context of the Media Extension,
           #   represented as a JSON dictionary. See the documentation for the specific {Media
           #   Extension}[/docs/live/api/media-extensions-overview] you are using for more

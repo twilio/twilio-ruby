@@ -52,7 +52,7 @@ module Twilio
               #   overwritten with `currency` field. Leave blank or set to 0 to tokenize.
               # @param [String] currency The currency of the `charge_amount`, formatted as {ISO
               #   4127}[http://www.iso.org/iso/home/standards/currency_codes.htm] format. The
-              #   default value is `USD` and all values allowed from the <Pay> Connector are
+              #   default value is `USD` and all values allowed from the Pay Connector are
               #   accepted.
               # @param [String] description The description can be used to provide more details
               #   regarding the transaction. This information is submitted along with the payment
@@ -68,9 +68,9 @@ module Twilio
               #   that has to be included here depends on the <Pay> Connector. {Read
               #   more}[https://www.twilio.com/console/voice/pay-connectors].
               # @param [String] payment_connector This is the unique name corresponding to the
-              #   Payment Gateway Connector installed in the Twilio Add-ons. Learn more about
-              #   {<Pay> Connectors}[https://www.twilio.com/console/voice/pay-connectors]. The
-              #   default value is `Default`.
+              #   Pay Connector installed in the Twilio Add-ons. Learn more about {<Pay>
+              #   Connectors}[https://www.twilio.com/console/voice/pay-connectors]. The default
+              #   value is `Default`.
               # @param [payment.PaymentMethod] payment_method Type of payment being captured.
               #   One of `credit-card` or `ach-debit`. The default value is `credit-card`.
               # @param [Boolean] postal_code Indicates whether the credit card postal code (zip
@@ -202,7 +202,7 @@ module Twilio
               # @param [payment.Status] status Indicates whether the current payment session
               #   should be cancelled or completed. When `cancel` the payment session is
               #   cancelled. When `complete`, Twilio sends the payment information to the selected
-              #   <Pay> connector for processing.
+              #   Pay Connector for processing.
               # @return [PaymentInstance] Updated PaymentInstance
               def update(idempotency_key: nil, status_callback: nil, capture: :unset, status: :unset)
                 data = Twilio::Values.of({
@@ -342,7 +342,7 @@ module Twilio
               # @param [payment.Status] status Indicates whether the current payment session
               #   should be cancelled or completed. When `cancel` the payment session is
               #   cancelled. When `complete`, Twilio sends the payment information to the selected
-              #   <Pay> connector for processing.
+              #   Pay Connector for processing.
               # @return [PaymentInstance] Updated PaymentInstance
               def update(idempotency_key: nil, status_callback: nil, capture: :unset, status: :unset)
                 context.update(
