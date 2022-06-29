@@ -16,7 +16,6 @@ module Twilio
           super
           @version = 'v1'
           @settings = nil
-          @annotation = nil
           @calls = nil
           @call_summaries = nil
           @conferences = nil
@@ -27,21 +26,6 @@ module Twilio
         # @return [Twilio::REST::Insights::V1::SettingContext]
         def settings
           @settings ||= SettingContext.new self
-        end
-
-        ##
-        # @param [String] call_sid The call_sid
-        # @return [Twilio::REST::Insights::V1::AnnotationContext] if call_sid was passed.
-        # @return [Twilio::REST::Insights::V1::AnnotationList]
-        def annotation(call_sid=:unset)
-          if call_sid.nil?
-              raise ArgumentError, 'call_sid cannot be nil'
-          end
-          if call_sid == :unset
-              @annotation ||= AnnotationList.new self
-          else
-              AnnotationContext.new(self, call_sid)
-          end
         end
 
         ##

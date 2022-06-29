@@ -13,7 +13,8 @@ describe 'Annotation' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.insights.v1.annotation('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+      @client.insights.v1.calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                         .annotation().update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     expect(
@@ -33,7 +34,8 @@ describe 'Annotation' do
           "answered_by": "human",
           "connectivity_issue": "invalid_number",
           "quality_issues": [
-              "low_volume"
+              "low_volume",
+              "choppy_robotic"
           ],
           "spam": true,
           "call_score": 2,
@@ -44,7 +46,8 @@ describe 'Annotation' do
       ]
     ))
 
-    actual = @client.insights.v1.annotation('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+    actual = @client.insights.v1.calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .annotation().update()
 
     expect(actual).to_not eq(nil)
   end
@@ -53,7 +56,8 @@ describe 'Annotation' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.insights.v1.annotation('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+      @client.insights.v1.calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                         .annotation().fetch()
     }.to raise_exception(Twilio::REST::TwilioError)
 
     expect(
@@ -84,7 +88,8 @@ describe 'Annotation' do
       ]
     ))
 
-    actual = @client.insights.v1.annotation('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+    actual = @client.insights.v1.calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .annotation().fetch()
 
     expect(actual).to_not eq(nil)
   end

@@ -10,8 +10,6 @@ module Twilio
   module REST
     class Insights < Domain
       class V1 < Version
-        ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class CallList < ListResource
           ##
           # Initialize the CallList
@@ -31,8 +29,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class CallPage < Page
           ##
           # Initialize the CallPage
@@ -62,8 +58,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class CallContext < InstanceContext
           ##
           # Initialize the CallContext
@@ -81,6 +75,7 @@ module Twilio
             @events = nil
             @metrics = nil
             @summary = nil
+            @annotation = nil
           end
 
           ##
@@ -125,6 +120,14 @@ module Twilio
           end
 
           ##
+          # Access the annotation
+          # @return [AnnotationList]
+          # @return [AnnotationContext]
+          def annotation
+            AnnotationContext.new(@version, @solution[:sid], )
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -139,8 +142,6 @@ module Twilio
           end
         end
 
-        ##
-        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class CallInstance < InstanceResource
           ##
           # Initialize the CallInstance
@@ -214,6 +215,13 @@ module Twilio
           # @return [summary] summary
           def summary
             context.summary
+          end
+
+          ##
+          # Access the annotation
+          # @return [annotation] annotation
+          def annotation
+            context.annotation
           end
 
           ##

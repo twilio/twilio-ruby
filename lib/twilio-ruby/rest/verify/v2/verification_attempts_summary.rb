@@ -73,8 +73,8 @@ module Twilio
 
           ##
           # Fetch the VerificationAttemptsSummaryInstance
-          # @param [String] verify_service_sid Filter used to consider only Verification
-          #   Attempts of the given verify service on the summary aggregation.
+          # @param [String] service_sid Filter used to consider only Verification Attempts
+          #   of the given verify service on the summary aggregation.
           # @param [Time] date_created_after Datetime filter used to consider only
           #   Verification Attempts created after this datetime on the summary aggregation.
           #   Given as GMT in RFC 2822 format.
@@ -90,9 +90,9 @@ module Twilio
           #   on the summary aggregation by Destination prefix. It is the prefix of a phone
           #   number in E.164 format.
           # @return [VerificationAttemptsSummaryInstance] Fetched VerificationAttemptsSummaryInstance
-          def fetch(verify_service_sid: :unset, date_created_after: :unset, date_created_before: :unset, country: :unset, channel: :unset, destination_prefix: :unset)
+          def fetch(service_sid: :unset, date_created_after: :unset, date_created_before: :unset, country: :unset, channel: :unset, destination_prefix: :unset)
             params = Twilio::Values.of({
-                'VerifyServiceSid' => verify_service_sid,
+                'ServiceSid' => service_sid,
                 'DateCreatedAfter' => Twilio.serialize_iso8601_datetime(date_created_after),
                 'DateCreatedBefore' => Twilio.serialize_iso8601_datetime(date_created_before),
                 'Country' => country,
@@ -186,8 +186,8 @@ module Twilio
 
           ##
           # Fetch the VerificationAttemptsSummaryInstance
-          # @param [String] verify_service_sid Filter used to consider only Verification
-          #   Attempts of the given verify service on the summary aggregation.
+          # @param [String] service_sid Filter used to consider only Verification Attempts
+          #   of the given verify service on the summary aggregation.
           # @param [Time] date_created_after Datetime filter used to consider only
           #   Verification Attempts created after this datetime on the summary aggregation.
           #   Given as GMT in RFC 2822 format.
@@ -203,9 +203,9 @@ module Twilio
           #   on the summary aggregation by Destination prefix. It is the prefix of a phone
           #   number in E.164 format.
           # @return [VerificationAttemptsSummaryInstance] Fetched VerificationAttemptsSummaryInstance
-          def fetch(verify_service_sid: :unset, date_created_after: :unset, date_created_before: :unset, country: :unset, channel: :unset, destination_prefix: :unset)
+          def fetch(service_sid: :unset, date_created_after: :unset, date_created_before: :unset, country: :unset, channel: :unset, destination_prefix: :unset)
             context.fetch(
-                verify_service_sid: verify_service_sid,
+                service_sid: service_sid,
                 date_created_after: date_created_after,
                 date_created_before: date_created_before,
                 country: country,

@@ -69,13 +69,14 @@ module Twilio
       # Create a new <Enqueue> element
       # name:: Friendly name
       # action:: Action URL
+      # max_queue_size:: Maximum size of queue
       # method:: Action URL method
       # wait_url:: Wait URL
       # wait_url_method:: Wait URL method
       # workflow_sid:: TaskRouter Workflow SID
       # keyword_args:: additional attributes
-      def enqueue(name: nil, action: nil, method: nil, wait_url: nil, wait_url_method: nil, workflow_sid: nil, **keyword_args)
-        enqueue = Enqueue.new(name: name, action: action, method: method, wait_url: wait_url, wait_url_method: wait_url_method, workflow_sid: workflow_sid, **keyword_args)
+      def enqueue(name: nil, action: nil, max_queue_size: nil, method: nil, wait_url: nil, wait_url_method: nil, workflow_sid: nil, **keyword_args)
+        enqueue = Enqueue.new(name: name, action: action, max_queue_size: max_queue_size, method: method, wait_url: wait_url, wait_url_method: wait_url_method, workflow_sid: workflow_sid, **keyword_args)
 
         yield(enqueue) if block_given?
         append(enqueue)

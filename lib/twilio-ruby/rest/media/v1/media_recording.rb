@@ -243,7 +243,6 @@ module Twilio
             # Marshaled Properties
             @properties = {
                 'account_sid' => payload['account_sid'],
-                'bitrate' => payload['bitrate'].to_i,
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'duration' => payload['duration'].to_i,
@@ -280,12 +279,6 @@ module Twilio
           # @return [String] The SID of the Account that created the resource
           def account_sid
             @properties['account_sid']
-          end
-
-          ##
-          # @return [String] The bitrate of the media
-          def bitrate
-            @properties['bitrate']
           end
 
           ##
