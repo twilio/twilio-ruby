@@ -14,15 +14,13 @@ describe 'VerificationCheck' do
 
     expect {
       @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .verification_checks.create(code: 'code')
+                       .verification_checks.create()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Code' => 'code', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/VerificationCheck',
-        data: values,
     ))).to eq(true)
   end
 
@@ -47,7 +45,7 @@ describe 'VerificationCheck' do
     ))
 
     actual = @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .verification_checks.create(code: 'code')
+                              .verification_checks.create()
 
     expect(actual).to_not eq(nil)
   end
@@ -73,7 +71,33 @@ describe 'VerificationCheck' do
     ))
 
     actual = @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .verification_checks.create(code: 'code')
+                              .verification_checks.create()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives sna_verification_checks responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "sid": "VEaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "service_sid": "VAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "to": "+15017122661",
+          "channel": "sna",
+          "status": "approved",
+          "valid": true,
+          "amount": null,
+          "payee": null,
+          "date_created": "2015-07-30T20:00:00Z",
+          "date_updated": "2015-07-30T20:00:00Z"
+      }
+      ]
+    ))
+
+    actual = @client.verify.v2.services('VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                              .verification_checks.create()
 
     expect(actual).to_not eq(nil)
   end

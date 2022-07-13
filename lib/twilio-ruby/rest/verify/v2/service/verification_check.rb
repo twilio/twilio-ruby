@@ -29,7 +29,6 @@ module Twilio
 
             ##
             # Create the VerificationCheckInstance
-            # @param [String] code The 4-10 character string being verified.
             # @param [String] to The phone number or
             #   {email}[https://www.twilio.com/docs/verify/email] to verify. Either this
             #   parameter or the `verification_sid` must be specified. Phone numbers must be in
@@ -41,14 +40,15 @@ module Twilio
             #   Requires the PSD2 Service flag enabled.
             # @param [String] payee The payee of the associated PSD2 compliant transaction.
             #   Requires the PSD2 Service flag enabled.
+            # @param [String] code The 4-10 character string being verified.
             # @return [VerificationCheckInstance] Created VerificationCheckInstance
-            def create(code: nil, to: :unset, verification_sid: :unset, amount: :unset, payee: :unset)
+            def create(to: :unset, verification_sid: :unset, amount: :unset, payee: :unset, code: :unset)
               data = Twilio::Values.of({
-                  'Code' => code,
                   'To' => to,
                   'VerificationSid' => verification_sid,
                   'Amount' => amount,
                   'Payee' => payee,
+                  'Code' => code,
               })
 
               payload = @version.create('POST', @uri, data: data)

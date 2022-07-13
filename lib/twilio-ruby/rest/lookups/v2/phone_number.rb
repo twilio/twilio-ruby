@@ -83,7 +83,7 @@ module Twilio
           # Fetch the PhoneNumberInstance
           # @param [String] fields A comma-separated list of fields to return. Possible
           #   values are caller_name, sim_swap, call_forwarding, live_activity,
-          #   enhanced_line_type or line_type_intelligence.
+          #   line_type_intelligence.
           # @param [String] country_code The {country
           #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] used if the phone number
           #   provided is in national format.
@@ -136,7 +136,6 @@ module Twilio
                 'sim_swap' => payload['sim_swap'],
                 'call_forwarding' => payload['call_forwarding'],
                 'live_activity' => payload['live_activity'],
-                'enhanced_line_type' => payload['enhanced_line_type'],
                 'line_type_intelligence' => payload['line_type_intelligence'],
                 'url' => payload['url'],
             }
@@ -219,12 +218,6 @@ module Twilio
 
           ##
           # @return [Hash] An object that contains line type information
-          def enhanced_line_type
-            @properties['enhanced_line_type']
-          end
-
-          ##
-          # @return [Hash] An object that contains line type information
           def line_type_intelligence
             @properties['line_type_intelligence']
           end
@@ -239,7 +232,7 @@ module Twilio
           # Fetch the PhoneNumberInstance
           # @param [String] fields A comma-separated list of fields to return. Possible
           #   values are caller_name, sim_swap, call_forwarding, live_activity,
-          #   enhanced_line_type or line_type_intelligence.
+          #   line_type_intelligence.
           # @param [String] country_code The {country
           #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] used if the phone number
           #   provided is in national format.

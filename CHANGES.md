@@ -1,6 +1,28 @@
 twilio-ruby changelog
 =====================
 
+[2022-07-13] Version 5.69.0
+---------------------------
+**Library - Fix**
+- [PR #612](https://github.com/twilio/twilio-ruby/pull/612): useragent regrex unit test for RC branch. Thanks to [@claudiachua](https://github.com/claudiachua)!
+
+**Library - Test**
+- [PR #610](https://github.com/twilio/twilio-ruby/pull/610): Adding misc as PR type. Thanks to [@rakatyal](https://github.com/rakatyal)!
+
+**Conversations**
+- Allowed to use `identity` as part of Participant's resource **(breaking change)**
+
+**Lookups**
+- Remove `enhanced_line_type` from the lookup response **(breaking change)**
+
+**Supersim**
+- Add support for `sim_ip_addresses` resource to helper libraries
+
+**Verify**
+- Changed summary param `service_sid` to `verify_service_sid` to be consistent with list attempts API **(breaking change)**
+- Make `code` optional on Verification check to support `sna` attempts.
+
+
 [2022-06-29] Version 5.68.0
 ---------------------------
 **Api**

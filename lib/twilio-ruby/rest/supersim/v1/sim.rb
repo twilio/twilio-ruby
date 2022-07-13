@@ -203,6 +203,7 @@ module Twilio
 
             # Dependents
             @billing_periods = nil
+            @sim_ip_addresses = nil
           end
 
           ##
@@ -259,6 +260,18 @@ module Twilio
             end
 
             @billing_periods
+          end
+
+          ##
+          # Access the sim_ip_addresses
+          # @return [SimIpAddressList]
+          # @return [SimIpAddressContext]
+          def sim_ip_addresses
+            unless @sim_ip_addresses
+              @sim_ip_addresses = SimIpAddressList.new(@version, sim_sid: @solution[:sid], )
+            end
+
+            @sim_ip_addresses
           end
 
           ##
@@ -421,6 +434,13 @@ module Twilio
           # @return [billing_periods] billing_periods
           def billing_periods
             context.billing_periods
+          end
+
+          ##
+          # Access the sim_ip_addresses
+          # @return [sim_ip_addresses] sim_ip_addresses
+          def sim_ip_addresses
+            context.sim_ip_addresses
           end
 
           ##
