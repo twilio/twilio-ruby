@@ -32,6 +32,9 @@ describe 'InteractionChannel' do
           "sid": "UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
           "type": "chat",
           "interaction_sid": "KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "status": "closed",
+          "error_code": 19025,
+          "error_message": "Channel validation error",
           "url": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
           "links": {
               "participants": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1/Participants",
@@ -72,6 +75,9 @@ describe 'InteractionChannel' do
                   "sid": "UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
                   "type": "chat",
                   "interaction_sid": "KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "status": "closed",
+                  "error_code": 19025,
+                  "error_message": "Channel validation error",
                   "url": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
                   "links": {
                       "participants": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1/Participants",
@@ -82,10 +88,52 @@ describe 'InteractionChannel' do
                   "sid": "UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
                   "type": "sms",
                   "interaction_sid": "KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "status": "active",
+                  "error_code": null,
+                  "error_message": null,
                   "url": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2",
                   "links": {
                       "participants": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2/Participants",
                       "invites": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2/Invites"
+                  }
+              },
+              {
+                  "sid": "UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa3",
+                  "type": "email",
+                  "interaction_sid": "KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "status": "failed",
+                  "error_code": 19025,
+                  "error_message": "Channel validation error",
+                  "url": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa3",
+                  "links": {
+                      "participants": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa3/Participants",
+                      "invites": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa3/Invites"
+                  }
+              },
+              {
+                  "sid": "UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa4",
+                  "type": "voice",
+                  "interaction_sid": "KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "status": "setup",
+                  "error_code": null,
+                  "error_message": null,
+                  "url": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa4",
+                  "links": {
+                      "participants": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa4/Participants",
+                      "invites": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa4/Invites"
+                  }
+              },
+              {
+                  "sid": "UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa5",
+                  "type": "gbm",
+                  "interaction_sid": "KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "status": "failed",
+                  "error_code": 19025,
+                  "error_message": "Channel validation error",
+                  "url": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa5",
+                  "links": {
+                      "participants": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa5/Participants",
+                      "invites": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa5/Invites"
                   }
               }
           ],
@@ -133,6 +181,9 @@ describe 'InteractionChannel' do
           "sid": "UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
           "interaction_sid": "KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "type": "chat",
+          "status": "closed",
+          "error_code": 19025,
+          "error_message": "Channel validation error",
           "url": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
           "links": {
               "participants": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1/Participants",
@@ -156,6 +207,9 @@ describe 'InteractionChannel' do
           "sid": "UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
           "interaction_sid": "KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "type": "chat",
+          "status": "failed",
+          "error_code": 19025,
+          "error_message": "Channel validation error",
           "url": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1",
           "links": {
               "participants": "https://flex-api.twilio.com/v1/Interactions/KDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Channels/UOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1/Participants",

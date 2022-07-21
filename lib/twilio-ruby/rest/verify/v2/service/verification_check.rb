@@ -29,6 +29,7 @@ module Twilio
 
             ##
             # Create the VerificationCheckInstance
+            # @param [String] code The 4-10 character string being verified.
             # @param [String] to The phone number or
             #   {email}[https://www.twilio.com/docs/verify/email] to verify. Either this
             #   parameter or the `verification_sid` must be specified. Phone numbers must be in
@@ -40,15 +41,14 @@ module Twilio
             #   Requires the PSD2 Service flag enabled.
             # @param [String] payee The payee of the associated PSD2 compliant transaction.
             #   Requires the PSD2 Service flag enabled.
-            # @param [String] code The 4-10 character string being verified.
             # @return [VerificationCheckInstance] Created VerificationCheckInstance
-            def create(to: :unset, verification_sid: :unset, amount: :unset, payee: :unset, code: :unset)
+            def create(code: :unset, to: :unset, verification_sid: :unset, amount: :unset, payee: :unset)
               data = Twilio::Values.of({
+                  'Code' => code,
                   'To' => to,
                   'VerificationSid' => verification_sid,
                   'Amount' => amount,
                   'Payee' => payee,
-                  'Code' => code,
               })
 
               payload = @version.create('POST', @uri, data: data)
@@ -117,6 +117,7 @@ module Twilio
                   'payee' => payload['payee'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                  'sna_attempts_error_codes' => payload['sna_attempts_error_codes'],
               }
             end
 
@@ -184,6 +185,12 @@ module Twilio
             # @return [Time] The ISO 8601 date and time in GMT when the Verification Check resource was last updated
             def date_updated
               @properties['date_updated']
+            end
+
+            ##
+            # @return [Array[Hash]] List of error codes as a result of attempting a verification using the `sna` channel.
+            def sna_attempts_error_codes
+              @properties['sna_attempts_error_codes']
             end
 
             ##

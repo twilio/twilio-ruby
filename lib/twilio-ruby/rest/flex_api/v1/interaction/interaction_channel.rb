@@ -275,6 +275,9 @@ module Twilio
                   'sid' => payload['sid'],
                   'interaction_sid' => payload['interaction_sid'],
                   'type' => payload['type'],
+                  'status' => payload['status'],
+                  'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
+                  'error_message' => payload['error_message'],
                   'url' => payload['url'],
                   'links' => payload['links'],
               }
@@ -306,7 +309,7 @@ module Twilio
             end
 
             ##
-            # @return [String] The unique string that identifies the resource
+            # @return [String] The unique string that identifies the resource.
             def interaction_sid
               @properties['interaction_sid']
             end
@@ -315,6 +318,24 @@ module Twilio
             # @return [interaction_channel.Type] The Interaction Channel's type.
             def type
               @properties['type']
+            end
+
+            ##
+            # @return [interaction_channel.ChannelStatus] The status of this channel.
+            def status
+              @properties['status']
+            end
+
+            ##
+            # @return [String] The Twilio error code for a failed channel.
+            def error_code
+              @properties['error_code']
+            end
+
+            ##
+            # @return [String] The error message for a failed channel.
+            def error_message
+              @properties['error_message']
             end
 
             ##

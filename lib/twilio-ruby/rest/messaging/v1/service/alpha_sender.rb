@@ -32,8 +32,8 @@ module Twilio
             ##
             # Create the AlphaSenderInstance
             # @param [String] alpha_sender The Alphanumeric Sender ID string. Can be up to 11
-            #   characters long. Valid characters are A-Z, a-z, 0-9, space, and hyphen `-`. This
-            #   value cannot contain only numbers.
+            #   characters long. Valid characters are A-Z, a-z, 0-9, space, hyphen `-`, plus
+            #   `+`, underscore `_` and ampersand `&`. This value cannot contain only numbers.
             # @return [AlphaSenderInstance] Created AlphaSenderInstance
             def create(alpha_sender: nil)
               data = Twilio::Values.of({'AlphaSender' => alpha_sender, })

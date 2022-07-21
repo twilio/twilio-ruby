@@ -1,6 +1,20 @@
 twilio-ruby changelog
 =====================
 
+[2022-07-21] Version 5.70.0
+---------------------------
+**Flex**
+- Add `status`, `error_code`, and `error_message` fields to Interaction `Channel`
+- Adding `messenger` and `gbm` as supported channels for Interactions API
+
+**Messaging**
+- Update alpha_sender docs with new valid characters
+
+**Verify**
+- Reorder Verification Check parameters so `code` stays as the first parameter **(breaking change)**
+- Rollback List Attempts API V2 back to pilot stage.
+
+
 [2022-07-13] Version 5.69.0
 ---------------------------
 **Library - Fix**
