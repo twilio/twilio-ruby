@@ -1,4 +1,4 @@
-.PHONY: githooks install test lint docs docker-build docker-push
+.PHONY: githooks install test test-docker lint docs docker-build docker-push
 
 githooks:
 	ln -sf ../../githooks/pre-commit .git/hooks/pre-commit
@@ -8,6 +8,10 @@ install:
 
 test:
 	bundle exec rake spec
+
+test-docker:
+	docker build -t twilio/twilio-ruby .
+	docker run twilio/twilio-ruby bundle exec rake spec
 
 docs:
 	bundle exec yard doc --output-dir ./doc
