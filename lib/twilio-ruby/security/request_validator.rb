@@ -32,7 +32,7 @@ module Twilio
         valid_body = true # default succeed, since body not always provided
         params_hash = body_or_hash(params)
         unless params_hash.is_a? Enumerable
-          body_hash = URI.decode_www_form(parsed_url.query).to_h['bodySHA256']
+          body_hash = URI.decode_www_form(parsed_url.query || '').to_h['bodySHA256']
           params_hash = build_hash_for(params)
           valid_body = !(params_hash.nil? || body_hash.nil?) && secure_compare(params_hash, body_hash)
           params_hash = {}
