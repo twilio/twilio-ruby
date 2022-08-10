@@ -36,9 +36,9 @@ module Twilio
           # @param [Boolean] data_enabled Defines whether SIMs in the Fleet are capable of
           #   using 2G/3G/4G/LTE/CAT-M data connectivity. Defaults to `true`.
           # @param [String] data_limit The total data usage (download and upload combined)
-          #   in Megabytes that each Sim resource assigned to the Fleet resource can consume
-          #   during a billing period (normally one month). Value must be between 1MB (1) and
-          #   2TB (2,000,000). Defaults to 1GB (1,000).
+          #   in Megabytes that each Super SIM assigned to the Fleet can consume during a
+          #   billing period (normally one month). Value must be between 1MB (1) and 2TB
+          #   (2,000,000). Defaults to 1GB (1,000).
           # @param [String] ip_commands_url The URL that will receive a webhook when a Super
           #   SIM in the Fleet is used to send an IP Command from your device to a special IP
           #   address. Your server should respond with an HTTP status code in the 200 range;
@@ -254,8 +254,12 @@ module Twilio
           # @param [String] sms_commands_method A string representing the HTTP method to use
           #   when making a request to `sms_commands_url`. Can be one of `POST` or `GET`.
           #   Defaults to `POST`.
+          # @param [String] data_limit The total data usage (download and upload combined)
+          #   in Megabytes that each Super SIM assigned to the Fleet can consume during a
+          #   billing period (normally one month). Value must be between 1MB (1) and 2TB
+          #   (2,000,000). Defaults to 1GB (1,000).
           # @return [FleetInstance] Updated FleetInstance
-          def update(unique_name: :unset, network_access_profile: :unset, ip_commands_url: :unset, ip_commands_method: :unset, sms_commands_url: :unset, sms_commands_method: :unset)
+          def update(unique_name: :unset, network_access_profile: :unset, ip_commands_url: :unset, ip_commands_method: :unset, sms_commands_url: :unset, sms_commands_method: :unset, data_limit: :unset)
             data = Twilio::Values.of({
                 'UniqueName' => unique_name,
                 'NetworkAccessProfile' => network_access_profile,
@@ -263,6 +267,7 @@ module Twilio
                 'IpCommandsMethod' => ip_commands_method,
                 'SmsCommandsUrl' => sms_commands_url,
                 'SmsCommandsMethod' => sms_commands_method,
+                'DataLimit' => data_limit,
             })
 
             payload = @version.update('POST', @uri, data: data)
@@ -375,7 +380,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The total data usage (download and upload combined) in Megabytes that each Sim resource assigned to the Fleet resource can consume
+          # @return [String] The total data usage (download and upload combined) in Megabytes that each Super SIM assigned to the Fleet can consume
           def data_limit
             @properties['data_limit']
           end
@@ -451,8 +456,12 @@ module Twilio
           # @param [String] sms_commands_method A string representing the HTTP method to use
           #   when making a request to `sms_commands_url`. Can be one of `POST` or `GET`.
           #   Defaults to `POST`.
+          # @param [String] data_limit The total data usage (download and upload combined)
+          #   in Megabytes that each Super SIM assigned to the Fleet can consume during a
+          #   billing period (normally one month). Value must be between 1MB (1) and 2TB
+          #   (2,000,000). Defaults to 1GB (1,000).
           # @return [FleetInstance] Updated FleetInstance
-          def update(unique_name: :unset, network_access_profile: :unset, ip_commands_url: :unset, ip_commands_method: :unset, sms_commands_url: :unset, sms_commands_method: :unset)
+          def update(unique_name: :unset, network_access_profile: :unset, ip_commands_url: :unset, ip_commands_method: :unset, sms_commands_url: :unset, sms_commands_method: :unset, data_limit: :unset)
             context.update(
                 unique_name: unique_name,
                 network_access_profile: network_access_profile,
@@ -460,6 +469,7 @@ module Twilio
                 ip_commands_method: ip_commands_method,
                 sms_commands_url: sms_commands_url,
                 sms_commands_method: sms_commands_method,
+                data_limit: data_limit,
             )
           end
 

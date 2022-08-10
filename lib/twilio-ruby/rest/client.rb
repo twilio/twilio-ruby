@@ -49,6 +49,7 @@ module Twilio
         @preview = nil
         @pricing = nil
         @proxy = nil
+        @routes = nil
         @serverless = nil
         @studio = nil
         @sync = nil
@@ -61,6 +62,7 @@ module Twilio
         @wireless = nil
         @supersim = nil
         @bulkexports = nil
+        @microvisor = nil
       end
 
       ##
@@ -276,6 +278,12 @@ module Twilio
       end
 
       ##
+      # Access the Routes Twilio Domain
+      def routes
+        @routes ||= Routes.new self
+      end
+
+      ##
       # Access the Serverless Twilio Domain
       def serverless
         @serverless ||= Serverless.new self
@@ -345,6 +353,12 @@ module Twilio
       # Access the Bulkexports Twilio Domain
       def bulkexports
         @bulkexports ||= Bulkexports.new self
+      end
+
+      ##
+      # Access the Microvisor Twilio Domain
+      def microvisor
+        @microvisor ||= Microvisor.new self
       end
 
       ##
