@@ -113,7 +113,7 @@ module Twilio
                 ##
                 # Create the IpAddressInstance
                 # @param [String] friendly_name A human readable descriptive text for this
-                #   resource, up to 64 characters long.
+                #   resource, up to 255 characters long.
                 # @param [String] ip_address An IP address in dotted decimal notation from which
                 #   you want to accept traffic. Any SIP requests from this IP address will be
                 #   allowed by Twilio. IPv4 only supported today.
@@ -224,7 +224,7 @@ module Twilio
                 #   you want to accept traffic. Any SIP requests from this IP address will be
                 #   allowed by Twilio. IPv4 only supported today.
                 # @param [String] friendly_name A human readable descriptive text for this
-                #   resource, up to 64 characters long.
+                #   resource, up to 255 characters long.
                 # @param [String] cidr_prefix_length An integer representing the length of the
                 #   CIDR prefix to use with this IP address when accepting traffic. By default the
                 #   entire IP address is used.
@@ -335,7 +335,7 @@ module Twilio
                 end
 
                 ##
-                # @return [String] A human readable descriptive text for this resource, up to 64 characters long.
+                # @return [String] A human readable descriptive text for this resource, up to 255 characters long.
                 def friendly_name
                   @properties['friendly_name']
                 end
@@ -389,7 +389,7 @@ module Twilio
                 #   you want to accept traffic. Any SIP requests from this IP address will be
                 #   allowed by Twilio. IPv4 only supported today.
                 # @param [String] friendly_name A human readable descriptive text for this
-                #   resource, up to 64 characters long.
+                #   resource, up to 255 characters long.
                 # @param [String] cidr_prefix_length An integer representing the length of the
                 #   CIDR prefix to use with this IP address when accepting traffic. By default the
                 #   entire IP address is used.

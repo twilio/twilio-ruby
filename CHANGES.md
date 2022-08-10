@@ -1,6 +1,18 @@
 twilio-ruby changelog
 =====================
 
+[2022-08-10] Version 5.70.1
+---------------------------
+**Library - Fix**
+- [PR #614](https://github.com/twilio/twilio-ruby/pull/614): Make RequestValidator#validate fail if URL has no query params. Thanks to [@haffla](https://github.com/haffla)!
+
+**Routes**
+- Inbound Proccessing Region API - Public GA
+
+**Supersim**
+- Allow updating `DataLimit` on a Fleet
+
+
 [2022-07-21] Version 5.70.0
 ---------------------------
 **Flex**

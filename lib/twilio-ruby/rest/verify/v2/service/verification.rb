@@ -32,9 +32,9 @@ module Twilio
             # @param [String] to The phone number or
             #   {email}[https://www.twilio.com/docs/verify/email] to verify. Phone numbers must
             #   be in {E.164 format}[https://www.twilio.com/docs/glossary/what-e164].
-            # @param [String] channel The verification method to use. Can be:
-            #   {`email`}[https://www.twilio.com/docs/verify/email], `sms`, `whatsapp` or
-            #   `call`.
+            # @param [String] channel The verification method to use. One of:
+            #   {`email`}[https://www.twilio.com/docs/verify/email], `sms`, `whatsapp`, `call`,
+            #   or `sna`.
             # @param [String] custom_friendly_name A custom user defined friendly name that
             #   overwrites the existing one in the verification message
             # @param [String] custom_message The text of a custom message to use for the

@@ -110,7 +110,7 @@ module Twilio
               ##
               # Create the IpAccessControlListInstance
               # @param [String] friendly_name A human readable descriptive text that describes
-              #   the IpAccessControlList, up to 64 characters long.
+              #   the IpAccessControlList, up to 255 characters long.
               # @return [IpAccessControlListInstance] Created IpAccessControlListInstance
               def create(friendly_name: nil)
                 data = Twilio::Values.of({'FriendlyName' => friendly_name, })
@@ -193,7 +193,7 @@ module Twilio
 
               ##
               # Update the IpAccessControlListInstance
-              # @param [String] friendly_name A human readable descriptive text, up to 64
+              # @param [String] friendly_name A human readable descriptive text, up to 255
               #   characters long.
               # @return [IpAccessControlListInstance] Updated IpAccessControlListInstance
               def update(friendly_name: nil)
@@ -344,7 +344,7 @@ module Twilio
 
               ##
               # Update the IpAccessControlListInstance
-              # @param [String] friendly_name A human readable descriptive text, up to 64
+              # @param [String] friendly_name A human readable descriptive text, up to 255
               #   characters long.
               # @return [IpAccessControlListInstance] Updated IpAccessControlListInstance
               def update(friendly_name: nil)

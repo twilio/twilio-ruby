@@ -19,7 +19,6 @@ module Twilio
         @port = 443
 
         # Versions
-        @bulk_exports = nil
         @deployed_devices = nil
         @hosted_numbers = nil
         @marketplace = nil
@@ -27,12 +26,6 @@ module Twilio
         @understand = nil
         @wireless = nil
         @trusted_comms = nil
-      end
-
-      ##
-      # Version bulk_exports of preview
-      def bulk_exports
-        @bulk_exports ||= BulkExports.new self
       end
 
       ##
@@ -75,24 +68,6 @@ module Twilio
       # Version trusted_comms of preview
       def trusted_comms
         @trusted_comms ||= TrustedComms.new self
-      end
-
-      ##
-      # @param [String] resource_type The type of communication – Messages, Calls,
-      #   Conferences, and Participants
-      # @return [Twilio::REST::Preview::BulkExports::ExportInstance] if resource_type was passed.
-      # @return [Twilio::REST::Preview::BulkExports::ExportList]
-      def exports(resource_type=:unset)
-        self.bulk_exports.exports(resource_type)
-      end
-
-      ##
-      # @param [String] resource_type The type of communication – Messages, Calls,
-      #   Conferences, and Participants
-      # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationInstance] if resource_type was passed.
-      # @return [Twilio::REST::Preview::BulkExports::ExportConfigurationList]
-      def export_configuration(resource_type=:unset)
-        self.bulk_exports.export_configuration(resource_type)
       end
 
       ##
