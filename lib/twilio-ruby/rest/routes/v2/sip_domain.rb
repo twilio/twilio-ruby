@@ -73,19 +73,6 @@ module Twilio
           end
 
           ##
-          # Create the SipDomainInstance
-          # @param [String] voice_region The voice_region
-          # @param [String] friendly_name The friendly_name
-          # @return [SipDomainInstance] Created SipDomainInstance
-          def create(voice_region: :unset, friendly_name: :unset)
-            data = Twilio::Values.of({'VoiceRegion' => voice_region, 'FriendlyName' => friendly_name, })
-
-            payload = @version.create('POST', @uri, data: data)
-
-            SipDomainInstance.new(@version, payload, sip_domain: @solution[:sip_domain], )
-          end
-
-          ##
           # Update the SipDomainInstance
           # @param [String] voice_region The voice_region
           # @param [String] friendly_name The friendly_name
@@ -206,15 +193,6 @@ module Twilio
           # @return [Time] The date_updated
           def date_updated
             @properties['date_updated']
-          end
-
-          ##
-          # Create the SipDomainInstance
-          # @param [String] voice_region The voice_region
-          # @param [String] friendly_name The friendly_name
-          # @return [SipDomainInstance] Created SipDomainInstance
-          def create(voice_region: :unset, friendly_name: :unset)
-            context.create(voice_region: voice_region, friendly_name: friendly_name, )
           end
 
           ##

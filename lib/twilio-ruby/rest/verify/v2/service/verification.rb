@@ -43,11 +43,10 @@ module Twilio
             #   for example, to dial an extension. For more information, see the Programmable
             #   Voice documentation of
             #   {sendDigits}[https://www.twilio.com/docs/voice/twiml/number#attributes-sendDigits].
-            # @param [String] locale The locale to use for the verification SMS, WhatsApp or
-            #   call. Can be: `af`, `ar`, `ca`, `cs`, `da`, `de`, `el`, `en`, `en-GB`, `es`,
-            #   `fi`, `fr`, `he`, `hi`, `hr`, `hu`, `id`, `it`, `ja`, `ko`, `ms`, `nb`, `nl`,
-            #   `pl`, `pt`, `pr-BR`, `ro`, `ru`, `sv`, `th`, `tl`, `tr`, `vi`, `zh`, `zh-CN`, or
-            #   `zh-HK.`
+            # @param [String] locale Locale will automatically resolve based on phone number
+            #   country code for SMS, WhatsApp and call channel verifications. This parameter
+            #   will override the automatic locale. {See supported languages and more
+            #   information here.}[https://www.twilio.com/docs/verify/supported-languages].
             # @param [String] custom_code A pre-generated code to use for verification. The
             #   code can be between 4 and 10 characters, inclusive.
             # @param [String] amount The amount of the associated PSD2 compliant transaction.

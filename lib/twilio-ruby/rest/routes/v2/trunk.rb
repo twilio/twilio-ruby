@@ -73,21 +73,6 @@ module Twilio
           end
 
           ##
-          # Create the TrunkInstance
-          # @param [String] voice_region The Inbound Processing Region used for this SIP
-          #   Trunk for voice
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
-          # @return [TrunkInstance] Created TrunkInstance
-          def create(voice_region: :unset, friendly_name: :unset)
-            data = Twilio::Values.of({'VoiceRegion' => voice_region, 'FriendlyName' => friendly_name, })
-
-            payload = @version.create('POST', @uri, data: data)
-
-            TrunkInstance.new(@version, payload, sip_trunk_domain: @solution[:sip_trunk_domain], )
-          end
-
-          ##
           # Update the TrunkInstance
           # @param [String] voice_region The Inbound Processing Region used for this SIP
           #   Trunk for voice
@@ -210,17 +195,6 @@ module Twilio
           # @return [Time] The date that the Inbound Processing Region was updated for this SIP Trunk.
           def date_updated
             @properties['date_updated']
-          end
-
-          ##
-          # Create the TrunkInstance
-          # @param [String] voice_region The Inbound Processing Region used for this SIP
-          #   Trunk for voice
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
-          # @return [TrunkInstance] Created TrunkInstance
-          def create(voice_region: :unset, friendly_name: :unset)
-            context.create(voice_region: voice_region, friendly_name: friendly_name, )
           end
 
           ##

@@ -73,28 +73,13 @@ module Twilio
           end
 
           ##
-          # Create the PhoneNumberInstance
-          # @param [String] voice_region The Inbound Processing Region used for this phone
-          #   number for voice
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
-          # @return [PhoneNumberInstance] Created PhoneNumberInstance
-          def create(voice_region: :unset, friendly_name: :unset)
-            data = Twilio::Values.of({'VoiceRegion' => voice_region, 'FriendlyName' => friendly_name, })
-
-            payload = @version.create('POST', @uri, data: data)
-
-            PhoneNumberInstance.new(@version, payload, phone_number: @solution[:phone_number], )
-          end
-
-          ##
           # Update the PhoneNumberInstance
           # @param [String] voice_region The Inbound Processing Region used for this phone
           #   number for voice
           # @param [String] friendly_name A human readable description of this resource, up
           #   to 64 characters.
           # @return [PhoneNumberInstance] Updated PhoneNumberInstance
-          def update(voice_region: nil, friendly_name: nil)
+          def update(voice_region: :unset, friendly_name: :unset)
             data = Twilio::Values.of({'VoiceRegion' => voice_region, 'FriendlyName' => friendly_name, })
 
             payload = @version.update('POST', @uri, data: data)
@@ -213,24 +198,13 @@ module Twilio
           end
 
           ##
-          # Create the PhoneNumberInstance
-          # @param [String] voice_region The Inbound Processing Region used for this phone
-          #   number for voice
-          # @param [String] friendly_name A human readable description of this resource, up
-          #   to 64 characters.
-          # @return [PhoneNumberInstance] Created PhoneNumberInstance
-          def create(voice_region: :unset, friendly_name: :unset)
-            context.create(voice_region: voice_region, friendly_name: friendly_name, )
-          end
-
-          ##
           # Update the PhoneNumberInstance
           # @param [String] voice_region The Inbound Processing Region used for this phone
           #   number for voice
           # @param [String] friendly_name A human readable description of this resource, up
           #   to 64 characters.
           # @return [PhoneNumberInstance] Updated PhoneNumberInstance
-          def update(voice_region: nil, friendly_name: nil)
+          def update(voice_region: :unset, friendly_name: :unset)
             context.update(voice_region: voice_region, friendly_name: friendly_name, )
           end
 

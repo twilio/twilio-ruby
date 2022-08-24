@@ -9,55 +9,17 @@
 require 'spec_helper.rb'
 
 describe 'PhoneNumber' do
-  it "can create" do
-    @holodeck.mock(Twilio::Response.new(500, ''))
-
-    expect {
-      @client.routes.v2.phone_numbers('phone_number').create()
-    }.to raise_exception(Twilio::REST::TwilioError)
-
-    expect(
-    @holodeck.has_request?(Holodeck::Request.new(
-        method: 'post',
-        url: 'https://routes.twilio.com/v2/PhoneNumbers/phone_number',
-    ))).to eq(true)
-  end
-
-  it "receives create responses" do
-    @holodeck.mock(Twilio::Response.new(
-        201,
-      %q[
-      {
-          "phone_number": "+18001234567",
-          "url": "https://routes.twilio.com/v2/PhoneNumbers/+18001234567",
-          "sid": "QQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "friendly_name": "friendly_name",
-          "voice_region": "au1",
-          "date_created": "2015-07-30T20:00:00Z",
-          "date_updated": "2015-07-30T20:00:00Z"
-      }
-      ]
-    ))
-
-    actual = @client.routes.v2.phone_numbers('phone_number').create()
-
-    expect(actual).to_not eq(nil)
-  end
-
   it "can update" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.routes.v2.phone_numbers('phone_number').update(voice_region: 'voice_region', friendly_name: 'friendly_name')
+      @client.routes.v2.phone_numbers('phone_number').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'VoiceRegion' => 'voice_region', 'FriendlyName' => 'friendly_name', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://routes.twilio.com/v2/PhoneNumbers/phone_number',
-        data: values,
     ))).to eq(true)
   end
 
@@ -78,7 +40,7 @@ describe 'PhoneNumber' do
       ]
     ))
 
-    actual = @client.routes.v2.phone_numbers('phone_number').update(voice_region: 'voice_region', friendly_name: 'friendly_name')
+    actual = @client.routes.v2.phone_numbers('phone_number').update()
 
     expect(actual).to_not eq(nil)
   end

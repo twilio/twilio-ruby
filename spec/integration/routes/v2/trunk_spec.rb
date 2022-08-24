@@ -9,42 +9,6 @@
 require 'spec_helper.rb'
 
 describe 'Trunk' do
-  it "can create" do
-    @holodeck.mock(Twilio::Response.new(500, ''))
-
-    expect {
-      @client.routes.v2.trunks('sip_trunk_domain').create()
-    }.to raise_exception(Twilio::REST::TwilioError)
-
-    expect(
-    @holodeck.has_request?(Holodeck::Request.new(
-        method: 'post',
-        url: 'https://routes.twilio.com/v2/Trunks/sip_trunk_domain',
-    ))).to eq(true)
-  end
-
-  it "receives create responses" do
-    @holodeck.mock(Twilio::Response.new(
-        201,
-      %q[
-      {
-          "sip_trunk_domain": "test.pstn.twilio.com",
-          "url": "https://routes.twilio.com/v2/Trunks/test.pstn.twilio.com",
-          "sid": "QQaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "friendly_name": "friendly_name",
-          "voice_region": "au1",
-          "date_created": "2020-08-07T22:29:24Z",
-          "date_updated": "2020-08-07T22:29:24Z"
-      }
-      ]
-    ))
-
-    actual = @client.routes.v2.trunks('sip_trunk_domain').create()
-
-    expect(actual).to_not eq(nil)
-  end
-
   it "can update" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
