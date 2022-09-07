@@ -38,6 +38,14 @@ module Twilio
       end
 
       ##
+      # @param [String] phone_number The phone number in SafeList.
+      # @return [Twilio::REST::Verify::V2::SafelistInstance] if phone_number was passed.
+      # @return [Twilio::REST::Verify::V2::SafelistList]
+      def safelist(phone_number=:unset)
+        self.v2.safelist(phone_number)
+      end
+
+      ##
       # @param [String] sid The unique string that we created to identify the Service
       #   resource.
       # @return [Twilio::REST::Verify::V2::ServiceInstance] if sid was passed.

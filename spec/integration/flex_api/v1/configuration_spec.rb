@@ -243,7 +243,13 @@ describe 'Configuration' do
                       ]
                   }
               }
-          ]
+          ],
+          "debugger_integration": {
+              "enabled": false
+          },
+          "flex_ui_status_report": {
+              "enabled": false
+          }
       }
       ]
     ))
@@ -454,7 +460,13 @@ describe 'Configuration' do
                       ]
                   }
               }
-          ]
+          ],
+          "debugger_integration": {
+              "enabled": false
+          },
+          "flex_ui_status_report": {
+              "enabled": false
+          }
       }
       ]
     ))
@@ -678,7 +690,13 @@ describe 'Configuration' do
                       ]
                   }
               }
-          ]
+          ],
+          "debugger_integration": {
+              "enabled": false
+          },
+          "flex_ui_status_report": {
+              "enabled": false
+          }
       }
       ]
     ))

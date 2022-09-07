@@ -16,6 +16,7 @@ module Twilio
           super
           @version = 'v2'
           @forms = nil
+          @safelist = nil
           @services = nil
           @verification_attempts = nil
           @verification_attempts_summary = nil
@@ -35,6 +36,23 @@ module Twilio
               @forms ||= FormList.new self
           else
               FormContext.new(self, form_type)
+          end
+        end
+
+        ##
+        # @param [String] phone_number The phone number to be fetched from SafeList. Phone
+        #   numbers must be in {E.164
+        #   format}[https://www.twilio.com/docs/glossary/what-e164].
+        # @return [Twilio::REST::Verify::V2::SafelistContext] if phone_number was passed.
+        # @return [Twilio::REST::Verify::V2::SafelistList]
+        def safelist(phone_number=:unset)
+          if phone_number.nil?
+              raise ArgumentError, 'phone_number cannot be nil'
+          end
+          if phone_number == :unset
+              @safelist ||= SafelistList.new self
+          else
+              SafelistContext.new(self, phone_number)
           end
         end
 

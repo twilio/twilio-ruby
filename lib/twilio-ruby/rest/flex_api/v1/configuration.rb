@@ -171,6 +171,8 @@ module Twilio
                 'flex_insights_drilldown' => payload['flex_insights_drilldown'],
                 'flex_url' => payload['flex_url'],
                 'channel_configs' => payload['channel_configs'],
+                'debugger_integration' => payload['debugger_integration'],
+                'flex_ui_status_report' => payload['flex_ui_status_report'],
             }
 
             # Context
@@ -445,6 +447,18 @@ module Twilio
           # @return [Array[Hash]] Flex Conversations channels' attachments configurations
           def channel_configs
             @properties['channel_configs']
+          end
+
+          ##
+          # @return [Hash] Configurable parameters for Debugger Integration
+          def debugger_integration
+            @properties['debugger_integration']
+          end
+
+          ##
+          # @return [Hash] Configurable parameters for Flex UI Status report
+          def flex_ui_status_report
+            @properties['flex_ui_status_report']
           end
 
           ##

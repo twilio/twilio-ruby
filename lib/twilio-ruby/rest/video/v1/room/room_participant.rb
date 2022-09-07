@@ -207,6 +207,7 @@ module Twilio
               @published_tracks = nil
               @subscribed_tracks = nil
               @subscribe_rules = nil
+              @anonymize = nil
             end
 
             ##
@@ -291,6 +292,14 @@ module Twilio
               end
 
               @subscribe_rules
+            end
+
+            ##
+            # Access the anonymize
+            # @return [AnonymizeList]
+            # @return [AnonymizeContext]
+            def anonymize
+              AnonymizeContext.new(@version, @solution[:room_sid], @solution[:sid], )
             end
 
             ##
@@ -460,6 +469,13 @@ module Twilio
             # @return [subscribe_rules] subscribe_rules
             def subscribe_rules
               context.subscribe_rules
+            end
+
+            ##
+            # Access the anonymize
+            # @return [anonymize] anonymize
+            def anonymize
+              context.anonymize
             end
 
             ##

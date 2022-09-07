@@ -58,6 +58,14 @@ module Twilio
       end
 
       ##
+      # @param [String] sid The unique string to identify Tollfree Verification.
+      # @return [Twilio::REST::Messaging::V1::TollfreeVerificationInstance] if sid was passed.
+      # @return [Twilio::REST::Messaging::V1::TollfreeVerificationList]
+      def tollfree_verifications(sid=:unset)
+        self.v1.tollfree_verifications(sid)
+      end
+
+      ##
       # @return [Twilio::REST::Messaging::V1::UsecaseInstance]
       def usecases
         self.v1.usecases()

@@ -111,10 +111,10 @@ describe 'InteractionChannelParticipant' do
     expect {
       @client.flex_api.v1.interaction('KDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                          .channels('UOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                         .participants('UOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(status: 'close')
+                         .participants('UOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(status: 'closed')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Status' => 'close', }
+    values = {'Status' => 'closed', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -139,7 +139,7 @@ describe 'InteractionChannelParticipant' do
 
     actual = @client.flex_api.v1.interaction('KDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .channels('UOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .participants('UOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(status: 'close')
+                                .participants('UOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(status: 'closed')
 
     expect(actual).to_not eq(nil)
   end
@@ -160,7 +160,7 @@ describe 'InteractionChannelParticipant' do
 
     actual = @client.flex_api.v1.interaction('KDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                                 .channels('UOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                .participants('UOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(status: 'close')
+                                .participants('UOXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(status: 'closed')
 
     expect(actual).to_not eq(nil)
   end
