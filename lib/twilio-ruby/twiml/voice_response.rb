@@ -1571,9 +1571,16 @@ module Twilio
       # status_callback:: Status callback URL
       # status_callback_method:: Status callback URL method
       # byoc:: BYOC trunk SID (Beta)
+      # machine_detection:: Enable machine detection or end of greeting detection
+      # amd_status_callback_method:: HTTP Method to use with amd_status_callback
+      # amd_status_callback:: The URL we should call to send amd status information to your application
+      # machine_detection_timeout:: Number of seconds to wait for machine detection
+      # machine_detection_speech_threshold:: Number of milliseconds for measuring stick for the length of the speech activity
+      # machine_detection_speech_end_threshold:: Number of milliseconds of silence after speech activity
+      # machine_detection_silence_timeout:: Number of milliseconds of initial silence
       # keyword_args:: additional attributes
-      def number(phone_number, send_digits: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, byoc: nil, **keyword_args)
-        append(Number.new(phone_number, send_digits: send_digits, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, byoc: byoc, **keyword_args))
+      def number(phone_number, send_digits: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, byoc: nil, machine_detection: nil, amd_status_callback_method: nil, amd_status_callback: nil, machine_detection_timeout: nil, machine_detection_speech_threshold: nil, machine_detection_speech_end_threshold: nil, machine_detection_silence_timeout: nil, **keyword_args)
+        append(Number.new(phone_number, send_digits: send_digits, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, byoc: byoc, machine_detection: machine_detection, amd_status_callback_method: amd_status_callback_method, amd_status_callback: amd_status_callback, machine_detection_timeout: machine_detection_timeout, machine_detection_speech_threshold: machine_detection_speech_threshold, machine_detection_speech_end_threshold: machine_detection_speech_end_threshold, machine_detection_silence_timeout: machine_detection_silence_timeout, **keyword_args))
       end
 
       ##
@@ -1606,9 +1613,16 @@ module Twilio
       # status_callback_event:: Status callback events
       # status_callback:: Status callback URL
       # status_callback_method:: Status callback URL method
+      # machine_detection:: Enable machine detection or end of greeting detection
+      # amd_status_callback_method:: HTTP Method to use with amd_status_callback
+      # amd_status_callback:: The URL we should call to send amd status information to your application
+      # machine_detection_timeout:: Number of seconds to wait for machine detection
+      # machine_detection_speech_threshold:: Number of milliseconds for measuring stick for the length of the speech activity
+      # machine_detection_speech_end_threshold:: Number of milliseconds of silence after speech activity
+      # machine_detection_silence_timeout:: Number of milliseconds of initial silence
       # keyword_args:: additional attributes
-      def sip(sip_url, username: nil, password: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
-        append(Sip.new(sip_url, username: username, password: password, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args))
+      def sip(sip_url, username: nil, password: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, machine_detection: nil, amd_status_callback_method: nil, amd_status_callback: nil, machine_detection_timeout: nil, machine_detection_speech_threshold: nil, machine_detection_speech_end_threshold: nil, machine_detection_silence_timeout: nil, **keyword_args)
+        append(Sip.new(sip_url, username: username, password: password, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, machine_detection: machine_detection, amd_status_callback_method: amd_status_callback_method, amd_status_callback: amd_status_callback, machine_detection_timeout: machine_detection_timeout, machine_detection_speech_threshold: machine_detection_speech_threshold, machine_detection_speech_end_threshold: machine_detection_speech_end_threshold, machine_detection_silence_timeout: machine_detection_silence_timeout, **keyword_args))
       end
     end
 

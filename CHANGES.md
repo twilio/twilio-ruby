@@ -1,6 +1,16 @@
 twilio-ruby changelog
 =====================
 
+[2022-10-05] Version 5.72.1
+---------------------------
+**Api**
+- Added `virtual-agent` to `usage_record` API.
+- Add AMD attributes to participant create request
+
+**Twiml**
+- Add AMD attributes to `Number` and `Sip`
+
+
 [2022-09-07] Version 5.72.0
 ---------------------------
 **Flex**
