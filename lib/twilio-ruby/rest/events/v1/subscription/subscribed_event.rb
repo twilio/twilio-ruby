@@ -247,7 +247,7 @@ module Twilio
               @properties = {
                   'account_sid' => payload['account_sid'],
                   'type' => payload['type'],
-                  'schema_version' => payload['schema_version'].to_i,
+                  'schema_version' => payload['schema_version'] == nil ? payload['schema_version'] : payload['schema_version'].to_i,
                   'subscription_sid' => payload['subscription_sid'],
                   'url' => payload['url'],
               }

@@ -345,8 +345,8 @@ module Twilio
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'created_by' => payload['created_by'],
-                  'members_count' => payload['members_count'].to_i,
-                  'messages_count' => payload['messages_count'].to_i,
+                  'members_count' => payload['members_count'] == nil ? payload['members_count'] : payload['members_count'].to_i,
+                  'messages_count' => payload['messages_count'] == nil ? payload['messages_count'] : payload['messages_count'].to_i,
                   'url' => payload['url'],
                   'links' => payload['links'],
               }

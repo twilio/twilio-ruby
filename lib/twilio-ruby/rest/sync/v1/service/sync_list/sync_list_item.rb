@@ -328,7 +328,7 @@ module Twilio
 
                 # Marshaled Properties
                 @properties = {
-                    'index' => payload['index'].to_i,
+                    'index' => payload['index'] == nil ? payload['index'] : payload['index'].to_i,
                     'account_sid' => payload['account_sid'],
                     'service_sid' => payload['service_sid'],
                     'list_sid' => payload['list_sid'],

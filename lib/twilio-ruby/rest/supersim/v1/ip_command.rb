@@ -287,7 +287,7 @@ module Twilio
                 'status' => payload['status'],
                 'direction' => payload['direction'],
                 'device_ip' => payload['device_ip'],
-                'device_port' => payload['device_port'].to_i,
+                'device_port' => payload['device_port'] == nil ? payload['device_port'] : payload['device_port'].to_i,
                 'payload_type' => payload['payload_type'],
                 'payload' => payload['payload'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),

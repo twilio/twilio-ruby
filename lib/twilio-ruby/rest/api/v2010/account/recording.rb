@@ -329,7 +329,7 @@ module Twilio
                   'price' => payload['price'],
                   'price_unit' => payload['price_unit'],
                   'status' => payload['status'],
-                  'channels' => payload['channels'].to_i,
+                  'channels' => payload['channels'] == nil ? payload['channels'] : payload['channels'].to_i,
                   'source' => payload['source'],
                   'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
                   'uri' => payload['uri'],

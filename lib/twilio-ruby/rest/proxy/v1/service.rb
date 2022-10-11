@@ -386,7 +386,7 @@ module Twilio
                 'account_sid' => payload['account_sid'],
                 'chat_instance_sid' => payload['chat_instance_sid'],
                 'callback_url' => payload['callback_url'],
-                'default_ttl' => payload['default_ttl'].to_i,
+                'default_ttl' => payload['default_ttl'] == nil ? payload['default_ttl'] : payload['default_ttl'].to_i,
                 'number_selection_behavior' => payload['number_selection_behavior'],
                 'geo_match_level' => payload['geo_match_level'],
                 'intercept_callback_url' => payload['intercept_callback_url'],

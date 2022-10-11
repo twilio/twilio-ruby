@@ -242,9 +242,9 @@ module Twilio
                 @properties = {
                     'call_sid' => payload['call_sid'],
                     'date_enqueued' => Twilio.deserialize_rfc2822(payload['date_enqueued']),
-                    'position' => payload['position'].to_i,
+                    'position' => payload['position'] == nil ? payload['position'] : payload['position'].to_i,
                     'uri' => payload['uri'],
-                    'wait_time' => payload['wait_time'].to_i,
+                    'wait_time' => payload['wait_time'] == nil ? payload['wait_time'] : payload['wait_time'].to_i,
                     'queue_sid' => payload['queue_sid'],
                 }
 

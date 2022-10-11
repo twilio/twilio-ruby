@@ -239,10 +239,10 @@ module Twilio
                 # Marshaled Properties
                 @properties = {
                     'account_sid' => payload['account_sid'],
-                    'assigned_tasks' => payload['assigned_tasks'].to_i,
+                    'assigned_tasks' => payload['assigned_tasks'] == nil ? payload['assigned_tasks'] : payload['assigned_tasks'].to_i,
                     'available' => payload['available'],
-                    'available_capacity_percentage' => payload['available_capacity_percentage'].to_i,
-                    'configured_capacity' => payload['configured_capacity'].to_i,
+                    'available_capacity_percentage' => payload['available_capacity_percentage'] == nil ? payload['available_capacity_percentage'] : payload['available_capacity_percentage'].to_i,
+                    'configured_capacity' => payload['configured_capacity'] == nil ? payload['configured_capacity'] : payload['configured_capacity'].to_i,
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'sid' => payload['sid'],

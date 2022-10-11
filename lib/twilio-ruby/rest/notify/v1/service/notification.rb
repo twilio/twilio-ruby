@@ -215,7 +215,7 @@ module Twilio
                   'tags' => payload['tags'],
                   'segments' => payload['segments'],
                   'priority' => payload['priority'],
-                  'ttl' => payload['ttl'].to_i,
+                  'ttl' => payload['ttl'] == nil ? payload['ttl'] : payload['ttl'].to_i,
                   'title' => payload['title'],
                   'body' => payload['body'],
                   'sound' => payload['sound'],

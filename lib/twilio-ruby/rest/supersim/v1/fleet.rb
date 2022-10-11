@@ -311,7 +311,7 @@ module Twilio
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
                 'data_enabled' => payload['data_enabled'],
-                'data_limit' => payload['data_limit'].to_i,
+                'data_limit' => payload['data_limit'] == nil ? payload['data_limit'] : payload['data_limit'].to_i,
                 'data_metering' => payload['data_metering'],
                 'sms_commands_enabled' => payload['sms_commands_enabled'],
                 'sms_commands_url' => payload['sms_commands_url'],

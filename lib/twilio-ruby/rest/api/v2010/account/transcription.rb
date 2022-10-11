@@ -218,7 +218,7 @@ module Twilio
                   'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                   'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                   'duration' => payload['duration'],
-                  'price' => payload['price'].to_f,
+                  'price' => payload['price'] == nil ? payload['price'] : payload['price'].to_f,
                   'price_unit' => payload['price_unit'],
                   'recording_sid' => payload['recording_sid'],
                   'sid' => payload['sid'],

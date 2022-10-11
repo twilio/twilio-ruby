@@ -349,7 +349,7 @@ module Twilio
                     'chat_service_sid' => payload['chat_service_sid'],
                     'conversation_sid' => payload['conversation_sid'],
                     'sid' => payload['sid'],
-                    'index' => payload['index'].to_i,
+                    'index' => payload['index'] == nil ? payload['index'] : payload['index'].to_i,
                     'author' => payload['author'],
                     'body' => payload['body'],
                     'media' => payload['media'],

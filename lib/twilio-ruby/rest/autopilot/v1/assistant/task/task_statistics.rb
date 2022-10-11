@@ -147,8 +147,8 @@ module Twilio
                     'account_sid' => payload['account_sid'],
                     'assistant_sid' => payload['assistant_sid'],
                     'task_sid' => payload['task_sid'],
-                    'samples_count' => payload['samples_count'].to_i,
-                    'fields_count' => payload['fields_count'].to_i,
+                    'samples_count' => payload['samples_count'] == nil ? payload['samples_count'] : payload['samples_count'].to_i,
+                    'fields_count' => payload['fields_count'] == nil ? payload['fields_count'] : payload['fields_count'].to_i,
                     'url' => payload['url'],
                 }
 

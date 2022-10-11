@@ -260,10 +260,10 @@ module Twilio
                 'fleet_sid' => payload['fleet_sid'],
                 'iso_country' => payload['iso_country'],
                 'period' => payload['period'],
-                'data_upload' => payload['data_upload'].to_i,
-                'data_download' => payload['data_download'].to_i,
-                'data_total' => payload['data_total'].to_i,
-                'data_total_billed' => payload['data_total_billed'].to_f,
+                'data_upload' => payload['data_upload'] == nil ? payload['data_upload'] : payload['data_upload'].to_i,
+                'data_download' => payload['data_download'] == nil ? payload['data_download'] : payload['data_download'].to_i,
+                'data_total' => payload['data_total'] == nil ? payload['data_total'] : payload['data_total'].to_i,
+                'data_total_billed' => payload['data_total_billed'] == nil ? payload['data_total_billed'] : payload['data_total_billed'].to_f,
                 'billed_unit' => payload['billed_unit'],
             }
           end

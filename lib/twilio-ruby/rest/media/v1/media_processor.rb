@@ -270,7 +270,7 @@ module Twilio
                 'ended_reason' => payload['ended_reason'],
                 'status_callback' => payload['status_callback'],
                 'status_callback_method' => payload['status_callback_method'],
-                'max_duration' => payload['max_duration'].to_i,
+                'max_duration' => payload['max_duration'] == nil ? payload['max_duration'] : payload['max_duration'].to_i,
             }
 
             # Context

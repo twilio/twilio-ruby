@@ -313,7 +313,7 @@ module Twilio
                   'description' => payload['description'],
                   'event_data' => payload['event_data'],
                   'event_date' => Twilio.deserialize_iso8601_datetime(payload['event_date']),
-                  'event_date_ms' => payload['event_date_ms'].to_i,
+                  'event_date_ms' => payload['event_date_ms'] == nil ? payload['event_date_ms'] : payload['event_date_ms'].to_i,
                   'event_type' => payload['event_type'],
                   'resource_sid' => payload['resource_sid'],
                   'resource_type' => payload['resource_type'],

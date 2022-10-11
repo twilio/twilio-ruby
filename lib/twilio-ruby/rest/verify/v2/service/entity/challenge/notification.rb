@@ -125,7 +125,7 @@ module Twilio
                       'identity' => payload['identity'],
                       'challenge_sid' => payload['challenge_sid'],
                       'priority' => payload['priority'],
-                      'ttl' => payload['ttl'].to_i,
+                      'ttl' => payload['ttl'] == nil ? payload['ttl'] : payload['ttl'].to_i,
                       'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   }
                 end

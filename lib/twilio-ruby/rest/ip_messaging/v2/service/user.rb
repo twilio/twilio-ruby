@@ -303,7 +303,7 @@ module Twilio
                   'is_notifiable' => payload['is_notifiable'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                  'joined_channels_count' => payload['joined_channels_count'].to_i,
+                  'joined_channels_count' => payload['joined_channels_count'] == nil ? payload['joined_channels_count'] : payload['joined_channels_count'].to_i,
                   'links' => payload['links'],
                   'url' => payload['url'],
               }

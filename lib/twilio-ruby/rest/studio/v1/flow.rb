@@ -240,7 +240,7 @@ module Twilio
                 'account_sid' => payload['account_sid'],
                 'friendly_name' => payload['friendly_name'],
                 'status' => payload['status'],
-                'version' => payload['version'].to_i,
+                'version' => payload['version'] == nil ? payload['version'] : payload['version'].to_i,
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],

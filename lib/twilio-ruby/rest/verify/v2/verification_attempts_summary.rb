@@ -131,10 +131,10 @@ module Twilio
 
             # Marshaled Properties
             @properties = {
-                'total_attempts' => payload['total_attempts'].to_i,
-                'total_converted' => payload['total_converted'].to_i,
-                'total_unconverted' => payload['total_unconverted'].to_i,
-                'conversion_rate_percentage' => payload['conversion_rate_percentage'].to_f,
+                'total_attempts' => payload['total_attempts'] == nil ? payload['total_attempts'] : payload['total_attempts'].to_i,
+                'total_converted' => payload['total_converted'] == nil ? payload['total_converted'] : payload['total_converted'].to_i,
+                'total_unconverted' => payload['total_unconverted'] == nil ? payload['total_unconverted'] : payload['total_unconverted'].to_i,
+                'conversion_rate_percentage' => payload['conversion_rate_percentage'] == nil ? payload['conversion_rate_percentage'] : payload['conversion_rate_percentage'].to_f,
                 'url' => payload['url'],
             }
 
