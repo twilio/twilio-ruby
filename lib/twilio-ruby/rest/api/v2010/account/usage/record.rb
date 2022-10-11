@@ -303,7 +303,7 @@ module Twilio
                     'count_unit' => payload['count_unit'],
                     'description' => payload['description'],
                     'end_date' => Twilio.deserialize_iso8601_date(payload['end_date']),
-                    'price' => payload['price'].to_f,
+                    'price' => payload['price'] == nil ? payload['price'] : payload['price'].to_f,
                     'price_unit' => payload['price_unit'],
                     'start_date' => Twilio.deserialize_iso8601_date(payload['start_date']),
                     'subresource_uris' => payload['subresource_uris'],

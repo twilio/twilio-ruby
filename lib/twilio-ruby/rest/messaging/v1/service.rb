@@ -469,7 +469,7 @@ module Twilio
                 'fallback_to_long_code' => payload['fallback_to_long_code'],
                 'area_code_geomatch' => payload['area_code_geomatch'],
                 'synchronous_validation' => payload['synchronous_validation'],
-                'validity_period' => payload['validity_period'].to_i,
+                'validity_period' => payload['validity_period'] == nil ? payload['validity_period'] : payload['validity_period'].to_i,
                 'url' => payload['url'],
                 'links' => payload['links'],
                 'usecase' => payload['usecase'],

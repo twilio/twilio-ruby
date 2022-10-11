@@ -292,7 +292,7 @@ module Twilio
                 'friendly_name' => payload['friendly_name'],
                 'definition' => payload['definition'],
                 'status' => payload['status'],
-                'revision' => payload['revision'].to_i,
+                'revision' => payload['revision'] == nil ? payload['revision'] : payload['revision'].to_i,
                 'commit_message' => payload['commit_message'],
                 'valid' => payload['valid'],
                 'errors' => payload['errors'],

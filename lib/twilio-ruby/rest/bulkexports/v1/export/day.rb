@@ -200,7 +200,7 @@ module Twilio
               @properties = {
                   'redirect_to' => payload['redirect_to'],
                   'day' => payload['day'],
-                  'size' => payload['size'].to_i,
+                  'size' => payload['size'] == nil ? payload['size'] : payload['size'].to_i,
                   'create_date' => payload['create_date'],
                   'friendly_name' => payload['friendly_name'],
                   'resource_type' => payload['resource_type'],

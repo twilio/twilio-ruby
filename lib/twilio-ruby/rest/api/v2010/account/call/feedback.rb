@@ -188,7 +188,7 @@ module Twilio
                     'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                     'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                     'issues' => payload['issues'],
-                    'quality_score' => payload['quality_score'].to_i,
+                    'quality_score' => payload['quality_score'] == nil ? payload['quality_score'] : payload['quality_score'].to_i,
                     'sid' => payload['sid'],
                 }
 

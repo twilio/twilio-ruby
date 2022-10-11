@@ -210,7 +210,7 @@ module Twilio
                   'participant_identity' => payload['participant_identity'],
                   'join_time' => Twilio.deserialize_iso8601_datetime(payload['join_time']),
                   'leave_time' => Twilio.deserialize_iso8601_datetime(payload['leave_time']),
-                  'duration_sec' => payload['duration_sec'].to_i,
+                  'duration_sec' => payload['duration_sec'] == nil ? payload['duration_sec'] : payload['duration_sec'].to_i,
                   'account_sid' => payload['account_sid'],
                   'room_sid' => payload['room_sid'],
                   'status' => payload['status'],

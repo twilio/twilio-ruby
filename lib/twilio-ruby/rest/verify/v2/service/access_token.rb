@@ -161,7 +161,7 @@ module Twilio
                   'factor_friendly_name' => payload['factor_friendly_name'],
                   'token' => payload['token'],
                   'url' => payload['url'],
-                  'ttl' => payload['ttl'].to_i,
+                  'ttl' => payload['ttl'] == nil ? payload['ttl'] : payload['ttl'].to_i,
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
               }
 

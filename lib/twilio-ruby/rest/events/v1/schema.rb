@@ -143,7 +143,7 @@ module Twilio
                 'url' => payload['url'],
                 'links' => payload['links'],
                 'latest_version_date_created' => Twilio.deserialize_iso8601_datetime(payload['latest_version_date_created']),
-                'latest_version' => payload['latest_version'].to_i,
+                'latest_version' => payload['latest_version'] == nil ? payload['latest_version'] : payload['latest_version'].to_i,
             }
 
             # Context

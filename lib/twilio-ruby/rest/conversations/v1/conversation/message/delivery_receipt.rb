@@ -229,7 +229,7 @@ module Twilio
                     'channel_message_sid' => payload['channel_message_sid'],
                     'participant_sid' => payload['participant_sid'],
                     'status' => payload['status'],
-                    'error_code' => payload['error_code'].to_i,
+                    'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
                     'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                     'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                     'url' => payload['url'],

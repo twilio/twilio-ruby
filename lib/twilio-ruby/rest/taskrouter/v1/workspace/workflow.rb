@@ -328,7 +328,7 @@ module Twilio
                   'fallback_assignment_callback_url' => payload['fallback_assignment_callback_url'],
                   'friendly_name' => payload['friendly_name'],
                   'sid' => payload['sid'],
-                  'task_reservation_timeout' => payload['task_reservation_timeout'].to_i,
+                  'task_reservation_timeout' => payload['task_reservation_timeout'] == nil ? payload['task_reservation_timeout'] : payload['task_reservation_timeout'].to_i,
                   'workspace_sid' => payload['workspace_sid'],
                   'url' => payload['url'],
                   'links' => payload['links'],

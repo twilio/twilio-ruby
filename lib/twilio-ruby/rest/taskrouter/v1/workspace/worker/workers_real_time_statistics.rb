@@ -121,7 +121,7 @@ module Twilio
                 @properties = {
                     'account_sid' => payload['account_sid'],
                     'activity_statistics' => payload['activity_statistics'],
-                    'total_workers' => payload['total_workers'].to_i,
+                    'total_workers' => payload['total_workers'] == nil ? payload['total_workers'] : payload['total_workers'].to_i,
                     'workspace_sid' => payload['workspace_sid'],
                     'url' => payload['url'],
                 }

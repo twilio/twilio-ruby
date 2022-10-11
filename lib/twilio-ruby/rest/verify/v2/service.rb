@@ -491,7 +491,7 @@ module Twilio
                 'sid' => payload['sid'],
                 'account_sid' => payload['account_sid'],
                 'friendly_name' => payload['friendly_name'],
-                'code_length' => payload['code_length'].to_i,
+                'code_length' => payload['code_length'] == nil ? payload['code_length'] : payload['code_length'].to_i,
                 'lookup_enabled' => payload['lookup_enabled'],
                 'psd2_enabled' => payload['psd2_enabled'],
                 'skip_sms_to_landlines' => payload['skip_sms_to_landlines'],

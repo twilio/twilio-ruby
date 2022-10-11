@@ -210,7 +210,7 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'id' => payload['id'],
-                  'schema_version' => payload['schema_version'].to_i,
+                  'schema_version' => payload['schema_version'] == nil ? payload['schema_version'] : payload['schema_version'].to_i,
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'url' => payload['url'],
                   'raw' => payload['raw'],

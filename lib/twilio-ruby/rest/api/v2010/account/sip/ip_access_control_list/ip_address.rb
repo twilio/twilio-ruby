@@ -290,7 +290,7 @@ module Twilio
                       'account_sid' => payload['account_sid'],
                       'friendly_name' => payload['friendly_name'],
                       'ip_address' => payload['ip_address'],
-                      'cidr_prefix_length' => payload['cidr_prefix_length'].to_i,
+                      'cidr_prefix_length' => payload['cidr_prefix_length'] == nil ? payload['cidr_prefix_length'] : payload['cidr_prefix_length'].to_i,
                       'ip_access_control_list_sid' => payload['ip_access_control_list_sid'],
                       'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                       'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),

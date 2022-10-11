@@ -92,7 +92,7 @@ module Twilio
 
               # Marshaled Properties
               @properties = {
-                  'update_count' => payload['update_count'].to_i,
+                  'update_count' => payload['update_count'] == nil ? payload['update_count'] : payload['update_count'].to_i,
                   'update_request' => payload['update_request'],
               }
             end

@@ -368,7 +368,7 @@ module Twilio
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'friendly_name' => payload['friendly_name'],
-                  'max_reserved_workers' => payload['max_reserved_workers'].to_i,
+                  'max_reserved_workers' => payload['max_reserved_workers'] == nil ? payload['max_reserved_workers'] : payload['max_reserved_workers'].to_i,
                   'reservation_activity_sid' => payload['reservation_activity_sid'],
                   'reservation_activity_name' => payload['reservation_activity_name'],
                   'sid' => payload['sid'],

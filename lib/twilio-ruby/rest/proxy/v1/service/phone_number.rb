@@ -273,7 +273,7 @@ module Twilio
                   'capabilities' => payload['capabilities'],
                   'url' => payload['url'],
                   'is_reserved' => payload['is_reserved'],
-                  'in_use' => payload['in_use'].to_i,
+                  'in_use' => payload['in_use'] == nil ? payload['in_use'] : payload['in_use'].to_i,
               }
 
               # Context

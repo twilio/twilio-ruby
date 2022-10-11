@@ -117,12 +117,12 @@ module Twilio
               @properties = {
                   'account_sid' => payload['account_sid'],
                   'activity_statistics' => payload['activity_statistics'],
-                  'longest_task_waiting_age' => payload['longest_task_waiting_age'].to_i,
+                  'longest_task_waiting_age' => payload['longest_task_waiting_age'] == nil ? payload['longest_task_waiting_age'] : payload['longest_task_waiting_age'].to_i,
                   'longest_task_waiting_sid' => payload['longest_task_waiting_sid'],
                   'tasks_by_priority' => payload['tasks_by_priority'],
                   'tasks_by_status' => payload['tasks_by_status'],
-                  'total_tasks' => payload['total_tasks'].to_i,
-                  'total_workers' => payload['total_workers'].to_i,
+                  'total_tasks' => payload['total_tasks'] == nil ? payload['total_tasks'] : payload['total_tasks'].to_i,
+                  'total_workers' => payload['total_workers'] == nil ? payload['total_workers'] : payload['total_workers'].to_i,
                   'workspace_sid' => payload['workspace_sid'],
                   'url' => payload['url'],
               }

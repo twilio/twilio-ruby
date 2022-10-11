@@ -302,7 +302,7 @@ module Twilio
                     'was_edited' => payload['was_edited'],
                     'from' => payload['from'],
                     'body' => payload['body'],
-                    'index' => payload['index'].to_i,
+                    'index' => payload['index'] == nil ? payload['index'] : payload['index'].to_i,
                     'type' => payload['type'],
                     'media' => payload['media'],
                     'url' => payload['url'],

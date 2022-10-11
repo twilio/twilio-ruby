@@ -372,7 +372,7 @@ module Twilio
                 'reachability_webhooks_enabled' => payload['reachability_webhooks_enabled'],
                 'acl_enabled' => payload['acl_enabled'],
                 'reachability_debouncing_enabled' => payload['reachability_debouncing_enabled'],
-                'reachability_debouncing_window' => payload['reachability_debouncing_window'].to_i,
+                'reachability_debouncing_window' => payload['reachability_debouncing_window'] == nil ? payload['reachability_debouncing_window'] : payload['reachability_debouncing_window'].to_i,
                 'links' => payload['links'],
             }
 

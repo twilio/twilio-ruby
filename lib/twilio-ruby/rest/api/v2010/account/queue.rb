@@ -264,14 +264,14 @@ module Twilio
               # Marshaled Properties
               @properties = {
                   'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
-                  'current_size' => payload['current_size'].to_i,
+                  'current_size' => payload['current_size'] == nil ? payload['current_size'] : payload['current_size'].to_i,
                   'friendly_name' => payload['friendly_name'],
                   'uri' => payload['uri'],
                   'account_sid' => payload['account_sid'],
-                  'average_wait_time' => payload['average_wait_time'].to_i,
+                  'average_wait_time' => payload['average_wait_time'] == nil ? payload['average_wait_time'] : payload['average_wait_time'].to_i,
                   'sid' => payload['sid'],
                   'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
-                  'max_size' => payload['max_size'].to_i,
+                  'max_size' => payload['max_size'] == nil ? payload['max_size'] : payload['max_size'].to_i,
               }
 
               # Context
