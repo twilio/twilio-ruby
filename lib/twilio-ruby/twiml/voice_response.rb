@@ -251,9 +251,10 @@ module Twilio
       # error_type:: Type of error
       # card_type:: Type of the credit card
       # attempt:: Current attempt count
+      # require_matching_inputs:: Require customer to input requested information twice and verify matching.
       # keyword_args:: additional attributes
-      def prompt(for_: nil, error_type: nil, card_type: nil, attempt: nil, **keyword_args)
-        prompt = Prompt.new(for_: for_, error_type: error_type, card_type: card_type, attempt: attempt, **keyword_args)
+      def prompt(for_: nil, error_type: nil, card_type: nil, attempt: nil, require_matching_inputs: nil, **keyword_args)
+        prompt = Prompt.new(for_: for_, error_type: error_type, card_type: card_type, attempt: attempt, require_matching_inputs: require_matching_inputs, **keyword_args)
 
         yield(prompt) if block_given?
         append(prompt)
@@ -1326,9 +1327,10 @@ module Twilio
       # error_type:: Type of error
       # card_type:: Type of the credit card
       # attempt:: Current attempt count
+      # require_matching_inputs:: Require customer to input requested information twice and verify matching.
       # keyword_args:: additional attributes
-      def prompt(for_: nil, error_type: nil, card_type: nil, attempt: nil, **keyword_args)
-        prompt = Prompt.new(for_: for_, error_type: error_type, card_type: card_type, attempt: attempt, **keyword_args)
+      def prompt(for_: nil, error_type: nil, card_type: nil, attempt: nil, require_matching_inputs: nil, **keyword_args)
+        prompt = Prompt.new(for_: for_, error_type: error_type, card_type: card_type, attempt: attempt, require_matching_inputs: require_matching_inputs, **keyword_args)
 
         yield(prompt) if block_given?
         append(prompt)

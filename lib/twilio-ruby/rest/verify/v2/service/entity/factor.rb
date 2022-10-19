@@ -12,8 +12,6 @@ module Twilio
       class V2 < Version
         class ServiceContext < InstanceContext
           class EntityContext < InstanceContext
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class FactorList < ListResource
               ##
               # Initialize the FactorList
@@ -119,8 +117,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class FactorPage < Page
               ##
               # Initialize the FactorPage
@@ -155,8 +151,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class FactorContext < InstanceContext
               ##
               # Initialize the FactorContext
@@ -263,8 +257,6 @@ module Twilio
               end
             end
 
-            ##
-            # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
             class FactorInstance < InstanceResource
               ##
               # Initialize the FactorInstance

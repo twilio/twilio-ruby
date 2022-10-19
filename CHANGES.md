@@ -1,6 +1,31 @@
 twilio-ruby changelog
 =====================
 
+[2022-10-19] Version 5.73.0
+---------------------------
+**Library - Feature**
+- [PR #619](https://github.com/twilio/twilio-ruby/pull/619): check numeric properties for nil before converting. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Api**
+- Make link shortening parameters public **(breaking change)**
+
+**Oauth**
+- added oauth JWKS endpoint
+- Get userinfo resource
+- OpenID discovery resource
+- Add new API for token endpoint
+
+**Supersim**
+- Add SettingsUpdates resource
+
+**Verify**
+- Update Verify Push endpoints to `ga` maturity
+- Verify BYOT add Channels property to the Get Templates response
+
+**Twiml**
+- Add `requireMatchingInputs` attribute and `input-matching-failed` errorType to `<Prompt>`
+
+
 [2022-10-05] Version 5.72.1
 ---------------------------
 **Api**

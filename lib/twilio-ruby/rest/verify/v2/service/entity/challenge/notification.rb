@@ -13,8 +13,6 @@ module Twilio
         class ServiceContext < InstanceContext
           class EntityContext < InstanceContext
             class ChallengeContext < InstanceContext
-              ##
-              # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
               class NotificationList < ListResource
                 ##
                 # Initialize the NotificationList
@@ -62,8 +60,6 @@ module Twilio
                 end
               end
 
-              ##
-              # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
               class NotificationPage < Page
                 ##
                 # Initialize the NotificationPage
@@ -99,8 +95,6 @@ module Twilio
                 end
               end
 
-              ##
-              # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
               class NotificationInstance < InstanceResource
                 ##
                 # Initialize the NotificationInstance

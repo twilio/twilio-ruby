@@ -78,6 +78,12 @@ module Twilio
             # @param [Boolean] smart_encoded Whether to detect Unicode characters that have a
             #   similar GSM-7 character and replace them. Can be: `true` or `false`.
             # @param [Array[String]] persistent_action Rich actions for Channels Messages.
+            # @param [Boolean] shorten_urls Determines the usage of Click Tracking. Setting it
+            #   to `true` will instruct Twilio to replace all links in the Message with a
+            #   shortened version based on the associated Domain Sid and track clicks on them.
+            #   If this parameter is not set on an API call, we will use the value set on the
+            #   Messaging Service. If this parameter is not set and the value is not configured
+            #   on the Messaging Service used this will default to `false`.
             # @param [message.ScheduleType] schedule_type Indicates your intent to schedule a
             #   message. Pass the value `fixed` to schedule a message at a fixed time.
             # @param [Time] send_at The time that Twilio will send the message. Must be in ISO
@@ -114,7 +120,7 @@ module Twilio
             #   parameters in the POST request. You can include up to 10 `media_url` parameters
             #   per message. You can send images in an SMS message in only the US and Canada.
             # @return [MessageInstance] Created MessageInstance
-            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, attempt: :unset, validity_period: :unset, force_delivery: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, persistent_action: :unset, schedule_type: :unset, send_at: :unset, send_as_mms: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, attempt: :unset, validity_period: :unset, force_delivery: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, persistent_action: :unset, shorten_urls: :unset, schedule_type: :unset, send_at: :unset, send_as_mms: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -132,6 +138,7 @@ module Twilio
                   'AddressRetention' => address_retention,
                   'SmartEncoded' => smart_encoded,
                   'PersistentAction' => Twilio.serialize_list(persistent_action) { |e| e },
+                  'ShortenUrls' => shorten_urls,
                   'ScheduleType' => schedule_type,
                   'SendAt' => Twilio.serialize_iso8601_datetime(send_at),
                   'SendAsMms' => send_as_mms,

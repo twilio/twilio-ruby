@@ -11,8 +11,6 @@ module Twilio
     class Verify < Domain
       class V2 < Version
         class ServiceContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class AccessTokenList < ListResource
             ##
             # Initialize the AccessTokenList
@@ -59,8 +57,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class AccessTokenPage < Page
             ##
             # Initialize the AccessTokenPage
@@ -90,8 +86,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class AccessTokenContext < InstanceContext
             ##
             # Initialize the AccessTokenContext
@@ -137,8 +131,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class AccessTokenInstance < InstanceResource
             ##
             # Initialize the AccessTokenInstance

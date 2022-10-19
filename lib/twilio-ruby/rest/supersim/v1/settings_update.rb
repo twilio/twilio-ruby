@@ -8,27 +8,29 @@
 
 module Twilio
   module REST
-    class Verify < Domain
-      class V2 < Version
-        class TemplateList < ListResource
+    class Supersim < Domain
+      class V1 < Version
+        ##
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        class SettingsUpdateList < ListResource
           ##
-          # Initialize the TemplateList
+          # Initialize the SettingsUpdateList
           # @param [Version] version Version that contains the resource
-          # @return [TemplateList] TemplateList
+          # @return [SettingsUpdateList] SettingsUpdateList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/Templates"
+            @uri = "/SettingsUpdates"
           end
 
           ##
-          # Lists TemplateInstance records from the API as a list.
+          # Lists SettingsUpdateInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] friendly_name String filter used to query templates with a given
-          #   friendly name
+          # @param [String] sim Filter the Settings Updates by a Super SIM's SID or
+          #   UniqueName.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -36,16 +38,16 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(friendly_name: :unset, limit: nil, page_size: nil)
-            self.stream(friendly_name: friendly_name, limit: limit, page_size: page_size).entries
+          def list(sim: :unset, limit: nil, page_size: nil)
+            self.stream(sim: sim, limit: limit, page_size: page_size).entries
           end
 
           ##
-          # Streams TemplateInstance records from the API as an Enumerable.
+          # Streams SettingsUpdateInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] friendly_name String filter used to query templates with a given
-          #   friendly name
+          # @param [String] sim Filter the Settings Updates by a Super SIM's SID or
+          #   UniqueName.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -53,16 +55,16 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(friendly_name: :unset, limit: nil, page_size: nil)
+          def stream(sim: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(friendly_name: friendly_name, page_size: limits[:page_size], )
+            page = self.page(sim: sim, page_size: limits[:page_size], )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
 
           ##
-          # When passed a block, yields TemplateInstance records from the API.
+          # When passed a block, yields SettingsUpdateInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -76,17 +78,17 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of TemplateInstance records from the API.
+          # Retrieve a single page of SettingsUpdateInstance records from the API.
           # Request is executed immediately.
-          # @param [String] friendly_name String filter used to query templates with a given
-          #   friendly name
+          # @param [String] sim Filter the Settings Updates by a Super SIM's SID or
+          #   UniqueName.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of TemplateInstance
-          def page(friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          # @return [Page] Page of SettingsUpdateInstance
+          def page(sim: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
-                'FriendlyName' => friendly_name,
+                'Sim' => sim,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -94,36 +96,38 @@ module Twilio
 
             response = @version.page('GET', @uri, params: params)
 
-            TemplatePage.new(@version, response, @solution)
+            SettingsUpdatePage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of TemplateInstance records from the API.
+          # Retrieve a single page of SettingsUpdateInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of TemplateInstance
+          # @return [Page] Page of SettingsUpdateInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            TemplatePage.new(@version, response, @solution)
+            SettingsUpdatePage.new(@version, response, @solution)
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Verify.V2.TemplateList>'
+            '#<Twilio.Supersim.V1.SettingsUpdateList>'
           end
         end
 
-        class TemplatePage < Page
+        ##
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        class SettingsUpdatePage < Page
           ##
-          # Initialize the TemplatePage
+          # Initialize the SettingsUpdatePage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [TemplatePage] TemplatePage
+          # @return [SettingsUpdatePage] SettingsUpdatePage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -132,79 +136,102 @@ module Twilio
           end
 
           ##
-          # Build an instance of TemplateInstance
+          # Build an instance of SettingsUpdateInstance
           # @param [Hash] payload Payload response from the API
-          # @return [TemplateInstance] TemplateInstance
+          # @return [SettingsUpdateInstance] SettingsUpdateInstance
           def get_instance(payload)
-            TemplateInstance.new(@version, payload, )
+            SettingsUpdateInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Verify.V2.TemplatePage>'
+            '<Twilio.Supersim.V1.SettingsUpdatePage>'
           end
         end
 
-        class TemplateInstance < InstanceResource
+        ##
+        # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
+        class SettingsUpdateInstance < InstanceResource
           ##
-          # Initialize the TemplateInstance
+          # Initialize the SettingsUpdateInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @return [TemplateInstance] TemplateInstance
+          # @return [SettingsUpdateInstance] SettingsUpdateInstance
           def initialize(version, payload)
             super(version)
 
             # Marshaled Properties
             @properties = {
                 'sid' => payload['sid'],
-                'account_sid' => payload['account_sid'],
-                'friendly_name' => payload['friendly_name'],
-                'channels' => payload['channels'],
-                'translations' => payload['translations'],
+                'iccid' => payload['iccid'],
+                'sim_sid' => payload['sim_sid'],
+                'status' => payload['status'],
+                'packages' => payload['packages'],
+                'date_completed' => Twilio.deserialize_iso8601_datetime(payload['date_completed']),
+                'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
             }
           end
 
           ##
-          # @return [String] A string that uniquely identifies this Template
+          # @return [String] The unique identifier of this Settings Update
           def sid
             @properties['sid']
           end
 
           ##
-          # @return [String] Account Sid
-          def account_sid
-            @properties['account_sid']
+          # @return [String] The ICCID associated with the SIM
+          def iccid
+            @properties['iccid']
           end
 
           ##
-          # @return [String] A string to describe the verification template
-          def friendly_name
-            @properties['friendly_name']
+          # @return [String] The SID of the Super SIM to which this Settings Update was applied
+          def sim_sid
+            @properties['sim_sid']
           end
 
           ##
-          # @return [Array[String]] The channels
-          def channels
-            @properties['channels']
+          # @return [settings_update.Status] The Status of this Settings Update
+          def status
+            @properties['status']
           end
 
           ##
-          # @return [Hash] Object with the template translations.
-          def translations
-            @properties['translations']
+          # @return [Array[Hash]] Array containing the different Settings Packages that will be applied to the SIM after the update completes
+          def packages
+            @properties['packages']
+          end
+
+          ##
+          # @return [Time] The time when the update successfully completed and the new settings were applied to the SIM
+          def date_completed
+            @properties['date_completed']
+          end
+
+          ##
+          # @return [Time] The date this Settings Update was created
+          def date_created
+            @properties['date_created']
+          end
+
+          ##
+          # @return [Time] The date this Settings Update was last updated
+          def date_updated
+            @properties['date_updated']
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            "<Twilio.Verify.V2.TemplateInstance>"
+            "<Twilio.Supersim.V1.SettingsUpdateInstance>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
-            "<Twilio.Verify.V2.TemplateInstance>"
+            "<Twilio.Supersim.V1.SettingsUpdateInstance>"
           end
         end
       end

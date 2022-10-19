@@ -11,8 +11,6 @@ module Twilio
     class Verify < Domain
       class V2 < Version
         class ServiceContext < InstanceContext
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class EntityList < ListResource
             ##
             # Initialize the EntityList
@@ -129,8 +127,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class EntityPage < Page
             ##
             # Initialize the EntityPage
@@ -160,8 +156,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class EntityContext < InstanceContext
             ##
             # Initialize the EntityContext
@@ -281,8 +275,6 @@ module Twilio
             end
           end
 
-          ##
-          # PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
           class EntityInstance < InstanceResource
             ##
             # Initialize the EntityInstance

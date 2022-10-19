@@ -74,6 +74,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Supersim::V1::SettingsUpdateInstance]
+      def settings_updates
+        self.v1.settings_updates()
+      end
+
+      ##
       # @param [String] sid The unique string that identifies the Sim resource.
       # @return [Twilio::REST::Supersim::V1::SimInstance] if sid was passed.
       # @return [Twilio::REST::Supersim::V1::SimList]

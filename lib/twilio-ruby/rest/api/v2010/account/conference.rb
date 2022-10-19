@@ -244,8 +244,8 @@ module Twilio
             #   Can be: `init`, `in-progress`, or `completed`. Specifying `completed` will end
             #   the conference and hang up all participants
             # @param [String] announce_url The URL we should call to announce something into
-            #   the conference. The URL can return an MP3, a WAV, or a TwiML document with
-            #   `<Play>` or `<Say>`.
+            #   the conference. The URL may return an MP3 file, a WAV file, or a TwiML document
+            #   that contains `<Play>`, `<Say>`, `<Pause>`, or `<Redirect>` verbs.
             # @param [String] announce_method The HTTP method used to call `announce_url`. Can
             #   be: `GET` or `POST` and the default is `POST`
             # @return [ConferenceInstance] Updated ConferenceInstance
@@ -456,8 +456,8 @@ module Twilio
             #   Can be: `init`, `in-progress`, or `completed`. Specifying `completed` will end
             #   the conference and hang up all participants
             # @param [String] announce_url The URL we should call to announce something into
-            #   the conference. The URL can return an MP3, a WAV, or a TwiML document with
-            #   `<Play>` or `<Say>`.
+            #   the conference. The URL may return an MP3 file, a WAV file, or a TwiML document
+            #   that contains `<Play>`, `<Say>`, `<Pause>`, or `<Redirect>` verbs.
             # @param [String] announce_method The HTTP method used to call `announce_url`. Can
             #   be: `GET` or `POST` and the default is `POST`
             # @return [ConferenceInstance] Updated ConferenceInstance

@@ -20,6 +20,7 @@ module Twilio
           @ip_commands = nil
           @networks = nil
           @network_access_profiles = nil
+          @settings_updates = nil
           @sims = nil
           @sms_commands = nil
           @usage_records = nil
@@ -98,6 +99,12 @@ module Twilio
           else
               NetworkAccessProfileContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Supersim::V1::SettingsUpdateContext]
+        def settings_updates
+          @settings_updates ||= SettingsUpdateList.new self
         end
 
         ##
