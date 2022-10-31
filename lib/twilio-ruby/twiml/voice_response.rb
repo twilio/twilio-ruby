@@ -1775,6 +1775,8 @@ module Twilio
       # inbound_autocreation:: Inbound autocreation
       # routing_assignment_timeout:: Routing assignment timeout
       # inbound_timeout:: Inbound timeout
+      # url:: TwiML URL
+      # method:: TwiML URL method
       # record:: Record
       # trim:: Trim
       # recording_status_callback:: Recording status callback URL
@@ -1784,8 +1786,8 @@ module Twilio
       # status_callback_method:: Status callback URL method
       # status_callback_event:: Events to call status callback URL
       # keyword_args:: additional attributes
-      def conversation(service_instance_sid: nil, inbound_autocreation: nil, routing_assignment_timeout: nil, inbound_timeout: nil, record: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, status_callback: nil, status_callback_method: nil, status_callback_event: nil, **keyword_args)
-        append(Conversation.new(service_instance_sid: service_instance_sid, inbound_autocreation: inbound_autocreation, routing_assignment_timeout: routing_assignment_timeout, inbound_timeout: inbound_timeout, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, status_callback_event: status_callback_event, **keyword_args))
+      def conversation(service_instance_sid: nil, inbound_autocreation: nil, routing_assignment_timeout: nil, inbound_timeout: nil, url: nil, method: nil, record: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, status_callback: nil, status_callback_method: nil, status_callback_event: nil, **keyword_args)
+        append(Conversation.new(service_instance_sid: service_instance_sid, inbound_autocreation: inbound_autocreation, routing_assignment_timeout: routing_assignment_timeout, inbound_timeout: inbound_timeout, url: url, method: method, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, status_callback_event: status_callback_event, **keyword_args))
       end
     end
 

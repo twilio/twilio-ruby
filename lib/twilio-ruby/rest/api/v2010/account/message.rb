@@ -90,6 +90,13 @@ module Twilio
             #   8601 format.
             # @param [Boolean] send_as_mms If set to True, Twilio will deliver the message as
             #   a single MMS message, regardless of the presence of media.
+            # @param [String] content_sid The SID of the Content object returned at Content
+            #   API content create time
+            #   (https://www.twilio.com/docs/content-api/create-and-send-your-first-content-api-template#create-a-template).
+            #   If this parameter is not specified, then the Content API will not be utilized.
+            # @param [String] content_variables Key-value pairs of variable names to
+            #   substitution values, used alongside a content_sid. If not specified, Content API
+            #   will default to the default variables defined at create time.
             # @param [String] from A Twilio phone number in
             #   {E.164}[https://www.twilio.com/docs/glossary/what-e164] format, an {alphanumeric
             #   sender
@@ -120,7 +127,7 @@ module Twilio
             #   parameters in the POST request. You can include up to 10 `media_url` parameters
             #   per message. You can send images in an SMS message in only the US and Canada.
             # @return [MessageInstance] Created MessageInstance
-            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, attempt: :unset, validity_period: :unset, force_delivery: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, persistent_action: :unset, shorten_urls: :unset, schedule_type: :unset, send_at: :unset, send_as_mms: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
+            def create(to: nil, status_callback: :unset, application_sid: :unset, max_price: :unset, provide_feedback: :unset, attempt: :unset, validity_period: :unset, force_delivery: :unset, content_retention: :unset, address_retention: :unset, smart_encoded: :unset, persistent_action: :unset, shorten_urls: :unset, schedule_type: :unset, send_at: :unset, send_as_mms: :unset, content_sid: :unset, content_variables: :unset, from: :unset, messaging_service_sid: :unset, body: :unset, media_url: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'From' => from,
@@ -142,6 +149,8 @@ module Twilio
                   'ScheduleType' => schedule_type,
                   'SendAt' => Twilio.serialize_iso8601_datetime(send_at),
                   'SendAsMms' => send_as_mms,
+                  'ContentSid' => content_sid,
+                  'ContentVariables' => content_variables,
               })
 
               payload = @version.create('POST', @uri, data: data)

@@ -184,7 +184,7 @@ module Twilio
           end
 
           ##
-          # @return [Array[String]] The channels
+          # @return [Array[String]] A list of channels that support the Template
           def channels
             @properties['channels']
           end

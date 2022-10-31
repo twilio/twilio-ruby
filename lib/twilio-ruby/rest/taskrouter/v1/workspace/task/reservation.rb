@@ -35,6 +35,7 @@ module Twilio
               # @param [reservation.Status] reservation_status Returns the list of reservations
               #   for a task with a specified ReservationStatus.  Can be: `pending`, `accepted`,
               #   `rejected`, or `timeout`.
+              # @param [String] worker_sid The SID of the reserved Worker resource to read.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit.  Default is no limit
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -42,8 +43,13 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Array] Array of up to limit results
-              def list(reservation_status: :unset, limit: nil, page_size: nil)
-                self.stream(reservation_status: reservation_status, limit: limit, page_size: page_size).entries
+              def list(reservation_status: :unset, worker_sid: :unset, limit: nil, page_size: nil)
+                self.stream(
+                    reservation_status: reservation_status,
+                    worker_sid: worker_sid,
+                    limit: limit,
+                    page_size: page_size
+                ).entries
               end
 
               ##
@@ -53,6 +59,7 @@ module Twilio
               # @param [reservation.Status] reservation_status Returns the list of reservations
               #   for a task with a specified ReservationStatus.  Can be: `pending`, `accepted`,
               #   `rejected`, or `timeout`.
+              # @param [String] worker_sid The SID of the reserved Worker resource to read.
               # @param [Integer] limit Upper limit for the number of records to return. stream()
               #    guarantees to never return more than limit. Default is no limit.
               # @param [Integer] page_size Number of records to fetch per request, when
@@ -60,10 +67,14 @@ module Twilio
               #    but a limit is defined, stream() will attempt to read the limit with the most
               #    efficient page size, i.e. min(limit, 1000)
               # @return [Enumerable] Enumerable that will yield up to limit results
-              def stream(reservation_status: :unset, limit: nil, page_size: nil)
+              def stream(reservation_status: :unset, worker_sid: :unset, limit: nil, page_size: nil)
                 limits = @version.read_limits(limit, page_size)
 
-                page = self.page(reservation_status: reservation_status, page_size: limits[:page_size], )
+                page = self.page(
+                    reservation_status: reservation_status,
+                    worker_sid: worker_sid,
+                    page_size: limits[:page_size],
+                )
 
                 @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
               end
@@ -88,13 +99,15 @@ module Twilio
               # @param [reservation.Status] reservation_status Returns the list of reservations
               #   for a task with a specified ReservationStatus.  Can be: `pending`, `accepted`,
               #   `rejected`, or `timeout`.
+              # @param [String] worker_sid The SID of the reserved Worker resource to read.
               # @param [String] page_token PageToken provided by the API
               # @param [Integer] page_number Page Number, this value is simply for client state
               # @param [Integer] page_size Number of records to return, defaults to 50
               # @return [Page] Page of ReservationInstance
-              def page(reservation_status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+              def page(reservation_status: :unset, worker_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                 params = Twilio::Values.of({
                     'ReservationStatus' => reservation_status,
+                    'WorkerSid' => worker_sid,
                     'PageToken' => page_token,
                     'Page' => page_number,
                     'PageSize' => page_size,

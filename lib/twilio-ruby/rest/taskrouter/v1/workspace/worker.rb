@@ -48,6 +48,7 @@ module Twilio
             #   Workers to read are eligible for.
             # @param [String] task_queue_sid The SID of the TaskQueue that the Workers to read
             #   are eligible for.
+            # @param [String] ordering Sorting parameter for Workers
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -55,7 +56,7 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, limit: nil, page_size: nil)
+            def list(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, ordering: :unset, limit: nil, page_size: nil)
               self.stream(
                   activity_name: activity_name,
                   activity_sid: activity_sid,
@@ -64,6 +65,7 @@ module Twilio
                   target_workers_expression: target_workers_expression,
                   task_queue_name: task_queue_name,
                   task_queue_sid: task_queue_sid,
+                  ordering: ordering,
                   limit: limit,
                   page_size: page_size
               ).entries
@@ -89,6 +91,7 @@ module Twilio
             #   Workers to read are eligible for.
             # @param [String] task_queue_sid The SID of the TaskQueue that the Workers to read
             #   are eligible for.
+            # @param [String] ordering Sorting parameter for Workers
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -96,7 +99,7 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, limit: nil, page_size: nil)
+            def stream(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, ordering: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
@@ -107,6 +110,7 @@ module Twilio
                   target_workers_expression: target_workers_expression,
                   task_queue_name: task_queue_name,
                   task_queue_sid: task_queue_sid,
+                  ordering: ordering,
                   page_size: limits[:page_size],
               )
 
@@ -146,11 +150,12 @@ module Twilio
             #   Workers to read are eligible for.
             # @param [String] task_queue_sid The SID of the TaskQueue that the Workers to read
             #   are eligible for.
+            # @param [String] ordering Sorting parameter for Workers
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of WorkerInstance
-            def page(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, ordering: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'ActivityName' => activity_name,
                   'ActivitySid' => activity_sid,
@@ -159,6 +164,7 @@ module Twilio
                   'TargetWorkersExpression' => target_workers_expression,
                   'TaskQueueName' => task_queue_name,
                   'TaskQueueSid' => task_queue_sid,
+                  'Ordering' => ordering,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,

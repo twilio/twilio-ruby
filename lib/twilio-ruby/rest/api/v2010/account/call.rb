@@ -444,6 +444,8 @@ module Twilio
               @payments = nil
               @siprec = nil
               @streams = nil
+              @user_defined_message_subscriptions = nil
+              @user_defined_messages = nil
             end
 
             ##
@@ -634,6 +636,49 @@ module Twilio
               end
 
               @streams
+            end
+
+            ##
+            # Access the user_defined_message_subscriptions
+            # @return [UserDefinedMessageSubscriptionList]
+            # @return [UserDefinedMessageSubscriptionContext] if sid was passed.
+            def user_defined_message_subscriptions(sid=:unset)
+              raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+              if sid != :unset
+                return UserDefinedMessageSubscriptionContext.new(
+                    @version,
+                    @solution[:account_sid],
+                    @solution[:sid],
+                    sid,
+                )
+              end
+
+              unless @user_defined_message_subscriptions
+                @user_defined_message_subscriptions = UserDefinedMessageSubscriptionList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    call_sid: @solution[:sid],
+                )
+              end
+
+              @user_defined_message_subscriptions
+            end
+
+            ##
+            # Access the user_defined_messages
+            # @return [UserDefinedMessageList]
+            # @return [UserDefinedMessageContext]
+            def user_defined_messages
+              unless @user_defined_messages
+                @user_defined_messages = UserDefinedMessageList.new(
+                    @version,
+                    account_sid: @solution[:account_sid],
+                    call_sid: @solution[:sid],
+                )
+              end
+
+              @user_defined_messages
             end
 
             ##
@@ -975,6 +1020,20 @@ module Twilio
             # @return [streams] streams
             def streams
               context.streams
+            end
+
+            ##
+            # Access the user_defined_message_subscriptions
+            # @return [user_defined_message_subscriptions] user_defined_message_subscriptions
+            def user_defined_message_subscriptions
+              context.user_defined_message_subscriptions
+            end
+
+            ##
+            # Access the user_defined_messages
+            # @return [user_defined_messages] user_defined_messages
+            def user_defined_messages
+              context.user_defined_messages
             end
 
             ##

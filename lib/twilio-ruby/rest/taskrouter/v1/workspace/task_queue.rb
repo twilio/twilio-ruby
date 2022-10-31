@@ -40,6 +40,7 @@ module Twilio
             #   this parameter.
             # @param [String] worker_sid The SID of the Worker with the TaskQueue resources to
             #   read.
+            # @param [String] ordering Sorting parameter for TaskQueues
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit.  Default is no limit
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -47,11 +48,12 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Array] Array of up to limit results
-            def list(friendly_name: :unset, evaluate_worker_attributes: :unset, worker_sid: :unset, limit: nil, page_size: nil)
+            def list(friendly_name: :unset, evaluate_worker_attributes: :unset, worker_sid: :unset, ordering: :unset, limit: nil, page_size: nil)
               self.stream(
                   friendly_name: friendly_name,
                   evaluate_worker_attributes: evaluate_worker_attributes,
                   worker_sid: worker_sid,
+                  ordering: ordering,
                   limit: limit,
                   page_size: page_size
               ).entries
@@ -68,6 +70,7 @@ module Twilio
             #   this parameter.
             # @param [String] worker_sid The SID of the Worker with the TaskQueue resources to
             #   read.
+            # @param [String] ordering Sorting parameter for TaskQueues
             # @param [Integer] limit Upper limit for the number of records to return. stream()
             #    guarantees to never return more than limit. Default is no limit.
             # @param [Integer] page_size Number of records to fetch per request, when
@@ -75,13 +78,14 @@ module Twilio
             #    but a limit is defined, stream() will attempt to read the limit with the most
             #    efficient page size, i.e. min(limit, 1000)
             # @return [Enumerable] Enumerable that will yield up to limit results
-            def stream(friendly_name: :unset, evaluate_worker_attributes: :unset, worker_sid: :unset, limit: nil, page_size: nil)
+            def stream(friendly_name: :unset, evaluate_worker_attributes: :unset, worker_sid: :unset, ordering: :unset, limit: nil, page_size: nil)
               limits = @version.read_limits(limit, page_size)
 
               page = self.page(
                   friendly_name: friendly_name,
                   evaluate_worker_attributes: evaluate_worker_attributes,
                   worker_sid: worker_sid,
+                  ordering: ordering,
                   page_size: limits[:page_size],
               )
 
@@ -112,15 +116,17 @@ module Twilio
             #   this parameter.
             # @param [String] worker_sid The SID of the Worker with the TaskQueue resources to
             #   read.
+            # @param [String] ordering Sorting parameter for TaskQueues
             # @param [String] page_token PageToken provided by the API
             # @param [Integer] page_number Page Number, this value is simply for client state
             # @param [Integer] page_size Number of records to return, defaults to 50
             # @return [Page] Page of TaskQueueInstance
-            def page(friendly_name: :unset, evaluate_worker_attributes: :unset, worker_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            def page(friendly_name: :unset, evaluate_worker_attributes: :unset, worker_sid: :unset, ordering: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
               params = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'EvaluateWorkerAttributes' => evaluate_worker_attributes,
                   'WorkerSid' => worker_sid,
+                  'Ordering' => ordering,
                   'PageToken' => page_token,
                   'Page' => page_number,
                   'PageSize' => page_size,

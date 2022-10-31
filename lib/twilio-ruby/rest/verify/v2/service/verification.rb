@@ -46,7 +46,7 @@ module Twilio
             # @param [String] locale Locale will automatically resolve based on phone number
             #   country code for SMS, WhatsApp and call channel verifications. This parameter
             #   will override the automatic locale. {See supported languages and more
-            #   information here.}[https://www.twilio.com/docs/verify/supported-languages].
+            #   information here}[https://www.twilio.com/docs/verify/supported-languages].
             # @param [String] custom_code A pre-generated code to use for verification. The
             #   code can be between 4 and 10 characters, inclusive.
             # @param [String] amount The amount of the associated PSD2 compliant transaction.
@@ -68,7 +68,7 @@ module Twilio
             #   Example SMS body: `<#> Your AppName verification code is: 1234 He42w354ol9`.
             # @param [String] template_sid The message
             #   {template}[https://www.twilio.com/docs/verify/api/templates]. If provided, will
-            #   override the default template for the Service. SMS channel only.
+            #   override the default template for the Service. SMS and Voice channels only.
             # @param [String] template_custom_substitutions A stringified JSON object in which
             #   the keys are the template's special variables and the values are the variables
             #   substitutions.
