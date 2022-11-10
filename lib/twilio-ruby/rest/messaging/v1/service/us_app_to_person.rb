@@ -41,8 +41,22 @@ module Twilio
             #   messages that contain links.
             # @param [Boolean] has_embedded_phone Indicates that this SMS campaign will send
             #   messages that contain phone numbers.
+            # @param [String] message_flow Description of how end users opt-in to the SMS
+            #   campaign, therefore giving consent to receive messages.
+            # @param [String] opt_in_message The message that will be sent to the user when
+            #   they opt in to the SMS campaign.
+            # @param [String] opt_out_message The message that will be sent to the user when
+            #   they opt out of the SMS campaign.
+            # @param [String] help_message The message that will be sent to the user when they
+            #   request help for the SMS campaign.
+            # @param [Array[String]] opt_in_keywords The keywords that will be used to opt in
+            #   to the SMS campaign.
+            # @param [Array[String]] opt_out_keywords The keywords that will be used to opt
+            #   out of the SMS campaign.
+            # @param [Array[String]] help_keywords The keywords that will be used to request
+            #   help for the SMS campaign.
             # @return [UsAppToPersonInstance] Created UsAppToPersonInstance
-            def create(brand_registration_sid: nil, description: nil, message_samples: nil, us_app_to_person_usecase: nil, has_embedded_links: nil, has_embedded_phone: nil)
+            def create(brand_registration_sid: nil, description: nil, message_samples: nil, us_app_to_person_usecase: nil, has_embedded_links: nil, has_embedded_phone: nil, message_flow: :unset, opt_in_message: :unset, opt_out_message: :unset, help_message: :unset, opt_in_keywords: :unset, opt_out_keywords: :unset, help_keywords: :unset)
               data = Twilio::Values.of({
                   'BrandRegistrationSid' => brand_registration_sid,
                   'Description' => description,
@@ -50,6 +64,13 @@ module Twilio
                   'UsAppToPersonUsecase' => us_app_to_person_usecase,
                   'HasEmbeddedLinks' => has_embedded_links,
                   'HasEmbeddedPhone' => has_embedded_phone,
+                  'MessageFlow' => message_flow,
+                  'OptInMessage' => opt_in_message,
+                  'OptOutMessage' => opt_out_message,
+                  'HelpMessage' => help_message,
+                  'OptInKeywords' => Twilio.serialize_list(opt_in_keywords) { |e| e },
+                  'OptOutKeywords' => Twilio.serialize_list(opt_out_keywords) { |e| e },
+                  'HelpKeywords' => Twilio.serialize_list(help_keywords) { |e| e },
               })
 
               payload = @version.create('POST', @uri, data: data)
@@ -270,6 +291,13 @@ module Twilio
                   'campaign_id' => payload['campaign_id'],
                   'is_externally_registered' => payload['is_externally_registered'],
                   'rate_limits' => payload['rate_limits'],
+                  'message_flow' => payload['message_flow'],
+                  'opt_in_message' => payload['opt_in_message'],
+                  'opt_out_message' => payload['opt_out_message'],
+                  'help_message' => payload['help_message'],
+                  'opt_in_keywords' => payload['opt_in_keywords'],
+                  'opt_out_keywords' => payload['opt_out_keywords'],
+                  'help_keywords' => payload['help_keywords'],
                   'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                   'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                   'url' => payload['url'],
@@ -372,6 +400,48 @@ module Twilio
             # @return [Hash] Rate limit and/or classification set by each carrier
             def rate_limits
               @properties['rate_limits']
+            end
+
+            ##
+            # @return [String] Consumer opt-in flow
+            def message_flow
+              @properties['message_flow']
+            end
+
+            ##
+            # @return [String] Opt In Message
+            def opt_in_message
+              @properties['opt_in_message']
+            end
+
+            ##
+            # @return [String] Opt Out Message
+            def opt_out_message
+              @properties['opt_out_message']
+            end
+
+            ##
+            # @return [String] Help Message
+            def help_message
+              @properties['help_message']
+            end
+
+            ##
+            # @return [Array[String]] Opt In Keywords
+            def opt_in_keywords
+              @properties['opt_in_keywords']
+            end
+
+            ##
+            # @return [Array[String]] Opt Out Keywords
+            def opt_out_keywords
+              @properties['opt_out_keywords']
+            end
+
+            ##
+            # @return [Array[String]] Help Keywords
+            def help_keywords
+              @properties['help_keywords']
             end
 
             ##

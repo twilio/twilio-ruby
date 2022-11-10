@@ -21,8 +21,8 @@ module Twilio
               #   User Defined Messages.
               # @param [String] call_sid The SID of the
               #   {Call}[https://www.twilio.com/docs/voice/api/call-resource] the User Defined
-              #   Messages subscription is associated with. This refers to the call sid that is
-              #   producing the user defined messages.
+              #   Message Subscription is associated with. This refers to the Call SID that is
+              #   producing the User Defined Messages.
               # @return [UserDefinedMessageSubscriptionList] UserDefinedMessageSubscriptionList
               def initialize(version, account_sid: nil, call_sid: nil)
                 super(version)
@@ -109,8 +109,8 @@ module Twilio
               #   User Defined Messages.
               # @param [String] call_sid The SID of the
               #   {Call}[https://www.twilio.com/docs/voice/api/call-resource] the User Defined
-              #   Messages subscription is associated with. This refers to the call sid that is
-              #   producing the user defined messages.
+              #   Message Subscription is associated with. This refers to the Call SID that is
+              #   producing the User Defined Messages.
               # @param [String] sid The SID that uniquely identifies this User Defined Message
               #   Subscription.
               # @return [UserDefinedMessageSubscriptionContext] UserDefinedMessageSubscriptionContext
@@ -154,8 +154,8 @@ module Twilio
               #   User Defined Messages.
               # @param [String] call_sid The SID of the
               #   {Call}[https://www.twilio.com/docs/voice/api/call-resource] the User Defined
-              #   Messages subscription is associated with. This refers to the call sid that is
-              #   producing the user defined messages.
+              #   Message Subscription is associated with. This refers to the Call SID that is
+              #   producing the User Defined Messages.
               # @param [String] sid The SID that uniquely identifies this User Defined Message
               #   Subscription.
               # @return [UserDefinedMessageSubscriptionInstance] UserDefinedMessageSubscriptionInstance
@@ -193,31 +193,31 @@ module Twilio
               end
 
               ##
-              # @return [String] Account Sid.
+              # @return [String] Account SID.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] Call Sid.
+              # @return [String] Call SID.
               def call_sid
                 @properties['call_sid']
               end
 
               ##
-              # @return [String] User Defined Message Subscription Sid
+              # @return [String] User Defined Message Subscription SID.
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [Time] The date this User Defined Message Subscription was created
+              # @return [Time] The date this User Defined Message Subscription was created.
               def date_created
                 @properties['date_created']
               end
 
               ##
-              # @return [String] The URI of the resource, relative to `https://api.twilio.com`.
+              # @return [String] The URI of the User Defined Message Subscription Resource, relative to `https://api.twilio.com`.
               def uri
                 @properties['uri']
               end

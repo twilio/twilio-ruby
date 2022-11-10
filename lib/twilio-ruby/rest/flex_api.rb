@@ -53,12 +53,24 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Flex_api::V1::GoodDataInstance]
+      def good_data
+        self.v1.good_data()
+      end
+
+      ##
       # @param [String] sid The unique string created by Twilio to identify an
       #   Interaction resource, prefixed with KD.
       # @return [Twilio::REST::Flex_api::V1::InteractionInstance] if sid was passed.
       # @return [Twilio::REST::Flex_api::V1::InteractionList]
       def interaction(sid=:unset)
         self.v1.interaction(sid)
+      end
+
+      ##
+      # @return [Twilio::REST::Flex_api::V1::UserRolesInstance]
+      def user_roles
+        self.v1.user_roles()
       end
 
       ##

@@ -18,7 +18,9 @@ module Twilio
           @channel = nil
           @configuration = nil
           @flex_flow = nil
+          @good_data = nil
           @interaction = nil
+          @user_roles = nil
           @web_channel = nil
         end
 
@@ -59,6 +61,12 @@ module Twilio
         end
 
         ##
+        # @return [Twilio::REST::Flex_api::V1::GoodDataContext]
+        def good_data
+          @good_data ||= GoodDataContext.new self
+        end
+
+        ##
         # @param [String] sid The SID of the Interaction resource to fetch.
         # @return [Twilio::REST::Flex_api::V1::InteractionContext] if sid was passed.
         # @return [Twilio::REST::Flex_api::V1::InteractionList]
@@ -71,6 +79,12 @@ module Twilio
           else
               InteractionContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Flex_api::V1::UserRolesContext]
+        def user_roles
+          @user_roles ||= UserRolesContext.new self
         end
 
         ##

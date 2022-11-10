@@ -33,8 +33,8 @@ module Twilio
 
               ##
               # Create the UserDefinedMessageInstance
-              # @param [String] content A unique string value to identify API call. This should
-              #   be a unique string value per API call and can be a randomly generated.
+              # @param [String] content The User Defined Message in the form of URL-encoded JSON
+              #   string.
               # @param [String] idempotency_key A unique string value to identify API call. This
               #   should be a unique string value per API call and can be a randomly generated.
               # @return [UserDefinedMessageInstance] Created UserDefinedMessageInstance
@@ -117,25 +117,25 @@ module Twilio
               end
 
               ##
-              # @return [String] Account Sid.
+              # @return [String] Account SID.
               def account_sid
                 @properties['account_sid']
               end
 
               ##
-              # @return [String] Call Sid.
+              # @return [String] Call SID.
               def call_sid
                 @properties['call_sid']
               end
 
               ##
-              # @return [String] A string that uniquely identifies this User Defined Message.
+              # @return [String] User Defined Message SID.
               def sid
                 @properties['sid']
               end
 
               ##
-              # @return [Time] The date this User Defined Message was created
+              # @return [Time] The date this User Defined Message was created.
               def date_created
                 @properties['date_created']
               end
