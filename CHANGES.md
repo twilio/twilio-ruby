@@ -1,6 +1,22 @@
 twilio-ruby changelog
 =====================
 
+[2022-11-16] Version 5.73.3
+---------------------------
+**Library - Chore**
+- [PR #621](https://github.com/twilio/twilio-ruby/pull/621): upgrade GitHub Actions dependencies. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Api**
+- Set the Content resource to have public visibility as Preview
+
+**Flex**
+- Adding new parameter `base_url` to 'gooddata' response in version `v1`
+
+**Insights**
+- Added `answered_by` field in List Call Summary
+- Added `answered_by` field in call summary
+
+
 [2022-11-10] Version 5.73.2
 ---------------------------
 **Flex**

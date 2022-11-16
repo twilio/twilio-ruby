@@ -72,6 +72,7 @@ describe 'CallSummaries' do
                   "connect_duration": 20,
                   "call_type": "carrier",
                   "call_state": "completed",
+                  "answered_by": "machine_start",
                   "from": {
                       "caller": "+15555555555",
                       "carrier": "T-Mobile USA, Inc.",
@@ -160,6 +161,7 @@ describe 'CallSummaries' do
                   "connect_duration": 18,
                   "call_type": "carrier",
                   "call_state": "completed",
+                  "answered_by": "machine_start",
                   "from": {
                       "caller": "+15555555555",
                       "carrier": "T-Mobile USA, Inc.",
@@ -270,6 +272,7 @@ describe 'CallSummaries' do
                   "connect_duration": 6,
                   "call_type": "client",
                   "call_state": "completed",
+                  "answered_by": "machine_start",
                   "from": {
                       "caller": "client:+15555555555",
                       "connection": "twilio_sdk"
@@ -341,6 +344,7 @@ describe 'CallSummaries' do
                   "connect_duration": 3,
                   "call_type": "client",
                   "call_state": "completed",
+                  "answered_by": "machine_start",
                   "from": {
                       "caller": "+15555555555",
                       "carrier": "Verizon",
@@ -442,6 +446,7 @@ describe 'CallSummaries' do
                   "connect_duration": 41,
                   "call_type": "trunking",
                   "call_state": "completed",
+                  "answered_by": "machine_start",
                   "from": {
                       "caller": "+15555555555",
                       "carrier": "ACS",
@@ -535,6 +540,7 @@ describe 'CallSummaries' do
                   "connect_duration": 6,
                   "call_type": "carrier",
                   "call_state": "completed",
+                  "answered_by": "machine_start",
                   "from": {
                       "caller": "+15555555555",
                       "carrier": "T-Mobile USA, Inc.",
@@ -620,6 +626,7 @@ describe 'CallSummaries' do
                   "connect_duration": 3,
                   "call_type": "carrier",
                   "call_state": "completed",
+                  "answered_by": "machine_start",
                   "from": {
                       "caller": "+15555555555",
                       "carrier": "Hawaiian Telcom, Inc. - HI",
@@ -708,6 +715,7 @@ describe 'CallSummaries' do
                   "connect_duration": 12,
                   "call_type": "sip",
                   "call_state": "completed",
+                  "answered_by": "machine_start",
                   "from": {
                       "caller": "+15555555555",
                       "carrier": "XO Communications, Inc.",
@@ -787,6 +795,7 @@ describe 'CallSummaries' do
                   "connect_duration": 41,
                   "call_type": "trunking",
                   "call_state": "completed",
+                  "answered_by": "machine_start",
                   "from": {
                       "caller": "+15555555555",
                       "carrier": "ACS",

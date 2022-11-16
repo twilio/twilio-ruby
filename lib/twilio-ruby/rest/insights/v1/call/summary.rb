@@ -117,6 +117,7 @@ module Twilio
                   'call_sid' => payload['call_sid'],
                   'call_type' => payload['call_type'],
                   'call_state' => payload['call_state'],
+                  'answered_by' => payload['answered_by'],
                   'processing_state' => payload['processing_state'],
                   'created_time' => Twilio.deserialize_iso8601_datetime(payload['created_time']),
                   'start_time' => Twilio.deserialize_iso8601_datetime(payload['start_time']),
@@ -175,6 +176,12 @@ module Twilio
             # @return [call_summary.CallState] The call_state
             def call_state
               @properties['call_state']
+            end
+
+            ##
+            # @return [call_summary.AnsweredBy] The answered_by
+            def answered_by
+              @properties['answered_by']
             end
 
             ##

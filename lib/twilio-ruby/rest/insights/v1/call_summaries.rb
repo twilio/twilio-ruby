@@ -268,6 +268,7 @@ module Twilio
             @properties = {
                 'account_sid' => payload['account_sid'],
                 'call_sid' => payload['call_sid'],
+                'answered_by' => payload['answered_by'],
                 'call_type' => payload['call_type'],
                 'call_state' => payload['call_state'],
                 'processing_state' => payload['processing_state'],
@@ -300,6 +301,12 @@ module Twilio
           # @return [String] The call_sid
           def call_sid
             @properties['call_sid']
+          end
+
+          ##
+          # @return [call_summaries.AnsweredBy] The answered_by
+          def answered_by
+            @properties['answered_by']
           end
 
           ##

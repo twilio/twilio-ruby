@@ -34,6 +34,7 @@ module Twilio
         @api = nil
         @autopilot = nil
         @chat = nil
+        @content = nil
         @conversations = nil
         @events = nil
         @flex_api = nil
@@ -186,6 +187,12 @@ module Twilio
       # Access the Chat Twilio Domain
       def chat
         @chat ||= Chat.new self
+      end
+
+      ##
+      # Access the Content Twilio Domain
+      def content
+        @content ||= Content.new self
       end
 
       ##

@@ -112,6 +112,7 @@ module Twilio
                 'workspace_id' => payload['workspace_id'],
                 'session_expiry' => payload['session_expiry'],
                 'session_id' => payload['session_id'],
+                'gd_base_url' => payload['gd_base_url'],
                 'url' => payload['url'],
             }
 
@@ -147,6 +148,12 @@ module Twilio
           # @return [String] Unique session ID
           def session_id
             @properties['session_id']
+          end
+
+          ##
+          # @return [String] GoodData login base URL
+          def gd_base_url
+            @properties['gd_base_url']
           end
 
           ##
