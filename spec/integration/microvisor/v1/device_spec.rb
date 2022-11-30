@@ -72,7 +72,10 @@ describe 'Device' do
                   },
                   "date_created": "2021-01-01T12:34:56Z",
                   "date_updated": "2021-01-01T12:34:56Z",
-                  "url": "https://microvisor.twilio.com/v1/Devices/UVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  "url": "https://microvisor.twilio.com/v1/Devices/UVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "links": {
+                      "device_secrets": "https://microvisor.twilio.com/v1/Devices/UVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Secrets"
+                  }
               }
           ],
           "meta": {
@@ -130,7 +133,10 @@ describe 'Device' do
           },
           "date_created": "2021-01-01T12:34:56Z",
           "date_updated": "2021-01-01T12:34:56Z",
-          "url": "https://microvisor.twilio.com/v1/Devices/UVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://microvisor.twilio.com/v1/Devices/UVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "device_secrets": "https://microvisor.twilio.com/v1/Devices/UVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Secrets"
+          }
       }
       ]
     ))
@@ -177,7 +183,10 @@ describe 'Device' do
           },
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
-          "url": "https://microvisor.twilio.com/v1/Devices/UVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          "url": "https://microvisor.twilio.com/v1/Devices/UVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "device_secrets": "https://microvisor.twilio.com/v1/Devices/UVaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Secrets"
+          }
       }
       ]
     ))

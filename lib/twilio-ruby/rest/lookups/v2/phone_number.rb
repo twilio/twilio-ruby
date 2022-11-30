@@ -83,13 +83,47 @@ module Twilio
           # Fetch the PhoneNumberInstance
           # @param [String] fields A comma-separated list of fields to return. Possible
           #   values are caller_name, sim_swap, call_forwarding, live_activity,
-          #   line_type_intelligence.
+          #   line_type_intelligence, identity_match.
           # @param [String] country_code The {country
           #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] used if the phone number
           #   provided is in national format.
+          # @param [String] first_name User’s first name. This query parameter is only used
+          #   (optionally) for identity_match package requests.
+          # @param [String] last_name User’s last name. This query parameter is only used
+          #   (optionally) for identity_match package requests.
+          # @param [String] address_line_1 User’s first address line. This query parameter
+          #   is only used (optionally) for identity_match package requests.
+          # @param [String] address_line_2 User’s second address line. This query parameter
+          #   is only used (optionally) for identity_match package requests.
+          # @param [String] city User’s city. This query parameter is only used (optionally)
+          #   for identity_match package requests.
+          # @param [String] state User’s country subdivision, such as state, province, or
+          #   locality. This query parameter is only used (optionally) for identity_match
+          #   package requests.
+          # @param [String] postal_code User’s postal zip code. This query parameter is only
+          #   used (optionally) for identity_match package requests.
+          # @param [String] address_country_code User’s country, up to two characters. This
+          #   query parameter is only used (optionally) for identity_match package requests.
+          # @param [String] national_id User’s national ID, such as SSN or Passport ID. This
+          #   query parameter is only used (optionally) for identity_match package requests.
+          # @param [String] date_of_birth User’s date of birth, in YYYYMMDD format. This
+          #   query parameter is only used (optionally) for identity_match package requests.
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
-          def fetch(fields: :unset, country_code: :unset)
-            params = Twilio::Values.of({'Fields' => fields, 'CountryCode' => country_code, })
+          def fetch(fields: :unset, country_code: :unset, first_name: :unset, last_name: :unset, address_line_1: :unset, address_line_2: :unset, city: :unset, state: :unset, postal_code: :unset, address_country_code: :unset, national_id: :unset, date_of_birth: :unset)
+            params = Twilio::Values.of({
+                'Fields' => fields,
+                'CountryCode' => country_code,
+                'FirstName' => first_name,
+                'LastName' => last_name,
+                'AddressLine1' => address_line_1,
+                'AddressLine2' => address_line_2,
+                'City' => city,
+                'State' => state,
+                'PostalCode' => postal_code,
+                'AddressCountryCode' => address_country_code,
+                'NationalId' => national_id,
+                'DateOfBirth' => date_of_birth,
+            })
 
             payload = @version.fetch('GET', @uri, params: params)
 
@@ -137,6 +171,7 @@ module Twilio
                 'call_forwarding' => payload['call_forwarding'],
                 'live_activity' => payload['live_activity'],
                 'line_type_intelligence' => payload['line_type_intelligence'],
+                'identity_match' => payload['identity_match'],
                 'url' => payload['url'],
             }
 
@@ -223,6 +258,12 @@ module Twilio
           end
 
           ##
+          # @return [Hash] An object that contains identity match information
+          def identity_match
+            @properties['identity_match']
+          end
+
+          ##
           # @return [String] The absolute URL of the resource
           def url
             @properties['url']
@@ -232,13 +273,47 @@ module Twilio
           # Fetch the PhoneNumberInstance
           # @param [String] fields A comma-separated list of fields to return. Possible
           #   values are caller_name, sim_swap, call_forwarding, live_activity,
-          #   line_type_intelligence.
+          #   line_type_intelligence, identity_match.
           # @param [String] country_code The {country
           #   code}[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] used if the phone number
           #   provided is in national format.
+          # @param [String] first_name User’s first name. This query parameter is only used
+          #   (optionally) for identity_match package requests.
+          # @param [String] last_name User’s last name. This query parameter is only used
+          #   (optionally) for identity_match package requests.
+          # @param [String] address_line_1 User’s first address line. This query parameter
+          #   is only used (optionally) for identity_match package requests.
+          # @param [String] address_line_2 User’s second address line. This query parameter
+          #   is only used (optionally) for identity_match package requests.
+          # @param [String] city User’s city. This query parameter is only used (optionally)
+          #   for identity_match package requests.
+          # @param [String] state User’s country subdivision, such as state, province, or
+          #   locality. This query parameter is only used (optionally) for identity_match
+          #   package requests.
+          # @param [String] postal_code User’s postal zip code. This query parameter is only
+          #   used (optionally) for identity_match package requests.
+          # @param [String] address_country_code User’s country, up to two characters. This
+          #   query parameter is only used (optionally) for identity_match package requests.
+          # @param [String] national_id User’s national ID, such as SSN or Passport ID. This
+          #   query parameter is only used (optionally) for identity_match package requests.
+          # @param [String] date_of_birth User’s date of birth, in YYYYMMDD format. This
+          #   query parameter is only used (optionally) for identity_match package requests.
           # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
-          def fetch(fields: :unset, country_code: :unset)
-            context.fetch(fields: fields, country_code: country_code, )
+          def fetch(fields: :unset, country_code: :unset, first_name: :unset, last_name: :unset, address_line_1: :unset, address_line_2: :unset, city: :unset, state: :unset, postal_code: :unset, address_country_code: :unset, national_id: :unset, date_of_birth: :unset)
+            context.fetch(
+                fields: fields,
+                country_code: country_code,
+                first_name: first_name,
+                last_name: last_name,
+                address_line_1: address_line_1,
+                address_line_2: address_line_2,
+                city: city,
+                state: state,
+                postal_code: postal_code,
+                address_country_code: address_country_code,
+                national_id: national_id,
+                date_of_birth: date_of_birth,
+            )
           end
 
           ##

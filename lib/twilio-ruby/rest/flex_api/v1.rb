@@ -15,6 +15,7 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @assessments = nil
           @channel = nil
           @configuration = nil
           @flex_flow = nil
@@ -22,6 +23,12 @@ module Twilio
           @interaction = nil
           @user_roles = nil
           @web_channel = nil
+        end
+
+        ##
+        # @return [Twilio::REST::Flex_api::V1::AssessmentsContext]
+        def assessments
+          @assessments ||= AssessmentsContext.new self
         end
 
         ##

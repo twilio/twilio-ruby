@@ -29,6 +29,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Flex_api::V1::AssessmentsInstance]
+      def assessments
+        self.v1.assessments()
+      end
+
+      ##
       # @param [String] sid The unique string that we created to identify the Channel
       #   resource.
       # @return [Twilio::REST::Flex_api::V1::ChannelInstance] if sid was passed.

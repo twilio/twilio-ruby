@@ -17,6 +17,8 @@ module Twilio
           @version = 'v1'
           @brand_registrations = nil
           @deactivations = nil
+          @domain_certs = nil
+          @domain_config = nil
           @external_campaign = nil
           @services = nil
           @tollfree_verifications = nil
@@ -42,6 +44,38 @@ module Twilio
         # @return [Twilio::REST::Messaging::V1::DeactivationsContext]
         def deactivations
           @deactivations ||= DeactivationsContext.new self
+        end
+
+        ##
+        # @param [String] domain_sid Unique string used to identify the domain that this
+        #   certificate should be associated with.
+        # @return [Twilio::REST::Messaging::V1::DomainCertsContext] if domain_sid was passed.
+        # @return [Twilio::REST::Messaging::V1::DomainCertsList]
+        def domain_certs(domain_sid=:unset)
+          if domain_sid.nil?
+              raise ArgumentError, 'domain_sid cannot be nil'
+          end
+          if domain_sid == :unset
+              @domain_certs ||= DomainCertsList.new self
+          else
+              DomainCertsContext.new(self, domain_sid)
+          end
+        end
+
+        ##
+        # @param [String] domain_sid Unique string used to identify the domain that this
+        #   config should be associated with.
+        # @return [Twilio::REST::Messaging::V1::DomainConfigContext] if domain_sid was passed.
+        # @return [Twilio::REST::Messaging::V1::DomainConfigList]
+        def domain_config(domain_sid=:unset)
+          if domain_sid.nil?
+              raise ArgumentError, 'domain_sid cannot be nil'
+          end
+          if domain_sid == :unset
+              @domain_config ||= DomainConfigList.new self
+          else
+              DomainConfigContext.new(self, domain_sid)
+          end
         end
 
         ##

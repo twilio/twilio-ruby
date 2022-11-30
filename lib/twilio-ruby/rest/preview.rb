@@ -25,7 +25,6 @@ module Twilio
         @sync = nil
         @understand = nil
         @wireless = nil
-        @trusted_comms = nil
       end
 
       ##
@@ -62,12 +61,6 @@ module Twilio
       # Version wireless of preview
       def wireless
         @wireless ||= Wireless.new self
-      end
-
-      ##
-      # Version trusted_comms of preview
-      def trusted_comms
-        @trusted_comms ||= TrustedComms.new self
       end
 
       ##
@@ -155,32 +148,6 @@ module Twilio
       # @return [Twilio::REST::Preview::Wireless::SimList]
       def sims(sid=:unset)
         self.wireless.sims(sid)
-      end
-
-      ##
-      # @param [String] sid The unique SID identifier of the Branded Channel.
-      # @return [Twilio::REST::Preview::TrustedComms::BrandedChannelInstance] if sid was passed.
-      # @return [Twilio::REST::Preview::TrustedComms::BrandedChannelList]
-      def branded_channels(sid=:unset)
-        self.trusted_comms.branded_channels(sid)
-      end
-
-      ##
-      # @return [Twilio::REST::Preview::TrustedComms::BrandsInformationInstance]
-      def brands_information
-        self.trusted_comms.brands_information()
-      end
-
-      ##
-      # @return [Twilio::REST::Preview::TrustedComms::CpsInstance]
-      def cps
-        self.trusted_comms.cps()
-      end
-
-      ##
-      # @return [Twilio::REST::Preview::TrustedComms::CurrentCallInstance]
-      def current_calls
-        self.trusted_comms.current_calls()
       end
 
       ##

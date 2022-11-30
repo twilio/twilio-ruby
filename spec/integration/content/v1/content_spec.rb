@@ -61,58 +61,6 @@ describe 'Content' do
     expect(actual).to_not eq(nil)
   end
 
-  it "can create" do
-    @holodeck.mock(Twilio::Response.new(500, ''))
-
-    expect {
-      @client.content.v1.contents.create()
-    }.to raise_exception(Twilio::REST::TwilioError)
-
-    expect(
-    @holodeck.has_request?(Holodeck::Request.new(
-        method: 'post',
-        url: 'https://content.twilio.com/v1/Content',
-    ))).to eq(true)
-  end
-
-  it "receives create responses" do
-    @holodeck.mock(Twilio::Response.new(
-        201,
-      %q[
-      {
-          "sid": "HXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "friendly_name": "",
-          "language": "en",
-          "variables": {
-              "name": "foo"
-          },
-          "types": {
-              "twilio/text": {
-                  "body": "Foo Bar Co is located at 39.7392, 104.9903"
-              },
-              "twilio/location": {
-                  "longitude": 104.9903,
-                  "latitude": 39.7392,
-                  "label": "Foo Bar Co"
-              }
-          },
-          "url": "https://content.twilio.com/v1/Content/HXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "date_created": "2015-07-30T19:00:00Z",
-          "date_updated": "2015-07-30T19:00:00Z",
-          "links": {
-              "approval_create": "https://content.twilio.com/v1/Content/HXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ApprovalRequests/whatsapp",
-              "approval_fetch": "https://content.twilio.com/v1/Content/HXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ApprovalRequests"
-          }
-      }
-      ]
-    ))
-
-    actual = @client.content.v1.contents.create()
-
-    expect(actual).to_not eq(nil)
-  end
-
   it "can delete" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

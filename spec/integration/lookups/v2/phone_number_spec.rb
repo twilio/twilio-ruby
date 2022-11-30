@@ -39,6 +39,7 @@ describe 'PhoneNumber' do
           "call_forwarding": null,
           "live_activity": null,
           "line_type_intelligence": null,
+          "identity_match": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+14159929960"
       }
       ]
@@ -67,6 +68,7 @@ describe 'PhoneNumber' do
           "call_forwarding": null,
           "live_activity": null,
           "line_type_intelligence": null,
+          "identity_match": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+141599299600"
       }
       ]
@@ -97,6 +99,7 @@ describe 'PhoneNumber' do
           "call_forwarding": null,
           "live_activity": null,
           "line_type_intelligence": null,
+          "identity_match": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+14159929960"
       }
       ]
@@ -133,6 +136,7 @@ describe 'PhoneNumber' do
           "call_forwarding": null,
           "live_activity": null,
           "line_type_intelligence": null,
+          "identity_match": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -169,6 +173,7 @@ describe 'PhoneNumber' do
           "call_forwarding": null,
           "live_activity": null,
           "line_type_intelligence": null,
+          "identity_match": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -205,6 +210,7 @@ describe 'PhoneNumber' do
           "call_forwarding": null,
           "live_activity": null,
           "line_type_intelligence": null,
+          "identity_match": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -237,6 +243,7 @@ describe 'PhoneNumber' do
           },
           "live_activity": null,
           "line_type_intelligence": null,
+          "identity_match": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -279,6 +286,7 @@ describe 'PhoneNumber' do
           },
           "live_activity": null,
           "line_type_intelligence": null,
+          "identity_match": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -317,6 +325,7 @@ describe 'PhoneNumber' do
               "error_code": null
           },
           "line_type_intelligence": null,
+          "identity_match": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -359,6 +368,7 @@ describe 'PhoneNumber' do
               "error_code": null
           },
           "line_type_intelligence": null,
+          "identity_match": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -402,6 +412,7 @@ describe 'PhoneNumber' do
               "error_code": null
           },
           "line_type_intelligence": null,
+          "identity_match": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -433,6 +444,47 @@ describe 'PhoneNumber' do
               "mobile_network_code": "38",
               "carrier_name": "Twilio - SMS/MMS-SVR",
               "type": "nonFixedVoip"
+          },
+          "identity_match": null,
+          "url": "https://lookups.twilio.com/v2/PhoneNumbers/+14159929960"
+      }
+      ]
+    ))
+
+    actual = @client.lookups.v2.phone_numbers('phone_number').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives fetch_identity_match responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "calling_country_code": "1",
+          "country_code": "US",
+          "phone_number": "+14159929960",
+          "national_format": "(415) 992-9960",
+          "valid": true,
+          "validation_errors": [],
+          "caller_name": null,
+          "sim_swap": null,
+          "call_forwarding": null,
+          "live_activity": null,
+          "line_type_intelligence": null,
+          "identity_match": {
+              "first_name_match": "exact_match",
+              "last_name_match": "high_partial_match",
+              "address_lines_match": "no_match",
+              "city_match": "no_match",
+              "state_match": "high_partial_match",
+              "postal_code_match": "no_data",
+              "address_country_match": "exact_match",
+              "national_id_match": "exact_match",
+              "date_of_birth_match": "exact_match",
+              "summary_score": 90,
+              "error_code": null,
+              "error_message": null
           },
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+14159929960"
       }

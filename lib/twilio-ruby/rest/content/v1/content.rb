@@ -26,15 +26,6 @@ module Twilio
           end
 
           ##
-          # Create the ContentInstance
-          # @return [ContentInstance] Created ContentInstance
-          def create
-            payload = @version.create('POST', @uri)
-
-            ContentInstance.new(@version, payload, )
-          end
-
-          ##
           # Lists ContentInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
@@ -167,6 +158,9 @@ module Twilio
             # Path Solution
             @solution = {sid: sid, }
             @uri = "/Content/#{@solution[:sid]}"
+
+            # Dependents
+            @approval_fetch = nil
           end
 
           ##
@@ -183,6 +177,14 @@ module Twilio
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
              @version.delete('DELETE', @uri)
+          end
+
+          ##
+          # Access the approval_fetch
+          # @return [ApprovalFetchList]
+          # @return [ApprovalFetchContext]
+          def approval_fetch
+            ApprovalFetchContext.new(@version, @solution[:sid], )
           end
 
           ##
@@ -315,6 +317,13 @@ module Twilio
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete
+          end
+
+          ##
+          # Access the approval_fetch
+          # @return [approval_fetch] approval_fetch
+          def approval_fetch
+            context.approval_fetch
           end
 
           ##

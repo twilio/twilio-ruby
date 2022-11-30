@@ -43,6 +43,24 @@ module Twilio
       end
 
       ##
+      # @param [String] domain_sid The unique string that we created to identify the
+      #   Domain resource.
+      # @return [Twilio::REST::Messaging::V1::DomainCertsInstance] if domain_sid was passed.
+      # @return [Twilio::REST::Messaging::V1::DomainCertsList]
+      def domain_certs(domain_sid=:unset)
+        self.v1.domain_certs(domain_sid)
+      end
+
+      ##
+      # @param [String] domain_sid The unique string that we created to identify the
+      #   Domain resource.
+      # @return [Twilio::REST::Messaging::V1::DomainConfigInstance] if domain_sid was passed.
+      # @return [Twilio::REST::Messaging::V1::DomainConfigList]
+      def domain_config(domain_sid=:unset)
+        self.v1.domain_config(domain_sid)
+      end
+
+      ##
       # @return [Twilio::REST::Messaging::V1::ExternalCampaignInstance]
       def external_campaign
         self.v1.external_campaign()

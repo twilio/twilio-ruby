@@ -226,6 +226,7 @@ module Twilio
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
+                'links' => payload['links'],
             }
 
             # Context
@@ -290,6 +291,12 @@ module Twilio
           # @return [String] The URL of this resource.
           def url
             @properties['url']
+          end
+
+          ##
+          # @return [String] The absolute URLs of related resources
+          def links
+            @properties['links']
           end
 
           ##
