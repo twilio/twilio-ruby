@@ -3,10 +3,24 @@ module Twilio
     class ClientBase
       # rubocop:disable Style/ClassVars
       @@default_region = 'us1'
-
       # rubocop:enable Style/ClassVars
+      
       attr_accessor :http_client, :username, :password, :account_sid, :auth_token, :region, :edge, :logger,
                     :user_agent_extensions
+
+      def initialize(username = nil, password = nil, account_sid = nil, region = nil, http_client = nil, logger = nil,
+                     user_agent_extensions = nil)
+        @username = username || Twilio.account_sid
+        @password = password || Twilio.auth_token
+        @region = region || Twilio.region
+        @edge = Twilio.edge
+        @account_sid = account_sid || @username
+        @auth_token = @password
+        @auth = [@username, @password]
+        @http_client = http_client || Twilio.http_client || Twilio::HTTP::Client.new
+        @logger = logger || Twilio.logger
+        @user_agent_extensions = user_agent_extensions || []
+      end
 
       ##
       # Makes a request to the Twilio API using the configured http client
