@@ -12,49 +12,7 @@ module Twilio
     ##
     # A client for accessing the Twilio API.
     class Client < ClientBase
-      ##
-      # Initializes the Twilio Client
-      def initialize (username = nil, password = nil, account_sid = nil, region = nil, http_client = nil, logger = nil,
-        user_agent_extensions = nil)
-        super
-        # Domains
-        @accounts = nil
-        @api = nil
-        @autopilot = nil
-        @chat = nil
-        @content = nil
-        @conversations = nil
-        @events = nil
-        @flex_api = nil
-        @frontline_api = nil
-        @insights = nil
-        @ip_messaging = nil
-        @lookups = nil
-        @media = nil
-        @messaging = nil
-        @monitor = nil
-        @notify = nil
-        @numbers = nil
-        @oauth = nil
-        @preview = nil
-        @pricing = nil
-        @proxy = nil
-        @routes = nil
-        @serverless = nil
-        @studio = nil
-        @sync = nil
-        @taskrouter = nil
-        @trunking = nil
-        @trusthub = nil
-        @verify = nil
-        @video = nil
-        @voice = nil
-        @wireless = nil
-        @supersim = nil
-        @bulkexports = nil
-        @microvisor = nil
-      end
-
+      
       ##
       # Access the Accounts Twilio Domain
       def accounts
