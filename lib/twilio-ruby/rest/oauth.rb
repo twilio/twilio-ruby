@@ -35,6 +35,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Oauth::V1::DeviceCodeInstance]
+      def device_code
+        self.v1.device_code()
+      end
+
+      ##
       # @return [Twilio::REST::Oauth::V1::OpenidDiscoveryInstance]
       def openid_discovery
         self.v1.openid_discovery()

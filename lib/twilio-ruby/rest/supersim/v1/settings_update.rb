@@ -31,6 +31,8 @@ module Twilio
           # memory before returning.
           # @param [String] sim Filter the Settings Updates by a Super SIM's SID or
           #   UniqueName.
+          # @param [settings_update.Status] status Filter the Settings Updates by status.
+          #   Can be `scheduled`, `in-progress`, `successful`, or `failed`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -38,8 +40,8 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(sim: :unset, limit: nil, page_size: nil)
-            self.stream(sim: sim, limit: limit, page_size: page_size).entries
+          def list(sim: :unset, status: :unset, limit: nil, page_size: nil)
+            self.stream(sim: sim, status: status, limit: limit, page_size: page_size).entries
           end
 
           ##
@@ -48,6 +50,8 @@ module Twilio
           # is reached.
           # @param [String] sim Filter the Settings Updates by a Super SIM's SID or
           #   UniqueName.
+          # @param [settings_update.Status] status Filter the Settings Updates by status.
+          #   Can be `scheduled`, `in-progress`, `successful`, or `failed`.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -55,10 +59,10 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(sim: :unset, limit: nil, page_size: nil)
+          def stream(sim: :unset, status: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(sim: sim, page_size: limits[:page_size], )
+            page = self.page(sim: sim, status: status, page_size: limits[:page_size], )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
@@ -82,13 +86,16 @@ module Twilio
           # Request is executed immediately.
           # @param [String] sim Filter the Settings Updates by a Super SIM's SID or
           #   UniqueName.
+          # @param [settings_update.Status] status Filter the Settings Updates by status.
+          #   Can be `scheduled`, `in-progress`, `successful`, or `failed`.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
           # @return [Page] Page of SettingsUpdateInstance
-          def page(sim: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          def page(sim: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'Sim' => sim,
+                'Status' => status,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,

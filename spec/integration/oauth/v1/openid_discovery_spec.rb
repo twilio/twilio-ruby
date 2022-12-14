@@ -19,7 +19,7 @@ describe 'OpenidDiscovery' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://oauth.twilio.com/v1/well-known/openid-configuration',
+        url: 'https://oauth.twilio.com/v1/.well-known/openid-configuration',
     ))).to eq(true)
   end
 
@@ -65,7 +65,7 @@ describe 'OpenidDiscovery' do
               "scp",
               "sub"
           ],
-          "url": "https://oauth.twilio.com/v1/well-known/openid-configuration"
+          "url": "https://oauth.twilio.com/v1/.well-known/openid-configuration"
       }
       ]
     ))

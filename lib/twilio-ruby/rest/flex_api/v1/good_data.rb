@@ -68,7 +68,7 @@ module Twilio
 
             # Path Solution
             @solution = {}
-            @uri = "/Accounts/GoodData"
+            @uri = "/Insights/Session"
           end
 
           ##
@@ -112,7 +112,7 @@ module Twilio
                 'workspace_id' => payload['workspace_id'],
                 'session_expiry' => payload['session_expiry'],
                 'session_id' => payload['session_id'],
-                'gd_base_url' => payload['gd_base_url'],
+                'base_url' => payload['base_url'],
                 'url' => payload['url'],
             }
 
@@ -133,7 +133,7 @@ module Twilio
           end
 
           ##
-          # @return [String] Unique workspace ID in gooddata
+          # @return [String] Unique ID to identify the user's workspace
           def workspace_id
             @properties['workspace_id']
           end
@@ -151,9 +151,9 @@ module Twilio
           end
 
           ##
-          # @return [String] GoodData login base URL
-          def gd_base_url
-            @properties['gd_base_url']
+          # @return [String] Base URL to fetch reports and dashboards
+          def base_url
+            @properties['base_url']
           end
 
           ##

@@ -68,7 +68,7 @@ module Twilio
 
             # Path Solution
             @solution = {}
-            @uri = "/well-known/openid-configuration"
+            @uri = "/.well-known/openid-configuration"
           end
 
           ##

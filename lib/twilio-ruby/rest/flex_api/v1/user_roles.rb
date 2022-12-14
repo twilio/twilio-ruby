@@ -68,7 +68,7 @@ module Twilio
 
             # Path Solution
             @solution = {}
-            @uri = "/Accounts/UserRoles"
+            @uri = "/Insights/UserRoles"
           end
 
           ##

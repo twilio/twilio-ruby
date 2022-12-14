@@ -16,6 +16,7 @@ module Twilio
           super
           @version = 'v1'
           @oauth = nil
+          @device_code = nil
           @openid_discovery = nil
           @token = nil
           @user_info = nil
@@ -25,6 +26,12 @@ module Twilio
         # @return [Twilio::REST::Oauth::V1::OauthContext]
         def oauth
           @oauth ||= OauthContext.new self
+        end
+
+        ##
+        # @return [Twilio::REST::Oauth::V1::DeviceCodeContext]
+        def device_code
+          @device_code ||= DeviceCodeList.new self
         end
 
         ##

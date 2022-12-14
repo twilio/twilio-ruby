@@ -15,10 +15,10 @@ describe 'UserDefinedMessageSubscription' do
     expect {
       @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                        .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                       .user_defined_message_subscriptions.create(callback: 'https://example.com', method: 'GET')
+                       .user_defined_message_subscriptions.create(callback: 'https://example.com')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {'Callback' => 'https://example.com', 'Method' => 'GET', }
+    values = {'Callback' => 'https://example.com', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
@@ -43,7 +43,7 @@ describe 'UserDefinedMessageSubscription' do
 
     actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
                               .calls('CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                              .user_defined_message_subscriptions.create(callback: 'https://example.com', method: 'GET')
+                              .user_defined_message_subscriptions.create(callback: 'https://example.com')
 
     expect(actual).to_not eq(nil)
   end

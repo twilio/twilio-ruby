@@ -20,12 +20,19 @@ module Twilio
 
         # Versions
         @v1 = nil
+        @v2 = nil
       end
 
       ##
       # Version v1 of flex_api
       def v1
         @v1 ||= V1.new self
+      end
+
+      ##
+      # Version v2 of flex_api
+      def v2
+        @v2 ||= V2.new self
       end
 
       ##
@@ -86,6 +93,12 @@ module Twilio
       # @return [Twilio::REST::Flex_api::V1::WebChannelList]
       def web_channel(sid=:unset)
         self.v1.web_channel(sid)
+      end
+
+      ##
+      # @return [Twilio::REST::Flex_api::V2::WebChannelsInstance]
+      def web_channels
+        self.v2.web_channels()
       end
 
       ##

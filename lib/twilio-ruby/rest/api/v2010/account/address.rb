@@ -43,8 +43,10 @@ module Twilio
             #   the address. Can be: `true` or `false` and the default is `true`. If empty or
             #   `true`, we will correct the address you provide if necessary. If `false`, we
             #   won't alter the address you provide.
+            # @param [String] street_secondary The additional number and street address of the
+            #   address.
             # @return [AddressInstance] Created AddressInstance
-            def create(customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil, iso_country: nil, friendly_name: :unset, emergency_enabled: :unset, auto_correct_address: :unset)
+            def create(customer_name: nil, street: nil, city: nil, region: nil, postal_code: nil, iso_country: nil, friendly_name: :unset, emergency_enabled: :unset, auto_correct_address: :unset, street_secondary: :unset)
               data = Twilio::Values.of({
                   'CustomerName' => customer_name,
                   'Street' => street,
@@ -55,6 +57,7 @@ module Twilio
                   'FriendlyName' => friendly_name,
                   'EmergencyEnabled' => emergency_enabled,
                   'AutoCorrectAddress' => auto_correct_address,
+                  'StreetSecondary' => street_secondary,
               })
 
               payload = @version.create('POST', @uri, data: data)
@@ -262,8 +265,10 @@ module Twilio
             #   the address. Can be: `true` or `false` and the default is `true`. If empty or
             #   `true`, we will correct the address you provide if necessary. If `false`, we
             #   won't alter the address you provide.
+            # @param [String] street_secondary The additional number and street address of the
+            #   address.
             # @return [AddressInstance] Updated AddressInstance
-            def update(friendly_name: :unset, customer_name: :unset, street: :unset, city: :unset, region: :unset, postal_code: :unset, emergency_enabled: :unset, auto_correct_address: :unset)
+            def update(friendly_name: :unset, customer_name: :unset, street: :unset, city: :unset, region: :unset, postal_code: :unset, emergency_enabled: :unset, auto_correct_address: :unset, street_secondary: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'CustomerName' => customer_name,
@@ -273,6 +278,7 @@ module Twilio
                   'PostalCode' => postal_code,
                   'EmergencyEnabled' => emergency_enabled,
                   'AutoCorrectAddress' => auto_correct_address,
+                  'StreetSecondary' => street_secondary,
               })
 
               payload = @version.update('POST', @uri, data: data)
@@ -342,6 +348,7 @@ module Twilio
                   'emergency_enabled' => payload['emergency_enabled'],
                   'validated' => payload['validated'],
                   'verified' => payload['verified'],
+                  'street_secondary' => payload['street_secondary'],
               }
 
               # Context
@@ -451,6 +458,12 @@ module Twilio
             end
 
             ##
+            # @return [String] The additional number and street address of the address
+            def street_secondary
+              @properties['street_secondary']
+            end
+
+            ##
             # Delete the AddressInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
@@ -479,8 +492,10 @@ module Twilio
             #   the address. Can be: `true` or `false` and the default is `true`. If empty or
             #   `true`, we will correct the address you provide if necessary. If `false`, we
             #   won't alter the address you provide.
+            # @param [String] street_secondary The additional number and street address of the
+            #   address.
             # @return [AddressInstance] Updated AddressInstance
-            def update(friendly_name: :unset, customer_name: :unset, street: :unset, city: :unset, region: :unset, postal_code: :unset, emergency_enabled: :unset, auto_correct_address: :unset)
+            def update(friendly_name: :unset, customer_name: :unset, street: :unset, city: :unset, region: :unset, postal_code: :unset, emergency_enabled: :unset, auto_correct_address: :unset, street_secondary: :unset)
               context.update(
                   friendly_name: friendly_name,
                   customer_name: customer_name,
@@ -490,6 +505,7 @@ module Twilio
                   postal_code: postal_code,
                   emergency_enabled: emergency_enabled,
                   auto_correct_address: auto_correct_address,
+                  street_secondary: street_secondary,
               )
             end
 

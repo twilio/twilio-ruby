@@ -37,16 +37,16 @@ module Twilio
               # @param [String] callback The URL we should call using the `method` to send user
               #   defined events to your application. URLs must contain a valid hostname
               #   (underscores are not permitted).
-              # @param [String] method The HTTP method Twilio will use when requesting the above
-              #   `Url`. Either `GET` or `POST`.
               # @param [String] idempotency_key A unique string value to identify API call. This
               #   should be a unique string value per API call and can be a randomly generated.
+              # @param [String] method The HTTP method Twilio will use when requesting the above
+              #   `Url`. Either `GET` or `POST`.
               # @return [UserDefinedMessageSubscriptionInstance] Created UserDefinedMessageSubscriptionInstance
-              def create(callback: nil, method: nil, idempotency_key: :unset)
+              def create(callback: nil, idempotency_key: :unset, method: :unset)
                 data = Twilio::Values.of({
                     'Callback' => callback,
-                    'Method' => method,
                     'IdempotencyKey' => idempotency_key,
+                    'Method' => method,
                 })
 
                 payload = @version.create('POST', @uri, data: data)

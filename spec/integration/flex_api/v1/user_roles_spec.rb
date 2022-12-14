@@ -20,7 +20,7 @@ describe 'UserRoles' do
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',
-        url: 'https://flex-api.twilio.com/v1/Accounts/UserRoles',
+        url: 'https://flex-api.twilio.com/v1/Insights/UserRoles',
         headers: headers,
     ))).to eq(true)
   end
@@ -33,7 +33,7 @@ describe 'UserRoles' do
           "roles": [
               "wfo.full_access"
           ],
-          "url": "https://flex-api.twilio.com/v1/Accounts/UserRoles"
+          "url": "https://flex-api.twilio.com/v1/Insights/UserRoles"
       }
       ]
     ))

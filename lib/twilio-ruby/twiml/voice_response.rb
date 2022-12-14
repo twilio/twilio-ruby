@@ -614,10 +614,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -701,10 +701,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -832,10 +832,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -931,10 +931,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -1063,10 +1063,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -1173,10 +1173,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -1272,10 +1272,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##

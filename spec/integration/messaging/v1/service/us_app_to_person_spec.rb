@@ -14,12 +14,13 @@ describe 'UsAppToPerson' do
 
     expect {
       @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                          .us_app_to_person.create(brand_registration_sid: 'BNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', description: 'description', message_samples: ['message_samples'], us_app_to_person_usecase: 'us_app_to_person_usecase', has_embedded_links: true, has_embedded_phone: true)
+                          .us_app_to_person.create(brand_registration_sid: 'BNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', description: 'description', message_flow: 'message_flow', message_samples: ['message_samples'], us_app_to_person_usecase: 'us_app_to_person_usecase', has_embedded_links: true, has_embedded_phone: true)
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'BrandRegistrationSid' => 'BNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
         'Description' => 'description',
+        'MessageFlow' => 'message_flow',
         'MessageSamples' => Twilio.serialize_list(['message_samples']) { |e| e },
         'UsAppToPersonUsecase' => 'us_app_to_person_usecase',
         'HasEmbeddedLinks' => true,
@@ -84,7 +85,7 @@ describe 'UsAppToPerson' do
     ))
 
     actual = @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                 .us_app_to_person.create(brand_registration_sid: 'BNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', description: 'description', message_samples: ['message_samples'], us_app_to_person_usecase: 'us_app_to_person_usecase', has_embedded_links: true, has_embedded_phone: true)
+                                 .us_app_to_person.create(brand_registration_sid: 'BNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', description: 'description', message_flow: 'message_flow', message_samples: ['message_samples'], us_app_to_person_usecase: 'us_app_to_person_usecase', has_embedded_links: true, has_embedded_phone: true)
 
     expect(actual).to_not eq(nil)
   end
@@ -146,7 +147,7 @@ describe 'UsAppToPerson' do
     ))
 
     actual = @client.messaging.v1.services('MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
-                                 .us_app_to_person.create(brand_registration_sid: 'BNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', description: 'description', message_samples: ['message_samples'], us_app_to_person_usecase: 'us_app_to_person_usecase', has_embedded_links: true, has_embedded_phone: true)
+                                 .us_app_to_person.create(brand_registration_sid: 'BNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', description: 'description', message_flow: 'message_flow', message_samples: ['message_samples'], us_app_to_person_usecase: 'us_app_to_person_usecase', has_embedded_links: true, has_embedded_phone: true)
 
     expect(actual).to_not eq(nil)
   end
