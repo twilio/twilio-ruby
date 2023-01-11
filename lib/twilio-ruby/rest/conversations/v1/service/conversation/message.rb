@@ -44,10 +44,16 @@ module Twilio
               #   you wish. The string value must contain structurally valid JSON if specified.
               #   **Note** that if the attributes are not set "{}" will be returned.
               # @param [String] media_sid The Media SID to be attached to the new Message.
+              # @param [String] content_sid The unique ID of the multi-channel {Rich
+              #   Content}[https://www.twilio.com/docs/content-api] template, required for
+              #   template-generated messages.  **Note** that if this field is set, `Body` and
+              #   `MediaSid` parameters are ignored.
+              # @param [String] content_variables A structurally valid JSON string that contains
+              #   values to resolve Rich Content template variables.
               # @param [message.WebhookEnabledType] x_twilio_webhook_enabled The
               #   X-Twilio-Webhook-Enabled HTTP request header
               # @return [MessageInstance] Created MessageInstance
-              def create(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, media_sid: :unset, x_twilio_webhook_enabled: :unset)
+              def create(author: :unset, body: :unset, date_created: :unset, date_updated: :unset, attributes: :unset, media_sid: :unset, content_sid: :unset, content_variables: :unset, x_twilio_webhook_enabled: :unset)
                 data = Twilio::Values.of({
                     'Author' => author,
                     'Body' => body,
@@ -55,6 +61,8 @@ module Twilio
                     'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
                     'Attributes' => attributes,
                     'MediaSid' => media_sid,
+                    'ContentSid' => content_sid,
+                    'ContentVariables' => content_variables,
                 })
                 headers = Twilio::Values.of({'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
 
@@ -360,6 +368,7 @@ module Twilio
                     'delivery' => payload['delivery'],
                     'url' => payload['url'],
                     'links' => payload['links'],
+                    'content_sid' => payload['content_sid'],
                 }
 
                 # Context
@@ -475,6 +484,12 @@ module Twilio
               # @return [String] Absolute URL to access the receipts of this message.
               def links
                 @properties['links']
+              end
+
+              ##
+              # @return [String] The unique ID of the multi-channel Rich Content template.
+              def content_sid
+                @properties['content_sid']
               end
 
               ##

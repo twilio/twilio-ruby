@@ -269,6 +269,78 @@ module Twilio
           end
 
           ##
+          # Update the TollfreeVerificationInstance
+          # @param [String] business_name The name of the business or organization using the
+          #   Tollfree number.
+          # @param [String] business_website The website of the business or organization
+          #   using the Tollfree number.
+          # @param [String] notification_email The email address to receive the notification
+          #   about the verification result. .
+          # @param [Array[String]] use_case_categories The category of the use case for the
+          #   Tollfree Number. List as many are applicable..
+          # @param [String] use_case_summary Use this to further explain how messaging is
+          #   used by the business or organization.
+          # @param [String] production_message_sample An example of message content, i.e. a
+          #   sample message.
+          # @param [Array[String]] opt_in_image_urls Link to an image that shows the opt-in
+          #   workflow. Multiple images allowed and must be a publicly hosted URL.
+          # @param [tollfree_verification.OptInType] opt_in_type Describe how a user opts-in
+          #   to text messages.
+          # @param [String] message_volume Estimate monthly volume of messages from the
+          #   Tollfree Number.
+          # @param [String] business_street_address The address of the business or
+          #   organization using the Tollfree number.
+          # @param [String] business_street_address2 The address of the business or
+          #   organization using the Tollfree number.
+          # @param [String] business_city The city of the business or organization using the
+          #   Tollfree number.
+          # @param [String] business_state_province_region The state/province/region of the
+          #   business or organization using the Tollfree number.
+          # @param [String] business_postal_code The postal code of the business or
+          #   organization using the Tollfree number.
+          # @param [String] business_country The country of the business or organization
+          #   using the Tollfree number.
+          # @param [String] additional_information Additional information to be provided for
+          #   verification.
+          # @param [String] business_contact_first_name The first name of the contact for
+          #   the business or organization using the Tollfree number.
+          # @param [String] business_contact_last_name The last name of the contact for the
+          #   business or organization using the Tollfree number.
+          # @param [String] business_contact_email The email address of the contact for the
+          #   business or organization using the Tollfree number.
+          # @param [String] business_contact_phone The phone number of the contact for the
+          #   business or organization using the Tollfree number.
+          # @return [TollfreeVerificationInstance] Updated TollfreeVerificationInstance
+          def update(business_name: :unset, business_website: :unset, notification_email: :unset, use_case_categories: :unset, use_case_summary: :unset, production_message_sample: :unset, opt_in_image_urls: :unset, opt_in_type: :unset, message_volume: :unset, business_street_address: :unset, business_street_address2: :unset, business_city: :unset, business_state_province_region: :unset, business_postal_code: :unset, business_country: :unset, additional_information: :unset, business_contact_first_name: :unset, business_contact_last_name: :unset, business_contact_email: :unset, business_contact_phone: :unset)
+            data = Twilio::Values.of({
+                'BusinessName' => business_name,
+                'BusinessWebsite' => business_website,
+                'NotificationEmail' => notification_email,
+                'UseCaseCategories' => Twilio.serialize_list(use_case_categories) { |e| e },
+                'UseCaseSummary' => use_case_summary,
+                'ProductionMessageSample' => production_message_sample,
+                'OptInImageUrls' => Twilio.serialize_list(opt_in_image_urls) { |e| e },
+                'OptInType' => opt_in_type,
+                'MessageVolume' => message_volume,
+                'BusinessStreetAddress' => business_street_address,
+                'BusinessStreetAddress2' => business_street_address2,
+                'BusinessCity' => business_city,
+                'BusinessStateProvinceRegion' => business_state_province_region,
+                'BusinessPostalCode' => business_postal_code,
+                'BusinessCountry' => business_country,
+                'AdditionalInformation' => additional_information,
+                'BusinessContactFirstName' => business_contact_first_name,
+                'BusinessContactLastName' => business_contact_last_name,
+                'BusinessContactEmail' => business_contact_email,
+                'BusinessContactPhone' => business_contact_phone,
+            })
+
+            payload = @version.update('POST', @uri, data: data)
+
+            TollfreeVerificationInstance.new(@version, payload, sid: @solution[:sid], )
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
@@ -537,6 +609,74 @@ module Twilio
           # @return [TollfreeVerificationInstance] Fetched TollfreeVerificationInstance
           def fetch
             context.fetch
+          end
+
+          ##
+          # Update the TollfreeVerificationInstance
+          # @param [String] business_name The name of the business or organization using the
+          #   Tollfree number.
+          # @param [String] business_website The website of the business or organization
+          #   using the Tollfree number.
+          # @param [String] notification_email The email address to receive the notification
+          #   about the verification result. .
+          # @param [Array[String]] use_case_categories The category of the use case for the
+          #   Tollfree Number. List as many are applicable..
+          # @param [String] use_case_summary Use this to further explain how messaging is
+          #   used by the business or organization.
+          # @param [String] production_message_sample An example of message content, i.e. a
+          #   sample message.
+          # @param [Array[String]] opt_in_image_urls Link to an image that shows the opt-in
+          #   workflow. Multiple images allowed and must be a publicly hosted URL.
+          # @param [tollfree_verification.OptInType] opt_in_type Describe how a user opts-in
+          #   to text messages.
+          # @param [String] message_volume Estimate monthly volume of messages from the
+          #   Tollfree Number.
+          # @param [String] business_street_address The address of the business or
+          #   organization using the Tollfree number.
+          # @param [String] business_street_address2 The address of the business or
+          #   organization using the Tollfree number.
+          # @param [String] business_city The city of the business or organization using the
+          #   Tollfree number.
+          # @param [String] business_state_province_region The state/province/region of the
+          #   business or organization using the Tollfree number.
+          # @param [String] business_postal_code The postal code of the business or
+          #   organization using the Tollfree number.
+          # @param [String] business_country The country of the business or organization
+          #   using the Tollfree number.
+          # @param [String] additional_information Additional information to be provided for
+          #   verification.
+          # @param [String] business_contact_first_name The first name of the contact for
+          #   the business or organization using the Tollfree number.
+          # @param [String] business_contact_last_name The last name of the contact for the
+          #   business or organization using the Tollfree number.
+          # @param [String] business_contact_email The email address of the contact for the
+          #   business or organization using the Tollfree number.
+          # @param [String] business_contact_phone The phone number of the contact for the
+          #   business or organization using the Tollfree number.
+          # @return [TollfreeVerificationInstance] Updated TollfreeVerificationInstance
+          def update(business_name: :unset, business_website: :unset, notification_email: :unset, use_case_categories: :unset, use_case_summary: :unset, production_message_sample: :unset, opt_in_image_urls: :unset, opt_in_type: :unset, message_volume: :unset, business_street_address: :unset, business_street_address2: :unset, business_city: :unset, business_state_province_region: :unset, business_postal_code: :unset, business_country: :unset, additional_information: :unset, business_contact_first_name: :unset, business_contact_last_name: :unset, business_contact_email: :unset, business_contact_phone: :unset)
+            context.update(
+                business_name: business_name,
+                business_website: business_website,
+                notification_email: notification_email,
+                use_case_categories: use_case_categories,
+                use_case_summary: use_case_summary,
+                production_message_sample: production_message_sample,
+                opt_in_image_urls: opt_in_image_urls,
+                opt_in_type: opt_in_type,
+                message_volume: message_volume,
+                business_street_address: business_street_address,
+                business_street_address2: business_street_address2,
+                business_city: business_city,
+                business_state_province_region: business_state_province_region,
+                business_postal_code: business_postal_code,
+                business_country: business_country,
+                additional_information: additional_information,
+                business_contact_first_name: business_contact_first_name,
+                business_contact_last_name: business_contact_last_name,
+                business_contact_email: business_contact_email,
+                business_contact_phone: business_contact_phone,
+            )
           end
 
           ##

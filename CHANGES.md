@@ -1,6 +1,21 @@
 twilio-ruby changelog
 =====================
 
+[2023-01-11] Version 5.74.1
+---------------------------
+**Library - Chore**
+- [PR #626](https://github.com/twilio/twilio-ruby/pull/626): Bump jwt version max version to 2.6. Thanks to [@MarcPer](https://github.com/MarcPer)!
+
+**Conversations**
+- Add support for creating Multi-Channel Rich Content Messages
+
+**Lookups**
+- Changed the no data message for match postal code from `no_data` to `data_not_available` in identity match package
+
+**Messaging**
+- Add update/edit tollfree verification API
+
+
 [2022-12-14] Version 5.74.0
 ---------------------------
 **Api**

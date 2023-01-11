@@ -30,7 +30,10 @@ module Twilio
           # @param [String] sim The `sid` or `unique_name` of the {Super
           #   SIM}[https://www.twilio.com/docs/iot/supersim/api/sim-resource] to send the IP
           #   Command to.
-          # @param [String] payload The payload to be delivered to the device.
+          # @param [String] payload The data that will be sent to the device. The payload
+          #   cannot exceed 1300 bytes. If the PayloadType is set to text, the payload is
+          #   encoded in UTF-8. If PayloadType is set to binary, the payload is encoded in
+          #   Base64.
           # @param [String] device_port The device port to which the IP Command will be
           #   sent.
           # @param [ip_command.PayloadType] payload_type Indicates how the payload is
