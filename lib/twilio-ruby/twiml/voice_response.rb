@@ -114,7 +114,10 @@ module Twilio
       # Create a new <Hangup> element
       # keyword_args:: additional attributes
       def hangup(**keyword_args)
-        append(Hangup.new(**keyword_args))
+        hangup = Hangup.new(**keyword_args)
+
+        yield(hangup) if block_given?
+        append(hangup)
       end
 
       ##
@@ -187,7 +190,10 @@ module Twilio
       # reason:: Rejection reason
       # keyword_args:: additional attributes
       def reject(reason: nil, **keyword_args)
-        append(Reject.new(reason: reason, **keyword_args))
+        reject = Reject.new(reason: reason, **keyword_args)
+
+        yield(reject) if block_given?
+        append(reject)
       end
 
       ##
@@ -1366,6 +1372,15 @@ module Twilio
 
         yield(self) if block_given?
       end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
     end
 
     ##
@@ -1420,6 +1435,15 @@ module Twilio
         @name = 'Hangup'
 
         yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
       end
     end
 
@@ -1625,6 +1649,63 @@ module Twilio
       # keyword_args:: additional attributes
       def sip(sip_url, username: nil, password: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, machine_detection: nil, amd_status_callback_method: nil, amd_status_callback: nil, machine_detection_timeout: nil, machine_detection_speech_threshold: nil, machine_detection_speech_end_threshold: nil, machine_detection_silence_timeout: nil, **keyword_args)
         append(Sip.new(sip_url, username: username, password: password, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, machine_detection: machine_detection, amd_status_callback_method: amd_status_callback_method, amd_status_callback: amd_status_callback, machine_detection_timeout: machine_detection_timeout, machine_detection_speech_threshold: machine_detection_speech_threshold, machine_detection_speech_end_threshold: machine_detection_speech_end_threshold, machine_detection_silence_timeout: machine_detection_silence_timeout, **keyword_args))
+      end
+
+      ##
+      # Create a new <Application> element
+      # application_sid:: Application sid
+      # url:: TwiML URL
+      # method:: TwiML URL Method
+      # status_callback_event:: Events to trigger status callback
+      # status_callback:: Status Callback URL
+      # status_callback_method:: Status Callback URL Method
+      # customer_id:: Identity of the customer calling application
+      # copy_parent_to:: Copy parent call To field to called application side, otherwise use the application sid as To field
+      # keyword_args:: additional attributes
+      def application(application_sid: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, customer_id: nil, copy_parent_to: nil, **keyword_args)
+        application = Application.new(application_sid: application_sid, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, customer_id: customer_id, copy_parent_to: copy_parent_to, **keyword_args)
+
+        yield(application) if block_given?
+        append(application)
+      end
+    end
+
+    ##
+    # <Application> TwiML Noun
+    class Application < TwiML
+      def initialize(application_sid: nil, **keyword_args)
+        super(**keyword_args)
+        @name = 'Application'
+        @value = application_sid unless application_sid.nil?
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <ApplicationSid> element
+      # sid:: Application sid to dial
+      # keyword_args:: additional attributes
+      def application_sid(sid, **keyword_args)
+        append(ApplicationSid.new(sid, **keyword_args))
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
+    end
+
+    ##
+    # <ApplicationSid> TwiML Noun
+    class ApplicationSid < TwiML
+      def initialize(sid, **keyword_args)
+        super(**keyword_args)
+        @name = 'ApplicationSid'
+        @value = sid
+        yield(self) if block_given?
       end
     end
 

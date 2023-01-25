@@ -8,12 +8,12 @@
 
 require 'spec_helper.rb'
 
-describe 'GoodData' do
+describe 'InsightsSession' do
   it "can create" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.flex_api.v1.good_data().create(token: 'token')
+      @client.flex_api.v1.insights_session().create(token: 'token')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     headers = {'Token' => 'token', }
@@ -39,7 +39,7 @@ describe 'GoodData' do
       ]
     ))
 
-    actual = @client.flex_api.v1.good_data().create()
+    actual = @client.flex_api.v1.insights_session().create()
 
     expect(actual).to_not eq(nil)
   end

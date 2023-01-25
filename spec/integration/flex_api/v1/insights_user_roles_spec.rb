@@ -8,12 +8,12 @@
 
 require 'spec_helper.rb'
 
-describe 'UserRoles' do
+describe 'InsightsUserRoles' do
   it "can fetch" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.flex_api.v1.user_roles().fetch(token: 'token')
+      @client.flex_api.v1.insights_user_roles().fetch(token: 'token')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     headers = {'Token' => 'token', }
@@ -38,7 +38,7 @@ describe 'UserRoles' do
       ]
     ))
 
-    actual = @client.flex_api.v1.user_roles().fetch()
+    actual = @client.flex_api.v1.insights_user_roles().fetch()
 
     expect(actual).to_not eq(nil)
   end
