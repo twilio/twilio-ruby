@@ -29,18 +29,7 @@ module Twilio
       # Authentication information is automatically added if none is provided
       def request(host, port, method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil) # rubocop:disable Metrics/MethodLength
         auth ||= @auth
-
-        ruby_config = RbConfig::CONFIG
-        headers['User-Agent'] =
-          "twilio-ruby/#{Twilio::VERSION} (#{ruby_config['host_os']} #{ruby_config['host_cpu']}) Ruby/#{RUBY_VERSION}"
-        headers['Accept-Charset'] = 'utf-8'
-
-        user_agent_extensions.each { |extension| headers['User-Agent'] += " #{extension}" }
-
-        headers['Content-Type'] = 'application/x-www-form-urlencoded' if method == 'POST' && !headers['Content-Type']
-
-        headers['Accept'] = 'application/json' unless headers['Accept']
-
+        headers = self.generate_headers(method)
         uri = build_uri(uri)
 
         if @logger
@@ -112,6 +101,22 @@ module Twilio
         return unless response.status_code < 200 || response.status_code >= 300
 
         raise RestError.new 'Unexpected response from certificate endpoint', response
+      end
+
+
+      def generate_headers(method)
+        ruby_config = RbConfig::CONFIG
+        headers = {}
+        headers['User-Agent'] =
+          "twilio-ruby/#{Twilio::VERSION} (#{ruby_config['host_os']} #{ruby_config['host_cpu']}) Ruby/#{RUBY_VERSION}"
+        headers['Accept-Charset'] = 'utf-8'
+
+        user_agent_extensions.each { |extension| headers['User-Agent'] += " #{extension}" }
+
+        headers['Content-Type'] = 'application/x-www-form-urlencoded' if method == 'POST' && !headers['Content-Type']
+
+        headers['Accept'] = 'application/json' unless headers['Accept']
+        return headers
       end
     end
   end
