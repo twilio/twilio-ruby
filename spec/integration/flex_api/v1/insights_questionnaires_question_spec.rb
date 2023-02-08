@@ -48,6 +48,7 @@ describe 'InsightsQuestionnairesQuestion' do
           },
           "answer_set_id": "a6a8a54f-5305-4aec-b92c-a6e429932f58",
           "allow_na": false,
+          "usage": 0,
           "url": "https://flex-api.twilio.com/v1/Insights/QM/Questions/945ac7ff-8afc-4606-be76-e94b1a80cd72"
       }
       ]
@@ -62,15 +63,10 @@ describe 'InsightsQuestionnairesQuestion' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.flex_api.v1.insights_questionnaires_question('question_id').update(question: 'question', description: 'description', answer_set_id: 'answer_set_id', allow_na: true, token: 'token')
+      @client.flex_api.v1.insights_questionnaires_question('question_id').update(allow_na: true, token: 'token')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'Question' => 'question',
-        'Description' => 'description',
-        'AnswerSetId' => 'answer_set_id',
-        'AllowNa' => true,
-    }
+    values = {'AllowNa' => true, }
     headers = {'Token' => 'token', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
@@ -96,12 +92,92 @@ describe 'InsightsQuestionnairesQuestion' do
           },
           "answer_set_id": "a6a8a54f-5305-4aec-b92c-a6e429932f58",
           "allow_na": false,
+          "usage": 0,
           "url": "https://flex-api.twilio.com/v1/Insights/QM/Questions/945ac7ff-8afc-4606-be76-e94b1a80cd72"
       }
       ]
     ))
 
-    actual = @client.flex_api.v1.insights_questionnaires_question('question_id').update(question: 'question', description: 'description', answer_set_id: 'answer_set_id', allow_na: true)
+    actual = @client.flex_api.v1.insights_questionnaires_question('question_id').update(allow_na: true)
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "can read" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.flex_api.v1.insights_questionnaires_question.list(token: 'token')
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    headers = {'Token' => 'token', }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'get',
+        url: 'https://flex-api.twilio.com/v1/Insights/QM/Questions',
+        headers: headers,
+    ))).to eq(true)
+  end
+
+  it "receives read_empty responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "questions": [],
+          "meta": {
+              "page": 0,
+              "page_size": 50,
+              "first_page_url": "https://flex-api.twilio.com/v1/Insights/QM/Questions?CategoryId=4b4e78e4-4f05-49e2-bf52-0973c5cde419&PageSize=50&Page=0",
+              "previous_page_url": null,
+              "url": "https://flex-api.twilio.com/v1/Insights/QM/Questions?CategoryId=4b4e78e4-4f05-49e2-bf52-0973c5cde419&PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "questions"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.flex_api.v1.insights_questionnaires_question.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives read_full responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "questions": [
+              {
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "question": "What is the total time",
+                  "question_id": "945ac7ff-8afc-4606-be76-e94b1a80cd72",
+                  "description": "time spent",
+                  "category": {
+                      "category_name": "test cat",
+                      "category_id": "4b4e78e4-4f05-49e2-bf52-0973c5cde418"
+                  },
+                  "answer_set_id": "a6a8a54f-5305-4aec-b92c-a6e429932f58",
+                  "allow_na": false,
+                  "usage": 0,
+                  "url": "https://flex-api.twilio.com/v1/Insights/QM/Questions/945ac7ff-8afc-4606-be76-e94b1a80cd72"
+              }
+          ],
+          "meta": {
+              "page": 0,
+              "page_size": 50,
+              "first_page_url": "https://flex-api.twilio.com/v1/Insights/QM/Questions?CategoryId=4b4e78e4-4f05-49e2-bf52-0973c5cde419&PageSize=50&Page=0",
+              "previous_page_url": null,
+              "url": "https://flex-api.twilio.com/v1/Insights/QM/Questions?CategoryId=4b4e78e4-4f05-49e2-bf52-0973c5cde419&PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "questions"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.flex_api.v1.insights_questionnaires_question.list()
 
     expect(actual).to_not eq(nil)
   end

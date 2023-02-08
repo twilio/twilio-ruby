@@ -16,6 +16,7 @@ module Twilio
           super
           @version = 'v1'
           @contents = nil
+          @legacy_contents = nil
         end
 
         ##
@@ -32,6 +33,12 @@ module Twilio
           else
               ContentContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Content::V1::LegacyContentContext]
+        def legacy_contents
+          @legacy_contents ||= LegacyContentList.new self
         end
 
         ##

@@ -8,42 +8,27 @@
 
 module Twilio
   module REST
-    class FlexApi < Domain
+    class Microvisor < Domain
       class V1 < Version
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class InsightsQuestionnairesCategoryList < ListResource
+        class AccountSecretList < ListResource
           ##
-          # Initialize the InsightsQuestionnairesCategoryList
+          # Initialize the AccountSecretList
           # @param [Version] version Version that contains the resource
-          # @return [InsightsQuestionnairesCategoryList] InsightsQuestionnairesCategoryList
+          # @return [AccountSecretList] AccountSecretList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/Insights/QM/Categories"
+            @uri = "/Secrets"
           end
 
           ##
-          # Create the InsightsQuestionnairesCategoryInstance
-          # @param [String] name The name of this category.
-          # @param [String] token The Token HTTP request header
-          # @return [InsightsQuestionnairesCategoryInstance] Created InsightsQuestionnairesCategoryInstance
-          def create(name: nil, token: :unset)
-            data = Twilio::Values.of({'Name' => name, })
-            headers = Twilio::Values.of({'Token' => token, })
-
-            payload = @version.create('POST', @uri, data: data, headers: headers)
-
-            InsightsQuestionnairesCategoryInstance.new(@version, payload, )
-          end
-
-          ##
-          # Lists InsightsQuestionnairesCategoryInstance records from the API as a list.
+          # Lists AccountSecretInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
-          # @param [String] token The Token HTTP request header
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -51,15 +36,14 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(token: :unset, limit: nil, page_size: nil)
-            self.stream(token: token, limit: limit, page_size: page_size).entries
+          def list(limit: nil, page_size: nil)
+            self.stream(limit: limit, page_size: page_size).entries
           end
 
           ##
-          # Streams InsightsQuestionnairesCategoryInstance records from the API as an Enumerable.
+          # Streams AccountSecretInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
-          # @param [String] token The Token HTTP request header
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -67,16 +51,16 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(token: :unset, limit: nil, page_size: nil)
+          def stream(limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(token: token, page_size: limits[:page_size], )
+            page = self.page(page_size: limits[:page_size], )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
 
           ##
-          # When passed a block, yields InsightsQuestionnairesCategoryInstance records from the API.
+          # When passed a block, yields AccountSecretInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -90,55 +74,66 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of InsightsQuestionnairesCategoryInstance records from the API.
+          # Retrieve a single page of AccountSecretInstance records from the API.
           # Request is executed immediately.
-          # @param [String] token The Token HTTP request header
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of InsightsQuestionnairesCategoryInstance
-          def page(token: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          # @return [Page] Page of AccountSecretInstance
+          def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
-            headers = Twilio::Values.of({'Token' => token, })
 
-            response = @version.page('GET', @uri, params: params, headers: headers)
+            response = @version.page('GET', @uri, params: params)
 
-            InsightsQuestionnairesCategoryPage.new(@version, response, @solution)
+            AccountSecretPage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of InsightsQuestionnairesCategoryInstance records from the API.
+          # Retrieve a single page of AccountSecretInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of InsightsQuestionnairesCategoryInstance
+          # @return [Page] Page of AccountSecretInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            InsightsQuestionnairesCategoryPage.new(@version, response, @solution)
+            AccountSecretPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Create the AccountSecretInstance
+          # @param [String] key The secret key; up to 100 characters.
+          # @param [String] value The secret value; up to 4096 characters.
+          # @return [AccountSecretInstance] Created AccountSecretInstance
+          def create(key: nil, value: nil)
+            data = Twilio::Values.of({'Key' => key, 'Value' => value, })
+
+            payload = @version.create('POST', @uri, data: data)
+
+            AccountSecretInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryList>'
+            '#<Twilio.Microvisor.V1.AccountSecretList>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class InsightsQuestionnairesCategoryPage < Page
+        class AccountSecretPage < Page
           ##
-          # Initialize the InsightsQuestionnairesCategoryPage
+          # Initialize the AccountSecretPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [InsightsQuestionnairesCategoryPage] InsightsQuestionnairesCategoryPage
+          # @return [AccountSecretPage] AccountSecretPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -147,164 +142,146 @@ module Twilio
           end
 
           ##
-          # Build an instance of InsightsQuestionnairesCategoryInstance
+          # Build an instance of AccountSecretInstance
           # @param [Hash] payload Payload response from the API
-          # @return [InsightsQuestionnairesCategoryInstance] InsightsQuestionnairesCategoryInstance
+          # @return [AccountSecretInstance] AccountSecretInstance
           def get_instance(payload)
-            InsightsQuestionnairesCategoryInstance.new(@version, payload, )
+            AccountSecretInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryPage>'
+            '<Twilio.Microvisor.V1.AccountSecretPage>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class InsightsQuestionnairesCategoryContext < InstanceContext
+        class AccountSecretContext < InstanceContext
           ##
-          # Initialize the InsightsQuestionnairesCategoryContext
+          # Initialize the AccountSecretContext
           # @param [Version] version Version that contains the resource
-          # @param [String] category_id The ID of the category to be update
-          # @return [InsightsQuestionnairesCategoryContext] InsightsQuestionnairesCategoryContext
-          def initialize(version, category_id)
+          # @param [String] key The secret key; up to 100 characters.
+          # @return [AccountSecretContext] AccountSecretContext
+          def initialize(version, key)
             super(version)
 
             # Path Solution
-            @solution = {category_id: category_id, }
-            @uri = "/Insights/QM/Categories/#{@solution[:category_id]}"
+            @solution = {key: key, }
+            @uri = "/Secrets/#{@solution[:key]}"
           end
 
           ##
-          # Update the InsightsQuestionnairesCategoryInstance
-          # @param [String] name The name of this category.
-          # @param [String] token The Token HTTP request header
-          # @return [InsightsQuestionnairesCategoryInstance] Updated InsightsQuestionnairesCategoryInstance
-          def update(name: nil, token: :unset)
-            data = Twilio::Values.of({'Name' => name, })
-            headers = Twilio::Values.of({'Token' => token, })
+          # Fetch the AccountSecretInstance
+          # @return [AccountSecretInstance] Fetched AccountSecretInstance
+          def fetch
+            payload = @version.fetch('GET', @uri)
 
-            payload = @version.update('POST', @uri, data: data, headers: headers)
-
-            InsightsQuestionnairesCategoryInstance.new(@version, payload, category_id: @solution[:category_id], )
+            AccountSecretInstance.new(@version, payload, key: @solution[:key], )
           end
 
           ##
-          # Delete the InsightsQuestionnairesCategoryInstance
-          # @param [String] token The Token HTTP request header
+          # Delete the AccountSecretInstance
           # @return [Boolean] true if delete succeeds, false otherwise
-          def delete(token: :unset)
-            headers = Twilio::Values.of({'Token' => token, })
-
-             @version.delete('DELETE', @uri, headers: headers)
+          def delete
+             @version.delete('DELETE', @uri)
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryContext #{context}>"
+            "#<Twilio.Microvisor.V1.AccountSecretContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryContext #{context}>"
+            "#<Twilio.Microvisor.V1.AccountSecretContext #{context}>"
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class InsightsQuestionnairesCategoryInstance < InstanceResource
+        class AccountSecretInstance < InstanceResource
           ##
-          # Initialize the InsightsQuestionnairesCategoryInstance
+          # Initialize the AccountSecretInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] category_id The ID of the category to be update
-          # @return [InsightsQuestionnairesCategoryInstance] InsightsQuestionnairesCategoryInstance
-          def initialize(version, payload, category_id: nil)
+          # @param [String] key The secret key; up to 100 characters.
+          # @return [AccountSecretInstance] AccountSecretInstance
+          def initialize(version, payload, key: nil)
             super(version)
 
             # Marshaled Properties
             @properties = {
-                'account_sid' => payload['account_sid'],
-                'category_id' => payload['category_id'],
-                'name' => payload['name'],
+                'key' => payload['key'],
+                'date_rotated' => Twilio.deserialize_iso8601_datetime(payload['date_rotated']),
                 'url' => payload['url'],
             }
 
             # Context
             @instance_context = nil
-            @params = {'category_id' => category_id || @properties['category_id'], }
+            @params = {'key' => key || @properties['key'], }
           end
 
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [InsightsQuestionnairesCategoryContext] InsightsQuestionnairesCategoryContext for this InsightsQuestionnairesCategoryInstance
+          # @return [AccountSecretContext] AccountSecretContext for this AccountSecretInstance
           def context
             unless @instance_context
-              @instance_context = InsightsQuestionnairesCategoryContext.new(@version, @params['category_id'], )
+              @instance_context = AccountSecretContext.new(@version, @params['key'], )
             end
             @instance_context
           end
 
           ##
-          # @return [String] The SID of the Account that created the resource and owns this Flex Insights
-          def account_sid
-            @properties['account_sid']
+          # @return [String] The secret key.
+          def key
+            @properties['key']
           end
 
           ##
-          # @return [String] Unique category ID
-          def category_id
-            @properties['category_id']
+          # @return [Time] The date_rotated
+          def date_rotated
+            @properties['date_rotated']
           end
 
           ##
-          # @return [String] The category name.
-          def name
-            @properties['name']
-          end
-
-          ##
-          # @return [String] The url
+          # @return [String] The absolute URL of the Secret.
           def url
             @properties['url']
           end
 
           ##
-          # Update the InsightsQuestionnairesCategoryInstance
-          # @param [String] name The name of this category.
-          # @param [String] token The Token HTTP request header
-          # @return [InsightsQuestionnairesCategoryInstance] Updated InsightsQuestionnairesCategoryInstance
-          def update(name: nil, token: :unset)
-            context.update(name: name, token: token, )
+          # Fetch the AccountSecretInstance
+          # @return [AccountSecretInstance] Fetched AccountSecretInstance
+          def fetch
+            context.fetch
           end
 
           ##
-          # Delete the InsightsQuestionnairesCategoryInstance
-          # @param [String] token The Token HTTP request header
+          # Delete the AccountSecretInstance
           # @return [Boolean] true if delete succeeds, false otherwise
-          def delete(token: :unset)
-            context.delete(token: token, )
+          def delete
+            context.delete
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryInstance #{values}>"
+            "<Twilio.Microvisor.V1.AccountSecretInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryInstance #{values}>"
+            "<Twilio.Microvisor.V1.AccountSecretInstance #{values}>"
           end
         end
       end

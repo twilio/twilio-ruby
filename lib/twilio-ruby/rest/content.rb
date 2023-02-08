@@ -38,6 +38,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Content::V1::LegacyContentInstance]
+      def legacy_contents
+        self.v1.legacy_contents()
+      end
+
+      ##
       # Provide a user friendly representation
       def to_s
         '#<Twilio::REST::Content>'

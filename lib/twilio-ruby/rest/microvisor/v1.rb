@@ -15,8 +15,40 @@ module Twilio
         def initialize(domain)
           super
           @version = 'v1'
+          @account_configs = nil
+          @account_secrets = nil
           @apps = nil
           @devices = nil
+        end
+
+        ##
+        # @param [String] key The config key; up to 100 characters.
+        # @return [Twilio::REST::Microvisor::V1::AccountConfigContext] if key was passed.
+        # @return [Twilio::REST::Microvisor::V1::AccountConfigList]
+        def account_configs(key=:unset)
+          if key.nil?
+              raise ArgumentError, 'key cannot be nil'
+          end
+          if key == :unset
+              @account_configs ||= AccountConfigList.new self
+          else
+              AccountConfigContext.new(self, key)
+          end
+        end
+
+        ##
+        # @param [String] key The secret key; up to 100 characters.
+        # @return [Twilio::REST::Microvisor::V1::AccountSecretContext] if key was passed.
+        # @return [Twilio::REST::Microvisor::V1::AccountSecretList]
+        def account_secrets(key=:unset)
+          if key.nil?
+              raise ArgumentError, 'key cannot be nil'
+          end
+          if key == :unset
+              @account_secrets ||= AccountSecretList.new self
+          else
+              AccountSecretContext.new(self, key)
+          end
         end
 
         ##

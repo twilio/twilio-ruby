@@ -81,6 +81,77 @@ describe 'InsightsQuestionnairesCategory' do
     expect(actual).to_not eq(nil)
   end
 
+  it "can read" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.flex_api.v1.insights_questionnaires_category.list(token: 'token')
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    headers = {'Token' => 'token', }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'get',
+        url: 'https://flex-api.twilio.com/v1/Insights/QM/Categories',
+        headers: headers,
+    ))).to eq(true)
+  end
+
+  it "receives read_empty responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "categories": [],
+          "meta": {
+              "page": 0,
+              "page_size": 50,
+              "first_page_url": "https://flex-api.twilio.com/v1/Insights/QM/Categories?PageSize=50&Page=0",
+              "previous_page_url": null,
+              "url": "https://flex-api.twilio.com/v1/Insights/QM/Categories?PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "categories"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.flex_api.v1.insights_questionnaires_category.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives read_full responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "categories": [
+              {
+                  "category_id": "4b4e78e4-4f05-49e2-bf52-0973c5cde418",
+                  "name": "Test1",
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "url": "https://flex-api.twilio.com/v1/Insights/QM/Categories/4b4e78e4-4f05-49e2-bf52-0973c5cde418"
+              }
+          ],
+          "meta": {
+              "page": 0,
+              "page_size": 50,
+              "first_page_url": "https://flex-api.twilio.com/v1/Insights/QM/Categories?PageSize=50&Page=0",
+              "previous_page_url": null,
+              "url": "https://flex-api.twilio.com/v1/Insights/QM/Categories?PageSize=50&Page=0",
+              "next_page_url": null,
+              "key": "categories"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.flex_api.v1.insights_questionnaires_category.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

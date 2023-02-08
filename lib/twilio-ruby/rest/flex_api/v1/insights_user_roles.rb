@@ -10,6 +10,8 @@ module Twilio
   module REST
     class FlexApi < Domain
       class V1 < Version
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class InsightsUserRolesList < ListResource
           ##
           # Initialize the InsightsUserRolesList
@@ -29,6 +31,8 @@ module Twilio
           end
         end
 
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class InsightsUserRolesPage < Page
           ##
           # Initialize the InsightsUserRolesPage
@@ -58,6 +62,8 @@ module Twilio
           end
         end
 
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class InsightsUserRolesContext < InstanceContext
           ##
           # Initialize the InsightsUserRolesContext
@@ -73,10 +79,10 @@ module Twilio
 
           ##
           # Fetch the InsightsUserRolesInstance
-          # @param [String] token The Token HTTP request header
+          # @param [String] authorization The Authorization HTTP request header
           # @return [InsightsUserRolesInstance] Fetched InsightsUserRolesInstance
-          def fetch(token: :unset)
-            headers = Twilio::Values.of({'Token' => token, })
+          def fetch(authorization: :unset)
+            headers = Twilio::Values.of({'Authorization' => authorization, })
 
             payload = @version.fetch('GET', @uri, headers: headers)
 
@@ -98,6 +104,8 @@ module Twilio
           end
         end
 
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class InsightsUserRolesInstance < InstanceResource
           ##
           # Initialize the InsightsUserRolesInstance
@@ -140,10 +148,10 @@ module Twilio
 
           ##
           # Fetch the InsightsUserRolesInstance
-          # @param [String] token The Token HTTP request header
+          # @param [String] authorization The Authorization HTTP request header
           # @return [InsightsUserRolesInstance] Fetched InsightsUserRolesInstance
-          def fetch(token: :unset)
-            context.fetch(token: token, )
+          def fetch(authorization: :unset)
+            context.fetch(authorization: authorization, )
           end
 
           ##

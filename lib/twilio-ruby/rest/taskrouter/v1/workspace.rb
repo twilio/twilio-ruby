@@ -220,6 +220,7 @@ module Twilio
             @real_time_statistics = nil
             @cumulative_statistics = nil
             @task_channels = nil
+            @bulk_real_time_statistics = nil
           end
 
           ##
@@ -437,6 +438,21 @@ module Twilio
             end
 
             @task_channels
+          end
+
+          ##
+          # Access the bulk_real_time_statistics
+          # @return [TaskQueueBulkRealTimeStatisticsList]
+          # @return [TaskQueueBulkRealTimeStatisticsContext]
+          def bulk_real_time_statistics
+            unless @bulk_real_time_statistics
+              @bulk_real_time_statistics = TaskQueueBulkRealTimeStatisticsList.new(
+                  @version,
+                  workspace_sid: @solution[:sid],
+              )
+            end
+
+            @bulk_real_time_statistics
           end
 
           ##
@@ -718,6 +734,13 @@ module Twilio
           # @return [task_channels] task_channels
           def task_channels
             context.task_channels
+          end
+
+          ##
+          # Access the bulk_real_time_statistics
+          # @return [bulk_real_time_statistics] bulk_real_time_statistics
+          def bulk_real_time_statistics
+            context.bulk_real_time_statistics
           end
 
           ##

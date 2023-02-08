@@ -12,37 +12,48 @@ module Twilio
       class V1 < Version
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class InsightsQuestionnairesCategoryList < ListResource
+        class InsightsQuestionnairesList < ListResource
           ##
-          # Initialize the InsightsQuestionnairesCategoryList
+          # Initialize the InsightsQuestionnairesList
           # @param [Version] version Version that contains the resource
-          # @return [InsightsQuestionnairesCategoryList] InsightsQuestionnairesCategoryList
+          # @return [InsightsQuestionnairesList] InsightsQuestionnairesList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/Insights/QM/Categories"
+            @uri = "/Insights/QM/Questionnaires"
           end
 
           ##
-          # Create the InsightsQuestionnairesCategoryInstance
-          # @param [String] name The name of this category.
+          # Create the InsightsQuestionnairesInstance
+          # @param [String] name The name of this questionnaire
+          # @param [String] description The description of this questionnaire
+          # @param [Boolean] active The flag to enable or disable questionnaire
+          # @param [Array[String]] question_ids The list of questions ids under a
+          #   questionnaire
           # @param [String] token The Token HTTP request header
-          # @return [InsightsQuestionnairesCategoryInstance] Created InsightsQuestionnairesCategoryInstance
-          def create(name: nil, token: :unset)
-            data = Twilio::Values.of({'Name' => name, })
+          # @return [InsightsQuestionnairesInstance] Created InsightsQuestionnairesInstance
+          def create(name: nil, description: :unset, active: :unset, question_ids: :unset, token: :unset)
+            data = Twilio::Values.of({
+                'Name' => name,
+                'Description' => description,
+                'Active' => active,
+                'QuestionIds' => Twilio.serialize_list(question_ids) { |e| e },
+            })
             headers = Twilio::Values.of({'Token' => token, })
 
             payload = @version.create('POST', @uri, data: data, headers: headers)
 
-            InsightsQuestionnairesCategoryInstance.new(@version, payload, )
+            InsightsQuestionnairesInstance.new(@version, payload, )
           end
 
           ##
-          # Lists InsightsQuestionnairesCategoryInstance records from the API as a list.
+          # Lists InsightsQuestionnairesInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
+          # @param [Boolean] include_inactive Flag indicating whether to include inactive
+          #   questionnaires or not
           # @param [String] token The Token HTTP request header
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
@@ -51,14 +62,21 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(token: :unset, limit: nil, page_size: nil)
-            self.stream(token: token, limit: limit, page_size: page_size).entries
+          def list(include_inactive: :unset, token: :unset, limit: nil, page_size: nil)
+            self.stream(
+                include_inactive: include_inactive,
+                token: token,
+                limit: limit,
+                page_size: page_size
+            ).entries
           end
 
           ##
-          # Streams InsightsQuestionnairesCategoryInstance records from the API as an Enumerable.
+          # Streams InsightsQuestionnairesInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
+          # @param [Boolean] include_inactive Flag indicating whether to include inactive
+          #   questionnaires or not
           # @param [String] token The Token HTTP request header
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
@@ -67,16 +85,16 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(token: :unset, limit: nil, page_size: nil)
+          def stream(include_inactive: :unset, token: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(token: token, page_size: limits[:page_size], )
+            page = self.page(include_inactive: include_inactive, token: token, page_size: limits[:page_size], )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
 
           ##
-          # When passed a block, yields InsightsQuestionnairesCategoryInstance records from the API.
+          # When passed a block, yields InsightsQuestionnairesInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -90,15 +108,18 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of InsightsQuestionnairesCategoryInstance records from the API.
+          # Retrieve a single page of InsightsQuestionnairesInstance records from the API.
           # Request is executed immediately.
+          # @param [Boolean] include_inactive Flag indicating whether to include inactive
+          #   questionnaires or not
           # @param [String] token The Token HTTP request header
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of InsightsQuestionnairesCategoryInstance
-          def page(token: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+          # @return [Page] Page of InsightsQuestionnairesInstance
+          def page(include_inactive: :unset, token: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
+                'IncludeInactive' => include_inactive,
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
@@ -107,38 +128,38 @@ module Twilio
 
             response = @version.page('GET', @uri, params: params, headers: headers)
 
-            InsightsQuestionnairesCategoryPage.new(@version, response, @solution)
+            InsightsQuestionnairesPage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of InsightsQuestionnairesCategoryInstance records from the API.
+          # Retrieve a single page of InsightsQuestionnairesInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of InsightsQuestionnairesCategoryInstance
+          # @return [Page] Page of InsightsQuestionnairesInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            InsightsQuestionnairesCategoryPage.new(@version, response, @solution)
+            InsightsQuestionnairesPage.new(@version, response, @solution)
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryList>'
+            '#<Twilio.FlexApi.V1.InsightsQuestionnairesList>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class InsightsQuestionnairesCategoryPage < Page
+        class InsightsQuestionnairesPage < Page
           ##
-          # Initialize the InsightsQuestionnairesCategoryPage
+          # Initialize the InsightsQuestionnairesPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [InsightsQuestionnairesCategoryPage] InsightsQuestionnairesCategoryPage
+          # @return [InsightsQuestionnairesPage] InsightsQuestionnairesPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -147,52 +168,61 @@ module Twilio
           end
 
           ##
-          # Build an instance of InsightsQuestionnairesCategoryInstance
+          # Build an instance of InsightsQuestionnairesInstance
           # @param [Hash] payload Payload response from the API
-          # @return [InsightsQuestionnairesCategoryInstance] InsightsQuestionnairesCategoryInstance
+          # @return [InsightsQuestionnairesInstance] InsightsQuestionnairesInstance
           def get_instance(payload)
-            InsightsQuestionnairesCategoryInstance.new(@version, payload, )
+            InsightsQuestionnairesInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryPage>'
+            '<Twilio.FlexApi.V1.InsightsQuestionnairesPage>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class InsightsQuestionnairesCategoryContext < InstanceContext
+        class InsightsQuestionnairesContext < InstanceContext
           ##
-          # Initialize the InsightsQuestionnairesCategoryContext
+          # Initialize the InsightsQuestionnairesContext
           # @param [Version] version Version that contains the resource
-          # @param [String] category_id The ID of the category to be update
-          # @return [InsightsQuestionnairesCategoryContext] InsightsQuestionnairesCategoryContext
-          def initialize(version, category_id)
+          # @param [String] id The unique ID of the questionnaire
+          # @return [InsightsQuestionnairesContext] InsightsQuestionnairesContext
+          def initialize(version, id)
             super(version)
 
             # Path Solution
-            @solution = {category_id: category_id, }
-            @uri = "/Insights/QM/Categories/#{@solution[:category_id]}"
+            @solution = {id: id, }
+            @uri = "/Insights/QM/Questionnaires/#{@solution[:id]}"
           end
 
           ##
-          # Update the InsightsQuestionnairesCategoryInstance
-          # @param [String] name The name of this category.
+          # Update the InsightsQuestionnairesInstance
+          # @param [Boolean] active The flag to enable or disable questionnaire
+          # @param [String] name The name of this questionnaire
+          # @param [String] description The description of this questionnaire
+          # @param [Array[String]] question_ids The list of questions ids under a
+          #   questionnaire
           # @param [String] token The Token HTTP request header
-          # @return [InsightsQuestionnairesCategoryInstance] Updated InsightsQuestionnairesCategoryInstance
-          def update(name: nil, token: :unset)
-            data = Twilio::Values.of({'Name' => name, })
+          # @return [InsightsQuestionnairesInstance] Updated InsightsQuestionnairesInstance
+          def update(active: nil, name: :unset, description: :unset, question_ids: :unset, token: :unset)
+            data = Twilio::Values.of({
+                'Active' => active,
+                'Name' => name,
+                'Description' => description,
+                'QuestionIds' => Twilio.serialize_list(question_ids) { |e| e },
+            })
             headers = Twilio::Values.of({'Token' => token, })
 
             payload = @version.update('POST', @uri, data: data, headers: headers)
 
-            InsightsQuestionnairesCategoryInstance.new(@version, payload, category_id: @solution[:category_id], )
+            InsightsQuestionnairesInstance.new(@version, payload, id: @solution[:id], )
           end
 
           ##
-          # Delete the InsightsQuestionnairesCategoryInstance
+          # Delete the InsightsQuestionnairesInstance
           # @param [String] token The Token HTTP request header
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete(token: :unset)
@@ -202,52 +232,67 @@ module Twilio
           end
 
           ##
+          # Fetch the InsightsQuestionnairesInstance
+          # @param [String] token The Token HTTP request header
+          # @return [InsightsQuestionnairesInstance] Fetched InsightsQuestionnairesInstance
+          def fetch(token: :unset)
+            headers = Twilio::Values.of({'Token' => token, })
+
+            payload = @version.fetch('GET', @uri, headers: headers)
+
+            InsightsQuestionnairesInstance.new(@version, payload, id: @solution[:id], )
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryContext #{context}>"
+            "#<Twilio.FlexApi.V1.InsightsQuestionnairesContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryContext #{context}>"
+            "#<Twilio.FlexApi.V1.InsightsQuestionnairesContext #{context}>"
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class InsightsQuestionnairesCategoryInstance < InstanceResource
+        class InsightsQuestionnairesInstance < InstanceResource
           ##
-          # Initialize the InsightsQuestionnairesCategoryInstance
+          # Initialize the InsightsQuestionnairesInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] category_id The ID of the category to be update
-          # @return [InsightsQuestionnairesCategoryInstance] InsightsQuestionnairesCategoryInstance
-          def initialize(version, payload, category_id: nil)
+          # @param [String] id The unique ID of the questionnaire
+          # @return [InsightsQuestionnairesInstance] InsightsQuestionnairesInstance
+          def initialize(version, payload, id: nil)
             super(version)
 
             # Marshaled Properties
             @properties = {
                 'account_sid' => payload['account_sid'],
-                'category_id' => payload['category_id'],
+                'id' => payload['id'],
                 'name' => payload['name'],
+                'description' => payload['description'],
+                'active' => payload['active'],
+                'questions' => payload['questions'],
                 'url' => payload['url'],
             }
 
             # Context
             @instance_context = nil
-            @params = {'category_id' => category_id || @properties['category_id'], }
+            @params = {'id' => id || @properties['id'], }
           end
 
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [InsightsQuestionnairesCategoryContext] InsightsQuestionnairesCategoryContext for this InsightsQuestionnairesCategoryInstance
+          # @return [InsightsQuestionnairesContext] InsightsQuestionnairesContext for this InsightsQuestionnairesInstance
           def context
             unless @instance_context
-              @instance_context = InsightsQuestionnairesCategoryContext.new(@version, @params['category_id'], )
+              @instance_context = InsightsQuestionnairesContext.new(@version, @params['id'], )
             end
             @instance_context
           end
@@ -259,9 +304,9 @@ module Twilio
           end
 
           ##
-          # @return [String] Unique category ID
-          def category_id
-            @properties['category_id']
+          # @return [String] The questionnaire id
+          def id
+            @properties['id']
           end
 
           ##
@@ -271,22 +316,50 @@ module Twilio
           end
 
           ##
+          # @return [String] The questionnaire description
+          def description
+            @properties['description']
+          end
+
+          ##
+          # @return [Boolean] Is questionnaire enabled ?
+          def active
+            @properties['active']
+          end
+
+          ##
+          # @return [Array[Hash]] The questions list
+          def questions
+            @properties['questions']
+          end
+
+          ##
           # @return [String] The url
           def url
             @properties['url']
           end
 
           ##
-          # Update the InsightsQuestionnairesCategoryInstance
-          # @param [String] name The name of this category.
+          # Update the InsightsQuestionnairesInstance
+          # @param [Boolean] active The flag to enable or disable questionnaire
+          # @param [String] name The name of this questionnaire
+          # @param [String] description The description of this questionnaire
+          # @param [Array[String]] question_ids The list of questions ids under a
+          #   questionnaire
           # @param [String] token The Token HTTP request header
-          # @return [InsightsQuestionnairesCategoryInstance] Updated InsightsQuestionnairesCategoryInstance
-          def update(name: nil, token: :unset)
-            context.update(name: name, token: token, )
+          # @return [InsightsQuestionnairesInstance] Updated InsightsQuestionnairesInstance
+          def update(active: nil, name: :unset, description: :unset, question_ids: :unset, token: :unset)
+            context.update(
+                active: active,
+                name: name,
+                description: description,
+                question_ids: question_ids,
+                token: token,
+            )
           end
 
           ##
-          # Delete the InsightsQuestionnairesCategoryInstance
+          # Delete the InsightsQuestionnairesInstance
           # @param [String] token The Token HTTP request header
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete(token: :unset)
@@ -294,17 +367,25 @@ module Twilio
           end
 
           ##
+          # Fetch the InsightsQuestionnairesInstance
+          # @param [String] token The Token HTTP request header
+          # @return [InsightsQuestionnairesInstance] Fetched InsightsQuestionnairesInstance
+          def fetch(token: :unset)
+            context.fetch(token: token, )
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryInstance #{values}>"
+            "<Twilio.FlexApi.V1.InsightsQuestionnairesInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryInstance #{values}>"
+            "<Twilio.FlexApi.V1.InsightsQuestionnairesInstance #{values}>"
           end
         end
       end

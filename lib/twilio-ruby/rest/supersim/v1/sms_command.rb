@@ -58,7 +58,7 @@ module Twilio
           # @param [sms_command.Status] status The status of the SMS Command. Can be:
           #   `queued`, `sent`, `delivered`, `received` or `failed`. See the {SMS Command
           #   Status
-          #   Values}[https://www.twilio.com/docs/wireless/api/smscommand-resource#status-values]
+          #   Values}[https://www.twilio.com/docs/iot/supersim/api/smscommand-resource#status-values]
           #   for a description of each.
           # @param [sms_command.Direction] direction The direction of the SMS Command. Can
           #   be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term
@@ -90,7 +90,7 @@ module Twilio
           # @param [sms_command.Status] status The status of the SMS Command. Can be:
           #   `queued`, `sent`, `delivered`, `received` or `failed`. See the {SMS Command
           #   Status
-          #   Values}[https://www.twilio.com/docs/wireless/api/smscommand-resource#status-values]
+          #   Values}[https://www.twilio.com/docs/iot/supersim/api/smscommand-resource#status-values]
           #   for a description of each.
           # @param [sms_command.Direction] direction The direction of the SMS Command. Can
           #   be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term
@@ -133,7 +133,7 @@ module Twilio
           # @param [sms_command.Status] status The status of the SMS Command. Can be:
           #   `queued`, `sent`, `delivered`, `received` or `failed`. See the {SMS Command
           #   Status
-          #   Values}[https://www.twilio.com/docs/wireless/api/smscommand-resource#status-values]
+          #   Values}[https://www.twilio.com/docs/iot/supersim/api/smscommand-resource#status-values]
           #   for a description of each.
           # @param [sms_command.Direction] direction The direction of the SMS Command. Can
           #   be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term

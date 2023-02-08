@@ -50,6 +50,94 @@ module Twilio
           end
 
           ##
+          # Lists InsightsQuestionnairesQuestionInstance records from the API as a list.
+          # Unlike stream(), this operation is eager and will load `limit` records into
+          # memory before returning.
+          # @param [Array[String]] category_id The list of category IDs
+          # @param [String] token The Token HTTP request header
+          # @param [Integer] limit Upper limit for the number of records to return. stream()
+          #    guarantees to never return more than limit.  Default is no limit
+          # @param [Integer] page_size Number of records to fetch per request, when
+          #    not set will use the default value of 50 records.  If no page_size is defined
+          #    but a limit is defined, stream() will attempt to read the limit with the most
+          #    efficient page size, i.e. min(limit, 1000)
+          # @return [Array] Array of up to limit results
+          def list(category_id: :unset, token: :unset, limit: nil, page_size: nil)
+            self.stream(category_id: category_id, token: token, limit: limit, page_size: page_size).entries
+          end
+
+          ##
+          # Streams InsightsQuestionnairesQuestionInstance records from the API as an Enumerable.
+          # This operation lazily loads records as efficiently as possible until the limit
+          # is reached.
+          # @param [Array[String]] category_id The list of category IDs
+          # @param [String] token The Token HTTP request header
+          # @param [Integer] limit Upper limit for the number of records to return. stream()
+          #    guarantees to never return more than limit. Default is no limit.
+          # @param [Integer] page_size Number of records to fetch per request, when
+          #    not set will use the default value of 50 records. If no page_size is defined
+          #    but a limit is defined, stream() will attempt to read the limit with the most
+          #    efficient page size, i.e. min(limit, 1000)
+          # @return [Enumerable] Enumerable that will yield up to limit results
+          def stream(category_id: :unset, token: :unset, limit: nil, page_size: nil)
+            limits = @version.read_limits(limit, page_size)
+
+            page = self.page(category_id: category_id, token: token, page_size: limits[:page_size], )
+
+            @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+          end
+
+          ##
+          # When passed a block, yields InsightsQuestionnairesQuestionInstance records from the API.
+          # This operation lazily loads records as efficiently as possible until the limit
+          # is reached.
+          def each
+            limits = @version.read_limits
+
+            page = self.page(page_size: limits[:page_size], )
+
+            @version.stream(page,
+                            limit: limits[:limit],
+                            page_limit: limits[:page_limit]).each {|x| yield x}
+          end
+
+          ##
+          # Retrieve a single page of InsightsQuestionnairesQuestionInstance records from the API.
+          # Request is executed immediately.
+          # @param [Array[String]] category_id The list of category IDs
+          # @param [String] token The Token HTTP request header
+          # @param [String] page_token PageToken provided by the API
+          # @param [Integer] page_number Page Number, this value is simply for client state
+          # @param [Integer] page_size Number of records to return, defaults to 50
+          # @return [Page] Page of InsightsQuestionnairesQuestionInstance
+          def page(category_id: :unset, token: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            params = Twilio::Values.of({
+                'CategoryId' => Twilio.serialize_list(category_id) { |e| e },
+                'PageToken' => page_token,
+                'Page' => page_number,
+                'PageSize' => page_size,
+            })
+            headers = Twilio::Values.of({'Token' => token, })
+
+            response = @version.page('GET', @uri, params: params, headers: headers)
+
+            InsightsQuestionnairesQuestionPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of InsightsQuestionnairesQuestionInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of InsightsQuestionnairesQuestionInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            InsightsQuestionnairesQuestionPage.new(@version, response, @solution)
+          end
+
+          ##
           # Provide a user friendly representation
           def to_s
             '#<Twilio.FlexApi.V1.InsightsQuestionnairesQuestionList>'
@@ -105,20 +193,20 @@ module Twilio
 
           ##
           # Update the InsightsQuestionnairesQuestionInstance
+          # @param [Boolean] allow_na The flag to enable for disable NA for answer.
+          # @param [String] category_id The ID of the category
           # @param [String] question The question.
           # @param [String] description The description for the question.
           # @param [String] answer_set_id The answer_set for the question.
-          # @param [Boolean] allow_na The flag to enable for disable NA for answer.
-          # @param [String] category_id The ID of the category
           # @param [String] token The Token HTTP request header
           # @return [InsightsQuestionnairesQuestionInstance] Updated InsightsQuestionnairesQuestionInstance
-          def update(question: nil, description: nil, answer_set_id: nil, allow_na: nil, category_id: :unset, token: :unset)
+          def update(allow_na: nil, category_id: :unset, question: :unset, description: :unset, answer_set_id: :unset, token: :unset)
             data = Twilio::Values.of({
+                'AllowNa' => allow_na,
+                'CategoryId' => category_id,
                 'Question' => question,
                 'Description' => description,
                 'AnswerSetId' => answer_set_id,
-                'AllowNa' => allow_na,
-                'CategoryId' => category_id,
             })
             headers = Twilio::Values.of({'Token' => token, })
 
@@ -173,6 +261,7 @@ module Twilio
                 'category' => payload['category'],
                 'answer_set_id' => payload['answer_set_id'],
                 'allow_na' => payload['allow_na'],
+                'usage' => payload['usage'] == nil ? payload['usage'] : payload['usage'].to_i,
                 'url' => payload['url'],
             }
 
@@ -235,6 +324,12 @@ module Twilio
           end
 
           ##
+          # @return [String] Questions usage
+          def usage
+            @properties['usage']
+          end
+
+          ##
           # @return [String] The url
           def url
             @properties['url']
@@ -242,20 +337,20 @@ module Twilio
 
           ##
           # Update the InsightsQuestionnairesQuestionInstance
+          # @param [Boolean] allow_na The flag to enable for disable NA for answer.
+          # @param [String] category_id The ID of the category
           # @param [String] question The question.
           # @param [String] description The description for the question.
           # @param [String] answer_set_id The answer_set for the question.
-          # @param [Boolean] allow_na The flag to enable for disable NA for answer.
-          # @param [String] category_id The ID of the category
           # @param [String] token The Token HTTP request header
           # @return [InsightsQuestionnairesQuestionInstance] Updated InsightsQuestionnairesQuestionInstance
-          def update(question: nil, description: nil, answer_set_id: nil, allow_na: nil, category_id: :unset, token: :unset)
+          def update(allow_na: nil, category_id: :unset, question: :unset, description: :unset, answer_set_id: :unset, token: :unset)
             context.update(
+                allow_na: allow_na,
+                category_id: category_id,
                 question: question,
                 description: description,
                 answer_set_id: answer_set_id,
-                allow_na: allow_na,
-                category_id: category_id,
                 token: token,
             )
           end

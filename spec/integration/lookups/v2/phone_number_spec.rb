@@ -40,6 +40,8 @@ describe 'PhoneNumber' do
           "live_activity": null,
           "line_type_intelligence": null,
           "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+14159929960"
       }
       ]
@@ -69,6 +71,8 @@ describe 'PhoneNumber' do
           "live_activity": null,
           "line_type_intelligence": null,
           "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+141599299600"
       }
       ]
@@ -100,6 +104,8 @@ describe 'PhoneNumber' do
           "live_activity": null,
           "line_type_intelligence": null,
           "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+14159929960"
       }
       ]
@@ -137,6 +143,8 @@ describe 'PhoneNumber' do
           "live_activity": null,
           "line_type_intelligence": null,
           "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -174,6 +182,8 @@ describe 'PhoneNumber' do
           "live_activity": null,
           "line_type_intelligence": null,
           "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -211,6 +221,8 @@ describe 'PhoneNumber' do
           "live_activity": null,
           "line_type_intelligence": null,
           "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -244,6 +256,8 @@ describe 'PhoneNumber' do
           "live_activity": null,
           "line_type_intelligence": null,
           "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -287,6 +301,8 @@ describe 'PhoneNumber' do
           "live_activity": null,
           "line_type_intelligence": null,
           "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -326,6 +342,8 @@ describe 'PhoneNumber' do
           },
           "line_type_intelligence": null,
           "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -369,6 +387,8 @@ describe 'PhoneNumber' do
           },
           "line_type_intelligence": null,
           "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -413,6 +433,8 @@ describe 'PhoneNumber' do
           },
           "line_type_intelligence": null,
           "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+447772000001"
       }
       ]
@@ -446,6 +468,8 @@ describe 'PhoneNumber' do
               "type": "nonFixedVoip"
           },
           "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+14159929960"
       }
       ]
@@ -485,6 +509,95 @@ describe 'PhoneNumber' do
               "summary_score": 90,
               "error_code": null,
               "error_message": null
+          },
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": null,
+          "url": "https://lookups.twilio.com/v2/PhoneNumbers/+14159929960"
+      }
+      ]
+    ))
+
+    actual = @client.lookups.v2.phone_numbers('phone_number').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives fetch_sms_pumping_risk responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "calling_country_code": "1",
+          "country_code": "US",
+          "phone_number": "+14159929960",
+          "national_format": "(415) 992-9960",
+          "valid": true,
+          "validation_errors": [],
+          "caller_name": null,
+          "sim_swap": null,
+          "call_forwarding": null,
+          "live_activity": null,
+          "line_type_intelligence": null,
+          "identity_match": null,
+          "sms_pumping_risk": {
+              "carrier": {
+                  "name": "Twilio Carrier",
+                  "mobile_country_code": "214",
+                  "mobile_network_code": "07",
+                  "carrier_risk_score": 69,
+                  "carrier_risk_category": "moderate"
+              },
+              "number_blocked": false,
+              "number_blocked_date": null,
+              "number_blocked_last_3_months": null,
+              "error_code": null
+          },
+          "disposable_phone_number_risk": null,
+          "url": "https://lookups.twilio.com/v2/PhoneNumbers/+14159929960"
+      }
+      ]
+    ))
+
+    actual = @client.lookups.v2.phone_numbers('phone_number').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives fetch_disposable_phone_number_risk responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "calling_country_code": "1",
+          "country_code": "US",
+          "phone_number": "+14159929960",
+          "national_format": "(415) 992-9960",
+          "valid": true,
+          "validation_errors": [],
+          "caller_name": null,
+          "sim_swap": null,
+          "call_forwarding": null,
+          "live_activity": null,
+          "line_type_intelligence": null,
+          "identity_match": null,
+          "sms_pumping_risk": null,
+          "disposable_phone_number_risk": {
+              "carrier": {
+                  "mobile_country_code": "452",
+                  "mobile_network_code": "05",
+                  "carrier_risk_score": 17,
+                  "carrier_risk_category": "low",
+                  "line_type": "mobile",
+                  "name": "Twilio Carrier"
+              },
+              "is_disposable": false,
+              "disposable_phone_risk_score": 0,
+              "disposable_phone_risk_category": "low",
+              "velocity_risk_score": 0,
+              "velocity_risk_category": "low",
+              "summary_risk_score": 0,
+              "summary_risk_category": "low",
+              "error_code": null
           },
           "url": "https://lookups.twilio.com/v2/PhoneNumbers/+14159929960"
       }

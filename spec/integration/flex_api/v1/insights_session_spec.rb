@@ -13,10 +13,10 @@ describe 'InsightsSession' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.flex_api.v1.insights_session().create(token: 'token')
+      @client.flex_api.v1.insights_session().create(authorization: 'authorization')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    headers = {'Token' => 'token', }
+    headers = {'Authorization' => 'authorization', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',

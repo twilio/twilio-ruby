@@ -10,6 +10,8 @@ module Twilio
   module REST
     class FlexApi < Domain
       class V1 < Version
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class InsightsSessionList < ListResource
           ##
           # Initialize the InsightsSessionList
@@ -29,6 +31,8 @@ module Twilio
           end
         end
 
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class InsightsSessionPage < Page
           ##
           # Initialize the InsightsSessionPage
@@ -58,6 +62,8 @@ module Twilio
           end
         end
 
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class InsightsSessionContext < InstanceContext
           ##
           # Initialize the InsightsSessionContext
@@ -73,10 +79,10 @@ module Twilio
 
           ##
           # Create the InsightsSessionInstance
-          # @param [String] token The Token HTTP request header
+          # @param [String] authorization The Authorization HTTP request header
           # @return [InsightsSessionInstance] Created InsightsSessionInstance
-          def create(token: :unset)
-            headers = Twilio::Values.of({'Token' => token, })
+          def create(authorization: :unset)
+            headers = Twilio::Values.of({'Authorization' => authorization, })
 
             payload = @version.create('POST', @uri, headers: headers)
 
@@ -98,6 +104,8 @@ module Twilio
           end
         end
 
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
         class InsightsSessionInstance < InstanceResource
           ##
           # Initialize the InsightsSessionInstance
@@ -164,10 +172,10 @@ module Twilio
 
           ##
           # Create the InsightsSessionInstance
-          # @param [String] token The Token HTTP request header
+          # @param [String] authorization The Authorization HTTP request header
           # @return [InsightsSessionInstance] Created InsightsSessionInstance
-          def create(token: :unset)
-            context.create(token: token, )
+          def create(authorization: :unset)
+            context.create(authorization: authorization, )
           end
 
           ##

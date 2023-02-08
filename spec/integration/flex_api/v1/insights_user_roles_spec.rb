@@ -13,10 +13,10 @@ describe 'InsightsUserRoles' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.flex_api.v1.insights_user_roles().fetch(token: 'token')
+      @client.flex_api.v1.insights_user_roles().fetch(authorization: 'authorization')
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    headers = {'Token' => 'token', }
+    headers = {'Authorization' => 'authorization', }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'get',

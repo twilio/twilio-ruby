@@ -66,6 +66,20 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Flex_api::V1::InsightsAssessmentsCommentInstance]
+      def insights_assessments_comment
+        self.v1.insights_assessments_comment()
+      end
+
+      ##
+      # @param [String] id The unique id of this questionnaire
+      # @return [Twilio::REST::Flex_api::V1::InsightsQuestionnairesInstance] if id was passed.
+      # @return [Twilio::REST::Flex_api::V1::InsightsQuestionnairesList]
+      def insights_questionnaires(id=:unset)
+        self.v1.insights_questionnaires(id)
+      end
+
+      ##
       # @param [String] category_id The unique ID for the category
       # @return [Twilio::REST::Flex_api::V1::InsightsQuestionnairesCategoryInstance] if category_id was passed.
       # @return [Twilio::REST::Flex_api::V1::InsightsQuestionnairesCategoryList]
@@ -79,6 +93,14 @@ module Twilio
       # @return [Twilio::REST::Flex_api::V1::InsightsQuestionnairesQuestionList]
       def insights_questionnaires_question(question_id=:unset)
         self.v1.insights_questionnaires_question(question_id)
+      end
+
+      ##
+      # @param [String] segment_id To unique id of the segment
+      # @return [Twilio::REST::Flex_api::V1::InsightsSegmentsInstance] if segment_id was passed.
+      # @return [Twilio::REST::Flex_api::V1::InsightsSegmentsList]
+      def insights_segments(segment_id=:unset)
+        self.v1.insights_segments(segment_id)
       end
 
       ##
