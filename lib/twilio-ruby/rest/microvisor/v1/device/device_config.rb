@@ -192,6 +192,23 @@ module Twilio
             end
 
             ##
+            # Update the DeviceConfigInstance
+            # @param [String] value The config value; up to 4096 characters.
+            # @return [DeviceConfigInstance] Updated DeviceConfigInstance
+            def update(value: nil)
+              data = Twilio::Values.of({'Value' => value, })
+
+              payload = @version.update('POST', @uri, data: data)
+
+              DeviceConfigInstance.new(
+                  @version,
+                  payload,
+                  device_sid: @solution[:device_sid],
+                  key: @solution[:key],
+              )
+            end
+
+            ##
             # Delete the DeviceConfigInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
@@ -287,6 +304,14 @@ module Twilio
             # @return [DeviceConfigInstance] Fetched DeviceConfigInstance
             def fetch
               context.fetch
+            end
+
+            ##
+            # Update the DeviceConfigInstance
+            # @param [String] value The config value; up to 4096 characters.
+            # @return [DeviceConfigInstance] Updated DeviceConfigInstance
+            def update(value: nil)
+              context.update(value: value, )
             end
 
             ##

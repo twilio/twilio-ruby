@@ -182,6 +182,18 @@ module Twilio
           end
 
           ##
+          # Update the AccountSecretInstance
+          # @param [String] value The secret value; up to 4096 characters.
+          # @return [AccountSecretInstance] Updated AccountSecretInstance
+          def update(value: nil)
+            data = Twilio::Values.of({'Value' => value, })
+
+            payload = @version.update('POST', @uri, data: data)
+
+            AccountSecretInstance.new(@version, payload, key: @solution[:key], )
+          end
+
+          ##
           # Delete the AccountSecretInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
@@ -261,6 +273,14 @@ module Twilio
           # @return [AccountSecretInstance] Fetched AccountSecretInstance
           def fetch
             context.fetch
+          end
+
+          ##
+          # Update the AccountSecretInstance
+          # @param [String] value The secret value; up to 4096 characters.
+          # @return [AccountSecretInstance] Updated AccountSecretInstance
+          def update(value: nil)
+            context.update(value: value, )
           end
 
           ##

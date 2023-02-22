@@ -150,6 +150,40 @@ describe 'AccountConfig' do
     expect(actual).to_not eq(nil)
   end
 
+  it "can update" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.microvisor.v1.account_configs('key').update(value: 'value')
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    values = {'Value' => 'value', }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'post',
+        url: 'https://microvisor.twilio.com/v1/Configs/key',
+        data: values,
+    ))).to eq(true)
+  end
+
+  it "receives update responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "key": "first",
+          "value": "place",
+          "date_updated": "2021-01-01T12:34:56Z",
+          "url": "https://microvisor.twilio.com/v1/Configs/first"
+      }
+      ]
+    ))
+
+    actual = @client.microvisor.v1.account_configs('key').update(value: 'value')
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

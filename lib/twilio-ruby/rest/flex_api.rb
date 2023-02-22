@@ -60,9 +60,11 @@ module Twilio
       end
 
       ##
-      # @return [Twilio::REST::Flex_api::V1::AssessmentsInstance]
-      def assessments
-        self.v1.assessments()
+      # @param [String] assessment_id The unique id of the assessment
+      # @return [Twilio::REST::Flex_api::V1::AssessmentsInstance] if assessment_id was passed.
+      # @return [Twilio::REST::Flex_api::V1::AssessmentsList]
+      def assessments(assessment_id=:unset)
+        self.v1.assessments(assessment_id)
       end
 
       ##

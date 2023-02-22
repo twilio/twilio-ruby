@@ -108,7 +108,7 @@ module Twilio
           ##
           # Create the AccountConfigInstance
           # @param [String] key The config key; up to 100 characters.
-          # @param [String] value The config value;  up to 4096 characters.
+          # @param [String] value The config value; up to 4096 characters.
           # @return [AccountConfigInstance] Created AccountConfigInstance
           def create(key: nil, value: nil)
             data = Twilio::Values.of({'Key' => key, 'Value' => value, })
@@ -177,6 +177,18 @@ module Twilio
           # @return [AccountConfigInstance] Fetched AccountConfigInstance
           def fetch
             payload = @version.fetch('GET', @uri)
+
+            AccountConfigInstance.new(@version, payload, key: @solution[:key], )
+          end
+
+          ##
+          # Update the AccountConfigInstance
+          # @param [String] value The config value; up to 4096 characters.
+          # @return [AccountConfigInstance] Updated AccountConfigInstance
+          def update(value: nil)
+            data = Twilio::Values.of({'Value' => value, })
+
+            payload = @version.update('POST', @uri, data: data)
 
             AccountConfigInstance.new(@version, payload, key: @solution[:key], )
           end
@@ -268,6 +280,14 @@ module Twilio
           # @return [AccountConfigInstance] Fetched AccountConfigInstance
           def fetch
             context.fetch
+          end
+
+          ##
+          # Update the AccountConfigInstance
+          # @param [String] value The config value; up to 4096 characters.
+          # @return [AccountConfigInstance] Updated AccountConfigInstance
+          def update(value: nil)
+            context.update(value: value, )
           end
 
           ##

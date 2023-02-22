@@ -22,6 +22,100 @@ module Twilio
 
             # Path Solution
             @solution = {}
+            @uri = "/Insights/Segments"
+          end
+
+          ##
+          # Lists InsightsSegmentsInstance records from the API as a list.
+          # Unlike stream(), this operation is eager and will load `limit` records into
+          # memory before returning.
+          # @param [Array[String]] reservation_id The list of reservation Ids
+          # @param [String] token The Token HTTP request header
+          # @param [Integer] limit Upper limit for the number of records to return. stream()
+          #    guarantees to never return more than limit.  Default is no limit
+          # @param [Integer] page_size Number of records to fetch per request, when
+          #    not set will use the default value of 50 records.  If no page_size is defined
+          #    but a limit is defined, stream() will attempt to read the limit with the most
+          #    efficient page size, i.e. min(limit, 1000)
+          # @return [Array] Array of up to limit results
+          def list(reservation_id: :unset, token: :unset, limit: nil, page_size: nil)
+            self.stream(
+                reservation_id: reservation_id,
+                token: token,
+                limit: limit,
+                page_size: page_size
+            ).entries
+          end
+
+          ##
+          # Streams InsightsSegmentsInstance records from the API as an Enumerable.
+          # This operation lazily loads records as efficiently as possible until the limit
+          # is reached.
+          # @param [Array[String]] reservation_id The list of reservation Ids
+          # @param [String] token The Token HTTP request header
+          # @param [Integer] limit Upper limit for the number of records to return. stream()
+          #    guarantees to never return more than limit. Default is no limit.
+          # @param [Integer] page_size Number of records to fetch per request, when
+          #    not set will use the default value of 50 records. If no page_size is defined
+          #    but a limit is defined, stream() will attempt to read the limit with the most
+          #    efficient page size, i.e. min(limit, 1000)
+          # @return [Enumerable] Enumerable that will yield up to limit results
+          def stream(reservation_id: :unset, token: :unset, limit: nil, page_size: nil)
+            limits = @version.read_limits(limit, page_size)
+
+            page = self.page(reservation_id: reservation_id, token: token, page_size: limits[:page_size], )
+
+            @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+          end
+
+          ##
+          # When passed a block, yields InsightsSegmentsInstance records from the API.
+          # This operation lazily loads records as efficiently as possible until the limit
+          # is reached.
+          def each
+            limits = @version.read_limits
+
+            page = self.page(page_size: limits[:page_size], )
+
+            @version.stream(page,
+                            limit: limits[:limit],
+                            page_limit: limits[:page_limit]).each {|x| yield x}
+          end
+
+          ##
+          # Retrieve a single page of InsightsSegmentsInstance records from the API.
+          # Request is executed immediately.
+          # @param [Array[String]] reservation_id The list of reservation Ids
+          # @param [String] token The Token HTTP request header
+          # @param [String] page_token PageToken provided by the API
+          # @param [Integer] page_number Page Number, this value is simply for client state
+          # @param [Integer] page_size Number of records to return, defaults to 50
+          # @return [Page] Page of InsightsSegmentsInstance
+          def page(reservation_id: :unset, token: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+            params = Twilio::Values.of({
+                'ReservationId' => Twilio.serialize_list(reservation_id) { |e| e },
+                'PageToken' => page_token,
+                'Page' => page_number,
+                'PageSize' => page_size,
+            })
+            headers = Twilio::Values.of({'Token' => token, })
+
+            response = @version.page('GET', @uri, params: params, headers: headers)
+
+            InsightsSegmentsPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Retrieve a single page of InsightsSegmentsInstance records from the API.
+          # Request is executed immediately.
+          # @param [String] target_url API-generated URL for the requested results page
+          # @return [Page] Page of InsightsSegmentsInstance
+          def get_page(target_url)
+            response = @version.domain.request(
+                'GET',
+                target_url
+            )
+            InsightsSegmentsPage.new(@version, response, @solution)
           end
 
           ##
@@ -268,7 +362,7 @@ module Twilio
           end
 
           ##
-          # @return [String] The link for the conversation.
+          # @return [Hash] The media identifiers of the conversation.
           def media
             @properties['media']
           end

@@ -262,6 +262,7 @@ module Twilio
                 'answer_set_id' => payload['answer_set_id'],
                 'allow_na' => payload['allow_na'],
                 'usage' => payload['usage'] == nil ? payload['usage'] : payload['usage'].to_i,
+                'answer_set' => payload['answer_set'],
                 'url' => payload['url'],
             }
 
@@ -327,6 +328,12 @@ module Twilio
           # @return [String] Questions usage
           def usage
             @properties['usage']
+          end
+
+          ##
+          # @return [Hash] Question's Answer set
+          def answer_set
+            @properties['answer_set']
           end
 
           ##

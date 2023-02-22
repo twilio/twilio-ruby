@@ -192,6 +192,23 @@ module Twilio
             end
 
             ##
+            # Update the DeviceSecretInstance
+            # @param [String] value The secret value; up to 4096 characters.
+            # @return [DeviceSecretInstance] Updated DeviceSecretInstance
+            def update(value: nil)
+              data = Twilio::Values.of({'Value' => value, })
+
+              payload = @version.update('POST', @uri, data: data)
+
+              DeviceSecretInstance.new(
+                  @version,
+                  payload,
+                  device_sid: @solution[:device_sid],
+                  key: @solution[:key],
+              )
+            end
+
+            ##
             # Delete the DeviceSecretInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
@@ -280,6 +297,14 @@ module Twilio
             # @return [DeviceSecretInstance] Fetched DeviceSecretInstance
             def fetch
               context.fetch
+            end
+
+            ##
+            # Update the DeviceSecretInstance
+            # @param [String] value The secret value; up to 4096 characters.
+            # @return [DeviceSecretInstance] Updated DeviceSecretInstance
+            def update(value: nil)
+              context.update(value: value, )
             end
 
             ##

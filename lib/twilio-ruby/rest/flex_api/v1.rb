@@ -69,9 +69,18 @@ module Twilio
         end
 
         ##
-        # @return [Twilio::REST::Flex_api::V1::AssessmentsContext]
-        def assessments
-          @assessments ||= AssessmentsContext.new self
+        # @param [String] assessment_id The id of the assessment to be modified
+        # @return [Twilio::REST::Flex_api::V1::AssessmentsContext] if assessment_id was passed.
+        # @return [Twilio::REST::Flex_api::V1::AssessmentsList]
+        def assessments(assessment_id=:unset)
+          if assessment_id.nil?
+              raise ArgumentError, 'assessment_id cannot be nil'
+          end
+          if assessment_id == :unset
+              @assessments ||= AssessmentsList.new self
+          else
+              AssessmentsContext.new(self, assessment_id)
+          end
         end
 
         ##
