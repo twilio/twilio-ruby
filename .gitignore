@@ -15,7 +15,7 @@ docs/_build
 .rakeTasks
 .yardoc
 .openapi-generator*
-.idea
+.idea/
 
 
 coverage
