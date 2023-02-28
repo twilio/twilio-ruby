@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a29d7be-2080-451d-b694-5073430259fb" name="Changes" comment="" />
+    <list default="true" id="4a29d7be-2080-451d-b694-5073430259fb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,7 +46,7 @@
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/Users/kgoswami/Projects/github/twilio-ruby",
+    "last_opened_file_path": "/Users/kgoswami/Projects/github/twilio-ruby/lib/twilio-ruby",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -59,6 +61,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/twilio-ruby" />
       <recent name="$PROJECT_DIR$/lib/twilio-ruby/rest" />
       <recent name="$PROJECT_DIR$/spec/integration" />
       <recent name="$PROJECT_DIR$/spec/rest" />
@@ -329,7 +332,7 @@
       <workItem from="1675401526054" duration="21912000" />
       <workItem from="1675744344065" duration="2466000" />
       <workItem from="1675903505037" duration="14196000" />
-      <workItem from="1677527741108" duration="1939000" />
+      <workItem from="1677527741108" duration="3434000" />
     </task>
     <servers />
   </component>
@@ -379,7 +382,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/lib/twilio-ruby/rest.rb</url>
-          <line>8</line>
+          <line>9</line>
           <properties myBlockOrdinal="-1">
             <option name="block-ordinal" value="-1" />
           </properties>
