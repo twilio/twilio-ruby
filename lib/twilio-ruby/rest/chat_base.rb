@@ -16,23 +16,26 @@ module Twilio
       #
       # @param twilio - The twilio client
       #
-      def initialize(twilio: any)
-        super(twilio, "https://chat.twilio.com")
-        @v1 ||= nil
-        @v2 ||= nil
-        @v3 ||= nil
+      def initialize(twilio)
+        super(twilio)
+        @base_url =  "https://chat.twilio.com"
+        @host = "chat.twilio.com"
+        @port = 443
+        @v1 = nil
+        @v2 = nil
+        @v3 = nil
       end
 
       def v1
-        @v1 ||= V1.new self
+        @v1 ||= Chat::V1.new self
       end
 
       def v2
-        @v2 ||= V2.new self
+        @v2 ||= Chat::V2.new self
       end
 
       def v3
-        @v3 ||= V3.new self
+        @v3 ||= Chat::V3.new self
       end
 
       ##
@@ -43,3 +46,4 @@ module Twilio
     end
   end
 end
+

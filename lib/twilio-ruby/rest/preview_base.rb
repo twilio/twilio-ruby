@@ -16,38 +16,41 @@ module Twilio
       #
       # @param twilio - The twilio client
       #
-      def initialize(twilio: any)
-        super(twilio, "https://preview.twilio.com")
-        @deployed_devices ||= nil
-        @hosted_numbers ||= nil
-        @sync ||= nil
-        @marketplace ||= nil
-        @understand ||= nil
-        @wireless ||= nil
+      def initialize(twilio)
+        super(twilio)
+        @base_url =  "https://preview.twilio.com"
+        @host = "preview.twilio.com"
+        @port = 443
+        @deployed_devices = nil
+        @hosted_numbers = nil
+        @sync = nil
+        @marketplace = nil
+        @understand = nil
+        @wireless = nil
       end
 
       def deployed_devices
-        @deployed_devices ||= DeployedDevices.new self
+        @deployed_devices ||= Preview::DeployedDevices.new self
       end
 
       def hosted_numbers
-        @hosted_numbers ||= HostedNumbers.new self
+        @hosted_numbers ||= Preview::HostedNumbers.new self
       end
 
       def sync
-        @sync ||= Sync.new self
+        @sync ||= Preview::Sync.new self
       end
 
       def marketplace
-        @marketplace ||= Marketplace.new self
+        @marketplace ||= Preview::Marketplace.new self
       end
 
       def understand
-        @understand ||= Understand.new self
+        @understand ||= Preview::Understand.new self
       end
 
       def wireless
-        @wireless ||= Wireless.new self
+        @wireless ||= Preview::Wireless.new self
       end
 
       ##
@@ -58,3 +61,4 @@ module Twilio
     end
   end
 end
+

@@ -16,13 +16,16 @@ module Twilio
       #
       # @param twilio - The twilio client
       #
-      def initialize(twilio: any)
-        super(twilio, "https://numbers.twilio.com")
-        @v2 ||= nil
+      def initialize(twilio)
+        super(twilio)
+        @base_url =  "https://numbers.twilio.com"
+        @host = "numbers.twilio.com"
+        @port = 443
+        @v2 = nil
       end
 
       def v2
-        @v2 ||= V2.new self
+        @v2 ||= Numbers::V2.new self
       end
 
       ##
@@ -33,3 +36,4 @@ module Twilio
     end
   end
 end
+

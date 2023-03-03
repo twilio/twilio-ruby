@@ -16,13 +16,16 @@ module Twilio
       #
       # @param twilio - The twilio client
       #
-      def initialize(twilio: any)
-        super(twilio, "https://microvisor.twilio.com")
-        @v1 ||= nil
+      def initialize(twilio)
+        super(twilio)
+        @base_url =  "https://microvisor.twilio.com"
+        @host = "microvisor.twilio.com"
+        @port = 443
+        @v1 = nil
       end
 
       def v1
-        @v1 ||= V1.new self
+        @v1 ||= Microvisor::V1.new self
       end
 
       ##
@@ -33,3 +36,4 @@ module Twilio
     end
   end
 end
+
