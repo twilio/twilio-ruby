@@ -13,13 +13,12 @@ describe 'InsightsQuestionnairesQuestion' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.flex_api.v1.insights_questionnaires_question.create(category_id: 'category_id', question: 'question', description: 'description', answer_set_id: 'answer_set_id', allow_na: true, token: 'token')
+      @client.flex_api.v1.insights_questionnaires_question.create(category_id: 'category_id', question: 'question', answer_set_id: 'answer_set_id', allow_na: true, token: 'token')
     }.to raise_exception(Twilio::REST::TwilioError)
 
     values = {
         'CategoryId' => 'category_id',
         'Question' => 'question',
-        'Description' => 'description',
         'AnswerSetId' => 'answer_set_id',
         'AllowNa' => true,
     }
@@ -77,7 +76,7 @@ describe 'InsightsQuestionnairesQuestion' do
       ]
     ))
 
-    actual = @client.flex_api.v1.insights_questionnaires_question.create(category_id: 'category_id', question: 'question', description: 'description', answer_set_id: 'answer_set_id', allow_na: true)
+    actual = @client.flex_api.v1.insights_questionnaires_question.create(category_id: 'category_id', question: 'question', answer_set_id: 'answer_set_id', allow_na: true)
 
     expect(actual).to_not eq(nil)
   end

@@ -157,6 +157,9 @@ module Twilio
             # Path Solution
             @solution = {sid: sid, }
             @uri = "/Apps/#{@solution[:sid]}"
+
+            # Dependents
+            @app_manifests = nil
           end
 
           ##
@@ -173,6 +176,14 @@ module Twilio
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
              @version.delete('DELETE', @uri)
+          end
+
+          ##
+          # Access the app_manifests
+          # @return [AppManifestList]
+          # @return [AppManifestContext]
+          def app_manifests
+            AppManifestContext.new(@version, @solution[:sid], )
           end
 
           ##
@@ -211,6 +222,7 @@ module Twilio
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                 'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                 'url' => payload['url'],
+                'links' => payload['links'],
             }
 
             # Context
@@ -272,6 +284,12 @@ module Twilio
           end
 
           ##
+          # @return [String] The links
+          def links
+            @properties['links']
+          end
+
+          ##
           # Fetch the AppInstance
           # @return [AppInstance] Fetched AppInstance
           def fetch
@@ -283,6 +301,13 @@ module Twilio
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete
+          end
+
+          ##
+          # Access the app_manifests
+          # @return [app_manifests] app_manifests
+          def app_manifests
+            context.app_manifests
           end
 
           ##
