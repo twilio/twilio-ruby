@@ -2,10 +2,6 @@
 
 module Twilio
   module Util
-    def url_encode(hash)
-      warn "'Twilio::Util::url_encode has been deprecated."
-      hash.to_a.map { |p| p.map { |e| CGI.escape get_string(e) }.join '=' }.join '&'
-    end
 
     def get_string(obj)
       warn "'Twilio::Util::get_string has been deprecated."
