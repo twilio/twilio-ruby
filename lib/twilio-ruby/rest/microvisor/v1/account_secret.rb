@@ -12,21 +12,21 @@ module Twilio
       class V1 < Version
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class AppList < ListResource
+        class AccountSecretList < ListResource
           ##
-          # Initialize the AppList
+          # Initialize the AccountSecretList
           # @param [Version] version Version that contains the resource
-          # @return [AppList] AppList
+          # @return [AccountSecretList] AccountSecretList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/Apps"
+            @uri = "/Secrets"
           end
 
           ##
-          # Lists AppInstance records from the API as a list.
+          # Lists AccountSecretInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -41,7 +41,7 @@ module Twilio
           end
 
           ##
-          # Streams AppInstance records from the API as an Enumerable.
+          # Streams AccountSecretInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -60,7 +60,7 @@ module Twilio
           end
 
           ##
-          # When passed a block, yields AppInstance records from the API.
+          # When passed a block, yields AccountSecretInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -74,12 +74,12 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of AppInstance records from the API.
+          # Retrieve a single page of AccountSecretInstance records from the API.
           # Request is executed immediately.
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of AppInstance
+          # @return [Page] Page of AccountSecretInstance
           def page(page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
@@ -89,38 +89,51 @@ module Twilio
 
             response = @version.page('GET', @uri, params: params)
 
-            AppPage.new(@version, response, @solution)
+            AccountSecretPage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of AppInstance records from the API.
+          # Retrieve a single page of AccountSecretInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of AppInstance
+          # @return [Page] Page of AccountSecretInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            AppPage.new(@version, response, @solution)
+            AccountSecretPage.new(@version, response, @solution)
+          end
+
+          ##
+          # Create the AccountSecretInstance
+          # @param [String] key The secret key; up to 100 characters.
+          # @param [String] value The secret value; up to 4096 characters.
+          # @return [AccountSecretInstance] Created AccountSecretInstance
+          def create(key: nil, value: nil)
+            data = Twilio::Values.of({'Key' => key, 'Value' => value, })
+
+            payload = @version.create('POST', @uri, data: data)
+
+            AccountSecretInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Microvisor.V1.AppList>'
+            '#<Twilio.Microvisor.V1.AccountSecretList>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class AppPage < Page
+        class AccountSecretPage < Page
           ##
-          # Initialize the AppPage
+          # Initialize the AccountSecretPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [AppPage] AppPage
+          # @return [AccountSecretPage] AccountSecretPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -129,199 +142,166 @@ module Twilio
           end
 
           ##
-          # Build an instance of AppInstance
+          # Build an instance of AccountSecretInstance
           # @param [Hash] payload Payload response from the API
-          # @return [AppInstance] AppInstance
+          # @return [AccountSecretInstance] AccountSecretInstance
           def get_instance(payload)
-            AppInstance.new(@version, payload, )
+            AccountSecretInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Microvisor.V1.AppPage>'
+            '<Twilio.Microvisor.V1.AccountSecretPage>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class AppContext < InstanceContext
+        class AccountSecretContext < InstanceContext
           ##
-          # Initialize the AppContext
+          # Initialize the AccountSecretContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34-character string that uniquely identifies this App.
-          # @return [AppContext] AppContext
-          def initialize(version, sid)
+          # @param [String] key The secret key; up to 100 characters.
+          # @return [AccountSecretContext] AccountSecretContext
+          def initialize(version, key)
             super(version)
 
             # Path Solution
-            @solution = {sid: sid, }
-            @uri = "/Apps/#{@solution[:sid]}"
-
-            # Dependents
-            @app_manifests = nil
+            @solution = {key: key, }
+            @uri = "/Secrets/#{@solution[:key]}"
           end
 
           ##
-          # Fetch the AppInstance
-          # @return [AppInstance] Fetched AppInstance
+          # Fetch the AccountSecretInstance
+          # @return [AccountSecretInstance] Fetched AccountSecretInstance
           def fetch
             payload = @version.fetch('GET', @uri)
 
-            AppInstance.new(@version, payload, sid: @solution[:sid], )
+            AccountSecretInstance.new(@version, payload, key: @solution[:key], )
           end
 
           ##
-          # Delete the AppInstance
+          # Update the AccountSecretInstance
+          # @param [String] value The secret value; up to 4096 characters.
+          # @return [AccountSecretInstance] Updated AccountSecretInstance
+          def update(value: nil)
+            data = Twilio::Values.of({'Value' => value, })
+
+            payload = @version.update('POST', @uri, data: data)
+
+            AccountSecretInstance.new(@version, payload, key: @solution[:key], )
+          end
+
+          ##
+          # Delete the AccountSecretInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
              @version.delete('DELETE', @uri)
           end
 
           ##
-          # Access the app_manifests
-          # @return [AppManifestList]
-          # @return [AppManifestContext]
-          def app_manifests
-            AppManifestContext.new(@version, @solution[:sid], )
-          end
-
-          ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Microvisor.V1.AppContext #{context}>"
+            "#<Twilio.Microvisor.V1.AccountSecretContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Microvisor.V1.AppContext #{context}>"
+            "#<Twilio.Microvisor.V1.AccountSecretContext #{context}>"
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class AppInstance < InstanceResource
+        class AccountSecretInstance < InstanceResource
           ##
-          # Initialize the AppInstance
+          # Initialize the AccountSecretInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34-character string that uniquely identifies this App.
-          # @return [AppInstance] AppInstance
-          def initialize(version, payload, sid: nil)
+          # @param [String] key The secret key; up to 100 characters.
+          # @return [AccountSecretInstance] AccountSecretInstance
+          def initialize(version, payload, key: nil)
             super(version)
 
             # Marshaled Properties
             @properties = {
-                'sid' => payload['sid'],
-                'account_sid' => payload['account_sid'],
-                'hash' => payload['hash'],
-                'unique_name' => payload['unique_name'],
-                'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
-                'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                'key' => payload['key'],
+                'date_rotated' => Twilio.deserialize_iso8601_datetime(payload['date_rotated']),
                 'url' => payload['url'],
-                'links' => payload['links'],
             }
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'], }
+            @params = {'key' => key || @properties['key'], }
           end
 
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [AppContext] AppContext for this AppInstance
+          # @return [AccountSecretContext] AccountSecretContext for this AccountSecretInstance
           def context
             unless @instance_context
-              @instance_context = AppContext.new(@version, @params['sid'], )
+              @instance_context = AccountSecretContext.new(@version, @params['key'], )
             end
             @instance_context
           end
 
           ##
-          # @return [String] A string that uniquely identifies this App.
-          def sid
-            @properties['sid']
+          # @return [String] The secret key.
+          def key
+            @properties['key']
           end
 
           ##
-          # @return [String] The Account SID.
-          def account_sid
-            @properties['account_sid']
+          # @return [Time] The date_rotated
+          def date_rotated
+            @properties['date_rotated']
           end
 
           ##
-          # @return [String] App manifest hash represented as hash_algorithm:hash_value.
-          def hash
-            @properties['hash']
-          end
-
-          ##
-          # @return [String] An developer-defined string that uniquely identifies the App.
-          def unique_name
-            @properties['unique_name']
-          end
-
-          ##
-          # @return [Time] The date that this App was created.
-          def date_created
-            @properties['date_created']
-          end
-
-          ##
-          # @return [Time] The date that this App was last updated.
-          def date_updated
-            @properties['date_updated']
-          end
-
-          ##
-          # @return [String] The URL of this resource.
+          # @return [String] The absolute URL of the Secret.
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
-          def links
-            @properties['links']
-          end
-
-          ##
-          # Fetch the AppInstance
-          # @return [AppInstance] Fetched AppInstance
+          # Fetch the AccountSecretInstance
+          # @return [AccountSecretInstance] Fetched AccountSecretInstance
           def fetch
             context.fetch
           end
 
           ##
-          # Delete the AppInstance
+          # Update the AccountSecretInstance
+          # @param [String] value The secret value; up to 4096 characters.
+          # @return [AccountSecretInstance] Updated AccountSecretInstance
+          def update(value: nil)
+            context.update(value: value, )
+          end
+
+          ##
+          # Delete the AccountSecretInstance
           # @return [Boolean] true if delete succeeds, false otherwise
           def delete
             context.delete
           end
 
           ##
-          # Access the app_manifests
-          # @return [app_manifests] app_manifests
-          def app_manifests
-            context.app_manifests
-          end
-
-          ##
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Microvisor.V1.AppInstance #{values}>"
+            "<Twilio.Microvisor.V1.AccountSecretInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Microvisor.V1.AppInstance #{values}>"
+            "<Twilio.Microvisor.V1.AccountSecretInstance #{values}>"
           end
         end
       end

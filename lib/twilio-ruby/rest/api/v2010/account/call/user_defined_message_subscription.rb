@@ -40,7 +40,7 @@ module Twilio
               # @param [String] idempotency_key A unique string value to identify API call. This
               #   should be a unique string value per API call and can be a randomly generated.
               # @param [String] method The HTTP method Twilio will use when requesting the above
-              #   `Url`. Either `GET` or `POST`.
+              #   `Url`. Either `GET` or `POST`. Default is `POST`.
               # @return [UserDefinedMessageSubscriptionInstance] Created UserDefinedMessageSubscriptionInstance
               def create(callback: nil, idempotency_key: :unset, method: :unset)
                 data = Twilio::Values.of({

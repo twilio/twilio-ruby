@@ -173,8 +173,10 @@ module Twilio
           #   business or organization using the Tollfree number.
           # @param [String] business_contact_phone The phone number of the contact for the
           #   business or organization using the Tollfree number.
+          # @param [String] external_reference_id An optional external reference ID supplied
+          #   by customer and echoed back on status retrieval.
           # @return [TollfreeVerificationInstance] Created TollfreeVerificationInstance
-          def create(business_name: nil, business_website: nil, notification_email: nil, use_case_categories: nil, use_case_summary: nil, production_message_sample: nil, opt_in_image_urls: nil, opt_in_type: nil, message_volume: nil, tollfree_phone_number_sid: nil, customer_profile_sid: :unset, business_street_address: :unset, business_street_address2: :unset, business_city: :unset, business_state_province_region: :unset, business_postal_code: :unset, business_country: :unset, additional_information: :unset, business_contact_first_name: :unset, business_contact_last_name: :unset, business_contact_email: :unset, business_contact_phone: :unset)
+          def create(business_name: nil, business_website: nil, notification_email: nil, use_case_categories: nil, use_case_summary: nil, production_message_sample: nil, opt_in_image_urls: nil, opt_in_type: nil, message_volume: nil, tollfree_phone_number_sid: nil, customer_profile_sid: :unset, business_street_address: :unset, business_street_address2: :unset, business_city: :unset, business_state_province_region: :unset, business_postal_code: :unset, business_country: :unset, additional_information: :unset, business_contact_first_name: :unset, business_contact_last_name: :unset, business_contact_email: :unset, business_contact_phone: :unset, external_reference_id: :unset)
             data = Twilio::Values.of({
                 'BusinessName' => business_name,
                 'BusinessWebsite' => business_website,
@@ -198,6 +200,7 @@ module Twilio
                 'BusinessContactLastName' => business_contact_last_name,
                 'BusinessContactEmail' => business_contact_email,
                 'BusinessContactPhone' => business_contact_phone,
+                'ExternalReferenceId' => external_reference_id,
             })
 
             payload = @version.create('POST', @uri, data: data)
@@ -400,6 +403,7 @@ module Twilio
                 'status' => payload['status'],
                 'url' => payload['url'],
                 'resource_links' => payload['resource_links'],
+                'external_reference_id' => payload['external_reference_id'],
             }
 
             # Context
@@ -602,6 +606,12 @@ module Twilio
           # @return [Hash] The URLs of the documents associated with the Tollfree Verification resource
           def resource_links
             @properties['resource_links']
+          end
+
+          ##
+          # @return [String] An optional external reference ID supplied by customer and echoed back on status retrieval
+          def external_reference_id
+            @properties['external_reference_id']
           end
 
           ##

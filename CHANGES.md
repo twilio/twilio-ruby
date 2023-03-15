@@ -1,6 +1,47 @@
 twilio-ruby changelog
 =====================
 
+[2023-03-09] Version 5.74.5
+---------------------------
+**Api**
+- Add new categories for whatsapp template
+
+**Lookups**
+- Remove `validation_results` from the `default_output_properties`
+
+**Supersim**
+- Add ESimProfile's `matching_id` and `activation_code` parameters to libraries
+
+
+[2023-02-22] Version 5.74.4
+---------------------------
+**Api**
+- Remove `scheduled_for` property from message resource
+- Add `scheduled_for` property to message resource
+
+
+[2023-02-08] Version 5.74.3
+---------------------------
+**Lookups**
+- Add `disposable_phone_number_risk` package to the lookup response
+- Add `sms_pumping_risk` package to the lookup response
+
+
+[2023-01-25] Version 5.74.2
+---------------------------
+**Api**
+- Add `public_application_connect_enabled` param to Application resource
+
+**Messaging**
+- Add new tollfree verification API property (ExternalReferenceId)]
+
+**Verify**
+- Add `device_ip` parameter and channel `auto` for sna/sms orchestration
+
+**Twiml**
+- Add support for `<Application>` noun and `<ApplicationSid>` noun, nested `<Parameter>` to `<Hangup>` and `<Leave>` verb
+
+
 [2023-01-11] Version 5.74.1
 ---------------------------
 **Library - Chore**

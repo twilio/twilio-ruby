@@ -10,11 +10,13 @@ module Twilio
   module REST
     class FlexApi < Domain
       class V1 < Version
-        class UserRolesList < ListResource
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        class InsightsUserRolesList < ListResource
           ##
-          # Initialize the UserRolesList
+          # Initialize the InsightsUserRolesList
           # @param [Version] version Version that contains the resource
-          # @return [UserRolesList] UserRolesList
+          # @return [InsightsUserRolesList] InsightsUserRolesList
           def initialize(version)
             super(version)
 
@@ -25,17 +27,19 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.FlexApi.V1.UserRolesList>'
+            '#<Twilio.FlexApi.V1.InsightsUserRolesList>'
           end
         end
 
-        class UserRolesPage < Page
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        class InsightsUserRolesPage < Page
           ##
-          # Initialize the UserRolesPage
+          # Initialize the InsightsUserRolesPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [UserRolesPage] UserRolesPage
+          # @return [InsightsUserRolesPage] InsightsUserRolesPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -44,25 +48,27 @@ module Twilio
           end
 
           ##
-          # Build an instance of UserRolesInstance
+          # Build an instance of InsightsUserRolesInstance
           # @param [Hash] payload Payload response from the API
-          # @return [UserRolesInstance] UserRolesInstance
+          # @return [InsightsUserRolesInstance] InsightsUserRolesInstance
           def get_instance(payload)
-            UserRolesInstance.new(@version, payload, )
+            InsightsUserRolesInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.FlexApi.V1.UserRolesPage>'
+            '<Twilio.FlexApi.V1.InsightsUserRolesPage>'
           end
         end
 
-        class UserRolesContext < InstanceContext
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        class InsightsUserRolesContext < InstanceContext
           ##
-          # Initialize the UserRolesContext
+          # Initialize the InsightsUserRolesContext
           # @param [Version] version Version that contains the resource
-          # @return [UserRolesContext] UserRolesContext
+          # @return [InsightsUserRolesContext] InsightsUserRolesContext
           def initialize(version)
             super(version)
 
@@ -72,38 +78,40 @@ module Twilio
           end
 
           ##
-          # Fetch the UserRolesInstance
-          # @param [String] token The Token HTTP request header
-          # @return [UserRolesInstance] Fetched UserRolesInstance
-          def fetch(token: :unset)
-            headers = Twilio::Values.of({'Token' => token, })
+          # Fetch the InsightsUserRolesInstance
+          # @param [String] authorization The Authorization HTTP request header
+          # @return [InsightsUserRolesInstance] Fetched InsightsUserRolesInstance
+          def fetch(authorization: :unset)
+            headers = Twilio::Values.of({'Authorization' => authorization, })
 
             payload = @version.fetch('GET', @uri, headers: headers)
 
-            UserRolesInstance.new(@version, payload, )
+            InsightsUserRolesInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.FlexApi.V1.UserRolesContext #{context}>"
+            "#<Twilio.FlexApi.V1.InsightsUserRolesContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.FlexApi.V1.UserRolesContext #{context}>"
+            "#<Twilio.FlexApi.V1.InsightsUserRolesContext #{context}>"
           end
         end
 
-        class UserRolesInstance < InstanceResource
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        class InsightsUserRolesInstance < InstanceResource
           ##
-          # Initialize the UserRolesInstance
+          # Initialize the InsightsUserRolesInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @return [UserRolesInstance] UserRolesInstance
+          # @return [InsightsUserRolesInstance] InsightsUserRolesInstance
           def initialize(version, payload)
             super(version)
 
@@ -118,10 +126,10 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [UserRolesContext] UserRolesContext for this UserRolesInstance
+          # @return [InsightsUserRolesContext] InsightsUserRolesContext for this InsightsUserRolesInstance
           def context
             unless @instance_context
-              @instance_context = UserRolesContext.new(@version, )
+              @instance_context = InsightsUserRolesContext.new(@version, )
             end
             @instance_context
           end
@@ -139,25 +147,25 @@ module Twilio
           end
 
           ##
-          # Fetch the UserRolesInstance
-          # @param [String] token The Token HTTP request header
-          # @return [UserRolesInstance] Fetched UserRolesInstance
-          def fetch(token: :unset)
-            context.fetch(token: token, )
+          # Fetch the InsightsUserRolesInstance
+          # @param [String] authorization The Authorization HTTP request header
+          # @return [InsightsUserRolesInstance] Fetched InsightsUserRolesInstance
+          def fetch(authorization: :unset)
+            context.fetch(authorization: authorization, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.FlexApi.V1.UserRolesInstance #{values}>"
+            "<Twilio.FlexApi.V1.InsightsUserRolesInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.FlexApi.V1.UserRolesInstance #{values}>"
+            "<Twilio.FlexApi.V1.InsightsUserRolesInstance #{values}>"
           end
         end
       end

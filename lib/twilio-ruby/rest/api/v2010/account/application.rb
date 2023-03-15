@@ -61,8 +61,11 @@ module Twilio
             #   method to send message status information to your application.
             # @param [String] friendly_name A descriptive string that you create to describe
             #   the new application. It can be up to 64 characters long.
+            # @param [Boolean] public_application_connect_enabled Whether to allow other
+            #   Twilio accounts to dial this applicaton using Dial verb. Can be: `true` or
+            #   `false`.
             # @return [ApplicationInstance] Created ApplicationInstance
-            def create(api_version: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, voice_caller_id_lookup: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, sms_status_callback: :unset, message_status_callback: :unset, friendly_name: :unset)
+            def create(api_version: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, voice_caller_id_lookup: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, sms_status_callback: :unset, message_status_callback: :unset, friendly_name: :unset, public_application_connect_enabled: :unset)
               data = Twilio::Values.of({
                   'ApiVersion' => api_version,
                   'VoiceUrl' => voice_url,
@@ -79,6 +82,7 @@ module Twilio
                   'SmsStatusCallback' => sms_status_callback,
                   'MessageStatusCallback' => message_status_callback,
                   'FriendlyName' => friendly_name,
+                  'PublicApplicationConnectEnabled' => public_application_connect_enabled,
               })
 
               payload = @version.create('POST', @uri, data: data)
@@ -283,8 +287,11 @@ module Twilio
             #   sent by the application. Deprecated, included for backwards compatibility.
             # @param [String] message_status_callback The URL we should call using a POST
             #   method to send message status information to your application.
+            # @param [Boolean] public_application_connect_enabled Whether to allow other
+            #   Twilio accounts to dial this applicaton using Dial verb. Can be: `true` or
+            #   `false`.
             # @return [ApplicationInstance] Updated ApplicationInstance
-            def update(friendly_name: :unset, api_version: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, voice_caller_id_lookup: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, sms_status_callback: :unset, message_status_callback: :unset)
+            def update(friendly_name: :unset, api_version: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, voice_caller_id_lookup: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, sms_status_callback: :unset, message_status_callback: :unset, public_application_connect_enabled: :unset)
               data = Twilio::Values.of({
                   'FriendlyName' => friendly_name,
                   'ApiVersion' => api_version,
@@ -301,6 +308,7 @@ module Twilio
                   'SmsFallbackMethod' => sms_fallback_method,
                   'SmsStatusCallback' => sms_status_callback,
                   'MessageStatusCallback' => message_status_callback,
+                  'PublicApplicationConnectEnabled' => public_application_connect_enabled,
               })
 
               payload = @version.update('POST', @uri, data: data)
@@ -364,6 +372,7 @@ module Twilio
                   'voice_fallback_url' => payload['voice_fallback_url'],
                   'voice_method' => payload['voice_method'],
                   'voice_url' => payload['voice_url'],
+                  'public_application_connect_enabled' => payload['public_application_connect_enabled'],
               }
 
               # Context
@@ -503,6 +512,12 @@ module Twilio
             end
 
             ##
+            # @return [Boolean] Whether to allow other Twilio accounts to dial this application
+            def public_application_connect_enabled
+              @properties['public_application_connect_enabled']
+            end
+
+            ##
             # Delete the ApplicationInstance
             # @return [Boolean] true if delete succeeds, false otherwise
             def delete
@@ -551,8 +566,11 @@ module Twilio
             #   sent by the application. Deprecated, included for backwards compatibility.
             # @param [String] message_status_callback The URL we should call using a POST
             #   method to send message status information to your application.
+            # @param [Boolean] public_application_connect_enabled Whether to allow other
+            #   Twilio accounts to dial this applicaton using Dial verb. Can be: `true` or
+            #   `false`.
             # @return [ApplicationInstance] Updated ApplicationInstance
-            def update(friendly_name: :unset, api_version: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, voice_caller_id_lookup: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, sms_status_callback: :unset, message_status_callback: :unset)
+            def update(friendly_name: :unset, api_version: :unset, voice_url: :unset, voice_method: :unset, voice_fallback_url: :unset, voice_fallback_method: :unset, status_callback: :unset, status_callback_method: :unset, voice_caller_id_lookup: :unset, sms_url: :unset, sms_method: :unset, sms_fallback_url: :unset, sms_fallback_method: :unset, sms_status_callback: :unset, message_status_callback: :unset, public_application_connect_enabled: :unset)
               context.update(
                   friendly_name: friendly_name,
                   api_version: api_version,
@@ -569,6 +587,7 @@ module Twilio
                   sms_fallback_method: sms_fallback_method,
                   sms_status_callback: sms_status_callback,
                   message_status_callback: message_status_callback,
+                  public_application_connect_enabled: public_application_connect_enabled,
               )
             end
 

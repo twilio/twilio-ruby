@@ -8,27 +8,42 @@
 
 module Twilio
   module REST
-    class Microvisor < Domain
+    class FlexApi < Domain
       class V1 < Version
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class AppList < ListResource
+        class InsightsQuestionnairesCategoryList < ListResource
           ##
-          # Initialize the AppList
+          # Initialize the InsightsQuestionnairesCategoryList
           # @param [Version] version Version that contains the resource
-          # @return [AppList] AppList
+          # @return [InsightsQuestionnairesCategoryList] InsightsQuestionnairesCategoryList
           def initialize(version)
             super(version)
 
             # Path Solution
             @solution = {}
-            @uri = "/Apps"
+            @uri = "/Insights/QM/Categories"
           end
 
           ##
-          # Lists AppInstance records from the API as a list.
+          # Create the InsightsQuestionnairesCategoryInstance
+          # @param [String] name The name of this category.
+          # @param [String] token The Token HTTP request header
+          # @return [InsightsQuestionnairesCategoryInstance] Created InsightsQuestionnairesCategoryInstance
+          def create(name: nil, token: :unset)
+            data = Twilio::Values.of({'Name' => name, })
+            headers = Twilio::Values.of({'Token' => token, })
+
+            payload = @version.create('POST', @uri, data: data, headers: headers)
+
+            InsightsQuestionnairesCategoryInstance.new(@version, payload, )
+          end
+
+          ##
+          # Lists InsightsQuestionnairesCategoryInstance records from the API as a list.
           # Unlike stream(), this operation is eager and will load `limit` records into
           # memory before returning.
+          # @param [String] token The Token HTTP request header
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit.  Default is no limit
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -36,14 +51,15 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Array] Array of up to limit results
-          def list(limit: nil, page_size: nil)
-            self.stream(limit: limit, page_size: page_size).entries
+          def list(token: :unset, limit: nil, page_size: nil)
+            self.stream(token: token, limit: limit, page_size: page_size).entries
           end
 
           ##
-          # Streams AppInstance records from the API as an Enumerable.
+          # Streams InsightsQuestionnairesCategoryInstance records from the API as an Enumerable.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
+          # @param [String] token The Token HTTP request header
           # @param [Integer] limit Upper limit for the number of records to return. stream()
           #    guarantees to never return more than limit. Default is no limit.
           # @param [Integer] page_size Number of records to fetch per request, when
@@ -51,16 +67,16 @@ module Twilio
           #    but a limit is defined, stream() will attempt to read the limit with the most
           #    efficient page size, i.e. min(limit, 1000)
           # @return [Enumerable] Enumerable that will yield up to limit results
-          def stream(limit: nil, page_size: nil)
+          def stream(token: :unset, limit: nil, page_size: nil)
             limits = @version.read_limits(limit, page_size)
 
-            page = self.page(page_size: limits[:page_size], )
+            page = self.page(token: token, page_size: limits[:page_size], )
 
             @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
           end
 
           ##
-          # When passed a block, yields AppInstance records from the API.
+          # When passed a block, yields InsightsQuestionnairesCategoryInstance records from the API.
           # This operation lazily loads records as efficiently as possible until the limit
           # is reached.
           def each
@@ -74,53 +90,55 @@ module Twilio
           end
 
           ##
-          # Retrieve a single page of AppInstance records from the API.
+          # Retrieve a single page of InsightsQuestionnairesCategoryInstance records from the API.
           # Request is executed immediately.
+          # @param [String] token The Token HTTP request header
           # @param [String] page_token PageToken provided by the API
           # @param [Integer] page_number Page Number, this value is simply for client state
           # @param [Integer] page_size Number of records to return, defaults to 50
-          # @return [Page] Page of AppInstance
-          def page(page_token: :unset, page_number: :unset, page_size: :unset)
+          # @return [Page] Page of InsightsQuestionnairesCategoryInstance
+          def page(token: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
             params = Twilio::Values.of({
                 'PageToken' => page_token,
                 'Page' => page_number,
                 'PageSize' => page_size,
             })
+            headers = Twilio::Values.of({'Token' => token, })
 
-            response = @version.page('GET', @uri, params: params)
+            response = @version.page('GET', @uri, params: params, headers: headers)
 
-            AppPage.new(@version, response, @solution)
+            InsightsQuestionnairesCategoryPage.new(@version, response, @solution)
           end
 
           ##
-          # Retrieve a single page of AppInstance records from the API.
+          # Retrieve a single page of InsightsQuestionnairesCategoryInstance records from the API.
           # Request is executed immediately.
           # @param [String] target_url API-generated URL for the requested results page
-          # @return [Page] Page of AppInstance
+          # @return [Page] Page of InsightsQuestionnairesCategoryInstance
           def get_page(target_url)
             response = @version.domain.request(
                 'GET',
                 target_url
             )
-            AppPage.new(@version, response, @solution)
+            InsightsQuestionnairesCategoryPage.new(@version, response, @solution)
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.Microvisor.V1.AppList>'
+            '#<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryList>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class AppPage < Page
+        class InsightsQuestionnairesCategoryPage < Page
           ##
-          # Initialize the AppPage
+          # Initialize the InsightsQuestionnairesCategoryPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [AppPage] AppPage
+          # @return [InsightsQuestionnairesCategoryPage] InsightsQuestionnairesCategoryPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -129,199 +147,164 @@ module Twilio
           end
 
           ##
-          # Build an instance of AppInstance
+          # Build an instance of InsightsQuestionnairesCategoryInstance
           # @param [Hash] payload Payload response from the API
-          # @return [AppInstance] AppInstance
+          # @return [InsightsQuestionnairesCategoryInstance] InsightsQuestionnairesCategoryInstance
           def get_instance(payload)
-            AppInstance.new(@version, payload, )
+            InsightsQuestionnairesCategoryInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.Microvisor.V1.AppPage>'
+            '<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryPage>'
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class AppContext < InstanceContext
+        class InsightsQuestionnairesCategoryContext < InstanceContext
           ##
-          # Initialize the AppContext
+          # Initialize the InsightsQuestionnairesCategoryContext
           # @param [Version] version Version that contains the resource
-          # @param [String] sid A 34-character string that uniquely identifies this App.
-          # @return [AppContext] AppContext
-          def initialize(version, sid)
+          # @param [String] category_id The ID of the category to be update
+          # @return [InsightsQuestionnairesCategoryContext] InsightsQuestionnairesCategoryContext
+          def initialize(version, category_id)
             super(version)
 
             # Path Solution
-            @solution = {sid: sid, }
-            @uri = "/Apps/#{@solution[:sid]}"
-
-            # Dependents
-            @app_manifests = nil
+            @solution = {category_id: category_id, }
+            @uri = "/Insights/QM/Categories/#{@solution[:category_id]}"
           end
 
           ##
-          # Fetch the AppInstance
-          # @return [AppInstance] Fetched AppInstance
-          def fetch
-            payload = @version.fetch('GET', @uri)
+          # Update the InsightsQuestionnairesCategoryInstance
+          # @param [String] name The name of this category.
+          # @param [String] token The Token HTTP request header
+          # @return [InsightsQuestionnairesCategoryInstance] Updated InsightsQuestionnairesCategoryInstance
+          def update(name: nil, token: :unset)
+            data = Twilio::Values.of({'Name' => name, })
+            headers = Twilio::Values.of({'Token' => token, })
 
-            AppInstance.new(@version, payload, sid: @solution[:sid], )
+            payload = @version.update('POST', @uri, data: data, headers: headers)
+
+            InsightsQuestionnairesCategoryInstance.new(@version, payload, category_id: @solution[:category_id], )
           end
 
           ##
-          # Delete the AppInstance
+          # Delete the InsightsQuestionnairesCategoryInstance
+          # @param [String] token The Token HTTP request header
           # @return [Boolean] true if delete succeeds, false otherwise
-          def delete
-             @version.delete('DELETE', @uri)
-          end
+          def delete(token: :unset)
+            headers = Twilio::Values.of({'Token' => token, })
 
-          ##
-          # Access the app_manifests
-          # @return [AppManifestList]
-          # @return [AppManifestContext]
-          def app_manifests
-            AppManifestContext.new(@version, @solution[:sid], )
+             @version.delete('DELETE', @uri, headers: headers)
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Microvisor.V1.AppContext #{context}>"
+            "#<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.Microvisor.V1.AppContext #{context}>"
+            "#<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryContext #{context}>"
           end
         end
 
         ##
         # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-        class AppInstance < InstanceResource
+        class InsightsQuestionnairesCategoryInstance < InstanceResource
           ##
-          # Initialize the AppInstance
+          # Initialize the InsightsQuestionnairesCategoryInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @param [String] sid A 34-character string that uniquely identifies this App.
-          # @return [AppInstance] AppInstance
-          def initialize(version, payload, sid: nil)
+          # @param [String] category_id The ID of the category to be update
+          # @return [InsightsQuestionnairesCategoryInstance] InsightsQuestionnairesCategoryInstance
+          def initialize(version, payload, category_id: nil)
             super(version)
 
             # Marshaled Properties
             @properties = {
-                'sid' => payload['sid'],
                 'account_sid' => payload['account_sid'],
-                'hash' => payload['hash'],
-                'unique_name' => payload['unique_name'],
-                'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
-                'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                'category_id' => payload['category_id'],
+                'name' => payload['name'],
                 'url' => payload['url'],
-                'links' => payload['links'],
             }
 
             # Context
             @instance_context = nil
-            @params = {'sid' => sid || @properties['sid'], }
+            @params = {'category_id' => category_id || @properties['category_id'], }
           end
 
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [AppContext] AppContext for this AppInstance
+          # @return [InsightsQuestionnairesCategoryContext] InsightsQuestionnairesCategoryContext for this InsightsQuestionnairesCategoryInstance
           def context
             unless @instance_context
-              @instance_context = AppContext.new(@version, @params['sid'], )
+              @instance_context = InsightsQuestionnairesCategoryContext.new(@version, @params['category_id'], )
             end
             @instance_context
           end
 
           ##
-          # @return [String] A string that uniquely identifies this App.
-          def sid
-            @properties['sid']
-          end
-
-          ##
-          # @return [String] The Account SID.
+          # @return [String] The SID of the Account that created the resource and owns this Flex Insights
           def account_sid
             @properties['account_sid']
           end
 
           ##
-          # @return [String] App manifest hash represented as hash_algorithm:hash_value.
-          def hash
-            @properties['hash']
+          # @return [String] Unique category ID
+          def category_id
+            @properties['category_id']
           end
 
           ##
-          # @return [String] An developer-defined string that uniquely identifies the App.
-          def unique_name
-            @properties['unique_name']
+          # @return [String] The category name.
+          def name
+            @properties['name']
           end
 
           ##
-          # @return [Time] The date that this App was created.
-          def date_created
-            @properties['date_created']
-          end
-
-          ##
-          # @return [Time] The date that this App was last updated.
-          def date_updated
-            @properties['date_updated']
-          end
-
-          ##
-          # @return [String] The URL of this resource.
+          # @return [String] The url
           def url
             @properties['url']
           end
 
           ##
-          # @return [String] The links
-          def links
-            @properties['links']
+          # Update the InsightsQuestionnairesCategoryInstance
+          # @param [String] name The name of this category.
+          # @param [String] token The Token HTTP request header
+          # @return [InsightsQuestionnairesCategoryInstance] Updated InsightsQuestionnairesCategoryInstance
+          def update(name: nil, token: :unset)
+            context.update(name: name, token: token, )
           end
 
           ##
-          # Fetch the AppInstance
-          # @return [AppInstance] Fetched AppInstance
-          def fetch
-            context.fetch
-          end
-
-          ##
-          # Delete the AppInstance
+          # Delete the InsightsQuestionnairesCategoryInstance
+          # @param [String] token The Token HTTP request header
           # @return [Boolean] true if delete succeeds, false otherwise
-          def delete
-            context.delete
-          end
-
-          ##
-          # Access the app_manifests
-          # @return [app_manifests] app_manifests
-          def app_manifests
-            context.app_manifests
+          def delete(token: :unset)
+            context.delete(token: token, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Microvisor.V1.AppInstance #{values}>"
+            "<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.Microvisor.V1.AppInstance #{values}>"
+            "<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryInstance #{values}>"
           end
         end
       end

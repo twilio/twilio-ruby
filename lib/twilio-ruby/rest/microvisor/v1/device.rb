@@ -157,6 +157,10 @@ module Twilio
             # Path Solution
             @solution = {sid: sid, }
             @uri = "/Devices/#{@solution[:sid]}"
+
+            # Dependents
+            @device_configs = nil
+            @device_secrets = nil
           end
 
           ##
@@ -187,6 +191,42 @@ module Twilio
             payload = @version.update('POST', @uri, data: data)
 
             DeviceInstance.new(@version, payload, sid: @solution[:sid], )
+          end
+
+          ##
+          # Access the device_configs
+          # @return [DeviceConfigList]
+          # @return [DeviceConfigContext] if key was passed.
+          def device_configs(key=:unset)
+            raise ArgumentError, 'key cannot be nil' if key.nil?
+
+            if key != :unset
+              return DeviceConfigContext.new(@version, @solution[:sid], key, )
+            end
+
+            unless @device_configs
+              @device_configs = DeviceConfigList.new(@version, device_sid: @solution[:sid], )
+            end
+
+            @device_configs
+          end
+
+          ##
+          # Access the device_secrets
+          # @return [DeviceSecretList]
+          # @return [DeviceSecretContext] if key was passed.
+          def device_secrets(key=:unset)
+            raise ArgumentError, 'key cannot be nil' if key.nil?
+
+            if key != :unset
+              return DeviceSecretContext.new(@version, @solution[:sid], key, )
+            end
+
+            unless @device_secrets
+              @device_secrets = DeviceSecretList.new(@version, device_sid: @solution[:sid], )
+            end
+
+            @device_secrets
           end
 
           ##
@@ -317,6 +357,20 @@ module Twilio
           # @return [DeviceInstance] Updated DeviceInstance
           def update(unique_name: :unset, target_app: :unset, logging_enabled: :unset)
             context.update(unique_name: unique_name, target_app: target_app, logging_enabled: logging_enabled, )
+          end
+
+          ##
+          # Access the device_configs
+          # @return [device_configs] device_configs
+          def device_configs
+            context.device_configs
+          end
+
+          ##
+          # Access the device_secrets
+          # @return [device_secrets] device_secrets
+          def device_secrets
+            context.device_secrets
           end
 
           ##

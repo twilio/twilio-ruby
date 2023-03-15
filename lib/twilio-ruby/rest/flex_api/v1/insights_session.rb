@@ -10,11 +10,13 @@ module Twilio
   module REST
     class FlexApi < Domain
       class V1 < Version
-        class GoodDataList < ListResource
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        class InsightsSessionList < ListResource
           ##
-          # Initialize the GoodDataList
+          # Initialize the InsightsSessionList
           # @param [Version] version Version that contains the resource
-          # @return [GoodDataList] GoodDataList
+          # @return [InsightsSessionList] InsightsSessionList
           def initialize(version)
             super(version)
 
@@ -25,17 +27,19 @@ module Twilio
           ##
           # Provide a user friendly representation
           def to_s
-            '#<Twilio.FlexApi.V1.GoodDataList>'
+            '#<Twilio.FlexApi.V1.InsightsSessionList>'
           end
         end
 
-        class GoodDataPage < Page
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        class InsightsSessionPage < Page
           ##
-          # Initialize the GoodDataPage
+          # Initialize the InsightsSessionPage
           # @param [Version] version Version that contains the resource
           # @param [Response] response Response from the API
           # @param [Hash] solution Path solution for the resource
-          # @return [GoodDataPage] GoodDataPage
+          # @return [InsightsSessionPage] InsightsSessionPage
           def initialize(version, response, solution)
             super(version, response)
 
@@ -44,25 +48,27 @@ module Twilio
           end
 
           ##
-          # Build an instance of GoodDataInstance
+          # Build an instance of InsightsSessionInstance
           # @param [Hash] payload Payload response from the API
-          # @return [GoodDataInstance] GoodDataInstance
+          # @return [InsightsSessionInstance] InsightsSessionInstance
           def get_instance(payload)
-            GoodDataInstance.new(@version, payload, )
+            InsightsSessionInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
-            '<Twilio.FlexApi.V1.GoodDataPage>'
+            '<Twilio.FlexApi.V1.InsightsSessionPage>'
           end
         end
 
-        class GoodDataContext < InstanceContext
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        class InsightsSessionContext < InstanceContext
           ##
-          # Initialize the GoodDataContext
+          # Initialize the InsightsSessionContext
           # @param [Version] version Version that contains the resource
-          # @return [GoodDataContext] GoodDataContext
+          # @return [InsightsSessionContext] InsightsSessionContext
           def initialize(version)
             super(version)
 
@@ -72,38 +78,40 @@ module Twilio
           end
 
           ##
-          # Create the GoodDataInstance
-          # @param [String] token The Token HTTP request header
-          # @return [GoodDataInstance] Created GoodDataInstance
-          def create(token: :unset)
-            headers = Twilio::Values.of({'Token' => token, })
+          # Create the InsightsSessionInstance
+          # @param [String] authorization The Authorization HTTP request header
+          # @return [InsightsSessionInstance] Created InsightsSessionInstance
+          def create(authorization: :unset)
+            headers = Twilio::Values.of({'Authorization' => authorization, })
 
             payload = @version.create('POST', @uri, headers: headers)
 
-            GoodDataInstance.new(@version, payload, )
+            InsightsSessionInstance.new(@version, payload, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.FlexApi.V1.GoodDataContext #{context}>"
+            "#<Twilio.FlexApi.V1.InsightsSessionContext #{context}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
-            "#<Twilio.FlexApi.V1.GoodDataContext #{context}>"
+            "#<Twilio.FlexApi.V1.InsightsSessionContext #{context}>"
           end
         end
 
-        class GoodDataInstance < InstanceResource
+        ##
+        # PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+        class InsightsSessionInstance < InstanceResource
           ##
-          # Initialize the GoodDataInstance
+          # Initialize the InsightsSessionInstance
           # @param [Version] version Version that contains the resource
           # @param [Hash] payload payload that contains response from Twilio
-          # @return [GoodDataInstance] GoodDataInstance
+          # @return [InsightsSessionInstance] InsightsSessionInstance
           def initialize(version, payload)
             super(version)
 
@@ -124,10 +132,10 @@ module Twilio
           ##
           # Generate an instance context for the instance, the context is capable of
           # performing various actions.  All instance actions are proxied to the context
-          # @return [GoodDataContext] GoodDataContext for this GoodDataInstance
+          # @return [InsightsSessionContext] InsightsSessionContext for this InsightsSessionInstance
           def context
             unless @instance_context
-              @instance_context = GoodDataContext.new(@version, )
+              @instance_context = InsightsSessionContext.new(@version, )
             end
             @instance_context
           end
@@ -163,25 +171,25 @@ module Twilio
           end
 
           ##
-          # Create the GoodDataInstance
-          # @param [String] token The Token HTTP request header
-          # @return [GoodDataInstance] Created GoodDataInstance
-          def create(token: :unset)
-            context.create(token: token, )
+          # Create the InsightsSessionInstance
+          # @param [String] authorization The Authorization HTTP request header
+          # @return [InsightsSessionInstance] Created InsightsSessionInstance
+          def create(authorization: :unset)
+            context.create(authorization: authorization, )
           end
 
           ##
           # Provide a user friendly representation
           def to_s
             values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.FlexApi.V1.GoodDataInstance #{values}>"
+            "<Twilio.FlexApi.V1.InsightsSessionInstance #{values}>"
           end
 
           ##
           # Provide a detailed, user friendly representation
           def inspect
             values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-            "<Twilio.FlexApi.V1.GoodDataInstance #{values}>"
+            "<Twilio.FlexApi.V1.InsightsSessionInstance #{values}>"
           end
         end
       end

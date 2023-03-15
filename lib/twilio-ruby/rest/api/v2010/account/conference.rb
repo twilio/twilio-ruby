@@ -396,7 +396,7 @@ module Twilio
             end
 
             ##
-            # @return [String] A string that you assigned to describe this conference room
+            # @return [String] A string that you assigned to describe this conference room. Max length is 128 characters.
             def friendly_name
               @properties['friendly_name']
             end

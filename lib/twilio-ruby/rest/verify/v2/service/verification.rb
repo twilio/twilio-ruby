@@ -34,7 +34,7 @@ module Twilio
             #   be in {E.164 format}[https://www.twilio.com/docs/glossary/what-e164].
             # @param [String] channel The verification method to use. One of:
             #   {`email`}[https://www.twilio.com/docs/verify/email], `sms`, `whatsapp`, `call`,
-            #   or `sna`.
+            #   `sna` or `auto`.
             # @param [String] custom_friendly_name A custom user defined friendly name that
             #   overwrites the existing one in the verification message
             # @param [String] custom_message The text of a custom message to use for the
@@ -74,8 +74,10 @@ module Twilio
             # @param [String] template_custom_substitutions A stringified JSON object in which
             #   the keys are the template's special variables and the values are the variables
             #   substitutions.
+            # @param [String] device_ip The IP address of the client's device. If provided, it
+            #   has to be a valid IPv4 or IPv6 address.
             # @return [VerificationInstance] Created VerificationInstance
-            def create(to: nil, channel: nil, custom_friendly_name: :unset, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset, app_hash: :unset, template_sid: :unset, template_custom_substitutions: :unset)
+            def create(to: nil, channel: nil, custom_friendly_name: :unset, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset, app_hash: :unset, template_sid: :unset, template_custom_substitutions: :unset, device_ip: :unset)
               data = Twilio::Values.of({
                   'To' => to,
                   'Channel' => channel,
@@ -91,6 +93,7 @@ module Twilio
                   'AppHash' => app_hash,
                   'TemplateSid' => template_sid,
                   'TemplateCustomSubstitutions' => template_custom_substitutions,
+                  'DeviceIp' => device_ip,
               })
 
               payload = @version.create('POST', @uri, data: data)
