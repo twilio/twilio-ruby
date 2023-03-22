@@ -20,6 +20,7 @@ module Twilio
           @flex_flow = nil
           @assessments = nil
           @insights_assessments_comment = nil
+          @insights_conversations = nil
           @insights_questionnaires = nil
           @insights_questionnaires_category = nil
           @insights_questionnaires_question = nil
@@ -87,6 +88,12 @@ module Twilio
         # @return [Twilio::REST::Flex_api::V1::InsightsAssessmentsCommentContext]
         def insights_assessments_comment
           @insights_assessments_comment ||= InsightsAssessmentsCommentList.new self
+        end
+
+        ##
+        # @return [Twilio::REST::Flex_api::V1::InsightsConversationsContext]
+        def insights_conversations
+          @insights_conversations ||= InsightsConversationsList.new self
         end
 
         ##

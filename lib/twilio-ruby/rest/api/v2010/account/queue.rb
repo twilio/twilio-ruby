@@ -112,7 +112,7 @@ module Twilio
             # @param [String] friendly_name A descriptive string that you created to describe
             #   this resource. It can be up to 64 characters long.
             # @param [String] max_size The maximum number of calls allowed to be in the queue.
-            #   The default is 100. The maximum is 5000.
+            #   The default is 1000. The maximum is 5000.
             # @return [QueueInstance] Created QueueInstance
             def create(friendly_name: nil, max_size: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'MaxSize' => max_size, })
@@ -193,7 +193,7 @@ module Twilio
             # @param [String] friendly_name A descriptive string that you created to describe
             #   this resource. It can be up to 64 characters long.
             # @param [String] max_size The maximum number of calls allowed to be in the queue.
-            #   The default is 100. The maximum is 5000.
+            #   The default is 1000. The maximum is 5000.
             # @return [QueueInstance] Updated QueueInstance
             def update(friendly_name: :unset, max_size: :unset)
               data = Twilio::Values.of({'FriendlyName' => friendly_name, 'MaxSize' => max_size, })
@@ -356,7 +356,7 @@ module Twilio
             # @param [String] friendly_name A descriptive string that you created to describe
             #   this resource. It can be up to 64 characters long.
             # @param [String] max_size The maximum number of calls allowed to be in the queue.
-            #   The default is 100. The maximum is 5000.
+            #   The default is 1000. The maximum is 5000.
             # @return [QueueInstance] Updated QueueInstance
             def update(friendly_name: :unset, max_size: :unset)
               context.update(friendly_name: friendly_name, max_size: max_size, )

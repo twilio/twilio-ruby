@@ -19,7 +19,9 @@ module Twilio
           @deactivations = nil
           @domain_certs = nil
           @domain_config = nil
+          @domain_config_messaging_service = nil
           @external_campaign = nil
+          @linkshortening_messaging_service = nil
           @services = nil
           @tollfree_verifications = nil
           @usecases = nil
@@ -79,9 +81,48 @@ module Twilio
         end
 
         ##
+        # @param [String] messaging_service_sid Unique string used to identify the
+        #   Messaging service that this domain should be associated with.
+        # @return [Twilio::REST::Messaging::V1::DomainConfigMessagingServiceContext] if messaging_service_sid was passed.
+        # @return [Twilio::REST::Messaging::V1::DomainConfigMessagingServiceList]
+        def domain_config_messaging_service(messaging_service_sid=:unset)
+          if messaging_service_sid.nil?
+              raise ArgumentError, 'messaging_service_sid cannot be nil'
+          end
+          if messaging_service_sid == :unset
+              @domain_config_messaging_service ||= DomainConfigMessagingServiceList.new self
+          else
+              DomainConfigMessagingServiceContext.new(self, messaging_service_sid)
+          end
+        end
+
+        ##
         # @return [Twilio::REST::Messaging::V1::ExternalCampaignContext]
         def external_campaign
           @external_campaign ||= ExternalCampaignList.new self
+        end
+
+        ##
+        # @param [String] domain_sid The domain SID to dissociate from a messaging
+        #   service. With URL shortening enabled, links in messages sent with the associated
+        #   messaging service will be shortened to the provided domain
+        # @param [String] messaging_service_sid A messaging service SID to dissociate from
+        #   a domain. With URL shortening enabled, links in messages sent with the provided
+        #   messaging service will be shortened to the associated domain
+        # @return [Twilio::REST::Messaging::V1::LinkshorteningMessagingServiceContext] if messaging_service_sid was passed.
+        # @return [Twilio::REST::Messaging::V1::LinkshorteningMessagingServiceList]
+        def linkshortening_messaging_service(domain_sid=:unset, messaging_service_sid=:unset)
+          if domain_sid.nil?
+              raise ArgumentError, 'domain_sid cannot be nil'
+          end
+          if messaging_service_sid.nil?
+              raise ArgumentError, 'messaging_service_sid cannot be nil'
+          end
+          if domain_sid == :unset && messaging_service_sid == :unset
+              @linkshortening_messaging_service ||= LinkshorteningMessagingServiceList.new self
+          else
+              LinkshorteningMessagingServiceContext.new(self, domain_sid, messaging_service_sid)
+          end
         end
 
         ##

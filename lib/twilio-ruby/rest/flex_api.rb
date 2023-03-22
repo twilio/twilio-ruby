@@ -74,6 +74,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Flex_api::V1::InsightsConversationsInstance]
+      def insights_conversations
+        self.v1.insights_conversations()
+      end
+
+      ##
       # @param [String] id The unique id of this questionnaire
       # @return [Twilio::REST::Flex_api::V1::InsightsQuestionnairesInstance] if id was passed.
       # @return [Twilio::REST::Flex_api::V1::InsightsQuestionnairesList]
