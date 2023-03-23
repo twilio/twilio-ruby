@@ -1,7 +1,7 @@
 twilio-ruby changelog
 =====================
 
-[2023-03-23] Version 6.0.0.rc0
+[2023-03-23] Version 6.0.0-rc.0
 ---------------------------
 - Release Candidate prep  
 

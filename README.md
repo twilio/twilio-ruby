@@ -46,7 +46,7 @@ gem install twilio-ruby -v 5.73.4
 To install `twilio-ruby` release candidate via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 6.0.0.rc1
+gem install twilio-ruby -v 6.0.0-rc.1
 ```
 
 To build and install the development branch yourself from the latest source:
