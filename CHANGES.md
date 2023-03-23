@@ -1,6 +1,10 @@
 twilio-ruby changelog
 =====================
 
+[2023-03-23] Version 6.0.0-rc.0
+---------------------------
+- Release Candidate prep  
+
 [2022-11-30] Version 5.73.4
 ---------------------------
 **Flex**
