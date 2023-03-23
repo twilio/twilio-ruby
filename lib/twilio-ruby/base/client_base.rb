@@ -27,9 +27,10 @@ module Twilio
       ##
       # Makes a request to the Twilio API using the configured http client
       # Authentication information is automatically added if none is provided
+      # rubocop:disable Lint/ShadowedArgument
       def request(host, port, method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil) # rubocop:disable Metrics/MethodLength
         auth ||= @auth
-        headers = self.generate_headers(method)
+        headers = generate_headers(method)
         uri = build_uri(uri)
 
         if @logger
@@ -67,6 +68,7 @@ module Twilio
 
         response
       end
+      # rubocop:enable Lint/ShadowedArgument
 
       ##
       # Build the final request uri
@@ -103,7 +105,6 @@ module Twilio
         raise RestError.new 'Unexpected response from certificate endpoint', response
       end
 
-
       def generate_headers(method)
         ruby_config = RbConfig::CONFIG
         headers = {}
@@ -116,7 +117,7 @@ module Twilio
         headers['Content-Type'] = 'application/x-www-form-urlencoded' if method == 'POST' && !headers['Content-Type']
 
         headers['Accept'] = 'application/json' unless headers['Accept']
-        return headers
+        headers
       end
     end
   end
