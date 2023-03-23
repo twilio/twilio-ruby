@@ -213,18 +213,18 @@ module Twilio
 
             # @return [Twilio::REST::Api::V2010::AccountContext::AuthorizedConnectAppInstance] if connectAppSid was passed.
             # @return [Twilio::REST::Api::V2010::AccountContext::AuthorizedConnectAppList]
-            def authorizedConnectApps(connectAppSid=:unset)
-                self.api.v2010.account.authorizedConnectApps(connectAppSid)
+            def authorized_connect_apps(connectAppSid=:unset)
+                self.api.v2010.account.authorized_connect_apps(connectAppSid)
             end
             ##
             # @param [string] countryCode The [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of the country to fetch available phone number information about.
 
             # @return [Twilio::REST::Api::V2010::AccountContext::AvailablePhoneNumberCountryInstance] if countryCode was passed.
             # @return [Twilio::REST::Api::V2010::AccountContext::AvailablePhoneNumberCountryList]
-            def availablePhoneNumbers(countryCode=:unset)
-                self.api.v2010.account.availablePhoneNumbers(countryCode)
+            def available_phone_numbers(countryCode=:unset)
+                self.api.v2010.account.available_phone_numbers(countryCode)
             end
-            
+
             ##
             # @param [string] sid The SID of the Call resource to fetch.
 
@@ -246,16 +246,16 @@ module Twilio
 
             # @return [Twilio::REST::Api::V2010::AccountContext::ConnectAppInstance] if sid was passed.
             # @return [Twilio::REST::Api::V2010::AccountContext::ConnectAppList]
-            def connectApps(sid=:unset)
-                self.api.v2010.account.connectApps(sid)
+            def connect_apps(sid=:unset)
+                self.api.v2010.account.connect_apps(sid)
             end
             ##
             # @param [string] sid The Twilio-provided string that uniquely identifies the IncomingPhoneNumber resource to fetch.
 
             # @return [Twilio::REST::Api::V2010::AccountContext::IncomingPhoneNumberInstance] if sid was passed.
             # @return [Twilio::REST::Api::V2010::AccountContext::IncomingPhoneNumberList]
-            def incomingPhoneNumbers(sid=:unset)
-                self.api.v2010.account.incomingPhoneNumbers(sid)
+            def incoming_phone_numbers(sid=:unset)
+                self.api.v2010.account.incoming_phone_numbers(sid)
             end
             ##
             # @param [string] sid The Twilio-provided string that uniquely identifies the Key resource to fetch.
@@ -273,8 +273,8 @@ module Twilio
             def messages(sid=:unset)
                 self.api.v2010.account.messages(sid)
             end
-            
-            
+
+
             ##
             # @param [string] sid The Twilio-provided string that uniquely identifies the Notification resource to fetch.
 
@@ -288,8 +288,8 @@ module Twilio
 
             # @return [Twilio::REST::Api::V2010::AccountContext::OutgoingCallerIdInstance] if sid was passed.
             # @return [Twilio::REST::Api::V2010::AccountContext::OutgoingCallerIdList]
-            def outgoingCallerIds(sid=:unset)
-                self.api.v2010.account.outgoingCallerIds(sid)
+            def outgoing_caller_ids(sid=:unset)
+                self.api.v2010.account.outgoing_caller_ids(sid)
             end
             ##
             # @param [string] sid The Twilio-provided string that uniquely identifies the Queue resource to fetch
@@ -312,18 +312,18 @@ module Twilio
 
             # @return [Twilio::REST::Api::V2010::AccountContext::ShortCodeInstance] if sid was passed.
             # @return [Twilio::REST::Api::V2010::AccountContext::ShortCodeList]
-            def shortCodes(sid=:unset)
-                self.api.v2010.account.shortCodes(sid)
+            def short_codes(sid=:unset)
+                self.api.v2010.account.short_codes(sid)
             end
             ##
 
             # @return [Twilio::REST::Api::V2010::AccountContext::SigningKeyInstance] if sid was passed.
             # @return [Twilio::REST::Api::V2010::AccountContext::SigningKeyList]
-            def signingKeys(sid=:unset)
-                self.api.v2010.account.signingKeys(sid)
+            def signing_keys(sid=:unset)
+                self.api.v2010.account.signing_keys(sid)
             end
-            
-            
+
+
             ##
             # @param [string] sid The Twilio-provided string that uniquely identifies the Transcription resource to fetch.
 
@@ -332,8 +332,8 @@ module Twilio
             def transcriptions(sid=:unset)
                 self.api.v2010.account.transcriptions(sid)
             end
-            
-            
+
+
 
             ##
             # Provide a user friendly representation
@@ -343,4 +343,5 @@ module Twilio
         end
     end
 end
+
 
