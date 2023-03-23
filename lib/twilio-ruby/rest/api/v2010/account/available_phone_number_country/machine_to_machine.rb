@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, country_code: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,country_code: country_code, }
+                        @solution = { account_sid: account_sid, country_code: country_code }
                         @uri = "/Accounts/#{@solution[:account_sid]}/AvailablePhoneNumbers/#{@solution[:country_code]}/MachineToMachine.json"
                         
                     end
@@ -251,6 +251,7 @@ module Twilio
                         '#<Twilio.Api.V2010.MachineToMachineList>'
                     end
                 end
+
                 class MachineToMachinePage < Page
                     ##
                     # Initialize the MachineToMachinePage
@@ -401,6 +402,7 @@ module Twilio
                         "<Twilio.Api.V2010.MachineToMachineInstance>"
                     end
                 end
+
              end
              end
             end

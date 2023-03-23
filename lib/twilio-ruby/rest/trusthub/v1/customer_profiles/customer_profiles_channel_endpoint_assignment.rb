@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, customer_profile_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { customer_profile_sid: customer_profile_sid, }
+                        @solution = { customer_profile_sid: customer_profile_sid }
                         @uri = "/CustomerProfiles/#{@solution[:customer_profile_sid]}/ChannelEndpointAssignments"
                         
                     end
@@ -162,6 +162,7 @@ module Twilio
                     end
                 end
 
+
                 class CustomerProfilesChannelEndpointAssignmentContext < InstanceContext
                     ##
                     # Initialize the CustomerProfilesChannelEndpointAssignmentContext
@@ -204,14 +205,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trusthub.V1.CustomerProfilesChannelEndpointAssignmentContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trusthub.V1.CustomerProfilesChannelEndpointAssignmentContext #{context}>"
                     end
                 end
@@ -356,6 +357,7 @@ module Twilio
                         "<Twilio.Trusthub.V1.CustomerProfilesChannelEndpointAssignmentInstance #{values}>"
                     end
                 end
+
              end
             end
         end

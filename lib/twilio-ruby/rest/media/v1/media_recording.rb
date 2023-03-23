@@ -34,8 +34,8 @@ module Twilio
                     # Lists MediaRecordingInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [MediaRecordingOrder] order The sort order of the list by `date_created`. Can be: `asc` (ascending) or `desc` (descending) with `desc` as the default.
-                    # @param [MediaRecordingStatus] status Status to filter by, with possible values `processing`, `completed`, `deleted`, or `failed`.
+                    # @param [Order] order The sort order of the list by `date_created`. Can be: `asc` (ascending) or `desc` (descending) with `desc` as the default.
+                    # @param [Status] status Status to filter by, with possible values `processing`, `completed`, `deleted`, or `failed`.
                     # @param [String] processor_sid SID of a MediaProcessor to filter by.
                     # @param [String] source_sid SID of a MediaRecording source to filter by.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -60,8 +60,8 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [MediaRecordingOrder] order The sort order of the list by `date_created`. Can be: `asc` (ascending) or `desc` (descending) with `desc` as the default.
-                    # @param [MediaRecordingStatus] status Status to filter by, with possible values `processing`, `completed`, `deleted`, or `failed`.
+                    # @param [Order] order The sort order of the list by `date_created`. Can be: `asc` (ascending) or `desc` (descending) with `desc` as the default.
+                    # @param [Status] status Status to filter by, with possible values `processing`, `completed`, `deleted`, or `failed`.
                     # @param [String] processor_sid SID of a MediaProcessor to filter by.
                     # @param [String] source_sid SID of a MediaRecording source to filter by.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -101,8 +101,8 @@ module Twilio
                     ##
                     # Retrieve a single page of MediaRecordingInstance records from the API.
                     # Request is executed immediately.
-                    # @param [MediaRecordingOrder] order The sort order of the list by `date_created`. Can be: `asc` (ascending) or `desc` (descending) with `desc` as the default.
-                    # @param [MediaRecordingStatus] status Status to filter by, with possible values `processing`, `completed`, `deleted`, or `failed`.
+                    # @param [Order] order The sort order of the list by `date_created`. Can be: `asc` (ascending) or `desc` (descending) with `desc` as the default.
+                    # @param [Status] status Status to filter by, with possible values `processing`, `completed`, `deleted`, or `failed`.
                     # @param [String] processor_sid SID of a MediaProcessor to filter by.
                     # @param [String] source_sid SID of a MediaRecording source to filter by.
                     # @param [String] page_token PageToken provided by the API
@@ -151,6 +151,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class MediaRecordingContext < InstanceContext
@@ -193,14 +194,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Media.V1.MediaRecordingContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Media.V1.MediaRecordingContext #{context}>"
                     end
                 end
@@ -306,7 +307,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [MediaRecordingFormat] 
+                    # @return [Format] 
                     def format
                         @properties['format']
                     end
@@ -348,7 +349,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [MediaRecordingStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -401,6 +402,7 @@ module Twilio
                         "<Twilio.Media.V1.MediaRecordingInstance #{values}>"
                     end
                 end
+
             end
         end
     end

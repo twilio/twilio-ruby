@@ -40,7 +40,7 @@ module Twilio
                     # @param [Boolean] sticky_sender Whether to enable [Sticky Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service instance.
                     # @param [Boolean] mms_converter Whether to enable the [MMS Converter](https://www.twilio.com/docs/sms/services#mms-converter) for messages sent through the Service instance.
                     # @param [Boolean] smart_encoding Whether to enable [Smart Encoding](https://www.twilio.com/docs/sms/services#smart-encoding) for messages sent through the Service instance.
-                    # @param [ServiceScanMessageContent] scan_message_content 
+                    # @param [ScanMessageContent] scan_message_content 
                     # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/sms/services#fallback-to-long-code) for messages sent through the Service instance.
                     # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/sms/services#area-code-geomatch) on the Service Instance.
                     # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
@@ -187,6 +187,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class ServiceContext < InstanceContext
@@ -241,7 +242,7 @@ module Twilio
                     # @param [Boolean] sticky_sender Whether to enable [Sticky Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service instance.
                     # @param [Boolean] mms_converter Whether to enable the [MMS Converter](https://www.twilio.com/docs/sms/services#mms-converter) for messages sent through the Service instance.
                     # @param [Boolean] smart_encoding Whether to enable [Smart Encoding](https://www.twilio.com/docs/sms/services#smart-encoding) for messages sent through the Service instance.
-                    # @param [ServiceScanMessageContent] scan_message_content 
+                    # @param [ScanMessageContent] scan_message_content 
                     # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/sms/services#fallback-to-long-code) for messages sent through the Service instance.
                     # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/sms/services#area-code-geomatch) on the Service Instance.
                     # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
@@ -402,14 +403,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Messaging.V1.ServiceContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Messaging.V1.ServiceContext #{context}>"
                     end
                 end
@@ -577,7 +578,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ServiceScanMessageContent] 
+                    # @return [ScanMessageContent] 
                     def scan_message_content
                         @properties['scan_message_content']
                     end
@@ -663,7 +664,7 @@ module Twilio
                     # @param [Boolean] sticky_sender Whether to enable [Sticky Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service instance.
                     # @param [Boolean] mms_converter Whether to enable the [MMS Converter](https://www.twilio.com/docs/sms/services#mms-converter) for messages sent through the Service instance.
                     # @param [Boolean] smart_encoding Whether to enable [Smart Encoding](https://www.twilio.com/docs/sms/services#smart-encoding) for messages sent through the Service instance.
-                    # @param [ServiceScanMessageContent] scan_message_content 
+                    # @param [ScanMessageContent] scan_message_content 
                     # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/sms/services#fallback-to-long-code) for messages sent through the Service instance.
                     # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/sms/services#area-code-geomatch) on the Service Instance.
                     # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
@@ -759,6 +760,7 @@ module Twilio
                         "<Twilio.Messaging.V1.ServiceInstance #{values}>"
                     end
                 end
+
             end
         end
     end

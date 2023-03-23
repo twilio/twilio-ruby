@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Usage.json"
                         # Components
                         @records = nil
@@ -61,6 +61,7 @@ module Twilio
                         '#<Twilio.Api.V2010.UsageList>'
                     end
                 end
+
                 class UsagePage < Page
                     ##
                     # Initialize the UsagePage
@@ -117,6 +118,7 @@ module Twilio
                         "<Twilio.Api.V2010.UsageInstance>"
                     end
                 end
+
              end
             end
         end

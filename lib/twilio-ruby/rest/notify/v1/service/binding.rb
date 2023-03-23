@@ -27,14 +27,14 @@ module Twilio
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid, }
+                        @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Bindings"
                         
                     end
                     ##
                     # Create the BindingInstance
                     # @param [String] identity The `identity` value that uniquely identifies the new resource's [User](https://www.twilio.com/docs/chat/rest/user-resource) within the [Service](https://www.twilio.com/docs/notify/api/service-resource). Up to 20 Bindings can be created for the same Identity in a given Service.
-                    # @param [BindingBindingType] binding_type 
+                    # @param [BindingType] binding_type 
                     # @param [String] address The channel-specific address. For APNS, the device token. For FCM and GCM, the registration token. For SMS, a phone number in E.164 format. For Facebook Messenger, the Messenger ID of the user or a phone number in E.164 format.
                     # @param [Array[String]] tag A tag that can be used to select the Bindings to notify. Repeat this parameter to specify more than one tag, up to a total of 20 tags.
                     # @param [String] notification_protocol_version The protocol version to use to send the notification. This defaults to the value of `default_xxxx_notification_protocol_version` for the protocol in the [Service](https://www.twilio.com/docs/notify/api/service-resource). The current version is `\\\"3\\\"` for `apn`, `fcm`, and `gcm` type Bindings. The parameter is not applicable to `sms` and `facebook-messenger` type Bindings as the data format is fixed.
@@ -191,6 +191,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class BindingContext < InstanceContext
@@ -235,14 +236,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Notify.V1.BindingContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Notify.V1.BindingContext #{context}>"
                     end
                 end
@@ -436,6 +437,7 @@ module Twilio
                         "<Twilio.Notify.V1.BindingInstance #{values}>"
                     end
                 end
+
              end
             end
         end

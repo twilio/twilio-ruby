@@ -49,6 +49,7 @@ module Twilio
                         '#<Twilio.Messaging.V1.UsecaseList>'
                     end
                 end
+
                 class UsecasePage < Page
                     ##
                     # Initialize the UsecasePage
@@ -115,6 +116,7 @@ module Twilio
                         "<Twilio.Messaging.V1.UsecaseInstance>"
                     end
                 end
+
             end
         end
     end

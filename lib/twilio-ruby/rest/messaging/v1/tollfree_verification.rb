@@ -38,7 +38,7 @@ module Twilio
                     # @param [String] use_case_summary Use this to further explain how messaging is used by the business or organization.
                     # @param [String] production_message_sample An example of message content, i.e. a sample message.
                     # @param [Array[String]] opt_in_image_urls Link to an image that shows the opt-in workflow. Multiple images allowed and must be a publicly hosted URL.
-                    # @param [TollfreeVerificationOptInType] opt_in_type 
+                    # @param [OptInType] opt_in_type 
                     # @param [String] message_volume Estimate monthly volume of messages from the Tollfree Number.
                     # @param [String] tollfree_phone_number_sid The SID of the Phone Number associated with the Tollfree Verification.
                     # @param [String] customer_profile_sid Customer's Profile Bundle BundleSid.
@@ -120,7 +120,7 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [String] tollfree_phone_number_sid The SID of the Phone Number associated with the Tollfree Verification.
-                    # @param [TollfreeVerificationStatus] status The compliance status of the Tollfree Verification record.
+                    # @param [Status] status The compliance status of the Tollfree Verification record.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -142,7 +142,7 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [String] tollfree_phone_number_sid The SID of the Phone Number associated with the Tollfree Verification.
-                    # @param [TollfreeVerificationStatus] status The compliance status of the Tollfree Verification record.
+                    # @param [Status] status The compliance status of the Tollfree Verification record.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -179,7 +179,7 @@ module Twilio
                     # Retrieve a single page of TollfreeVerificationInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] tollfree_phone_number_sid The SID of the Phone Number associated with the Tollfree Verification.
-                    # @param [TollfreeVerificationStatus] status The compliance status of the Tollfree Verification record.
+                    # @param [Status] status The compliance status of the Tollfree Verification record.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -222,6 +222,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class TollfreeVerificationContext < InstanceContext
@@ -261,7 +262,7 @@ module Twilio
                     # @param [String] use_case_summary Use this to further explain how messaging is used by the business or organization.
                     # @param [String] production_message_sample An example of message content, i.e. a sample message.
                     # @param [Array[String]] opt_in_image_urls Link to an image that shows the opt-in workflow. Multiple images allowed and must be a publicly hosted URL.
-                    # @param [TollfreeVerificationOptInType] opt_in_type 
+                    # @param [OptInType] opt_in_type 
                     # @param [String] message_volume Estimate monthly volume of messages from the Tollfree Number.
                     # @param [String] business_street_address The address of the business or organization using the Tollfree number.
                     # @param [String] business_street_address2 The address of the business or organization using the Tollfree number.
@@ -333,14 +334,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Messaging.V1.TollfreeVerificationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Messaging.V1.TollfreeVerificationContext #{context}>"
                     end
                 end
@@ -583,7 +584,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [TollfreeVerificationOptInType] 
+                    # @return [OptInType] 
                     def opt_in_type
                         @properties['opt_in_type']
                     end
@@ -607,7 +608,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [TollfreeVerificationStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -647,7 +648,7 @@ module Twilio
                     # @param [String] use_case_summary Use this to further explain how messaging is used by the business or organization.
                     # @param [String] production_message_sample An example of message content, i.e. a sample message.
                     # @param [Array[String]] opt_in_image_urls Link to an image that shows the opt-in workflow. Multiple images allowed and must be a publicly hosted URL.
-                    # @param [TollfreeVerificationOptInType] opt_in_type 
+                    # @param [OptInType] opt_in_type 
                     # @param [String] message_volume Estimate monthly volume of messages from the Tollfree Number.
                     # @param [String] business_street_address The address of the business or organization using the Tollfree number.
                     # @param [String] business_street_address2 The address of the business or organization using the Tollfree number.
@@ -722,6 +723,7 @@ module Twilio
                         "<Twilio.Messaging.V1.TollfreeVerificationInstance #{values}>"
                     end
                 end
+
             end
         end
     end

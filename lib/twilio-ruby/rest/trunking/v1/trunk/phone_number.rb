@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, trunk_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { trunk_sid: trunk_sid, }
+                        @solution = { trunk_sid: trunk_sid }
                         @uri = "/Trunks/#{@solution[:trunk_sid]}/PhoneNumbers"
                         
                     end
@@ -145,6 +145,7 @@ module Twilio
                     end
                 end
 
+
                 class PhoneNumberContext < InstanceContext
                     ##
                     # Initialize the PhoneNumberContext
@@ -187,14 +188,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trunking.V1.PhoneNumberContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trunking.V1.PhoneNumberContext #{context}>"
                     end
                 end
@@ -293,7 +294,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [PhoneNumberAddressRequirement] 
+                    # @return [AddressRequirement] 
                     def address_requirements
                         @properties['address_requirements']
                     end
@@ -472,6 +473,7 @@ module Twilio
                         "<Twilio.Trunking.V1.PhoneNumberInstance #{values}>"
                     end
                 end
+
              end
             end
         end

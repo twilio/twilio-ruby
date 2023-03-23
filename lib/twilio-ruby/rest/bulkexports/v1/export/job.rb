@@ -40,6 +40,7 @@ module Twilio
                     end
                 end
 
+
                 class JobContext < InstanceContext
                     ##
                     # Initialize the JobContext
@@ -80,14 +81,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Bulkexports.V1.JobContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Bulkexports.V1.JobContext #{context}>"
                     end
                 end
@@ -267,6 +268,7 @@ module Twilio
                         "<Twilio.Bulkexports.V1.JobInstance #{values}>"
                     end
                 end
+
              end
             end
         end

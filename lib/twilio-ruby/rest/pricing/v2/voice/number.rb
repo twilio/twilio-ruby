@@ -40,6 +40,7 @@ module Twilio
                     end
                 end
 
+
                 class NumberContext < InstanceContext
                     ##
                     # Initialize the NumberContext
@@ -51,7 +52,7 @@ module Twilio
 
                         # Path Solution
                         @solution = { destination_number: destination_number,  }
-                        @uri = "/Voice/Numbers/#{@solution[:destination_number]}"
+                        @uri = "/Voice/Numbers/#{CGI.escape(@solution[:destination_number]).gsub("+", "%20")}"
 
                         
                     end
@@ -78,14 +79,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Pricing.V2.NumberContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Pricing.V2.NumberContext #{context}>"
                     end
                 end
@@ -234,6 +235,7 @@ module Twilio
                         "<Twilio.Pricing.V2.NumberInstance #{values}>"
                     end
                 end
+
              end
             end
         end

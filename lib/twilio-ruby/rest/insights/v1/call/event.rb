@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, call_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { call_sid: call_sid, }
+                        @solution = { call_sid: call_sid }
                         @uri = "/Voice/#{@solution[:call_sid]}/Events"
                         
                     end
@@ -36,7 +36,7 @@ module Twilio
                     # Lists EventInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [EventTwilioEdge] edge 
+                    # @param [TwilioEdge] edge 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -56,7 +56,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [EventTwilioEdge] edge 
+                    # @param [TwilioEdge] edge 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -91,7 +91,7 @@ module Twilio
                     ##
                     # Retrieve a single page of EventInstance records from the API.
                     # Request is executed immediately.
-                    # @param [EventTwilioEdge] edge 
+                    # @param [TwilioEdge] edge 
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -131,6 +131,7 @@ module Twilio
                         '#<Twilio.Insights.V1.EventList>'
                     end
                 end
+
                 class EventPage < Page
                     ##
                     # Initialize the EventPage
@@ -208,7 +209,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [EventTwilioEdge] 
+                    # @return [TwilioEdge] 
                     def edge
                         @properties['edge']
                     end
@@ -220,7 +221,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [EventLevel] 
+                    # @return [Level] 
                     def level
                         @properties['level']
                     end
@@ -267,6 +268,7 @@ module Twilio
                         "<Twilio.Insights.V1.EventInstance>"
                     end
                 end
+
              end
             end
         end

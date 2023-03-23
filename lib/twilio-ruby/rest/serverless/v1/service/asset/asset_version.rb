@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, asset_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,asset_sid: asset_sid, }
+                        @solution = { service_sid: service_sid, asset_sid: asset_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Assets/#{@solution[:asset_sid]}/Versions"
                         
                     end
@@ -126,6 +126,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class AssetVersionContext < InstanceContext
@@ -164,14 +165,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Serverless.V1.AssetVersionContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Serverless.V1.AssetVersionContext #{context}>"
                     end
                 end
@@ -276,7 +277,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [AssetVersionVisibility] 
+                    # @return [Visibility] 
                     def visibility
                         @properties['visibility']
                     end
@@ -315,6 +316,7 @@ module Twilio
                         "<Twilio.Serverless.V1.AssetVersionInstance #{values}>"
                     end
                 end
+
              end
              end
             end

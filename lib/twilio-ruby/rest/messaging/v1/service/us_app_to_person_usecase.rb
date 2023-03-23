@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, messaging_service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { messaging_service_sid: messaging_service_sid, }
+                        @solution = { messaging_service_sid: messaging_service_sid }
                         @uri = "/Services/#{@solution[:messaging_service_sid]}/Compliance/Usa2p/Usecases"
                         
                     end
@@ -58,6 +58,7 @@ module Twilio
                         '#<Twilio.Messaging.V1.UsAppToPersonUsecaseList>'
                     end
                 end
+
                 class UsAppToPersonUsecasePage < Page
                     ##
                     # Initialize the UsAppToPersonUsecasePage
@@ -124,6 +125,7 @@ module Twilio
                         "<Twilio.Messaging.V1.UsAppToPersonUsecaseInstance>"
                     end
                 end
+
              end
             end
         end

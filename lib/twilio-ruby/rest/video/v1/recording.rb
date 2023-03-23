@@ -34,12 +34,12 @@ module Twilio
                     # Lists RecordingInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [RecordingStatus] status Read only the recordings that have this status. Can be: `processing`, `completed`, or `deleted`.
+                    # @param [Status] status Read only the recordings that have this status. Can be: `processing`, `completed`, or `deleted`.
                     # @param [String] source_sid Read only the recordings that have this `source_sid`.
                     # @param [Array[String]] grouping_sid Read only recordings with this `grouping_sid`, which may include a `participant_sid` and/or a `room_sid`.
                     # @param [Time] date_created_after Read only recordings that started on or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone.
                     # @param [Time] date_created_before Read only recordings that started before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or `YYYY-MM-DDThh:mm:ssZ`.
-                    # @param [RecordingType] media_type Read only recordings that have this media type. Can be either `audio` or `video`.
+                    # @param [Type] media_type Read only recordings that have this media type. Can be either `audio` or `video`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -64,12 +64,12 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [RecordingStatus] status Read only the recordings that have this status. Can be: `processing`, `completed`, or `deleted`.
+                    # @param [Status] status Read only the recordings that have this status. Can be: `processing`, `completed`, or `deleted`.
                     # @param [String] source_sid Read only the recordings that have this `source_sid`.
                     # @param [Array[String]] grouping_sid Read only recordings with this `grouping_sid`, which may include a `participant_sid` and/or a `room_sid`.
                     # @param [Time] date_created_after Read only recordings that started on or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone.
                     # @param [Time] date_created_before Read only recordings that started before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or `YYYY-MM-DDThh:mm:ssZ`.
-                    # @param [RecordingType] media_type Read only recordings that have this media type. Can be either `audio` or `video`.
+                    # @param [Type] media_type Read only recordings that have this media type. Can be either `audio` or `video`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -109,12 +109,12 @@ module Twilio
                     ##
                     # Retrieve a single page of RecordingInstance records from the API.
                     # Request is executed immediately.
-                    # @param [RecordingStatus] status Read only the recordings that have this status. Can be: `processing`, `completed`, or `deleted`.
+                    # @param [Status] status Read only the recordings that have this status. Can be: `processing`, `completed`, or `deleted`.
                     # @param [String] source_sid Read only the recordings that have this `source_sid`.
                     # @param [Array[String]] grouping_sid Read only recordings with this `grouping_sid`, which may include a `participant_sid` and/or a `room_sid`.
                     # @param [Time] date_created_after Read only recordings that started on or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone.
                     # @param [Time] date_created_before Read only recordings that started before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone, given as `YYYY-MM-DDThh:mm:ss+|-hh:mm` or `YYYY-MM-DDThh:mm:ssZ`.
-                    # @param [RecordingType] media_type Read only recordings that have this media type. Can be either `audio` or `video`.
+                    # @param [Type] media_type Read only recordings that have this media type. Can be either `audio` or `video`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -165,6 +165,7 @@ module Twilio
                     end
                 end
 
+
                 class RecordingContext < InstanceContext
                     ##
                     # Initialize the RecordingContext
@@ -205,14 +206,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.RecordingContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.RecordingContext #{context}>"
                     end
                 end
@@ -303,7 +304,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RecordingStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -339,7 +340,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RecordingType] 
+                    # @return [Type] 
                     def type
                         @properties['type']
                     end
@@ -351,13 +352,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RecordingFormat] 
+                    # @return [Format] 
                     def container_format
                         @properties['container_format']
                     end
                     
                     ##
-                    # @return [RecordingCodec] 
+                    # @return [Codec] 
                     def codec
                         @properties['codec']
                     end
@@ -434,6 +435,7 @@ module Twilio
                         "<Twilio.Video.V1.RecordingInstance #{values}>"
                     end
                 end
+
             end
         end
     end

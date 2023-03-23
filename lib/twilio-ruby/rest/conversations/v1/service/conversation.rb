@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, chat_service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { chat_service_sid: chat_service_sid, }
+                        @solution = { chat_service_sid: chat_service_sid }
                         @uri = "/Services/#{@solution[:chat_service_sid]}/Conversations"
                         
                     end
@@ -39,10 +39,10 @@ module Twilio
                     # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs to.
                     # @param [Time] date_created The date that this resource was created.
                     # @param [Time] date_updated The date that this resource was last updated.
-                    # @param [ServiceConversationState] state 
+                    # @param [State] state 
                     # @param [String] timers_inactive ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
                     # @param [String] timers_closed ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
-                    # @param [ServiceConversationWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceConversationEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ConversationInstance] Created ConversationInstance
                     def create(
                         friendly_name: :unset, 
@@ -172,6 +172,7 @@ module Twilio
                     end
                 end
 
+
                 class ConversationContext < InstanceContext
                     ##
                     # Initialize the ConversationContext
@@ -193,7 +194,7 @@ module Twilio
                     end
                     ##
                     # Delete the ConversationInstance
-                    # @param [ServiceConversationWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceConversationEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
                         x_twilio_webhook_enabled: :unset
@@ -224,11 +225,11 @@ module Twilio
                     # @param [Time] date_updated The date that this resource was last updated.
                     # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
                     # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs to.
-                    # @param [ServiceConversationState] state 
+                    # @param [State] state 
                     # @param [String] timers_inactive ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
                     # @param [String] timers_closed ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used to address the resource in place of the resource's `sid` in the URL.
-                    # @param [ServiceConversationWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceConversationEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ConversationInstance] Updated ConversationInstance
                     def update(
                         friendly_name: :unset, 
@@ -338,14 +339,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.ConversationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.ConversationContext #{context}>"
                     end
                 end
@@ -468,7 +469,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ServiceConversationState] 
+                    # @return [State] 
                     def state
                         @properties['state']
                     end
@@ -511,7 +512,7 @@ module Twilio
                     
                     ##
                     # Delete the ConversationInstance
-                    # @param [ServiceConversationWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceConversationEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
                         x_twilio_webhook_enabled: :unset
@@ -537,11 +538,11 @@ module Twilio
                     # @param [Time] date_updated The date that this resource was last updated.
                     # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
                     # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs to.
-                    # @param [ServiceConversationState] state 
+                    # @param [State] state 
                     # @param [String] timers_inactive ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
                     # @param [String] timers_closed ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used to address the resource in place of the resource's `sid` in the URL.
-                    # @param [ServiceConversationWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceConversationEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ConversationInstance] Updated ConversationInstance
                     def update(
                         friendly_name: :unset, 
@@ -605,6 +606,7 @@ module Twilio
                         "<Twilio.Conversations.V1.ConversationInstance #{values}>"
                     end
                 end
+
              end
             end
         end

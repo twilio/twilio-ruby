@@ -103,7 +103,6 @@ module Twilio
         raise RestError.new 'Unexpected response from certificate endpoint', response
       end
 
-
       def generate_headers(method)
         ruby_config = RbConfig::CONFIG
         headers = {}

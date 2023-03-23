@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, resource_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,resource_sid: resource_sid, }
+                        @solution = { account_sid: account_sid, resource_sid: resource_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/IncomingPhoneNumbers/#{@solution[:resource_sid]}/AssignedAddOns.json"
                         
                     end
@@ -147,6 +147,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class AssignedAddOnContext < InstanceContext
@@ -218,14 +219,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.AssignedAddOnContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.AssignedAddOnContext #{context}>"
                     end
                 end
@@ -405,6 +406,7 @@ module Twilio
                         "<Twilio.Api.V2010.AssignedAddOnInstance #{values}>"
                     end
                 end
+
              end
              end
             end

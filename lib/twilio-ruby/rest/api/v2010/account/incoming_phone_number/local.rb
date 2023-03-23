@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/IncomingPhoneNumbers/Local.json"
                         
                     end
@@ -52,10 +52,10 @@ module Twilio
                     # @param [String] voice_url The URL that we should call to answer a call to the new phone number. The `voice_url` will not be called if a `voice_application_sid` or a `trunk_sid` is set.
                     # @param [String] identity_sid The SID of the Identity resource that we should associate with the new phone number. Some regions require an identity to meet local regulations.
                     # @param [String] address_sid The SID of the Address resource we should associate with the new phone number. Some regions require addresses to meet local regulations.
-                    # @param [IncomingPhoneNumberLocalEmergencyStatus] emergency_status 
+                    # @param [EmergencyStatus] emergency_status 
                     # @param [String] emergency_address_sid The SID of the emergency address configuration to use for emergency calling from the new phone number.
                     # @param [String] trunk_sid The SID of the Trunk we should use to handle calls to the new phone number. If a `trunk_sid` is present, we ignore all of the voice urls and voice applications and use only those set on the Trunk. Setting a `trunk_sid` will automatically delete your `voice_application_sid` and vice versa.
-                    # @param [IncomingPhoneNumberLocalVoiceReceiveMode] voice_receive_mode 
+                    # @param [VoiceReceiveMode] voice_receive_mode 
                     # @param [String] bundle_sid The SID of the Bundle resource that you associate with the phone number. Some regions require a Bundle to meet local Regulations.
                     # @return [LocalInstance] Created LocalInstance
                     def create(
@@ -239,6 +239,7 @@ module Twilio
                         '#<Twilio.Api.V2010.LocalList>'
                     end
                 end
+
                 class LocalPage < Page
                     ##
                     # Initialize the LocalPage
@@ -333,7 +334,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [IncomingPhoneNumberLocalAddressRequirement] 
+                    # @return [AddressRequirement] 
                     def address_requirements
                         @properties['address_requirements']
                     end
@@ -453,7 +454,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [IncomingPhoneNumberLocalVoiceReceiveMode] 
+                    # @return [VoiceReceiveMode] 
                     def voice_receive_mode
                         @properties['voice_receive_mode']
                     end
@@ -495,7 +496,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [IncomingPhoneNumberLocalEmergencyStatus] 
+                    # @return [EmergencyStatus] 
                     def emergency_status
                         @properties['emergency_status']
                     end
@@ -507,7 +508,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [IncomingPhoneNumberLocalEmergencyAddressStatus] 
+                    # @return [EmergencyAddressStatus] 
                     def emergency_address_status
                         @properties['emergency_address_status']
                     end
@@ -536,6 +537,7 @@ module Twilio
                         "<Twilio.Api.V2010.LocalInstance>"
                     end
                 end
+
              end
              end
             end

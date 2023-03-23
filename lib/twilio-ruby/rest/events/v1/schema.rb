@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class SchemaContext < InstanceContext
@@ -95,14 +96,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Events.V1.SchemaContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Events.V1.SchemaContext #{context}>"
                     end
                 end
@@ -232,6 +233,7 @@ module Twilio
                         "<Twilio.Events.V1.SchemaInstance #{values}>"
                     end
                 end
+
             end
         end
     end

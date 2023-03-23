@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class UserContext < InstanceContext
@@ -72,7 +73,7 @@ module Twilio
                     # Update the UserInstance
                     # @param [String] friendly_name The string that you assigned to describe the User.
                     # @param [String] avatar The avatar URL which will be shown in Frontline application.
-                    # @param [UserStateType] state 
+                    # @param [StateType] state 
                     # @param [Boolean] is_available Whether the User is available for new conversations. Set to `false` to prevent User from receiving new inbound conversations if you are using [Pool Routing](https://www.twilio.com/docs/frontline/handle-incoming-conversations#3-pool-routing).
                     # @return [UserInstance] Updated UserInstance
                     def update(
@@ -101,14 +102,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FrontlineApi.V1.UserContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FrontlineApi.V1.UserContext #{context}>"
                     end
                 end
@@ -206,7 +207,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [UserStateType] 
+                    # @return [StateType] 
                     def state
                         @properties['state']
                     end
@@ -235,7 +236,7 @@ module Twilio
                     # Update the UserInstance
                     # @param [String] friendly_name The string that you assigned to describe the User.
                     # @param [String] avatar The avatar URL which will be shown in Frontline application.
-                    # @param [UserStateType] state 
+                    # @param [StateType] state 
                     # @param [Boolean] is_available Whether the User is available for new conversations. Set to `false` to prevent User from receiving new inbound conversations if you are using [Pool Routing](https://www.twilio.com/docs/frontline/handle-incoming-conversations#3-pool-routing).
                     # @return [UserInstance] Updated UserInstance
                     def update(
@@ -267,6 +268,7 @@ module Twilio
                         "<Twilio.FrontlineApi.V1.UserInstance #{values}>"
                     end
                 end
+
             end
         end
     end

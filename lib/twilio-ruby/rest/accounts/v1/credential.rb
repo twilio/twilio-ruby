@@ -65,6 +65,7 @@ module Twilio
                         '#<Twilio.Accounts.V1.CredentialList>'
                     end
                 end
+
                 class CredentialPage < Page
                     ##
                     # Initialize the CredentialPage
@@ -121,6 +122,7 @@ module Twilio
                         "<Twilio.Accounts.V1.CredentialInstance>"
                     end
                 end
+
             end
         end
     end

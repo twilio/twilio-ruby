@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/SIP.json"
                         # Components
                         @domains = nil
@@ -81,6 +81,7 @@ module Twilio
                         '#<Twilio.Api.V2010.SipList>'
                     end
                 end
+
                 class SipPage < Page
                     ##
                     # Initialize the SipPage
@@ -137,6 +138,7 @@ module Twilio
                         "<Twilio.Api.V2010.SipInstance>"
                     end
                 end
+
              end
             end
         end

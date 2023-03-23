@@ -1,6 +1,74 @@
 twilio-ruby changelog
 =====================
 
+[2023-03-22] Version 5.74.0
+---------------------------
+**Library - Fix**
+- [PR #639](https://github.com/twilio/twilio-ruby/pull/639): add all handcrafted domain files. Thanks to [@charan678](https://github.com/charan678)!
+
+**Library - Chore**
+- [PR #631](https://github.com/twilio/twilio-ruby/pull/631): Add Cluster test to rc branch. Thanks to [@rohith-prakash](https://github.com/rohith-prakash)!
+- [PR #627](https://github.com/twilio/twilio-ruby/pull/627): bump jwt max version to 2.6. Thanks to [@claudiachua](https://github.com/claudiachua)!
+
+**Library - Feature**
+- [PR #622](https://github.com/twilio/twilio-ruby/pull/622): Add client base file. Thanks to [@shrutiburman](https://github.com/shrutiburman)!
+
+**Api**
+- Revert Corrected the data type for `friendly_name` in Available Phone Number Local, Mobile and TollFree resources
+- Corrected the data type for `friendly_name` in Available Phone Number Local, Mobile and TollFree resources **(breaking change)**
+- Add new categories for whatsapp template
+- Remove `scheduled_for` property from message resource
+- Add `scheduled_for` property to message resource
+- Add `public_application_connect_enabled` param to Application resource
+- Add `street_secondary` param to address create and update
+- Make `method` optional for user defined message subscription **(breaking change)**
+
+**Conversations**
+- Add support for creating Multi-Channel Rich Content Messages
+
+**Flex**
+- Flex Conversations is now Generally Available
+- Adding the ie1 mapping for authorization api, updating service base uri and base url response attribute **(breaking change)**
+- Change web channels to GA and library visibility to public
+- Changing the uri for authorization api from using Accounts to Insights **(breaking change)**
+
+**Lookups**
+- Remove `validation_results` from the `default_output_properties`
+- Add `disposable_phone_number_risk` package to the lookup response
+- Add `sms_pumping_risk` package to the lookup response
+- Changed the no data message for match postal code from `no_data` to `data_not_available` in identity match package
+
+**Media**
+- Gate Twilio Live endpoints behind beta_feature for EOS
+
+**Messaging**
+- Add `linkshortening_messaging_service` resource
+- Add new endpoint for GetDomainConfigByMessagingServiceSid
+- Remove `validated` parameter and add `cert_in_validation` parameter to Link Shortening API **(breaking change)**
+- Add new tollfree verification API property (ExternalReferenceId)]
+- Add update/edit tollfree verification API
+- Mark `MessageFlow` as a required field for Campaign Creation **(breaking change)**
+
+**Oauth**
+- updated openid discovery endpoint uri **(breaking change)**
+- Added device code authorization endpoint
+
+**Supersim**
+- Add ESimProfile's `matching_id` and `activation_code` parameters to libraries
+- Allow filtering the SettingsUpdates resource by `status`
+
+**Verify**
+- Add `device_ip` parameter and channel `auto` for sna/sms orchestration
+
+**Twiml**
+- Add support for `<Application>` noun and `<ApplicationSid>` noun, nested `<Parameter>` to `<Hangup>` and `<Leave>` verb
+- Add new Polly Neural voices
+- Add tr-TR, ar-AE, yue-CN, fi-FI languages to SSML `<lang>` element.
+- Add x-amazon-jyutping, x-amazon-pinyin, x-amazon-pron-kana, x-amazon-yomigana alphabets to SSML `<phoneme>` element.
+- Rename `character` value for SSML `<say-as>` `interpret-as` attribute to `characters`. **(breaking change)**
+- Rename `role` attribute to `format` in SSML `<say-as>` element. **(breaking change)**
+
+
 [2022-11-30] Version 5.73.4
 ---------------------------
 **Flex**

@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class DomainCertsContext < InstanceContext
@@ -100,14 +101,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Messaging.V1.DomainCertsContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Messaging.V1.DomainCertsContext #{context}>"
                     end
                 end
@@ -162,7 +163,7 @@ module Twilio
                             'domain_name' => payload['domain_name'],
                             'certificate_sid' => payload['certificate_sid'],
                             'url' => payload['url'],
-                            'validated' => payload['validated'],
+                            'cert_in_validation' => payload['cert_in_validation'],
                         }
 
                         # Context
@@ -224,9 +225,9 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Boolean] Boolean value indicating whether certificate has been validated
-                    def validated
-                        @properties['validated']
+                    # @return [Hash] Optional JSON field describing the status and upload date of a new certificate in the process of validation
+                    def cert_in_validation
+                        @properties['cert_in_validation']
                     end
                     
                     ##
@@ -272,6 +273,7 @@ module Twilio
                         "<Twilio.Messaging.V1.DomainCertsInstance #{values}>"
                     end
                 end
+
             end
         end
     end

@@ -172,6 +172,7 @@ module Twilio
                     end
                 end
 
+
                 class RatePlanContext < InstanceContext
                     ##
                     # Initialize the RatePlanContext
@@ -235,14 +236,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Wireless.V1.RatePlanContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Wireless.V1.RatePlanContext #{context}>"
                     end
                 end
@@ -466,6 +467,7 @@ module Twilio
                         "<Twilio.Wireless.V1.RatePlanInstance #{values}>"
                     end
                 end
+
             end
         end
     end

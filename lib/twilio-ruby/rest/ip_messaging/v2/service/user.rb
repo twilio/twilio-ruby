@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid, }
+                        @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Users"
                         
                     end
@@ -37,7 +37,7 @@ module Twilio
                     # @param [String] role_sid 
                     # @param [String] attributes 
                     # @param [String] friendly_name 
-                    # @param [UserWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [UserEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [UserInstance] Created UserInstance
                     def create(
                         identity: nil, 
@@ -157,6 +157,7 @@ module Twilio
                     end
                 end
 
+
                 class UserContext < InstanceContext
                     ##
                     # Initialize the UserContext
@@ -202,7 +203,7 @@ module Twilio
                     # @param [String] role_sid 
                     # @param [String] attributes 
                     # @param [String] friendly_name 
-                    # @param [UserWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [UserEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [UserInstance] Updated UserInstance
                     def update(
                         role_sid: :unset, 
@@ -277,14 +278,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V2.UserContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V2.UserContext #{context}>"
                     end
                 end
@@ -469,7 +470,7 @@ module Twilio
                     # @param [String] role_sid 
                     # @param [String] attributes 
                     # @param [String] friendly_name 
-                    # @param [UserWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [UserEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [UserInstance] Updated UserInstance
                     def update(
                         role_sid: :unset, 
@@ -514,6 +515,7 @@ module Twilio
                         "<Twilio.IpMessaging.V2.UserInstance #{values}>"
                     end
                 end
+
              end
             end
         end

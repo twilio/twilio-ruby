@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, user_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,user_sid: user_sid, }
+                        @solution = { service_sid: service_sid, user_sid: user_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Users/#{@solution[:user_sid]}/Bindings"
                         
                     end
@@ -37,7 +37,7 @@ module Twilio
                     # Lists UserBindingInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [Array[UserBindingBindingType]] binding_type The push technology used by the User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See [push notification configuration](https://www.twilio.com/docs/chat/push-notification-configuration) for more info.
+                    # @param [Array[BindingType]] binding_type The push technology used by the User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See [push notification configuration](https://www.twilio.com/docs/chat/push-notification-configuration) for more info.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -57,7 +57,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [Array[UserBindingBindingType]] binding_type The push technology used by the User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See [push notification configuration](https://www.twilio.com/docs/chat/push-notification-configuration) for more info.
+                    # @param [Array[BindingType]] binding_type The push technology used by the User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See [push notification configuration](https://www.twilio.com/docs/chat/push-notification-configuration) for more info.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -92,7 +92,7 @@ module Twilio
                     ##
                     # Retrieve a single page of UserBindingInstance records from the API.
                     # Request is executed immediately.
-                    # @param [Array[UserBindingBindingType]] binding_type The push technology used by the User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See [push notification configuration](https://www.twilio.com/docs/chat/push-notification-configuration) for more info.
+                    # @param [Array[BindingType]] binding_type The push technology used by the User Binding resources to read. Can be: `apn`, `gcm`, or `fcm`.  See [push notification configuration](https://www.twilio.com/docs/chat/push-notification-configuration) for more info.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -132,6 +132,7 @@ module Twilio
                         '#<Twilio.Chat.V2.UserBindingList>'
                     end
                 end
+
 
                 class UserBindingContext < InstanceContext
                     ##
@@ -177,14 +178,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V2.UserBindingContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V2.UserBindingContext #{context}>"
                     end
                 end
@@ -317,7 +318,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [UserBindingBindingType] 
+                    # @return [BindingType] 
                     def binding_type
                         @properties['binding_type']
                     end
@@ -364,6 +365,7 @@ module Twilio
                         "<Twilio.Chat.V2.UserBindingInstance #{values}>"
                     end
                 end
+
              end
              end
             end

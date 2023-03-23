@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 class DeactivationsContext < InstanceContext
                     ##
                     # Initialize the DeactivationsContext
@@ -74,14 +75,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Messaging.V1.DeactivationsContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Messaging.V1.DeactivationsContext #{context}>"
                     end
                 end
@@ -181,6 +182,7 @@ module Twilio
                         "<Twilio.Messaging.V1.DeactivationsInstance #{values}>"
                     end
                 end
+
             end
         end
     end

@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, room_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { room_sid: room_sid, }
+                        @solution = { room_sid: room_sid }
                         @uri = "/Rooms/#{@solution[:room_sid]}/Recordings"
                         
                     end
@@ -36,7 +36,7 @@ module Twilio
                     # Lists RoomRecordingInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [RoomRecordingStatus] status Read only the recordings with this status. Can be: `processing`, `completed`, or `deleted`.
+                    # @param [Status] status Read only the recordings with this status. Can be: `processing`, `completed`, or `deleted`.
                     # @param [String] source_sid Read only the recordings that have this `source_sid`.
                     # @param [Time] date_created_after Read only recordings that started on or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
                     # @param [Time] date_created_before Read only Recordings that started before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
@@ -62,7 +62,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [RoomRecordingStatus] status Read only the recordings with this status. Can be: `processing`, `completed`, or `deleted`.
+                    # @param [Status] status Read only the recordings with this status. Can be: `processing`, `completed`, or `deleted`.
                     # @param [String] source_sid Read only the recordings that have this `source_sid`.
                     # @param [Time] date_created_after Read only recordings that started on or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
                     # @param [Time] date_created_before Read only Recordings that started before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
@@ -103,7 +103,7 @@ module Twilio
                     ##
                     # Retrieve a single page of RoomRecordingInstance records from the API.
                     # Request is executed immediately.
-                    # @param [RoomRecordingStatus] status Read only the recordings with this status. Can be: `processing`, `completed`, or `deleted`.
+                    # @param [Status] status Read only the recordings with this status. Can be: `processing`, `completed`, or `deleted`.
                     # @param [String] source_sid Read only the recordings that have this `source_sid`.
                     # @param [Time] date_created_after Read only recordings that started on or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
                     # @param [Time] date_created_before Read only Recordings that started before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
@@ -153,6 +153,7 @@ module Twilio
                     end
                 end
 
+
                 class RoomRecordingContext < InstanceContext
                     ##
                     # Initialize the RoomRecordingContext
@@ -195,14 +196,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.RoomRecordingContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.RoomRecordingContext #{context}>"
                     end
                 end
@@ -292,7 +293,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RoomRecordingStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -328,7 +329,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RoomRecordingType] 
+                    # @return [Type] 
                     def type
                         @properties['type']
                     end
@@ -340,13 +341,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RoomRecordingFormat] 
+                    # @return [Format] 
                     def container_format
                         @properties['container_format']
                     end
                     
                     ##
-                    # @return [RoomRecordingCodec] 
+                    # @return [Codec] 
                     def codec
                         @properties['codec']
                     end
@@ -417,6 +418,7 @@ module Twilio
                         "<Twilio.Video.V1.RoomRecordingInstance #{values}>"
                     end
                 end
+
              end
             end
         end

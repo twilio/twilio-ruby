@@ -32,7 +32,7 @@ module Twilio
                     ##
                     # Create the FlowInstance
                     # @param [String] friendly_name The string that you assigned to describe the Flow.
-                    # @param [FlowStatus] status 
+                    # @param [Status] status 
                     # @param [Object] definition JSON representation of flow definition.
                     # @param [String] commit_message Description of change made in the revision.
                     # @return [FlowInstance] Created FlowInstance
@@ -151,6 +151,7 @@ module Twilio
                     end
                 end
 
+
                 class FlowContext < InstanceContext
                     ##
                     # Initialize the FlowContext
@@ -192,7 +193,7 @@ module Twilio
 
                     ##
                     # Update the FlowInstance
-                    # @param [FlowStatus] status 
+                    # @param [Status] status 
                     # @param [String] friendly_name The string that you assigned to describe the Flow.
                     # @param [Object] definition JSON representation of flow definition.
                     # @param [String] commit_message Description of change made in the revision.
@@ -277,14 +278,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V2.FlowContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V2.FlowContext #{context}>"
                     end
                 end
@@ -390,7 +391,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [FlowStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -473,7 +474,7 @@ module Twilio
 
                     ##
                     # Update the FlowInstance
-                    # @param [FlowStatus] status 
+                    # @param [Status] status 
                     # @param [String] friendly_name The string that you assigned to describe the Flow.
                     # @param [Object] definition JSON representation of flow definition.
                     # @param [String] commit_message Description of change made in the revision.
@@ -528,6 +529,7 @@ module Twilio
                         "<Twilio.Studio.V2.FlowInstance #{values}>"
                     end
                 end
+
             end
         end
     end

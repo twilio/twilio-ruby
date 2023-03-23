@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, app_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { app_sid: app_sid, }
+                        @solution = { app_sid: app_sid }
                         
                         
                     end
@@ -39,6 +39,7 @@ module Twilio
                         '#<Twilio.Microvisor.V1.AppManifestList>'
                     end
                 end
+
 
                 ##
                 #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
@@ -74,14 +75,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Microvisor.V1.AppManifestContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Microvisor.V1.AppManifestContext #{context}>"
                     end
                 end
@@ -197,6 +198,7 @@ module Twilio
                         "<Twilio.Microvisor.V1.AppManifestInstance #{values}>"
                     end
                 end
+
              end
             end
         end

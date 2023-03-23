@@ -40,6 +40,7 @@ module Twilio
                     end
                 end
 
+
                 class WebhookContext < InstanceContext
                     ##
                     # Initialize the WebhookContext
@@ -72,7 +73,7 @@ module Twilio
                     # @param [Array[String]] filters The list of webhook event triggers that are enabled for this Service: `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`, `onConversationUpdated`, `onConversationRemoved`, `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`
                     # @param [String] pre_webhook_url The absolute url the pre-event webhook request should be sent to.
                     # @param [String] post_webhook_url The absolute url the post-event webhook request should be sent to.
-                    # @param [ConfigurationWebhookTarget] target 
+                    # @param [Target] target 
                     # @return [WebhookInstance] Updated WebhookInstance
                     def update(
                         method: :unset, 
@@ -101,14 +102,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.WebhookContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.WebhookContext #{context}>"
                     end
                 end
@@ -188,7 +189,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ConfigurationWebhookMethod] 
+                    # @return [Method] 
                     def method
                         @properties['method']
                     end
@@ -212,7 +213,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ConfigurationWebhookTarget] 
+                    # @return [Target] 
                     def target
                         @properties['target']
                     end
@@ -237,7 +238,7 @@ module Twilio
                     # @param [Array[String]] filters The list of webhook event triggers that are enabled for this Service: `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`, `onConversationUpdated`, `onConversationRemoved`, `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`
                     # @param [String] pre_webhook_url The absolute url the pre-event webhook request should be sent to.
                     # @param [String] post_webhook_url The absolute url the post-event webhook request should be sent to.
-                    # @param [ConfigurationWebhookTarget] target 
+                    # @param [Target] target 
                     # @return [WebhookInstance] Updated WebhookInstance
                     def update(
                         method: :unset, 
@@ -270,6 +271,7 @@ module Twilio
                         "<Twilio.Conversations.V1.WebhookInstance #{values}>"
                     end
                 end
+
              end
             end
         end

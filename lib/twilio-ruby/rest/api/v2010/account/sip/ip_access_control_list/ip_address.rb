@@ -29,7 +29,7 @@ module Twilio
                     def initialize(version, account_sid: nil, ip_access_control_list_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,ip_access_control_list_sid: ip_access_control_list_sid, }
+                        @solution = { account_sid: account_sid, ip_access_control_list_sid: ip_access_control_list_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/IpAccessControlLists/#{@solution[:ip_access_control_list_sid]}/IpAddresses.json"
                         
                     end
@@ -154,6 +154,7 @@ module Twilio
                     end
                 end
 
+
                 class IpAddressContext < InstanceContext
                     ##
                     # Initialize the IpAddressContext
@@ -226,14 +227,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.IpAddressContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.IpAddressContext #{context}>"
                     end
                 end
@@ -411,6 +412,7 @@ module Twilio
                         "<Twilio.Api.V2010.IpAddressInstance #{values}>"
                     end
                 end
+
              end
              end
              end

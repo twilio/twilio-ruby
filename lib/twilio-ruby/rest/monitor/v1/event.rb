@@ -165,6 +165,7 @@ module Twilio
                     end
                 end
 
+
                 class EventContext < InstanceContext
                     ##
                     # Initialize the EventContext
@@ -197,14 +198,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Monitor.V1.EventContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Monitor.V1.EventContext #{context}>"
                     end
                 end
@@ -390,6 +391,7 @@ module Twilio
                         "<Twilio.Monitor.V1.EventInstance #{values}>"
                     end
                 end
+
             end
         end
     end

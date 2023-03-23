@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, country_code: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,country_code: country_code, }
+                        @solution = { account_sid: account_sid, country_code: country_code }
                         @uri = "/Accounts/#{@solution[:account_sid]}/AvailablePhoneNumbers/#{@solution[:country_code]}/National.json"
                         
                     end
@@ -251,6 +251,7 @@ module Twilio
                         '#<Twilio.Api.V2010.NationalList>'
                     end
                 end
+
                 class NationalPage < Page
                     ##
                     # Initialize the NationalPage
@@ -401,6 +402,7 @@ module Twilio
                         "<Twilio.Api.V2010.NationalInstance>"
                     end
                 end
+
              end
              end
             end

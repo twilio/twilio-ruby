@@ -27,14 +27,14 @@ module Twilio
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid, }
+                        @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Roles"
                         
                     end
                     ##
                     # Create the RoleInstance
                     # @param [String] friendly_name A descriptive string that you create to describe the new resource. It can be up to 64 characters long.
-                    # @param [RoleRoleType] type 
+                    # @param [RoleType] type 
                     # @param [Array[String]] permission A permission that you grant to the new role. Only one permission can be granted per parameter. To assign more than one permission, repeat this parameter for each permission value. The values for this parameter depend on the role's `type`.
                     # @return [RoleInstance] Created RoleInstance
                     def create(
@@ -151,6 +151,7 @@ module Twilio
                     end
                 end
 
+
                 class RoleContext < InstanceContext
                     ##
                     # Initialize the RoleContext
@@ -214,14 +215,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V2.RoleContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V2.RoleContext #{context}>"
                     end
                 end
@@ -321,7 +322,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RoleRoleType] 
+                    # @return [RoleType] 
                     def type
                         @properties['type']
                     end
@@ -393,6 +394,7 @@ module Twilio
                         "<Twilio.Chat.V2.RoleInstance #{values}>"
                     end
                 end
+
              end
             end
         end

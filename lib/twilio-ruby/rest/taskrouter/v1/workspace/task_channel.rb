@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, workspace_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { workspace_sid: workspace_sid, }
+                        @solution = { workspace_sid: workspace_sid }
                         @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskChannels"
                         
                     end
@@ -151,6 +151,7 @@ module Twilio
                     end
                 end
 
+
                 class TaskChannelContext < InstanceContext
                     ##
                     # Initialize the TaskChannelContext
@@ -217,14 +218,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Taskrouter.V1.TaskChannelContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Taskrouter.V1.TaskChannelContext #{context}>"
                     end
                 end
@@ -406,6 +407,7 @@ module Twilio
                         "<Twilio.Taskrouter.V1.TaskChannelInstance #{values}>"
                     end
                 end
+
              end
             end
         end

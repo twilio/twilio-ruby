@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 class ConfigurationContext < InstanceContext
                     ##
                     # Initialize the ConfigurationContext
@@ -106,14 +107,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.ConfigurationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.ConfigurationContext #{context}>"
                     end
                 end
@@ -279,6 +280,7 @@ module Twilio
                         "<Twilio.Conversations.V1.ConfigurationInstance #{values}>"
                     end
                 end
+
             end
         end
     end

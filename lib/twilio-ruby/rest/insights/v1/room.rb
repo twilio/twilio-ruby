@@ -34,8 +34,8 @@ module Twilio
                     # Lists RoomInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [Array[VideoRoomSummaryRoomType]] room_type Type of room. Can be `go`, `peer_to_peer`, `group`, or `group_small`.
-                    # @param [Array[VideoRoomSummaryCodec]] codec Codecs used by participants in the room. Can be `VP8`, `H264`, or `VP9`.
+                    # @param [Array[RoomType]] room_type Type of room. Can be `go`, `peer_to_peer`, `group`, or `group_small`.
+                    # @param [Array[Codec]] codec Codecs used by participants in the room. Can be `VP8`, `H264`, or `VP9`.
                     # @param [String] room_name Room friendly name.
                     # @param [Time] created_after Only read rooms that started on or after this ISO 8601 timestamp.
                     # @param [Time] created_before Only read rooms that started before this ISO 8601 timestamp.
@@ -62,8 +62,8 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [Array[VideoRoomSummaryRoomType]] room_type Type of room. Can be `go`, `peer_to_peer`, `group`, or `group_small`.
-                    # @param [Array[VideoRoomSummaryCodec]] codec Codecs used by participants in the room. Can be `VP8`, `H264`, or `VP9`.
+                    # @param [Array[RoomType]] room_type Type of room. Can be `go`, `peer_to_peer`, `group`, or `group_small`.
+                    # @param [Array[Codec]] codec Codecs used by participants in the room. Can be `VP8`, `H264`, or `VP9`.
                     # @param [String] room_name Room friendly name.
                     # @param [Time] created_after Only read rooms that started on or after this ISO 8601 timestamp.
                     # @param [Time] created_before Only read rooms that started before this ISO 8601 timestamp.
@@ -105,8 +105,8 @@ module Twilio
                     ##
                     # Retrieve a single page of RoomInstance records from the API.
                     # Request is executed immediately.
-                    # @param [Array[VideoRoomSummaryRoomType]] room_type Type of room. Can be `go`, `peer_to_peer`, `group`, or `group_small`.
-                    # @param [Array[VideoRoomSummaryCodec]] codec Codecs used by participants in the room. Can be `VP8`, `H264`, or `VP9`.
+                    # @param [Array[RoomType]] room_type Type of room. Can be `go`, `peer_to_peer`, `group`, or `group_small`.
+                    # @param [Array[Codec]] codec Codecs used by participants in the room. Can be `VP8`, `H264`, or `VP9`.
                     # @param [String] room_name Room friendly name.
                     # @param [Time] created_after Only read rooms that started on or after this ISO 8601 timestamp.
                     # @param [Time] created_before Only read rooms that started before this ISO 8601 timestamp.
@@ -157,6 +157,7 @@ module Twilio
                         '#<Twilio.Insights.V1.RoomList>'
                     end
                 end
+
 
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
@@ -215,14 +216,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Insights.V1.RoomContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Insights.V1.RoomContext #{context}>"
                     end
                 end
@@ -345,13 +346,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [VideoRoomSummaryRoomType] 
+                    # @return [RoomType] 
                     def room_type
                         @properties['room_type']
                     end
                     
                     ##
-                    # @return [VideoRoomSummaryRoomStatus] 
+                    # @return [RoomStatus] 
                     def room_status
                         @properties['room_status']
                     end
@@ -369,13 +370,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [VideoRoomSummaryCreatedMethod] 
+                    # @return [CreatedMethod] 
                     def created_method
                         @properties['created_method']
                     end
                     
                     ##
-                    # @return [VideoRoomSummaryEndReason] 
+                    # @return [EndReason] 
                     def end_reason
                         @properties['end_reason']
                     end
@@ -411,13 +412,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Array<VideoRoomSummaryCodec>] Codecs used by participants in the room. Can be `VP8`, `H264`, or `VP9`.
+                    # @return [Array<Codec>] Codecs used by participants in the room. Can be `VP8`, `H264`, or `VP9`.
                     def codecs
                         @properties['codecs']
                     end
                     
                     ##
-                    # @return [VideoRoomSummaryTwilioRealm] 
+                    # @return [TwilioRealm] 
                     def media_region
                         @properties['media_region']
                     end
@@ -441,7 +442,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [VideoRoomSummaryProcessingState] 
+                    # @return [ProcessingState] 
                     def processing_state
                         @properties['processing_state']
                     end
@@ -453,7 +454,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [VideoRoomSummaryEdgeLocation] 
+                    # @return [EdgeLocation] 
                     def edge_location
                         @properties['edge_location']
                     end
@@ -499,6 +500,7 @@ module Twilio
                         "<Twilio.Insights.V1.RoomInstance #{values}>"
                     end
                 end
+
             end
         end
     end

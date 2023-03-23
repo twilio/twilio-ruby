@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/OutgoingCallerIds.json"
                         
                     end
@@ -139,6 +139,7 @@ module Twilio
                     end
                 end
 
+
                 class OutgoingCallerIdContext < InstanceContext
                     ##
                     # Initialize the OutgoingCallerIdContext
@@ -202,14 +203,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.OutgoingCallerIdContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.OutgoingCallerIdContext #{context}>"
                     end
                 end
@@ -367,6 +368,7 @@ module Twilio
                         "<Twilio.Api.V2010.OutgoingCallerIdInstance #{values}>"
                     end
                 end
+
              end
             end
         end

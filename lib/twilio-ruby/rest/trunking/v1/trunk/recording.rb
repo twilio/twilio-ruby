@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, trunk_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { trunk_sid: trunk_sid, }
+                        @solution = { trunk_sid: trunk_sid }
                         
                         
                     end
@@ -39,6 +39,7 @@ module Twilio
                         '#<Twilio.Trunking.V1.RecordingList>'
                     end
                 end
+
 
                 class RecordingContext < InstanceContext
                     ##
@@ -70,8 +71,8 @@ module Twilio
 
                     ##
                     # Update the RecordingInstance
-                    # @param [RecordingRecordingMode] mode 
-                    # @param [RecordingRecordingTrim] trim 
+                    # @param [RecordingMode] mode 
+                    # @param [RecordingTrim] trim 
                     # @return [RecordingInstance] Updated RecordingInstance
                     def update(
                         mode: :unset, 
@@ -95,14 +96,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trunking.V1.RecordingContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trunking.V1.RecordingContext #{context}>"
                     end
                 end
@@ -171,13 +172,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RecordingRecordingMode] 
+                    # @return [RecordingMode] 
                     def mode
                         @properties['mode']
                     end
                     
                     ##
-                    # @return [RecordingRecordingTrim] 
+                    # @return [RecordingTrim] 
                     def trim
                         @properties['trim']
                     end
@@ -192,8 +193,8 @@ module Twilio
 
                     ##
                     # Update the RecordingInstance
-                    # @param [RecordingRecordingMode] mode 
-                    # @param [RecordingRecordingTrim] trim 
+                    # @param [RecordingMode] mode 
+                    # @param [RecordingTrim] trim 
                     # @return [RecordingInstance] Updated RecordingInstance
                     def update(
                         mode: :unset, 
@@ -220,6 +221,7 @@ module Twilio
                         "<Twilio.Trunking.V1.RecordingInstance #{values}>"
                     end
                 end
+
              end
             end
         end

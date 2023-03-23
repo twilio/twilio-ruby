@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, call_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,call_sid: call_sid, }
+                        @solution = { account_sid: account_sid, call_sid: call_sid }
                         
                         
                     end
@@ -40,6 +40,7 @@ module Twilio
                         '#<Twilio.Api.V2010.FeedbackList>'
                     end
                 end
+
 
                 class FeedbackContext < InstanceContext
                     ##
@@ -74,7 +75,7 @@ module Twilio
                     ##
                     # Update the FeedbackInstance
                     # @param [String] quality_score The call quality expressed as an integer from `1` to `5` where `1` represents very poor call quality and `5` represents a perfect call.
-                    # @param [Array[CallFeedbackIssues]] issue One or more issues experienced during the call. The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`, `audio-latency`, `unsolicited-call`, or `one-way-audio`.
+                    # @param [Array[Issues]] issue One or more issues experienced during the call. The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`, `audio-latency`, `unsolicited-call`, or `one-way-audio`.
                     # @return [FeedbackInstance] Updated FeedbackInstance
                     def update(
                         quality_score: :unset, 
@@ -99,14 +100,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.FeedbackContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.FeedbackContext #{context}>"
                     end
                 end
@@ -197,7 +198,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Array<CallFeedbackIssues>] A list of issues experienced during the call. The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`, `audio-latency`, `unsolicited-call`, or `one-way-audio`.
+                    # @return [Array<Issues>] A list of issues experienced during the call. The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`, `audio-latency`, `unsolicited-call`, or `one-way-audio`.
                     def issues
                         @properties['issues']
                     end
@@ -225,7 +226,7 @@ module Twilio
                     ##
                     # Update the FeedbackInstance
                     # @param [String] quality_score The call quality expressed as an integer from `1` to `5` where `1` represents very poor call quality and `5` represents a perfect call.
-                    # @param [Array[CallFeedbackIssues]] issue One or more issues experienced during the call. The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`, `audio-latency`, `unsolicited-call`, or `one-way-audio`.
+                    # @param [Array[Issues]] issue One or more issues experienced during the call. The issues can be: `imperfect-audio`, `dropped-call`, `incorrect-caller-id`, `post-dial-delay`, `digits-not-captured`, `audio-latency`, `unsolicited-call`, or `one-way-audio`.
                     # @return [FeedbackInstance] Updated FeedbackInstance
                     def update(
                         quality_score: :unset, 
@@ -252,6 +253,7 @@ module Twilio
                         "<Twilio.Api.V2010.FeedbackInstance #{values}>"
                     end
                 end
+
              end
              end
             end

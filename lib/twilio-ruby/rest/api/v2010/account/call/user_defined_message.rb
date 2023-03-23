@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, call_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,call_sid: call_sid, }
+                        @solution = { account_sid: account_sid, call_sid: call_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/UserDefinedMessages.json"
                         
                     end
@@ -64,6 +64,7 @@ module Twilio
                         '#<Twilio.Api.V2010.UserDefinedMessageList>'
                     end
                 end
+
                 class UserDefinedMessagePage < Page
                     ##
                     # Initialize the UserDefinedMessagePage
@@ -151,6 +152,7 @@ module Twilio
                         "<Twilio.Api.V2010.UserDefinedMessageInstance>"
                     end
                 end
+
              end
              end
             end

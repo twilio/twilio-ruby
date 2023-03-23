@@ -63,8 +63,8 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [String] sim The SID or unique name of the Sim resource that SMS Command was sent to or from.
-                    # @param [SmsCommandStatus] status The status of the SMS Command. Can be: `queued`, `sent`, `delivered`, `received` or `failed`. See the [SMS Command Status Values](https://www.twilio.com/docs/iot/supersim/api/smscommand-resource#status-values) for a description of each.
-                    # @param [SmsCommandDirection] direction The direction of the SMS Command. Can be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term `mobile terminated`, and `from_sim` is synonymous with the term `mobile originated`.
+                    # @param [Status] status The status of the SMS Command. Can be: `queued`, `sent`, `delivered`, `received` or `failed`. See the [SMS Command Status Values](https://www.twilio.com/docs/iot/supersim/api/smscommand-resource#status-values) for a description of each.
+                    # @param [Direction] direction The direction of the SMS Command. Can be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term `mobile terminated`, and `from_sim` is synonymous with the term `mobile originated`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -87,8 +87,8 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [String] sim The SID or unique name of the Sim resource that SMS Command was sent to or from.
-                    # @param [SmsCommandStatus] status The status of the SMS Command. Can be: `queued`, `sent`, `delivered`, `received` or `failed`. See the [SMS Command Status Values](https://www.twilio.com/docs/iot/supersim/api/smscommand-resource#status-values) for a description of each.
-                    # @param [SmsCommandDirection] direction The direction of the SMS Command. Can be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term `mobile terminated`, and `from_sim` is synonymous with the term `mobile originated`.
+                    # @param [Status] status The status of the SMS Command. Can be: `queued`, `sent`, `delivered`, `received` or `failed`. See the [SMS Command Status Values](https://www.twilio.com/docs/iot/supersim/api/smscommand-resource#status-values) for a description of each.
+                    # @param [Direction] direction The direction of the SMS Command. Can be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term `mobile terminated`, and `from_sim` is synonymous with the term `mobile originated`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -126,8 +126,8 @@ module Twilio
                     # Retrieve a single page of SmsCommandInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] sim The SID or unique name of the Sim resource that SMS Command was sent to or from.
-                    # @param [SmsCommandStatus] status The status of the SMS Command. Can be: `queued`, `sent`, `delivered`, `received` or `failed`. See the [SMS Command Status Values](https://www.twilio.com/docs/iot/supersim/api/smscommand-resource#status-values) for a description of each.
-                    # @param [SmsCommandDirection] direction The direction of the SMS Command. Can be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term `mobile terminated`, and `from_sim` is synonymous with the term `mobile originated`.
+                    # @param [Status] status The status of the SMS Command. Can be: `queued`, `sent`, `delivered`, `received` or `failed`. See the [SMS Command Status Values](https://www.twilio.com/docs/iot/supersim/api/smscommand-resource#status-values) for a description of each.
+                    # @param [Direction] direction The direction of the SMS Command. Can be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term `mobile terminated`, and `from_sim` is synonymous with the term `mobile originated`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -172,6 +172,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class SmsCommandContext < InstanceContext
@@ -206,14 +207,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Supersim.V1.SmsCommandContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Supersim.V1.SmsCommandContext #{context}>"
                     end
                 end
@@ -313,13 +314,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [SmsCommandStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
                     
                     ##
-                    # @return [SmsCommandDirection] 
+                    # @return [Direction] 
                     def direction
                         @properties['direction']
                     end
@@ -364,6 +365,7 @@ module Twilio
                         "<Twilio.Supersim.V1.SmsCommandInstance #{values}>"
                     end
                 end
+
             end
         end
     end

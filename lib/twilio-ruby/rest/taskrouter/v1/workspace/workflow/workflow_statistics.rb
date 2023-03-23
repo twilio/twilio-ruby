@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, workspace_sid: nil, workflow_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { workspace_sid: workspace_sid,workflow_sid: workflow_sid, }
+                        @solution = { workspace_sid: workspace_sid, workflow_sid: workflow_sid }
                         
                         
                     end
@@ -40,6 +40,7 @@ module Twilio
                         '#<Twilio.Taskrouter.V1.WorkflowStatisticsList>'
                     end
                 end
+
 
                 class WorkflowStatisticsContext < InstanceContext
                     ##
@@ -93,14 +94,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Taskrouter.V1.WorkflowStatisticsContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Taskrouter.V1.WorkflowStatisticsContext #{context}>"
                     end
                 end
@@ -247,6 +248,7 @@ module Twilio
                         "<Twilio.Taskrouter.V1.WorkflowStatisticsInstance #{values}>"
                     end
                 end
+
              end
              end
             end

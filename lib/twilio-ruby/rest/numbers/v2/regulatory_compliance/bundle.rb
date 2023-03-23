@@ -38,7 +38,7 @@ module Twilio
                     # @param [String] status_callback The URL we call to inform your application of status changes.
                     # @param [String] regulation_sid The unique string of a regulation that is associated to the Bundle resource.
                     # @param [String] iso_country The [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
-                    # @param [BundleEndUserType] end_user_type 
+                    # @param [EndUserType] end_user_type 
                     # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll free`.
                     # @return [BundleInstance] Created BundleInstance
                     def create(
@@ -73,14 +73,14 @@ module Twilio
                     # Lists BundleInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [BundleStatus] status The verification status of the Bundle resource. Please refer to [Bundle Statuses](https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses) for more details.
+                    # @param [Status] status The verification status of the Bundle resource. Please refer to [Bundle Statuses](https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses) for more details.
                     # @param [String] friendly_name The string that you assigned to describe the resource. The column can contain 255 variable characters.
                     # @param [String] regulation_sid The unique string of a [Regulation resource](https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations) that is associated to the Bundle resource.
                     # @param [String] iso_country The 2-digit [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
                     # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `tollfree`.
                     # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid Bundle until a specified expiration date.
-                    # @param [BundleSortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
-                    # @param [BundleSortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
+                    # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
+                    # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
                     # @param [Time] valid_until_date Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
                     # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
                     # @param [Time] valid_until_date_after Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
@@ -113,14 +113,14 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [BundleStatus] status The verification status of the Bundle resource. Please refer to [Bundle Statuses](https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses) for more details.
+                    # @param [Status] status The verification status of the Bundle resource. Please refer to [Bundle Statuses](https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses) for more details.
                     # @param [String] friendly_name The string that you assigned to describe the resource. The column can contain 255 variable characters.
                     # @param [String] regulation_sid The unique string of a [Regulation resource](https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations) that is associated to the Bundle resource.
                     # @param [String] iso_country The 2-digit [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
                     # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `tollfree`.
                     # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid Bundle until a specified expiration date.
-                    # @param [BundleSortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
-                    # @param [BundleSortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
+                    # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
+                    # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
                     # @param [Time] valid_until_date Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
                     # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
                     # @param [Time] valid_until_date_after Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
@@ -168,14 +168,14 @@ module Twilio
                     ##
                     # Retrieve a single page of BundleInstance records from the API.
                     # Request is executed immediately.
-                    # @param [BundleStatus] status The verification status of the Bundle resource. Please refer to [Bundle Statuses](https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses) for more details.
+                    # @param [Status] status The verification status of the Bundle resource. Please refer to [Bundle Statuses](https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses) for more details.
                     # @param [String] friendly_name The string that you assigned to describe the resource. The column can contain 255 variable characters.
                     # @param [String] regulation_sid The unique string of a [Regulation resource](https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations) that is associated to the Bundle resource.
                     # @param [String] iso_country The 2-digit [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
                     # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `tollfree`.
                     # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid Bundle until a specified expiration date.
-                    # @param [BundleSortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
-                    # @param [BundleSortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
+                    # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
+                    # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
                     # @param [Time] valid_until_date Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
                     # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
                     # @param [Time] valid_until_date_after Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
@@ -239,6 +239,7 @@ module Twilio
                     end
                 end
 
+
                 class BundleContext < InstanceContext
                     ##
                     # Initialize the BundleContext
@@ -281,7 +282,7 @@ module Twilio
 
                     ##
                     # Update the BundleInstance
-                    # @param [BundleStatus] status 
+                    # @param [Status] status 
                     # @param [String] status_callback The URL we call to inform your application of status changes.
                     # @param [String] friendly_name The string that you assigned to describe the resource.
                     # @param [String] email The email address that will receive updates when the Bundle resource changes status.
@@ -386,14 +387,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Numbers.V2.BundleContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Numbers.V2.BundleContext #{context}>"
                     end
                 end
@@ -496,7 +497,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [BundleStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -561,7 +562,7 @@ module Twilio
 
                     ##
                     # Update the BundleInstance
-                    # @param [BundleStatus] status 
+                    # @param [Status] status 
                     # @param [String] status_callback The URL we call to inform your application of status changes.
                     # @param [String] friendly_name The string that you assigned to describe the resource.
                     # @param [String] email The email address that will receive updates when the Bundle resource changes status.
@@ -623,6 +624,7 @@ module Twilio
                         "<Twilio.Numbers.V2.BundleInstance #{values}>"
                     end
                 end
+
              end
             end
         end

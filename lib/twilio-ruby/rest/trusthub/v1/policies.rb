@@ -123,6 +123,7 @@ module Twilio
                     end
                 end
 
+
                 class PoliciesContext < InstanceContext
                     ##
                     # Initialize the PoliciesContext
@@ -155,14 +156,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trusthub.V1.PoliciesContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trusthub.V1.PoliciesContext #{context}>"
                     end
                 end
@@ -278,6 +279,7 @@ module Twilio
                         "<Twilio.Trusthub.V1.PoliciesInstance #{values}>"
                     end
                 end
+
             end
         end
     end

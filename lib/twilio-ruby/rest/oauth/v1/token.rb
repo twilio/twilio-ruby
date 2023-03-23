@@ -77,6 +77,7 @@ module Twilio
                         '#<Twilio.Oauth.V1.TokenList>'
                     end
                 end
+
                 class TokenPage < Page
                     ##
                     # Initialize the TokenPage
@@ -171,6 +172,7 @@ module Twilio
                         "<Twilio.Oauth.V1.TokenInstance>"
                     end
                 end
+
             end
         end
     end

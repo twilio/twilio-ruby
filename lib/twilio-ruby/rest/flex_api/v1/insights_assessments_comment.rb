@@ -186,6 +186,7 @@ module Twilio
                         '#<Twilio.FlexApi.V1.InsightsAssessmentsCommentList>'
                     end
                 end
+
                 class InsightsAssessmentsCommentPage < Page
                     ##
                     # Initialize the InsightsAssessmentsCommentPage
@@ -329,6 +330,7 @@ module Twilio
                         "<Twilio.FlexApi.V1.InsightsAssessmentsCommentInstance>"
                     end
                 end
+
             end
         end
     end

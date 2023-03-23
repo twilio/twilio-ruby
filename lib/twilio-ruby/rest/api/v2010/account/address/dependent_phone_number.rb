@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, address_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,address_sid: address_sid, }
+                        @solution = { account_sid: account_sid, address_sid: address_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Addresses/#{@solution[:address_sid]}/DependentPhoneNumbers.json"
                         
                     end
@@ -125,6 +125,7 @@ module Twilio
                         '#<Twilio.Api.V2010.DependentPhoneNumberList>'
                     end
                 end
+
                 class DependentPhoneNumberPage < Page
                     ##
                     # Initialize the DependentPhoneNumberPage
@@ -289,7 +290,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [DependentPhoneNumberAddressRequirement] 
+                    # @return [AddressRequirement] 
                     def address_requirements
                         @properties['address_requirements']
                     end
@@ -337,7 +338,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [DependentPhoneNumberEmergencyStatus] 
+                    # @return [EmergencyStatus] 
                     def emergency_status
                         @properties['emergency_status']
                     end
@@ -366,6 +367,7 @@ module Twilio
                         "<Twilio.Api.V2010.DependentPhoneNumberInstance>"
                     end
                 end
+
              end
              end
             end

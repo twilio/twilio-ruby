@@ -28,13 +28,13 @@ module Twilio
                     def initialize(version, account_sid: nil, message_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,message_sid: message_sid, }
+                        @solution = { account_sid: account_sid, message_sid: message_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Messages/#{@solution[:message_sid]}/Feedback.json"
                         
                     end
                     ##
                     # Create the FeedbackInstance
-                    # @param [MessageFeedbackOutcome] outcome 
+                    # @param [Outcome] outcome 
                     # @return [FeedbackInstance] Created FeedbackInstance
                     def create(
                         outcome: :unset
@@ -61,6 +61,7 @@ module Twilio
                         '#<Twilio.Api.V2010.FeedbackList>'
                     end
                 end
+
                 class FeedbackPage < Page
                     ##
                     # Initialize the FeedbackPage
@@ -127,7 +128,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [MessageFeedbackOutcome] 
+                    # @return [Outcome] 
                     def outcome
                         @properties['outcome']
                     end
@@ -162,6 +163,7 @@ module Twilio
                         "<Twilio.Api.V2010.FeedbackInstance>"
                     end
                 end
+
              end
              end
             end

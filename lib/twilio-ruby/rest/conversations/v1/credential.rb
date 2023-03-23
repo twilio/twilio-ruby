@@ -31,7 +31,7 @@ module Twilio
                     end
                     ##
                     # Create the CredentialInstance
-                    # @param [CredentialPushType] type 
+                    # @param [PushType] type 
                     # @param [String] friendly_name A descriptive string that you create to describe the new resource. It can be up to 64 characters long.
                     # @param [String] certificate [APN only] The URL encoded representation of the certificate. For example,  `-----BEGIN CERTIFICATE----- MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEF.....A== -----END CERTIFICATE-----`.
                     # @param [String] private_key [APN only] The URL encoded representation of the private key. For example, `-----BEGIN RSA PRIVATE KEY----- MIIEpQIBAAKCAQEAuyf/lNrH9ck8DmNyo3fG... -----END RSA PRIVATE KEY-----`.
@@ -160,6 +160,7 @@ module Twilio
                     end
                 end
 
+
                 class CredentialContext < InstanceContext
                     ##
                     # Initialize the CredentialContext
@@ -198,7 +199,7 @@ module Twilio
 
                     ##
                     # Update the CredentialInstance
-                    # @param [CredentialPushType] type 
+                    # @param [PushType] type 
                     # @param [String] friendly_name A descriptive string that you create to describe the new resource. It can be up to 64 characters long.
                     # @param [String] certificate [APN only] The URL encoded representation of the certificate. For example,  `-----BEGIN CERTIFICATE----- MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEF.....A== -----END CERTIFICATE-----`.
                     # @param [String] private_key [APN only] The URL encoded representation of the private key. For example, `-----BEGIN RSA PRIVATE KEY----- MIIEpQIBAAKCAQEAuyf/lNrH9ck8DmNyo3fG... -----END RSA PRIVATE KEY-----`.
@@ -238,14 +239,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.CredentialContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.CredentialContext #{context}>"
                     end
                 end
@@ -338,7 +339,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CredentialPushType] 
+                    # @return [PushType] 
                     def type
                         @properties['type']
                     end
@@ -385,7 +386,7 @@ module Twilio
 
                     ##
                     # Update the CredentialInstance
-                    # @param [CredentialPushType] type 
+                    # @param [PushType] type 
                     # @param [String] friendly_name A descriptive string that you create to describe the new resource. It can be up to 64 characters long.
                     # @param [String] certificate [APN only] The URL encoded representation of the certificate. For example,  `-----BEGIN CERTIFICATE----- MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEF.....A== -----END CERTIFICATE-----`.
                     # @param [String] private_key [APN only] The URL encoded representation of the private key. For example, `-----BEGIN RSA PRIVATE KEY----- MIIEpQIBAAKCAQEAuyf/lNrH9ck8DmNyo3fG... -----END RSA PRIVATE KEY-----`.
@@ -428,6 +429,7 @@ module Twilio
                         "<Twilio.Conversations.V1.CredentialInstance #{values}>"
                     end
                 end
+
             end
         end
     end

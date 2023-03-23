@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains.json"
                         
                     end
@@ -181,6 +181,7 @@ module Twilio
                         '#<Twilio.Api.V2010.DomainList>'
                     end
                 end
+
 
                 class DomainContext < InstanceContext
                     ##
@@ -346,14 +347,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.DomainContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.DomainContext #{context}>"
                     end
                 end
@@ -666,6 +667,7 @@ module Twilio
                         "<Twilio.Api.V2010.DomainInstance #{values}>"
                     end
                 end
+
              end
              end
             end

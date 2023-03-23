@@ -154,6 +154,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class BrandRegistrationContext < InstanceContext
@@ -224,14 +225,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Messaging.V1.BrandRegistrationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Messaging.V1.BrandRegistrationContext #{context}>"
                     end
                 end
@@ -360,7 +361,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [BrandRegistrationsStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -390,13 +391,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Array<BrandRegistrationsBrandFeedback>] Feedback on how to improve brand score
+                    # @return [Array<BrandFeedback>] Feedback on how to improve brand score
                     def brand_feedback
                         @properties['brand_feedback']
                     end
                     
                     ##
-                    # @return [BrandRegistrationsIdentityStatus] 
+                    # @return [IdentityStatus] 
                     def identity_status
                         @properties['identity_status']
                     end
@@ -474,6 +475,7 @@ module Twilio
                         "<Twilio.Messaging.V1.BrandRegistrationInstance #{values}>"
                     end
                 end
+
             end
         end
     end

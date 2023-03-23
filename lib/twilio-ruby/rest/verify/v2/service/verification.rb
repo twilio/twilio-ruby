@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid, }
+                        @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Verifications"
                         
                     end
@@ -47,7 +47,7 @@ module Twilio
                     # @param [String] app_hash Your [App Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string) to be appended at the end of your verification SMS body. Applies only to SMS. Example SMS body: `<#> Your AppName verification code is: 1234 He42w354ol9`.
                     # @param [String] template_sid The message [template](https://www.twilio.com/docs/verify/api/templates). If provided, will override the default template for the Service. SMS and Voice channels only.
                     # @param [String] template_custom_substitutions A stringified JSON object in which the keys are the template's special variables and the values are the variables substitutions.
-                    # @param [String] device_ip The IP address of the client's device. If provided, it has to be a valid IPv4 or IPv6 address.
+                    # @param [String] device_ip Strongly encouraged if using the auto channel. The IP address of the client's device. If provided, it has to be a valid IPv4 or IPv6 address.
                     # @return [VerificationInstance] Created VerificationInstance
                     def create(
                         to: nil, 
@@ -102,6 +102,7 @@ module Twilio
                     end
                 end
 
+
                 class VerificationContext < InstanceContext
                     ##
                     # Initialize the VerificationContext
@@ -134,7 +135,7 @@ module Twilio
 
                     ##
                     # Update the VerificationInstance
-                    # @param [VerificationStatus] status 
+                    # @param [Status] status 
                     # @return [VerificationInstance] Updated VerificationInstance
                     def update(
                         status: nil
@@ -157,14 +158,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.VerificationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.VerificationContext #{context}>"
                     end
                 end
@@ -270,7 +271,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [VerificationChannel] 
+                    # @return [Channel] 
                     def channel
                         @properties['channel']
                     end
@@ -345,7 +346,7 @@ module Twilio
 
                     ##
                     # Update the VerificationInstance
-                    # @param [VerificationStatus] status 
+                    # @param [Status] status 
                     # @return [VerificationInstance] Updated VerificationInstance
                     def update(
                         status: nil
@@ -370,6 +371,7 @@ module Twilio
                         "<Twilio.Verify.V2.VerificationInstance #{values}>"
                     end
                 end
+
              end
             end
         end

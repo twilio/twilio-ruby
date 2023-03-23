@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, device_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { device_sid: device_sid, }
+                        @solution = { device_sid: device_sid }
                         @uri = "/Devices/#{@solution[:device_sid]}/Configs"
                         
                     end
@@ -148,6 +148,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class DeviceConfigContext < InstanceContext
@@ -213,14 +214,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Microvisor.V1.DeviceConfigContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Microvisor.V1.DeviceConfigContext #{context}>"
                     end
                 end
@@ -364,6 +365,7 @@ module Twilio
                         "<Twilio.Microvisor.V1.DeviceConfigInstance #{values}>"
                     end
                 end
+
              end
             end
         end

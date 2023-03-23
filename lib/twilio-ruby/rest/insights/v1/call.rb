@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 class CallContext < InstanceContext
                     ##
                     # Initialize the CallContext
@@ -124,14 +125,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Insights.V1.CallContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Insights.V1.CallContext #{context}>"
                     end
                 end
@@ -268,6 +269,7 @@ module Twilio
                         "<Twilio.Insights.V1.CallInstance #{values}>"
                     end
                 end
+
             end
         end
     end

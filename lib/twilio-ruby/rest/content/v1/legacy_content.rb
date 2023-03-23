@@ -122,6 +122,7 @@ module Twilio
                         '#<Twilio.Content.V1.LegacyContentList>'
                     end
                 end
+
                 class LegacyContentPage < Page
                     ##
                     # Initialize the LegacyContentPage
@@ -258,6 +259,7 @@ module Twilio
                         "<Twilio.Content.V1.LegacyContentInstance>"
                     end
                 end
+
             end
         end
     end

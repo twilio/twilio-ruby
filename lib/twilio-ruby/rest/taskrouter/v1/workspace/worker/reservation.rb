@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, workspace_sid: nil, worker_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { workspace_sid: workspace_sid,worker_sid: worker_sid, }
+                        @solution = { workspace_sid: workspace_sid, worker_sid: worker_sid }
                         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers/#{@solution[:worker_sid]}/Reservations"
                         
                     end
@@ -37,7 +37,7 @@ module Twilio
                     # Lists ReservationInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [WorkerReservationStatus] reservation_status Returns the list of reservations for a worker with a specified ReservationStatus. Can be: `pending`, `accepted`, `rejected`, `timeout`, `canceled`, or `rescinded`.
+                    # @param [Status] reservation_status Returns the list of reservations for a worker with a specified ReservationStatus. Can be: `pending`, `accepted`, `rejected`, `timeout`, `canceled`, or `rescinded`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -57,7 +57,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [WorkerReservationStatus] reservation_status Returns the list of reservations for a worker with a specified ReservationStatus. Can be: `pending`, `accepted`, `rejected`, `timeout`, `canceled`, or `rescinded`.
+                    # @param [Status] reservation_status Returns the list of reservations for a worker with a specified ReservationStatus. Can be: `pending`, `accepted`, `rejected`, `timeout`, `canceled`, or `rescinded`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -92,7 +92,7 @@ module Twilio
                     ##
                     # Retrieve a single page of ReservationInstance records from the API.
                     # Request is executed immediately.
-                    # @param [WorkerReservationStatus] reservation_status Returns the list of reservations for a worker with a specified ReservationStatus. Can be: `pending`, `accepted`, `rejected`, `timeout`, `canceled`, or `rescinded`.
+                    # @param [Status] reservation_status Returns the list of reservations for a worker with a specified ReservationStatus. Can be: `pending`, `accepted`, `rejected`, `timeout`, `canceled`, or `rescinded`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -133,6 +133,7 @@ module Twilio
                     end
                 end
 
+
                 class ReservationContext < InstanceContext
                     ##
                     # Initialize the ReservationContext
@@ -167,7 +168,7 @@ module Twilio
 
                     ##
                     # Update the ReservationInstance
-                    # @param [WorkerReservationStatus] reservation_status 
+                    # @param [Status] reservation_status 
                     # @param [String] worker_activity_sid The new worker activity SID if rejecting a reservation.
                     # @param [String] instruction The assignment instruction for the reservation.
                     # @param [String] dequeue_post_work_activity_sid The SID of the Activity resource to start after executing a Dequeue instruction.
@@ -190,7 +191,7 @@ module Twilio
                     # @param [String] from The caller ID of the call to the worker when executing a Conference instruction.
                     # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application.
                     # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `POST` or `GET` and the default is `POST`.
-                    # @param [Array[WorkerReservationCallStatus]] status_callback_event The call progress events that we will send to `status_callback`. Can be: `initiated`, `ringing`, `answered`, or `completed`.
+                    # @param [Array[CallStatus]] status_callback_event The call progress events that we will send to `status_callback`. Can be: `initiated`, `ringing`, `answered`, or `completed`.
                     # @param [String] timeout The timeout for a call when executing a Conference instruction.
                     # @param [Boolean] record Whether to record the participant and their conferences, including the time between conferences. Can be `true` or `false` and the default is `false`.
                     # @param [Boolean] muted Whether the agent is muted in the conference. Defaults to `false`.
@@ -203,7 +204,7 @@ module Twilio
                     # @param [String] max_participants The maximum number of participants allowed in the conference. Can be a positive integer from `2` to `250`. The default value is `250`.
                     # @param [String] conference_status_callback The URL we should call using the `conference_status_callback_method` when the conference events in `conference_status_callback_event` occur. Only the value set by the first participant to join the conference is used. Subsequent `conference_status_callback` values are ignored.
                     # @param [String] conference_status_callback_method The HTTP method we should use to call `conference_status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
-                    # @param [Array[WorkerReservationConferenceEvent]] conference_status_callback_event The conference status events that we will send to `conference_status_callback`. Can be: `start`, `end`, `join`, `leave`, `mute`, `hold`, `speaker`.
+                    # @param [Array[ConferenceEvent]] conference_status_callback_event The conference status events that we will send to `conference_status_callback`. Can be: `start`, `end`, `join`, `leave`, `mute`, `hold`, `speaker`.
                     # @param [String] conference_record Whether to record the conference the participant is joining or when to record the conference. Can be: `true`, `false`, `record-from-start`, and `do-not-record`. The default value is `false`.
                     # @param [String] conference_trim Whether to trim leading and trailing silence from your recorded conference audio files. Can be: `trim-silence` or `do-not-trim` and defaults to `trim-silence`.
                     # @param [String] recording_channels The recording channels for the final recording. Can be: `mono` or `dual` and the default is `mono`.
@@ -344,14 +345,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Taskrouter.V1.ReservationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Taskrouter.V1.ReservationContext #{context}>"
                     end
                 end
@@ -447,7 +448,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [WorkerReservationStatus] 
+                    # @return [Status] 
                     def reservation_status
                         @properties['reservation_status']
                     end
@@ -504,7 +505,7 @@ module Twilio
 
                     ##
                     # Update the ReservationInstance
-                    # @param [WorkerReservationStatus] reservation_status 
+                    # @param [Status] reservation_status 
                     # @param [String] worker_activity_sid The new worker activity SID if rejecting a reservation.
                     # @param [String] instruction The assignment instruction for the reservation.
                     # @param [String] dequeue_post_work_activity_sid The SID of the Activity resource to start after executing a Dequeue instruction.
@@ -527,7 +528,7 @@ module Twilio
                     # @param [String] from The caller ID of the call to the worker when executing a Conference instruction.
                     # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application.
                     # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `POST` or `GET` and the default is `POST`.
-                    # @param [Array[WorkerReservationCallStatus]] status_callback_event The call progress events that we will send to `status_callback`. Can be: `initiated`, `ringing`, `answered`, or `completed`.
+                    # @param [Array[CallStatus]] status_callback_event The call progress events that we will send to `status_callback`. Can be: `initiated`, `ringing`, `answered`, or `completed`.
                     # @param [String] timeout The timeout for a call when executing a Conference instruction.
                     # @param [Boolean] record Whether to record the participant and their conferences, including the time between conferences. Can be `true` or `false` and the default is `false`.
                     # @param [Boolean] muted Whether the agent is muted in the conference. Defaults to `false`.
@@ -540,7 +541,7 @@ module Twilio
                     # @param [String] max_participants The maximum number of participants allowed in the conference. Can be a positive integer from `2` to `250`. The default value is `250`.
                     # @param [String] conference_status_callback The URL we should call using the `conference_status_callback_method` when the conference events in `conference_status_callback_event` occur. Only the value set by the first participant to join the conference is used. Subsequent `conference_status_callback` values are ignored.
                     # @param [String] conference_status_callback_method The HTTP method we should use to call `conference_status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
-                    # @param [Array[WorkerReservationConferenceEvent]] conference_status_callback_event The conference status events that we will send to `conference_status_callback`. Can be: `start`, `end`, `join`, `leave`, `mute`, `hold`, `speaker`.
+                    # @param [Array[ConferenceEvent]] conference_status_callback_event The conference status events that we will send to `conference_status_callback`. Can be: `start`, `end`, `join`, `leave`, `mute`, `hold`, `speaker`.
                     # @param [String] conference_record Whether to record the conference the participant is joining or when to record the conference. Can be: `true`, `false`, `record-from-start`, and `do-not-record`. The default value is `false`.
                     # @param [String] conference_trim Whether to trim leading and trailing silence from your recorded conference audio files. Can be: `trim-silence` or `do-not-trim` and defaults to `trim-silence`.
                     # @param [String] recording_channels The recording channels for the final recording. Can be: `mono` or `dual` and the default is `mono`.
@@ -682,6 +683,7 @@ module Twilio
                         "<Twilio.Taskrouter.V1.ReservationInstance #{values}>"
                     end
                 end
+
              end
              end
             end

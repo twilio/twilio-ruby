@@ -36,7 +36,7 @@ module Twilio
                     # @param [Array[String]] audio_sources An array of track names from the same group room to merge into the new composition. Can include zero or more track names. The new composition includes all audio sources specified in `audio_sources` except for those specified in `audio_sources_excluded`. The track names in this parameter can include an asterisk as a wild card character, which will match zero or more characters in a track name. For example, `student*` includes `student` as well as `studentTeam`. Please, be aware that either video_layout or audio_sources have to be provided to get a valid creation request
                     # @param [Array[String]] audio_sources_excluded An array of track names to exclude. The new composition includes all audio sources specified in `audio_sources` except for those specified in `audio_sources_excluded`. The track names in this parameter can include an asterisk as a wild card character, which will match zero or more characters in a track name. For example, `student*` excludes `student` as well as `studentTeam`. This parameter can also be empty.
                     # @param [String] resolution A string that describes the columns (width) and rows (height) of the generated composed video in pixels. Defaults to `640x480`.  The string's format is `{width}x{height}` where:   * 16 <= `{width}` <= 1280 * 16 <= `{height}` <= 1280 * `{width}` * `{height}` <= 921,600  Typical values are:   * HD = `1280x720` * PAL = `1024x576` * VGA = `640x480` * CIF = `320x240`  Note that the `resolution` imposes an aspect ratio to the resulting composition. When the original video tracks are constrained by the aspect ratio, they are scaled to fit. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
-                    # @param [CompositionFormat] format 
+                    # @param [Format] format 
                     # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application on every composition event. If not provided, status callback events will not be dispatched.
                     # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `POST` or `GET` and the default is `POST`.
                     # @param [Boolean] trim Whether to clip the intervals where there is no active media in the composition. The default is `true`. Compositions with `trim` enabled are shorter when the Room is created and no Participant joins for a while as well as if all the Participants leave the room and join later, because those gaps will be removed. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
@@ -77,7 +77,7 @@ module Twilio
                     # Lists CompositionInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [CompositionStatus] status Read only Composition resources with this status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
+                    # @param [Status] status Read only Composition resources with this status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
                     # @param [Time] date_created_after Read only Composition resources created on or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone.
                     # @param [Time] date_created_before Read only Composition resources created before this ISO 8601 date-time with time zone.
                     # @param [String] room_sid Read only Composition resources with this Room SID.
@@ -103,7 +103,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [CompositionStatus] status Read only Composition resources with this status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
+                    # @param [Status] status Read only Composition resources with this status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
                     # @param [Time] date_created_after Read only Composition resources created on or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone.
                     # @param [Time] date_created_before Read only Composition resources created before this ISO 8601 date-time with time zone.
                     # @param [String] room_sid Read only Composition resources with this Room SID.
@@ -144,7 +144,7 @@ module Twilio
                     ##
                     # Retrieve a single page of CompositionInstance records from the API.
                     # Request is executed immediately.
-                    # @param [CompositionStatus] status Read only Composition resources with this status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
+                    # @param [Status] status Read only Composition resources with this status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
                     # @param [Time] date_created_after Read only Composition resources created on or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone.
                     # @param [Time] date_created_before Read only Composition resources created before this ISO 8601 date-time with time zone.
                     # @param [String] room_sid Read only Composition resources with this Room SID.
@@ -194,6 +194,7 @@ module Twilio
                     end
                 end
 
+
                 class CompositionContext < InstanceContext
                     ##
                     # Initialize the CompositionContext
@@ -234,14 +235,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.CompositionContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.CompositionContext #{context}>"
                     end
                 end
@@ -335,7 +336,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CompositionStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -401,7 +402,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CompositionFormat] 
+                    # @return [Format] 
                     def format
                         @properties['format']
                     end
@@ -484,6 +485,7 @@ module Twilio
                         "<Twilio.Video.V1.CompositionInstance #{values}>"
                     end
                 end
+
             end
         end
     end

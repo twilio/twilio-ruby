@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, resource_type: nil)
                         super(version)
                         # Path Solution
-                        @solution = { resource_type: resource_type, }
+                        @solution = { resource_type: resource_type }
                         @uri = "/Exports/#{@solution[:resource_type]}/Jobs"
                         
                     end
@@ -159,6 +159,7 @@ module Twilio
                         '#<Twilio.Bulkexports.V1.ExportCustomJobList>'
                     end
                 end
+
                 class ExportCustomJobPage < Page
                     ##
                     # Initialize the ExportCustomJobPage
@@ -295,6 +296,7 @@ module Twilio
                         "<Twilio.Bulkexports.V1.ExportCustomJobInstance>"
                     end
                 end
+
              end
             end
         end

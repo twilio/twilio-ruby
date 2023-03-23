@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 class ChannelContext < InstanceContext
                     ##
                     # Initialize the ChannelContext
@@ -56,9 +57,9 @@ module Twilio
                     end
                     ##
                     # Update the ChannelInstance
-                    # @param [ChannelChannelType] type 
+                    # @param [ChannelType] type 
                     # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) this channel belongs to.
-                    # @param [ChannelWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ChannelEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ChannelInstance] Updated ChannelInstance
                     def update(
                         type: :unset, 
@@ -85,14 +86,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V3.ChannelContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V3.ChannelContext #{context}>"
                     end
                 end
@@ -209,7 +210,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ChannelChannelType] 
+                    # @return [ChannelType] 
                     def type
                         @properties['type']
                     end
@@ -258,9 +259,9 @@ module Twilio
                     
                     ##
                     # Update the ChannelInstance
-                    # @param [ChannelChannelType] type 
+                    # @param [ChannelType] type 
                     # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) this channel belongs to.
-                    # @param [ChannelWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ChannelEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ChannelInstance] Updated ChannelInstance
                     def update(
                         type: :unset, 
@@ -289,6 +290,7 @@ module Twilio
                         "<Twilio.Chat.V3.ChannelInstance #{values}>"
                     end
                 end
+
             end
         end
     end

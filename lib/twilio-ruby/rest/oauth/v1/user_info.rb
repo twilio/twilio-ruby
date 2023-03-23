@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 class UserInfoContext < InstanceContext
                     ##
                     # Initialize the UserInfoContext
@@ -68,14 +69,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Oauth.V1.UserInfoContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Oauth.V1.UserInfoContext #{context}>"
                     end
                 end
@@ -205,6 +206,7 @@ module Twilio
                         "<Twilio.Oauth.V1.UserInfoInstance #{values}>"
                     end
                 end
+
             end
         end
     end

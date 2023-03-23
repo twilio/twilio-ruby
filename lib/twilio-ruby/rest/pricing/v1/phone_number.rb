@@ -51,6 +51,7 @@ module Twilio
                         '#<Twilio.Pricing.V1.PhoneNumberList>'
                     end
                 end
+
                 class PhoneNumberPage < Page
                     ##
                     # Initialize the PhoneNumberPage
@@ -107,6 +108,7 @@ module Twilio
                         "<Twilio.Pricing.V1.PhoneNumberInstance>"
                     end
                 end
+
             end
         end
     end

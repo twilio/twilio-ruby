@@ -29,7 +29,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Records/Yearly.json"
                         
                     end
@@ -38,7 +38,7 @@ module Twilio
                     # Lists YearlyInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [UsageRecordYearlyCategory] category The [usage category](https://www.twilio.com/docs/usage/api/usage-record#usage-categories) of the UsageRecord resources to read. Only UsageRecord resources in the specified category are retrieved.
+                    # @param [Category] category The [usage category](https://www.twilio.com/docs/usage/api/usage-record#usage-categories) of the UsageRecord resources to read. Only UsageRecord resources in the specified category are retrieved.
                     # @param [Date] start_date Only include usage that has occurred on or after this date. Specify the date in GMT and format as `YYYY-MM-DD`. You can also specify offsets from the current date, such as: `-30days`, which will set the start date to be 30 days before the current date.
                     # @param [Date] end_date Only include usage that occurred on or before this date. Specify the date in GMT and format as `YYYY-MM-DD`.  You can also specify offsets from the current date, such as: `+30days`, which will set the end date to 30 days from the current date.
                     # @param [Boolean] include_subaccounts Whether to include usage from the master account and all its subaccounts. Can be: `true` (the default) to include usage from the master account and all subaccounts or `false` to retrieve usage from only the specified account.
@@ -64,7 +64,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [UsageRecordYearlyCategory] category The [usage category](https://www.twilio.com/docs/usage/api/usage-record#usage-categories) of the UsageRecord resources to read. Only UsageRecord resources in the specified category are retrieved.
+                    # @param [Category] category The [usage category](https://www.twilio.com/docs/usage/api/usage-record#usage-categories) of the UsageRecord resources to read. Only UsageRecord resources in the specified category are retrieved.
                     # @param [Date] start_date Only include usage that has occurred on or after this date. Specify the date in GMT and format as `YYYY-MM-DD`. You can also specify offsets from the current date, such as: `-30days`, which will set the start date to be 30 days before the current date.
                     # @param [Date] end_date Only include usage that occurred on or before this date. Specify the date in GMT and format as `YYYY-MM-DD`.  You can also specify offsets from the current date, such as: `+30days`, which will set the end date to 30 days from the current date.
                     # @param [Boolean] include_subaccounts Whether to include usage from the master account and all its subaccounts. Can be: `true` (the default) to include usage from the master account and all subaccounts or `false` to retrieve usage from only the specified account.
@@ -105,7 +105,7 @@ module Twilio
                     ##
                     # Retrieve a single page of YearlyInstance records from the API.
                     # Request is executed immediately.
-                    # @param [UsageRecordYearlyCategory] category The [usage category](https://www.twilio.com/docs/usage/api/usage-record#usage-categories) of the UsageRecord resources to read. Only UsageRecord resources in the specified category are retrieved.
+                    # @param [Category] category The [usage category](https://www.twilio.com/docs/usage/api/usage-record#usage-categories) of the UsageRecord resources to read. Only UsageRecord resources in the specified category are retrieved.
                     # @param [Date] start_date Only include usage that has occurred on or after this date. Specify the date in GMT and format as `YYYY-MM-DD`. You can also specify offsets from the current date, such as: `-30days`, which will set the start date to be 30 days before the current date.
                     # @param [Date] end_date Only include usage that occurred on or before this date. Specify the date in GMT and format as `YYYY-MM-DD`.  You can also specify offsets from the current date, such as: `+30days`, which will set the end date to 30 days from the current date.
                     # @param [Boolean] include_subaccounts Whether to include usage from the master account and all its subaccounts. Can be: `true` (the default) to include usage from the master account and all subaccounts or `false` to retrieve usage from only the specified account.
@@ -154,6 +154,7 @@ module Twilio
                         '#<Twilio.Api.V2010.YearlyList>'
                     end
                 end
+
                 class YearlyPage < Page
                     ##
                     # Initialize the YearlyPage
@@ -235,7 +236,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [UsageRecordYearlyCategory] 
+                    # @return [Category] 
                     def category
                         @properties['category']
                     end
@@ -318,6 +319,7 @@ module Twilio
                         "<Twilio.Api.V2010.YearlyInstance>"
                     end
                 end
+
              end
              end
              end

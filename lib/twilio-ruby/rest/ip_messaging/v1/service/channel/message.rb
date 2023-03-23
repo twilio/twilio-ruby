@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, channel_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,channel_sid: channel_sid, }
+                        @solution = { service_sid: service_sid, channel_sid: channel_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Channels/#{@solution[:channel_sid]}/Messages"
                         
                     end
@@ -64,7 +64,7 @@ module Twilio
                     # Lists MessageInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [MessageOrderType] order 
+                    # @param [OrderType] order 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -84,7 +84,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [MessageOrderType] order 
+                    # @param [OrderType] order 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -119,7 +119,7 @@ module Twilio
                     ##
                     # Retrieve a single page of MessageInstance records from the API.
                     # Request is executed immediately.
-                    # @param [MessageOrderType] order 
+                    # @param [OrderType] order 
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -159,6 +159,7 @@ module Twilio
                         '#<Twilio.IpMessaging.V1.MessageList>'
                     end
                 end
+
 
                 class MessageContext < InstanceContext
                     ##
@@ -229,14 +230,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V1.MessageContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V1.MessageContext #{context}>"
                     end
                 end
@@ -439,6 +440,7 @@ module Twilio
                         "<Twilio.IpMessaging.V1.MessageInstance #{values}>"
                     end
                 end
+
              end
              end
             end

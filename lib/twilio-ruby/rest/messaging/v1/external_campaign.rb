@@ -59,6 +59,7 @@ module Twilio
                         '#<Twilio.Messaging.V1.ExternalCampaignList>'
                     end
                 end
+
                 class ExternalCampaignPage < Page
                     ##
                     # Initialize the ExternalCampaignPage
@@ -153,6 +154,7 @@ module Twilio
                         "<Twilio.Messaging.V1.ExternalCampaignInstance>"
                     end
                 end
+
             end
         end
     end

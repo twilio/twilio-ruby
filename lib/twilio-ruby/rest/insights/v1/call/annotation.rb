@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, call_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { call_sid: call_sid, }
+                        @solution = { call_sid: call_sid }
                         
                         
                     end
@@ -39,6 +39,7 @@ module Twilio
                         '#<Twilio.Insights.V1.AnnotationList>'
                     end
                 end
+
 
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
@@ -72,8 +73,8 @@ module Twilio
 
                     ##
                     # Update the AnnotationInstance
-                    # @param [AnnotationAnsweredBy] answered_by 
-                    # @param [AnnotationConnectivityIssue] connectivity_issue 
+                    # @param [AnsweredBy] answered_by 
+                    # @param [ConnectivityIssue] connectivity_issue 
                     # @param [String] quality_issues Specify if the call had any subjective quality issues. Possible values, one or more of:  no_quality_issue, low_volume, choppy_robotic, echo, dtmf, latency, owa, static_noise. Use comma separated values to indicate multiple quality issues for the same call
                     # @param [Boolean] spam Specify if the call was a spam call. Use this to provide feedback on whether calls placed from your account were marked as spam, or if inbound calls received by your account were unwanted spam. Is of type Boolean: true, false. Use true if the call was a spam call.
                     # @param [String] call_score Specify the call score. This is of type integer. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for rating the call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
@@ -112,14 +113,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Insights.V1.AnnotationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Insights.V1.AnnotationContext #{context}>"
                     end
                 end
@@ -208,13 +209,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [AnnotationAnsweredBy] 
+                    # @return [AnsweredBy] 
                     def answered_by
                         @properties['answered_by']
                     end
                     
                     ##
-                    # @return [AnnotationConnectivityIssue] 
+                    # @return [ConnectivityIssue] 
                     def connectivity_issue
                         @properties['connectivity_issue']
                     end
@@ -265,8 +266,8 @@ module Twilio
 
                     ##
                     # Update the AnnotationInstance
-                    # @param [AnnotationAnsweredBy] answered_by 
-                    # @param [AnnotationConnectivityIssue] connectivity_issue 
+                    # @param [AnsweredBy] answered_by 
+                    # @param [ConnectivityIssue] connectivity_issue 
                     # @param [String] quality_issues Specify if the call had any subjective quality issues. Possible values, one or more of:  no_quality_issue, low_volume, choppy_robotic, echo, dtmf, latency, owa, static_noise. Use comma separated values to indicate multiple quality issues for the same call
                     # @param [Boolean] spam Specify if the call was a spam call. Use this to provide feedback on whether calls placed from your account were marked as spam, or if inbound calls received by your account were unwanted spam. Is of type Boolean: true, false. Use true if the call was a spam call.
                     # @param [String] call_score Specify the call score. This is of type integer. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for rating the call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
@@ -308,6 +309,7 @@ module Twilio
                         "<Twilio.Insights.V1.AnnotationInstance #{values}>"
                     end
                 end
+
              end
             end
         end

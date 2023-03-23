@@ -48,8 +48,8 @@ module Twilio
                     # @param [String] call_type 
                     # @param [String] call_state 
                     # @param [String] direction 
-                    # @param [CallSummariesProcessingStateRequest] processing_state 
-                    # @param [CallSummariesSortBy] sort_by 
+                    # @param [ProcessingStateRequest] processing_state 
+                    # @param [SortBy] sort_by 
                     # @param [String] subaccount 
                     # @param [Boolean] abnormal_session 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -102,8 +102,8 @@ module Twilio
                     # @param [String] call_type 
                     # @param [String] call_state 
                     # @param [String] direction 
-                    # @param [CallSummariesProcessingStateRequest] processing_state 
-                    # @param [CallSummariesSortBy] sort_by 
+                    # @param [ProcessingStateRequest] processing_state 
+                    # @param [SortBy] sort_by 
                     # @param [String] subaccount 
                     # @param [Boolean] abnormal_session 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -171,8 +171,8 @@ module Twilio
                     # @param [String] call_type 
                     # @param [String] call_state 
                     # @param [String] direction 
-                    # @param [CallSummariesProcessingStateRequest] processing_state 
-                    # @param [CallSummariesSortBy] sort_by 
+                    # @param [ProcessingStateRequest] processing_state 
+                    # @param [SortBy] sort_by 
                     # @param [String] subaccount 
                     # @param [Boolean] abnormal_session 
                     # @param [String] page_token PageToken provided by the API
@@ -248,6 +248,7 @@ module Twilio
                         '#<Twilio.Insights.V1.CallSummariesList>'
                     end
                 end
+
                 class CallSummariesPage < Page
                     ##
                     # Initialize the CallSummariesPage
@@ -330,25 +331,25 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CallSummariesAnsweredBy] 
+                    # @return [AnsweredBy] 
                     def answered_by
                         @properties['answered_by']
                     end
                     
                     ##
-                    # @return [CallSummariesCallType] 
+                    # @return [CallType] 
                     def call_type
                         @properties['call_type']
                     end
                     
                     ##
-                    # @return [CallSummariesCallState] 
+                    # @return [CallState] 
                     def call_state
                         @properties['call_state']
                     end
                     
                     ##
-                    # @return [CallSummariesProcessingState] 
+                    # @return [ProcessingState] 
                     def processing_state
                         @properties['processing_state']
                     end
@@ -461,6 +462,7 @@ module Twilio
                         "<Twilio.Insights.V1.CallSummariesInstance>"
                     end
                 end
+
             end
         end
     end

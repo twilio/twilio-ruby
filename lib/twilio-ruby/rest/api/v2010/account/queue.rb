@@ -27,14 +27,14 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Queues.json"
                         
                     end
                     ##
                     # Create the QueueInstance
                     # @param [String] friendly_name A descriptive string that you created to describe this resource. It can be up to 64 characters long.
-                    # @param [String] max_size The maximum number of calls allowed to be in the queue. The default is 100. The maximum is 5000.
+                    # @param [String] max_size The maximum number of calls allowed to be in the queue. The default is 1000. The maximum is 5000.
                     # @return [QueueInstance] Created QueueInstance
                     def create(
                         friendly_name: nil, 
@@ -148,6 +148,7 @@ module Twilio
                     end
                 end
 
+
                 class QueueContext < InstanceContext
                     ##
                     # Initialize the QueueContext
@@ -190,7 +191,7 @@ module Twilio
                     ##
                     # Update the QueueInstance
                     # @param [String] friendly_name A descriptive string that you created to describe this resource. It can be up to 64 characters long.
-                    # @param [String] max_size The maximum number of calls allowed to be in the queue. The default is 100. The maximum is 5000.
+                    # @param [String] max_size The maximum number of calls allowed to be in the queue. The default is 1000. The maximum is 5000.
                     # @return [QueueInstance] Updated QueueInstance
                     def update(
                         friendly_name: :unset, 
@@ -238,14 +239,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.QueueContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.QueueContext #{context}>"
                     end
                 end
@@ -369,7 +370,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String]  The maximum number of calls that can be in the queue. The default is 100 and the maximum is 5000.
+                    # @return [String]  The maximum number of calls that can be in the queue. The default is 1000 and the maximum is 5000.
                     def max_size
                         @properties['max_size']
                     end
@@ -393,7 +394,7 @@ module Twilio
                     ##
                     # Update the QueueInstance
                     # @param [String] friendly_name A descriptive string that you created to describe this resource. It can be up to 64 characters long.
-                    # @param [String] max_size The maximum number of calls allowed to be in the queue. The default is 100. The maximum is 5000.
+                    # @param [String] max_size The maximum number of calls allowed to be in the queue. The default is 1000. The maximum is 5000.
                     # @return [QueueInstance] Updated QueueInstance
                     def update(
                         friendly_name: :unset, 
@@ -427,6 +428,7 @@ module Twilio
                         "<Twilio.Api.V2010.QueueInstance #{values}>"
                     end
                 end
+
              end
             end
         end

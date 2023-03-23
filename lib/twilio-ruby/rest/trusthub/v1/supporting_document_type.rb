@@ -123,6 +123,7 @@ module Twilio
                     end
                 end
 
+
                 class SupportingDocumentTypeContext < InstanceContext
                     ##
                     # Initialize the SupportingDocumentTypeContext
@@ -155,14 +156,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trusthub.V1.SupportingDocumentTypeContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trusthub.V1.SupportingDocumentTypeContext #{context}>"
                     end
                 end
@@ -285,6 +286,7 @@ module Twilio
                         "<Twilio.Trusthub.V1.SupportingDocumentTypeInstance #{values}>"
                     end
                 end
+
             end
         end
     end

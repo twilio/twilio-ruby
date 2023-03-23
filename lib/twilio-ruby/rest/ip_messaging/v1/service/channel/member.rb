@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, channel_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,channel_sid: channel_sid, }
+                        @solution = { service_sid: service_sid, channel_sid: channel_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Channels/#{@solution[:channel_sid]}/Members"
                         
                     end
@@ -157,6 +157,7 @@ module Twilio
                     end
                 end
 
+
                 class MemberContext < InstanceContext
                     ##
                     # Initialize the MemberContext
@@ -226,14 +227,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V1.MemberContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V1.MemberContext #{context}>"
                     end
                 end
@@ -422,6 +423,7 @@ module Twilio
                         "<Twilio.IpMessaging.V1.MemberInstance #{values}>"
                     end
                 end
+
              end
              end
             end

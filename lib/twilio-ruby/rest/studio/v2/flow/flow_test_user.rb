@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { sid: sid, }
+                        @solution = { sid: sid }
                         
                         
                     end
@@ -39,6 +39,7 @@ module Twilio
                         '#<Twilio.Studio.V2.FlowTestUserList>'
                     end
                 end
+
 
                 class FlowTestUserContext < InstanceContext
                     ##
@@ -92,14 +93,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V2.FlowTestUserContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V2.FlowTestUserContext #{context}>"
                     end
                 end
@@ -221,6 +222,7 @@ module Twilio
                         "<Twilio.Studio.V2.FlowTestUserInstance #{values}>"
                     end
                 end
+
              end
             end
         end

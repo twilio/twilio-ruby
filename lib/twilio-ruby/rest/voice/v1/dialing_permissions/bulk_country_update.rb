@@ -58,6 +58,7 @@ module Twilio
                         '#<Twilio.Voice.V1.BulkCountryUpdateList>'
                     end
                 end
+
                 class BulkCountryUpdatePage < Page
                     ##
                     # Initialize the BulkCountryUpdatePage
@@ -131,6 +132,7 @@ module Twilio
                         "<Twilio.Voice.V1.BulkCountryUpdateInstance>"
                     end
                 end
+
              end
             end
         end

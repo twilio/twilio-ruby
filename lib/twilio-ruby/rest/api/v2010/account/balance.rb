@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Balance.json"
                         
                     end
@@ -52,6 +52,7 @@ module Twilio
                         '#<Twilio.Api.V2010.BalanceList>'
                     end
                 end
+
                 class BalancePage < Page
                     ##
                     # Initialize the BalancePage
@@ -132,6 +133,7 @@ module Twilio
                         "<Twilio.Api.V2010.BalanceInstance>"
                     end
                 end
+
              end
             end
         end

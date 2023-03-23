@@ -129,6 +129,7 @@ module Twilio
                         '#<Twilio.Verify.V2.TemplateList>'
                     end
                 end
+
                 class TemplatePage < Page
                     ##
                     # Initialize the TemplatePage
@@ -223,6 +224,7 @@ module Twilio
                         "<Twilio.Verify.V2.TemplateInstance>"
                     end
                 end
+
             end
         end
     end

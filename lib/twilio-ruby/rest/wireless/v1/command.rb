@@ -35,7 +35,7 @@ module Twilio
                     # @param [String] sim The `sid` or `unique_name` of the [SIM](https://www.twilio.com/docs/wireless/api/sim-resource) to send the Command to.
                     # @param [String] callback_method The HTTP method we use to call `callback_url`. Can be: `POST` or `GET`, and the default is `POST`.
                     # @param [String] callback_url The URL we call using the `callback_url` when the Command has finished sending, whether the command was delivered or it failed.
-                    # @param [CommandCommandMode] command_mode 
+                    # @param [CommandMode] command_mode 
                     # @param [String] include_sid Whether to include the SID of the command in the message body. Can be: `none`, `start`, or `end`, and the default behavior is `none`. When sending a Command to a SIM in text mode, we can automatically include the SID of the Command in the message body, which could be used to ensure that the device does not process the same Command more than once.  A value of `start` will prepend the message with the Command SID, and `end` will append it to the end, separating the Command SID from the message body with a space. The length of the Command SID is included in the 160 character limit so the SMS body must be 128 characters or less before the Command SID is included.
                     # @param [Boolean] delivery_receipt_requested Whether to request delivery receipt from the recipient. For Commands that request delivery receipt, the Command state transitions to 'delivered' once the server has received a delivery receipt from the device. The default value is `true`.
                     # @return [CommandInstance] Created CommandInstance
@@ -72,9 +72,9 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [String] sim The `sid` or `unique_name` of the [Sim resources](https://www.twilio.com/docs/wireless/api/sim-resource) to read.
-                    # @param [CommandStatus] status The status of the resources to read. Can be: `queued`, `sent`, `delivered`, `received`, or `failed`.
-                    # @param [CommandDirection] direction Only return Commands with this direction value.
-                    # @param [CommandTransport] transport Only return Commands with this transport value. Can be: `sms` or `ip`.
+                    # @param [Status] status The status of the resources to read. Can be: `queued`, `sent`, `delivered`, `received`, or `failed`.
+                    # @param [Direction] direction Only return Commands with this direction value.
+                    # @param [Transport] transport Only return Commands with this transport value. Can be: `sms` or `ip`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -98,9 +98,9 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [String] sim The `sid` or `unique_name` of the [Sim resources](https://www.twilio.com/docs/wireless/api/sim-resource) to read.
-                    # @param [CommandStatus] status The status of the resources to read. Can be: `queued`, `sent`, `delivered`, `received`, or `failed`.
-                    # @param [CommandDirection] direction Only return Commands with this direction value.
-                    # @param [CommandTransport] transport Only return Commands with this transport value. Can be: `sms` or `ip`.
+                    # @param [Status] status The status of the resources to read. Can be: `queued`, `sent`, `delivered`, `received`, or `failed`.
+                    # @param [Direction] direction Only return Commands with this direction value.
+                    # @param [Transport] transport Only return Commands with this transport value. Can be: `sms` or `ip`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -139,9 +139,9 @@ module Twilio
                     # Retrieve a single page of CommandInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] sim The `sid` or `unique_name` of the [Sim resources](https://www.twilio.com/docs/wireless/api/sim-resource) to read.
-                    # @param [CommandStatus] status The status of the resources to read. Can be: `queued`, `sent`, `delivered`, `received`, or `failed`.
-                    # @param [CommandDirection] direction Only return Commands with this direction value.
-                    # @param [CommandTransport] transport Only return Commands with this transport value. Can be: `sms` or `ip`.
+                    # @param [Status] status The status of the resources to read. Can be: `queued`, `sent`, `delivered`, `received`, or `failed`.
+                    # @param [Direction] direction Only return Commands with this direction value.
+                    # @param [Transport] transport Only return Commands with this transport value. Can be: `sms` or `ip`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -188,6 +188,7 @@ module Twilio
                     end
                 end
 
+
                 class CommandContext < InstanceContext
                     ##
                     # Initialize the CommandContext
@@ -228,14 +229,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Wireless.V1.CommandContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Wireless.V1.CommandContext #{context}>"
                     end
                 end
@@ -338,13 +339,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CommandCommandMode] 
+                    # @return [CommandMode] 
                     def command_mode
                         @properties['command_mode']
                     end
                     
                     ##
-                    # @return [CommandTransport] 
+                    # @return [Transport] 
                     def transport
                         @properties['transport']
                     end
@@ -356,13 +357,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CommandStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
                     
                     ##
-                    # @return [CommandDirection] 
+                    # @return [Direction] 
                     def direction
                         @properties['direction']
                     end
@@ -415,6 +416,7 @@ module Twilio
                         "<Twilio.Wireless.V1.CommandInstance #{values}>"
                     end
                 end
+
             end
         end
     end

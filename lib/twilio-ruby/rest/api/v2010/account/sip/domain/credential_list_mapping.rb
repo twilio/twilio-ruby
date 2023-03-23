@@ -29,7 +29,7 @@ module Twilio
                     def initialize(version, account_sid: nil, domain_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,domain_sid: domain_sid, }
+                        @solution = { account_sid: account_sid, domain_sid: domain_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/CredentialListMappings.json"
                         
                     end
@@ -148,6 +148,7 @@ module Twilio
                     end
                 end
 
+
                 class CredentialListMappingContext < InstanceContext
                     ##
                     # Initialize the CredentialListMappingContext
@@ -192,14 +193,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.CredentialListMappingContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.CredentialListMappingContext #{context}>"
                     end
                 end
@@ -344,6 +345,7 @@ module Twilio
                         "<Twilio.Api.V2010.CredentialListMappingInstance #{values}>"
                     end
                 end
+
              end
              end
              end

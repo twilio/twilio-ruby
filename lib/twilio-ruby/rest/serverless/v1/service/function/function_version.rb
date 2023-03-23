@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, function_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,function_sid: function_sid, }
+                        @solution = { service_sid: service_sid, function_sid: function_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Functions/#{@solution[:function_sid]}/Versions"
                         
                     end
@@ -126,6 +126,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class FunctionVersionContext < InstanceContext
@@ -177,14 +178,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Serverless.V1.FunctionVersionContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Serverless.V1.FunctionVersionContext #{context}>"
                     end
                 end
@@ -290,7 +291,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [FunctionVersionVisibility] 
+                    # @return [Visibility] 
                     def visibility
                         @properties['visibility']
                     end
@@ -342,6 +343,7 @@ module Twilio
                         "<Twilio.Serverless.V1.FunctionVersionInstance #{values}>"
                     end
                 end
+
              end
              end
             end

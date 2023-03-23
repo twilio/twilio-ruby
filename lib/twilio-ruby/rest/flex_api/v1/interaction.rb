@@ -60,6 +60,7 @@ module Twilio
                     end
                 end
 
+
                 class InteractionContext < InstanceContext
                     ##
                     # Initialize the InteractionContext
@@ -115,14 +116,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.InteractionContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.InteractionContext #{context}>"
                     end
                 end
@@ -252,6 +253,7 @@ module Twilio
                         "<Twilio.FlexApi.V1.InteractionInstance #{values}>"
                     end
                 end
+
             end
         end
     end

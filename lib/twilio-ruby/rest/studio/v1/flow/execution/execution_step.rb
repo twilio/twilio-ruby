@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, flow_sid: nil, execution_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { flow_sid: flow_sid,execution_sid: execution_sid, }
+                        @solution = { flow_sid: flow_sid, execution_sid: execution_sid }
                         @uri = "/Flows/#{@solution[:flow_sid]}/Executions/#{@solution[:execution_sid]}/Steps"
                         
                     end
@@ -126,6 +126,7 @@ module Twilio
                     end
                 end
 
+
                 class ExecutionStepContext < InstanceContext
                     ##
                     # Initialize the ExecutionStepContext
@@ -175,14 +176,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V1.ExecutionStepContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V1.ExecutionStepContext #{context}>"
                     end
                 end
@@ -361,6 +362,7 @@ module Twilio
                         "<Twilio.Studio.V1.ExecutionStepInstance #{values}>"
                     end
                 end
+
              end
              end
             end

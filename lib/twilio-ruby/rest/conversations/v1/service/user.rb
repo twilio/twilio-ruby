@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, chat_service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { chat_service_sid: chat_service_sid, }
+                        @solution = { chat_service_sid: chat_service_sid }
                         @uri = "/Services/#{@solution[:chat_service_sid]}/Users"
                         
                     end
@@ -37,7 +37,7 @@ module Twilio
                     # @param [String] friendly_name The string that you assigned to describe the resource.
                     # @param [String] attributes The JSON Object string that stores application-specific data. If attributes have not been set, `{}` is returned.
                     # @param [String] role_sid The SID of a service-level [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to the user.
-                    # @param [ServiceUserWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceUserEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [UserInstance] Created UserInstance
                     def create(
                         identity: nil, 
@@ -157,6 +157,7 @@ module Twilio
                     end
                 end
 
+
                 class UserContext < InstanceContext
                     ##
                     # Initialize the UserContext
@@ -176,7 +177,7 @@ module Twilio
                     end
                     ##
                     # Delete the UserInstance
-                    # @param [ServiceUserWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceUserEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
                         x_twilio_webhook_enabled: :unset
@@ -205,7 +206,7 @@ module Twilio
                     # @param [String] friendly_name The string that you assigned to describe the resource.
                     # @param [String] attributes The JSON Object string that stores application-specific data. If attributes have not been set, `{}` is returned.
                     # @param [String] role_sid The SID of a service-level [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to the user.
-                    # @param [ServiceUserWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceUserEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [UserInstance] Updated UserInstance
                     def update(
                         friendly_name: :unset, 
@@ -257,14 +258,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.UserContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.UserContext #{context}>"
                     end
                 end
@@ -423,7 +424,7 @@ module Twilio
                     
                     ##
                     # Delete the UserInstance
-                    # @param [ServiceUserWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceUserEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
                         x_twilio_webhook_enabled: :unset
@@ -447,7 +448,7 @@ module Twilio
                     # @param [String] friendly_name The string that you assigned to describe the resource.
                     # @param [String] attributes The JSON Object string that stores application-specific data. If attributes have not been set, `{}` is returned.
                     # @param [String] role_sid The SID of a service-level [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to the user.
-                    # @param [ServiceUserWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceUserEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [UserInstance] Updated UserInstance
                     def update(
                         friendly_name: :unset, 
@@ -485,6 +486,7 @@ module Twilio
                         "<Twilio.Conversations.V1.UserInstance #{values}>"
                     end
                 end
+
              end
             end
         end

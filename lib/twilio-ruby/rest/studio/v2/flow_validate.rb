@@ -32,7 +32,7 @@ module Twilio
                     ##
                     # Update the FlowValidateInstance
                     # @param [String] friendly_name The string that you assigned to describe the Flow.
-                    # @param [FlowValidateStatus] status 
+                    # @param [Status] status 
                     # @param [Object] definition JSON representation of flow definition.
                     # @param [String] commit_message Description of change made in the revision.
                     # @return [FlowValidateInstance] Updated FlowValidateInstance
@@ -65,6 +65,7 @@ module Twilio
                         '#<Twilio.Studio.V2.FlowValidateList>'
                     end
                 end
+
                 class FlowValidatePage < Page
                     ##
                     # Initialize the FlowValidatePage
@@ -131,6 +132,7 @@ module Twilio
                         "<Twilio.Studio.V2.FlowValidateInstance>"
                     end
                 end
+
             end
         end
     end

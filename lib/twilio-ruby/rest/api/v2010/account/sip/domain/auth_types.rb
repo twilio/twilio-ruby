@@ -29,7 +29,7 @@ module Twilio
                     def initialize(version, account_sid: nil, domain_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,domain_sid: domain_sid, }
+                        @solution = { account_sid: account_sid, domain_sid: domain_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/Auth.json"
                         # Components
                         @calls = nil
@@ -57,6 +57,7 @@ module Twilio
                         '#<Twilio.Api.V2010.AuthTypesList>'
                     end
                 end
+
                 class AuthTypesPage < Page
                     ##
                     # Initialize the AuthTypesPage
@@ -113,6 +114,7 @@ module Twilio
                         "<Twilio.Api.V2010.AuthTypesInstance>"
                     end
                 end
+
              end
              end
              end

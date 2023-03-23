@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid, }
+                        @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/VerificationCheck"
                         
                     end
@@ -71,6 +71,7 @@ module Twilio
                         '#<Twilio.Verify.V2.VerificationCheckList>'
                     end
                 end
+
                 class VerificationCheckPage < Page
                     ##
                     # Initialize the VerificationCheckPage
@@ -155,7 +156,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [VerificationCheckChannel] 
+                    # @return [Channel] 
                     def channel
                         @properties['channel']
                     end
@@ -214,6 +215,7 @@ module Twilio
                         "<Twilio.Verify.V2.VerificationCheckInstance>"
                     end
                 end
+
              end
             end
         end

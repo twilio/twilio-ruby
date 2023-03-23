@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, resource_type: nil)
                         super(version)
                         # Path Solution
-                        @solution = { resource_type: resource_type, }
+                        @solution = { resource_type: resource_type }
                         @uri = "/Exports/#{@solution[:resource_type]}/Days"
                         
                     end
@@ -125,6 +125,7 @@ module Twilio
                     end
                 end
 
+
                 class DayContext < InstanceContext
                     ##
                     # Initialize the DayContext
@@ -159,14 +160,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Bulkexports.V1.DayContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Bulkexports.V1.DayContext #{context}>"
                     end
                 end
@@ -296,6 +297,7 @@ module Twilio
                         "<Twilio.Bulkexports.V1.DayInstance #{values}>"
                     end
                 end
+
              end
             end
         end

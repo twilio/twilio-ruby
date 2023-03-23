@@ -69,7 +69,7 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [String] email Email that this AuthorizationDocument will be sent to for signing.
-                    # @param [AuthorizationDocumentStatus] status Status of an instance resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5. failed. See the section entitled [Status Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
+                    # @param [Status] status Status of an instance resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5. failed. See the section entitled [Status Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -91,7 +91,7 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [String] email Email that this AuthorizationDocument will be sent to for signing.
-                    # @param [AuthorizationDocumentStatus] status Status of an instance resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5. failed. See the section entitled [Status Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
+                    # @param [Status] status Status of an instance resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5. failed. See the section entitled [Status Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -128,7 +128,7 @@ module Twilio
                     # Retrieve a single page of AuthorizationDocumentInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] email Email that this AuthorizationDocument will be sent to for signing.
-                    # @param [AuthorizationDocumentStatus] status Status of an instance resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5. failed. See the section entitled [Status Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
+                    # @param [Status] status Status of an instance resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5. failed. See the section entitled [Status Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -171,6 +171,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class AuthorizationDocumentContext < InstanceContext
@@ -208,7 +209,7 @@ module Twilio
                     # @param [String] address_sid A 34 character string that uniquely identifies the Address resource that is associated with this AuthorizationDocument.
                     # @param [String] email Email that this AuthorizationDocument will be sent to for signing.
                     # @param [Array[String]] cc_emails Email recipients who will be informed when an Authorization Document has been sent and signed
-                    # @param [AuthorizationDocumentStatus] status 
+                    # @param [Status] status 
                     # @param [String] contact_title The title of the person authorized to sign the Authorization Document for this phone number.
                     # @param [String] contact_phone_number The contact phone number of the person authorized to sign the Authorization Document.
                     # @return [AuthorizationDocumentInstance] Updated AuthorizationDocumentInstance
@@ -259,14 +260,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Preview.HostedNumbers.AuthorizationDocumentContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Preview.HostedNumbers.AuthorizationDocumentContext #{context}>"
                     end
                 end
@@ -354,7 +355,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [AuthorizationDocumentStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -409,7 +410,7 @@ module Twilio
                     # @param [String] address_sid A 34 character string that uniquely identifies the Address resource that is associated with this AuthorizationDocument.
                     # @param [String] email Email that this AuthorizationDocument will be sent to for signing.
                     # @param [Array[String]] cc_emails Email recipients who will be informed when an Authorization Document has been sent and signed
-                    # @param [AuthorizationDocumentStatus] status 
+                    # @param [Status] status 
                     # @param [String] contact_title The title of the person authorized to sign the Authorization Document for this phone number.
                     # @param [String] contact_phone_number The contact phone number of the person authorized to sign the Authorization Document.
                     # @return [AuthorizationDocumentInstance] Updated AuthorizationDocumentInstance
@@ -455,6 +456,7 @@ module Twilio
                         "<Twilio.Preview.HostedNumbers.AuthorizationDocumentInstance #{values}>"
                     end
                 end
+
             end
         end
     end

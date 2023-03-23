@@ -28,15 +28,15 @@ module Twilio
                     def initialize(version, chat_service_sid: nil, conversation_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { chat_service_sid: chat_service_sid,conversation_sid: conversation_sid, }
+                        @solution = { chat_service_sid: chat_service_sid, conversation_sid: conversation_sid }
                         @uri = "/Services/#{@solution[:chat_service_sid]}/Conversations/#{@solution[:conversation_sid]}/Webhooks"
                         
                     end
                     ##
                     # Create the WebhookInstance
-                    # @param [ServiceConversationScopedWebhookTarget] target 
+                    # @param [Target] target 
                     # @param [String] configuration_url The absolute url the webhook request should be sent to.
-                    # @param [ServiceConversationScopedWebhookMethod] configuration_method 
+                    # @param [Method] configuration_method 
                     # @param [Array[String]] configuration_filters The list of events, firing webhook event for this Conversation.
                     # @param [Array[String]] configuration_triggers The list of keywords, firing webhook event for this Conversation.
                     # @param [String] configuration_flow_sid The studio flow SID, where the webhook should be sent to.
@@ -165,6 +165,7 @@ module Twilio
                     end
                 end
 
+
                 class WebhookContext < InstanceContext
                     ##
                     # Initialize the WebhookContext
@@ -208,7 +209,7 @@ module Twilio
                     ##
                     # Update the WebhookInstance
                     # @param [String] configuration_url The absolute url the webhook request should be sent to.
-                    # @param [ServiceConversationScopedWebhookMethod] configuration_method 
+                    # @param [Method] configuration_method 
                     # @param [Array[String]] configuration_filters The list of events, firing webhook event for this Conversation.
                     # @param [Array[String]] configuration_triggers The list of keywords, firing webhook event for this Conversation.
                     # @param [String] configuration_flow_sid The studio flow SID, where the webhook should be sent to.
@@ -243,14 +244,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.WebhookContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.WebhookContext #{context}>"
                     end
                 end
@@ -398,7 +399,7 @@ module Twilio
                     ##
                     # Update the WebhookInstance
                     # @param [String] configuration_url The absolute url the webhook request should be sent to.
-                    # @param [ServiceConversationScopedWebhookMethod] configuration_method 
+                    # @param [Method] configuration_method 
                     # @param [Array[String]] configuration_filters The list of events, firing webhook event for this Conversation.
                     # @param [Array[String]] configuration_triggers The list of keywords, firing webhook event for this Conversation.
                     # @param [String] configuration_flow_sid The studio flow SID, where the webhook should be sent to.
@@ -434,6 +435,7 @@ module Twilio
                         "<Twilio.Conversations.V1.WebhookInstance #{values}>"
                     end
                 end
+
              end
              end
             end

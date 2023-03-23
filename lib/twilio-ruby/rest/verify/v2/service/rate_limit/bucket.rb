@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, rate_limit_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,rate_limit_sid: rate_limit_sid, }
+                        @solution = { service_sid: service_sid, rate_limit_sid: rate_limit_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/RateLimits/#{@solution[:rate_limit_sid]}/Buckets"
                         
                     end
@@ -150,6 +150,7 @@ module Twilio
                     end
                 end
 
+
                 class BucketContext < InstanceContext
                     ##
                     # Initialize the BucketContext
@@ -219,14 +220,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.BucketContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.BucketContext #{context}>"
                     end
                 end
@@ -401,6 +402,7 @@ module Twilio
                         "<Twilio.Verify.V2.BucketInstance #{values}>"
                     end
                 end
+
              end
              end
             end

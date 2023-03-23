@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 class ExportConfigurationContext < InstanceContext
                     ##
                     # Initialize the ExportConfigurationContext
@@ -96,14 +97,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Bulkexports.V1.ExportConfigurationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Bulkexports.V1.ExportConfigurationContext #{context}>"
                     end
                 end
@@ -245,6 +246,7 @@ module Twilio
                         "<Twilio.Bulkexports.V1.ExportConfigurationInstance #{values}>"
                     end
                 end
+
             end
         end
     end

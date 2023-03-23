@@ -56,7 +56,7 @@ module Twilio
                     # Lists SimInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [SimStatus] status The status of the Sim resources to read. Can be `new`, `ready`, `active`, `inactive`, or `scheduled`.
+                    # @param [Status] status The status of the Sim resources to read. Can be `new`, `ready`, `active`, `inactive`, or `scheduled`.
                     # @param [String] fleet The SID or unique name of the Fleet to which a list of Sims are assigned.
                     # @param [String] iccid The [ICCID](https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID) associated with a Super SIM to filter the list by. Passing this parameter will always return a list containing zero or one SIMs.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -80,7 +80,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [SimStatus] status The status of the Sim resources to read. Can be `new`, `ready`, `active`, `inactive`, or `scheduled`.
+                    # @param [Status] status The status of the Sim resources to read. Can be `new`, `ready`, `active`, `inactive`, or `scheduled`.
                     # @param [String] fleet The SID or unique name of the Fleet to which a list of Sims are assigned.
                     # @param [String] iccid The [ICCID](https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID) associated with a Super SIM to filter the list by. Passing this parameter will always return a list containing zero or one SIMs.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -119,7 +119,7 @@ module Twilio
                     ##
                     # Retrieve a single page of SimInstance records from the API.
                     # Request is executed immediately.
-                    # @param [SimStatus] status The status of the Sim resources to read. Can be `new`, `ready`, `active`, `inactive`, or `scheduled`.
+                    # @param [Status] status The status of the Sim resources to read. Can be `new`, `ready`, `active`, `inactive`, or `scheduled`.
                     # @param [String] fleet The SID or unique name of the Fleet to which a list of Sims are assigned.
                     # @param [String] iccid The [ICCID](https://en.wikipedia.org/wiki/Subscriber_identity_module#ICCID) associated with a Super SIM to filter the list by. Passing this parameter will always return a list containing zero or one SIMs.
                     # @param [String] page_token PageToken provided by the API
@@ -166,6 +166,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class SimContext < InstanceContext
@@ -201,7 +202,7 @@ module Twilio
                     ##
                     # Update the SimInstance
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used in place of the resource's `sid` in the URL to address the resource.
-                    # @param [SimStatusUpdate] status 
+                    # @param [StatusUpdate] status 
                     # @param [String] fleet The SID or unique name of the Fleet to which the SIM resource should be assigned.
                     # @param [String] callback_url The URL we should call using the `callback_method` after an asynchronous update has finished.
                     # @param [String] callback_method The HTTP method we should use to call `callback_url`. Can be: `GET` or `POST` and the default is POST.
@@ -267,14 +268,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Supersim.V1.SimContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Supersim.V1.SimContext #{context}>"
                     end
                 end
@@ -375,7 +376,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [SimStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -421,7 +422,7 @@ module Twilio
                     ##
                     # Update the SimInstance
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used in place of the resource's `sid` in the URL to address the resource.
-                    # @param [SimStatusUpdate] status 
+                    # @param [StatusUpdate] status 
                     # @param [String] fleet The SID or unique name of the Fleet to which the SIM resource should be assigned.
                     # @param [String] callback_url The URL we should call using the `callback_method` after an asynchronous update has finished.
                     # @param [String] callback_method The HTTP method we should use to call `callback_url`. Can be: `GET` or `POST` and the default is POST.
@@ -474,6 +475,7 @@ module Twilio
                         "<Twilio.Supersim.V1.SimInstance #{values}>"
                     end
                 end
+
             end
         end
     end

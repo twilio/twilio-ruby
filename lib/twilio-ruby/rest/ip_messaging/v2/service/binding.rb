@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid, }
+                        @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Bindings"
                         
                     end
@@ -36,7 +36,7 @@ module Twilio
                     # Lists BindingInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [Array[BindingBindingType]] binding_type 
+                    # @param [Array[BindingType]] binding_type 
                     # @param [Array[String]] identity 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -58,7 +58,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [Array[BindingBindingType]] binding_type 
+                    # @param [Array[BindingType]] binding_type 
                     # @param [Array[String]] identity 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -95,7 +95,7 @@ module Twilio
                     ##
                     # Retrieve a single page of BindingInstance records from the API.
                     # Request is executed immediately.
-                    # @param [Array[BindingBindingType]] binding_type 
+                    # @param [Array[BindingType]] binding_type 
                     # @param [Array[String]] identity 
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
@@ -139,6 +139,7 @@ module Twilio
                     end
                 end
 
+
                 class BindingContext < InstanceContext
                     ##
                     # Initialize the BindingContext
@@ -181,14 +182,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V2.BindingContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V2.BindingContext #{context}>"
                     end
                 end
@@ -315,7 +316,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [BindingBindingType] 
+                    # @return [BindingType] 
                     def binding_type
                         @properties['binding_type']
                     end
@@ -368,6 +369,7 @@ module Twilio
                         "<Twilio.IpMessaging.V2.BindingInstance #{values}>"
                     end
                 end
+
              end
             end
         end

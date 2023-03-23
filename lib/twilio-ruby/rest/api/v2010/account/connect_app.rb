@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/ConnectApps.json"
                         
                     end
@@ -125,6 +125,7 @@ module Twilio
                     end
                 end
 
+
                 class ConnectAppContext < InstanceContext
                     ##
                     # Initialize the ConnectAppContext
@@ -172,7 +173,7 @@ module Twilio
                     # @param [String] description A description of the Connect App.
                     # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
                     # @param [String] homepage_url A public URL where users can obtain more information about this Connect App.
-                    # @param [Array[ConnectAppPermission]] permissions A comma-separated list of the permissions you will request from the users of this ConnectApp.  Can include: `get-all` and `post-all`.
+                    # @param [Array[Permission]] permissions A comma-separated list of the permissions you will request from the users of this ConnectApp.  Can include: `get-all` and `post-all`.
                     # @return [ConnectAppInstance] Updated ConnectAppInstance
                     def update(
                         authorize_redirect_url: :unset, 
@@ -209,14 +210,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.ConnectAppContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.ConnectAppContext #{context}>"
                     end
                 end
@@ -342,7 +343,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Array<ConnectAppPermission>] The set of permissions that your ConnectApp requests.
+                    # @return [Array<Permission>] The set of permissions that your ConnectApp requests.
                     def permissions
                         @properties['permissions']
                     end
@@ -384,7 +385,7 @@ module Twilio
                     # @param [String] description A description of the Connect App.
                     # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
                     # @param [String] homepage_url A public URL where users can obtain more information about this Connect App.
-                    # @param [Array[ConnectAppPermission]] permissions A comma-separated list of the permissions you will request from the users of this ConnectApp.  Can include: `get-all` and `post-all`.
+                    # @param [Array[Permission]] permissions A comma-separated list of the permissions you will request from the users of this ConnectApp.  Can include: `get-all` and `post-all`.
                     # @return [ConnectAppInstance] Updated ConnectAppInstance
                     def update(
                         authorize_redirect_url: :unset, 
@@ -423,6 +424,7 @@ module Twilio
                         "<Twilio.Api.V2010.ConnectAppInstance #{values}>"
                     end
                 end
+
              end
             end
         end

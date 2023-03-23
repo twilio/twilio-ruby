@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, channel_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,channel_sid: channel_sid, }
+                        @solution = { service_sid: service_sid, channel_sid: channel_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Channels/#{@solution[:channel_sid]}/Invites"
                         
                     end
@@ -157,6 +157,7 @@ module Twilio
                     end
                 end
 
+
                 class InviteContext < InstanceContext
                     ##
                     # Initialize the InviteContext
@@ -201,14 +202,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V2.InviteContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V2.InviteContext #{context}>"
                     end
                 end
@@ -374,6 +375,7 @@ module Twilio
                         "<Twilio.Chat.V2.InviteInstance #{values}>"
                     end
                 end
+
              end
              end
             end

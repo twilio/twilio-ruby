@@ -29,7 +29,7 @@ module Twilio
                     def initialize(version, account_sid: nil, reference_sid: nil, add_on_result_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,reference_sid: reference_sid,add_on_result_sid: add_on_result_sid, }
+                        @solution = { account_sid: account_sid, reference_sid: reference_sid, add_on_result_sid: add_on_result_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Recordings/#{@solution[:reference_sid]}/AddOnResults/#{@solution[:add_on_result_sid]}/Payloads.json"
                         
                     end
@@ -127,6 +127,7 @@ module Twilio
                     end
                 end
 
+
                 class PayloadContext < InstanceContext
                     ##
                     # Initialize the PayloadContext
@@ -173,14 +174,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.PayloadContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.PayloadContext #{context}>"
                     end
                 end
@@ -353,6 +354,7 @@ module Twilio
                         "<Twilio.Api.V2010.PayloadInstance #{values}>"
                     end
                 end
+
              end
              end
              end

@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, stream_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,stream_sid: stream_sid, }
+                        @solution = { service_sid: service_sid, stream_sid: stream_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Streams/#{@solution[:stream_sid]}/Messages"
                         
                     end
@@ -61,6 +61,7 @@ module Twilio
                         '#<Twilio.Sync.V1.StreamMessageList>'
                     end
                 end
+
                 class StreamMessagePage < Page
                     ##
                     # Initialize the StreamMessagePage
@@ -134,6 +135,7 @@ module Twilio
                         "<Twilio.Sync.V1.StreamMessageInstance>"
                     end
                 end
+
              end
              end
             end

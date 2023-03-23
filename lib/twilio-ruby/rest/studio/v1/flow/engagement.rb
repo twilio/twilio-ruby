@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, flow_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { flow_sid: flow_sid, }
+                        @solution = { flow_sid: flow_sid }
                         @uri = "/Flows/#{@solution[:flow_sid]}/Engagements"
                         
                     end
@@ -151,6 +151,7 @@ module Twilio
                     end
                 end
 
+
                 class EngagementContext < InstanceContext
                     ##
                     # Initialize the EngagementContext
@@ -229,14 +230,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V1.EngagementContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V1.EngagementContext #{context}>"
                     end
                 end
@@ -350,7 +351,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [EngagementStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -423,6 +424,7 @@ module Twilio
                         "<Twilio.Studio.V1.EngagementInstance #{values}>"
                     end
                 end
+
              end
             end
         end

@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, call_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,call_sid: call_sid, }
+                        @solution = { account_sid: account_sid, call_sid: call_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Recordings.json"
                         
                     end
@@ -183,6 +183,7 @@ module Twilio
                     end
                 end
 
+
                 class RecordingContext < InstanceContext
                     ##
                     # Initialize the RecordingContext
@@ -225,7 +226,7 @@ module Twilio
 
                     ##
                     # Update the RecordingInstance
-                    # @param [CallRecordingStatus] status 
+                    # @param [Status] status 
                     # @param [String] pause_behavior Whether to record during a pause. Can be: `skip` or `silence` and the default is `silence`. `skip` does not record during the pause period, while `silence` will replace the actual audio of the call with silence during the pause period. This parameter only applies when setting `status` is set to `paused`.
                     # @return [RecordingInstance] Updated RecordingInstance
                     def update(
@@ -252,14 +253,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.RecordingContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.RecordingContext #{context}>"
                     end
                 end
@@ -422,7 +423,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CallRecordingStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -434,7 +435,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CallRecordingSource] 
+                    # @return [Source] 
                     def source
                         @properties['source']
                     end
@@ -469,7 +470,7 @@ module Twilio
 
                     ##
                     # Update the RecordingInstance
-                    # @param [CallRecordingStatus] status 
+                    # @param [Status] status 
                     # @param [String] pause_behavior Whether to record during a pause. Can be: `skip` or `silence` and the default is `silence`. `skip` does not record during the pause period, while `silence` will replace the actual audio of the call with silence during the pause period. This parameter only applies when setting `status` is set to `paused`.
                     # @return [RecordingInstance] Updated RecordingInstance
                     def update(
@@ -497,6 +498,7 @@ module Twilio
                         "<Twilio.Api.V2010.RecordingInstance #{values}>"
                     end
                 end
+
              end
              end
             end

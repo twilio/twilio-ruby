@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, call_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,call_sid: call_sid, }
+                        @solution = { account_sid: account_sid, call_sid: call_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Siprec.json"
                         
                     end
@@ -36,7 +36,7 @@ module Twilio
                     # Create the SiprecInstance
                     # @param [String] name The user-specified name of this Siprec, if one was given when the Siprec was created. This may be used to stop the Siprec.
                     # @param [String] connector_name Unique name used when configuring the connector via Marketplace Add-on.
-                    # @param [SiprecTrack] track 
+                    # @param [Track] track 
                     # @param [String] status_callback Absolute URL of the status callback.
                     # @param [String] status_callback_method The http method for the status_callback (one of GET, POST).
                     # @param [String] parameter1_name Parameter name
@@ -668,6 +668,7 @@ module Twilio
                     end
                 end
 
+
                 class SiprecContext < InstanceContext
                     ##
                     # Initialize the SiprecContext
@@ -687,7 +688,7 @@ module Twilio
                     end
                     ##
                     # Update the SiprecInstance
-                    # @param [SiprecUpdateStatus] status 
+                    # @param [UpdateStatus] status 
                     # @return [SiprecInstance] Updated SiprecInstance
                     def update(
                         status: nil
@@ -711,14 +712,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.SiprecContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.SiprecContext #{context}>"
                     end
                 end
@@ -816,7 +817,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [SiprecStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -835,7 +836,7 @@ module Twilio
                     
                     ##
                     # Update the SiprecInstance
-                    # @param [SiprecUpdateStatus] status 
+                    # @param [UpdateStatus] status 
                     # @return [SiprecInstance] Updated SiprecInstance
                     def update(
                         status: nil
@@ -860,6 +861,7 @@ module Twilio
                         "<Twilio.Api.V2010.SiprecInstance #{values}>"
                     end
                 end
+
              end
              end
             end

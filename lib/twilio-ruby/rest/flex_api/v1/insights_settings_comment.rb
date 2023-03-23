@@ -53,6 +53,7 @@ module Twilio
                         '#<Twilio.FlexApi.V1.InsightsSettingsCommentList>'
                     end
                 end
+
                 class InsightsSettingsCommentPage < Page
                     ##
                     # Initialize the InsightsSettingsCommentPage
@@ -133,6 +134,7 @@ module Twilio
                         "<Twilio.FlexApi.V1.InsightsSettingsCommentInstance>"
                     end
                 end
+
             end
         end
     end

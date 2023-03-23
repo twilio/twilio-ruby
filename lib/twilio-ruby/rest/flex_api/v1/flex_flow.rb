@@ -33,10 +33,10 @@ module Twilio
                     # Create the FlexFlowInstance
                     # @param [String] friendly_name A descriptive string that you create to describe the Flex Flow resource.
                     # @param [String] chat_service_sid The SID of the chat service.
-                    # @param [FlexFlowChannelType] channel_type 
+                    # @param [ChannelType] channel_type 
                     # @param [String] contact_identity The channel contact's Identity.
                     # @param [Boolean] enabled Whether the new Flex Flow is enabled.
-                    # @param [FlexFlowIntegrationType] integration_type 
+                    # @param [IntegrationType] integration_type 
                     # @param [String] integration_flow_sid The SID of the Studio Flow. Required when `integrationType` is `studio`.
                     # @param [String] integration_url The URL of the external webhook. Required when `integrationType` is `external`.
                     # @param [String] integration_workspace_sid The Workspace SID for a new Task. Required when `integrationType` is `task`.
@@ -197,6 +197,7 @@ module Twilio
                     end
                 end
 
+
                 class FlexFlowContext < InstanceContext
                     ##
                     # Initialize the FlexFlowContext
@@ -237,10 +238,10 @@ module Twilio
                     # Update the FlexFlowInstance
                     # @param [String] friendly_name A descriptive string that you create to describe the Flex Flow resource.
                     # @param [String] chat_service_sid The SID of the chat service.
-                    # @param [FlexFlowChannelType] channel_type 
+                    # @param [ChannelType] channel_type 
                     # @param [String] contact_identity The channel contact's Identity.
                     # @param [Boolean] enabled Whether the new Flex Flow is enabled.
-                    # @param [FlexFlowIntegrationType] integration_type 
+                    # @param [IntegrationType] integration_type 
                     # @param [String] integration_flow_sid The SID of the Studio Flow. Required when `integrationType` is `studio`.
                     # @param [String] integration_url The URL of the external webhook. Required when `integrationType` is `external`.
                     # @param [String] integration_workspace_sid The Workspace SID for a new Task. Required when `integrationType` is `task`.
@@ -305,14 +306,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.FlexFlowContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.FlexFlowContext #{context}>"
                     end
                 end
@@ -429,7 +430,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [FlexFlowChannelType] 
+                    # @return [ChannelType] 
                     def channel_type
                         @properties['channel_type']
                     end
@@ -447,7 +448,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [FlexFlowIntegrationType] 
+                    # @return [IntegrationType] 
                     def integration_type
                         @properties['integration_type']
                     end
@@ -496,10 +497,10 @@ module Twilio
                     # Update the FlexFlowInstance
                     # @param [String] friendly_name A descriptive string that you create to describe the Flex Flow resource.
                     # @param [String] chat_service_sid The SID of the chat service.
-                    # @param [FlexFlowChannelType] channel_type 
+                    # @param [ChannelType] channel_type 
                     # @param [String] contact_identity The channel contact's Identity.
                     # @param [Boolean] enabled Whether the new Flex Flow is enabled.
-                    # @param [FlexFlowIntegrationType] integration_type 
+                    # @param [IntegrationType] integration_type 
                     # @param [String] integration_flow_sid The SID of the Studio Flow. Required when `integrationType` is `studio`.
                     # @param [String] integration_url The URL of the external webhook. Required when `integrationType` is `external`.
                     # @param [String] integration_workspace_sid The Workspace SID for a new Task. Required when `integrationType` is `task`.
@@ -567,6 +568,7 @@ module Twilio
                         "<Twilio.FlexApi.V1.FlexFlowInstance #{values}>"
                     end
                 end
+
             end
         end
     end

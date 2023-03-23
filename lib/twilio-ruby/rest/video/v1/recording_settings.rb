@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 class RecordingSettingsContext < InstanceContext
                     ##
                     # Initialize the RecordingSettingsContext
@@ -102,14 +103,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.RecordingSettingsContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.RecordingSettingsContext #{context}>"
                     end
                 end
@@ -281,6 +282,7 @@ module Twilio
                         "<Twilio.Video.V1.RecordingSettingsInstance #{values}>"
                     end
                 end
+
             end
         end
     end

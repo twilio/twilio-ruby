@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, interaction_sid: nil, channel_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { interaction_sid: interaction_sid,channel_sid: channel_sid, }
+                        @solution = { interaction_sid: interaction_sid, channel_sid: channel_sid }
                         @uri = "/Interactions/#{@solution[:interaction_sid]}/Channels/#{@solution[:channel_sid]}/Invites"
                         
                     end
@@ -146,6 +146,7 @@ module Twilio
                         '#<Twilio.FlexApi.V1.InteractionChannelInviteList>'
                     end
                 end
+
                 class InteractionChannelInvitePage < Page
                     ##
                     # Initialize the InteractionChannelInvitePage
@@ -240,6 +241,7 @@ module Twilio
                         "<Twilio.FlexApi.V1.InteractionChannelInviteInstance>"
                     end
                 end
+
              end
              end
             end
