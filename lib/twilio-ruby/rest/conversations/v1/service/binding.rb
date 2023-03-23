@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, chat_service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { chat_service_sid: chat_service_sid, }
+                        @solution = { chat_service_sid: chat_service_sid }
                         @uri = "/Services/#{@solution[:chat_service_sid]}/Bindings"
                         
                     end
@@ -36,7 +36,7 @@ module Twilio
                     # Lists BindingInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [Array[ServiceBindingBindingType]] binding_type The push technology used by the Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push notification configuration](https://www.twilio.com/docs/chat/push-notification-configuration) for more info.
+                    # @param [Array[BindingType]] binding_type The push technology used by the Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push notification configuration](https://www.twilio.com/docs/chat/push-notification-configuration) for more info.
                     # @param [Array[String]] identity The identity of a [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource) this binding belongs to. See [access tokens](https://www.twilio.com/docs/conversations/create-tokens) for more details.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -58,7 +58,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [Array[ServiceBindingBindingType]] binding_type The push technology used by the Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push notification configuration](https://www.twilio.com/docs/chat/push-notification-configuration) for more info.
+                    # @param [Array[BindingType]] binding_type The push technology used by the Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push notification configuration](https://www.twilio.com/docs/chat/push-notification-configuration) for more info.
                     # @param [Array[String]] identity The identity of a [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource) this binding belongs to. See [access tokens](https://www.twilio.com/docs/conversations/create-tokens) for more details.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -95,7 +95,7 @@ module Twilio
                     ##
                     # Retrieve a single page of BindingInstance records from the API.
                     # Request is executed immediately.
-                    # @param [Array[ServiceBindingBindingType]] binding_type The push technology used by the Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push notification configuration](https://www.twilio.com/docs/chat/push-notification-configuration) for more info.
+                    # @param [Array[BindingType]] binding_type The push technology used by the Binding resources to read.  Can be: `apn`, `gcm`, or `fcm`.  See [push notification configuration](https://www.twilio.com/docs/chat/push-notification-configuration) for more info.
                     # @param [Array[String]] identity The identity of a [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource) this binding belongs to. See [access tokens](https://www.twilio.com/docs/conversations/create-tokens) for more details.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
@@ -139,6 +139,7 @@ module Twilio
                     end
                 end
 
+
                 class BindingContext < InstanceContext
                     ##
                     # Initialize the BindingContext
@@ -181,14 +182,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.BindingContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.BindingContext #{context}>"
                     end
                 end
@@ -314,7 +315,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ServiceBindingBindingType] 
+                    # @return [BindingType] 
                     def binding_type
                         @properties['binding_type']
                     end
@@ -361,6 +362,7 @@ module Twilio
                         "<Twilio.Conversations.V1.BindingInstance #{values}>"
                     end
                 end
+
              end
             end
         end

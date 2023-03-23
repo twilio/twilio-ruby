@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, flow_sid: nil, engagement_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { flow_sid: flow_sid,engagement_sid: engagement_sid, }
+                        @solution = { flow_sid: flow_sid, engagement_sid: engagement_sid }
                         
                         
                     end
@@ -40,6 +40,7 @@ module Twilio
                         '#<Twilio.Studio.V1.EngagementContextList>'
                     end
                 end
+
 
                 class EngagementContextContext < InstanceContext
                     ##
@@ -75,14 +76,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V1.EngagementContextContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V1.EngagementContextContext #{context}>"
                     end
                 end
@@ -205,6 +206,7 @@ module Twilio
                         "<Twilio.Studio.V1.EngagementContextInstance #{values}>"
                     end
                 end
+
              end
              end
             end

@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/OutgoingCallerIds.json"
                         
                     end
@@ -74,6 +74,7 @@ module Twilio
                         '#<Twilio.Api.V2010.ValidationRequestList>'
                     end
                 end
+
                 class ValidationRequestPage < Page
                     ##
                     # Initialize the ValidationRequestPage
@@ -168,6 +169,7 @@ module Twilio
                         "<Twilio.Api.V2010.ValidationRequestInstance>"
                     end
                 end
+
              end
             end
         end

@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, sim_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { sim_sid: sim_sid, }
+                        @solution = { sim_sid: sim_sid }
                         @uri = "/Sims/#{@solution[:sim_sid]}/DataSessions"
                         
                     end
@@ -124,6 +124,7 @@ module Twilio
                         '#<Twilio.Wireless.V1.DataSessionList>'
                     end
                 end
+
                 class DataSessionPage < Page
                     ##
                     # Initialize the DataSessionPage
@@ -295,6 +296,7 @@ module Twilio
                         "<Twilio.Wireless.V1.DataSessionInstance>"
                     end
                 end
+
              end
             end
         end

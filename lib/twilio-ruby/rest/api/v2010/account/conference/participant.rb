@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, conference_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,conference_sid: conference_sid, }
+                        @solution = { account_sid: account_sid, conference_sid: conference_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:conference_sid]}/Participants.json"
                         
                     end
@@ -303,6 +303,7 @@ module Twilio
                     end
                 end
 
+
                 class ParticipantContext < InstanceContext
                     ##
                     # Initialize the ParticipantContext
@@ -402,14 +403,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.ParticipantContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.ParticipantContext #{context}>"
                     end
                 end
@@ -562,7 +563,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ParticipantStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -649,6 +650,7 @@ module Twilio
                         "<Twilio.Api.V2010.ParticipantInstance #{values}>"
                     end
                 end
+
              end
              end
             end

@@ -54,7 +54,7 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [String] friendly_name Only return the Account resources with friendly names that exactly match this name.
-                    # @param [AccountStatus] status Only return Account resources with the given status. Can be `closed`, `suspended` or `active`.
+                    # @param [Status] status Only return Account resources with the given status. Can be `closed`, `suspended` or `active`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -76,7 +76,7 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [String] friendly_name Only return the Account resources with friendly names that exactly match this name.
-                    # @param [AccountStatus] status Only return Account resources with the given status. Can be `closed`, `suspended` or `active`.
+                    # @param [Status] status Only return Account resources with the given status. Can be `closed`, `suspended` or `active`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -113,7 +113,7 @@ module Twilio
                     # Retrieve a single page of AccountInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] friendly_name Only return the Account resources with friendly names that exactly match this name.
-                    # @param [AccountStatus] status Only return Account resources with the given status. Can be `closed`, `suspended` or `active`.
+                    # @param [Status] status Only return Account resources with the given status. Can be `closed`, `suspended` or `active`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -155,6 +155,7 @@ module Twilio
                         '#<Twilio.Api.V2010.AccountList>'
                     end
                 end
+
 
                 class AccountContext < InstanceContext
                     ##
@@ -211,7 +212,7 @@ module Twilio
                     ##
                     # Update the AccountInstance
                     # @param [String] friendly_name Update the human-readable description of this Account
-                    # @param [AccountStatus] status 
+                    # @param [Status] status 
                     # @return [AccountInstance] Updated AccountInstance
                     def update(
                         friendly_name: :unset, 
@@ -714,14 +715,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.AccountContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.AccountContext #{context}>"
                     end
                 end
@@ -834,7 +835,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [AccountStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -846,7 +847,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [AccountType] 
+                    # @return [Type] 
                     def type
                         @properties['type']
                     end
@@ -868,7 +869,7 @@ module Twilio
                     ##
                     # Update the AccountInstance
                     # @param [String] friendly_name Update the human-readable description of this Account
-                    # @param [AccountStatus] status 
+                    # @param [Status] status 
                     # @return [AccountInstance] Updated AccountInstance
                     def update(
                         friendly_name: :unset, 
@@ -1063,6 +1064,7 @@ module Twilio
                         "<Twilio.Api.V2010.AccountInstance #{values}>"
                     end
                 end
+
             end
         end
     end

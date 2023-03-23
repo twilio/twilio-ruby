@@ -33,17 +33,20 @@ module Twilio
                     # Create the EsimProfileInstance
                     # @param [String] callback_url The URL we should call using the `callback_method` when the status of the eSIM Profile changes. At this stage of the eSIM Profile pilot, the a request to the URL will only be called when the ESimProfile resource changes from `reserving` to `available`.
                     # @param [String] callback_method The HTTP method we should use to call `callback_url`. Can be: `GET` or `POST` and the default is POST.
+                    # @param [Boolean] generate_matching_id When set to `true`, a value for `Eid` does not need to be provided. Instead, when the eSIM profile is reserved, a matching ID will be generated and returned via the `matching_id` property. This identifies the specific eSIM profile that can be used by any capable device to claim and download the profile.
                     # @param [String] eid Identifier of the eUICC that will claim the eSIM Profile.
                     # @return [EsimProfileInstance] Created EsimProfileInstance
                     def create(
                         callback_url: :unset, 
                         callback_method: :unset, 
+                        generate_matching_id: :unset, 
                         eid: :unset
                     )
 
                         data = Twilio::Values.of({
                             'CallbackUrl' => callback_url,
                             'CallbackMethod' => callback_method,
+                            'GenerateMatchingId' => generate_matching_id,
                             'Eid' => eid,
                         })
 
@@ -61,7 +64,7 @@ module Twilio
                     # memory before returning.
                     # @param [String] eid List the eSIM Profiles that have been associated with an EId.
                     # @param [String] sim_sid Find the eSIM Profile resource related to a [Sim](https://www.twilio.com/docs/wireless/api/sim-resource) resource by providing the SIM SID. Will always return an array with either 1 or 0 records.
-                    # @param [EsimProfileStatus] status List the eSIM Profiles that are in a given status.
+                    # @param [Status] status List the eSIM Profiles that are in a given status.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -85,7 +88,7 @@ module Twilio
                     # is reached.
                     # @param [String] eid List the eSIM Profiles that have been associated with an EId.
                     # @param [String] sim_sid Find the eSIM Profile resource related to a [Sim](https://www.twilio.com/docs/wireless/api/sim-resource) resource by providing the SIM SID. Will always return an array with either 1 or 0 records.
-                    # @param [EsimProfileStatus] status List the eSIM Profiles that are in a given status.
+                    # @param [Status] status List the eSIM Profiles that are in a given status.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -124,7 +127,7 @@ module Twilio
                     # Request is executed immediately.
                     # @param [String] eid List the eSIM Profiles that have been associated with an EId.
                     # @param [String] sim_sid Find the eSIM Profile resource related to a [Sim](https://www.twilio.com/docs/wireless/api/sim-resource) resource by providing the SIM SID. Will always return an array with either 1 or 0 records.
-                    # @param [EsimProfileStatus] status List the eSIM Profiles that are in a given status.
+                    # @param [Status] status List the eSIM Profiles that are in a given status.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -169,6 +172,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class EsimProfileContext < InstanceContext
@@ -203,14 +207,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Supersim.V1.EsimProfileContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Supersim.V1.EsimProfileContext #{context}>"
                     end
                 end
@@ -265,6 +269,8 @@ module Twilio
                             'status' => payload['status'],
                             'eid' => payload['eid'],
                             'smdp_plus_address' => payload['smdp_plus_address'],
+                            'matching_id' => payload['matching_id'],
+                            'activation_code' => payload['activation_code'],
                             'error_code' => payload['error_code'],
                             'error_message' => payload['error_message'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
@@ -313,7 +319,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [EsimProfileStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -328,6 +334,18 @@ module Twilio
                     # @return [String] Address of the SM-DP+ server from which the Profile will be downloaded. The URL will appear once the eSIM Profile reaches the status `available`.
                     def smdp_plus_address
                         @properties['smdp_plus_address']
+                    end
+                    
+                    ##
+                    # @return [String] Unique identifier of the eSIM profile that can be used to identify and download the eSIM profile from the SM-DP+ server. Populated if `generate_matching_id` is set to `true` when creating the eSIM profile reservation.
+                    def matching_id
+                        @properties['matching_id']
+                    end
+                    
+                    ##
+                    # @return [String] Combined machine-readable activation code for acquiring an eSIM Profile with the Activation Code download method. Can be used in a QR code to download an eSIM profile.
+                    def activation_code
+                        @properties['activation_code']
                     end
                     
                     ##
@@ -382,6 +400,7 @@ module Twilio
                         "<Twilio.Supersim.V1.EsimProfileInstance #{values}>"
                     end
                 end
+
             end
         end
     end

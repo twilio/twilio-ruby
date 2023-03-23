@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, sim_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { sim_sid: sim_sid, }
+                        @solution = { sim_sid: sim_sid }
                         
                         
                     end
@@ -39,6 +39,7 @@ module Twilio
                         '#<Twilio.Preview.Wireless.UsageList>'
                     end
                 end
+
 
                 ##
                 #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
@@ -83,14 +84,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Preview.Wireless.UsageContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Preview.Wireless.UsageContext #{context}>"
                     end
                 end
@@ -249,6 +250,7 @@ module Twilio
                         "<Twilio.Preview.Wireless.UsageInstance #{values}>"
                     end
                 end
+
              end
             end
         end

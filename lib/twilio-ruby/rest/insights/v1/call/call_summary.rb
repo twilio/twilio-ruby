@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, call_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { call_sid: call_sid, }
+                        @solution = { call_sid: call_sid }
                         
                         
                     end
@@ -39,6 +39,7 @@ module Twilio
                         '#<Twilio.Insights.V1.CallSummaryList>'
                     end
                 end
+
 
                 class CallSummaryContext < InstanceContext
                     ##
@@ -57,7 +58,7 @@ module Twilio
                     end
                     ##
                     # Fetch the CallSummaryInstance
-                    # @param [SummaryProcessingState] processing_state 
+                    # @param [ProcessingState] processing_state 
                     # @return [CallSummaryInstance] Fetched CallSummaryInstance
                     def fetch(
                         processing_state: :unset
@@ -78,14 +79,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Insights.V1.CallSummaryContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Insights.V1.CallSummaryContext #{context}>"
                     end
                 end
@@ -187,25 +188,25 @@ module Twilio
                     end
                     
                     ##
-                    # @return [SummaryCallType] 
+                    # @return [CallType] 
                     def call_type
                         @properties['call_type']
                     end
                     
                     ##
-                    # @return [SummaryCallState] 
+                    # @return [CallState] 
                     def call_state
                         @properties['call_state']
                     end
                     
                     ##
-                    # @return [SummaryAnsweredBy] 
+                    # @return [AnsweredBy] 
                     def answered_by
                         @properties['answered_by']
                     end
                     
                     ##
-                    # @return [SummaryProcessingState] 
+                    # @return [ProcessingState] 
                     def processing_state
                         @properties['processing_state']
                     end
@@ -314,7 +315,7 @@ module Twilio
                     
                     ##
                     # Fetch the CallSummaryInstance
-                    # @param [SummaryProcessingState] processing_state 
+                    # @param [ProcessingState] processing_state 
                     # @return [CallSummaryInstance] Fetched CallSummaryInstance
                     def fetch(
                         processing_state: :unset
@@ -339,6 +340,7 @@ module Twilio
                         "<Twilio.Insights.V1.CallSummaryInstance #{values}>"
                     end
                 end
+
              end
             end
         end

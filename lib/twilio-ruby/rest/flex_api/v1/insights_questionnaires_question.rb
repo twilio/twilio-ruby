@@ -33,26 +33,26 @@ module Twilio
                     # Create the InsightsQuestionnairesQuestionInstance
                     # @param [String] category_id The ID of the category
                     # @param [String] question The question.
-                    # @param [String] description The description for the question.
                     # @param [String] answer_set_id The answer_set for the question.
                     # @param [Boolean] allow_na The flag to enable for disable NA for answer.
+                    # @param [String] description The description for the question.
                     # @param [String] token The Token HTTP request header
                     # @return [InsightsQuestionnairesQuestionInstance] Created InsightsQuestionnairesQuestionInstance
                     def create(
                         category_id: nil, 
                         question: nil, 
-                        description: nil, 
                         answer_set_id: nil, 
                         allow_na: nil, 
+                        description: :unset, 
                         token: :unset
                     )
 
                         data = Twilio::Values.of({
                             'CategoryId' => category_id,
                             'Question' => question,
-                            'Description' => description,
                             'AnswerSetId' => answer_set_id,
                             'AllowNa' => allow_na,
+                            'Description' => description,
                         })
 
                         headers = Twilio::Values.of({ 'Token' => token, })
@@ -171,6 +171,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class InsightsQuestionnairesQuestionContext < InstanceContext
@@ -239,14 +240,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.InsightsQuestionnairesQuestionContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.InsightsQuestionnairesQuestionContext #{context}>"
                     end
                 end
@@ -437,6 +438,7 @@ module Twilio
                         "<Twilio.FlexApi.V1.InsightsQuestionnairesQuestionInstance #{values}>"
                     end
                 end
+
             end
         end
     end

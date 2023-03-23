@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 class PhoneNumberContext < InstanceContext
                     ##
                     # Initialize the PhoneNumberContext
@@ -49,7 +50,7 @@ module Twilio
 
                         # Path Solution
                         @solution = { phone_number: phone_number,  }
-                        @uri = "/PhoneNumbers/#{@solution[:phone_number]}"
+                        @uri = "/PhoneNumbers/#{CGI.escape(@solution[:phone_number]).gsub("+", "%20")}"
 
                         
                     end
@@ -85,14 +86,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Lookups.V1.PhoneNumberContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Lookups.V1.PhoneNumberContext #{context}>"
                     end
                 end
@@ -243,6 +244,7 @@ module Twilio
                         "<Twilio.Lookups.V1.PhoneNumberInstance #{values}>"
                     end
                 end
+
             end
         end
     end

@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, network_access_profile_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { network_access_profile_sid: network_access_profile_sid, }
+                        @solution = { network_access_profile_sid: network_access_profile_sid }
                         @uri = "/NetworkAccessProfiles/#{@solution[:network_access_profile_sid]}/Networks"
                         
                     end
@@ -145,6 +145,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class NetworkAccessProfileNetworkContext < InstanceContext
@@ -189,14 +190,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Supersim.V1.NetworkAccessProfileNetworkContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Supersim.V1.NetworkAccessProfileNetworkContext #{context}>"
                     end
                 end
@@ -334,6 +335,7 @@ module Twilio
                         "<Twilio.Supersim.V1.NetworkAccessProfileNetworkInstance #{values}>"
                     end
                 end
+
              end
             end
         end

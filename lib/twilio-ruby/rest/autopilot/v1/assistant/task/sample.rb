@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, assistant_sid: nil, task_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { assistant_sid: assistant_sid,task_sid: task_sid, }
+                        @solution = { assistant_sid: assistant_sid, task_sid: task_sid }
                         @uri = "/Assistants/#{@solution[:assistant_sid]}/Tasks/#{@solution[:task_sid]}/Samples"
                         
                     end
@@ -160,6 +160,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class SampleContext < InstanceContext
@@ -234,14 +235,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Autopilot.V1.SampleContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Autopilot.V1.SampleContext #{context}>"
                     end
                 end
@@ -426,6 +427,7 @@ module Twilio
                         "<Twilio.Autopilot.V1.SampleInstance #{values}>"
                     end
                 end
+
              end
              end
             end

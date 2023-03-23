@@ -193,6 +193,7 @@ module Twilio
                     end
                 end
 
+
                 class ConferenceContext < InstanceContext
                     ##
                     # Initialize the ConferenceContext
@@ -248,14 +249,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Insights.V1.ConferenceContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Insights.V1.ConferenceContext #{context}>"
                     end
                 end
@@ -393,7 +394,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ConferenceConferenceStatus] 
+                    # @return [ConferenceStatus] 
                     def status
                         @properties['status']
                     end
@@ -417,7 +418,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ConferenceConferenceEndReason] 
+                    # @return [ConferenceEndReason] 
                     def end_reason
                         @properties['end_reason']
                     end
@@ -429,13 +430,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ConferenceRegion] 
+                    # @return [Region] 
                     def mixer_region
                         @properties['mixer_region']
                     end
                     
                     ##
-                    # @return [ConferenceRegion] 
+                    # @return [Region] 
                     def mixer_region_requested
                         @properties['mixer_region_requested']
                     end
@@ -453,7 +454,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Array<ConferenceTag>] Tags for detected conference conditions and participant behaviors which may be of interest.
+                    # @return [Array<Tag>] Tags for detected conference conditions and participant behaviors which may be of interest.
                     def tags
                         @properties['tags']
                     end
@@ -465,7 +466,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ConferenceProcessingState] 
+                    # @return [ProcessingState] 
                     def processing_state
                         @properties['processing_state']
                     end
@@ -511,6 +512,7 @@ module Twilio
                         "<Twilio.Insights.V1.ConferenceInstance #{values}>"
                     end
                 end
+
             end
         end
     end

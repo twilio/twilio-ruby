@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, map_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,map_sid: map_sid, }
+                        @solution = { service_sid: service_sid, map_sid: map_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Maps/#{@solution[:map_sid]}/Items"
                         
                     end
@@ -70,9 +70,9 @@ module Twilio
                     # Lists SyncMapItemInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [SyncMapItemQueryResultOrder] order How to order the Map Items returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending. Map Items are [ordered lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item key.
+                    # @param [QueryResultOrder] order How to order the Map Items returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending. Map Items are [ordered lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item key.
                     # @param [String] from The `key` of the first Sync Map Item resource to read. See also `bounds`.
-                    # @param [SyncMapItemQueryFromBoundType] bounds Whether to include the Map Item referenced by the `from` parameter. Can be: `inclusive` to include the Map Item referenced by the `from` parameter or `exclusive` to start with the next Map Item. The default value is `inclusive`.
+                    # @param [QueryFromBoundType] bounds Whether to include the Map Item referenced by the `from` parameter. Can be: `inclusive` to include the Map Item referenced by the `from` parameter or `exclusive` to start with the next Map Item. The default value is `inclusive`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -94,9 +94,9 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [SyncMapItemQueryResultOrder] order How to order the Map Items returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending. Map Items are [ordered lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item key.
+                    # @param [QueryResultOrder] order How to order the Map Items returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending. Map Items are [ordered lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item key.
                     # @param [String] from The `key` of the first Sync Map Item resource to read. See also `bounds`.
-                    # @param [SyncMapItemQueryFromBoundType] bounds Whether to include the Map Item referenced by the `from` parameter. Can be: `inclusive` to include the Map Item referenced by the `from` parameter or `exclusive` to start with the next Map Item. The default value is `inclusive`.
+                    # @param [QueryFromBoundType] bounds Whether to include the Map Item referenced by the `from` parameter. Can be: `inclusive` to include the Map Item referenced by the `from` parameter or `exclusive` to start with the next Map Item. The default value is `inclusive`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -133,9 +133,9 @@ module Twilio
                     ##
                     # Retrieve a single page of SyncMapItemInstance records from the API.
                     # Request is executed immediately.
-                    # @param [SyncMapItemQueryResultOrder] order How to order the Map Items returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending. Map Items are [ordered lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item key.
+                    # @param [QueryResultOrder] order How to order the Map Items returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending. Map Items are [ordered lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item key.
                     # @param [String] from The `key` of the first Sync Map Item resource to read. See also `bounds`.
-                    # @param [SyncMapItemQueryFromBoundType] bounds Whether to include the Map Item referenced by the `from` parameter. Can be: `inclusive` to include the Map Item referenced by the `from` parameter or `exclusive` to start with the next Map Item. The default value is `inclusive`.
+                    # @param [QueryFromBoundType] bounds Whether to include the Map Item referenced by the `from` parameter. Can be: `inclusive` to include the Map Item referenced by the `from` parameter or `exclusive` to start with the next Map Item. The default value is `inclusive`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -179,6 +179,7 @@ module Twilio
                         '#<Twilio.Sync.V1.SyncMapItemList>'
                     end
                 end
+
 
                 class SyncMapItemContext < InstanceContext
                     ##
@@ -262,14 +263,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Sync.V1.SyncMapItemContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Sync.V1.SyncMapItemContext #{context}>"
                     end
                 end
@@ -472,6 +473,7 @@ module Twilio
                         "<Twilio.Sync.V1.SyncMapItemInstance #{values}>"
                     end
                 end
+
              end
              end
             end

@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { sid: sid, }
+                        @solution = { sid: sid }
                         @uri = "/Sinks/#{@solution[:sid]}/Test"
                         
                     end
@@ -52,6 +52,7 @@ module Twilio
                         '#<Twilio.Events.V1.SinkTestList>'
                     end
                 end
+
                 class SinkTestPage < Page
                     ##
                     # Initialize the SinkTestPage
@@ -118,6 +119,7 @@ module Twilio
                         "<Twilio.Events.V1.SinkTestInstance>"
                     end
                 end
+
              end
             end
         end

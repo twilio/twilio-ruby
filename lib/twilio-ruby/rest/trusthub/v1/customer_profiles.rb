@@ -62,7 +62,7 @@ module Twilio
                     # Lists CustomerProfilesInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [CustomerProfileStatus] status The verification status of the Customer-Profile resource.
+                    # @param [Status] status The verification status of the Customer-Profile resource.
                     # @param [String] friendly_name The string that you assigned to describe the resource.
                     # @param [String] policy_sid The unique string of a policy that is associated to the Customer-Profile resource.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -86,7 +86,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [CustomerProfileStatus] status The verification status of the Customer-Profile resource.
+                    # @param [Status] status The verification status of the Customer-Profile resource.
                     # @param [String] friendly_name The string that you assigned to describe the resource.
                     # @param [String] policy_sid The unique string of a policy that is associated to the Customer-Profile resource.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -125,7 +125,7 @@ module Twilio
                     ##
                     # Retrieve a single page of CustomerProfilesInstance records from the API.
                     # Request is executed immediately.
-                    # @param [CustomerProfileStatus] status The verification status of the Customer-Profile resource.
+                    # @param [Status] status The verification status of the Customer-Profile resource.
                     # @param [String] friendly_name The string that you assigned to describe the resource.
                     # @param [String] policy_sid The unique string of a policy that is associated to the Customer-Profile resource.
                     # @param [String] page_token PageToken provided by the API
@@ -172,6 +172,7 @@ module Twilio
                     end
                 end
 
+
                 class CustomerProfilesContext < InstanceContext
                     ##
                     # Initialize the CustomerProfilesContext
@@ -213,7 +214,7 @@ module Twilio
 
                     ##
                     # Update the CustomerProfilesInstance
-                    # @param [CustomerProfileStatus] status 
+                    # @param [Status] status 
                     # @param [String] status_callback The URL we call to inform your application of status changes.
                     # @param [String] friendly_name The string that you assigned to describe the resource.
                     # @param [String] email The email address that will receive updates when the Customer-Profile resource changes status.
@@ -310,14 +311,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trusthub.V1.CustomerProfilesContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trusthub.V1.CustomerProfilesContext #{context}>"
                     end
                 end
@@ -420,7 +421,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CustomerProfileStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -485,7 +486,7 @@ module Twilio
 
                     ##
                     # Update the CustomerProfilesInstance
-                    # @param [CustomerProfileStatus] status 
+                    # @param [Status] status 
                     # @param [String] status_callback The URL we call to inform your application of status changes.
                     # @param [String] friendly_name The string that you assigned to describe the resource.
                     # @param [String] email The email address that will receive updates when the Customer-Profile resource changes status.
@@ -540,6 +541,7 @@ module Twilio
                         "<Twilio.Trusthub.V1.CustomerProfilesInstance #{values}>"
                     end
                 end
+
             end
         end
     end

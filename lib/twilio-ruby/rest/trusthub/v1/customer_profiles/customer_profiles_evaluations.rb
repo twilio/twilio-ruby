@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, customer_profile_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { customer_profile_sid: customer_profile_sid, }
+                        @solution = { customer_profile_sid: customer_profile_sid }
                         @uri = "/CustomerProfiles/#{@solution[:customer_profile_sid]}/Evaluations"
                         
                     end
@@ -145,6 +145,7 @@ module Twilio
                     end
                 end
 
+
                 class CustomerProfilesEvaluationsContext < InstanceContext
                     ##
                     # Initialize the CustomerProfilesEvaluationsContext
@@ -179,14 +180,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trusthub.V1.CustomerProfilesEvaluationsContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trusthub.V1.CustomerProfilesEvaluationsContext #{context}>"
                     end
                 end
@@ -285,7 +286,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CustomerProfileEvaluationStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -330,6 +331,7 @@ module Twilio
                         "<Twilio.Trusthub.V1.CustomerProfilesEvaluationsInstance #{values}>"
                     end
                 end
+
              end
             end
         end

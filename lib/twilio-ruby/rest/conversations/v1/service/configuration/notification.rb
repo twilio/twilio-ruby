@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, chat_service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { chat_service_sid: chat_service_sid, }
+                        @solution = { chat_service_sid: chat_service_sid }
                         
                         
                     end
@@ -40,6 +40,7 @@ module Twilio
                         '#<Twilio.Conversations.V1.NotificationList>'
                     end
                 end
+
 
                 class NotificationContext < InstanceContext
                     ##
@@ -129,14 +130,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.NotificationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.NotificationContext #{context}>"
                     end
                 end
@@ -322,6 +323,7 @@ module Twilio
                         "<Twilio.Conversations.V1.NotificationInstance #{values}>"
                     end
                 end
+
              end
              end
             end

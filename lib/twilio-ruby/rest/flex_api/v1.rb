@@ -26,6 +26,7 @@ module Twilio
                     @configuration = nil
                     @flex_flow = nil
                     @insights_assessments_comment = nil
+                    @insights_conversations = nil
                     @insights_questionnaires = nil
                     @insights_questionnaires_category = nil
                     @insights_questionnaires_question = nil
@@ -89,6 +90,11 @@ module Twilio
                 # @return [Twilio::REST::FlexApi::V1::InsightsAssessmentsCommentList]
                 def insights_assessments_comment
                     @insights_assessments_comment ||= InsightsAssessmentsCommentList.new self
+                end
+                ##
+                # @return [Twilio::REST::FlexApi::V1::InsightsConversationsList]
+                def insights_conversations
+                    @insights_conversations ||= InsightsConversationsList.new self
                 end
                 ##
                 # @param [String] id The unique ID of the questionnaire

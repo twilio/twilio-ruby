@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid, }
+                        @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Sessions"
                         
                     end
@@ -36,8 +36,8 @@ module Twilio
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. This value must be 191 characters or fewer in length and be unique. **This value should not have PII.**
                     # @param [Time] date_expiry The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date when the Session should expire. If this is value is present, it overrides the `ttl` value.
                     # @param [String] ttl The time, in seconds, when the session will expire. The time is measured from the last Session create or the Session's last Interaction.
-                    # @param [SessionMode] mode 
-                    # @param [SessionStatus] status 
+                    # @param [Mode] mode 
+                    # @param [Status] status 
                     # @param [Array[Hash]] participants The Participant objects to include in the new session.
                     # @return [SessionInstance] Created SessionInstance
                     def create(
@@ -160,6 +160,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class SessionContext < InstanceContext
@@ -206,7 +207,7 @@ module Twilio
                     # Update the SessionInstance
                     # @param [Time] date_expiry The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date when the Session should expire. If this is value is present, it overrides the `ttl` value.
                     # @param [String] ttl The time, in seconds, when the session will expire. The time is measured from the last Session create or the Session's last Interaction.
-                    # @param [SessionStatus] status 
+                    # @param [Status] status 
                     # @return [SessionInstance] Updated SessionInstance
                     def update(
                         date_expiry: :unset, 
@@ -279,14 +280,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Proxy.V1.SessionContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Proxy.V1.SessionContext #{context}>"
                     end
                 end
@@ -417,7 +418,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [SessionStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -435,7 +436,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [SessionMode] 
+                    # @return [Mode] 
                     def mode
                         @properties['mode']
                     end
@@ -484,7 +485,7 @@ module Twilio
                     # Update the SessionInstance
                     # @param [Time] date_expiry The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date when the Session should expire. If this is value is present, it overrides the `ttl` value.
                     # @param [String] ttl The time, in seconds, when the session will expire. The time is measured from the last Session create or the Session's last Interaction.
-                    # @param [SessionStatus] status 
+                    # @param [Status] status 
                     # @return [SessionInstance] Updated SessionInstance
                     def update(
                         date_expiry: :unset, 
@@ -527,6 +528,7 @@ module Twilio
                         "<Twilio.Proxy.V1.SessionInstance #{values}>"
                     end
                 end
+
              end
             end
         end

@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, bundle_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { bundle_sid: bundle_sid, }
+                        @solution = { bundle_sid: bundle_sid }
                         @uri = "/RegulatoryCompliance/Bundles/#{@solution[:bundle_sid]}/ItemAssignments"
                         
                     end
@@ -146,6 +146,7 @@ module Twilio
                     end
                 end
 
+
                 class ItemAssignmentContext < InstanceContext
                     ##
                     # Initialize the ItemAssignmentContext
@@ -188,14 +189,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Numbers.V2.ItemAssignmentContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Numbers.V2.ItemAssignmentContext #{context}>"
                     end
                 end
@@ -333,6 +334,7 @@ module Twilio
                         "<Twilio.Numbers.V2.ItemAssignmentInstance #{values}>"
                     end
                 end
+
              end
              end
             end

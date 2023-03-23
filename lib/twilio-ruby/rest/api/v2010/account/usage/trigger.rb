@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Triggers.json"
                         
                     end
@@ -36,11 +36,11 @@ module Twilio
                     # Create the TriggerInstance
                     # @param [String] callback_url The URL we should call using `callback_method` when the trigger fires.
                     # @param [String] trigger_value The usage value at which the trigger should fire.  For convenience, you can use an offset value such as `+30` to specify a trigger_value that is 30 units more than the current usage value. Be sure to urlencode a `+` as `%2B`.
-                    # @param [UsageTriggerUsageCategory] usage_category 
+                    # @param [UsageCategory] usage_category 
                     # @param [String] callback_method The HTTP method we should use to call `callback_url`. Can be: `GET` or `POST` and the default is `POST`.
                     # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
-                    # @param [UsageTriggerRecurring] recurring 
-                    # @param [UsageTriggerTriggerField] trigger_by 
+                    # @param [Recurring] recurring 
+                    # @param [TriggerField] trigger_by 
                     # @return [TriggerInstance] Created TriggerInstance
                     def create(
                         callback_url: nil, 
@@ -75,9 +75,9 @@ module Twilio
                     # Lists TriggerInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [UsageTriggerRecurring] recurring The frequency of recurring UsageTriggers to read. Can be: `daily`, `monthly`, or `yearly` to read recurring UsageTriggers. An empty value or a value of `alltime` reads non-recurring UsageTriggers.
-                    # @param [UsageTriggerTriggerField] trigger_by The trigger field of the UsageTriggers to read.  Can be: `count`, `usage`, or `price` as described in the [UsageRecords documentation](https://www.twilio.com/docs/usage/api/usage-record#usage-count-price).
-                    # @param [UsageTriggerUsageCategory] usage_category The usage category of the UsageTriggers to read. Must be a supported [usage categories](https://www.twilio.com/docs/usage/api/usage-record#usage-categories).
+                    # @param [Recurring] recurring The frequency of recurring UsageTriggers to read. Can be: `daily`, `monthly`, or `yearly` to read recurring UsageTriggers. An empty value or a value of `alltime` reads non-recurring UsageTriggers.
+                    # @param [TriggerField] trigger_by The trigger field of the UsageTriggers to read.  Can be: `count`, `usage`, or `price` as described in the [UsageRecords documentation](https://www.twilio.com/docs/usage/api/usage-record#usage-count-price).
+                    # @param [UsageCategory] usage_category The usage category of the UsageTriggers to read. Must be a supported [usage categories](https://www.twilio.com/docs/usage/api/usage-record#usage-categories).
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -99,9 +99,9 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [UsageTriggerRecurring] recurring The frequency of recurring UsageTriggers to read. Can be: `daily`, `monthly`, or `yearly` to read recurring UsageTriggers. An empty value or a value of `alltime` reads non-recurring UsageTriggers.
-                    # @param [UsageTriggerTriggerField] trigger_by The trigger field of the UsageTriggers to read.  Can be: `count`, `usage`, or `price` as described in the [UsageRecords documentation](https://www.twilio.com/docs/usage/api/usage-record#usage-count-price).
-                    # @param [UsageTriggerUsageCategory] usage_category The usage category of the UsageTriggers to read. Must be a supported [usage categories](https://www.twilio.com/docs/usage/api/usage-record#usage-categories).
+                    # @param [Recurring] recurring The frequency of recurring UsageTriggers to read. Can be: `daily`, `monthly`, or `yearly` to read recurring UsageTriggers. An empty value or a value of `alltime` reads non-recurring UsageTriggers.
+                    # @param [TriggerField] trigger_by The trigger field of the UsageTriggers to read.  Can be: `count`, `usage`, or `price` as described in the [UsageRecords documentation](https://www.twilio.com/docs/usage/api/usage-record#usage-count-price).
+                    # @param [UsageCategory] usage_category The usage category of the UsageTriggers to read. Must be a supported [usage categories](https://www.twilio.com/docs/usage/api/usage-record#usage-categories).
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -138,9 +138,9 @@ module Twilio
                     ##
                     # Retrieve a single page of TriggerInstance records from the API.
                     # Request is executed immediately.
-                    # @param [UsageTriggerRecurring] recurring The frequency of recurring UsageTriggers to read. Can be: `daily`, `monthly`, or `yearly` to read recurring UsageTriggers. An empty value or a value of `alltime` reads non-recurring UsageTriggers.
-                    # @param [UsageTriggerTriggerField] trigger_by The trigger field of the UsageTriggers to read.  Can be: `count`, `usage`, or `price` as described in the [UsageRecords documentation](https://www.twilio.com/docs/usage/api/usage-record#usage-count-price).
-                    # @param [UsageTriggerUsageCategory] usage_category The usage category of the UsageTriggers to read. Must be a supported [usage categories](https://www.twilio.com/docs/usage/api/usage-record#usage-categories).
+                    # @param [Recurring] recurring The frequency of recurring UsageTriggers to read. Can be: `daily`, `monthly`, or `yearly` to read recurring UsageTriggers. An empty value or a value of `alltime` reads non-recurring UsageTriggers.
+                    # @param [TriggerField] trigger_by The trigger field of the UsageTriggers to read.  Can be: `count`, `usage`, or `price` as described in the [UsageRecords documentation](https://www.twilio.com/docs/usage/api/usage-record#usage-count-price).
+                    # @param [UsageCategory] usage_category The usage category of the UsageTriggers to read. Must be a supported [usage categories](https://www.twilio.com/docs/usage/api/usage-record#usage-categories).
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -184,6 +184,7 @@ module Twilio
                         '#<Twilio.Api.V2010.TriggerList>'
                     end
                 end
+
 
                 class TriggerContext < InstanceContext
                     ##
@@ -254,14 +255,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.TriggerContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.TriggerContext #{context}>"
                     end
                 end
@@ -398,7 +399,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [UsageTriggerRecurring] 
+                    # @return [Recurring] 
                     def recurring
                         @properties['recurring']
                     end
@@ -410,7 +411,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [UsageTriggerTriggerField] 
+                    # @return [TriggerField] 
                     def trigger_by
                         @properties['trigger_by']
                     end
@@ -428,7 +429,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [UsageTriggerUsageCategory] 
+                    # @return [UsageCategory] 
                     def usage_category
                         @properties['usage_category']
                     end
@@ -488,6 +489,7 @@ module Twilio
                         "<Twilio.Api.V2010.TriggerInstance #{values}>"
                     end
                 end
+
              end
              end
             end

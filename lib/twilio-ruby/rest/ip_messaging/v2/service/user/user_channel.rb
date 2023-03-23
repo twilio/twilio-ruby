@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, user_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,user_sid: user_sid, }
+                        @solution = { service_sid: service_sid, user_sid: user_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Users/#{@solution[:user_sid]}/Channels"
                         
                     end
@@ -126,6 +126,7 @@ module Twilio
                     end
                 end
 
+
                 class UserChannelContext < InstanceContext
                     ##
                     # Initialize the UserChannelContext
@@ -168,7 +169,7 @@ module Twilio
 
                     ##
                     # Update the UserChannelInstance
-                    # @param [UserChannelNotificationLevel] notification_level 
+                    # @param [NotificationLevel] notification_level 
                     # @param [String] last_consumed_message_index 
                     # @param [Time] last_consumption_timestamp 
                     # @return [UserChannelInstance] Updated UserChannelInstance
@@ -198,14 +199,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V2.UserChannelContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V2.UserChannelContext #{context}>"
                     end
                 end
@@ -313,7 +314,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [UserChannelChannelStatus] 
+                    # @return [ChannelStatus] 
                     def status
                         @properties['status']
                     end
@@ -343,7 +344,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [UserChannelNotificationLevel] 
+                    # @return [NotificationLevel] 
                     def notification_level
                         @properties['notification_level']
                     end
@@ -366,7 +367,7 @@ module Twilio
 
                     ##
                     # Update the UserChannelInstance
-                    # @param [UserChannelNotificationLevel] notification_level 
+                    # @param [NotificationLevel] notification_level 
                     # @param [String] last_consumed_message_index 
                     # @param [Time] last_consumption_timestamp 
                     # @return [UserChannelInstance] Updated UserChannelInstance
@@ -397,6 +398,7 @@ module Twilio
                         "<Twilio.IpMessaging.V2.UserChannelInstance #{values}>"
                     end
                 end
+
              end
              end
             end

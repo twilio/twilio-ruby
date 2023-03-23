@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, bundle_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { bundle_sid: bundle_sid, }
+                        @solution = { bundle_sid: bundle_sid }
                         @uri = "/RegulatoryCompliance/Bundles/#{@solution[:bundle_sid]}/Copies"
                         
                     end
@@ -145,6 +145,7 @@ module Twilio
                         '#<Twilio.Numbers.V2.BundleCopyList>'
                     end
                 end
+
                 class BundleCopyPage < Page
                     ##
                     # Initialize the BundleCopyPage
@@ -227,7 +228,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [BundleCopyStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -274,6 +275,7 @@ module Twilio
                         "<Twilio.Numbers.V2.BundleCopyInstance>"
                     end
                 end
+
              end
              end
             end

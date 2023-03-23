@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, conference_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { conference_sid: conference_sid, }
+                        @solution = { conference_sid: conference_sid }
                         @uri = "/Conferences/#{@solution[:conference_sid]}/Participants"
                         
                     end
@@ -146,6 +146,7 @@ module Twilio
                     end
                 end
 
+
                 class ConferenceParticipantContext < InstanceContext
                     ##
                     # Initialize the ConferenceParticipantContext
@@ -189,14 +190,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Insights.V1.ConferenceParticipantContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Insights.V1.ConferenceParticipantContext #{context}>"
                     end
                 end
@@ -320,7 +321,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ConferenceParticipantCallDirection] 
+                    # @return [CallDirection] 
                     def call_direction
                         @properties['call_direction']
                     end
@@ -338,7 +339,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ConferenceParticipantCallStatus] 
+                    # @return [CallStatus] 
                     def call_status
                         @properties['call_status']
                     end
@@ -386,7 +387,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ConferenceParticipantJitterBufferSize] 
+                    # @return [JitterBufferSize] 
                     def jitter_buffer_size
                         @properties['jitter_buffer_size']
                     end
@@ -404,25 +405,25 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ConferenceParticipantRegion] 
+                    # @return [Region] 
                     def participant_region
                         @properties['participant_region']
                     end
                     
                     ##
-                    # @return [ConferenceParticipantRegion] 
+                    # @return [Region] 
                     def conference_region
                         @properties['conference_region']
                     end
                     
                     ##
-                    # @return [ConferenceParticipantCallType] 
+                    # @return [CallType] 
                     def call_type
                         @properties['call_type']
                     end
                     
                     ##
-                    # @return [ConferenceParticipantProcessingState] 
+                    # @return [ProcessingState] 
                     def processing_state
                         @properties['processing_state']
                     end
@@ -481,6 +482,7 @@ module Twilio
                         "<Twilio.Insights.V1.ConferenceParticipantInstance #{values}>"
                     end
                 end
+
              end
             end
         end

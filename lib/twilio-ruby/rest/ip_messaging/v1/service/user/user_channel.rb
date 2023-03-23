@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, user_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,user_sid: user_sid, }
+                        @solution = { service_sid: service_sid, user_sid: user_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Users/#{@solution[:user_sid]}/Channels"
                         
                     end
@@ -125,6 +125,7 @@ module Twilio
                         '#<Twilio.IpMessaging.V1.UserChannelList>'
                     end
                 end
+
                 class UserChannelPage < Page
                     ##
                     # Initialize the UserChannelPage
@@ -205,7 +206,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [UserChannelChannelStatus] 
+                    # @return [ChannelStatus] 
                     def status
                         @properties['status']
                     end
@@ -240,6 +241,7 @@ module Twilio
                         "<Twilio.IpMessaging.V1.UserChannelInstance>"
                     end
                 end
+
              end
              end
             end

@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, country_code: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,country_code: country_code, }
+                        @solution = { account_sid: account_sid, country_code: country_code }
                         @uri = "/Accounts/#{@solution[:account_sid]}/AvailablePhoneNumbers/#{@solution[:country_code]}/SharedCost.json"
                         
                     end
@@ -251,6 +251,7 @@ module Twilio
                         '#<Twilio.Api.V2010.SharedCostList>'
                     end
                 end
+
                 class SharedCostPage < Page
                     ##
                     # Initialize the SharedCostPage
@@ -401,6 +402,7 @@ module Twilio
                         "<Twilio.Api.V2010.SharedCostInstance>"
                     end
                 end
+
              end
              end
             end

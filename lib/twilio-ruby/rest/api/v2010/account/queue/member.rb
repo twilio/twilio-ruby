@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, queue_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,queue_sid: queue_sid, }
+                        @solution = { account_sid: account_sid, queue_sid: queue_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Queues/#{@solution[:queue_sid]}/Members.json"
                         
                     end
@@ -126,6 +126,7 @@ module Twilio
                     end
                 end
 
+
                 class MemberContext < InstanceContext
                     ##
                     # Initialize the MemberContext
@@ -187,14 +188,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.MemberContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.MemberContext #{context}>"
                     end
                 end
@@ -340,6 +341,7 @@ module Twilio
                         "<Twilio.Api.V2010.MemberInstance #{values}>"
                     end
                 end
+
              end
              end
             end

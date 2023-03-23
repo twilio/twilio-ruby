@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, sim_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { sim_sid: sim_sid, }
+                        @solution = { sim_sid: sim_sid }
                         @uri = "/Sims/#{@solution[:sim_sid]}/UsageRecords"
                         
                     end
@@ -38,7 +38,7 @@ module Twilio
                     # memory before returning.
                     # @param [Time] end_ Only include usage that occurred on or before this date, specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html). The default is the current time.
                     # @param [Time] start Only include usage that has occurred on or after this date, specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html). The default is one month before the `end` parameter value.
-                    # @param [UsageRecordGranularity] granularity How to summarize the usage by time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of `all` returns one Usage Record that describes the usage for the entire period.
+                    # @param [Granularity] granularity How to summarize the usage by time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of `all` returns one Usage Record that describes the usage for the entire period.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -62,7 +62,7 @@ module Twilio
                     # is reached.
                     # @param [Time] end_ Only include usage that occurred on or before this date, specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html). The default is the current time.
                     # @param [Time] start Only include usage that has occurred on or after this date, specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html). The default is one month before the `end` parameter value.
-                    # @param [UsageRecordGranularity] granularity How to summarize the usage by time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of `all` returns one Usage Record that describes the usage for the entire period.
+                    # @param [Granularity] granularity How to summarize the usage by time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of `all` returns one Usage Record that describes the usage for the entire period.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -101,7 +101,7 @@ module Twilio
                     # Request is executed immediately.
                     # @param [Time] end_ Only include usage that occurred on or before this date, specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html). The default is the current time.
                     # @param [Time] start Only include usage that has occurred on or after this date, specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html). The default is one month before the `end` parameter value.
-                    # @param [UsageRecordGranularity] granularity How to summarize the usage by time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of `all` returns one Usage Record that describes the usage for the entire period.
+                    # @param [Granularity] granularity How to summarize the usage by time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of `all` returns one Usage Record that describes the usage for the entire period.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -145,6 +145,7 @@ module Twilio
                         '#<Twilio.Wireless.V1.UsageRecordList>'
                     end
                 end
+
                 class UsageRecordPage < Page
                     ##
                     # Initialize the UsageRecordPage
@@ -239,6 +240,7 @@ module Twilio
                         "<Twilio.Wireless.V1.UsageRecordInstance>"
                     end
                 end
+
              end
             end
         end

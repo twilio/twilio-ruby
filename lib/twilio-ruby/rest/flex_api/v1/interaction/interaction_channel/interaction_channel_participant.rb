@@ -28,13 +28,13 @@ module Twilio
                     def initialize(version, interaction_sid: nil, channel_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { interaction_sid: interaction_sid,channel_sid: channel_sid, }
+                        @solution = { interaction_sid: interaction_sid, channel_sid: channel_sid }
                         @uri = "/Interactions/#{@solution[:interaction_sid]}/Channels/#{@solution[:channel_sid]}/Participants"
                         
                     end
                     ##
                     # Create the InteractionChannelParticipantInstance
-                    # @param [InteractionChannelParticipantType] type 
+                    # @param [Type] type 
                     # @param [Object] media_properties JSON representing the Media Properties for the new Participant.
                     # @return [InteractionChannelParticipantInstance] Created InteractionChannelParticipantInstance
                     def create(
@@ -150,6 +150,7 @@ module Twilio
                     end
                 end
 
+
                 class InteractionChannelParticipantContext < InstanceContext
                     ##
                     # Initialize the InteractionChannelParticipantContext
@@ -169,7 +170,7 @@ module Twilio
                     end
                     ##
                     # Update the InteractionChannelParticipantInstance
-                    # @param [InteractionChannelParticipantStatus] status 
+                    # @param [Status] status 
                     # @return [InteractionChannelParticipantInstance] Updated InteractionChannelParticipantInstance
                     def update(
                         status: nil
@@ -193,14 +194,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.InteractionChannelParticipantContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.InteractionChannelParticipantContext #{context}>"
                     end
                 end
@@ -278,7 +279,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [InteractionChannelParticipantType] 
+                    # @return [Type] 
                     def type
                         @properties['type']
                     end
@@ -303,7 +304,7 @@ module Twilio
                     
                     ##
                     # Update the InteractionChannelParticipantInstance
-                    # @param [InteractionChannelParticipantStatus] status 
+                    # @param [Status] status 
                     # @return [InteractionChannelParticipantInstance] Updated InteractionChannelParticipantInstance
                     def update(
                         status: nil
@@ -328,6 +329,7 @@ module Twilio
                         "<Twilio.FlexApi.V1.InteractionChannelParticipantInstance #{values}>"
                     end
                 end
+
              end
              end
             end

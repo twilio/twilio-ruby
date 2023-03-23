@@ -28,15 +28,15 @@ module Twilio
                     def initialize(version, service_sid: nil, channel_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,channel_sid: channel_sid, }
+                        @solution = { service_sid: service_sid, channel_sid: channel_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Channels/#{@solution[:channel_sid]}/Webhooks"
                         
                     end
                     ##
                     # Create the WebhookInstance
-                    # @param [ChannelWebhookType] type 
+                    # @param [Type] type 
                     # @param [String] configuration_url The URL of the webhook to call using the `configuration.method`.
-                    # @param [ChannelWebhookMethod] configuration_method 
+                    # @param [Method] configuration_method 
                     # @param [Array[String]] configuration_filters The events that cause us to call the Channel Webhook. Used when `type` is `webhook`. This parameter takes only one event. To specify more than one event, repeat this parameter for each event. For the list of possible events, see [Webhook Event Triggers](https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger).
                     # @param [Array[String]] configuration_triggers A string that will cause us to call the webhook when it is present in a message body. This parameter takes only one trigger string. To specify more than one, repeat this parameter for each trigger string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
                     # @param [String] configuration_flow_sid The SID of the Studio [Flow](https://www.twilio.com/docs/studio/rest-api/flow) to call when an event in `configuration.filters` occurs. Used only when `type` is `studio`.
@@ -165,6 +165,7 @@ module Twilio
                     end
                 end
 
+
                 class WebhookContext < InstanceContext
                     ##
                     # Initialize the WebhookContext
@@ -208,7 +209,7 @@ module Twilio
                     ##
                     # Update the WebhookInstance
                     # @param [String] configuration_url The URL of the webhook to call using the `configuration.method`.
-                    # @param [ChannelWebhookMethod] configuration_method 
+                    # @param [Method] configuration_method 
                     # @param [Array[String]] configuration_filters The events that cause us to call the Channel Webhook. Used when `type` is `webhook`. This parameter takes only one event. To specify more than one event, repeat this parameter for each event. For the list of possible events, see [Webhook Event Triggers](https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger).
                     # @param [Array[String]] configuration_triggers A string that will cause us to call the webhook when it is present in a message body. This parameter takes only one trigger string. To specify more than one, repeat this parameter for each trigger string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
                     # @param [String] configuration_flow_sid The SID of the Studio [Flow](https://www.twilio.com/docs/studio/rest-api/flow) to call when an event in `configuration.filters` occurs. Used only when `type` = `studio`.
@@ -246,14 +247,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V2.WebhookContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V2.WebhookContext #{context}>"
                     end
                 end
@@ -401,7 +402,7 @@ module Twilio
                     ##
                     # Update the WebhookInstance
                     # @param [String] configuration_url The URL of the webhook to call using the `configuration.method`.
-                    # @param [ChannelWebhookMethod] configuration_method 
+                    # @param [Method] configuration_method 
                     # @param [Array[String]] configuration_filters The events that cause us to call the Channel Webhook. Used when `type` is `webhook`. This parameter takes only one event. To specify more than one event, repeat this parameter for each event. For the list of possible events, see [Webhook Event Triggers](https://www.twilio.com/docs/chat/webhook-events#webhook-event-trigger).
                     # @param [Array[String]] configuration_triggers A string that will cause us to call the webhook when it is present in a message body. This parameter takes only one trigger string. To specify more than one, repeat this parameter for each trigger string up to a total of 5 trigger strings. Used only when `type` = `trigger`.
                     # @param [String] configuration_flow_sid The SID of the Studio [Flow](https://www.twilio.com/docs/studio/rest-api/flow) to call when an event in `configuration.filters` occurs. Used only when `type` = `studio`.
@@ -440,6 +441,7 @@ module Twilio
                         "<Twilio.Chat.V2.WebhookInstance #{values}>"
                     end
                 end
+
              end
              end
             end

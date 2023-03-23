@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, list_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,list_sid: list_sid, }
+                        @solution = { service_sid: service_sid, list_sid: list_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Lists/#{@solution[:list_sid]}/Items"
                         
                     end
@@ -67,9 +67,9 @@ module Twilio
                     # Lists SyncListItemInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [SyncListItemQueryResultOrder] order How to order the List Items returned by their `index` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending.
+                    # @param [QueryResultOrder] order How to order the List Items returned by their `index` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending.
                     # @param [String] from The `index` of the first Sync List Item resource to read. See also `bounds`.
-                    # @param [SyncListItemQueryFromBoundType] bounds Whether to include the List Item referenced by the `from` parameter. Can be: `inclusive` to include the List Item referenced by the `from` parameter or `exclusive` to start with the next List Item. The default value is `inclusive`.
+                    # @param [QueryFromBoundType] bounds Whether to include the List Item referenced by the `from` parameter. Can be: `inclusive` to include the List Item referenced by the `from` parameter or `exclusive` to start with the next List Item. The default value is `inclusive`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -91,9 +91,9 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [SyncListItemQueryResultOrder] order How to order the List Items returned by their `index` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending.
+                    # @param [QueryResultOrder] order How to order the List Items returned by their `index` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending.
                     # @param [String] from The `index` of the first Sync List Item resource to read. See also `bounds`.
-                    # @param [SyncListItemQueryFromBoundType] bounds Whether to include the List Item referenced by the `from` parameter. Can be: `inclusive` to include the List Item referenced by the `from` parameter or `exclusive` to start with the next List Item. The default value is `inclusive`.
+                    # @param [QueryFromBoundType] bounds Whether to include the List Item referenced by the `from` parameter. Can be: `inclusive` to include the List Item referenced by the `from` parameter or `exclusive` to start with the next List Item. The default value is `inclusive`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -130,9 +130,9 @@ module Twilio
                     ##
                     # Retrieve a single page of SyncListItemInstance records from the API.
                     # Request is executed immediately.
-                    # @param [SyncListItemQueryResultOrder] order How to order the List Items returned by their `index` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending.
+                    # @param [QueryResultOrder] order How to order the List Items returned by their `index` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending.
                     # @param [String] from The `index` of the first Sync List Item resource to read. See also `bounds`.
-                    # @param [SyncListItemQueryFromBoundType] bounds Whether to include the List Item referenced by the `from` parameter. Can be: `inclusive` to include the List Item referenced by the `from` parameter or `exclusive` to start with the next List Item. The default value is `inclusive`.
+                    # @param [QueryFromBoundType] bounds Whether to include the List Item referenced by the `from` parameter. Can be: `inclusive` to include the List Item referenced by the `from` parameter or `exclusive` to start with the next List Item. The default value is `inclusive`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -176,6 +176,7 @@ module Twilio
                         '#<Twilio.Sync.V1.SyncListItemList>'
                     end
                 end
+
 
                 class SyncListItemContext < InstanceContext
                     ##
@@ -259,14 +260,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Sync.V1.SyncListItemContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Sync.V1.SyncListItemContext #{context}>"
                     end
                 end
@@ -469,6 +470,7 @@ module Twilio
                         "<Twilio.Sync.V1.SyncListItemInstance #{values}>"
                     end
                 end
+
              end
              end
             end

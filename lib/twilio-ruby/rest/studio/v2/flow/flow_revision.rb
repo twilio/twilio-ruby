@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { sid: sid, }
+                        @solution = { sid: sid }
                         @uri = "/Flows/#{@solution[:sid]}/Revisions"
                         
                     end
@@ -125,6 +125,7 @@ module Twilio
                     end
                 end
 
+
                 class FlowRevisionContext < InstanceContext
                     ##
                     # Initialize the FlowRevisionContext
@@ -159,14 +160,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V2.FlowRevisionContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V2.FlowRevisionContext #{context}>"
                     end
                 end
@@ -269,7 +270,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [FlowRevisionStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -338,6 +339,7 @@ module Twilio
                         "<Twilio.Studio.V2.FlowRevisionInstance #{values}>"
                     end
                 end
+
              end
             end
         end

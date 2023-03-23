@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid, }
+                        @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Users"
                         
                     end
@@ -154,6 +154,7 @@ module Twilio
                     end
                 end
 
+
                 class UserContext < InstanceContext
                     ##
                     # Initialize the UserContext
@@ -240,14 +241,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V1.UserContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V1.UserContext #{context}>"
                     end
                 end
@@ -467,6 +468,7 @@ module Twilio
                         "<Twilio.Chat.V1.UserInstance #{values}>"
                     end
                 end
+
              end
             end
         end

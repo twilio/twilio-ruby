@@ -169,6 +169,7 @@ module Twilio
                     end
                 end
 
+
                 class ChannelContext < InstanceContext
                     ##
                     # Initialize the ChannelContext
@@ -209,14 +210,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.ChannelContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.ChannelContext #{context}>"
                     end
                 end
@@ -368,6 +369,7 @@ module Twilio
                         "<Twilio.FlexApi.V1.ChannelInstance #{values}>"
                     end
                 end
+
             end
         end
     end

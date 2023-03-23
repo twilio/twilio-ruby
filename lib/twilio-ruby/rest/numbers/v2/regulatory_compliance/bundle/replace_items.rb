@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, bundle_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { bundle_sid: bundle_sid, }
+                        @solution = { bundle_sid: bundle_sid }
                         @uri = "/RegulatoryCompliance/Bundles/#{@solution[:bundle_sid]}/ReplaceItems"
                         
                     end
@@ -60,6 +60,7 @@ module Twilio
                         '#<Twilio.Numbers.V2.ReplaceItemsList>'
                     end
                 end
+
                 class ReplaceItemsPage < Page
                     ##
                     # Initialize the ReplaceItemsPage
@@ -142,7 +143,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ReplaceItemsStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -189,6 +190,7 @@ module Twilio
                         "<Twilio.Numbers.V2.ReplaceItemsInstance>"
                     end
                 end
+
              end
              end
             end

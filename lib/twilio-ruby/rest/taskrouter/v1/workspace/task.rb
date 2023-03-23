@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, workspace_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { workspace_sid: workspace_sid, }
+                        @solution = { workspace_sid: workspace_sid }
                         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Tasks"
                         
                     end
@@ -220,6 +220,7 @@ module Twilio
                     end
                 end
 
+
                 class TaskContext < InstanceContext
                     ##
                     # Initialize the TaskContext
@@ -266,7 +267,7 @@ module Twilio
                     ##
                     # Update the TaskInstance
                     # @param [String] attributes The JSON string that describes the custom attributes of the task.
-                    # @param [TaskStatus] assignment_status 
+                    # @param [Status] assignment_status 
                     # @param [String] reason The reason that the Task was canceled or completed. This parameter is required only if the Task is canceled or completed. Setting this value queues the task for deletion and logs the reason.
                     # @param [String] priority The Task's new priority value. When supplied, the Task takes on the specified priority unless it matches a Workflow Target with a Priority set. Value can be 0 to 2^31^ (2,147,483,647).
                     # @param [String] task_channel When MultiTasking is enabled, specify the TaskChannel with the task to update. Can be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or `default`.
@@ -326,14 +327,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Taskrouter.V1.TaskContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Taskrouter.V1.TaskContext #{context}>"
                     end
                 end
@@ -433,7 +434,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [TaskStatus] 
+                    # @return [Status] 
                     def assignment_status
                         @properties['assignment_status']
                     end
@@ -570,7 +571,7 @@ module Twilio
                     ##
                     # Update the TaskInstance
                     # @param [String] attributes The JSON string that describes the custom attributes of the task.
-                    # @param [TaskStatus] assignment_status 
+                    # @param [Status] assignment_status 
                     # @param [String] reason The reason that the Task was canceled or completed. This parameter is required only if the Task is canceled or completed. Setting this value queues the task for deletion and logs the reason.
                     # @param [String] priority The Task's new priority value. When supplied, the Task takes on the specified priority unless it matches a Workflow Target with a Priority set. Value can be 0 to 2^31^ (2,147,483,647).
                     # @param [String] task_channel When MultiTasking is enabled, specify the TaskChannel with the task to update. Can be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or `default`.
@@ -616,6 +617,7 @@ module Twilio
                         "<Twilio.Taskrouter.V1.TaskInstance #{values}>"
                     end
                 end
+
              end
             end
         end

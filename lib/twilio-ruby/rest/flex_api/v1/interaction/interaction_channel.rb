@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, interaction_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { interaction_sid: interaction_sid, }
+                        @solution = { interaction_sid: interaction_sid }
                         @uri = "/Interactions/#{@solution[:interaction_sid]}/Channels"
                         
                     end
@@ -125,6 +125,7 @@ module Twilio
                     end
                 end
 
+
                 class InteractionChannelContext < InstanceContext
                     ##
                     # Initialize the InteractionChannelContext
@@ -159,7 +160,7 @@ module Twilio
 
                     ##
                     # Update the InteractionChannelInstance
-                    # @param [InteractionChannelStatus] status 
+                    # @param [Status] status 
                     # @param [Object] routing Optional. The state of associated tasks. If not specified, all tasks will be set to `wrapping`.
                     # @return [InteractionChannelInstance] Updated InteractionChannelInstance
                     def update(
@@ -224,14 +225,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.InteractionChannelContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.InteractionChannelContext #{context}>"
                     end
                 end
@@ -318,13 +319,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [InteractionChannelType] 
+                    # @return [Type] 
                     def type
                         @properties['type']
                     end
                     
                     ##
-                    # @return [InteractionChannelChannelStatus] 
+                    # @return [ChannelStatus] 
                     def status
                         @properties['status']
                     end
@@ -363,7 +364,7 @@ module Twilio
 
                     ##
                     # Update the InteractionChannelInstance
-                    # @param [InteractionChannelStatus] status 
+                    # @param [Status] status 
                     # @param [Object] routing Optional. The state of associated tasks. If not specified, all tasks will be set to `wrapping`.
                     # @return [InteractionChannelInstance] Updated InteractionChannelInstance
                     def update(
@@ -405,6 +406,7 @@ module Twilio
                         "<Twilio.FlexApi.V1.InteractionChannelInstance #{values}>"
                     end
                 end
+
              end
             end
         end

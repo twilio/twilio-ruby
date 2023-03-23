@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, chat_service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { chat_service_sid: chat_service_sid, }
+                        @solution = { chat_service_sid: chat_service_sid }
                         @uri = "/Services/#{@solution[:chat_service_sid]}/ParticipantConversations"
                         
                     end
@@ -138,6 +138,7 @@ module Twilio
                         '#<Twilio.Conversations.V1.ParticipantConversationList>'
                     end
                 end
+
                 class ParticipantConversationPage < Page
                     ##
                     # Initialize the ParticipantConversationPage
@@ -280,7 +281,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ServiceParticipantConversationState] 
+                    # @return [State] 
                     def conversation_state
                         @properties['conversation_state']
                     end
@@ -309,6 +310,7 @@ module Twilio
                         "<Twilio.Conversations.V1.ParticipantConversationInstance>"
                     end
                 end
+
              end
             end
         end

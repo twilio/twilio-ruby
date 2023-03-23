@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Keys.json"
                         
                     end
@@ -59,6 +59,7 @@ module Twilio
                         '#<Twilio.Api.V2010.NewKeyList>'
                     end
                 end
+
                 class NewKeyPage < Page
                     ##
                     # Initialize the NewKeyPage
@@ -153,6 +154,7 @@ module Twilio
                         "<Twilio.Api.V2010.NewKeyInstance>"
                     end
                 end
+
              end
             end
         end

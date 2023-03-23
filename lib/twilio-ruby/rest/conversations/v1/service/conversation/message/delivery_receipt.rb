@@ -29,7 +29,7 @@ module Twilio
                     def initialize(version, chat_service_sid: nil, conversation_sid: nil, message_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { chat_service_sid: chat_service_sid,conversation_sid: conversation_sid,message_sid: message_sid, }
+                        @solution = { chat_service_sid: chat_service_sid, conversation_sid: conversation_sid, message_sid: message_sid }
                         @uri = "/Services/#{@solution[:chat_service_sid]}/Conversations/#{@solution[:conversation_sid]}/Messages/#{@solution[:message_sid]}/Receipts"
                         
                     end
@@ -127,6 +127,7 @@ module Twilio
                     end
                 end
 
+
                 class DeliveryReceiptContext < InstanceContext
                     ##
                     # Initialize the DeliveryReceiptContext
@@ -165,14 +166,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.DeliveryReceiptContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.DeliveryReceiptContext #{context}>"
                     end
                 end
@@ -293,7 +294,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ServiceConversationMessageReceiptDeliveryStatus] 
+                    # @return [DeliveryStatus] 
                     def status
                         @properties['status']
                     end
@@ -344,6 +345,7 @@ module Twilio
                         "<Twilio.Conversations.V1.DeliveryReceiptInstance #{values}>"
                     end
                 end
+
              end
              end
              end

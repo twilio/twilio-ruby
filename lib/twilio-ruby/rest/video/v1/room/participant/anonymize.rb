@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, room_sid: nil, sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { room_sid: room_sid,sid: sid, }
+                        @solution = { room_sid: room_sid, sid: sid }
                         
                         
                     end
@@ -40,6 +40,7 @@ module Twilio
                         '#<Twilio.Video.V1.AnonymizeList>'
                     end
                 end
+
 
                 class AnonymizeContext < InstanceContext
                     ##
@@ -75,14 +76,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.AnonymizeContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.AnonymizeContext #{context}>"
                     end
                 end
@@ -178,7 +179,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RoomParticipantAnonymizeStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -247,6 +248,7 @@ module Twilio
                         "<Twilio.Video.V1.AnonymizeInstance #{values}>"
                     end
                 end
+
              end
              end
             end

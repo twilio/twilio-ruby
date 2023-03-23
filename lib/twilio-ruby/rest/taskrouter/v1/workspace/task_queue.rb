@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, workspace_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { workspace_sid: workspace_sid, }
+                        @solution = { workspace_sid: workspace_sid }
                         @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues"
                         # Components
                         @statistics = nil
@@ -37,7 +37,7 @@ module Twilio
                     # @param [String] friendly_name A descriptive string that you create to describe the TaskQueue. For example `Support-Tier 1`, `Sales`, or `Escalation`.
                     # @param [String] target_workers A string that describes the Worker selection criteria for any Tasks that enter the TaskQueue. For example, `'\\\"language\\\" == \\\"spanish\\\"'`. The default value is `1==1`. If this value is empty, Tasks will wait in the TaskQueue until they are deleted or moved to another TaskQueue. For more information about Worker selection, see [Describing Worker selection criteria](https://www.twilio.com/docs/taskrouter/api/taskqueues#target-workers).
                     # @param [String] max_reserved_workers The maximum number of Workers to reserve for the assignment of a Task in the queue. Can be an integer between 1 and 50, inclusive and defaults to 1.
-                    # @param [TaskQueueTaskOrder] task_order 
+                    # @param [TaskOrder] task_order 
                     # @param [String] reservation_activity_sid The SID of the Activity to assign Workers when a task is reserved for them.
                     # @param [String] assignment_activity_sid The SID of the Activity to assign Workers when a task is assigned to them.
                     # @return [TaskQueueInstance] Created TaskQueueInstance
@@ -196,6 +196,7 @@ module Twilio
                     end
                 end
 
+
                 class TaskQueueContext < InstanceContext
                     ##
                     # Initialize the TaskQueueContext
@@ -244,7 +245,7 @@ module Twilio
                     # @param [String] reservation_activity_sid The SID of the Activity to assign Workers when a task is reserved for them.
                     # @param [String] assignment_activity_sid The SID of the Activity to assign Workers when a task is assigned for them.
                     # @param [String] max_reserved_workers The maximum number of Workers to create reservations for the assignment of a task while in the queue. Maximum of 50.
-                    # @param [TaskQueueTaskOrder] task_order 
+                    # @param [TaskOrder] task_order 
                     # @return [TaskQueueInstance] Updated TaskQueueInstance
                     def update(
                         friendly_name: :unset, 
@@ -310,14 +311,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Taskrouter.V1.TaskQueueContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Taskrouter.V1.TaskQueueContext #{context}>"
                     end
                 end
@@ -465,7 +466,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [TaskQueueTaskOrder] 
+                    # @return [TaskOrder] 
                     def task_order
                         @properties['task_order']
                     end
@@ -511,7 +512,7 @@ module Twilio
                     # @param [String] reservation_activity_sid The SID of the Activity to assign Workers when a task is reserved for them.
                     # @param [String] assignment_activity_sid The SID of the Activity to assign Workers when a task is assigned for them.
                     # @param [String] max_reserved_workers The maximum number of Workers to create reservations for the assignment of a task while in the queue. Maximum of 50.
-                    # @param [TaskQueueTaskOrder] task_order 
+                    # @param [TaskOrder] task_order 
                     # @return [TaskQueueInstance] Updated TaskQueueInstance
                     def update(
                         friendly_name: :unset, 
@@ -567,6 +568,7 @@ module Twilio
                         "<Twilio.Taskrouter.V1.TaskQueueInstance #{values}>"
                     end
                 end
+
              end
             end
         end

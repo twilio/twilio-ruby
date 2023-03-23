@@ -32,13 +32,13 @@ module Twilio
                     ##
                     # Create the RoomInstance
                     # @param [Boolean] enable_turn Deprecated, now always considered to be true.
-                    # @param [RoomRoomType] type 
+                    # @param [RoomType] type 
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used as a `room_sid` in place of the resource's `sid` in the URL to address the resource, assuming it does not contain any [reserved characters](https://tools.ietf.org/html/rfc3986#section-2.2) that would need to be URL encoded. This value is unique for `in-progress` rooms. SDK clients can use this name to connect to the room. REST API clients can use this name in place of the Room SID to interact with the room as long as the room is `in-progress`.
                     # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application on every room event. See [Status Callbacks](https://www.twilio.com/docs/video/api/status-callbacks) for more info.
                     # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be `POST` or `GET`.
                     # @param [String] max_participants The maximum number of concurrent Participants allowed in the room. Peer-to-peer rooms can have up to 10 Participants. Small Group rooms can have up to 4 Participants. Group rooms can have up to 50 Participants.
                     # @param [Boolean] record_participants_on_connect Whether to start recording when Participants connect. ***This feature is not available in `peer-to-peer` rooms.***
-                    # @param [Array[RoomVideoCodec]] video_codecs An array of the video codecs that are supported when publishing a track in the room.  Can be: `VP8` and `H264`.  ***This feature is not available in `peer-to-peer` rooms***
+                    # @param [Array[VideoCodec]] video_codecs An array of the video codecs that are supported when publishing a track in the room.  Can be: `VP8` and `H264`.  ***This feature is not available in `peer-to-peer` rooms***
                     # @param [String] media_region The region for the media server in Group Rooms.  Can be: one of the [available Media Regions](https://www.twilio.com/docs/video/ip-address-whitelisting#group-rooms-media-servers). ***This feature is not available in `peer-to-peer` rooms.***
                     # @param [Object] recording_rules A collection of Recording Rules that describe how to include or exclude matching tracks for recording
                     # @param [Boolean] audio_only When set to true, indicates that the participants in the room will only publish audio. No video tracks will be allowed. Group rooms only.
@@ -95,7 +95,7 @@ module Twilio
                     # Lists RoomInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [RoomRoomStatus] status Read only the rooms with this status. Can be: `in-progress` (default) or `completed`
+                    # @param [RoomStatus] status Read only the rooms with this status. Can be: `in-progress` (default) or `completed`
                     # @param [String] unique_name Read only rooms with the this `unique_name`.
                     # @param [Time] date_created_after Read only rooms that started on or after this date, given as `YYYY-MM-DD`.
                     # @param [Time] date_created_before Read only rooms that started before this date, given as `YYYY-MM-DD`.
@@ -121,7 +121,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [RoomRoomStatus] status Read only the rooms with this status. Can be: `in-progress` (default) or `completed`
+                    # @param [RoomStatus] status Read only the rooms with this status. Can be: `in-progress` (default) or `completed`
                     # @param [String] unique_name Read only rooms with the this `unique_name`.
                     # @param [Time] date_created_after Read only rooms that started on or after this date, given as `YYYY-MM-DD`.
                     # @param [Time] date_created_before Read only rooms that started before this date, given as `YYYY-MM-DD`.
@@ -162,7 +162,7 @@ module Twilio
                     ##
                     # Retrieve a single page of RoomInstance records from the API.
                     # Request is executed immediately.
-                    # @param [RoomRoomStatus] status Read only the rooms with this status. Can be: `in-progress` (default) or `completed`
+                    # @param [RoomStatus] status Read only the rooms with this status. Can be: `in-progress` (default) or `completed`
                     # @param [String] unique_name Read only rooms with the this `unique_name`.
                     # @param [Time] date_created_after Read only rooms that started on or after this date, given as `YYYY-MM-DD`.
                     # @param [Time] date_created_before Read only rooms that started before this date, given as `YYYY-MM-DD`.
@@ -212,6 +212,7 @@ module Twilio
                     end
                 end
 
+
                 class RoomContext < InstanceContext
                     ##
                     # Initialize the RoomContext
@@ -245,7 +246,7 @@ module Twilio
 
                     ##
                     # Update the RoomInstance
-                    # @param [RoomRoomStatus] status 
+                    # @param [RoomStatus] status 
                     # @return [RoomInstance] Updated RoomInstance
                     def update(
                         status: nil
@@ -326,14 +327,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.RoomContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.RoomContext #{context}>"
                     end
                 end
@@ -430,7 +431,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RoomRoomStatus] 
+                    # @return [RoomStatus] 
                     def status
                         @properties['status']
                     end
@@ -490,7 +491,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RoomRoomType] 
+                    # @return [RoomType] 
                     def type
                         @properties['type']
                     end
@@ -520,7 +521,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Array<RoomVideoCodec>] An array of the video codecs that are supported when publishing a track in the room.  Can be: `VP8` and `H264`.  ***This feature is not available in `peer-to-peer` rooms***
+                    # @return [Array<VideoCodec>] An array of the video codecs that are supported when publishing a track in the room.  Can be: `VP8` and `H264`.  ***This feature is not available in `peer-to-peer` rooms***
                     def video_codecs
                         @properties['video_codecs']
                     end
@@ -577,7 +578,7 @@ module Twilio
 
                     ##
                     # Update the RoomInstance
-                    # @param [RoomRoomStatus] status 
+                    # @param [RoomStatus] status 
                     # @return [RoomInstance] Updated RoomInstance
                     def update(
                         status: nil
@@ -623,6 +624,7 @@ module Twilio
                         "<Twilio.Video.V1.RoomInstance #{values}>"
                     end
                 end
+
             end
         end
     end

@@ -36,7 +36,7 @@ module Twilio
                     # Lists RegulationInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [RegulationEndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
+                    # @param [EndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
                     # @param [String] iso_country The ISO country code of the phone number's country.
                     # @param [String] number_type The type of phone number that the regulatory requiremnt is restricting.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -60,7 +60,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [RegulationEndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
+                    # @param [EndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
                     # @param [String] iso_country The ISO country code of the phone number's country.
                     # @param [String] number_type The type of phone number that the regulatory requiremnt is restricting.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -99,7 +99,7 @@ module Twilio
                     ##
                     # Retrieve a single page of RegulationInstance records from the API.
                     # Request is executed immediately.
-                    # @param [RegulationEndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
+                    # @param [EndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
                     # @param [String] iso_country The ISO country code of the phone number's country.
                     # @param [String] number_type The type of phone number that the regulatory requiremnt is restricting.
                     # @param [String] page_token PageToken provided by the API
@@ -146,6 +146,7 @@ module Twilio
                     end
                 end
 
+
                 class RegulationContext < InstanceContext
                     ##
                     # Initialize the RegulationContext
@@ -178,14 +179,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Numbers.V2.RegulationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Numbers.V2.RegulationContext #{context}>"
                     end
                 end
@@ -283,7 +284,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RegulationEndUserType] 
+                    # @return [EndUserType] 
                     def end_user_type
                         @properties['end_user_type']
                     end
@@ -322,6 +323,7 @@ module Twilio
                         "<Twilio.Numbers.V2.RegulationInstance #{values}>"
                     end
                 end
+
              end
             end
         end

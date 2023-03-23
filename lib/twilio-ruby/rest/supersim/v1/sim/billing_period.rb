@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, sim_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { sim_sid: sim_sid, }
+                        @solution = { sim_sid: sim_sid }
                         @uri = "/Sims/#{@solution[:sim_sid]}/BillingPeriods"
                         
                     end
@@ -124,6 +124,7 @@ module Twilio
                         '#<Twilio.Supersim.V1.BillingPeriodList>'
                     end
                 end
+
                 class BillingPeriodPage < Page
                     ##
                     # Initialize the BillingPeriodPage
@@ -210,7 +211,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [BillingPeriodBpType] 
+                    # @return [BpType] 
                     def period_type
                         @properties['period_type']
                     end
@@ -239,6 +240,7 @@ module Twilio
                         "<Twilio.Supersim.V1.BillingPeriodInstance>"
                     end
                 end
+
              end
             end
         end

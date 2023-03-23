@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class PhoneNumberContext < InstanceContext
@@ -111,14 +112,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Lookups.V2.PhoneNumberContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Lookups.V2.PhoneNumberContext #{context}>"
                     end
                 end
@@ -230,7 +231,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Array<PhoneNumberValidationError>] Contains reasons why a phone number is invalid. Possible values: TOO_SHORT, TOO_LONG, INVALID_BUT_POSSIBLE, INVALID_COUNTRY_CODE, INVALID_LENGTH, NOT_A_NUMBER.
+                    # @return [Array<ValidationError>] Contains reasons why a phone number is invalid. Possible values: TOO_SHORT, TOO_LONG, INVALID_BUT_POSSIBLE, INVALID_COUNTRY_CODE, INVALID_LENGTH, NOT_A_NUMBER.
                     def validation_errors
                         @properties['validation_errors']
                     end
@@ -349,6 +350,7 @@ module Twilio
                         "<Twilio.Lookups.V2.PhoneNumberInstance #{values}>"
                     end
                 end
+
             end
         end
     end

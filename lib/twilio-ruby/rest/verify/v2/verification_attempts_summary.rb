@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 class VerificationAttemptsSummaryContext < InstanceContext
                     ##
                     # Initialize the VerificationAttemptsSummaryContext
@@ -58,7 +59,7 @@ module Twilio
                     # @param [Time] date_created_after Datetime filter used to consider only Verification Attempts created after this datetime on the summary aggregation. Given as GMT in RFC 2822 format.
                     # @param [Time] date_created_before Datetime filter used to consider only Verification Attempts created before this datetime on the summary aggregation. Given as GMT in RFC 2822 format.
                     # @param [String] country Filter used to consider only Verification Attempts sent to the specified destination country on the summary aggregation.
-                    # @param [VerificationAttemptsSummaryChannels] channel Filter Verification Attempts considered on the summary aggregation by communication channel. Valid values are `SMS` and `CALL`
+                    # @param [Channels] channel Filter Verification Attempts considered on the summary aggregation by communication channel. Valid values are `SMS` and `CALL`
                     # @param [String] destination_prefix Filter the Verification Attempts considered on the summary aggregation by Destination prefix. It is the prefix of a phone number in E.164 format.
                     # @return [VerificationAttemptsSummaryInstance] Fetched VerificationAttemptsSummaryInstance
                     def fetch(
@@ -89,14 +90,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.VerificationAttemptsSummaryContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.VerificationAttemptsSummaryContext #{context}>"
                     end
                 end
@@ -203,7 +204,7 @@ module Twilio
                     # @param [Time] date_created_after Datetime filter used to consider only Verification Attempts created after this datetime on the summary aggregation. Given as GMT in RFC 2822 format.
                     # @param [Time] date_created_before Datetime filter used to consider only Verification Attempts created before this datetime on the summary aggregation. Given as GMT in RFC 2822 format.
                     # @param [String] country Filter used to consider only Verification Attempts sent to the specified destination country on the summary aggregation.
-                    # @param [VerificationAttemptsSummaryChannels] channel Filter Verification Attempts considered on the summary aggregation by communication channel. Valid values are `SMS` and `CALL`
+                    # @param [Channels] channel Filter Verification Attempts considered on the summary aggregation by communication channel. Valid values are `SMS` and `CALL`
                     # @param [String] destination_prefix Filter the Verification Attempts considered on the summary aggregation by Destination prefix. It is the prefix of a phone number in E.164 format.
                     # @return [VerificationAttemptsSummaryInstance] Fetched VerificationAttemptsSummaryInstance
                     def fetch(
@@ -239,6 +240,7 @@ module Twilio
                         "<Twilio.Verify.V2.VerificationAttemptsSummaryInstance #{values}>"
                     end
                 end
+
             end
         end
     end

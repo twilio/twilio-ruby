@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 class SecondaryAuthTokenContext < InstanceContext
                     ##
                     # Initialize the SecondaryAuthTokenContext
@@ -76,14 +77,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Accounts.V1.SecondaryAuthTokenContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Accounts.V1.SecondaryAuthTokenContext #{context}>"
                     end
                 end
@@ -214,6 +215,7 @@ module Twilio
                         "<Twilio.Accounts.V1.SecondaryAuthTokenInstance #{values}>"
                     end
                 end
+
             end
         end
     end

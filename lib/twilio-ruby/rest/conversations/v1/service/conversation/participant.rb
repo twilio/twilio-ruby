@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, chat_service_sid: nil, conversation_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { chat_service_sid: chat_service_sid,conversation_sid: conversation_sid, }
+                        @solution = { chat_service_sid: chat_service_sid, conversation_sid: conversation_sid }
                         @uri = "/Services/#{@solution[:chat_service_sid]}/Conversations/#{@solution[:conversation_sid]}/Participants"
                         
                     end
@@ -42,7 +42,7 @@ module Twilio
                     # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
                     # @param [String] messaging_binding_projected_address The address of the Twilio phone number that is used in Group MMS. Communication mask for the Conversation participant with Identity.
                     # @param [String] role_sid The SID of a conversation-level [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to the participant.
-                    # @param [ServiceConversationParticipantWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceConversationParticipantEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ParticipantInstance] Created ParticipantInstance
                     def create(
                         identity: :unset, 
@@ -171,6 +171,7 @@ module Twilio
                     end
                 end
 
+
                 class ParticipantContext < InstanceContext
                     ##
                     # Initialize the ParticipantContext
@@ -190,7 +191,7 @@ module Twilio
                     end
                     ##
                     # Delete the ParticipantInstance
-                    # @param [ServiceConversationParticipantWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceConversationParticipantEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
                         x_twilio_webhook_enabled: :unset
@@ -226,7 +227,7 @@ module Twilio
                     # @param [String] messaging_binding_projected_address The address of the Twilio phone number that is used in Group MMS. 'null' value will remove it.
                     # @param [String] last_read_message_index Index of last “read” message in the [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for the Participant.
                     # @param [String] last_read_timestamp Timestamp of last “read” message in the [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for the Participant.
-                    # @param [ServiceConversationParticipantWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceConversationParticipantEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ParticipantInstance] Updated ParticipantInstance
                     def update(
                         date_created: :unset, 
@@ -268,14 +269,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.ParticipantContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.ParticipantContext #{context}>"
                     end
                 end
@@ -434,7 +435,7 @@ module Twilio
                     
                     ##
                     # Delete the ParticipantInstance
-                    # @param [ServiceConversationParticipantWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceConversationParticipantEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
                         x_twilio_webhook_enabled: :unset
@@ -464,7 +465,7 @@ module Twilio
                     # @param [String] messaging_binding_projected_address The address of the Twilio phone number that is used in Group MMS. 'null' value will remove it.
                     # @param [String] last_read_message_index Index of last “read” message in the [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for the Participant.
                     # @param [String] last_read_timestamp Timestamp of last “read” message in the [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for the Participant.
-                    # @param [ServiceConversationParticipantWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ServiceConversationParticipantEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ParticipantInstance] Updated ParticipantInstance
                     def update(
                         date_created: :unset, 
@@ -507,6 +508,7 @@ module Twilio
                         "<Twilio.Conversations.V1.ParticipantInstance #{values}>"
                     end
                 end
+
              end
              end
             end

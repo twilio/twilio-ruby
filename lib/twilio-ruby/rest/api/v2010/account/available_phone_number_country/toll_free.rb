@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, country_code: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,country_code: country_code, }
+                        @solution = { account_sid: account_sid, country_code: country_code }
                         @uri = "/Accounts/#{@solution[:account_sid]}/AvailablePhoneNumbers/#{@solution[:country_code]}/TollFree.json"
                         
                     end
@@ -251,6 +251,7 @@ module Twilio
                         '#<Twilio.Api.V2010.TollFreeList>'
                     end
                 end
+
                 class TollFreePage < Page
                     ##
                     # Initialize the TollFreePage
@@ -401,6 +402,7 @@ module Twilio
                         "<Twilio.Api.V2010.TollFreeInstance>"
                     end
                 end
+
              end
              end
             end

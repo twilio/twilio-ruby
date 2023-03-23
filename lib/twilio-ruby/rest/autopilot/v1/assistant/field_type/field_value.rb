@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, assistant_sid: nil, field_type_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { assistant_sid: assistant_sid,field_type_sid: field_type_sid, }
+                        @solution = { assistant_sid: assistant_sid, field_type_sid: field_type_sid }
                         @uri = "/Assistants/#{@solution[:assistant_sid]}/FieldTypes/#{@solution[:field_type_sid]}/FieldValues"
                         
                     end
@@ -160,6 +160,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class FieldValueContext < InstanceContext
@@ -206,14 +207,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Autopilot.V1.FieldValueContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Autopilot.V1.FieldValueContext #{context}>"
                     end
                 end
@@ -379,6 +380,7 @@ module Twilio
                         "<Twilio.Autopilot.V1.FieldValueInstance #{values}>"
                     end
                 end
+
              end
              end
             end

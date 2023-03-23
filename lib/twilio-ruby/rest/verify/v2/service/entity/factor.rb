@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, identity: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,identity: identity, }
+                        @solution = { service_sid: service_sid, identity: identity }
                         @uri = "/Services/#{@solution[:service_sid]}/Entities/#{@solution[:identity]}/Factors"
                         
                     end
@@ -126,6 +126,7 @@ module Twilio
                     end
                 end
 
+
                 class FactorContext < InstanceContext
                     ##
                     # Initialize the FactorContext
@@ -175,7 +176,7 @@ module Twilio
                     # @param [String] config_time_step Defines how often, in seconds, are TOTP codes generated. i.e, a new TOTP code is generated every time_step seconds. Must be between 20 and 60 seconds, inclusive
                     # @param [String] config_skew The number of time-steps, past and future, that are valid for validation of TOTP codes. Must be between 0 and 2, inclusive
                     # @param [String] config_code_length Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive
-                    # @param [FactorTotpAlgorithms] config_alg 
+                    # @param [TotpAlgorithms] config_alg 
                     # @param [String] config_notification_platform The transport technology used to generate the Notification Token. Can be `apn`, `fcm` or `none`.  Required when `factor_type` is `push`.
                     # @return [FactorInstance] Updated FactorInstance
                     def update(
@@ -216,14 +217,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.FactorContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.FactorContext #{context}>"
                     end
                 end
@@ -351,13 +352,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [FactorFactorStatuses] 
+                    # @return [FactorStatuses] 
                     def status
                         @properties['status']
                     end
                     
                     ##
-                    # @return [FactorFactorTypes] 
+                    # @return [FactorTypes] 
                     def factor_type
                         @properties['factor_type']
                     end
@@ -405,7 +406,7 @@ module Twilio
                     # @param [String] config_time_step Defines how often, in seconds, are TOTP codes generated. i.e, a new TOTP code is generated every time_step seconds. Must be between 20 and 60 seconds, inclusive
                     # @param [String] config_skew The number of time-steps, past and future, that are valid for validation of TOTP codes. Must be between 0 and 2, inclusive
                     # @param [String] config_code_length Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive
-                    # @param [FactorTotpAlgorithms] config_alg 
+                    # @param [TotpAlgorithms] config_alg 
                     # @param [String] config_notification_platform The transport technology used to generate the Notification Token. Can be `apn`, `fcm` or `none`.  Required when `factor_type` is `push`.
                     # @return [FactorInstance] Updated FactorInstance
                     def update(
@@ -447,6 +448,7 @@ module Twilio
                         "<Twilio.Verify.V2.FactorInstance #{values}>"
                     end
                 end
+
              end
              end
             end

@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,sid: sid, }
+                        @solution = { service_sid: service_sid, sid: sid }
                         
                         
                     end
@@ -40,6 +40,7 @@ module Twilio
                         '#<Twilio.Serverless.V1.BuildStatusList>'
                     end
                 end
+
 
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
@@ -77,14 +78,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Serverless.V1.BuildStatusContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Serverless.V1.BuildStatusContext #{context}>"
                     end
                 end
@@ -174,7 +175,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [BuildStatusStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -207,6 +208,7 @@ module Twilio
                         "<Twilio.Serverless.V1.BuildStatusInstance #{values}>"
                     end
                 end
+
              end
              end
             end

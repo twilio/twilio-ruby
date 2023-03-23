@@ -66,6 +66,7 @@ module Twilio
                         '#<Twilio.Voice.V1.DialingPermissionsList>'
                     end
                 end
+
                 class DialingPermissionsPage < Page
                     ##
                     # Initialize the DialingPermissionsPage
@@ -122,6 +123,7 @@ module Twilio
                         "<Twilio.Voice.V1.DialingPermissionsInstance>"
                     end
                 end
+
             end
         end
     end

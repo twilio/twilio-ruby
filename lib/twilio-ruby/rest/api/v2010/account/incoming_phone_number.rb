@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/IncomingPhoneNumbers.json"
                         # Components
                         @toll_free = nil
@@ -51,12 +51,12 @@ module Twilio
                     # @param [String] voice_fallback_url The URL that we should call when an error occurs retrieving or executing the TwiML requested by `url`.
                     # @param [String] voice_method The HTTP method that we should use to call `voice_url`. Can be: `GET` or `POST` and defaults to `POST`.
                     # @param [String] voice_url The URL that we should call to answer a call to the new phone number. The `voice_url` will not be called if a `voice_application_sid` or a `trunk_sid` is set.
-                    # @param [IncomingPhoneNumberEmergencyStatus] emergency_status 
+                    # @param [EmergencyStatus] emergency_status 
                     # @param [String] emergency_address_sid The SID of the emergency address configuration to use for emergency calling from the new phone number.
                     # @param [String] trunk_sid The SID of the Trunk we should use to handle calls to the new phone number. If a `trunk_sid` is present, we ignore all of the voice urls and voice applications and use only those set on the Trunk. Setting a `trunk_sid` will automatically delete your `voice_application_sid` and vice versa.
                     # @param [String] identity_sid The SID of the Identity resource that we should associate with the new phone number. Some regions require an identity to meet local regulations.
                     # @param [String] address_sid The SID of the Address resource we should associate with the new phone number. Some regions require addresses to meet local regulations.
-                    # @param [IncomingPhoneNumberVoiceReceiveMode] voice_receive_mode 
+                    # @param [VoiceReceiveMode] voice_receive_mode 
                     # @param [String] bundle_sid The SID of the Bundle resource that you associate with the phone number. Some regions require a Bundle to meet local Regulations.
                     # @param [String] phone_number The phone number to purchase specified in [E.164](https://www.twilio.com/docs/glossary/what-e164) format.  E.164 phone numbers consist of a + followed by the country code and subscriber number without punctuation characters. For example, +14155551234.
                     # @param [String] area_code The desired area code for your new incoming phone number. Can be any three-digit, US or Canada area code. We will provision an available phone number within this area code for you. **You must provide an `area_code` or a `phone_number`.** (US and Canada only).
@@ -266,6 +266,7 @@ module Twilio
                     end
                 end
 
+
                 class IncomingPhoneNumberContext < InstanceContext
                     ##
                     # Initialize the IncomingPhoneNumberContext
@@ -323,10 +324,10 @@ module Twilio
                     # @param [String] voice_fallback_url The URL that we should call when an error occurs retrieving or executing the TwiML requested by `url`.
                     # @param [String] voice_method The HTTP method that we should use to call `voice_url`. Can be: `GET` or `POST` and defaults to `POST`.
                     # @param [String] voice_url The URL that we should call to answer a call to the phone number. The `voice_url` will not be called if a `voice_application_sid` or a `trunk_sid` is set.
-                    # @param [IncomingPhoneNumberEmergencyStatus] emergency_status 
+                    # @param [EmergencyStatus] emergency_status 
                     # @param [String] emergency_address_sid The SID of the emergency address configuration to use for emergency calling from this phone number.
                     # @param [String] trunk_sid The SID of the Trunk we should use to handle phone calls to the phone number. If a `trunk_sid` is present, we ignore all of the voice urls and voice applications and use only those set on the Trunk. Setting a `trunk_sid` will automatically delete your `voice_application_sid` and vice versa.
-                    # @param [IncomingPhoneNumberVoiceReceiveMode] voice_receive_mode 
+                    # @param [VoiceReceiveMode] voice_receive_mode 
                     # @param [String] identity_sid The SID of the Identity resource that we should associate with the phone number. Some regions require an identity to meet local regulations.
                     # @param [String] address_sid The SID of the Address resource we should associate with the phone number. Some regions require addresses to meet local regulations.
                     # @param [String] bundle_sid The SID of the Bundle resource that you associate with the phone number. Some regions require a Bundle to meet local Regulations.
@@ -419,14 +420,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.IncomingPhoneNumberContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.IncomingPhoneNumberContext #{context}>"
                     end
                 end
@@ -539,7 +540,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [IncomingPhoneNumberAddressRequirement] 
+                    # @return [AddressRequirement] 
                     def address_requirements
                         @properties['address_requirements']
                     end
@@ -659,7 +660,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [IncomingPhoneNumberVoiceReceiveMode] 
+                    # @return [VoiceReceiveMode] 
                     def voice_receive_mode
                         @properties['voice_receive_mode']
                     end
@@ -701,7 +702,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [IncomingPhoneNumberEmergencyStatus] 
+                    # @return [EmergencyStatus] 
                     def emergency_status
                         @properties['emergency_status']
                     end
@@ -713,7 +714,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [IncomingPhoneNumberEmergencyAddressStatus] 
+                    # @return [EmergencyAddressStatus] 
                     def emergency_address_status
                         @properties['emergency_address_status']
                     end
@@ -764,10 +765,10 @@ module Twilio
                     # @param [String] voice_fallback_url The URL that we should call when an error occurs retrieving or executing the TwiML requested by `url`.
                     # @param [String] voice_method The HTTP method that we should use to call `voice_url`. Can be: `GET` or `POST` and defaults to `POST`.
                     # @param [String] voice_url The URL that we should call to answer a call to the phone number. The `voice_url` will not be called if a `voice_application_sid` or a `trunk_sid` is set.
-                    # @param [IncomingPhoneNumberEmergencyStatus] emergency_status 
+                    # @param [EmergencyStatus] emergency_status 
                     # @param [String] emergency_address_sid The SID of the emergency address configuration to use for emergency calling from this phone number.
                     # @param [String] trunk_sid The SID of the Trunk we should use to handle phone calls to the phone number. If a `trunk_sid` is present, we ignore all of the voice urls and voice applications and use only those set on the Trunk. Setting a `trunk_sid` will automatically delete your `voice_application_sid` and vice versa.
-                    # @param [IncomingPhoneNumberVoiceReceiveMode] voice_receive_mode 
+                    # @param [VoiceReceiveMode] voice_receive_mode 
                     # @param [String] identity_sid The SID of the Identity resource that we should associate with the phone number. Some regions require an identity to meet local regulations.
                     # @param [String] address_sid The SID of the Address resource we should associate with the phone number. Some regions require addresses to meet local regulations.
                     # @param [String] bundle_sid The SID of the Bundle resource that you associate with the phone number. Some regions require a Bundle to meet local Regulations.
@@ -846,6 +847,7 @@ module Twilio
                         "<Twilio.Api.V2010.IncomingPhoneNumberInstance #{values}>"
                     end
                 end
+
              end
             end
         end

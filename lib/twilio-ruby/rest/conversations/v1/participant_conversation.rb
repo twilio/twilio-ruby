@@ -136,6 +136,7 @@ module Twilio
                         '#<Twilio.Conversations.V1.ParticipantConversationList>'
                     end
                 end
+
                 class ParticipantConversationPage < Page
                     ##
                     # Initialize the ParticipantConversationPage
@@ -278,7 +279,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ParticipantConversationState] 
+                    # @return [State] 
                     def conversation_state
                         @properties['conversation_state']
                     end
@@ -307,6 +308,7 @@ module Twilio
                         "<Twilio.Conversations.V1.ParticipantConversationInstance>"
                     end
                 end
+
             end
         end
     end

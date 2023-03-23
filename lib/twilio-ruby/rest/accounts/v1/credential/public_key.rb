@@ -150,6 +150,7 @@ module Twilio
                     end
                 end
 
+
                 class PublicKeyContext < InstanceContext
                     ##
                     # Initialize the PublicKeyContext
@@ -210,14 +211,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Accounts.V1.PublicKeyContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Accounts.V1.PublicKeyContext #{context}>"
                     end
                 end
@@ -368,6 +369,7 @@ module Twilio
                         "<Twilio.Accounts.V1.PublicKeyInstance #{values}>"
                     end
                 end
+
              end
             end
         end

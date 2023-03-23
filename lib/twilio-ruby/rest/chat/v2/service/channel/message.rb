@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, channel_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,channel_sid: channel_sid, }
+                        @solution = { service_sid: service_sid, channel_sid: channel_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Channels/#{@solution[:channel_sid]}/Messages"
                         
                     end
@@ -41,7 +41,7 @@ module Twilio
                     # @param [String] last_updated_by The [Identity](https://www.twilio.com/docs/chat/identity) of the User who last updated the Message, if applicable.
                     # @param [String] body The message to send to the channel. Can be an empty string or `null`, which sets the value as an empty string. You can send structured data in the body by serializing it as a string.
                     # @param [String] media_sid The SID of the [Media](https://www.twilio.com/docs/chat/rest/media) to attach to the new Message.
-                    # @param [MessageWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [MessageEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [MessageInstance] Created MessageInstance
                     def create(
                         from: :unset, 
@@ -79,7 +79,7 @@ module Twilio
                     # Lists MessageInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [MessageOrderType] order The sort order of the returned messages. Can be: `asc` (ascending) or `desc` (descending) with `asc` as the default.
+                    # @param [OrderType] order The sort order of the returned messages. Can be: `asc` (ascending) or `desc` (descending) with `asc` as the default.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -99,7 +99,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [MessageOrderType] order The sort order of the returned messages. Can be: `asc` (ascending) or `desc` (descending) with `asc` as the default.
+                    # @param [OrderType] order The sort order of the returned messages. Can be: `asc` (ascending) or `desc` (descending) with `asc` as the default.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -134,7 +134,7 @@ module Twilio
                     ##
                     # Retrieve a single page of MessageInstance records from the API.
                     # Request is executed immediately.
-                    # @param [MessageOrderType] order The sort order of the returned messages. Can be: `asc` (ascending) or `desc` (descending) with `asc` as the default.
+                    # @param [OrderType] order The sort order of the returned messages. Can be: `asc` (ascending) or `desc` (descending) with `asc` as the default.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -175,6 +175,7 @@ module Twilio
                     end
                 end
 
+
                 class MessageContext < InstanceContext
                     ##
                     # Initialize the MessageContext
@@ -194,7 +195,7 @@ module Twilio
                     end
                     ##
                     # Delete the MessageInstance
-                    # @param [MessageWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [MessageEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
                         x_twilio_webhook_enabled: :unset
@@ -227,7 +228,7 @@ module Twilio
                     # @param [Time] date_updated The date, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource as the date it was last updated.
                     # @param [String] last_updated_by The [Identity](https://www.twilio.com/docs/chat/identity) of the User who last updated the Message, if applicable.
                     # @param [String] from The [Identity](https://www.twilio.com/docs/chat/identity) of the message's author.
-                    # @param [MessageWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [MessageEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [MessageInstance] Updated MessageInstance
                     def update(
                         body: :unset, 
@@ -263,14 +264,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V2.MessageContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Chat.V2.MessageContext #{context}>"
                     end
                 end
@@ -450,7 +451,7 @@ module Twilio
                     
                     ##
                     # Delete the MessageInstance
-                    # @param [MessageWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [MessageEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
                         x_twilio_webhook_enabled: :unset
@@ -477,7 +478,7 @@ module Twilio
                     # @param [Time] date_updated The date, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format, to assign to the resource as the date it was last updated.
                     # @param [String] last_updated_by The [Identity](https://www.twilio.com/docs/chat/identity) of the User who last updated the Message, if applicable.
                     # @param [String] from The [Identity](https://www.twilio.com/docs/chat/identity) of the message's author.
-                    # @param [MessageWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [MessageEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [MessageInstance] Updated MessageInstance
                     def update(
                         body: :unset, 
@@ -514,6 +515,7 @@ module Twilio
                         "<Twilio.Chat.V2.MessageInstance #{values}>"
                     end
                 end
+
              end
              end
             end

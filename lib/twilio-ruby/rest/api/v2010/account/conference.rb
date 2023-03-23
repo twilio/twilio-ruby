@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Conferences.json"
                         
                     end
@@ -43,7 +43,7 @@ module Twilio
                     # @param [Date] date_updated_before The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
                     # @param [Date] date_updated_after The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
                     # @param [String] friendly_name The string that identifies the Conference resources to read.
-                    # @param [ConferenceStatus] status The status of the resources to read. Can be: `init`, `in-progress`, or `completed`.
+                    # @param [Status] status The status of the resources to read. Can be: `init`, `in-progress`, or `completed`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -77,7 +77,7 @@ module Twilio
                     # @param [Date] date_updated_before The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
                     # @param [Date] date_updated_after The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
                     # @param [String] friendly_name The string that identifies the Conference resources to read.
-                    # @param [ConferenceStatus] status The status of the resources to read. Can be: `init`, `in-progress`, or `completed`.
+                    # @param [Status] status The status of the resources to read. Can be: `init`, `in-progress`, or `completed`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -126,7 +126,7 @@ module Twilio
                     # @param [Date] date_updated_before The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
                     # @param [Date] date_updated_after The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
                     # @param [String] friendly_name The string that identifies the Conference resources to read.
-                    # @param [ConferenceStatus] status The status of the resources to read. Can be: `init`, `in-progress`, or `completed`.
+                    # @param [Status] status The status of the resources to read. Can be: `init`, `in-progress`, or `completed`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -181,6 +181,7 @@ module Twilio
                     end
                 end
 
+
                 class ConferenceContext < InstanceContext
                     ##
                     # Initialize the ConferenceContext
@@ -215,7 +216,7 @@ module Twilio
 
                     ##
                     # Update the ConferenceInstance
-                    # @param [ConferenceUpdateStatus] status 
+                    # @param [UpdateStatus] status 
                     # @param [String] announce_url The URL we should call to announce something into the conference. The URL may return an MP3 file, a WAV file, or a TwiML document that contains `<Play>`, `<Say>`, `<Pause>`, or `<Redirect>` verbs.
                     # @param [String] announce_method The HTTP method used to call `announce_url`. Can be: `GET` or `POST` and the default is `POST`
                     # @return [ConferenceInstance] Updated ConferenceInstance
@@ -290,14 +291,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.ConferenceContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.ConferenceContext #{context}>"
                     end
                 end
@@ -418,7 +419,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ConferenceStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -436,7 +437,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ConferenceReasonConferenceEnded] 
+                    # @return [ReasonConferenceEnded] 
                     def reason_conference_ended
                         @properties['reason_conference_ended']
                     end
@@ -457,7 +458,7 @@ module Twilio
 
                     ##
                     # Update the ConferenceInstance
-                    # @param [ConferenceUpdateStatus] status 
+                    # @param [UpdateStatus] status 
                     # @param [String] announce_url The URL we should call to announce something into the conference. The URL may return an MP3 file, a WAV file, or a TwiML document that contains `<Play>`, `<Say>`, `<Pause>`, or `<Redirect>` verbs.
                     # @param [String] announce_method The HTTP method used to call `announce_url`. Can be: `GET` or `POST` and the default is `POST`
                     # @return [ConferenceInstance] Updated ConferenceInstance
@@ -502,6 +503,7 @@ module Twilio
                         "<Twilio.Api.V2010.ConferenceInstance #{values}>"
                     end
                 end
+
              end
             end
         end

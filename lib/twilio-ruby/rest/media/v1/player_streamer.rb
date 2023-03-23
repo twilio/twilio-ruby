@@ -62,8 +62,8 @@ module Twilio
                     # Lists PlayerStreamerInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [PlayerStreamerOrder] order The sort order of the list by `date_created`. Can be: `asc` (ascending) or `desc` (descending) with `desc` as the default.
-                    # @param [PlayerStreamerStatus] status Status to filter by, with possible values `created`, `started`, `ended`, or `failed`.
+                    # @param [Order] order The sort order of the list by `date_created`. Can be: `asc` (ascending) or `desc` (descending) with `desc` as the default.
+                    # @param [Status] status Status to filter by, with possible values `created`, `started`, `ended`, or `failed`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -84,8 +84,8 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [PlayerStreamerOrder] order The sort order of the list by `date_created`. Can be: `asc` (ascending) or `desc` (descending) with `desc` as the default.
-                    # @param [PlayerStreamerStatus] status Status to filter by, with possible values `created`, `started`, `ended`, or `failed`.
+                    # @param [Order] order The sort order of the list by `date_created`. Can be: `asc` (ascending) or `desc` (descending) with `desc` as the default.
+                    # @param [Status] status Status to filter by, with possible values `created`, `started`, `ended`, or `failed`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -121,8 +121,8 @@ module Twilio
                     ##
                     # Retrieve a single page of PlayerStreamerInstance records from the API.
                     # Request is executed immediately.
-                    # @param [PlayerStreamerOrder] order The sort order of the list by `date_created`. Can be: `asc` (ascending) or `desc` (descending) with `desc` as the default.
-                    # @param [PlayerStreamerStatus] status Status to filter by, with possible values `created`, `started`, `ended`, or `failed`.
+                    # @param [Order] order The sort order of the list by `date_created`. Can be: `asc` (ascending) or `desc` (descending) with `desc` as the default.
+                    # @param [Status] status Status to filter by, with possible values `created`, `started`, `ended`, or `failed`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -165,6 +165,7 @@ module Twilio
                     end
                 end
 
+
                 class PlayerStreamerContext < InstanceContext
                     ##
                     # Initialize the PlayerStreamerContext
@@ -196,7 +197,7 @@ module Twilio
 
                     ##
                     # Update the PlayerStreamerInstance
-                    # @param [PlayerStreamerUpdateStatus] status 
+                    # @param [UpdateStatus] status 
                     # @return [PlayerStreamerInstance] Updated PlayerStreamerInstance
                     def update(
                         status: nil
@@ -228,14 +229,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Media.V1.PlayerStreamerContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Media.V1.PlayerStreamerContext #{context}>"
                     end
                 end
@@ -350,7 +351,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [PlayerStreamerStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -374,7 +375,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [PlayerStreamerEndedReason] 
+                    # @return [EndedReason] 
                     def ended_reason
                         @properties['ended_reason']
                     end
@@ -395,7 +396,7 @@ module Twilio
 
                     ##
                     # Update the PlayerStreamerInstance
-                    # @param [PlayerStreamerUpdateStatus] status 
+                    # @param [UpdateStatus] status 
                     # @return [PlayerStreamerInstance] Updated PlayerStreamerInstance
                     def update(
                         status: nil
@@ -427,6 +428,7 @@ module Twilio
                         "<Twilio.Media.V1.PlayerStreamerInstance #{values}>"
                     end
                 end
+
             end
         end
     end

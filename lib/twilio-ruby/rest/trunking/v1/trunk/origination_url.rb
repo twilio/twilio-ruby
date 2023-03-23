@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, trunk_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { trunk_sid: trunk_sid, }
+                        @solution = { trunk_sid: trunk_sid }
                         @uri = "/Trunks/#{@solution[:trunk_sid]}/OriginationUrls"
                         
                     end
@@ -157,6 +157,7 @@ module Twilio
                     end
                 end
 
+
                 class OriginationUrlContext < InstanceContext
                     ##
                     # Initialize the OriginationUrlContext
@@ -232,14 +233,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trunking.V1.OriginationUrlContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trunking.V1.OriginationUrlContext #{context}>"
                     end
                 end
@@ -437,6 +438,7 @@ module Twilio
                         "<Twilio.Trunking.V1.OriginationUrlInstance #{values}>"
                     end
                 end
+
              end
             end
         end

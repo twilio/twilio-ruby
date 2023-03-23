@@ -62,6 +62,7 @@ module Twilio
                         '#<Twilio.Oauth.V1.DeviceCodeList>'
                     end
                 end
+
                 class DeviceCodePage < Page
                     ##
                     # Initialize the DeviceCodePage
@@ -163,6 +164,7 @@ module Twilio
                         "<Twilio.Oauth.V1.DeviceCodeInstance>"
                     end
                 end
+
             end
         end
     end

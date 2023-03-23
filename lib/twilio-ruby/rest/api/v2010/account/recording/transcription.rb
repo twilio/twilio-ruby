@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, recording_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,recording_sid: recording_sid, }
+                        @solution = { account_sid: account_sid, recording_sid: recording_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Recordings/#{@solution[:recording_sid]}/Transcriptions.json"
                         
                     end
@@ -126,6 +126,7 @@ module Twilio
                     end
                 end
 
+
                 class TranscriptionContext < InstanceContext
                     ##
                     # Initialize the TranscriptionContext
@@ -170,14 +171,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.TranscriptionContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.TranscriptionContext #{context}>"
                     end
                 end
@@ -311,7 +312,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RecordingTranscriptionStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -364,6 +365,7 @@ module Twilio
                         "<Twilio.Api.V2010.TranscriptionInstance #{values}>"
                     end
                 end
+
              end
              end
             end

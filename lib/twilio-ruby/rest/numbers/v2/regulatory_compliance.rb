@@ -121,6 +121,7 @@ module Twilio
                         '#<Twilio.Numbers.V2.RegulatoryComplianceList>'
                     end
                 end
+
                 class RegulatoryCompliancePage < Page
                     ##
                     # Initialize the RegulatoryCompliancePage
@@ -177,6 +178,7 @@ module Twilio
                         "<Twilio.Numbers.V2.RegulatoryComplianceInstance>"
                     end
                 end
+
             end
         end
     end

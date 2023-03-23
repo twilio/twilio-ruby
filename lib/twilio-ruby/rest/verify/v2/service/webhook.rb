@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid, }
+                        @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Webhooks"
                         
                     end
@@ -36,8 +36,8 @@ module Twilio
                     # @param [String] friendly_name The string that you assigned to describe the webhook. **This value should not contain PII.**
                     # @param [Array[String]] event_types The array of events that this Webhook is subscribed to. Possible event types: `*, factor.deleted, factor.created, factor.verified, challenge.approved, challenge.denied`
                     # @param [String] webhook_url The URL associated with this Webhook.
-                    # @param [WebhookStatus] status 
-                    # @param [WebhookVersion] version 
+                    # @param [Status] status 
+                    # @param [Version] version 
                     # @return [WebhookInstance] Created WebhookInstance
                     def create(
                         friendly_name: nil, 
@@ -157,6 +157,7 @@ module Twilio
                     end
                 end
 
+
                 class WebhookContext < InstanceContext
                     ##
                     # Initialize the WebhookContext
@@ -200,8 +201,8 @@ module Twilio
                     # @param [String] friendly_name The string that you assigned to describe the webhook. **This value should not contain PII.**
                     # @param [Array[String]] event_types The array of events that this Webhook is subscribed to. Possible event types: `*, factor.deleted, factor.created, factor.verified, challenge.approved, challenge.denied`
                     # @param [String] webhook_url The URL associated with this Webhook.
-                    # @param [WebhookStatus] status 
-                    # @param [WebhookVersion] version 
+                    # @param [Status] status 
+                    # @param [Version] version 
                     # @return [WebhookInstance] Updated WebhookInstance
                     def update(
                         friendly_name: :unset, 
@@ -232,14 +233,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.WebhookContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.WebhookContext #{context}>"
                     end
                 end
@@ -348,13 +349,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [WebhookStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
                     
                     ##
-                    # @return [WebhookVersion] 
+                    # @return [Version] 
                     def version
                         @properties['version']
                     end
@@ -366,7 +367,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [WebhookMethods] 
+                    # @return [Methods] 
                     def webhook_method
                         @properties['webhook_method']
                     end
@@ -410,8 +411,8 @@ module Twilio
                     # @param [String] friendly_name The string that you assigned to describe the webhook. **This value should not contain PII.**
                     # @param [Array[String]] event_types The array of events that this Webhook is subscribed to. Possible event types: `*, factor.deleted, factor.created, factor.verified, challenge.approved, challenge.denied`
                     # @param [String] webhook_url The URL associated with this Webhook.
-                    # @param [WebhookStatus] status 
-                    # @param [WebhookVersion] version 
+                    # @param [Status] status 
+                    # @param [Version] version 
                     # @return [WebhookInstance] Updated WebhookInstance
                     def update(
                         friendly_name: :unset, 
@@ -444,6 +445,7 @@ module Twilio
                         "<Twilio.Verify.V2.WebhookInstance #{values}>"
                     end
                 end
+
              end
             end
         end

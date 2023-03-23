@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, room_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { room_sid: room_sid, }
+                        @solution = { room_sid: room_sid }
                         @uri = "/Rooms/#{@solution[:room_sid]}/Participants"
                         
                     end
@@ -36,7 +36,7 @@ module Twilio
                     # Lists ParticipantInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [RoomParticipantStatus] status Read only the participants with this status. Can be: `connected` or `disconnected`. For `in-progress` Rooms the default Status is `connected`, for `completed` Rooms only `disconnected` Participants are returned.
+                    # @param [Status] status Read only the participants with this status. Can be: `connected` or `disconnected`. For `in-progress` Rooms the default Status is `connected`, for `completed` Rooms only `disconnected` Participants are returned.
                     # @param [String] identity Read only the Participants with this [User](https://www.twilio.com/docs/chat/rest/user-resource) `identity` value.
                     # @param [Time] date_created_after Read only Participants that started after this date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
                     # @param [Time] date_created_before Read only Participants that started before this date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
@@ -62,7 +62,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [RoomParticipantStatus] status Read only the participants with this status. Can be: `connected` or `disconnected`. For `in-progress` Rooms the default Status is `connected`, for `completed` Rooms only `disconnected` Participants are returned.
+                    # @param [Status] status Read only the participants with this status. Can be: `connected` or `disconnected`. For `in-progress` Rooms the default Status is `connected`, for `completed` Rooms only `disconnected` Participants are returned.
                     # @param [String] identity Read only the Participants with this [User](https://www.twilio.com/docs/chat/rest/user-resource) `identity` value.
                     # @param [Time] date_created_after Read only Participants that started after this date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
                     # @param [Time] date_created_before Read only Participants that started before this date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
@@ -103,7 +103,7 @@ module Twilio
                     ##
                     # Retrieve a single page of ParticipantInstance records from the API.
                     # Request is executed immediately.
-                    # @param [RoomParticipantStatus] status Read only the participants with this status. Can be: `connected` or `disconnected`. For `in-progress` Rooms the default Status is `connected`, for `completed` Rooms only `disconnected` Participants are returned.
+                    # @param [Status] status Read only the participants with this status. Can be: `connected` or `disconnected`. For `in-progress` Rooms the default Status is `connected`, for `completed` Rooms only `disconnected` Participants are returned.
                     # @param [String] identity Read only the Participants with this [User](https://www.twilio.com/docs/chat/rest/user-resource) `identity` value.
                     # @param [Time] date_created_after Read only Participants that started after this date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
                     # @param [Time] date_created_before Read only Participants that started before this date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
@@ -153,6 +153,7 @@ module Twilio
                     end
                 end
 
+
                 class ParticipantContext < InstanceContext
                     ##
                     # Initialize the ParticipantContext
@@ -189,7 +190,7 @@ module Twilio
 
                     ##
                     # Update the ParticipantInstance
-                    # @param [RoomParticipantStatus] status 
+                    # @param [Status] status 
                     # @return [ParticipantInstance] Updated ParticipantInstance
                     def update(
                         status: :unset
@@ -285,14 +286,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.ParticipantContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Video.V1.ParticipantContext #{context}>"
                     end
                 end
@@ -389,7 +390,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [RoomParticipantStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -452,7 +453,7 @@ module Twilio
 
                     ##
                     # Update the ParticipantInstance
-                    # @param [RoomParticipantStatus] status 
+                    # @param [Status] status 
                     # @return [ParticipantInstance] Updated ParticipantInstance
                     def update(
                         status: :unset
@@ -505,6 +506,7 @@ module Twilio
                         "<Twilio.Video.V1.ParticipantInstance #{values}>"
                     end
                 end
+
              end
             end
         end

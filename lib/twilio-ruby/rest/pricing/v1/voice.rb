@@ -65,6 +65,7 @@ module Twilio
                         '#<Twilio.Pricing.V1.VoiceList>'
                     end
                 end
+
                 class VoicePage < Page
                     ##
                     # Initialize the VoicePage
@@ -121,6 +122,7 @@ module Twilio
                         "<Twilio.Pricing.V1.VoiceInstance>"
                     end
                 end
+
             end
         end
     end

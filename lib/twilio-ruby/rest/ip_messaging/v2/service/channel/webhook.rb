@@ -28,15 +28,15 @@ module Twilio
                     def initialize(version, service_sid: nil, channel_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,channel_sid: channel_sid, }
+                        @solution = { service_sid: service_sid, channel_sid: channel_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Channels/#{@solution[:channel_sid]}/Webhooks"
                         
                     end
                     ##
                     # Create the WebhookInstance
-                    # @param [ChannelWebhookType] type 
+                    # @param [Type] type 
                     # @param [String] configuration_url 
-                    # @param [ChannelWebhookMethod] configuration_method 
+                    # @param [Method] configuration_method 
                     # @param [Array[String]] configuration_filters 
                     # @param [Array[String]] configuration_triggers 
                     # @param [String] configuration_flow_sid 
@@ -165,6 +165,7 @@ module Twilio
                     end
                 end
 
+
                 class WebhookContext < InstanceContext
                     ##
                     # Initialize the WebhookContext
@@ -208,7 +209,7 @@ module Twilio
                     ##
                     # Update the WebhookInstance
                     # @param [String] configuration_url 
-                    # @param [ChannelWebhookMethod] configuration_method 
+                    # @param [Method] configuration_method 
                     # @param [Array[String]] configuration_filters 
                     # @param [Array[String]] configuration_triggers 
                     # @param [String] configuration_flow_sid 
@@ -246,14 +247,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V2.WebhookContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V2.WebhookContext #{context}>"
                     end
                 end
@@ -401,7 +402,7 @@ module Twilio
                     ##
                     # Update the WebhookInstance
                     # @param [String] configuration_url 
-                    # @param [ChannelWebhookMethod] configuration_method 
+                    # @param [Method] configuration_method 
                     # @param [Array[String]] configuration_filters 
                     # @param [Array[String]] configuration_triggers 
                     # @param [String] configuration_flow_sid 
@@ -440,6 +441,7 @@ module Twilio
                         "<Twilio.IpMessaging.V2.WebhookInstance #{values}>"
                     end
                 end
+
              end
              end
             end

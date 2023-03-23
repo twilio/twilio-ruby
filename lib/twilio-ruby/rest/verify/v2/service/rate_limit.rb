@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid, }
+                        @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/RateLimits"
                         
                     end
@@ -148,6 +148,7 @@ module Twilio
                     end
                 end
 
+
                 class RateLimitContext < InstanceContext
                     ##
                     # Initialize the RateLimitContext
@@ -235,14 +236,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.RateLimitContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.RateLimitContext #{context}>"
                     end
                 end
@@ -421,6 +422,7 @@ module Twilio
                         "<Twilio.Verify.V2.RateLimitInstance #{values}>"
                     end
                 end
+
              end
             end
         end

@@ -56,6 +56,7 @@ module Twilio
                         '#<Twilio.Autopilot.V1.RestoreAssistantList>'
                     end
                 end
+
                 class RestoreAssistantPage < Page
                     ##
                     # Initialize the RestoreAssistantPage
@@ -199,6 +200,7 @@ module Twilio
                         "<Twilio.Autopilot.V1.RestoreAssistantInstance>"
                     end
                 end
+
             end
         end
     end

@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/AuthorizedConnectApps.json"
                         
                     end
@@ -125,6 +125,7 @@ module Twilio
                     end
                 end
 
+
                 class AuthorizedConnectAppContext < InstanceContext
                     ##
                     # Initialize the AuthorizedConnectAppContext
@@ -159,14 +160,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.AuthorizedConnectAppContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.AuthorizedConnectAppContext #{context}>"
                     end
                 end
@@ -291,7 +292,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Array<AuthorizedConnectAppPermission>] The set of permissions that you authorized for the Connect App.  Can be: `get-all` or `post-all`.
+                    # @return [Array<Permission>] The set of permissions that you authorized for the Connect App.  Can be: `get-all` or `post-all`.
                     def permissions
                         @properties['permissions']
                     end
@@ -324,6 +325,7 @@ module Twilio
                         "<Twilio.Api.V2010.AuthorizedConnectAppInstance #{values}>"
                     end
                 end
+
              end
             end
         end

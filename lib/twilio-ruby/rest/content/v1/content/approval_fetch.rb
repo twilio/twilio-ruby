@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { sid: sid, }
+                        @solution = { sid: sid }
                         
                         
                     end
@@ -39,6 +39,7 @@ module Twilio
                         '#<Twilio.Content.V1.ApprovalFetchList>'
                     end
                 end
+
 
                 ##
                 #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
@@ -74,14 +75,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Content.V1.ApprovalFetchContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Content.V1.ApprovalFetchContext #{context}>"
                     end
                 end
@@ -197,6 +198,7 @@ module Twilio
                         "<Twilio.Content.V1.ApprovalFetchInstance #{values}>"
                     end
                 end
+
              end
             end
         end

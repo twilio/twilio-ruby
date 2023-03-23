@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, workspace_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { workspace_sid: workspace_sid, }
+                        @solution = { workspace_sid: workspace_sid }
                         @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues/Statistics"
                         
                     end
@@ -167,6 +167,7 @@ module Twilio
                         '#<Twilio.Taskrouter.V1.TaskQueuesStatisticsList>'
                     end
                 end
+
                 class TaskQueuesStatisticsPage < Page
                     ##
                     # Initialize the TaskQueuesStatisticsPage
@@ -261,6 +262,7 @@ module Twilio
                         "<Twilio.Taskrouter.V1.TaskQueuesStatisticsInstance>"
                     end
                 end
+
              end
              end
             end

@@ -38,6 +38,7 @@ module Twilio
                     end
                 end
 
+
                 class OpenidDiscoveryContext < InstanceContext
                     ##
                     # Initialize the OpenidDiscoveryContext
@@ -68,14 +69,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Oauth.V1.OpenidDiscoveryContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Oauth.V1.OpenidDiscoveryContext #{context}>"
                     end
                 end
@@ -254,6 +255,7 @@ module Twilio
                         "<Twilio.Oauth.V1.OpenidDiscoveryInstance #{values}>"
                     end
                 end
+
             end
         end
     end

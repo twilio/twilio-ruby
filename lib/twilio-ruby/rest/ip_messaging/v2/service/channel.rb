@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid, }
+                        @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Channels"
                         
                     end
@@ -36,11 +36,11 @@ module Twilio
                     # @param [String] friendly_name 
                     # @param [String] unique_name 
                     # @param [String] attributes 
-                    # @param [ChannelChannelType] type 
+                    # @param [ChannelType] type 
                     # @param [Time] date_created 
                     # @param [Time] date_updated 
                     # @param [String] created_by 
-                    # @param [ChannelWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ChannelEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ChannelInstance] Created ChannelInstance
                     def create(
                         friendly_name: :unset, 
@@ -77,7 +77,7 @@ module Twilio
                     # Lists ChannelInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [Array[ChannelChannelType]] type 
+                    # @param [Array[ChannelType]] type 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -97,7 +97,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [Array[ChannelChannelType]] type 
+                    # @param [Array[ChannelType]] type 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -132,7 +132,7 @@ module Twilio
                     ##
                     # Retrieve a single page of ChannelInstance records from the API.
                     # Request is executed immediately.
-                    # @param [Array[ChannelChannelType]] type 
+                    # @param [Array[ChannelType]] type 
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -173,6 +173,7 @@ module Twilio
                     end
                 end
 
+
                 class ChannelContext < InstanceContext
                     ##
                     # Initialize the ChannelContext
@@ -195,7 +196,7 @@ module Twilio
                     end
                     ##
                     # Delete the ChannelInstance
-                    # @param [ChannelWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ChannelEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
                         x_twilio_webhook_enabled: :unset
@@ -227,7 +228,7 @@ module Twilio
                     # @param [Time] date_created 
                     # @param [Time] date_updated 
                     # @param [String] created_by 
-                    # @param [ChannelWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ChannelEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ChannelInstance] Updated ChannelInstance
                     def update(
                         friendly_name: :unset, 
@@ -354,14 +355,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V2.ChannelContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V2.ChannelContext #{context}>"
                     end
                 end
@@ -478,7 +479,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ChannelChannelType] 
+                    # @return [ChannelType] 
                     def type
                         @properties['type']
                     end
@@ -527,7 +528,7 @@ module Twilio
                     
                     ##
                     # Delete the ChannelInstance
-                    # @param [ChannelWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ChannelEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
                         x_twilio_webhook_enabled: :unset
@@ -554,7 +555,7 @@ module Twilio
                     # @param [Time] date_created 
                     # @param [Time] date_updated 
                     # @param [String] created_by 
-                    # @param [ChannelWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @param [ChannelEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ChannelInstance] Updated ChannelInstance
                     def update(
                         friendly_name: :unset, 
@@ -619,6 +620,7 @@ module Twilio
                         "<Twilio.IpMessaging.V2.ChannelInstance #{values}>"
                     end
                 end
+
              end
             end
         end

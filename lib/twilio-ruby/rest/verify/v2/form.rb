@@ -38,13 +38,14 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class FormContext < InstanceContext
                     ##
                     # Initialize the FormContext
                     # @param [Version] version Version that contains the resource
-                    # @param [FormFormTypes] form_type The Type of this Form. Currently only `form-push` is supported.
+                    # @param [FormTypes] form_type The Type of this Form. Currently only `form-push` is supported.
                     # @return [FormContext] FormContext
                     def initialize(version, form_type)
                         super(version)
@@ -72,14 +73,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.FormContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.FormContext #{context}>"
                     end
                 end
@@ -150,7 +151,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [FormFormTypes] 
+                    # @return [FormTypes] 
                     def form_type
                         @properties['form_type']
                     end
@@ -195,6 +196,7 @@ module Twilio
                         "<Twilio.Verify.V2.FormInstance #{values}>"
                     end
                 end
+
             end
         end
     end

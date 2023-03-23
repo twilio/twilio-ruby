@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, iso_code: nil)
                         super(version)
                         # Path Solution
-                        @solution = { iso_code: iso_code, }
+                        @solution = { iso_code: iso_code }
                         @uri = "/DialingPermissions/Countries/#{@solution[:iso_code]}/HighRiskSpecialPrefixes"
                         
                     end
@@ -125,6 +125,7 @@ module Twilio
                         '#<Twilio.Voice.V1.HighriskSpecialPrefixList>'
                     end
                 end
+
                 class HighriskSpecialPrefixPage < Page
                     ##
                     # Initialize the HighriskSpecialPrefixPage
@@ -191,6 +192,7 @@ module Twilio
                         "<Twilio.Voice.V1.HighriskSpecialPrefixInstance>"
                     end
                 end
+
              end
              end
             end

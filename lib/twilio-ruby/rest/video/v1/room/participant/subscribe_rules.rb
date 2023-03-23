@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, room_sid: nil, participant_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { room_sid: room_sid,participant_sid: participant_sid, }
+                        @solution = { room_sid: room_sid, participant_sid: participant_sid }
                         @uri = "/Rooms/#{@solution[:room_sid]}/Participants/#{@solution[:participant_sid]}/SubscribeRules"
                         
                     end
@@ -75,6 +75,7 @@ module Twilio
                         '#<Twilio.Video.V1.SubscribeRulesList>'
                     end
                 end
+
                 class SubscribeRulesPage < Page
                     ##
                     # Initialize the SubscribeRulesPage
@@ -169,6 +170,7 @@ module Twilio
                         "<Twilio.Video.V1.SubscribeRulesInstance>"
                     end
                 end
+
              end
              end
             end

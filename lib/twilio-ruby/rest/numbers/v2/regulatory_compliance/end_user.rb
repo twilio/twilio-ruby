@@ -34,7 +34,7 @@ module Twilio
                     ##
                     # Create the EndUserInstance
                     # @param [String] friendly_name The string that you assigned to describe the resource.
-                    # @param [EndUserType] type 
+                    # @param [Type] type 
                     # @param [Object] attributes The set of parameters that are the attributes of the End User resource which are derived End User Types.
                     # @return [EndUserInstance] Created EndUserInstance
                     def create(
@@ -150,6 +150,7 @@ module Twilio
                     end
                 end
 
+
                 class EndUserContext < InstanceContext
                     ##
                     # Initialize the EndUserContext
@@ -213,14 +214,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Numbers.V2.EndUserContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Numbers.V2.EndUserContext #{context}>"
                     end
                 end
@@ -313,7 +314,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [EndUserType] 
+                    # @return [Type] 
                     def type
                         @properties['type']
                     end
@@ -388,6 +389,7 @@ module Twilio
                         "<Twilio.Numbers.V2.EndUserInstance #{values}>"
                     end
                 end
+
              end
             end
         end

@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, identity: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,identity: identity, }
+                        @solution = { service_sid: service_sid, identity: identity }
                         @uri = "/Services/#{@solution[:service_sid]}/Entities/#{@solution[:identity]}/Challenges"
                         
                     end
@@ -74,8 +74,8 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [String] factor_sid The unique SID identifier of the Factor.
-                    # @param [ChallengeChallengeStatuses] status The Status of the Challenges to fetch. One of `pending`, `expired`, `approved` or `denied`.
-                    # @param [ChallengeListOrders] order The desired sort order of the Challenges list. One of `asc` or `desc` for ascending and descending respectively. Defaults to `asc`.
+                    # @param [ChallengeStatuses] status The Status of the Challenges to fetch. One of `pending`, `expired`, `approved` or `denied`.
+                    # @param [ListOrders] order The desired sort order of the Challenges list. One of `asc` or `desc` for ascending and descending respectively. Defaults to `asc`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -98,8 +98,8 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [String] factor_sid The unique SID identifier of the Factor.
-                    # @param [ChallengeChallengeStatuses] status The Status of the Challenges to fetch. One of `pending`, `expired`, `approved` or `denied`.
-                    # @param [ChallengeListOrders] order The desired sort order of the Challenges list. One of `asc` or `desc` for ascending and descending respectively. Defaults to `asc`.
+                    # @param [ChallengeStatuses] status The Status of the Challenges to fetch. One of `pending`, `expired`, `approved` or `denied`.
+                    # @param [ListOrders] order The desired sort order of the Challenges list. One of `asc` or `desc` for ascending and descending respectively. Defaults to `asc`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -137,8 +137,8 @@ module Twilio
                     # Retrieve a single page of ChallengeInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] factor_sid The unique SID identifier of the Factor.
-                    # @param [ChallengeChallengeStatuses] status The Status of the Challenges to fetch. One of `pending`, `expired`, `approved` or `denied`.
-                    # @param [ChallengeListOrders] order The desired sort order of the Challenges list. One of `asc` or `desc` for ascending and descending respectively. Defaults to `asc`.
+                    # @param [ChallengeStatuses] status The Status of the Challenges to fetch. One of `pending`, `expired`, `approved` or `denied`.
+                    # @param [ListOrders] order The desired sort order of the Challenges list. One of `asc` or `desc` for ascending and descending respectively. Defaults to `asc`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -182,6 +182,7 @@ module Twilio
                         '#<Twilio.Verify.V2.ChallengeList>'
                     end
                 end
+
 
                 class ChallengeContext < InstanceContext
                     ##
@@ -262,14 +263,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.ChallengeContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.ChallengeContext #{context}>"
                     end
                 end
@@ -414,13 +415,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ChallengeChallengeStatuses] 
+                    # @return [ChallengeStatuses] 
                     def status
                         @properties['status']
                     end
                     
                     ##
-                    # @return [ChallengeChallengeReasons] 
+                    # @return [ChallengeReasons] 
                     def responded_reason
                         @properties['responded_reason']
                     end
@@ -444,7 +445,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ChallengeFactorTypes] 
+                    # @return [FactorTypes] 
                     def factor_type
                         @properties['factor_type']
                     end
@@ -506,6 +507,7 @@ module Twilio
                         "<Twilio.Verify.V2.ChallengeInstance #{values}>"
                     end
                 end
+
              end
              end
             end

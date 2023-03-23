@@ -51,6 +51,7 @@ module Twilio
                         '#<Twilio.Pricing.V1.MessagingList>'
                     end
                 end
+
                 class MessagingPage < Page
                     ##
                     # Initialize the MessagingPage
@@ -107,6 +108,7 @@ module Twilio
                         "<Twilio.Pricing.V1.MessagingInstance>"
                     end
                 end
+
             end
         end
     end

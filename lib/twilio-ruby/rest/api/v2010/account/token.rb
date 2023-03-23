@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Tokens.json"
                         
                     end
@@ -59,6 +59,7 @@ module Twilio
                         '#<Twilio.Api.V2010.TokenList>'
                     end
                 end
+
                 class TokenPage < Page
                     ##
                     # Initialize the TokenPage
@@ -167,6 +168,7 @@ module Twilio
                         "<Twilio.Api.V2010.TokenInstance>"
                     end
                 end
+
              end
             end
         end

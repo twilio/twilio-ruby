@@ -53,6 +53,7 @@ module Twilio
                         '#<Twilio.FlexApi.V1.InsightsSettingsAnswerSetsList>'
                     end
                 end
+
                 class InsightsSettingsAnswerSetsPage < Page
                     ##
                     # Initialize the InsightsSettingsAnswerSetsPage
@@ -147,6 +148,7 @@ module Twilio
                         "<Twilio.FlexApi.V1.InsightsSettingsAnswerSetsInstance>"
                     end
                 end
+
             end
         end
     end

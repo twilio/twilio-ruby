@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, account_sid: nil, call_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid,call_sid: call_sid, }
+                        @solution = { account_sid: account_sid, call_sid: call_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Calls/#{@solution[:call_sid]}/Notifications.json"
                         
                     end
@@ -154,6 +154,7 @@ module Twilio
                     end
                 end
 
+
                 class NotificationContext < InstanceContext
                     ##
                     # Initialize the NotificationContext
@@ -190,14 +191,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.NotificationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.NotificationContext #{context}>"
                     end
                 end
@@ -404,6 +405,7 @@ module Twilio
                         "<Twilio.Api.V2010.NotificationInstance #{values}>"
                     end
                 end
+
              end
              end
             end

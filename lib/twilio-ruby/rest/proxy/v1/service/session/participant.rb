@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, service_sid: nil, session_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,session_sid: session_sid, }
+                        @solution = { service_sid: service_sid, session_sid: session_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Sessions/#{@solution[:session_sid]}/Participants"
                         
                     end
@@ -156,6 +156,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class ParticipantContext < InstanceContext
@@ -227,14 +228,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Proxy.V1.ParticipantContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Proxy.V1.ParticipantContext #{context}>"
                     end
                 end
@@ -428,6 +429,7 @@ module Twilio
                         "<Twilio.Proxy.V1.ParticipantInstance #{values}>"
                     end
                 end
+
              end
              end
             end

@@ -145,6 +145,7 @@ module Twilio
                     end
                 end
 
+
                 class SourceIpMappingContext < InstanceContext
                     ##
                     # Initialize the SourceIpMappingContext
@@ -205,14 +206,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Voice.V1.SourceIpMappingContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Voice.V1.SourceIpMappingContext #{context}>"
                     end
                 end
@@ -363,6 +364,7 @@ module Twilio
                         "<Twilio.Voice.V1.SourceIpMappingInstance #{values}>"
                     end
                 end
+
             end
         end
     end

@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, connection_policy_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { connection_policy_sid: connection_policy_sid, }
+                        @solution = { connection_policy_sid: connection_policy_sid }
                         @uri = "/ConnectionPolicies/#{@solution[:connection_policy_sid]}/Targets"
                         
                     end
@@ -157,6 +157,7 @@ module Twilio
                     end
                 end
 
+
                 class ConnectionPolicyTargetContext < InstanceContext
                     ##
                     # Initialize the ConnectionPolicyTargetContext
@@ -232,14 +233,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Voice.V1.ConnectionPolicyTargetContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Voice.V1.ConnectionPolicyTargetContext #{context}>"
                     end
                 end
@@ -437,6 +438,7 @@ module Twilio
                         "<Twilio.Voice.V1.ConnectionPolicyTargetInstance #{values}>"
                     end
                 end
+
              end
             end
         end

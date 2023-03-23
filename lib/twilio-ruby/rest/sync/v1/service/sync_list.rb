@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid, }
+                        @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Lists"
                         
                     end
@@ -151,6 +151,7 @@ module Twilio
                     end
                 end
 
+
                 class SyncListContext < InstanceContext
                     ##
                     # Initialize the SyncListContext
@@ -265,14 +266,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Sync.V1.SyncListContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Sync.V1.SyncListContext #{context}>"
                     end
                 end
@@ -475,6 +476,7 @@ module Twilio
                         "<Twilio.Sync.V1.SyncListInstance #{values}>"
                     end
                 end
+
              end
             end
         end

@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, trust_product_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { trust_product_sid: trust_product_sid, }
+                        @solution = { trust_product_sid: trust_product_sid }
                         @uri = "/TrustProducts/#{@solution[:trust_product_sid]}/EntityAssignments"
                         
                     end
@@ -145,6 +145,7 @@ module Twilio
                     end
                 end
 
+
                 class TrustProductsEntityAssignmentsContext < InstanceContext
                     ##
                     # Initialize the TrustProductsEntityAssignmentsContext
@@ -187,14 +188,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trusthub.V1.TrustProductsEntityAssignmentsContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trusthub.V1.TrustProductsEntityAssignmentsContext #{context}>"
                     end
                 end
@@ -332,6 +333,7 @@ module Twilio
                         "<Twilio.Trusthub.V1.TrustProductsEntityAssignmentsInstance #{values}>"
                     end
                 end
+
              end
             end
         end

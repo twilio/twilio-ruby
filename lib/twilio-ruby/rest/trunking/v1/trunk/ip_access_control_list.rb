@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, trunk_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { trunk_sid: trunk_sid, }
+                        @solution = { trunk_sid: trunk_sid }
                         @uri = "/Trunks/#{@solution[:trunk_sid]}/IpAccessControlLists"
                         
                     end
@@ -145,6 +145,7 @@ module Twilio
                     end
                 end
 
+
                 class IpAccessControlListContext < InstanceContext
                     ##
                     # Initialize the IpAccessControlListContext
@@ -187,14 +188,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trunking.V1.IpAccessControlListContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Trunking.V1.IpAccessControlListContext #{context}>"
                     end
                 end
@@ -339,6 +340,7 @@ module Twilio
                         "<Twilio.Trunking.V1.IpAccessControlListInstance #{values}>"
                     end
                 end
+
              end
             end
         end

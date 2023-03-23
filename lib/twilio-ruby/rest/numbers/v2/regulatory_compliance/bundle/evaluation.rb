@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, bundle_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { bundle_sid: bundle_sid, }
+                        @solution = { bundle_sid: bundle_sid }
                         @uri = "/RegulatoryCompliance/Bundles/#{@solution[:bundle_sid]}/Evaluations"
                         
                     end
@@ -139,6 +139,7 @@ module Twilio
                     end
                 end
 
+
                 class EvaluationContext < InstanceContext
                     ##
                     # Initialize the EvaluationContext
@@ -173,14 +174,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Numbers.V2.EvaluationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Numbers.V2.EvaluationContext #{context}>"
                     end
                 end
@@ -279,7 +280,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [EvaluationStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -324,6 +325,7 @@ module Twilio
                         "<Twilio.Numbers.V2.EvaluationInstance #{values}>"
                     end
                 end
+
              end
              end
             end

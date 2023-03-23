@@ -65,6 +65,7 @@ module Twilio
                         '#<Twilio.FlexApi.V2.WebChannelsList>'
                     end
                 end
+
                 class WebChannelsPage < Page
                     ##
                     # Initialize the WebChannelsPage
@@ -138,6 +139,7 @@ module Twilio
                         "<Twilio.FlexApi.V2.WebChannelsInstance>"
                     end
                 end
+
             end
         end
     end

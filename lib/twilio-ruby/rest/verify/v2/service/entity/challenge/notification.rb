@@ -29,7 +29,7 @@ module Twilio
                     def initialize(version, service_sid: nil, identity: nil, challenge_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { service_sid: service_sid,identity: identity,challenge_sid: challenge_sid, }
+                        @solution = { service_sid: service_sid, identity: identity, challenge_sid: challenge_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Entities/#{@solution[:identity]}/Challenges/#{@solution[:challenge_sid]}/Notifications"
                         
                     end
@@ -63,6 +63,7 @@ module Twilio
                         '#<Twilio.Verify.V2.NotificationList>'
                     end
                 end
+
                 class NotificationPage < Page
                     ##
                     # Initialize the NotificationPage
@@ -185,6 +186,7 @@ module Twilio
                         "<Twilio.Verify.V2.NotificationInstance>"
                     end
                 end
+
              end
              end
              end

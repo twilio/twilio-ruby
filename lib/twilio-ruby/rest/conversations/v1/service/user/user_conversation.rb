@@ -28,7 +28,7 @@ module Twilio
                     def initialize(version, chat_service_sid: nil, user_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { chat_service_sid: chat_service_sid,user_sid: user_sid, }
+                        @solution = { chat_service_sid: chat_service_sid, user_sid: user_sid }
                         @uri = "/Services/#{@solution[:chat_service_sid]}/Users/#{@solution[:user_sid]}/Conversations"
                         
                     end
@@ -126,6 +126,7 @@ module Twilio
                     end
                 end
 
+
                 class UserConversationContext < InstanceContext
                     ##
                     # Initialize the UserConversationContext
@@ -168,7 +169,7 @@ module Twilio
 
                     ##
                     # Update the UserConversationInstance
-                    # @param [ServiceUserConversationNotificationLevel] notification_level 
+                    # @param [NotificationLevel] notification_level 
                     # @param [Time] last_read_timestamp The date of the last message read in conversation by the user, given in ISO 8601 format.
                     # @param [String] last_read_message_index The index of the last Message in the Conversation that the Participant has read.
                     # @return [UserConversationInstance] Updated UserConversationInstance
@@ -198,14 +199,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.UserConversationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.UserConversationContext #{context}>"
                     end
                 end
@@ -338,7 +339,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ServiceUserConversationState] 
+                    # @return [State] 
                     def conversation_state
                         @properties['conversation_state']
                     end
@@ -374,7 +375,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ServiceUserConversationNotificationLevel] 
+                    # @return [NotificationLevel] 
                     def notification_level
                         @properties['notification_level']
                     end
@@ -415,7 +416,7 @@ module Twilio
 
                     ##
                     # Update the UserConversationInstance
-                    # @param [ServiceUserConversationNotificationLevel] notification_level 
+                    # @param [NotificationLevel] notification_level 
                     # @param [Time] last_read_timestamp The date of the last message read in conversation by the user, given in ISO 8601 format.
                     # @param [String] last_read_message_index The index of the last Message in the Conversation that the Participant has read.
                     # @return [UserConversationInstance] Updated UserConversationInstance
@@ -446,6 +447,7 @@ module Twilio
                         "<Twilio.Conversations.V1.UserConversationInstance #{values}>"
                     end
                 end
+
              end
              end
             end

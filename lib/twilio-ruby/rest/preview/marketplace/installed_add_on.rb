@@ -151,6 +151,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class InstalledAddOnContext < InstanceContext
@@ -239,14 +240,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Preview.Marketplace.InstalledAddOnContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Preview.Marketplace.InstalledAddOnContext #{context}>"
                     end
                 end
@@ -435,6 +436,7 @@ module Twilio
                         "<Twilio.Preview.Marketplace.InstalledAddOnInstance #{values}>"
                     end
                 end
+
             end
         end
     end

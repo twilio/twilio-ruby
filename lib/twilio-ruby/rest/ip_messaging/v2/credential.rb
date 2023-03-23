@@ -31,7 +31,7 @@ module Twilio
                     end
                     ##
                     # Create the CredentialInstance
-                    # @param [CredentialPushService] type 
+                    # @param [PushService] type 
                     # @param [String] friendly_name 
                     # @param [String] certificate 
                     # @param [String] private_key 
@@ -160,6 +160,7 @@ module Twilio
                     end
                 end
 
+
                 class CredentialContext < InstanceContext
                     ##
                     # Initialize the CredentialContext
@@ -235,14 +236,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V2.CredentialContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.IpMessaging.V2.CredentialContext #{context}>"
                     end
                 end
@@ -335,7 +336,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CredentialPushService] 
+                    # @return [PushService] 
                     def type
                         @properties['type']
                     end
@@ -422,6 +423,7 @@ module Twilio
                         "<Twilio.IpMessaging.V2.CredentialInstance #{values}>"
                     end
                 end
+
             end
         end
     end

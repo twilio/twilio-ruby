@@ -34,8 +34,8 @@ module Twilio
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. This value must be 191 characters or fewer in length and be unique. **This value should not have PII.**
                     # @param [String] default_ttl The default `ttl` value to set for Sessions created in the Service. The TTL (time to live) is measured in seconds after the Session's last create or last Interaction. The default value of `0` indicates an unlimited Session length. You can override a Session's default TTL value by setting its `ttl` value.
                     # @param [String] callback_url The URL we should call when the interaction status changes.
-                    # @param [ServiceGeoMatchLevel] geo_match_level 
-                    # @param [ServiceNumberSelectionBehavior] number_selection_behavior 
+                    # @param [GeoMatchLevel] geo_match_level 
+                    # @param [NumberSelectionBehavior] number_selection_behavior 
                     # @param [String] intercept_callback_url The URL we call on each interaction. If we receive a 403 status, we block the interaction; otherwise the interaction continues.
                     # @param [String] out_of_session_callback_url The URL we should call when an inbound call or SMS action occurs on a closed or non-existent Session. If your server (or a Twilio [function](https://www.twilio.com/functions)) responds with valid [TwiML](https://www.twilio.com/docs/voice/twiml), we will process it. This means it is possible, for example, to play a message for a call, send an automated text message response, or redirect a call to another Phone Number. See [Out-of-Session Callback Response Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide) for more information.
                     # @param [String] chat_instance_sid The SID of the Chat Service Instance managed by Proxy Service. The Chat Service enables Proxy to forward SMS and channel messages to this chat instance. This is a one-to-one relationship.
@@ -163,6 +163,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class ServiceContext < InstanceContext
@@ -209,8 +210,8 @@ module Twilio
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. This value must be 191 characters or fewer in length and be unique. **This value should not have PII.**
                     # @param [String] default_ttl The default `ttl` value to set for Sessions created in the Service. The TTL (time to live) is measured in seconds after the Session's last create or last Interaction. The default value of `0` indicates an unlimited Session length. You can override a Session's default TTL value by setting its `ttl` value.
                     # @param [String] callback_url The URL we should call when the interaction status changes.
-                    # @param [ServiceGeoMatchLevel] geo_match_level 
-                    # @param [ServiceNumberSelectionBehavior] number_selection_behavior 
+                    # @param [GeoMatchLevel] geo_match_level 
+                    # @param [NumberSelectionBehavior] number_selection_behavior 
                     # @param [String] intercept_callback_url The URL we call on each interaction. If we receive a 403 status, we block the interaction; otherwise the interaction continues.
                     # @param [String] out_of_session_callback_url The URL we should call when an inbound call or SMS action occurs on a closed or non-existent Session. If your server (or a Twilio [function](https://www.twilio.com/functions)) responds with valid [TwiML](https://www.twilio.com/docs/voice/twiml), we will process it. This means it is possible, for example, to play a message for a call, send an automated text message response, or redirect a call to another Phone Number. See [Out-of-Session Callback Response Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide) for more information.
                     # @param [String] chat_instance_sid The SID of the Chat Service Instance managed by Proxy Service. The Chat Service enables Proxy to forward SMS and channel messages to this chat instance. This is a one-to-one relationship.
@@ -315,14 +316,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Proxy.V1.ServiceContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Proxy.V1.ServiceContext #{context}>"
                     end
                 end
@@ -439,13 +440,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ServiceNumberSelectionBehavior] 
+                    # @return [NumberSelectionBehavior] 
                     def number_selection_behavior
                         @properties['number_selection_behavior']
                     end
                     
                     ##
-                    # @return [ServiceGeoMatchLevel] 
+                    # @return [GeoMatchLevel] 
                     def geo_match_level
                         @properties['geo_match_level']
                     end
@@ -507,8 +508,8 @@ module Twilio
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. This value must be 191 characters or fewer in length and be unique. **This value should not have PII.**
                     # @param [String] default_ttl The default `ttl` value to set for Sessions created in the Service. The TTL (time to live) is measured in seconds after the Session's last create or last Interaction. The default value of `0` indicates an unlimited Session length. You can override a Session's default TTL value by setting its `ttl` value.
                     # @param [String] callback_url The URL we should call when the interaction status changes.
-                    # @param [ServiceGeoMatchLevel] geo_match_level 
-                    # @param [ServiceNumberSelectionBehavior] number_selection_behavior 
+                    # @param [GeoMatchLevel] geo_match_level 
+                    # @param [NumberSelectionBehavior] number_selection_behavior 
                     # @param [String] intercept_callback_url The URL we call on each interaction. If we receive a 403 status, we block the interaction; otherwise the interaction continues.
                     # @param [String] out_of_session_callback_url The URL we should call when an inbound call or SMS action occurs on a closed or non-existent Session. If your server (or a Twilio [function](https://www.twilio.com/functions)) responds with valid [TwiML](https://www.twilio.com/docs/voice/twiml), we will process it. This means it is possible, for example, to play a message for a call, send an automated text message response, or redirect a call to another Phone Number. See [Out-of-Session Callback Response Guide](https://www.twilio.com/docs/proxy/out-session-callback-response-guide) for more information.
                     # @param [String] chat_instance_sid The SID of the Chat Service Instance managed by Proxy Service. The Chat Service enables Proxy to forward SMS and channel messages to this chat instance. This is a one-to-one relationship.
@@ -571,6 +572,7 @@ module Twilio
                         "<Twilio.Proxy.V1.ServiceInstance #{values}>"
                     end
                 end
+
             end
         end
     end

@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, room_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { room_sid: room_sid, }
+                        @solution = { room_sid: room_sid }
                         @uri = "/Rooms/#{@solution[:room_sid]}/RecordingRules"
                         
                     end
@@ -72,6 +72,7 @@ module Twilio
                         '#<Twilio.Video.V1.RecordingRulesList>'
                     end
                 end
+
                 class RecordingRulesPage < Page
                     ##
                     # Initialize the RecordingRulesPage
@@ -159,6 +160,7 @@ module Twilio
                         "<Twilio.Video.V1.RecordingRulesInstance>"
                     end
                 end
+
              end
             end
         end

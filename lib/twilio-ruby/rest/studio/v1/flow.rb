@@ -123,6 +123,7 @@ module Twilio
                     end
                 end
 
+
                 class FlowContext < InstanceContext
                     ##
                     # Initialize the FlowContext
@@ -209,14 +210,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V1.FlowContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Studio.V1.FlowContext #{context}>"
                     end
                 end
@@ -310,7 +311,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [FlowStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -389,6 +390,7 @@ module Twilio
                         "<Twilio.Studio.V1.FlowInstance #{values}>"
                     end
                 end
+
             end
         end
     end

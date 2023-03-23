@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, account_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { account_sid: account_sid, }
+                        @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Messages.json"
                         
                     end
@@ -41,12 +41,12 @@ module Twilio
                     # @param [String] attempt Total number of attempts made ( including this ) to send out the message regardless of the provider used
                     # @param [String] validity_period How long in seconds the message can remain in our outgoing message queue. After this period elapses, the message fails and we call your status callback. Can be between 1 and the default value of 14,400 seconds. After a message has been accepted by a carrier, however, we cannot guarantee that the message will not be queued after this period. We recommend that this value be at least 5 seconds.
                     # @param [Boolean] force_delivery Reserved
-                    # @param [MessageContentRetention] content_retention 
-                    # @param [MessageAddressRetention] address_retention 
+                    # @param [ContentRetention] content_retention 
+                    # @param [AddressRetention] address_retention 
                     # @param [Boolean] smart_encoded Whether to detect Unicode characters that have a similar GSM-7 character and replace them. Can be: `true` or `false`.
                     # @param [Array[String]] persistent_action Rich actions for Channels Messages.
                     # @param [Boolean] shorten_urls Determines the usage of Click Tracking. Setting it to `true` will instruct Twilio to replace all links in the Message with a shortened version based on the associated Domain Sid and track clicks on them. If this parameter is not set on an API call, we will use the value set on the Messaging Service. If this parameter is not set and the value is not configured on the Messaging Service used this will default to `false`.
-                    # @param [MessageScheduleType] schedule_type 
+                    # @param [ScheduleType] schedule_type 
                     # @param [Time] send_at The time that Twilio will send the message. Must be in ISO 8601 format.
                     # @param [Boolean] send_as_mms If set to True, Twilio will deliver the message as a single MMS message, regardless of the presence of media.
                     # @param [String] content_sid The SID of the Content object returned at Content API content create time (https://www.twilio.com/docs/content-api/create-and-send-your-first-content-api-template#create-a-template). If this parameter is not specified, then the Content API will not be utilized.
@@ -243,6 +243,7 @@ module Twilio
                     end
                 end
 
+
                 class MessageContext < InstanceContext
                     ##
                     # Initialize the MessageContext
@@ -286,7 +287,7 @@ module Twilio
                     ##
                     # Update the MessageInstance
                     # @param [String] body The text of the message you want to send. Can be up to 1,600 characters long.
-                    # @param [MessageUpdateStatus] status 
+                    # @param [UpdateStatus] status 
                     # @return [MessageInstance] Updated MessageInstance
                     def update(
                         body: :unset, 
@@ -350,14 +351,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.MessageContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Api.V2010.MessageContext #{context}>"
                     end
                 end
@@ -456,7 +457,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [MessageDirection] 
+                    # @return [Direction] 
                     def direction
                         @properties['direction']
                     end
@@ -510,7 +511,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [MessageStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -582,7 +583,7 @@ module Twilio
                     ##
                     # Update the MessageInstance
                     # @param [String] body The text of the message you want to send. Can be up to 1,600 characters long.
-                    # @param [MessageUpdateStatus] status 
+                    # @param [UpdateStatus] status 
                     # @return [MessageInstance] Updated MessageInstance
                     def update(
                         body: :unset, 
@@ -623,6 +624,7 @@ module Twilio
                         "<Twilio.Api.V2010.MessageInstance #{values}>"
                     end
                 end
+
              end
             end
         end

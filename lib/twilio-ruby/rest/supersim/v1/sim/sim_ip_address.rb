@@ -27,7 +27,7 @@ module Twilio
                     def initialize(version, sim_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { sim_sid: sim_sid, }
+                        @solution = { sim_sid: sim_sid }
                         @uri = "/Sims/#{@solution[:sim_sid]}/IpAddresses"
                         
                     end
@@ -124,6 +124,7 @@ module Twilio
                         '#<Twilio.Supersim.V1.SimIpAddressList>'
                     end
                 end
+
                 class SimIpAddressPage < Page
                     ##
                     # Initialize the SimIpAddressPage
@@ -180,7 +181,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [SimIpAddressIpAddressVersion] 
+                    # @return [IpAddressVersion] 
                     def ip_address_version
                         @properties['ip_address_version']
                     end
@@ -197,6 +198,7 @@ module Twilio
                         "<Twilio.Supersim.V1.SimIpAddressInstance>"
                     end
                 end
+
              end
             end
         end

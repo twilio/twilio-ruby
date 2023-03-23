@@ -150,6 +150,7 @@ module Twilio
                     end
                 end
 
+
                 class SupportingDocumentContext < InstanceContext
                     ##
                     # Initialize the SupportingDocumentContext
@@ -213,14 +214,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Numbers.V2.SupportingDocumentContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Numbers.V2.SupportingDocumentContext #{context}>"
                     end
                 end
@@ -322,7 +323,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [SupportingDocumentStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -409,6 +410,7 @@ module Twilio
                         "<Twilio.Numbers.V2.SupportingDocumentInstance #{values}>"
                     end
                 end
+
              end
             end
         end

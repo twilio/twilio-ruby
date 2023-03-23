@@ -157,6 +157,7 @@ module Twilio
                     end
                 end
 
+
                 class WebChannelContext < InstanceContext
                     ##
                     # Initialize the WebChannelContext
@@ -195,7 +196,7 @@ module Twilio
 
                     ##
                     # Update the WebChannelInstance
-                    # @param [WebChannelChatStatus] chat_status 
+                    # @param [ChatStatus] chat_status 
                     # @param [String] post_engagement_data The post-engagement data.
                     # @return [WebChannelInstance] Updated WebChannelInstance
                     def update(
@@ -220,14 +221,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.WebChannelContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.FlexApi.V1.WebChannelContext #{context}>"
                     end
                 end
@@ -353,7 +354,7 @@ module Twilio
 
                     ##
                     # Update the WebChannelInstance
-                    # @param [WebChannelChatStatus] chat_status 
+                    # @param [ChatStatus] chat_status 
                     # @param [String] post_engagement_data The post-engagement data.
                     # @return [WebChannelInstance] Updated WebChannelInstance
                     def update(
@@ -381,6 +382,7 @@ module Twilio
                         "<Twilio.FlexApi.V1.WebChannelInstance #{values}>"
                     end
                 end
+
             end
         end
     end

@@ -31,14 +31,14 @@ module Twilio
                     end
                     ##
                     # Create the AddressConfigurationInstance
-                    # @param [ConfigurationAddressType] type 
+                    # @param [Type] type 
                     # @param [String] address The unique address to be configured. The address can be a whatsapp address or phone number
                     # @param [String] friendly_name The human-readable name of this configuration, limited to 256 characters. Optional.
                     # @param [Boolean] auto_creation_enabled Enable/Disable auto-creating conversations for messages to this address
-                    # @param [ConfigurationAddressAutoCreationType] auto_creation_type 
+                    # @param [AutoCreationType] auto_creation_type 
                     # @param [String] auto_creation_conversation_service_sid Conversation Service for the auto-created conversation. If not set, the conversation is created in the default service.
                     # @param [String] auto_creation_webhook_url For type `webhook`, the url for the webhook request.
-                    # @param [ConfigurationAddressMethod] auto_creation_webhook_method 
+                    # @param [Method] auto_creation_webhook_method 
                     # @param [Array[String]] auto_creation_webhook_filters The list of events, firing webhook event for this Conversation. Values can be any of the following: `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`, `onConversationUpdated`, `onConversationStateUpdated`, `onConversationRemoved`, `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`, `onDeliveryUpdated`
                     # @param [String] auto_creation_studio_flow_sid For type `studio`, the studio flow SID where the webhook should be sent to.
                     # @param [String] auto_creation_studio_retry_count For type `studio`, number of times to retry the webhook request
@@ -179,6 +179,7 @@ module Twilio
                     end
                 end
 
+
                 class AddressConfigurationContext < InstanceContext
                     ##
                     # Initialize the AddressConfigurationContext
@@ -219,10 +220,10 @@ module Twilio
                     # Update the AddressConfigurationInstance
                     # @param [String] friendly_name The human-readable name of this configuration, limited to 256 characters. Optional.
                     # @param [Boolean] auto_creation_enabled Enable/Disable auto-creating conversations for messages to this address
-                    # @param [ConfigurationAddressAutoCreationType] auto_creation_type 
+                    # @param [AutoCreationType] auto_creation_type 
                     # @param [String] auto_creation_conversation_service_sid Conversation Service for the auto-created conversation. If not set, the conversation is created in the default service.
                     # @param [String] auto_creation_webhook_url For type `webhook`, the url for the webhook request.
-                    # @param [ConfigurationAddressMethod] auto_creation_webhook_method 
+                    # @param [Method] auto_creation_webhook_method 
                     # @param [Array[String]] auto_creation_webhook_filters The list of events, firing webhook event for this Conversation. Values can be any of the following: `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`, `onConversationUpdated`, `onConversationStateUpdated`, `onConversationRemoved`, `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`, `onDeliveryUpdated`
                     # @param [String] auto_creation_studio_flow_sid For type `studio`, the studio flow SID where the webhook should be sent to.
                     # @param [String] auto_creation_studio_retry_count For type `studio`, number of times to retry the webhook request
@@ -263,14 +264,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.AddressConfigurationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Conversations.V1.AddressConfigurationContext #{context}>"
                     end
                 end
@@ -419,10 +420,10 @@ module Twilio
                     # Update the AddressConfigurationInstance
                     # @param [String] friendly_name The human-readable name of this configuration, limited to 256 characters. Optional.
                     # @param [Boolean] auto_creation_enabled Enable/Disable auto-creating conversations for messages to this address
-                    # @param [ConfigurationAddressAutoCreationType] auto_creation_type 
+                    # @param [AutoCreationType] auto_creation_type 
                     # @param [String] auto_creation_conversation_service_sid Conversation Service for the auto-created conversation. If not set, the conversation is created in the default service.
                     # @param [String] auto_creation_webhook_url For type `webhook`, the url for the webhook request.
-                    # @param [ConfigurationAddressMethod] auto_creation_webhook_method 
+                    # @param [Method] auto_creation_webhook_method 
                     # @param [Array[String]] auto_creation_webhook_filters The list of events, firing webhook event for this Conversation. Values can be any of the following: `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`, `onConversationUpdated`, `onConversationStateUpdated`, `onConversationRemoved`, `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`, `onDeliveryUpdated`
                     # @param [String] auto_creation_studio_flow_sid For type `studio`, the studio flow SID where the webhook should be sent to.
                     # @param [String] auto_creation_studio_retry_count For type `studio`, number of times to retry the webhook request
@@ -466,6 +467,7 @@ module Twilio
                         "<Twilio.Conversations.V1.AddressConfigurationInstance #{values}>"
                     end
                 end
+
             end
         end
     end

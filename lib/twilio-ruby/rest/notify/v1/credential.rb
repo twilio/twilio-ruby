@@ -31,7 +31,7 @@ module Twilio
                     end
                     ##
                     # Create the CredentialInstance
-                    # @param [CredentialPushService] type 
+                    # @param [PushService] type 
                     # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
                     # @param [String] certificate [APN only] The URL-encoded representation of the certificate. Strip everything outside of the headers, e.g. `-----BEGIN CERTIFICATE-----MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV.....A==-----END CERTIFICATE-----`
                     # @param [String] private_key [APN only] The URL-encoded representation of the private key. Strip everything outside of the headers, e.g. `-----BEGIN RSA PRIVATE KEY-----MIIEpQIBAAKCAQEAuyf/lNrH9ck8DmNyo3fGgvCI1l9s+cmBY3WIz+cUDqmxiieR\\\\n.-----END RSA PRIVATE KEY-----`
@@ -160,6 +160,7 @@ module Twilio
                     end
                 end
 
+
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class CredentialContext < InstanceContext
@@ -237,14 +238,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Notify.V1.CredentialContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Notify.V1.CredentialContext #{context}>"
                     end
                 end
@@ -337,7 +338,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CredentialPushService] 
+                    # @return [PushService] 
                     def type
                         @properties['type']
                     end
@@ -424,6 +425,7 @@ module Twilio
                         "<Twilio.Notify.V1.CredentialInstance #{values}>"
                     end
                 end
+
             end
         end
     end

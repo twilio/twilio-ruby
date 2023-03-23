@@ -35,7 +35,7 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [String] sim Filter the Settings Updates by a Super SIM's SID or UniqueName.
-                    # @param [SettingsUpdateStatus] status Filter the Settings Updates by status. Can be `scheduled`, `in-progress`, `successful`, or `failed`.
+                    # @param [Status] status Filter the Settings Updates by status. Can be `scheduled`, `in-progress`, `successful`, or `failed`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -57,7 +57,7 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [String] sim Filter the Settings Updates by a Super SIM's SID or UniqueName.
-                    # @param [SettingsUpdateStatus] status Filter the Settings Updates by status. Can be `scheduled`, `in-progress`, `successful`, or `failed`.
+                    # @param [Status] status Filter the Settings Updates by status. Can be `scheduled`, `in-progress`, `successful`, or `failed`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -94,7 +94,7 @@ module Twilio
                     # Retrieve a single page of SettingsUpdateInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] sim Filter the Settings Updates by a Super SIM's SID or UniqueName.
-                    # @param [SettingsUpdateStatus] status Filter the Settings Updates by status. Can be `scheduled`, `in-progress`, `successful`, or `failed`.
+                    # @param [Status] status Filter the Settings Updates by status. Can be `scheduled`, `in-progress`, `successful`, or `failed`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -136,6 +136,7 @@ module Twilio
                         '#<Twilio.Supersim.V1.SettingsUpdateList>'
                     end
                 end
+
                 class SettingsUpdatePage < Page
                     ##
                     # Initialize the SettingsUpdatePage
@@ -210,7 +211,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [SettingsUpdateStatus] 
+                    # @return [Status] 
                     def status
                         @properties['status']
                     end
@@ -251,6 +252,7 @@ module Twilio
                         "<Twilio.Supersim.V1.SettingsUpdateInstance>"
                     end
                 end
+
             end
         end
     end

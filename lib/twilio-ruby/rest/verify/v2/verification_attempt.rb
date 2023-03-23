@@ -38,10 +38,10 @@ module Twilio
                     # @param [Time] date_created_before Datetime filter used to query Verification Attempts created before this datetime. Given as GMT in RFC 2822 format.
                     # @param [String] channel_data_to Destination of a verification. It is phone number in E.164 format.
                     # @param [String] country Filter used to query Verification Attempts sent to the specified destination country.
-                    # @param [VerificationAttemptChannels] channel Filter used to query Verification Attempts by communication channel. Valid values are `SMS` and `CALL`
+                    # @param [Channels] channel Filter used to query Verification Attempts by communication channel. Valid values are `SMS` and `CALL`
                     # @param [String] verify_service_sid Filter used to query Verification Attempts by verify service. Only attempts of the provided SID will be returned.
                     # @param [String] verification_sid Filter used to return all the Verification Attempts of a single verification. Only attempts of the provided verification SID will be returned.
-                    # @param [VerificationAttemptConversionStatus] status Filter used to query Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for attempts that were not converted, and `CONVERTED`, for attempts that were confirmed.
+                    # @param [ConversionStatus] status Filter used to query Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for attempts that were not converted, and `CONVERTED`, for attempts that were confirmed.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -72,10 +72,10 @@ module Twilio
                     # @param [Time] date_created_before Datetime filter used to query Verification Attempts created before this datetime. Given as GMT in RFC 2822 format.
                     # @param [String] channel_data_to Destination of a verification. It is phone number in E.164 format.
                     # @param [String] country Filter used to query Verification Attempts sent to the specified destination country.
-                    # @param [VerificationAttemptChannels] channel Filter used to query Verification Attempts by communication channel. Valid values are `SMS` and `CALL`
+                    # @param [Channels] channel Filter used to query Verification Attempts by communication channel. Valid values are `SMS` and `CALL`
                     # @param [String] verify_service_sid Filter used to query Verification Attempts by verify service. Only attempts of the provided SID will be returned.
                     # @param [String] verification_sid Filter used to return all the Verification Attempts of a single verification. Only attempts of the provided verification SID will be returned.
-                    # @param [VerificationAttemptConversionStatus] status Filter used to query Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for attempts that were not converted, and `CONVERTED`, for attempts that were confirmed.
+                    # @param [ConversionStatus] status Filter used to query Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for attempts that were not converted, and `CONVERTED`, for attempts that were confirmed.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -121,10 +121,10 @@ module Twilio
                     # @param [Time] date_created_before Datetime filter used to query Verification Attempts created before this datetime. Given as GMT in RFC 2822 format.
                     # @param [String] channel_data_to Destination of a verification. It is phone number in E.164 format.
                     # @param [String] country Filter used to query Verification Attempts sent to the specified destination country.
-                    # @param [VerificationAttemptChannels] channel Filter used to query Verification Attempts by communication channel. Valid values are `SMS` and `CALL`
+                    # @param [Channels] channel Filter used to query Verification Attempts by communication channel. Valid values are `SMS` and `CALL`
                     # @param [String] verify_service_sid Filter used to query Verification Attempts by verify service. Only attempts of the provided SID will be returned.
                     # @param [String] verification_sid Filter used to return all the Verification Attempts of a single verification. Only attempts of the provided verification SID will be returned.
-                    # @param [VerificationAttemptConversionStatus] status Filter used to query Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for attempts that were not converted, and `CONVERTED`, for attempts that were confirmed.
+                    # @param [ConversionStatus] status Filter used to query Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for attempts that were not converted, and `CONVERTED`, for attempts that were confirmed.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -179,6 +179,7 @@ module Twilio
                     end
                 end
 
+
                 class VerificationAttemptContext < InstanceContext
                     ##
                     # Initialize the VerificationAttemptContext
@@ -211,14 +212,14 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.VerificationAttemptContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        context = @solution.map {|k, v| "#{k}: #{v}"}.join(',')
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
                         "#<Twilio.Verify.V2.VerificationAttemptContext #{context}>"
                     end
                 end
@@ -332,13 +333,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [VerificationAttemptConversionStatus] 
+                    # @return [ConversionStatus] 
                     def conversion_status
                         @properties['conversion_status']
                     end
                     
                     ##
-                    # @return [VerificationAttemptChannels] 
+                    # @return [Channels] 
                     def channel
                         @properties['channel']
                     end
@@ -383,6 +384,7 @@ module Twilio
                         "<Twilio.Verify.V2.VerificationAttemptInstance #{values}>"
                     end
                 end
+
             end
         end
     end
