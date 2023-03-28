@@ -38,6 +38,12 @@ module Twilio
       end
 
       ##
+      # @return [Twilio::REST::Content::V1::ContentAndApprovalsInstance]
+      def content_and_approvals
+        self.v1.content_and_approvals()
+      end
+
+      ##
       # @return [Twilio::REST::Content::V1::LegacyContentInstance]
       def legacy_contents
         self.v1.legacy_contents()

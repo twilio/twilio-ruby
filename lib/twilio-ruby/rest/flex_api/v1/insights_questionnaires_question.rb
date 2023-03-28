@@ -29,18 +29,18 @@ module Twilio
           # Create the InsightsQuestionnairesQuestionInstance
           # @param [String] category_id The ID of the category
           # @param [String] question The question.
-          # @param [String] description The description for the question.
           # @param [String] answer_set_id The answer_set for the question.
           # @param [Boolean] allow_na The flag to enable for disable NA for answer.
+          # @param [String] description The description for the question.
           # @param [String] token The Token HTTP request header
           # @return [InsightsQuestionnairesQuestionInstance] Created InsightsQuestionnairesQuestionInstance
-          def create(category_id: nil, question: nil, description: nil, answer_set_id: nil, allow_na: nil, token: :unset)
+          def create(category_id: nil, question: nil, answer_set_id: nil, allow_na: nil, description: :unset, token: :unset)
             data = Twilio::Values.of({
                 'CategoryId' => category_id,
                 'Question' => question,
-                'Description' => description,
                 'AnswerSetId' => answer_set_id,
                 'AllowNa' => allow_na,
+                'Description' => description,
             })
             headers = Twilio::Values.of({'Token' => token, })
 

@@ -139,4 +139,98 @@ describe 'Assessments' do
 
     expect(actual).to_not eq(nil)
   end
+
+  it "can read" do
+    @holodeck.mock(Twilio::Response.new(500, ''))
+
+    expect {
+      @client.flex_api.v1.assessments.list(token: 'token')
+    }.to raise_exception(Twilio::REST::TwilioError)
+
+    headers = {'Token' => 'token', }
+    expect(
+    @holodeck.has_request?(Holodeck::Request.new(
+        method: 'get',
+        url: 'https://flex-api.twilio.com/v1/Insights/QM/Assessments',
+        headers: headers,
+    ))).to eq(true)
+  end
+
+  it "receives read_by_segment_id responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "assessments": [
+              {
+                  "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "assessment_id": "123",
+                  "offset": "0.0",
+                  "report": true,
+                  "weight": "1",
+                  "agent_id": "5d80ee80-7608-55df-b2b2-5ab5608b9831",
+                  "segment_id": "dbdf1f7b-c776-5e78-9676-98a397fb3cdc",
+                  "user_name": "Supervisor",
+                  "user_email": "supervisor@example.com",
+                  "answer_id": "ed8697d3-558d-46c3-9b73-cd21cd93cbb3",
+                  "answer_text": "Fair",
+                  "timestamp": "1657329694199",
+                  "assessment": {
+                      "questionnaire": {
+                          "questionnaire_id": "7326e997-a84c-57cd-9186-bb94db0def2b",
+                          "name": "Customer Experience",
+                          "question": {
+                              "id": "41518739-4e38-5871-bb01-d9f6e0cd1377",
+                              "name": "Active listening",
+                              "category": {
+                                  "id": "4b4e78e4-4f05-49e2-bf52-0973c5cde418",
+                                  "name": "Good for Training"
+                              }
+                          }
+                      }
+                  },
+                  "url": "https://flex-api.twilio.com/v1/Insights/QM/Assessments/123"
+              }
+          ],
+          "meta": {
+              "first_page_url": "https://flex-api.twilio.com/v1/Insights/QM/Assessments?SegmentId=dbdf1f7b-c776-5e78-9676-98a397fb3cdc&PageSize=50&Page=0",
+              "key": "assessments",
+              "next_page_url": null,
+              "page": 0,
+              "page_size": 50,
+              "previous_page_url": null,
+              "url": "https://flex-api.twilio.com/v1/Insights/QM/Assessments?SegmentId=dbdf1f7b-c776-5e78-9676-98a397fb3cdc&PageSize=50&Page=0"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.flex_api.v1.assessments.list()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives read_empty responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "assessments": [],
+          "meta": {
+              "first_page_url": "https://flex-api.twilio.com/v1/Insights/QM/Assessments?SegmentId=dbdf1f7b-c776-5e78-9676-98a397fb3cdc&PageSize=50&Page=0",
+              "key": "assessments",
+              "next_page_url": null,
+              "page": 0,
+              "page_size": 50,
+              "previous_page_url": null,
+              "url": "https://flex-api.twilio.com/v1/Insights/QM/Assessments?SegmentId=dbdf1f7b-c776-5e78-9676-98a397fb3cdc&PageSize=50&Page=0"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.flex_api.v1.assessments.list()
+
+    expect(actual).to_not eq(nil)
+  end
 end

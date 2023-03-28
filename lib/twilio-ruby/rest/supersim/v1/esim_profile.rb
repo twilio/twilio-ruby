@@ -33,12 +33,18 @@ module Twilio
           #   resource changes from `reserving` to `available`.
           # @param [String] callback_method The HTTP method we should use to call
           #   `callback_url`. Can be: `GET` or `POST` and the default is POST.
+          # @param [Boolean] generate_matching_id When set to `true`, a value for `Eid` does
+          #   not need to be provided. Instead, when the eSIM profile is reserved, a matching
+          #   ID will be generated and returned via the `matching_id` property. This
+          #   identifies the specific eSIM profile that can be used by any capable device to
+          #   claim and download the profile.
           # @param [String] eid Identifier of the eUICC that will claim the eSIM Profile.
           # @return [EsimProfileInstance] Created EsimProfileInstance
-          def create(callback_url: :unset, callback_method: :unset, eid: :unset)
+          def create(callback_url: :unset, callback_method: :unset, generate_matching_id: :unset, eid: :unset)
             data = Twilio::Values.of({
                 'CallbackUrl' => callback_url,
                 'CallbackMethod' => callback_method,
+                'GenerateMatchingId' => generate_matching_id,
                 'Eid' => eid,
             })
 
@@ -250,6 +256,8 @@ module Twilio
                 'status' => payload['status'],
                 'eid' => payload['eid'],
                 'smdp_plus_address' => payload['smdp_plus_address'],
+                'matching_id' => payload['matching_id'],
+                'activation_code' => payload['activation_code'],
                 'error_code' => payload['error_code'],
                 'error_message' => payload['error_message'],
                 'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
@@ -313,6 +321,18 @@ module Twilio
           # @return [String] Address of the SM-DP+ server from which the Profile will be downloaded
           def smdp_plus_address
             @properties['smdp_plus_address']
+          end
+
+          ##
+          # @return [String] Unique identifier of the eSIM profile that be used to identify and download the eSIM profile
+          def matching_id
+            @properties['matching_id']
+          end
+
+          ##
+          # @return [String] Combined machine-readable activation code for acquiring an eSIM Profile with the Activation Code download method
+          def activation_code
+            @properties['activation_code']
           end
 
           ##

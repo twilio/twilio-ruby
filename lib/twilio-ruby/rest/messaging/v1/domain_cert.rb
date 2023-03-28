@@ -146,7 +146,7 @@ module Twilio
                 'domain_name' => payload['domain_name'],
                 'certificate_sid' => payload['certificate_sid'],
                 'url' => payload['url'],
-                'validated' => payload['validated'],
+                'cert_in_validation' => payload['cert_in_validation'],
             }
 
             # Context
@@ -208,9 +208,9 @@ module Twilio
           end
 
           ##
-          # @return [Boolean] Certificate validation field
-          def validated
-            @properties['validated']
+          # @return [Hash] New certificate in process of validation field
+          def cert_in_validation
+            @properties['cert_in_validation']
           end
 
           ##
