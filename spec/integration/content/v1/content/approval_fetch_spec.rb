@@ -36,8 +36,9 @@ describe 'ApprovalFetch' do
               "name": "tree_fiddy",
               "category": "ACCOUNT_UPDATE",
               "content_type": "twilio/location",
-              "status": "unsubmitted",
-              "rejection_reason": ""
+              "status": "approved",
+              "rejection_reason": "",
+              "allow_category_change": true
           },
           "url": "https://content.twilio.com/v1/Content/HXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ApprovalRequests"
       }

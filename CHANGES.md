@@ -1,6 +1,21 @@
 twilio-ruby changelog
 =====================
 
+[2023-03-22] Version 5.75.0
+---------------------------
+**Library - Chore**
+- [PR #630](https://github.com/twilio/twilio-ruby/pull/630): Accommodate jwt's minor and patch updates. Thanks to [@sato11](https://github.com/sato11)!
+
+**Api**
+- Revert Corrected the data type for `friendly_name` in Available Phone Number Local, Mobile and TollFree resources
+- Corrected the data type for `friendly_name` in Available Phone Number Local, Mobile and TollFree resources **(breaking change)**
+
+**Messaging**
+- Add `linkshortening_messaging_service` resource
+- Add new endpoint for GetDomainConfigByMessagingServiceSid
+- Remove `validated` parameter and add `cert_in_validation` parameter to Link Shortening API **(breaking change)**
+
+
 [2023-03-09] Version 5.74.5
 ---------------------------
 **Api**

@@ -74,8 +74,9 @@ module Twilio
             # @param [String] template_custom_substitutions A stringified JSON object in which
             #   the keys are the template's special variables and the values are the variables
             #   substitutions.
-            # @param [String] device_ip The IP address of the client's device. If provided, it
-            #   has to be a valid IPv4 or IPv6 address.
+            # @param [String] device_ip Strongly encouraged if using the auto channel. The IP
+            #   address of the client's device. If provided, it has to be a valid IPv4 or IPv6
+            #   address.
             # @return [VerificationInstance] Created VerificationInstance
             def create(to: nil, channel: nil, custom_friendly_name: :unset, custom_message: :unset, send_digits: :unset, locale: :unset, custom_code: :unset, amount: :unset, payee: :unset, rate_limits: :unset, channel_configuration: :unset, app_hash: :unset, template_sid: :unset, template_custom_substitutions: :unset, device_ip: :unset)
               data = Twilio::Values.of({

@@ -16,6 +16,7 @@ module Twilio
           super
           @version = 'v1'
           @contents = nil
+          @content_and_approvals = nil
           @legacy_contents = nil
         end
 
@@ -33,6 +34,12 @@ module Twilio
           else
               ContentContext.new(self, sid)
           end
+        end
+
+        ##
+        # @return [Twilio::REST::Content::V1::ContentAndApprovalsContext]
+        def content_and_approvals
+          @content_and_approvals ||= ContentAndApprovalsList.new self
         end
 
         ##
