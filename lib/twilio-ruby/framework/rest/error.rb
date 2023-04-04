@@ -3,7 +3,6 @@
 module Twilio
   module REST
     class TwilioError < StandardError
-      end
     end
 
     class RestError < TwilioError
