@@ -33,7 +33,7 @@ module Twilio
                     # Create the BrandRegistrationInstance
                     # @param [String] customer_profile_bundle_sid Customer Profile Bundle Sid.
                     # @param [String] a2p_profile_bundle_sid A2P Messaging Profile Bundle Sid.
-                    # @param [String] brand_type Type of brand being created. One of: \\\"STANDARD\\\", \\\"STARTER\\\". STARTER is for low volume, starter use cases. STANDARD is for all other use cases.
+                    # @param [String] brand_type Type of brand being created. One of: \\\"STANDARD\\\", \\\"SOLE_PROPRIETOR\\\". SOLE_PROPRIETOR is for low volume, SOLE_PROPRIETOR use cases. STANDARD is for all other use cases.
                     # @param [Boolean] mock A boolean that specifies whether brand should be a mock or not. If true, brand will be registered as a mock brand. Defaults to false if no value is provided.
                     # @param [Boolean] skip_automatic_sec_vet A flag to disable automatic secondary vetting for brands which it would otherwise be done.
                     # @return [BrandRegistrationInstance] Created BrandRegistrationInstance
@@ -171,6 +171,7 @@ module Twilio
                         @uri = "/a2p/BrandRegistrations/#{@solution[:sid]}"
 
                         # Dependents
+                        @brand_registration_otps = nil
                         @brand_vettings = nil
                     end
                     ##
@@ -199,6 +200,21 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Access the brand_registration_otps
+                    # @return [BrandRegistrationOtpList]
+                    # @return [BrandRegistrationOtpContext]
+                    def brand_registration_otps
+                      unless @brand_registration_otps
+                        @brand_registration_otps = BrandRegistrationOtpList.new(
+                                @version,
+                                brand_registration_sid: @solution[:sid]
+                                
+                                )
+                      end
+
+                      @brand_registration_otps
+                    end
                     ##
                     # Access the brand_vettings
                     # @return [BrandVettingList]
@@ -355,7 +371,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] Type of brand. One of: \"STANDARD\", \"STARTER\". STARTER is for the low volume, STARTER campaign use case. There can only be one STARTER campaign created per STARTER brand. STANDARD is for all other campaign use cases. Multiple campaign use cases can be created per STANDARD brand.
+                    # @return [String] Type of brand. One of: \"STANDARD\", \"SOLE_PROPRIETOR\". SOLE_PROPRIETOR is for the low volume, SOLE_PROPRIETOR campaign use case. There can only be one SOLE_PROPRIETOR campaign created per SOLE_PROPRIETOR brand. STANDARD is for all other campaign use cases. Multiple campaign use cases can be created per STANDARD brand.
                     def brand_type
                         @properties['brand_type']
                     end
@@ -452,6 +468,13 @@ module Twilio
                     def update
 
                         context.update
+                    end
+
+                    ##
+                    # Access the brand_registration_otps
+                    # @return [brand_registration_otps] brand_registration_otps
+                    def brand_registration_otps
+                        context.brand_registration_otps
                     end
 
                     ##

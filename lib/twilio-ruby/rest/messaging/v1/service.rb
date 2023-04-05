@@ -205,10 +205,10 @@ module Twilio
 
                         # Dependents
                         @us_app_to_person_usecases = nil
-                        @alpha_senders = nil
                         @short_codes = nil
                         @us_app_to_person = nil
                         @phone_numbers = nil
+                        @alpha_senders = nil
                     end
                     ##
                     # Delete the ServiceInstance
@@ -312,28 +312,6 @@ module Twilio
                       @us_app_to_person_usecases
                     end
                     ##
-                    # Access the alpha_senders
-                    # @return [AlphaSenderList]
-                    # @return [AlphaSenderContext] if sid was passed.
-                    def alpha_senders(sid=:unset)
-
-                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-                        if sid != :unset
-                            return AlphaSenderContext.new(@version, @solution[:sid],sid )
-                        end
-
-                        unless @alpha_senders
-                            @alpha_senders = AlphaSenderList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
-                        end
-
-                     @alpha_senders
-                    end
-                    ##
                     # Access the short_codes
                     # @return [ShortCodeList]
                     # @return [ShortCodeContext] if sid was passed.
@@ -398,6 +376,28 @@ module Twilio
                         end
 
                      @phone_numbers
+                    end
+                    ##
+                    # Access the alpha_senders
+                    # @return [AlphaSenderList]
+                    # @return [AlphaSenderContext] if sid was passed.
+                    def alpha_senders(sid=:unset)
+
+                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+                        if sid != :unset
+                            return AlphaSenderContext.new(@version, @solution[:sid],sid )
+                        end
+
+                        unless @alpha_senders
+                            @alpha_senders = AlphaSenderList.new(
+                                @version,
+                                service_sid: @solution[:sid]
+                                
+                                )
+                        end
+
+                     @alpha_senders
                     end
 
                     ##
@@ -719,13 +719,6 @@ module Twilio
                     end
 
                     ##
-                    # Access the alpha_senders
-                    # @return [alpha_senders] alpha_senders
-                    def alpha_senders
-                        context.alpha_senders
-                    end
-
-                    ##
                     # Access the short_codes
                     # @return [short_codes] short_codes
                     def short_codes
@@ -744,6 +737,13 @@ module Twilio
                     # @return [phone_numbers] phone_numbers
                     def phone_numbers
                         context.phone_numbers
+                    end
+
+                    ##
+                    # Access the alpha_senders
+                    # @return [alpha_senders] alpha_senders
+                    def alpha_senders
+                        context.alpha_senders
                     end
 
                     ##

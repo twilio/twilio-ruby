@@ -52,6 +52,7 @@ module Twilio
                     # @param [SortBy] sort_by 
                     # @param [String] subaccount 
                     # @param [Boolean] abnormal_session 
+                    # @param [AnsweredBy] answered_by 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -59,7 +60,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, limit: nil, page_size: nil)
+                    def list(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, limit: nil, page_size: nil)
                         self.stream(
                             from: from,
                             to: to,
@@ -79,6 +80,7 @@ module Twilio
                             sort_by: sort_by,
                             subaccount: subaccount,
                             abnormal_session: abnormal_session,
+                            answered_by: answered_by,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -106,6 +108,7 @@ module Twilio
                     # @param [SortBy] sort_by 
                     # @param [String] subaccount 
                     # @param [Boolean] abnormal_session 
+                    # @param [AnsweredBy] answered_by 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -113,7 +116,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, limit: nil, page_size: nil)
+                    def stream(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
@@ -135,6 +138,7 @@ module Twilio
                             sort_by: sort_by,
                             subaccount: subaccount,
                             abnormal_session: abnormal_session,
+                            answered_by: answered_by,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -175,11 +179,12 @@ module Twilio
                     # @param [SortBy] sort_by 
                     # @param [String] subaccount 
                     # @param [Boolean] abnormal_session 
+                    # @param [AnsweredBy] answered_by 
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of CallSummariesInstance
-                    def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
                             'From' => from,
@@ -217,6 +222,8 @@ module Twilio
                             'Subaccount' => subaccount,
                             
                             'AbnormalSession' => abnormal_session,
+                            
+                            'AnsweredBy' => answered_by,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,
