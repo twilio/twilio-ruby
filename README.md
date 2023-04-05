@@ -8,7 +8,7 @@
 
 The documentation for the Twilio API can be found [here][apidocs].
 
-The Ruby library documentation can be found [here][libdocs] and individual releases [here][refdocs].
+The individual releases [here][refdocs].
 
 ## Versions
 
@@ -18,12 +18,12 @@ The Ruby library documentation can be found [here][libdocs] and individual relea
 
 This library supports the following Ruby implementations:
 
-* Ruby 2.4
-* Ruby 2.5
-* Ruby 2.6
-* Ruby 2.7
-* Ruby 3.0
-* Ruby 3.1
+- Ruby 2.4
+- Ruby 2.5
+- Ruby 2.6
+- Ruby 2.7
+- Ruby 3.0
+- Ruby 3.1
 
 ### Migrating from 4.x
 
@@ -51,18 +51,47 @@ cd twilio-ruby
 make install
 ```
 
-## Getting Started
+> **Info**
+> If the command line gives you an error message that says Permission Denied, try running the above commands with sudo.
+>
+> For example: `sudo gem install twilio-ruby`
 
-### Setup Work
+### Test your installation
+
+To make sure the installation was successful, try sending yourself an SMS message, like this:
+
+```rb
+require "twilio-ruby"
+
+# Your Account SID and Auth Token from console.twilio.com
+account_sid = "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+auth_token = "your_auth_token"
+
+@client = Twilio::REST::Client.new account_sid, auth_token
+message = @client.messages.create(
+  body: "Hello from Ruby",
+  to: "+12345678901",  # Text this number
+  from: "+15005550006", # From a valid Twilio number
+)
+
+puts message.sid
+```
+
+> **Warning**
+> It's okay to hardcode your credentials when testing locally, but you should use environment variables to keep them secret before committing any code or deploying to production. Check out [How to Set Environment Variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html) for more information.
+
+## Usage
+
+### Authenticate the Client
 
 ```ruby
 require 'twilio-ruby'
 
-# put your own credentials here
+# Your Account SID and Auth Token from console.twilio.com
 account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 
-# set up a client to talk to the Twilio REST API
+# Initialize the Twilio Client with your credentials
 @client = Twilio::REST::Client.new account_sid, auth_token
 ```
 
@@ -71,8 +100,9 @@ auth_token = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 ```ruby
 require 'twilio-ruby'
 
-# put your own credentials here
+# Your Account SID from console.twilio.com
 account_sid = 'ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+# API Key from twilio.com/console/project/api-keys
 api_key_sid = 'zzzzzzzzzzzzzzzzzzzzzz'
 api_key_secret = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
 
@@ -96,22 +126,6 @@ To take advantage of Twilio's [Global Infrastructure](https://www.twilio.com/doc
 ```
 
 This will result in the `hostname` transforming from `api.twilio.com` to `api.sydney.au1.twilio.com`.
-
-### Enable Debug logging
-
-In order to enable debug logging, pass in a 'logger' instance to the client with the level set to at least 'DEBUG'
-
-```ruby
-@client = Twilio::REST::Client.new account_sid, auth_token
-myLogger = Logger.new(STDOUT)
-myLogger.level = Logger::DEBUG
-@client.logger = myLogger
-
-@client = Twilio::REST::Client.new account_sid, auth_token
-myLogger = Logger.new('my_log.log')
-myLogger.level = Logger::DEBUG
-@client.logger = myLogger
-```
 
 ### Make a Call
 
@@ -147,7 +161,93 @@ message_sid = 'SMxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 @client.messages(message_sid).fetch
 ```
 
-### Customizing your HTTP Client
+### Iterate through records
+
+The library automatically handles paging for you. Collections, such as `calls` and `messages`, have `list` and stream methods that page under the hood. With both `list` and `stream`, you can specify the number of records you want to receive (`limit`) and the maximum size you want each page fetch to be (`page_size`). The library will then handle the task for you.
+
+`list` eagerly fetches all records and returns them as a list, whereas `stream` returns an enumerator and lazily retrieves pages of records as you iterate over the collection. You can also page manually using the `page` method.
+
+For more information about these methods, view the [auto-generated library docs](https://www.twilio.com/docs/libraries/reference/twilio-ruby).
+
+```rb
+require 'twilio-ruby'
+
+account_sid = 'ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+auth_token = 'your_auth_token'
+
+@client = Twilio::REST::Client.new(account_sid, auth_token)
+
+@client.calls.list
+       .each do |call|
+         puts call.direction
+       end
+```
+
+### Enable Debug logging
+
+In order to enable debug logging, pass in a 'logger' instance to the client with the level set to at least 'DEBUG'
+
+```ruby
+@client = Twilio::REST::Client.new account_sid, auth_token
+myLogger = Logger.new(STDOUT)
+myLogger.level = Logger::DEBUG
+@client.logger = myLogger
+
+@client = Twilio::REST::Client.new account_sid, auth_token
+myLogger = Logger.new('my_log.log')
+myLogger.level = Logger::DEBUG
+@client.logger = myLogger
+```
+
+### Handle Exceptions {#exceptions}
+
+If the Twilio API returns a 400 or a 500 level HTTP response, the `twilio-ruby`
+library will throw a `Twilio::REST::RestError`. 400-level errors are normal
+during API operation (`“Invalid number”`, `“Cannot deliver SMS to that number”`,
+for example) and should be handled appropriately.
+
+```rb
+require 'twilio-ruby'
+
+account_sid = 'ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+auth_token = 'your_auth_token'
+
+@client = Twilio::REST::Client.new account_sid, auth_token
+
+begin
+  messages = @client.messages.list(limit: 20)
+rescue Twilio::REST::RestError => e
+  puts e.message
+end
+```
+
+### Debug API requests
+
+To assist with debugging, the library allows you to access the underlying request and response objects. This capability is built into the default HTTP client that ships with the library.
+
+For example, you can retrieve the status code of the last response like so:
+
+```ruby
+require 'rubygems' # Not necessary with ruby 1.9 but included for completeness
+require 'twilio-ruby'
+
+# Your Account SID and Auth Token from console.twilio.com
+account_sid = 'ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+auth_token = 'your_auth_token'
+
+@client = Twilio::REST::Client.new(account_sid, auth_token)
+
+@message = @client.messages.create(
+  to: '+14158675309',
+  from: '+14258675310',
+  body: 'Ahoy!'
+)
+
+# Retrieve the status code of the last response from the HTTP client
+puts @client.http_client.last_response.status_code
+```
+
+### Customize your HTTP Client
 
 `twilio-ruby` uses [Faraday][faraday] to make HTTP requests. You can tell `Twilio::REST::Client` to use any of the Faraday adapters like so:
 
@@ -155,7 +255,7 @@ message_sid = 'SMxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 @client.http_client.adapter = :typhoeus
 ```
 
-To use a custom HTTP client with this helper library, please see the [Twilio documentation](https://www.twilio.com/docs/libraries/ruby/custom-http-clients).
+To use a custom HTTP client with this helper library, please see the [advanced example of how to do so](./advanced-examples/custom-http-client.md).
 
 To apply customizations such as middleware, you can use the `configure_connection` method like so:
 
@@ -165,19 +265,7 @@ To apply customizations such as middleware, you can use the `configure_connectio
 end
 ```
 
-### Handling Errors
-
-```ruby
-begin
-  messages = @client.messages.list(limit: 20)
-rescue Twilio::REST::RestError => e
-  puts e.message
-end
-```
-
-For more descriptive exception types, please see the [Twilio documentation](https://www.twilio.com/docs/libraries/ruby/usage-guide#error-handling).
-
-### Getting Started With Client Capability Tokens
+### Get started With Client Capability Tokens
 
 If you just need to generate a Capability Token for use with Twilio Client, you can do this:
 
@@ -205,7 +293,7 @@ capability.add_scope(incoming_scope)
 
 There is a slightly more detailed document in the [Capability][capability] section of the wiki.
 
-### Generating TwiML
+### Generate TwiML
 
 To control phone calls, your application needs to output [TwiML][twiml].
 
@@ -249,7 +337,6 @@ If you've instead found a bug in the library or would like new features added, g
 
 [apidocs]: https://www.twilio.com/docs/api
 [twiml]: https://www.twilio.com/docs/api/twiml
-[libdocs]: https://www.twilio.com/docs/libraries/ruby
 [refdocs]: https://twilio.github.io/twilio-ruby
 [capability]: https://github.com/twilio/twilio-ruby/wiki/JWT-Tokens
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
