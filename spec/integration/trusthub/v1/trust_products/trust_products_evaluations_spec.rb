@@ -199,6 +199,82 @@ describe 'TrustProductsEvaluations' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives create_compliant_sole_proprietor_a2p_profile responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "sid": "ELaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "policy_sid": "RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "trust_product_sid": "BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "status": "compliant",
+          "date_created": "2020-04-28T18:14:01Z",
+          "url": "https://trusthub.twilio.com/v1/TrustProducts/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Evaluations/ELaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "results": [
+              {
+                  "valid": [
+                      {
+                          "object_field": "brand_name",
+                          "error_code": null,
+                          "friendly_name": "Brand Name",
+                          "passed": true,
+                          "failure_reason": null
+                      },
+                      {
+                          "object_field": "mobile_phone_number",
+                          "error_code": null,
+                          "friendly_name": "Mobile Phone Number",
+                          "passed": true,
+                          "failure_reason": null
+                      },
+                      {
+                          "object_field": "vertical",
+                          "error_code": null,
+                          "friendly_name": "Vertical",
+                          "passed": true,
+                          "failure_reason": null
+                      }
+                  ],
+                  "invalid": [],
+                  "object_type": "sole_proprietor_information",
+                  "friendly_name": "Sole Proprietor Information",
+                  "failure_reason": null,
+                  "passed": true,
+                  "requirement_friendly_name": "Sole Proprietor Information",
+                  "error_code": null,
+                  "requirement_name": "sole_proprietor_information"
+              },
+              {
+                  "valid": [
+                      {
+                          "object_field": "bundle_status",
+                          "error_code": null,
+                          "friendly_name": "Supporting Bundle Status",
+                          "passed": true,
+                          "failure_reason": null
+                      }
+                  ],
+                  "invalid": [],
+                  "object_type": "starter_customer_profile_type_business",
+                  "friendly_name": "Starter Customer Profile(isv customers) Proof",
+                  "failure_reason": null,
+                  "passed": true,
+                  "requirement_friendly_name": "Customer Profile",
+                  "error_code": null,
+                  "requirement_name": "customer_profile"
+              }
+          ]
+      }
+      ]
+    ))
+
+    actual = @client.trusthub.v1.trust_products('BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .trust_products_evaluations.create(policy_sid: 'RNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can read" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

@@ -110,8 +110,8 @@ module Twilio
           # @param [String] customer_profile_bundle_sid Customer Profile Bundle Sid.
           # @param [String] a2p_profile_bundle_sid A2P Messaging Profile Bundle Sid.
           # @param [String] brand_type Type of brand being created. One of: "STANDARD",
-          #   "STARTER". STARTER is for low volume, starter use cases. STANDARD is for all
-          #   other use cases.
+          #   "SOLE_PROPRIETOR". SOLE_PROPRIETOR is for low volume, SOLE_PROPRIETOR use cases.
+          #   STANDARD is for all other use cases.
           # @param [Boolean] mock A boolean that specifies whether brand should be a mock or
           #   not. If true, brand will be registered as a mock brand. Defaults to false if no
           #   value is provided.
@@ -187,6 +187,7 @@ module Twilio
 
             # Dependents
             @brand_vettings = nil
+            @brand_registration_otps = nil
           end
 
           ##
@@ -223,6 +224,21 @@ module Twilio
             end
 
             @brand_vettings
+          end
+
+          ##
+          # Access the brand_registration_otps
+          # @return [BrandRegistrationOtpList]
+          # @return [BrandRegistrationOtpContext]
+          def brand_registration_otps
+            unless @brand_registration_otps
+              @brand_registration_otps = BrandRegistrationOtpList.new(
+                  @version,
+                  brand_registration_sid: @solution[:sid],
+              )
+            end
+
+            @brand_registration_otps
           end
 
           ##
@@ -329,7 +345,7 @@ module Twilio
           end
 
           ##
-          # @return [String] Type of brand. One of: "STANDARD", "STARTER".
+          # @return [String] Type of brand. One of: "STANDARD", "SOLE_PROPRIETOR".
           def brand_type
             @properties['brand_type']
           end
@@ -431,6 +447,13 @@ module Twilio
           # @return [brand_vettings] brand_vettings
           def brand_vettings
             context.brand_vettings
+          end
+
+          ##
+          # Access the brand_registration_otps
+          # @return [brand_registration_otps] brand_registration_otps
+          def brand_registration_otps
+            context.brand_registration_otps
           end
 
           ##

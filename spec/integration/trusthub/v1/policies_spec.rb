@@ -249,4 +249,121 @@ describe 'Policies' do
 
     expect(actual).to_not eq(nil)
   end
+
+  it "receives fetch_starter_customer_profile_policy responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "url": "https://trusthub.twilio.com/v1/Policies/RN806dd6cd175f314e1f96a9727ee271f4",
+          "requirements": {
+              "end_user": [
+                  {
+                      "url": "/EndUserTypes/starter_customer_profile_information",
+                      "fields": [
+                          "first_name",
+                          "last_name",
+                          "email",
+                          "phone_number"
+                      ],
+                      "type": "starter_customer_profile_information",
+                      "name": "Information",
+                      "requirement_name": "starter_customer_profile_information"
+                  }
+              ],
+              "supporting_trust_products": [],
+              "supporting_document": [
+                  [
+                      {
+                          "description": "Customer Profile Address",
+                          "type": "document",
+                          "name": "Customer Profile Address",
+                          "accepted_documents": [
+                              {
+                                  "url": "/SupportingDocumentTypes/customer_profile_address",
+                                  "fields": [
+                                      "address_sids"
+                                  ],
+                                  "type": "customer_profile_address",
+                                  "name": "Legal Company Address"
+                              },
+                              {
+                                  "url": "/SupportingDocumentTypes/starter_customer_profile_address",
+                                  "fields": [
+                                      "address_sids"
+                                  ],
+                                  "type": "starter_customer_profile_address",
+                                  "name": "Legal Company Address"
+                              }
+                          ],
+                          "requirement_name": "customer_profile_address"
+                      }
+                  ]
+              ],
+              "supporting_customer_profiles": [
+                  {
+                      "type": "primary_customer_profile_type_business",
+                      "name": "Primary Customer Profile Bundle",
+                      "requirement_name": "primary_customer_profile"
+                  }
+              ]
+          },
+          "friendly_name": "Starter Customer Profile of type Business",
+          "sid": "RN806dd6cd175f314e1f96a9727ee271f4"
+      }
+      ]
+    ))
+
+    actual = @client.trusthub.v1.policies('RNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives fetch_sole_proprietor_trust_bundle_policy responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "url": "https://trusthub.twilio.com/v1/Policies/RN670d5d2e282a6130ae063b234b6019c8",
+          "requirements": {
+              "end_user": [
+                  {
+                      "url": "/EndUserTypes/sole_proprietor_information",
+                      "fields": [
+                          "brand_name",
+                          "mobile_phone_number",
+                          "vertical"
+                      ],
+                      "type": "sole_proprietor_information",
+                      "name": "Sole Proprietor Information",
+                      "requirement_name": "sole_proprietor_information"
+                  }
+              ],
+              "supporting_trust_products": [],
+              "supporting_document": [
+                  []
+              ],
+              "supporting_customer_profiles": [
+                  {
+                      "type": "starter_customer_profile_type_business",
+                      "name": "Starter Customer Profile(isv customers) Proof",
+                      "requirement_name": "customer_profile"
+                  },
+                  {
+                      "type": "starter_customer_profile_type_direct_long_tail",
+                      "name": "Starter Customer Profile(direct customers) Proof",
+                      "requirement_name": "customer_profile"
+                  }
+              ]
+          },
+          "friendly_name": "Sole Proprietor TrustProduct",
+          "sid": "RN670d5d2e282a6130ae063b234b6019c8"
+      }
+      ]
+    ))
+
+    actual = @client.trusthub.v1.policies('RNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').fetch()
+
+    expect(actual).to_not eq(nil)
+  end
 end

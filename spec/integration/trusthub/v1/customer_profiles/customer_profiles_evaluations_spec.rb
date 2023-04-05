@@ -199,6 +199,184 @@ describe 'CustomerProfilesEvaluations' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives create_compliant_starter_customer_profile responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "sid": "ELaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "status": "compliant",
+          "date_created": "2023-03-15T13:51:57Z",
+          "policy_sid": "RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "customer_profile_sid": "BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://trusthub.twilio.com/v1/CustomerProfiles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Evaluations/ELaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "results": [
+              {
+                  "valid": [
+                      {
+                          "object_field": "first_name",
+                          "error_code": null,
+                          "friendly_name": "First Name",
+                          "passed": true,
+                          "failure_reason": null
+                      },
+                      {
+                          "object_field": "last_name",
+                          "error_code": null,
+                          "friendly_name": "Last Name",
+                          "passed": true,
+                          "failure_reason": null
+                      },
+                      {
+                          "object_field": "email",
+                          "error_code": null,
+                          "friendly_name": "Email Address",
+                          "passed": true,
+                          "failure_reason": null
+                      },
+                      {
+                          "object_field": "phone_number",
+                          "error_code": null,
+                          "friendly_name": "Phone Number",
+                          "passed": true,
+                          "failure_reason": null
+                      }
+                  ],
+                  "invalid": [],
+                  "object_type": "starter_customer_profile_information",
+                  "friendly_name": "Information",
+                  "failure_reason": null,
+                  "passed": true,
+                  "requirement_friendly_name": "Starter Customer Profile Information",
+                  "error_code": null,
+                  "requirement_name": "starter_customer_profile_information"
+              },
+              {
+                  "valid": [
+                      {
+                          "object_field": "address_sids",
+                          "error_code": null,
+                          "friendly_name": "address sids",
+                          "passed": true,
+                          "failure_reason": null
+                      }
+                  ],
+                  "invalid": [],
+                  "object_type": "customer_profile_address",
+                  "friendly_name": "Legal Company Address",
+                  "failure_reason": null,
+                  "passed": true,
+                  "requirement_friendly_name": "Customer Profile Address",
+                  "error_code": null,
+                  "requirement_name": "customer_profile_address"
+              },
+              {
+                  "valid": [
+                      {
+                          "object_field": "bundle_sid",
+                          "error_code": null,
+                          "friendly_name": "Supporting Bundle Status",
+                          "passed": true,
+                          "failure_reason": null
+                      }
+                  ],
+                  "invalid": [],
+                  "object_type": "primary_customer_profile_type_business",
+                  "friendly_name": "Primary Customer Profile Bundle",
+                  "failure_reason": null,
+                  "passed": true,
+                  "requirement_friendly_name": "Primary Customer Profile",
+                  "error_code": null,
+                  "requirement_name": "primary_customer_profile"
+              }
+          ]
+      }
+      ]
+    ))
+
+    actual = @client.trusthub.v1.customer_profiles('BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .customer_profiles_evaluations.create(policy_sid: 'RNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+
+    expect(actual).to_not eq(nil)
+  end
+
+  it "receives create_compliant_sole_proprietor_a2p_profile responses" do
+    @holodeck.mock(Twilio::Response.new(
+        201,
+      %q[
+      {
+          "sid": "ELaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "status": "compliant",
+          "date_created": "2023-03-15T13:51:57Z",
+          "policy_sid": "RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "customer_profile_sid": "BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "url": "https://trusthub.twilio.com/v1/CustomerProfiles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Evaluations/ELaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "results": [
+              {
+                  "valid": [
+                      {
+                          "object_field": "brand_name",
+                          "error_code": null,
+                          "friendly_name": "Brand Name",
+                          "passed": true,
+                          "failure_reason": null
+                      },
+                      {
+                          "object_field": "mobile_phone_number",
+                          "error_code": null,
+                          "friendly_name": "Mobile Phone Number",
+                          "passed": true,
+                          "failure_reason": null
+                      },
+                      {
+                          "object_field": "vertical",
+                          "error_code": null,
+                          "friendly_name": "Vertical",
+                          "passed": true,
+                          "failure_reason": null
+                      }
+                  ],
+                  "invalid": [],
+                  "object_type": "sole_proprietor_information",
+                  "friendly_name": "Sole Proprietor Information",
+                  "failure_reason": null,
+                  "passed": true,
+                  "requirement_friendly_name": "Sole Proprietor Information",
+                  "error_code": null,
+                  "requirement_name": "sole_proprietor_information"
+              },
+              {
+                  "valid": [
+                      {
+                          "object_field": "bundle_status",
+                          "error_code": null,
+                          "friendly_name": "Supporting Bundle Status",
+                          "passed": true,
+                          "failure_reason": null
+                      }
+                  ],
+                  "invalid": [],
+                  "object_type": "starter_customer_profile_type_business",
+                  "friendly_name": "Starter Customer Profile(isv customers) Proof",
+                  "failure_reason": null,
+                  "passed": true,
+                  "requirement_friendly_name": "Customer Profile",
+                  "error_code": null,
+                  "requirement_name": "customer_profile"
+              }
+          ]
+      }
+      ]
+    ))
+
+    actual = @client.trusthub.v1.customer_profiles('BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') \
+                                .customer_profiles_evaluations.create(policy_sid: 'RNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can read" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 

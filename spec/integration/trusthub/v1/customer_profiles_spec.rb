@@ -228,6 +228,36 @@ describe 'CustomerProfiles' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives update_to_in_review responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "sid": "BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "policy_sid": "RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "friendly_name": "friendly_name",
+          "status": "in-review",
+          "email": "email",
+          "status_callback": "http://www.example.com",
+          "valid_until": null,
+          "date_created": "2019-07-30T22:29:24Z",
+          "date_updated": "2019-07-31T01:09:00Z",
+          "url": "https://trusthub.twilio.com/v1/CustomerProfiles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "customer_profiles_entity_assignments": "https://trusthub.twilio.com/v1/CustomerProfiles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/EntityAssignments",
+              "customer_profiles_evaluations": "https://trusthub.twilio.com/v1/CustomerProfiles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Evaluations",
+              "customer_profiles_channel_endpoint_assignment": "https://trusthub.twilio.com/v1/CustomerProfiles/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ChannelEndpointAssignments"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.trusthub.v1.customer_profiles('BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
