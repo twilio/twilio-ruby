@@ -114,41 +114,6 @@ module Twilio
         end
       end
 
-      class IpMessagingGrant
-        include AccessTokenGrant
-        attr_accessor :service_sid,
-                      :endpoint_id,
-                      :deployment_role_sid,
-                      :push_credential_sid
-
-        def _key
-          'ip_messaging'
-        end
-
-        def _generate_payload
-          payload = {}
-
-          payload[:service_sid] = service_sid if service_sid
-
-          payload[:endpoint_id] = endpoint_id if endpoint_id
-
-          if deployment_role_sid
-            payload[:deployment_role_sid] = deployment_role_sid
-          end
-
-          if push_credential_sid
-            payload[:push_credential_sid] = push_credential_sid
-          end
-
-          payload
-        end
-
-        class << self
-          extend Gem::Deprecate
-          deprecate :new, 'Chat.new', 2017, 7
-        end
-      end
-
       class VoiceGrant
         include AccessTokenGrant
         attr_accessor :incoming_allow,
@@ -201,30 +166,6 @@ module Twilio
           payload['endpoint_id'] = endpoint_id if endpoint_id
 
           payload
-        end
-      end
-
-      class ConversationsGrant
-        include AccessTokenGrant
-        attr_accessor :configuration_profile_sid
-
-        def _key
-          'rtc'
-        end
-
-        def _generate_payload
-          payload = {}
-
-          if configuration_profile_sid
-            payload[:configuration_profile_sid] = configuration_profile_sid
-          end
-
-          payload
-        end
-
-        class << self
-          extend Gem::Deprecate
-          deprecate :new, 'VideoGrant.new', 2017, 5
         end
       end
 
