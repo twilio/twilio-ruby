@@ -55,11 +55,11 @@ describe 'CallSummaries' do
           "meta": {
               "page": 0,
               "page_size": 25,
-              "first_page_url": "https://insights.twilio.com/v1/Voice/Summaries?ToCarrier=AT%26T+Wireless&StartTime=4h&PageSize=25&Page=0",
+              "first_page_url": "https://insights.twilio.com/v1/Voice/Summaries?ToCarrier=AT%26T+Wireless&AnsweredBy=machine_start&StartTime=4h&PageSize=25&Page=0",
               "previous_page_url": null,
               "next_page_url": null,
               "key": "call_summaries",
-              "url": "https://insights.twilio.com/v1/Voice/Summaries?ToCarrier=AT%26T+Wireless&StartTime=4h&PageSize=25&Page=0"
+              "url": "https://insights.twilio.com/v1/Voice/Summaries?ToCarrier=AT%26T+Wireless&AnsweredBy=machine_start&StartTime=4h&PageSize=25&Page=0"
           },
           "call_summaries": [
               {

@@ -173,7 +173,6 @@ module Twilio
                 'line_type_intelligence' => payload['line_type_intelligence'],
                 'identity_match' => payload['identity_match'],
                 'sms_pumping_risk' => payload['sms_pumping_risk'],
-                'disposable_phone_number_risk' => payload['disposable_phone_number_risk'],
                 'url' => payload['url'],
             }
 
@@ -269,12 +268,6 @@ module Twilio
           # @return [Hash] An object that contains sms pumping risk information
           def sms_pumping_risk
             @properties['sms_pumping_risk']
-          end
-
-          ##
-          # @return [Hash] An object that contains disposable phone number risk information
-          def disposable_phone_number_risk
-            @properties['disposable_phone_number_risk']
           end
 
           ##

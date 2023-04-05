@@ -266,9 +266,9 @@ describe 'Conversation' do
           "meta": {
               "page": 0,
               "page_size": 50,
-              "first_page_url": "https://conversations.twilio.com/v1/Conversations?PageSize=50&Page=0",
+              "first_page_url": "https://conversations.twilio.com/v1/Conversations?StartDate=2015-12-01&State=active&EndDate=2015-12-31&PageSize=50&Page=0",
               "previous_page_url": null,
-              "url": "https://conversations.twilio.com/v1/Conversations?PageSize=50&Page=0",
+              "url": "https://conversations.twilio.com/v1/Conversations?StartDate=2015-12-01&State=active&EndDate=2015-12-31&PageSize=50&Page=0",
               "next_page_url": null,
               "key": "conversations"
           }

@@ -228,6 +228,36 @@ describe 'TrustProducts' do
     expect(actual).to_not eq(nil)
   end
 
+  it "receives update_to_in_review responses" do
+    @holodeck.mock(Twilio::Response.new(
+        200,
+      %q[
+      {
+          "sid": "BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "account_sid": "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "policy_sid": "RNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "friendly_name": "friendly_name",
+          "status": "in-review",
+          "email": "email",
+          "status_callback": "http://www.example.com",
+          "valid_until": null,
+          "date_created": "2019-07-30T22:29:24Z",
+          "date_updated": "2019-07-31T01:09:00Z",
+          "url": "https://trusthub.twilio.com/v1/TrustProducts/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "links": {
+              "trust_products_entity_assignments": "https://trusthub.twilio.com/v1/TrustProducts/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/EntityAssignments",
+              "trust_products_evaluations": "https://trusthub.twilio.com/v1/TrustProducts/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Evaluations",
+              "trust_products_channel_endpoint_assignment": "https://trusthub.twilio.com/v1/TrustProducts/BUaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/ChannelEndpointAssignments"
+          }
+      }
+      ]
+    ))
+
+    actual = @client.trusthub.v1.trust_products('BUXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
+
+    expect(actual).to_not eq(nil)
+  end
+
   it "can delete" do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
