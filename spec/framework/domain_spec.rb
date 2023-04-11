@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'logger'
 
 describe Twilio::REST::Domain do
-  class MyDomain < Twilio::REST::Domain
+  class MyOtherDomain < Twilio::REST::Domain
     def initialize(client)
       # Marshaled Properties
       @properties = {
@@ -15,7 +15,7 @@ describe Twilio::REST::Domain do
 
   describe '#as_json' do
     before do
-      @domain = MyDomain.new(@client)
+      @domain = MyOtherDomain.new(@client)
       @json = @domain.as_json
     end
 
