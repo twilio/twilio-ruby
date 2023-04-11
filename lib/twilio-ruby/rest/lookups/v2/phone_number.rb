@@ -180,7 +180,6 @@ module Twilio
                             'line_type_intelligence' => payload['line_type_intelligence'],
                             'identity_match' => payload['identity_match'],
                             'sms_pumping_risk' => payload['sms_pumping_risk'],
-                            'disposable_phone_number_risk' => payload['disposable_phone_number_risk'],
                             'url' => payload['url'],
                         }
 
@@ -276,12 +275,6 @@ module Twilio
                     # @return [Hash] An object that contains information on if a phone number has been currently or previously blocked by Verify Fraud Guard for receiving malicious SMS pumping traffic as well as other signals associated with risky carriers and low conversion rates.
                     def sms_pumping_risk
                         @properties['sms_pumping_risk']
-                    end
-                    
-                    ##
-                    # @return [Hash] An object that contains information on if a mobile phone number could be a disposable or burner number.
-                    def disposable_phone_number_risk
-                        @properties['disposable_phone_number_risk']
                     end
                     
                     ##

@@ -1,6 +1,31 @@
 twilio-ruby changelog
 =====================
 
+[2023-04-05] Version 6.0.0-rc.2
+-------------------------------
+**Library - Fix**
+- [PR #642](https://github.com/twilio/twilio-ruby/pull/642): remove deprecated Twilio::REST::TwilioError#body. Thanks to [@kridai](https://github.com/kridai)!
+- [PR #641](https://github.com/twilio/twilio-ruby/pull/641): remove deprecated TwilioResponse class. Thanks to [@kridai](https://github.com/kridai)!
+
+**Library - Chore**
+- [PR #643](https://github.com/twilio/twilio-ruby/pull/643): extend ruby & jruby support. Thanks to [@shrutiburman](https://github.com/shrutiburman)!
+
+**Conversations**
+- Expose query parameters `start_date`, `end_date` and `state` in list operation on Conversations resource for sorting and filtering
+
+**Insights**
+- Added answered by filter in Call Summaries
+
+**Lookups**
+- Remove `disposable_phone_number_risk` package **(breaking change)**
+
+**Messaging**
+- Add support for `SOLE_PROPRIETOR` brand type and `SOLE_PROPRIETOR` campaign use case.
+- New Sole Proprietor Brands should be created with `SOLE_PROPRIETOR` brand type. Brand registration requests with `STARTER` brand type will be rejected.
+- New Sole Proprietor Campaigns should be created with `SOLE_PROPRIETOR` campaign use case. Campaign registration requests with `STARTER` campaign use case will be rejected.
+- Add Brand Registrations OTP API
+
+
 [2023-03-23] Version 6.0.0-rc.1
 -------------------------------
 **Library - Fix**
