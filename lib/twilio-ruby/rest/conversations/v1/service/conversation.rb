@@ -75,10 +75,12 @@ module Twilio
             # Lists ConversationInstance records from the API as a list.
             # Unlike stream(), this operation is eager and will load `limit` records into
             # memory before returning.
-            # @param [String] start_date Start date in ISO8601 format for sorting and
-            #   filtering list of Conversations.
-            # @param [String] end_date End date in ISO8601 format for sorting and filtering
-            #   list of Conversations.
+            # @param [String] start_date Start date or time in ISO8601 format for filtering
+            #   list of Conversations. If a date is provided, the start time of the date is used
+            #   (YYYY-MM-DDT00:00:00Z). Can be combined with other filters.
+            # @param [String] end_date End date or time in ISO8601 format for filtering list
+            #   of Conversations. If a date is provided, the end time of the date is used
+            #   (YYYY-MM-DDT23:59:59Z). Can be combined with other filters.
             # @param [conversation.State] state State for sorting and filtering list of
             #   Conversations. Can be `active`, `inactive` or `closed`
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -102,10 +104,12 @@ module Twilio
             # Streams ConversationInstance records from the API as an Enumerable.
             # This operation lazily loads records as efficiently as possible until the limit
             # is reached.
-            # @param [String] start_date Start date in ISO8601 format for sorting and
-            #   filtering list of Conversations.
-            # @param [String] end_date End date in ISO8601 format for sorting and filtering
-            #   list of Conversations.
+            # @param [String] start_date Start date or time in ISO8601 format for filtering
+            #   list of Conversations. If a date is provided, the start time of the date is used
+            #   (YYYY-MM-DDT00:00:00Z). Can be combined with other filters.
+            # @param [String] end_date End date or time in ISO8601 format for filtering list
+            #   of Conversations. If a date is provided, the end time of the date is used
+            #   (YYYY-MM-DDT23:59:59Z). Can be combined with other filters.
             # @param [conversation.State] state State for sorting and filtering list of
             #   Conversations. Can be `active`, `inactive` or `closed`
             # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -145,10 +149,12 @@ module Twilio
             ##
             # Retrieve a single page of ConversationInstance records from the API.
             # Request is executed immediately.
-            # @param [String] start_date Start date in ISO8601 format for sorting and
-            #   filtering list of Conversations.
-            # @param [String] end_date End date in ISO8601 format for sorting and filtering
-            #   list of Conversations.
+            # @param [String] start_date Start date or time in ISO8601 format for filtering
+            #   list of Conversations. If a date is provided, the start time of the date is used
+            #   (YYYY-MM-DDT00:00:00Z). Can be combined with other filters.
+            # @param [String] end_date End date or time in ISO8601 format for filtering list
+            #   of Conversations. If a date is provided, the end time of the date is used
+            #   (YYYY-MM-DDT23:59:59Z). Can be combined with other filters.
             # @param [conversation.State] state State for sorting and filtering list of
             #   Conversations. Can be `active`, `inactive` or `closed`
             # @param [String] page_token PageToken provided by the API

@@ -64,6 +64,8 @@ describe 'TollfreeVerification' do
           "tollfree_phone_number_sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "status": "TWILIO_APPROVED",
           "url": "https://messaging.twilio.com/v1/Tollfree/Verifications/HHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "rejection_reason": null,
+          "error_code": null,
           "resource_links": {
               "customer_profile": "https://trusthub.twilio.com/v1/CustomerProfiles/BU3344409f7e067e279523808d267e2d85",
               "trust_product": "https://trusthub.twilio.com/v1/TrustProducts/BU3344409f7e067e279523808d267e2d88",
@@ -145,6 +147,8 @@ describe 'TollfreeVerification' do
                   "tollfree_phone_number_sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   "status": "TWILIO_APPROVED",
                   "url": "https://messaging.twilio.com/v1/Tollfree/Verifications/HHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "rejection_reason": null,
+                  "error_code": null,
                   "resource_links": {
                       "customer_profile": "https://trusthub.twilio.com/v1/CustomerProfiles/BU3344409f7e067e279523808d267e2d85",
                       "trust_product": "https://trusthub.twilio.com/v1/TrustProducts/BU3344409f7e067e279523808d267e2d88",
@@ -229,6 +233,8 @@ describe 'TollfreeVerification' do
           "message_volume": "1,000",
           "additional_information": "info",
           "tollfree_phone_number_sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "rejection_reason": null,
+          "error_code": null,
           "resource_links": {},
           "url": "https://messaging.twilio.com/v1/Tollfree/Verifications/HHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "external_reference_id": "abc123xyz567"
@@ -295,6 +301,8 @@ describe 'TollfreeVerification' do
           "message_volume": "1,000",
           "additional_information": "info",
           "tollfree_phone_number_sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "rejection_reason": null,
+          "error_code": null,
           "resource_links": {},
           "url": "https://messaging.twilio.com/v1/Tollfree/Verifications/HHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "external_reference_id": null

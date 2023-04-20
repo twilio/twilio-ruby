@@ -26,7 +26,7 @@ module Twilio
           ##
           # Create the ServiceInstance
           # @param [String] friendly_name A descriptive string that you create to describe
-          #   the verification service. It can be up to 30 characters long. **This value
+          #   the verification service. It can be up to 32 characters long. **This value
           #   should not contain PII.**
           # @param [String] code_length The length of the verification code to generate.
           #   Must be an integer value between 4 and 10, inclusive.
@@ -264,7 +264,7 @@ module Twilio
           ##
           # Update the ServiceInstance
           # @param [String] friendly_name A descriptive string that you create to describe
-          #   the verification service. It can be up to 30 characters long. **This value
+          #   the verification service. It can be up to 32 characters long. **This value
           #   should not contain PII.**
           # @param [String] code_length The length of the verification code to generate.
           #   Must be an integer value between 4 and 10, inclusive.
@@ -649,7 +649,7 @@ module Twilio
           ##
           # Update the ServiceInstance
           # @param [String] friendly_name A descriptive string that you create to describe
-          #   the verification service. It can be up to 30 characters long. **This value
+          #   the verification service. It can be up to 32 characters long. **This value
           #   should not contain PII.**
           # @param [String] code_length The length of the verification code to generate.
           #   Must be an integer value between 4 and 10, inclusive.

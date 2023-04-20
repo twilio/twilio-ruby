@@ -402,6 +402,8 @@ module Twilio
                 'tollfree_phone_number_sid' => payload['tollfree_phone_number_sid'],
                 'status' => payload['status'],
                 'url' => payload['url'],
+                'rejection_reason' => payload['rejection_reason'],
+                'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
                 'resource_links' => payload['resource_links'],
                 'external_reference_id' => payload['external_reference_id'],
             }
@@ -600,6 +602,18 @@ module Twilio
           # @return [String] The absolute URL of the Tollfree Verification
           def url
             @properties['url']
+          end
+
+          ##
+          # @return [String] The rejection reason given when a Tollfree Verification has been rejected.
+          def rejection_reason
+            @properties['rejection_reason']
+          end
+
+          ##
+          # @return [String] The error code given when a Tollfree Verification has been rejected.
+          def error_code
+            @properties['error_code']
           end
 
           ##

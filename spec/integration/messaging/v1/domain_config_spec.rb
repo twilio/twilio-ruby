@@ -13,17 +13,13 @@ describe 'DomainConfig' do
     @holodeck.mock(Twilio::Response.new(500, ''))
 
     expect {
-      @client.messaging.v1.domain_config('DNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(messaging_service_sids: ['MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'])
+      @client.messaging.v1.domain_config('DNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
     }.to raise_exception(Twilio::REST::TwilioError)
 
-    values = {
-        'MessagingServiceSids' => Twilio.serialize_list(['MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']) { |e| e },
-    }
     expect(
     @holodeck.has_request?(Holodeck::Request.new(
         method: 'post',
         url: 'https://messaging.twilio.com/v1/LinkShortening/Domains/DNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Config',
-        data: values,
     ))).to eq(true)
   end
 
@@ -33,10 +29,6 @@ describe 'DomainConfig' do
       %q[
       {
           "domain_sid": "DNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "messaging_service_sids": [
-              "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
-          ],
           "config_sid": "ZKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "fallback_url": "https://www.example.com",
           "callback_url": "https://www.example.com",
@@ -47,7 +39,7 @@ describe 'DomainConfig' do
       ]
     ))
 
-    actual = @client.messaging.v1.domain_config('DNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(messaging_service_sids: ['MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'])
+    actual = @client.messaging.v1.domain_config('DNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -58,10 +50,6 @@ describe 'DomainConfig' do
       %q[
       {
           "domain_sid": "DNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "messaging_service_sids": [
-              "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
-          ],
           "config_sid": "ZKaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "fallback_url": "https://www.example.com",
           "callback_url": "https://www.example.com",
@@ -72,7 +60,7 @@ describe 'DomainConfig' do
       ]
     ))
 
-    actual = @client.messaging.v1.domain_config('DNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update(messaging_service_sids: ['MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'])
+    actual = @client.messaging.v1.domain_config('DNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').update()
 
     expect(actual).to_not eq(nil)
   end
@@ -102,10 +90,6 @@ describe 'DomainConfig' do
           "callback_url": "https://www.example.com",
           "date_created": "2015-07-30T20:00:00Z",
           "date_updated": "2015-07-30T20:00:00Z",
-          "messaging_service_sids": [
-              "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              "MGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
-          ],
           "url": "https://messaging.twilio.com/v1/LinkShortening/Domains/DNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Config"
       }
       ]

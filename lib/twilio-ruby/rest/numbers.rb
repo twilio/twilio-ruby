@@ -19,13 +19,26 @@ module Twilio
         @port = 443
 
         # Versions
+        @v1 = nil
         @v2 = nil
+      end
+
+      ##
+      # Version v1 of numbers
+      def v1
+        @v1 ||= V1.new self
       end
 
       ##
       # Version v2 of numbers
       def v2
         @v2 ||= V2.new self
+      end
+
+      ##
+      # @return [Twilio::REST::Numbers::V1::EligibilityInstance]
+      def eligibilities
+        self.v1.eligibilities()
       end
 
       ##
