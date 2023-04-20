@@ -39,19 +39,19 @@ This library supports the following Ruby implementations:
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 6.0.0-rc.2'
+gem 'twilio-ruby', '~> 6.0.0-rc.3'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 6.0.0-rc.2
+gem install twilio-ruby -v 6.0.0-rc.3
 ```
 
 To install `twilio-ruby` release candidate via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 6.0.0-rc.2
+gem install twilio-ruby -v 6.0.0-rc.3
 ```
 
 To build and install the development branch yourself from the latest source:
