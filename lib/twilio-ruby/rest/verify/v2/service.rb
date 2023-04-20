@@ -31,7 +31,7 @@ module Twilio
                     end
                     ##
                     # Create the ServiceInstance
-                    # @param [String] friendly_name A descriptive string that you create to describe the verification service. It can be up to 30 characters long. **This value should not contain PII.**
+                    # @param [String] friendly_name A descriptive string that you create to describe the verification service. It can be up to 32 characters long. **This value should not contain PII.**
                     # @param [String] code_length The length of the verification code to generate. Must be an integer value between 4 and 10, inclusive.
                     # @param [Boolean] lookup_enabled Whether to perform a lookup with each verification started and return info about the phone number.
                     # @param [Boolean] skip_sms_to_landlines Whether to skip sending SMS verifications to landlines. Requires `lookup_enabled`.
@@ -236,7 +236,7 @@ module Twilio
 
                     ##
                     # Update the ServiceInstance
-                    # @param [String] friendly_name A descriptive string that you create to describe the verification service. It can be up to 30 characters long. **This value should not contain PII.**
+                    # @param [String] friendly_name A descriptive string that you create to describe the verification service. It can be up to 32 characters long. **This value should not contain PII.**
                     # @param [String] code_length The length of the verification code to generate. Must be an integer value between 4 and 10, inclusive.
                     # @param [Boolean] lookup_enabled Whether to perform a lookup with each verification started and return info about the phone number.
                     # @param [Boolean] skip_sms_to_landlines Whether to skip sending SMS verifications to landlines. Requires `lookup_enabled`.
@@ -557,7 +557,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The string that you assigned to describe the verification service. **This value should not contain PII.**
+                    # @return [String] The string that you assigned to describe the verification service. It can be up to 32 characters long. **This value should not contain PII.**
                     def friendly_name
                         @properties['friendly_name']
                     end
@@ -670,7 +670,7 @@ module Twilio
 
                     ##
                     # Update the ServiceInstance
-                    # @param [String] friendly_name A descriptive string that you create to describe the verification service. It can be up to 30 characters long. **This value should not contain PII.**
+                    # @param [String] friendly_name A descriptive string that you create to describe the verification service. It can be up to 32 characters long. **This value should not contain PII.**
                     # @param [String] code_length The length of the verification code to generate. Must be an integer value between 4 and 10, inclusive.
                     # @param [Boolean] lookup_enabled Whether to perform a lookup with each verification started and return info about the phone number.
                     # @param [Boolean] skip_sms_to_landlines Whether to skip sending SMS verifications to landlines. Requires `lookup_enabled`.

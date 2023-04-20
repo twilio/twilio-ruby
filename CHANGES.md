@@ -1,6 +1,22 @@
 twilio-ruby changelog
 =====================
 
+[2023-04-19] Version 6.0.0-rc.3
+-------------------------------
+**Library - Fix**
+- [PR #644](https://github.com/twilio/twilio-ruby/pull/644): remove deprecated access token grants. Thanks to [@kridai](https://github.com/kridai)!
+
+**Library - Chore**
+- [PR #647](https://github.com/twilio/twilio-ruby/pull/647): update client.rb. Thanks to [@shrutiburman](https://github.com/shrutiburman)!
+
+**Messaging**
+- Remove `messaging_service_sids` and `messaging_service_sid_action` from domain config endpoint **(breaking change)**
+- Add error_code and rejection_reason properties to tollfree verification API response
+
+**Numbers**
+- Added the new Eligibility API under version `/v1`.
+
+
 [2023-04-05] Version 6.0.0-rc.2
 -------------------------------
 **Library - Fix**

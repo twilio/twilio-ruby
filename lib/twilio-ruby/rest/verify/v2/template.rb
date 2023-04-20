@@ -34,7 +34,7 @@ module Twilio
                     # Lists TemplateInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [String] friendly_name String filter used to query templates with a given friendly name
+                    # @param [String] friendly_name String filter used to query templates with a given friendly name.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -54,7 +54,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [String] friendly_name String filter used to query templates with a given friendly name
+                    # @param [String] friendly_name String filter used to query templates with a given friendly name.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -89,7 +89,7 @@ module Twilio
                     ##
                     # Retrieve a single page of TemplateInstance records from the API.
                     # Request is executed immediately.
-                    # @param [String] friendly_name String filter used to query templates with a given friendly name
+                    # @param [String] friendly_name String filter used to query templates with a given friendly name.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -195,13 +195,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] A descriptive string that you create to describe a Template.
+                    # @return [String] A descriptive string that you create to describe a Template. It can be up to 32 characters long.
                     def friendly_name
                         @properties['friendly_name']
                     end
                     
                     ##
-                    # @return [Array<String>] A list of channels that support the Template. Can include: sms, voice
+                    # @return [Array<String>] A list of channels that support the Template. Can include: sms, voice.
                     def channels
                         @properties['channels']
                     end
