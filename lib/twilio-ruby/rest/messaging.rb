@@ -38,10 +38,28 @@ module Twilio
       end
 
       ##
+      # @param [String] messaging_service_sid The unique string that identifies the
+      #   messaging service
+      # @return [Twilio::REST::Messaging::V1::DomainConfigMessagingServiceInstance] if messaging_service_sid was passed.
+      # @return [Twilio::REST::Messaging::V1::DomainConfigMessagingServiceList]
+      def domain_config_messaging_service(messaging_service_sid=:unset)
+        self.v1.domain_config_messaging_service(messaging_service_sid)
+      end
+
+      ##
       # @return [Twilio::REST::Messaging::V1::ExternalCampaignInstance]
       def external_campaign
         warn "external_campaign is deprecated. Use v1.external_campaign instead."
         self.v1.external_campaign()
+      end
+
+      ##
+      # @param [String] messaging_service_sid The unique string that identifies the
+      #   messaging service
+      # @return [Twilio::REST::Messaging::V1::LinkshorteningMessagingServiceInstance] if messaging_service_sid was passed.
+      # @return [Twilio::REST::Messaging::V1::LinkshorteningMessagingServiceList]
+      def linkshortening_messaging_service(domain_sid=:unset, messaging_service_sid=:unset)
+        self.v1.linkshortening_messaging_service(domain_sid, messaging_service_sid)
       end
 
       ##
