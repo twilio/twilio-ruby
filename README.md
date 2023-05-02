@@ -30,7 +30,7 @@ This library supports the following Ruby implementations:
 * JRuby 9.3
 * JRuby 9.4
 
-### Migrating from 4.x
+### Migrating from 5.x
 
 [Upgrade Guide][upgrade]
 
@@ -39,13 +39,13 @@ This library supports the following Ruby implementations:
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 5.77.0'
+gem 'twilio-ruby', '~> 6.0.0'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 5.77.0
+gem install twilio-ruby -v 6.0.0
 ```
 
 To build and install the development branch yourself from the latest source:
