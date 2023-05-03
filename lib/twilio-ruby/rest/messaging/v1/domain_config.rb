@@ -71,17 +71,23 @@ module Twilio
 
                     ##
                     # Update the DomainConfigInstance
+                    # @param [Array[String]] messaging_service_sids A list of messagingServiceSids (with prefix MG)
                     # @param [String] fallback_url Any requests we receive to this domain that do not match an existing shortened message will be redirected to the fallback url. These will likely be either expired messages, random misdirected traffic, or intentional scraping.
                     # @param [String] callback_url URL to receive click events to your webhook whenever the recipients click on the shortened links
+                    # @param [String] messaging_service_sids_action An action type for messaging_service_sids operation (ADD, DELETE, REPLACE)
                     # @return [DomainConfigInstance] Updated DomainConfigInstance
                     def update(
+                        messaging_service_sids: nil, 
                         fallback_url: :unset, 
-                        callback_url: :unset
+                        callback_url: :unset, 
+                        messaging_service_sids_action: :unset
                     )
 
                         data = Twilio::Values.of({
+                            'MessagingServiceSids' => Twilio.serialize_list(messaging_service_sids) { |e| e },
                             'FallbackUrl' => fallback_url,
                             'CallbackUrl' => callback_url,
+                            'MessagingServiceSidsAction' => messaging_service_sids_action,
                         })
 
                         payload = @version.update('POST', @uri, data: data)
@@ -153,6 +159,7 @@ module Twilio
                         @properties = { 
                             'domain_sid' => payload['domain_sid'],
                             'config_sid' => payload['config_sid'],
+                            'messaging_service_sids' => payload['messaging_service_sids'],
                             'fallback_url' => payload['fallback_url'],
                             'callback_url' => payload['callback_url'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
@@ -186,6 +193,12 @@ module Twilio
                     # @return [String] The unique string that we created to identify the Domain config (prefix ZK).
                     def config_sid
                         @properties['config_sid']
+                    end
+                    
+                    ##
+                    # @return [Array<String>] A list of messagingServiceSids (with prefix MG).
+                    def messaging_service_sids
+                        @properties['messaging_service_sids']
                     end
                     
                     ##
@@ -228,17 +241,23 @@ module Twilio
 
                     ##
                     # Update the DomainConfigInstance
+                    # @param [Array[String]] messaging_service_sids A list of messagingServiceSids (with prefix MG)
                     # @param [String] fallback_url Any requests we receive to this domain that do not match an existing shortened message will be redirected to the fallback url. These will likely be either expired messages, random misdirected traffic, or intentional scraping.
                     # @param [String] callback_url URL to receive click events to your webhook whenever the recipients click on the shortened links
+                    # @param [String] messaging_service_sids_action An action type for messaging_service_sids operation (ADD, DELETE, REPLACE)
                     # @return [DomainConfigInstance] Updated DomainConfigInstance
                     def update(
+                        messaging_service_sids: nil, 
                         fallback_url: :unset, 
-                        callback_url: :unset
+                        callback_url: :unset, 
+                        messaging_service_sids_action: :unset
                     )
 
                         context.update(
+                            messaging_service_sids: messaging_service_sids, 
                             fallback_url: fallback_url, 
                             callback_url: callback_url, 
+                            messaging_service_sids_action: messaging_service_sids_action, 
                         )
                     end
 
