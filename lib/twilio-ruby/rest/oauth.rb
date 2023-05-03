@@ -9,12 +9,6 @@ module Twilio
       end
 
       ##
-      # @return [Twilio::REST::Oauth::V1::DeviceCodeInstance]
-      def device_code
-        self.v1.device_code()
-      end
-
-      ##
       # @return [Twilio::REST::Oauth::V1::OpenidDiscoveryInstance]
       def openid_discovery
         warn "openid_discovery is deprecated. Use v1.openid_discovery instead."

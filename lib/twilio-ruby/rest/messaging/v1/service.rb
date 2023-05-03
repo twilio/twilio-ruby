@@ -205,10 +205,10 @@ module Twilio
 
                         # Dependents
                         @us_app_to_person_usecases = nil
+                        @alpha_senders = nil
                         @short_codes = nil
                         @us_app_to_person = nil
                         @phone_numbers = nil
-                        @alpha_senders = nil
                     end
                     ##
                     # Delete the ServiceInstance
@@ -303,13 +303,28 @@ module Twilio
                     def us_app_to_person_usecases
                       unless @us_app_to_person_usecases
                         @us_app_to_person_usecases = UsAppToPersonUsecaseList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid], messaging_service_sid: @solution[:sid],  )
                       end
-
                       @us_app_to_person_usecases
+                    end
+                    ##
+                    # Access the alpha_senders
+                    # @return [AlphaSenderList]
+                    # @return [AlphaSenderContext] if sid was passed.
+                    def alpha_senders(sid=:unset)
+
+                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+                        if sid != :unset
+                            return AlphaSenderContext.new(@version, @solution[:sid],sid )
+                        end
+
+                        unless @alpha_senders
+                            @alpha_senders = AlphaSenderList.new(
+                                @version, service_sid: @solution[:sid], messaging_service_sid: @solution[:sid],  )
+                        end
+
+                     @alpha_senders
                     end
                     ##
                     # Access the short_codes
@@ -325,10 +340,7 @@ module Twilio
 
                         unless @short_codes
                             @short_codes = ShortCodeList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid], messaging_service_sid: @solution[:sid],  )
                         end
 
                      @short_codes
@@ -347,10 +359,7 @@ module Twilio
 
                         unless @us_app_to_person
                             @us_app_to_person = UsAppToPersonList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid], messaging_service_sid: @solution[:sid],  )
                         end
 
                      @us_app_to_person
@@ -369,35 +378,10 @@ module Twilio
 
                         unless @phone_numbers
                             @phone_numbers = PhoneNumberList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid], messaging_service_sid: @solution[:sid],  )
                         end
 
                      @phone_numbers
-                    end
-                    ##
-                    # Access the alpha_senders
-                    # @return [AlphaSenderList]
-                    # @return [AlphaSenderContext] if sid was passed.
-                    def alpha_senders(sid=:unset)
-
-                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-                        if sid != :unset
-                            return AlphaSenderContext.new(@version, @solution[:sid],sid )
-                        end
-
-                        unless @alpha_senders
-                            @alpha_senders = AlphaSenderList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
-                        end
-
-                     @alpha_senders
                     end
 
                     ##
@@ -719,6 +703,13 @@ module Twilio
                     end
 
                     ##
+                    # Access the alpha_senders
+                    # @return [alpha_senders] alpha_senders
+                    def alpha_senders
+                        context.alpha_senders
+                    end
+
+                    ##
                     # Access the short_codes
                     # @return [short_codes] short_codes
                     def short_codes
@@ -737,13 +728,6 @@ module Twilio
                     # @return [phone_numbers] phone_numbers
                     def phone_numbers
                         context.phone_numbers
-                    end
-
-                    ##
-                    # Access the alpha_senders
-                    # @return [alpha_senders] alpha_senders
-                    def alpha_senders
-                        context.alpha_senders
                     end
 
                     ##
