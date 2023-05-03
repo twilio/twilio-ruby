@@ -49,23 +49,6 @@ describe Twilio::JWT::AccessToken do
         @scat = Twilio::JWT::AccessToken.new 'AC123', 'SK123', 'secret'
       end
 
-      it 'IpMessaging grant' do
-        Gem::Deprecate.skip_during do
-          ip_messaging_grant = Twilio::JWT::AccessToken::IpMessagingGrant.new
-          ip_messaging_grant.service_sid = 'SS123'
-          ip_messaging_grant.endpoint_id = 'EP123'
-          ip_messaging_grant.deployment_role_sid = 'DR123'
-          ip_messaging_grant.push_credential_sid = 'PC123'
-          @scat.add_grant(ip_messaging_grant)
-          payload, _ = JWT.decode @scat.to_s, 'secret'
-          expect(payload['grants'].count).to eq(1)
-          expect(payload['grants']['ip_messaging']['service_sid']).to eq('SS123')
-          expect(payload['grants']['ip_messaging']['endpoint_id']).to eq('EP123')
-          expect(payload['grants']['ip_messaging']['push_credential_sid']).to eq('PC123')
-          expect(payload['grants']['ip_messaging']['deployment_role_sid']).to eq('DR123')
-        end
-      end
-
       it 'Chat grant' do
         chat_grant = Twilio::JWT::AccessToken::ChatGrant.new
         chat_grant.service_sid = 'SS123'
@@ -107,17 +90,6 @@ describe Twilio::JWT::AccessToken do
         expect(payload['grants'].count).to eq(1)
         expect(payload['grants']['data_sync']['service_sid']).to eq('SS123')
         expect(payload['grants']['data_sync']['endpoint_id']).to eq('EP123')
-      end
-
-      it 'Conversations grant' do
-        Gem::Deprecate.skip_during do
-          conversation_grant = Twilio::JWT::AccessToken::ConversationsGrant.new
-          conversation_grant.configuration_profile_sid = 'VS123'
-          @scat.add_grant(conversation_grant)
-          payload, _ = JWT.decode @scat.to_s, 'secret'
-          expect(payload['grants'].count).to eq(1)
-          expect(payload['grants']['rtc']['configuration_profile_sid']).to eq('VS123')
-        end
       end
 
       it 'Room grant' do

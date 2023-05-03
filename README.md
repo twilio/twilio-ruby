@@ -18,14 +18,19 @@ The individual releases [here][refdocs].
 
 This library supports the following Ruby implementations:
 
-- Ruby 2.4
-- Ruby 2.5
-- Ruby 2.6
-- Ruby 2.7
-- Ruby 3.0
-- Ruby 3.1
+* Ruby 2.4
+* Ruby 2.5
+* Ruby 2.6
+* Ruby 2.7
+* Ruby 3.0
+* Ruby 3.1
+* Ruby 3.2
 
-### Migrating from 4.x
+* JRuby 9.2
+* JRuby 9.3
+* JRuby 9.4
+
+### Migrating from 5.x
 
 [Upgrade Guide][upgrade]
 
@@ -34,13 +39,13 @@ This library supports the following Ruby implementations:
 To install using [Bundler][bundler] grab the latest stable version:
 
 ```ruby
-gem 'twilio-ruby', '~> 5.77.0'
+gem 'twilio-ruby', '~> 6.0.0'
 ```
 
 To manually install `twilio-ruby` via [Rubygems][rubygems] simply gem install:
 
 ```bash
-gem install twilio-ruby -v 5.77.0
+gem install twilio-ruby -v 6.0.0
 ```
 
 To build and install the development branch yourself from the latest source:
@@ -337,6 +342,7 @@ If you've instead found a bug in the library or would like new features added, g
 
 [apidocs]: https://www.twilio.com/docs/api
 [twiml]: https://www.twilio.com/docs/api/twiml
+[libdocs]: https://www.twilio.com/docs/libraries/reference/twilio-ruby/
 [refdocs]: https://twilio.github.io/twilio-ruby
 [capability]: https://github.com/twilio/twilio-ruby/wiki/JWT-Tokens
 [wiki]: https://github.com/twilio/twilio-ruby/wiki
