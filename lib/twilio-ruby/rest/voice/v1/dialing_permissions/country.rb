@@ -206,12 +206,8 @@ module Twilio
                     def highrisk_special_prefixes
                       unless @highrisk_special_prefixes
                         @highrisk_special_prefixes = HighriskSpecialPrefixList.new(
-                                @version,
-                                country_iso_code: @solution[:iso_code]
-                                
-                                )
+                                @version, iso_code: @solution[:iso_code],  )
                       end
-
                       @highrisk_special_prefixes
                     end
 

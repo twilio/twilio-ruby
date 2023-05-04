@@ -26,7 +26,7 @@ module Twilio
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        @uri = "/Insights/QM/Questionnaires"
+                        @uri = "/Insights/QualityManagement/Questionnaires"
                         
                     end
                     ##
@@ -34,14 +34,14 @@ module Twilio
                     # @param [String] name The name of this questionnaire
                     # @param [String] description The description of this questionnaire
                     # @param [Boolean] active The flag to enable or disable questionnaire
-                    # @param [Array[String]] question_ids The list of questions ids under a questionnaire
+                    # @param [Array[String]] question_sids The list of questions sids under a questionnaire
                     # @param [String] token The Token HTTP request header
                     # @return [InsightsQuestionnairesInstance] Created InsightsQuestionnairesInstance
                     def create(
                         name: nil, 
                         description: :unset, 
                         active: :unset, 
-                        question_ids: :unset, 
+                        question_sids: :unset, 
                         token: :unset
                     )
 
@@ -49,7 +49,7 @@ module Twilio
                             'Name' => name,
                             'Description' => description,
                             'Active' => active,
-                            'QuestionIds' => Twilio.serialize_list(question_ids) { |e| e },
+                            'QuestionSids' => Twilio.serialize_list(question_sids) { |e| e },
                         })
 
                         headers = Twilio::Values.of({ 'Token' => token, })
@@ -175,14 +175,14 @@ module Twilio
                     ##
                     # Initialize the InsightsQuestionnairesContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] id The unique ID of the questionnaire
+                    # @param [String] questionnaire_sid The SID of the questionnaire
                     # @return [InsightsQuestionnairesContext] InsightsQuestionnairesContext
-                    def initialize(version, id)
+                    def initialize(version, questionnaire_sid)
                         super(version)
 
                         # Path Solution
-                        @solution = { id: id,  }
-                        @uri = "/Insights/QM/Questionnaires/#{@solution[:id]}"
+                        @solution = { questionnaire_sid: questionnaire_sid,  }
+                        @uri = "/Insights/QualityManagement/Questionnaires/#{@solution[:questionnaire_sid]}"
 
                         
                     end
@@ -211,7 +211,7 @@ module Twilio
                         InsightsQuestionnairesInstance.new(
                             @version,
                             payload,
-                            id: @solution[:id],
+                            questionnaire_sid: @solution[:questionnaire_sid],
                         )
                     end
 
@@ -220,14 +220,14 @@ module Twilio
                     # @param [Boolean] active The flag to enable or disable questionnaire
                     # @param [String] name The name of this questionnaire
                     # @param [String] description The description of this questionnaire
-                    # @param [Array[String]] question_ids The list of questions ids under a questionnaire
+                    # @param [Array[String]] question_sids The list of questions sids under a questionnaire
                     # @param [String] token The Token HTTP request header
                     # @return [InsightsQuestionnairesInstance] Updated InsightsQuestionnairesInstance
                     def update(
                         active: nil, 
                         name: :unset, 
                         description: :unset, 
-                        question_ids: :unset, 
+                        question_sids: :unset, 
                         token: :unset
                     )
 
@@ -235,7 +235,7 @@ module Twilio
                             'Active' => active,
                             'Name' => name,
                             'Description' => description,
-                            'QuestionIds' => Twilio.serialize_list(question_ids) { |e| e },
+                            'QuestionSids' => Twilio.serialize_list(question_sids) { |e| e },
                         })
 
                         headers = Twilio::Values.of({ 'Token' => token, })
@@ -243,7 +243,7 @@ module Twilio
                         InsightsQuestionnairesInstance.new(
                             @version,
                             payload,
-                            id: @solution[:id],
+                            questionnaire_sid: @solution[:questionnaire_sid],
                         )
                     end
 
@@ -301,13 +301,13 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [InsightsQuestionnairesInstance] InsightsQuestionnairesInstance
-                    def initialize(version, payload , id: nil)
+                    def initialize(version, payload , questionnaire_sid: nil)
                         super(version)
                         
                         # Marshaled Properties
                         @properties = { 
                             'account_sid' => payload['account_sid'],
-                            'id' => payload['id'],
+                            'questionnaire_sid' => payload['questionnaire_sid'],
                             'name' => payload['name'],
                             'description' => payload['description'],
                             'active' => payload['active'],
@@ -317,7 +317,7 @@ module Twilio
 
                         # Context
                         @instance_context = nil
-                        @params = { 'id' => id  || @properties['id']  , }
+                        @params = { 'questionnaire_sid' => questionnaire_sid  || @properties['questionnaire_sid']  , }
                     end
 
                     ##
@@ -326,7 +326,7 @@ module Twilio
                     # @return [InsightsQuestionnairesContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = InsightsQuestionnairesContext.new(@version , @params['id'])
+                            @instance_context = InsightsQuestionnairesContext.new(@version , @params['questionnaire_sid'])
                         end
                         @instance_context
                     end
@@ -338,9 +338,9 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique id of this questionnaire
-                    def id
-                        @properties['id']
+                    # @return [String] The sid of this questionnaire
+                    def questionnaire_sid
+                        @properties['questionnaire_sid']
                     end
                     
                     ##
@@ -404,14 +404,14 @@ module Twilio
                     # @param [Boolean] active The flag to enable or disable questionnaire
                     # @param [String] name The name of this questionnaire
                     # @param [String] description The description of this questionnaire
-                    # @param [Array[String]] question_ids The list of questions ids under a questionnaire
+                    # @param [Array[String]] question_sids The list of questions sids under a questionnaire
                     # @param [String] token The Token HTTP request header
                     # @return [InsightsQuestionnairesInstance] Updated InsightsQuestionnairesInstance
                     def update(
                         active: nil, 
                         name: :unset, 
                         description: :unset, 
-                        question_ids: :unset, 
+                        question_sids: :unset, 
                         token: :unset
                     )
 
@@ -419,7 +419,7 @@ module Twilio
                             active: active, 
                             name: name, 
                             description: description, 
-                            question_ids: question_ids, 
+                            question_sids: question_sids, 
                             token: token, 
                         )
                     end

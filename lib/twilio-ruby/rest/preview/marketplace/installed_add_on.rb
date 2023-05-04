@@ -228,10 +228,7 @@ module Twilio
 
                         unless @extensions
                             @extensions = InstalledAddOnExtensionList.new(
-                                @version,
-                                installed_add_on_sid: @solution[:sid]
-                                
-                                )
+                                @version, installed_add_on_sid: @solution[:sid],  )
                         end
 
                      @extensions

@@ -182,12 +182,7 @@ module Twilio
 
                         unless @payloads
                             @payloads = PayloadList.new(
-                                @version,
-                                account_sid: @solution[:account_sid],
-                                reference_sid: @solution[:reference_sid],
-                                add_on_result_sid: @solution[:sid]
-                                
-                                )
+                                @version, account_sid: @solution[:account_sid],  reference_sid: @solution[:reference_sid],  add_on_result_sid: @solution[:sid],  )
                         end
 
                      @payloads

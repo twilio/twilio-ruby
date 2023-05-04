@@ -226,11 +226,7 @@ module Twilio
 
                         unless @members
                             @members = MemberList.new(
-                                @version,
-                                account_sid: @solution[:account_sid],
-                                queue_sid: @solution[:sid]
-                                
-                                )
+                                @version, account_sid: @solution[:account_sid],  queue_sid: @solution[:sid],  )
                         end
 
                      @members

@@ -216,13 +216,8 @@ module Twilio
                     def stream_messages
                       unless @stream_messages
                         @stream_messages = StreamMessageList.new(
-                                @version,
-                                service_sid: @solution[:service_sid],
-                                sync_stream_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:service_sid],  stream_sid: @solution[:sid],  )
                       end
-
                       @stream_messages
                     end
 

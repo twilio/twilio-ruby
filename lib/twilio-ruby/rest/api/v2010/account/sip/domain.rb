@@ -288,13 +288,8 @@ module Twilio
                     def auth
                       unless @auth
                         @auth = AuthTypesList.new(
-                                @version,
-                                account_sid: @solution[:account_sid],
-                                domain_sid: @solution[:sid]
-                                
-                                )
+                                @version, account_sid: @solution[:account_sid],  domain_sid: @solution[:sid],  )
                       end
-
                       @auth
                     end
                     ##
@@ -311,11 +306,7 @@ module Twilio
 
                         unless @ip_access_control_list_mappings
                             @ip_access_control_list_mappings = IpAccessControlListMappingList.new(
-                                @version,
-                                account_sid: @solution[:account_sid],
-                                domain_sid: @solution[:sid]
-                                
-                                )
+                                @version, account_sid: @solution[:account_sid],  domain_sid: @solution[:sid],  )
                         end
 
                      @ip_access_control_list_mappings
@@ -334,11 +325,7 @@ module Twilio
 
                         unless @credential_list_mappings
                             @credential_list_mappings = CredentialListMappingList.new(
-                                @version,
-                                account_sid: @solution[:account_sid],
-                                domain_sid: @solution[:sid]
-                                
-                                )
+                                @version, account_sid: @solution[:account_sid],  domain_sid: @solution[:sid],  )
                         end
 
                      @credential_list_mappings

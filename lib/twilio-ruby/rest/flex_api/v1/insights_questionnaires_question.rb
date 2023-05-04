@@ -26,12 +26,12 @@ module Twilio
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        @uri = "/Insights/QM/Questions"
+                        @uri = "/Insights/QualityManagement/Questions"
                         
                     end
                     ##
                     # Create the InsightsQuestionnairesQuestionInstance
-                    # @param [String] category_id The ID of the category
+                    # @param [String] category_sid The SID of the category
                     # @param [String] question The question.
                     # @param [String] answer_set_id The answer_set for the question.
                     # @param [Boolean] allow_na The flag to enable for disable NA for answer.
@@ -39,7 +39,7 @@ module Twilio
                     # @param [String] token The Token HTTP request header
                     # @return [InsightsQuestionnairesQuestionInstance] Created InsightsQuestionnairesQuestionInstance
                     def create(
-                        category_id: nil, 
+                        category_sid: nil, 
                         question: nil, 
                         answer_set_id: nil, 
                         allow_na: nil, 
@@ -48,7 +48,7 @@ module Twilio
                     )
 
                         data = Twilio::Values.of({
-                            'CategoryId' => category_id,
+                            'CategorySid' => category_sid,
                             'Question' => question,
                             'AnswerSetId' => answer_set_id,
                             'AllowNa' => allow_na,
@@ -69,7 +69,7 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [String] token The Token HTTP request header
-                    # @param [Array[String]] category_id The list of category IDs
+                    # @param [Array[String]] category_sid The list of category SIDs
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -77,10 +77,10 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(token: :unset, category_id: :unset, limit: nil, page_size: nil)
+                    def list(token: :unset, category_sid: :unset, limit: nil, page_size: nil)
                         self.stream(
                             token: token,
-                            category_id: category_id,
+                            category_sid: category_sid,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -91,7 +91,7 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [String] token The Token HTTP request header
-                    # @param [Array[String]] category_id The list of category IDs
+                    # @param [Array[String]] category_sid The list of category SIDs
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -99,12 +99,12 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(token: :unset, category_id: :unset, limit: nil, page_size: nil)
+                    def stream(token: :unset, category_sid: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
                             token: token,
-                            category_id: category_id,
+                            category_sid: category_sid,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -128,17 +128,17 @@ module Twilio
                     # Retrieve a single page of InsightsQuestionnairesQuestionInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] token The Token HTTP request header
-                    # @param [Array[String]] category_id The list of category IDs
+                    # @param [Array[String]] category_sid The list of category SIDs
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of InsightsQuestionnairesQuestionInstance
-                    def page(token: :unset, category_id: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(token: :unset, category_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
                             'Token' => token,
                             
-                            'CategoryId' =>  Twilio.serialize_list(category_id),
+                            'CategorySid' =>  Twilio.serialize_list(category_sid),
                             
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -178,14 +178,14 @@ module Twilio
                     ##
                     # Initialize the InsightsQuestionnairesQuestionContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] question_id The unique ID of the question
+                    # @param [String] question_sid The SID of the question
                     # @return [InsightsQuestionnairesQuestionContext] InsightsQuestionnairesQuestionContext
-                    def initialize(version, question_id)
+                    def initialize(version, question_sid)
                         super(version)
 
                         # Path Solution
-                        @solution = { question_id: question_id,  }
-                        @uri = "/Insights/QM/Questions/#{@solution[:question_id]}"
+                        @solution = { question_sid: question_sid,  }
+                        @uri = "/Insights/QualityManagement/Questions/#{@solution[:question_sid]}"
 
                         
                     end
@@ -204,7 +204,7 @@ module Twilio
                     ##
                     # Update the InsightsQuestionnairesQuestionInstance
                     # @param [Boolean] allow_na The flag to enable for disable NA for answer.
-                    # @param [String] category_id The ID of the category
+                    # @param [String] category_sid The SID of the category
                     # @param [String] question The question.
                     # @param [String] description The description for the question.
                     # @param [String] answer_set_id The answer_set for the question.
@@ -212,7 +212,7 @@ module Twilio
                     # @return [InsightsQuestionnairesQuestionInstance] Updated InsightsQuestionnairesQuestionInstance
                     def update(
                         allow_na: nil, 
-                        category_id: :unset, 
+                        category_sid: :unset, 
                         question: :unset, 
                         description: :unset, 
                         answer_set_id: :unset, 
@@ -221,7 +221,7 @@ module Twilio
 
                         data = Twilio::Values.of({
                             'AllowNa' => allow_na,
-                            'CategoryId' => category_id,
+                            'CategorySid' => category_sid,
                             'Question' => question,
                             'Description' => description,
                             'AnswerSetId' => answer_set_id,
@@ -232,7 +232,7 @@ module Twilio
                         InsightsQuestionnairesQuestionInstance.new(
                             @version,
                             payload,
-                            question_id: @solution[:question_id],
+                            question_sid: @solution[:question_sid],
                         )
                     end
 
@@ -290,13 +290,13 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [InsightsQuestionnairesQuestionInstance] InsightsQuestionnairesQuestionInstance
-                    def initialize(version, payload , question_id: nil)
+                    def initialize(version, payload , question_sid: nil)
                         super(version)
                         
                         # Marshaled Properties
                         @properties = { 
                             'account_sid' => payload['account_sid'],
-                            'question_id' => payload['question_id'],
+                            'question_sid' => payload['question_sid'],
                             'question' => payload['question'],
                             'description' => payload['description'],
                             'category' => payload['category'],
@@ -309,7 +309,7 @@ module Twilio
 
                         # Context
                         @instance_context = nil
-                        @params = { 'question_id' => question_id  || @properties['question_id']  , }
+                        @params = { 'question_sid' => question_sid  || @properties['question_sid']  , }
                     end
 
                     ##
@@ -318,7 +318,7 @@ module Twilio
                     # @return [InsightsQuestionnairesQuestionContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = InsightsQuestionnairesQuestionContext.new(@version , @params['question_id'])
+                            @instance_context = InsightsQuestionnairesQuestionContext.new(@version , @params['question_sid'])
                         end
                         @instance_context
                     end
@@ -330,9 +330,9 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique ID of the question
-                    def question_id
-                        @properties['question_id']
+                    # @return [String] The SID of the question
+                    def question_sid
+                        @properties['question_sid']
                     end
                     
                     ##
@@ -399,7 +399,7 @@ module Twilio
                     ##
                     # Update the InsightsQuestionnairesQuestionInstance
                     # @param [Boolean] allow_na The flag to enable for disable NA for answer.
-                    # @param [String] category_id The ID of the category
+                    # @param [String] category_sid The SID of the category
                     # @param [String] question The question.
                     # @param [String] description The description for the question.
                     # @param [String] answer_set_id The answer_set for the question.
@@ -407,7 +407,7 @@ module Twilio
                     # @return [InsightsQuestionnairesQuestionInstance] Updated InsightsQuestionnairesQuestionInstance
                     def update(
                         allow_na: nil, 
-                        category_id: :unset, 
+                        category_sid: :unset, 
                         question: :unset, 
                         description: :unset, 
                         answer_set_id: :unset, 
@@ -416,7 +416,7 @@ module Twilio
 
                         context.update(
                             allow_na: allow_na, 
-                            category_id: category_id, 
+                            category_sid: category_sid, 
                             question: question, 
                             description: description, 
                             answer_set_id: answer_set_id, 

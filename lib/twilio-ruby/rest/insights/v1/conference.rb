@@ -237,10 +237,7 @@ module Twilio
 
                         unless @conference_participants
                             @conference_participants = ConferenceParticipantList.new(
-                                @version,
-                                conference_conference_sid: @solution[:conference_sid]
-                                
-                                )
+                                @version, conference_sid: @solution[:conference_sid],  )
                         end
 
                      @conference_participants

@@ -262,10 +262,7 @@ module Twilio
 
                         unless @tasks
                             @tasks = TaskList.new(
-                                @version,
-                                assistant_sid: @solution[:sid]
-                                
-                                )
+                                @version, assistant_sid: @solution[:sid],  )
                         end
 
                      @tasks
@@ -294,10 +291,7 @@ module Twilio
 
                         unless @webhooks
                             @webhooks = WebhookList.new(
-                                @version,
-                                assistant_sid: @solution[:sid]
-                                
-                                )
+                                @version, assistant_sid: @solution[:sid],  )
                         end
 
                      @webhooks
@@ -316,10 +310,7 @@ module Twilio
 
                         unless @dialogues
                             @dialogues = DialogueList.new(
-                                @version,
-                                assistant_sid: @solution[:sid]
-                                
-                                )
+                                @version, assistant_sid: @solution[:sid],  )
                         end
 
                      @dialogues
@@ -338,10 +329,7 @@ module Twilio
 
                         unless @model_builds
                             @model_builds = ModelBuildList.new(
-                                @version,
-                                assistant_sid: @solution[:sid]
-                                
-                                )
+                                @version, assistant_sid: @solution[:sid],  )
                         end
 
                      @model_builds
@@ -360,10 +348,7 @@ module Twilio
 
                         unless @field_types
                             @field_types = FieldTypeList.new(
-                                @version,
-                                assistant_sid: @solution[:sid]
-                                
-                                )
+                                @version, assistant_sid: @solution[:sid],  )
                         end
 
                      @field_types
@@ -392,10 +377,7 @@ module Twilio
 
                         unless @queries
                             @queries = QueryList.new(
-                                @version,
-                                assistant_sid: @solution[:sid]
-                                
-                                )
+                                @version, assistant_sid: @solution[:sid],  )
                         end
 
                      @queries

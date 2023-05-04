@@ -316,12 +316,8 @@ module Twilio
                     def bundle_copies
                       unless @bundle_copies
                         @bundle_copies = BundleCopyList.new(
-                                @version,
-                                bundle_sid: @solution[:sid]
-                                
-                                )
+                                @version, bundle_sid: @solution[:sid],  )
                       end
-
                       @bundle_copies
                     end
                     ##
@@ -331,12 +327,8 @@ module Twilio
                     def replace_items
                       unless @replace_items
                         @replace_items = ReplaceItemsList.new(
-                                @version,
-                                bundle_sid: @solution[:sid]
-                                
-                                )
+                                @version, bundle_sid: @solution[:sid],  )
                       end
-
                       @replace_items
                     end
                     ##
@@ -353,10 +345,7 @@ module Twilio
 
                         unless @item_assignments
                             @item_assignments = ItemAssignmentList.new(
-                                @version,
-                                bundle_sid: @solution[:sid]
-                                
-                                )
+                                @version, bundle_sid: @solution[:sid],  )
                         end
 
                      @item_assignments
@@ -375,10 +364,7 @@ module Twilio
 
                         unless @evaluations
                             @evaluations = EvaluationList.new(
-                                @version,
-                                bundle_sid: @solution[:sid]
-                                
-                                )
+                                @version, bundle_sid: @solution[:sid],  )
                         end
 
                      @evaluations

@@ -255,10 +255,7 @@ module Twilio
 
                         unless @customer_profiles_channel_endpoint_assignment
                             @customer_profiles_channel_endpoint_assignment = CustomerProfilesChannelEndpointAssignmentList.new(
-                                @version,
-                                customer_profiles_sid: @solution[:sid]
-                                
-                                )
+                                @version, customer_profile_sid: @solution[:sid],  )
                         end
 
                      @customer_profiles_channel_endpoint_assignment
@@ -277,10 +274,7 @@ module Twilio
 
                         unless @customer_profiles_entity_assignments
                             @customer_profiles_entity_assignments = CustomerProfilesEntityAssignmentsList.new(
-                                @version,
-                                customer_profiles_sid: @solution[:sid]
-                                
-                                )
+                                @version, customer_profile_sid: @solution[:sid],  )
                         end
 
                      @customer_profiles_entity_assignments
@@ -299,10 +293,7 @@ module Twilio
 
                         unless @customer_profiles_evaluations
                             @customer_profiles_evaluations = CustomerProfilesEvaluationsList.new(
-                                @version,
-                                customer_profiles_sid: @solution[:sid]
-                                
-                                )
+                                @version, customer_profile_sid: @solution[:sid],  )
                         end
 
                      @customer_profiles_evaluations

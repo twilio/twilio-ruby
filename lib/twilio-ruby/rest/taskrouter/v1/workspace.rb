@@ -273,10 +273,7 @@ module Twilio
 
                         unless @task_queues
                             @task_queues = TaskQueueList.new(
-                                @version,
-                                workspace_sid: @solution[:sid]
-                                
-                                )
+                                @version, workspace_sid: @solution[:sid],  )
                         end
 
                      @task_queues
@@ -295,10 +292,7 @@ module Twilio
 
                         unless @activities
                             @activities = ActivityList.new(
-                                @version,
-                                workspace_sid: @solution[:sid]
-                                
-                                )
+                                @version, workspace_sid: @solution[:sid],  )
                         end
 
                      @activities
@@ -327,10 +321,7 @@ module Twilio
 
                         unless @tasks
                             @tasks = TaskList.new(
-                                @version,
-                                workspace_sid: @solution[:sid]
-                                
-                                )
+                                @version, workspace_sid: @solution[:sid],  )
                         end
 
                      @tasks
@@ -349,10 +340,7 @@ module Twilio
 
                         unless @workflows
                             @workflows = WorkflowList.new(
-                                @version,
-                                workspace_sid: @solution[:sid]
-                                
-                                )
+                                @version, workspace_sid: @solution[:sid],  )
                         end
 
                      @workflows
@@ -371,10 +359,7 @@ module Twilio
 
                         unless @events
                             @events = EventList.new(
-                                @version,
-                                workspace_sid: @solution[:sid]
-                                
-                                )
+                                @version, workspace_sid: @solution[:sid],  )
                         end
 
                      @events
@@ -393,10 +378,7 @@ module Twilio
 
                         unless @workers
                             @workers = WorkerList.new(
-                                @version,
-                                workspace_sid: @solution[:sid]
-                                
-                                )
+                                @version, workspace_sid: @solution[:sid],  )
                         end
 
                      @workers
@@ -425,10 +407,7 @@ module Twilio
 
                         unless @task_channels
                             @task_channels = TaskChannelList.new(
-                                @version,
-                                workspace_sid: @solution[:sid]
-                                
-                                )
+                                @version, workspace_sid: @solution[:sid],  )
                         end
 
                      @task_channels

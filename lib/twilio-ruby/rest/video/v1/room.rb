@@ -271,12 +271,8 @@ module Twilio
                     def recording_rules
                       unless @recording_rules
                         @recording_rules = RecordingRulesList.new(
-                                @version,
-                                room_sid: @solution[:sid]
-                                
-                                )
+                                @version, room_sid: @solution[:sid],  )
                       end
-
                       @recording_rules
                     end
                     ##
@@ -293,10 +289,7 @@ module Twilio
 
                         unless @participants
                             @participants = ParticipantList.new(
-                                @version,
-                                room_sid: @solution[:sid]
-                                
-                                )
+                                @version, room_sid: @solution[:sid],  )
                         end
 
                      @participants
@@ -315,10 +308,7 @@ module Twilio
 
                         unless @recordings
                             @recordings = RoomRecordingList.new(
-                                @version,
-                                room_sid: @solution[:sid]
-                                
-                                )
+                                @version, room_sid: @solution[:sid],  )
                         end
 
                      @recordings

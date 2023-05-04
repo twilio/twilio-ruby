@@ -375,10 +375,7 @@ module Twilio
 
                         unless @channels
                             @channels = ChannelList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @channels
@@ -397,10 +394,7 @@ module Twilio
 
                         unless @roles
                             @roles = RoleList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @roles
@@ -419,10 +413,7 @@ module Twilio
 
                         unless @users
                             @users = UserList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @users

@@ -211,10 +211,7 @@ module Twilio
 
                         unless @networks
                             @networks = NetworkAccessProfileNetworkList.new(
-                                @version,
-                                network_access_profile_sid: @solution[:sid]
-                                
-                                )
+                                @version, network_access_profile_sid: @solution[:sid],  )
                         end
 
                      @networks

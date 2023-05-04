@@ -275,12 +275,8 @@ module Twilio
                     def data_sessions
                       unless @data_sessions
                         @data_sessions = DataSessionList.new(
-                                @version,
-                                sim_sid: @solution[:sid]
-                                
-                                )
+                                @version, sim_sid: @solution[:sid],  )
                       end
-
                       @data_sessions
                     end
                     ##
@@ -290,12 +286,8 @@ module Twilio
                     def usage_records
                       unless @usage_records
                         @usage_records = UsageRecordList.new(
-                                @version,
-                                sim_sid: @solution[:sid]
-                                
-                                )
+                                @version, sim_sid: @solution[:sid],  )
                       end
-
                       @usage_records
                     end
 

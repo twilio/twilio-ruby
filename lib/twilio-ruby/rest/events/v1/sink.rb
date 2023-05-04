@@ -230,12 +230,8 @@ module Twilio
                     def sink_test
                       unless @sink_test
                         @sink_test = SinkTestList.new(
-                                @version,
-                                sink_sid: @solution[:sid]
-                                
-                                )
+                                @version, sid: @solution[:sid],  )
                       end
-
                       @sink_test
                     end
                     ##
@@ -245,12 +241,8 @@ module Twilio
                     def sink_validate
                       unless @sink_validate
                         @sink_validate = SinkValidateList.new(
-                                @version,
-                                sink_sid: @solution[:sid]
-                                
-                                )
+                                @version, sid: @solution[:sid],  )
                       end
-
                       @sink_validate
                     end
 

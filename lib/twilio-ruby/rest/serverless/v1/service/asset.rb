@@ -222,11 +222,7 @@ module Twilio
 
                         unless @asset_versions
                             @asset_versions = AssetVersionList.new(
-                                @version,
-                                service_sid: @solution[:service_sid],
-                                asset_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:service_sid],  asset_sid: @solution[:sid],  )
                         end
 
                      @asset_versions

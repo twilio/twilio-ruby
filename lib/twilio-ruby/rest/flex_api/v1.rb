@@ -40,17 +40,17 @@ module Twilio
                 end
 
                 ##
-                # @param [String] assessment_id The id of the assessment to be modified
-                # @return [Twilio::REST::FlexApi::V1::AssessmentsContext] if assessmentId was passed.
+                # @param [String] assessment_sid The SID of the assessment to be modified
+                # @return [Twilio::REST::FlexApi::V1::AssessmentsContext] if assessmentSid was passed.
                 # @return [Twilio::REST::FlexApi::V1::AssessmentsList]
-                def assessments(assessment_id=:unset)
-                    if assessment_id.nil?
-                        raise ArgumentError, 'assessment_id cannot be nil'
+                def assessments(assessment_sid=:unset)
+                    if assessment_sid.nil?
+                        raise ArgumentError, 'assessment_sid cannot be nil'
                     end
-                    if assessment_id == :unset
+                    if assessment_sid == :unset
                         @assessments ||= AssessmentsList.new self
                     else
-                        AssessmentsContext.new(self, assessment_id)
+                        AssessmentsContext.new(self, assessment_sid)
                     end
                 end
                 ##
@@ -97,60 +97,51 @@ module Twilio
                     @insights_conversations ||= InsightsConversationsList.new self
                 end
                 ##
-                # @param [String] id The unique ID of the questionnaire
-                # @return [Twilio::REST::FlexApi::V1::InsightsQuestionnairesContext] if id was passed.
+                # @param [String] questionnaire_sid The SID of the questionnaire
+                # @return [Twilio::REST::FlexApi::V1::InsightsQuestionnairesContext] if questionnaireSid was passed.
                 # @return [Twilio::REST::FlexApi::V1::InsightsQuestionnairesList]
-                def insights_questionnaires(id=:unset)
-                    if id.nil?
-                        raise ArgumentError, 'id cannot be nil'
+                def insights_questionnaires(questionnaire_sid=:unset)
+                    if questionnaire_sid.nil?
+                        raise ArgumentError, 'questionnaire_sid cannot be nil'
                     end
-                    if id == :unset
+                    if questionnaire_sid == :unset
                         @insights_questionnaires ||= InsightsQuestionnairesList.new self
                     else
-                        InsightsQuestionnairesContext.new(self, id)
+                        InsightsQuestionnairesContext.new(self, questionnaire_sid)
                     end
                 end
                 ##
-                # @param [String] category_id The ID of the category to be update
-                # @return [Twilio::REST::FlexApi::V1::InsightsQuestionnairesCategoryContext] if categoryId was passed.
+                # @param [String] category_sid The SID of the category to be updated
+                # @return [Twilio::REST::FlexApi::V1::InsightsQuestionnairesCategoryContext] if categorySid was passed.
                 # @return [Twilio::REST::FlexApi::V1::InsightsQuestionnairesCategoryList]
-                def insights_questionnaires_category(category_id=:unset)
-                    if category_id.nil?
-                        raise ArgumentError, 'category_id cannot be nil'
+                def insights_questionnaires_category(category_sid=:unset)
+                    if category_sid.nil?
+                        raise ArgumentError, 'category_sid cannot be nil'
                     end
-                    if category_id == :unset
+                    if category_sid == :unset
                         @insights_questionnaires_category ||= InsightsQuestionnairesCategoryList.new self
                     else
-                        InsightsQuestionnairesCategoryContext.new(self, category_id)
+                        InsightsQuestionnairesCategoryContext.new(self, category_sid)
                     end
                 end
                 ##
-                # @param [String] question_id The unique ID of the question
-                # @return [Twilio::REST::FlexApi::V1::InsightsQuestionnairesQuestionContext] if questionId was passed.
+                # @param [String] question_sid The SID of the question
+                # @return [Twilio::REST::FlexApi::V1::InsightsQuestionnairesQuestionContext] if questionSid was passed.
                 # @return [Twilio::REST::FlexApi::V1::InsightsQuestionnairesQuestionList]
-                def insights_questionnaires_question(question_id=:unset)
-                    if question_id.nil?
-                        raise ArgumentError, 'question_id cannot be nil'
+                def insights_questionnaires_question(question_sid=:unset)
+                    if question_sid.nil?
+                        raise ArgumentError, 'question_sid cannot be nil'
                     end
-                    if question_id == :unset
+                    if question_sid == :unset
                         @insights_questionnaires_question ||= InsightsQuestionnairesQuestionList.new self
                     else
-                        InsightsQuestionnairesQuestionContext.new(self, question_id)
+                        InsightsQuestionnairesQuestionContext.new(self, question_sid)
                     end
                 end
                 ##
-                # @param [String] segment_id To unique id of the segment
-                # @return [Twilio::REST::FlexApi::V1::InsightsSegmentsContext] if segmentId was passed.
                 # @return [Twilio::REST::FlexApi::V1::InsightsSegmentsList]
-                def insights_segments(segment_id=:unset)
-                    if segment_id.nil?
-                        raise ArgumentError, 'segment_id cannot be nil'
-                    end
-                    if segment_id == :unset
-                        @insights_segments ||= InsightsSegmentsList.new self
-                    else
-                        InsightsSegmentsContext.new(self, segment_id)
-                    end
+                def insights_segments
+                    @insights_segments ||= InsightsSegmentsList.new self
                 end
                 ##
                 # @return [Twilio::REST::FlexApi::V1::insightsSessionContext]

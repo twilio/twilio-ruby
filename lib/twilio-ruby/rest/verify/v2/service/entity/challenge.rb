@@ -249,14 +249,8 @@ module Twilio
                     def notifications
                       unless @notifications
                         @notifications = NotificationList.new(
-                                @version,
-                                service_sid: @solution[:service_sid],
-                                identity: @solution[:identity],
-                                challenge_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:service_sid],  identity: @solution[:identity],  challenge_sid: @solution[:sid],  )
                       end
-
                       @notifications
                     end
 

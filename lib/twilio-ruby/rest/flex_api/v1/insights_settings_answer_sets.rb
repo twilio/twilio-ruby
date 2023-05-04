@@ -26,7 +26,7 @@ module Twilio
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        @uri = "/Insights/QM/Settings/AnswerSets"
+                        @uri = "/Insights/QualityManagement/Settings/AnswerSets"
                         
                     end
                     ##

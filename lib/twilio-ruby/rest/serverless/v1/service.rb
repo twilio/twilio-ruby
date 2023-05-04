@@ -234,10 +234,7 @@ module Twilio
 
                         unless @environments
                             @environments = EnvironmentList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @environments
@@ -256,10 +253,7 @@ module Twilio
 
                         unless @functions
                             @functions = FunctionList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @functions
@@ -278,10 +272,7 @@ module Twilio
 
                         unless @builds
                             @builds = BuildList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @builds
@@ -300,10 +291,7 @@ module Twilio
 
                         unless @assets
                             @assets = AssetList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @assets

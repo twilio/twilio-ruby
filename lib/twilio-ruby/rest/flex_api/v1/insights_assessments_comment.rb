@@ -26,7 +26,7 @@ module Twilio
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        @uri = "/Insights/QM/Assessments/Comments"
+                        @uri = "/Insights/QualityManagement/Assessments/Comments"
                         
                     end
                     ##
@@ -231,7 +231,7 @@ module Twilio
                         # Marshaled Properties
                         @properties = { 
                             'account_sid' => payload['account_sid'],
-                            'assessment_id' => payload['assessment_id'],
+                            'assessment_sid' => payload['assessment_sid'],
                             'comment' => payload['comment'],
                             'offset' => payload['offset'],
                             'report' => payload['report'],
@@ -253,9 +253,9 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique ID of the assessment.
-                    def assessment_id
-                        @properties['assessment_id']
+                    # @return [String] The SID of the assessment.
+                    def assessment_sid
+                        @properties['assessment_sid']
                     end
                     
                     ##

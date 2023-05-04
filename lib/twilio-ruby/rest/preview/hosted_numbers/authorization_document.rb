@@ -248,12 +248,8 @@ module Twilio
                     def dependent_hosted_number_orders
                       unless @dependent_hosted_number_orders
                         @dependent_hosted_number_orders = DependentHostedNumberOrderList.new(
-                                @version,
-                                authorization_document_sid: @solution[:sid]
-                                
-                                )
+                                @version, signing_document_sid: @solution[:sid],  )
                       end
-
                       @dependent_hosted_number_orders
                     end
 

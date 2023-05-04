@@ -309,12 +309,8 @@ module Twilio
                     def verification_checks
                       unless @verification_checks
                         @verification_checks = VerificationCheckList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                       end
-
                       @verification_checks
                     end
                     ##
@@ -331,10 +327,7 @@ module Twilio
 
                         unless @verifications
                             @verifications = VerificationList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @verifications
@@ -353,10 +346,7 @@ module Twilio
 
                         unless @access_tokens
                             @access_tokens = AccessTokenList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @access_tokens
@@ -375,10 +365,7 @@ module Twilio
 
                         unless @webhooks
                             @webhooks = WebhookList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @webhooks
@@ -397,10 +384,7 @@ module Twilio
 
                         unless @messaging_configurations
                             @messaging_configurations = MessagingConfigurationList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @messaging_configurations
@@ -419,10 +403,7 @@ module Twilio
 
                         unless @entities
                             @entities = EntityList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @entities
@@ -441,10 +422,7 @@ module Twilio
 
                         unless @rate_limits
                             @rate_limits = RateLimitList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @rate_limits

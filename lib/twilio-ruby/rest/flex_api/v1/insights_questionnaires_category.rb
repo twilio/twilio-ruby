@@ -26,7 +26,7 @@ module Twilio
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        @uri = "/Insights/QM/Categories"
+                        @uri = "/Insights/QualityManagement/Categories"
                         
                     end
                     ##
@@ -159,14 +159,14 @@ module Twilio
                     ##
                     # Initialize the InsightsQuestionnairesCategoryContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] category_id The ID of the category to be update
+                    # @param [String] category_sid The SID of the category to be updated
                     # @return [InsightsQuestionnairesCategoryContext] InsightsQuestionnairesCategoryContext
-                    def initialize(version, category_id)
+                    def initialize(version, category_sid)
                         super(version)
 
                         # Path Solution
-                        @solution = { category_id: category_id,  }
-                        @uri = "/Insights/QM/Categories/#{@solution[:category_id]}"
+                        @solution = { category_sid: category_sid,  }
+                        @uri = "/Insights/QualityManagement/Categories/#{@solution[:category_sid]}"
 
                         
                     end
@@ -201,7 +201,7 @@ module Twilio
                         InsightsQuestionnairesCategoryInstance.new(
                             @version,
                             payload,
-                            category_id: @solution[:category_id],
+                            category_sid: @solution[:category_sid],
                         )
                     end
 
@@ -259,20 +259,20 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [InsightsQuestionnairesCategoryInstance] InsightsQuestionnairesCategoryInstance
-                    def initialize(version, payload , category_id: nil)
+                    def initialize(version, payload , category_sid: nil)
                         super(version)
                         
                         # Marshaled Properties
                         @properties = { 
                             'account_sid' => payload['account_sid'],
-                            'category_id' => payload['category_id'],
+                            'category_sid' => payload['category_sid'],
                             'name' => payload['name'],
                             'url' => payload['url'],
                         }
 
                         # Context
                         @instance_context = nil
-                        @params = { 'category_id' => category_id  || @properties['category_id']  , }
+                        @params = { 'category_sid' => category_sid  || @properties['category_sid']  , }
                     end
 
                     ##
@@ -281,7 +281,7 @@ module Twilio
                     # @return [InsightsQuestionnairesCategoryContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = InsightsQuestionnairesCategoryContext.new(@version , @params['category_id'])
+                            @instance_context = InsightsQuestionnairesCategoryContext.new(@version , @params['category_sid'])
                         end
                         @instance_context
                     end
@@ -293,9 +293,9 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique ID for the category
-                    def category_id
-                        @properties['category_id']
+                    # @return [String] The SID of the category
+                    def category_sid
+                        @properties['category_sid']
                     end
                     
                     ##

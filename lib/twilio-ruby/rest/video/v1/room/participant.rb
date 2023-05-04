@@ -216,13 +216,8 @@ module Twilio
                     def subscribe_rules
                       unless @subscribe_rules
                         @subscribe_rules = SubscribeRulesList.new(
-                                @version,
-                                room_sid: @solution[:room_sid],
-                                participant_sid: @solution[:sid]
-                                
-                                )
+                                @version, room_sid: @solution[:room_sid],  participant_sid: @solution[:sid],  sid: @solution[:sid],  )
                       end
-
                       @subscribe_rules
                     end
                     ##
@@ -239,11 +234,7 @@ module Twilio
 
                         unless @subscribed_tracks
                             @subscribed_tracks = SubscribedTrackList.new(
-                                @version,
-                                room_sid: @solution[:room_sid],
-                                participant_sid: @solution[:sid]
-                                
-                                )
+                                @version, room_sid: @solution[:room_sid],  participant_sid: @solution[:sid],  sid: @solution[:sid],  )
                         end
 
                      @subscribed_tracks
@@ -273,11 +264,7 @@ module Twilio
 
                         unless @published_tracks
                             @published_tracks = PublishedTrackList.new(
-                                @version,
-                                room_sid: @solution[:room_sid],
-                                participant_sid: @solution[:sid]
-                                
-                                )
+                                @version, room_sid: @solution[:room_sid],  participant_sid: @solution[:sid],  sid: @solution[:sid],  )
                         end
 
                      @published_tracks

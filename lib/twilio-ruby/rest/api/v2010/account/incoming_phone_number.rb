@@ -407,11 +407,7 @@ module Twilio
 
                         unless @assigned_add_ons
                             @assigned_add_ons = AssignedAddOnList.new(
-                                @version,
-                                account_sid: @solution[:account_sid],
-                                incoming_phone_number_sid: @solution[:sid]
-                                
-                                )
+                                @version, account_sid: @solution[:account_sid],  resource_sid: @solution[:sid],  )
                         end
 
                      @assigned_add_ons

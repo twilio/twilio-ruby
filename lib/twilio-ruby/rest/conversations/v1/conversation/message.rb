@@ -270,11 +270,7 @@ module Twilio
 
                         unless @delivery_receipts
                             @delivery_receipts = DeliveryReceiptList.new(
-                                @version,
-                                conversation_sid: @solution[:conversation_sid],
-                                message_sid: @solution[:sid]
-                                
-                                )
+                                @version, conversation_sid: @solution[:conversation_sid],  message_sid: @solution[:sid],  )
                         end
 
                      @delivery_receipts

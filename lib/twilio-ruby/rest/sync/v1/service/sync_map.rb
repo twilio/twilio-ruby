@@ -230,11 +230,7 @@ module Twilio
 
                         unless @sync_map_items
                             @sync_map_items = SyncMapItemList.new(
-                                @version,
-                                service_sid: @solution[:service_sid],
-                                sync_map_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:service_sid],  map_sid: @solution[:sid],  )
                         end
 
                      @sync_map_items
@@ -253,11 +249,7 @@ module Twilio
 
                         unless @sync_map_permissions
                             @sync_map_permissions = SyncMapPermissionList.new(
-                                @version,
-                                service_sid: @solution[:service_sid],
-                                sync_map_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:service_sid],  map_sid: @solution[:sid],  )
                         end
 
                      @sync_map_permissions

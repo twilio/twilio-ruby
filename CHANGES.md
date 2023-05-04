@@ -1,6 +1,20 @@
 twilio-ruby changelog
 ===================== 
 
+[2023-05-04] Version 6.0.0
+--------------------------
+**Note:** This release contains breaking changes, check our [upgrade guide](./UPGRADE.md#2023-05-03-5xx-to-6xx) for detailed migration notes.
+
+**Library - Feature**
+- [PR #651](https://github.com/twilio/twilio-ruby/pull/651): Merge branch '6.x.x-rc' to main. Thanks to [@shrutiburman](https://github.com/shrutiburman)! **(breaking change)**
+
+**Conversations**
+- Remove `start_date`, `end_date` and `state` query parameters from list operation on Conversations resource **(breaking change)**
+
+**Twiml**
+- Add support for new Amazon Polly voices (Q1 2023) for `Say` verb
+
+
 [2023-04-19] Version 5.77.0
 ---------------------------
 **Library - Docs**

@@ -244,11 +244,7 @@ module Twilio
 
                         unless @interactions
                             @interactions = InteractionList.new(
-                                @version,
-                                service_sid: @solution[:service_sid],
-                                session_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:service_sid],  session_sid: @solution[:sid],  )
                         end
 
                      @interactions
@@ -267,11 +263,7 @@ module Twilio
 
                         unless @participants
                             @participants = ParticipantList.new(
-                                @version,
-                                service_sid: @solution[:service_sid],
-                                session_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:service_sid],  session_sid: @solution[:sid],  )
                         end
 
                      @participants

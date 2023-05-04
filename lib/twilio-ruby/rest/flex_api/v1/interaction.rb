@@ -104,10 +104,7 @@ module Twilio
 
                         unless @channels
                             @channels = InteractionChannelList.new(
-                                @version,
-                                interaction_sid: @solution[:sid]
-                                
-                                )
+                                @version, interaction_sid: @solution[:sid],  )
                         end
 
                      @channels

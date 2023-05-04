@@ -236,10 +236,7 @@ module Twilio
 
                         unless @sync_lists
                             @sync_lists = SyncListList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @sync_lists
@@ -258,10 +255,7 @@ module Twilio
 
                         unless @sync_maps
                             @sync_maps = SyncMapList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @sync_maps
@@ -280,10 +274,7 @@ module Twilio
 
                         unless @documents
                             @documents = DocumentList.new(
-                                @version,
-                                service_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:sid],  )
                         end
 
                      @documents

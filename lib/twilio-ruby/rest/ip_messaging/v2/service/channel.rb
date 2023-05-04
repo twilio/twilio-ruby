@@ -273,11 +273,7 @@ module Twilio
 
                         unless @webhooks
                             @webhooks = WebhookList.new(
-                                @version,
-                                service_sid: @solution[:service_sid],
-                                channel_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:service_sid],  channel_sid: @solution[:sid],  )
                         end
 
                      @webhooks
@@ -296,11 +292,7 @@ module Twilio
 
                         unless @members
                             @members = MemberList.new(
-                                @version,
-                                service_sid: @solution[:service_sid],
-                                channel_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:service_sid],  channel_sid: @solution[:sid],  )
                         end
 
                      @members
@@ -319,11 +311,7 @@ module Twilio
 
                         unless @messages
                             @messages = MessageList.new(
-                                @version,
-                                service_sid: @solution[:service_sid],
-                                channel_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:service_sid],  channel_sid: @solution[:sid],  )
                         end
 
                      @messages
@@ -342,11 +330,7 @@ module Twilio
 
                         unless @invites
                             @invites = InviteList.new(
-                                @version,
-                                service_sid: @solution[:service_sid],
-                                channel_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:service_sid],  channel_sid: @solution[:sid],  )
                         end
 
                      @invites

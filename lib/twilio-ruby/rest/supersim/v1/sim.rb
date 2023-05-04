@@ -241,12 +241,8 @@ module Twilio
                     def billing_periods
                       unless @billing_periods
                         @billing_periods = BillingPeriodList.new(
-                                @version,
-                                sim_sid: @solution[:sid]
-                                
-                                )
+                                @version, sim_sid: @solution[:sid],  )
                       end
-
                       @billing_periods
                     end
                     ##
@@ -256,12 +252,8 @@ module Twilio
                     def sim_ip_addresses
                       unless @sim_ip_addresses
                         @sim_ip_addresses = SimIpAddressList.new(
-                                @version,
-                                sim_sid: @solution[:sid]
-                                
-                                )
+                                @version, sim_sid: @solution[:sid],  )
                       end
-
                       @sim_ip_addresses
                     end
 

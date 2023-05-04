@@ -223,11 +223,7 @@ module Twilio
 
                         unless @buckets
                             @buckets = BucketList.new(
-                                @version,
-                                service_sid: @solution[:service_sid],
-                                rate_limit_sid: @solution[:sid]
-                                
-                                )
+                                @version, service_sid: @solution[:service_sid],  rate_limit_sid: @solution[:sid],  )
                         end
 
                      @buckets

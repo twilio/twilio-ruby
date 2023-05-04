@@ -214,10 +214,7 @@ module Twilio
 
                         unless @targets
                             @targets = ConnectionPolicyTargetList.new(
-                                @version,
-                                connection_policy_sid: @solution[:sid]
-                                
-                                )
+                                @version, connection_policy_sid: @solution[:sid],  )
                         end
 
                      @targets

@@ -26,27 +26,27 @@ module Twilio
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        @uri = "/Insights/QM/Assessments"
+                        @uri = "/Insights/QualityManagement/Assessments"
                         
                     end
                     ##
                     # Create the AssessmentsInstance
-                    # @param [String] category_id The id of the category 
+                    # @param [String] category_sid The SID of the category 
                     # @param [String] category_name The name of the category
                     # @param [String] segment_id Segment Id of the conversation
                     # @param [String] user_name Name of the user assessing conversation
                     # @param [String] user_email Email of the user assessing conversation
                     # @param [String] agent_id The id of the Agent
                     # @param [Float] offset The offset of the conversation.
-                    # @param [String] metric_id The question Id selected for assessment
+                    # @param [String] metric_id The question SID selected for assessment
                     # @param [String] metric_name The question name of the assessment
                     # @param [String] answer_text The answer text selected by user
                     # @param [String] answer_id The id of the answer selected by user
-                    # @param [String] questionnaire_id Questionnaire Id of the associated question
+                    # @param [String] questionnaire_sid Questionnaire SID of the associated question
                     # @param [String] token The Token HTTP request header
                     # @return [AssessmentsInstance] Created AssessmentsInstance
                     def create(
-                        category_id: nil, 
+                        category_sid: nil, 
                         category_name: nil, 
                         segment_id: nil, 
                         user_name: nil, 
@@ -57,12 +57,12 @@ module Twilio
                         metric_name: nil, 
                         answer_text: nil, 
                         answer_id: nil, 
-                        questionnaire_id: nil, 
+                        questionnaire_sid: nil, 
                         token: :unset
                     )
 
                         data = Twilio::Values.of({
-                            'CategoryId' => category_id,
+                            'CategorySid' => category_sid,
                             'CategoryName' => category_name,
                             'SegmentId' => segment_id,
                             'UserName' => user_name,
@@ -73,7 +73,7 @@ module Twilio
                             'MetricName' => metric_name,
                             'AnswerText' => answer_text,
                             'AnswerId' => answer_id,
-                            'QuestionnaireId' => questionnaire_id,
+                            'QuestionnaireSid' => questionnaire_sid,
                         })
 
                         headers = Twilio::Values.of({ 'Token' => token, })
@@ -199,14 +199,14 @@ module Twilio
                     ##
                     # Initialize the AssessmentsContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] assessment_id The id of the assessment to be modified
+                    # @param [String] assessment_sid The SID of the assessment to be modified
                     # @return [AssessmentsContext] AssessmentsContext
-                    def initialize(version, assessment_id)
+                    def initialize(version, assessment_sid)
                         super(version)
 
                         # Path Solution
-                        @solution = { assessment_id: assessment_id,  }
-                        @uri = "/Insights/QM/Assessments/#{@solution[:assessment_id]}"
+                        @solution = { assessment_sid: assessment_sid,  }
+                        @uri = "/Insights/QualityManagement/Assessments/#{@solution[:assessment_sid]}"
 
                         
                     end
@@ -235,7 +235,7 @@ module Twilio
                         AssessmentsInstance.new(
                             @version,
                             payload,
-                            assessment_id: @solution[:assessment_id],
+                            assessment_sid: @solution[:assessment_sid],
                         )
                     end
 
@@ -293,13 +293,13 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [AssessmentsInstance] AssessmentsInstance
-                    def initialize(version, payload , assessment_id: nil)
+                    def initialize(version, payload , assessment_sid: nil)
                         super(version)
                         
                         # Marshaled Properties
                         @properties = { 
                             'account_sid' => payload['account_sid'],
-                            'assessment_id' => payload['assessment_id'],
+                            'assessment_sid' => payload['assessment_sid'],
                             'offset' => payload['offset'],
                             'report' => payload['report'],
                             'weight' => payload['weight'],
@@ -316,7 +316,7 @@ module Twilio
 
                         # Context
                         @instance_context = nil
-                        @params = { 'assessment_id' => assessment_id  || @properties['assessment_id']  , }
+                        @params = { 'assessment_sid' => assessment_sid  || @properties['assessment_sid']  , }
                     end
 
                     ##
@@ -325,7 +325,7 @@ module Twilio
                     # @return [AssessmentsContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = AssessmentsContext.new(@version , @params['assessment_id'])
+                            @instance_context = AssessmentsContext.new(@version , @params['assessment_sid'])
                         end
                         @instance_context
                     end
@@ -337,9 +337,9 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique id of the assessment
-                    def assessment_id
-                        @properties['assessment_id']
+                    # @return [String] The SID of the assessment
+                    def assessment_sid
+                        @properties['assessment_sid']
                     end
                     
                     ##

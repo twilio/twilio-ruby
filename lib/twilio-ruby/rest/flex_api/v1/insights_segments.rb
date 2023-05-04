@@ -35,6 +35,7 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [String] token The Token HTTP request header
+                    # @param [String] segment_id To unique id of the segment
                     # @param [Array[String]] reservation_id The list of reservation Ids
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -43,9 +44,10 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(token: :unset, reservation_id: :unset, limit: nil, page_size: nil)
+                    def list(token: :unset, segment_id: :unset, reservation_id: :unset, limit: nil, page_size: nil)
                         self.stream(
                             token: token,
+                            segment_id: segment_id,
                             reservation_id: reservation_id,
                             limit: limit,
                             page_size: page_size
@@ -57,6 +59,7 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [String] token The Token HTTP request header
+                    # @param [String] segment_id To unique id of the segment
                     # @param [Array[String]] reservation_id The list of reservation Ids
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -65,11 +68,12 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(token: :unset, reservation_id: :unset, limit: nil, page_size: nil)
+                    def stream(token: :unset, segment_id: :unset, reservation_id: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
                             token: token,
+                            segment_id: segment_id,
                             reservation_id: reservation_id,
                             page_size: limits[:page_size], )
 
@@ -94,15 +98,18 @@ module Twilio
                     # Retrieve a single page of InsightsSegmentsInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] token The Token HTTP request header
+                    # @param [String] segment_id To unique id of the segment
                     # @param [Array[String]] reservation_id The list of reservation Ids
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of InsightsSegmentsInstance
-                    def page(token: :unset, reservation_id: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(token: :unset, segment_id: :unset, reservation_id: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
                             'Token' => token,
+                            
+                            'SegmentId' => segment_id,
                             
                             'ReservationId' =>  Twilio.serialize_list(reservation_id),
                             
@@ -134,57 +141,6 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         '#<Twilio.FlexApi.V1.InsightsSegmentsList>'
-                    end
-                end
-
-
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-                class InsightsSegmentsContext < InstanceContext
-                    ##
-                    # Initialize the InsightsSegmentsContext
-                    # @param [Version] version Version that contains the resource
-                    # @param [String] segment_id To unique id of the segment
-                    # @return [InsightsSegmentsContext] InsightsSegmentsContext
-                    def initialize(version, segment_id)
-                        super(version)
-
-                        # Path Solution
-                        @solution = { segment_id: segment_id,  }
-                        @uri = "/Insights/Segments/#{@solution[:segment_id]}"
-
-                        
-                    end
-                    ##
-                    # Fetch the InsightsSegmentsInstance
-                    # @param [String] token The Token HTTP request header
-                    # @return [InsightsSegmentsInstance] Fetched InsightsSegmentsInstance
-                    def fetch(
-                        token: :unset
-                    )
-
-                        headers = Twilio::Values.of({ 'Token' => token, })
-                        payload = @version.fetch('GET', @uri, headers: headers)
-                        InsightsSegmentsInstance.new(
-                            @version,
-                            payload,
-                            segment_id: @solution[:segment_id],
-                        )
-                    end
-
-
-                    ##
-                    # Provide a user friendly representation
-                    def to_s
-                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.FlexApi.V1.InsightsSegmentsContext #{context}>"
-                    end
-
-                    ##
-                    # Provide a detailed, user friendly representation
-                    def inspect
-                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.FlexApi.V1.InsightsSegmentsContext #{context}>"
                     end
                 end
 
@@ -226,7 +182,7 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [InsightsSegmentsInstance] InsightsSegmentsInstance
-                    def initialize(version, payload , segment_id: nil)
+                    def initialize(version, payload )
                         super(version)
                         
                         # Marshaled Properties
@@ -254,22 +210,8 @@ module Twilio
                             'assessment_percentage' => payload['assessment_percentage'],
                             'url' => payload['url'],
                         }
-
-                        # Context
-                        @instance_context = nil
-                        @params = { 'segment_id' => segment_id  || @properties['segment_id']  , }
                     end
 
-                    ##
-                    # Generate an instance context for the instance, the context is capable of
-                    # performing various actions.  All instance actions are proxied to the context
-                    # @return [InsightsSegmentsContext] CallContext for this CallInstance
-                    def context
-                        unless @instance_context
-                            @instance_context = InsightsSegmentsContext.new(@version , @params['segment_id'])
-                        end
-                        @instance_context
-                    end
                     
                     ##
                     # @return [String] To unique id of the segment
@@ -404,30 +346,15 @@ module Twilio
                     end
                     
                     ##
-                    # Fetch the InsightsSegmentsInstance
-                    # @param [String] token The Token HTTP request header
-                    # @return [InsightsSegmentsInstance] Fetched InsightsSegmentsInstance
-                    def fetch(
-                        token: :unset
-                    )
-
-                        context.fetch(
-                            token: token, 
-                        )
-                    end
-
-                    ##
                     # Provide a user friendly representation
                     def to_s
-                        values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.FlexApi.V1.InsightsSegmentsInstance #{values}>"
+                        "<Twilio.FlexApi.V1.InsightsSegmentsInstance>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.FlexApi.V1.InsightsSegmentsInstance #{values}>"
+                        "<Twilio.FlexApi.V1.InsightsSegmentsInstance>"
                     end
                 end
 

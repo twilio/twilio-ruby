@@ -309,11 +309,7 @@ module Twilio
 
                         unless @reservations
                             @reservations = ReservationList.new(
-                                @version,
-                                workspace_sid: @solution[:workspace_sid],
-                                worker_sid: @solution[:sid]
-                                
-                                )
+                                @version, workspace_sid: @solution[:workspace_sid],  worker_sid: @solution[:sid],  )
                         end
 
                      @reservations
@@ -365,11 +361,7 @@ module Twilio
 
                         unless @worker_channels
                             @worker_channels = WorkerChannelList.new(
-                                @version,
-                                workspace_sid: @solution[:workspace_sid],
-                                worker_sid: @solution[:sid]
-                                
-                                )
+                                @version, workspace_sid: @solution[:workspace_sid],  worker_sid: @solution[:sid],  )
                         end
 
                      @worker_channels

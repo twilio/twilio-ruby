@@ -265,11 +265,7 @@ module Twilio
 
                         unless @samples
                             @samples = SampleList.new(
-                                @version,
-                                assistant_sid: @solution[:assistant_sid],
-                                task_sid: @solution[:sid]
-                                
-                                )
+                                @version, assistant_sid: @solution[:assistant_sid],  task_sid: @solution[:sid],  )
                         end
 
                      @samples
@@ -288,11 +284,7 @@ module Twilio
 
                         unless @fields
                             @fields = FieldList.new(
-                                @version,
-                                assistant_sid: @solution[:assistant_sid],
-                                task_sid: @solution[:sid]
-                                
-                                )
+                                @version, assistant_sid: @solution[:assistant_sid],  task_sid: @solution[:sid],  )
                         end
 
                      @fields

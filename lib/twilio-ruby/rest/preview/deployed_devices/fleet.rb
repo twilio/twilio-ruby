@@ -222,10 +222,7 @@ module Twilio
 
                         unless @devices
                             @devices = DeviceList.new(
-                                @version,
-                                fleet_sid: @solution[:sid]
-                                
-                                )
+                                @version, fleet_sid: @solution[:sid],  )
                         end
 
                      @devices
@@ -244,10 +241,7 @@ module Twilio
 
                         unless @keys
                             @keys = KeyList.new(
-                                @version,
-                                fleet_sid: @solution[:sid]
-                                
-                                )
+                                @version, fleet_sid: @solution[:sid],  )
                         end
 
                      @keys
@@ -266,10 +260,7 @@ module Twilio
 
                         unless @deployments
                             @deployments = DeploymentList.new(
-                                @version,
-                                fleet_sid: @solution[:sid]
-                                
-                                )
+                                @version, fleet_sid: @solution[:sid],  )
                         end
 
                      @deployments
@@ -288,10 +279,7 @@ module Twilio
 
                         unless @certificates
                             @certificates = CertificateList.new(
-                                @version,
-                                fleet_sid: @solution[:sid]
-                                
-                                )
+                                @version, fleet_sid: @solution[:sid],  )
                         end
 
                      @certificates
