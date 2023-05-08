@@ -32,3 +32,6 @@ docker-push:
 	docker push twilio/twilio-ruby:${GITHUB_TAG}
 	docker push twilio/twilio-ruby:apidefs-${API_DEFINITIONS_SHA}
 	docker push twilio/twilio-ruby:${CURRENT_TAG}
+
+cluster-test:
+	bundle exec rspec ./cluster_spec.rb
