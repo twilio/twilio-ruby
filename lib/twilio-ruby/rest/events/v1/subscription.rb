@@ -232,7 +232,7 @@ module Twilio
 
                         unless @subscribed_events
                             @subscribed_events = SubscribedEventList.new(
-                                @version, subscription_sid: @solution[:sid],  )
+                                @version, subscription_sid: @solution[:sid], )
                         end
 
                      @subscribed_events

@@ -42,6 +42,7 @@ module Twilio
                     # @param [Array[String]] auto_creation_webhook_filters The list of events, firing webhook event for this Conversation. Values can be any of the following: `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`, `onConversationUpdated`, `onConversationStateUpdated`, `onConversationRemoved`, `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`, `onDeliveryUpdated`
                     # @param [String] auto_creation_studio_flow_sid For type `studio`, the studio flow SID where the webhook should be sent to.
                     # @param [String] auto_creation_studio_retry_count For type `studio`, number of times to retry the webhook request
+                    # @param [String] address_country An ISO 3166-1 alpha-2n country code which the address belongs to. This is currently only applicable to short code addresses.
                     # @return [AddressConfigurationInstance] Created AddressConfigurationInstance
                     def create(
                         type: nil, 
@@ -54,7 +55,8 @@ module Twilio
                         auto_creation_webhook_method: :unset, 
                         auto_creation_webhook_filters: :unset, 
                         auto_creation_studio_flow_sid: :unset, 
-                        auto_creation_studio_retry_count: :unset
+                        auto_creation_studio_retry_count: :unset, 
+                        address_country: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -69,6 +71,7 @@ module Twilio
                             'AutoCreation.WebhookFilters' => Twilio.serialize_list(auto_creation_webhook_filters) { |e| e },
                             'AutoCreation.StudioFlowSid' => auto_creation_studio_flow_sid,
                             'AutoCreation.StudioRetryCount' => auto_creation_studio_retry_count,
+                            'AddressCountry' => address_country,
                         })
 
                         payload = @version.create('POST', @uri, data: data)
@@ -328,6 +331,7 @@ module Twilio
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'url' => payload['url'],
+                            'address_country' => payload['address_country'],
                         }
 
                         # Context
@@ -398,6 +402,12 @@ module Twilio
                     # @return [String] An absolute API resource URL for this address configuration.
                     def url
                         @properties['url']
+                    end
+                    
+                    ##
+                    # @return [String] An ISO 3166-1 alpha-2n country code which the address belongs to. This is currently only applicable to short code addresses.
+                    def address_country
+                        @properties['address_country']
                     end
                     
                     ##

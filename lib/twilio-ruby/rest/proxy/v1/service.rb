@@ -260,7 +260,7 @@ module Twilio
 
                         unless @sessions
                             @sessions = SessionList.new(
-                                @version, service_sid: @solution[:sid],  )
+                                @version, service_sid: @solution[:sid], )
                         end
 
                      @sessions
@@ -279,7 +279,7 @@ module Twilio
 
                         unless @short_codes
                             @short_codes = ShortCodeList.new(
-                                @version, service_sid: @solution[:sid],  )
+                                @version, service_sid: @solution[:sid], )
                         end
 
                      @short_codes
@@ -298,7 +298,7 @@ module Twilio
 
                         unless @phone_numbers
                             @phone_numbers = PhoneNumberList.new(
-                                @version, service_sid: @solution[:sid],  )
+                                @version, service_sid: @solution[:sid], )
                         end
 
                      @phone_numbers

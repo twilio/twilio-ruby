@@ -196,7 +196,7 @@ module Twilio
 
                         unless @device_secrets
                             @device_secrets = DeviceSecretList.new(
-                                @version, device_sid: @solution[:sid],  )
+                                @version, device_sid: @solution[:sid], )
                         end
 
                      @device_secrets
@@ -215,7 +215,7 @@ module Twilio
 
                         unless @device_configs
                             @device_configs = DeviceConfigList.new(
-                                @version, device_sid: @solution[:sid],  )
+                                @version, device_sid: @solution[:sid], )
                         end
 
                      @device_configs

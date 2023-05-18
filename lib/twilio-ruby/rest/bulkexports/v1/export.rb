@@ -90,7 +90,7 @@ module Twilio
                     def export_custom_jobs
                       unless @export_custom_jobs
                         @export_custom_jobs = ExportCustomJobList.new(
-                                @version, resource_type: @solution[:resource_type],  )
+                                @version, resource_type: @solution[:resource_type], )
                       end
                       @export_custom_jobs
                     end
@@ -108,7 +108,7 @@ module Twilio
 
                         unless @days
                             @days = DayList.new(
-                                @version, resource_type: @solution[:resource_type],  )
+                                @version, resource_type: @solution[:resource_type], )
                         end
 
                      @days

@@ -32,18 +32,18 @@ module Twilio
                     ##
                     # Create the InsightsQuestionnairesCategoryInstance
                     # @param [String] name The name of this category.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [InsightsQuestionnairesCategoryInstance] Created InsightsQuestionnairesCategoryInstance
                     def create(
                         name: nil, 
-                        token: :unset
+                        authorization: :unset
                     )
 
                         data = Twilio::Values.of({
                             'Name' => name,
                         })
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         InsightsQuestionnairesCategoryInstance.new(
                             @version,
@@ -56,7 +56,7 @@ module Twilio
                     # Lists InsightsQuestionnairesCategoryInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -64,9 +64,9 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(token: :unset, limit: nil, page_size: nil)
+                    def list(authorization: :unset, limit: nil, page_size: nil)
                         self.stream(
-                            token: token,
+                            authorization: authorization,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -76,7 +76,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -84,11 +84,11 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(token: :unset, limit: nil, page_size: nil)
+                    def stream(authorization: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
-                            token: token,
+                            authorization: authorization,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -111,15 +111,15 @@ module Twilio
                     ##
                     # Retrieve a single page of InsightsQuestionnairesCategoryInstance records from the API.
                     # Request is executed immediately.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of InsightsQuestionnairesCategoryInstance
-                    def page(token: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(authorization: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Token' => token,
+                            'Authorization' => authorization,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -172,31 +172,31 @@ module Twilio
                     end
                     ##
                     # Delete the InsightsQuestionnairesCategoryInstance
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
-                        token: :unset
+                        authorization: :unset
                     )
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
                     # Update the InsightsQuestionnairesCategoryInstance
                     # @param [String] name The name of this category.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [InsightsQuestionnairesCategoryInstance] Updated InsightsQuestionnairesCategoryInstance
                     def update(
                         name: nil, 
-                        token: :unset
+                        authorization: :unset
                     )
 
                         data = Twilio::Values.of({
                             'Name' => name,
                         })
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         InsightsQuestionnairesCategoryInstance.new(
                             @version,
@@ -312,30 +312,30 @@ module Twilio
                     
                     ##
                     # Delete the InsightsQuestionnairesCategoryInstance
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
-                        token: :unset
+                        authorization: :unset
                     )
 
                         context.delete(
-                            token: token, 
+                            authorization: authorization, 
                         )
                     end
 
                     ##
                     # Update the InsightsQuestionnairesCategoryInstance
                     # @param [String] name The name of this category.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [InsightsQuestionnairesCategoryInstance] Updated InsightsQuestionnairesCategoryInstance
                     def update(
                         name: nil, 
-                        token: :unset
+                        authorization: :unset
                     )
 
                         context.update(
                             name: name, 
-                            token: token, 
+                            authorization: authorization, 
                         )
                     end
 

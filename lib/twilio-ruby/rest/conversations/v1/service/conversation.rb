@@ -83,6 +83,9 @@ module Twilio
                     # Lists ConversationInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
+                    # @param [String] start_date Start date or time in ISO8601 format for filtering list of Conversations. If a date is provided, the start time of the date is used (YYYY-MM-DDT00:00:00Z). Can be combined with other filters.
+                    # @param [String] end_date End date or time in ISO8601 format for filtering list of Conversations. If a date is provided, the end time of the date is used (YYYY-MM-DDT23:59:59Z). Can be combined with other filters.
+                    # @param [State] state State for sorting and filtering list of Conversations. Can be `active`, `inactive` or `closed`
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -90,8 +93,11 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(limit: nil, page_size: nil)
+                    def list(start_date: :unset, end_date: :unset, state: :unset, limit: nil, page_size: nil)
                         self.stream(
+                            start_date: start_date,
+                            end_date: end_date,
+                            state: state,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -101,6 +107,9 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
+                    # @param [String] start_date Start date or time in ISO8601 format for filtering list of Conversations. If a date is provided, the start time of the date is used (YYYY-MM-DDT00:00:00Z). Can be combined with other filters.
+                    # @param [String] end_date End date or time in ISO8601 format for filtering list of Conversations. If a date is provided, the end time of the date is used (YYYY-MM-DDT23:59:59Z). Can be combined with other filters.
+                    # @param [State] state State for sorting and filtering list of Conversations. Can be `active`, `inactive` or `closed`
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -108,10 +117,13 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(limit: nil, page_size: nil)
+                    def stream(start_date: :unset, end_date: :unset, state: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
+                            start_date: start_date,
+                            end_date: end_date,
+                            state: state,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -134,12 +146,21 @@ module Twilio
                     ##
                     # Retrieve a single page of ConversationInstance records from the API.
                     # Request is executed immediately.
+                    # @param [String] start_date Start date or time in ISO8601 format for filtering list of Conversations. If a date is provided, the start time of the date is used (YYYY-MM-DDT00:00:00Z). Can be combined with other filters.
+                    # @param [String] end_date End date or time in ISO8601 format for filtering list of Conversations. If a date is provided, the end time of the date is used (YYYY-MM-DDT23:59:59Z). Can be combined with other filters.
+                    # @param [State] state State for sorting and filtering list of Conversations. Can be `active`, `inactive` or `closed`
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ConversationInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(start_date: :unset, end_date: :unset, state: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
+                            
+                            'StartDate' => start_date,
+                            
+                            'EndDate' => end_date,
+                            
+                            'State' => state,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -280,7 +301,7 @@ module Twilio
 
                         unless @participants
                             @participants = ParticipantList.new(
-                                @version, chat_service_sid: @solution[:chat_service_sid],  conversation_sid: @solution[:sid],  )
+                                @version, chat_service_sid: @solution[:chat_service_sid],  conversation_sid: @solution[:sid], )
                         end
 
                      @participants
@@ -299,7 +320,7 @@ module Twilio
 
                         unless @messages
                             @messages = MessageList.new(
-                                @version, chat_service_sid: @solution[:chat_service_sid],  conversation_sid: @solution[:sid],  )
+                                @version, chat_service_sid: @solution[:chat_service_sid],  conversation_sid: @solution[:sid], )
                         end
 
                      @messages
@@ -318,7 +339,7 @@ module Twilio
 
                         unless @webhooks
                             @webhooks = WebhookList.new(
-                                @version, chat_service_sid: @solution[:chat_service_sid],  conversation_sid: @solution[:sid],  )
+                                @version, chat_service_sid: @solution[:chat_service_sid],  conversation_sid: @solution[:sid], )
                         end
 
                      @webhooks

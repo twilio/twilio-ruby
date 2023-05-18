@@ -78,7 +78,7 @@ module Twilio
                     def metrics
                       unless @metrics
                         @metrics = MetricList.new(
-                                @version, call_sid: @solution[:sid],  )
+                                @version, call_sid: @solution[:sid], )
                       end
                       @metrics
                     end
@@ -89,7 +89,7 @@ module Twilio
                     def events
                       unless @events
                         @events = EventList.new(
-                                @version, call_sid: @solution[:sid],  )
+                                @version, call_sid: @solution[:sid], )
                       end
                       @events
                     end

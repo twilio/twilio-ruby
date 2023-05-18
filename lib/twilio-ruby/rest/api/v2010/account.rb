@@ -239,7 +239,7 @@ module Twilio
                     def usage
                       unless @usage
                         @usage = UsageList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                       end
                       @usage
                     end
@@ -250,7 +250,7 @@ module Twilio
                     def new_keys
                       unless @new_keys
                         @new_keys = NewKeyList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                       end
                       @new_keys
                     end
@@ -261,7 +261,7 @@ module Twilio
                     def validation_requests
                       unless @validation_requests
                         @validation_requests = ValidationRequestList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                       end
                       @validation_requests
                     end
@@ -272,7 +272,7 @@ module Twilio
                     def tokens
                       unless @tokens
                         @tokens = TokenList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                       end
                       @tokens
                     end
@@ -283,7 +283,7 @@ module Twilio
                     def balance
                       unless @balance
                         @balance = BalanceList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                       end
                       @balance
                     end
@@ -294,7 +294,7 @@ module Twilio
                     def sip
                       unless @sip
                         @sip = SipList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                       end
                       @sip
                     end
@@ -305,7 +305,7 @@ module Twilio
                     def new_signing_keys
                       unless @new_signing_keys
                         @new_signing_keys = NewSigningKeyList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                       end
                       @new_signing_keys
                     end
@@ -323,7 +323,7 @@ module Twilio
 
                         unless @applications
                             @applications = ApplicationList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @applications
@@ -342,7 +342,7 @@ module Twilio
 
                         unless @recordings
                             @recordings = RecordingList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @recordings
@@ -361,7 +361,7 @@ module Twilio
 
                         unless @connect_apps
                             @connect_apps = ConnectAppList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @connect_apps
@@ -380,7 +380,7 @@ module Twilio
 
                         unless @calls
                             @calls = CallList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @calls
@@ -399,7 +399,7 @@ module Twilio
 
                         unless @signing_keys
                             @signing_keys = SigningKeyList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @signing_keys
@@ -418,7 +418,7 @@ module Twilio
 
                         unless @outgoing_caller_ids
                             @outgoing_caller_ids = OutgoingCallerIdList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @outgoing_caller_ids
@@ -437,7 +437,7 @@ module Twilio
 
                         unless @short_codes
                             @short_codes = ShortCodeList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @short_codes
@@ -456,7 +456,7 @@ module Twilio
 
                         unless @incoming_phone_numbers
                             @incoming_phone_numbers = IncomingPhoneNumberList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @incoming_phone_numbers
@@ -475,7 +475,7 @@ module Twilio
 
                         unless @queues
                             @queues = QueueList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @queues
@@ -494,7 +494,7 @@ module Twilio
 
                         unless @authorized_connect_apps
                             @authorized_connect_apps = AuthorizedConnectAppList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @authorized_connect_apps
@@ -513,7 +513,7 @@ module Twilio
 
                         unless @available_phone_numbers
                             @available_phone_numbers = AvailablePhoneNumberCountryList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @available_phone_numbers
@@ -532,7 +532,7 @@ module Twilio
 
                         unless @addresses
                             @addresses = AddressList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @addresses
@@ -551,7 +551,7 @@ module Twilio
 
                         unless @transcriptions
                             @transcriptions = TranscriptionList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @transcriptions
@@ -570,7 +570,7 @@ module Twilio
 
                         unless @conferences
                             @conferences = ConferenceList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @conferences
@@ -589,7 +589,7 @@ module Twilio
 
                         unless @keys
                             @keys = KeyList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @keys
@@ -608,7 +608,7 @@ module Twilio
 
                         unless @notifications
                             @notifications = NotificationList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @notifications
@@ -627,7 +627,7 @@ module Twilio
 
                         unless @messages
                             @messages = MessageList.new(
-                                @version, account_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:sid], )
                         end
 
                      @messages

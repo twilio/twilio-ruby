@@ -207,7 +207,7 @@ module Twilio
                     def brand_registration_otps
                       unless @brand_registration_otps
                         @brand_registration_otps = BrandRegistrationOtpList.new(
-                                @version, brand_sid: @solution[:sid], brand_registration_sid: @solution[:sid],  )
+                                @version, brand_registration_sid: @solution[:sid], )
                       end
                       @brand_registration_otps
                     end
@@ -225,7 +225,7 @@ module Twilio
 
                         unless @brand_vettings
                             @brand_vettings = BrandVettingList.new(
-                                @version, brand_sid: @solution[:sid], brand_registration_sid: @solution[:sid],  )
+                                @version, brand_sid: @solution[:sid], )
                         end
 
                      @brand_vettings

@@ -315,7 +315,7 @@ module Twilio
                     def feedback
                       unless @feedback
                         @feedback = FeedbackList.new(
-                                @version, account_sid: @solution[:account_sid],  message_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  message_sid: @solution[:sid], )
                       end
                       @feedback
                     end
@@ -333,7 +333,7 @@ module Twilio
 
                         unless @media
                             @media = MediaList.new(
-                                @version, account_sid: @solution[:account_sid],  message_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  message_sid: @solution[:sid], )
                         end
 
                      @media

@@ -228,7 +228,7 @@ module Twilio
 
                         unless @add_on_results
                             @add_on_results = AddOnResultList.new(
-                                @version, account_sid: @solution[:account_sid],  recording_sid: @solution[:sid],  reference_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  reference_sid: @solution[:sid], )
                         end
 
                      @add_on_results
@@ -247,7 +247,7 @@ module Twilio
 
                         unless @transcriptions
                             @transcriptions = TranscriptionList.new(
-                                @version, account_sid: @solution[:account_sid],  recording_sid: @solution[:sid],  reference_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  recording_sid: @solution[:sid], )
                         end
 
                      @transcriptions

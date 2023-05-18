@@ -35,14 +35,14 @@ module Twilio
                     # @param [String] description The description of this questionnaire
                     # @param [Boolean] active The flag to enable or disable questionnaire
                     # @param [Array[String]] question_sids The list of questions sids under a questionnaire
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [InsightsQuestionnairesInstance] Created InsightsQuestionnairesInstance
                     def create(
                         name: nil, 
                         description: :unset, 
                         active: :unset, 
                         question_sids: :unset, 
-                        token: :unset
+                        authorization: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -52,7 +52,7 @@ module Twilio
                             'QuestionSids' => Twilio.serialize_list(question_sids) { |e| e },
                         })
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         InsightsQuestionnairesInstance.new(
                             @version,
@@ -65,7 +65,7 @@ module Twilio
                     # Lists InsightsQuestionnairesInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Boolean] include_inactive Flag indicating whether to include inactive questionnaires or not
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -74,9 +74,9 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(token: :unset, include_inactive: :unset, limit: nil, page_size: nil)
+                    def list(authorization: :unset, include_inactive: :unset, limit: nil, page_size: nil)
                         self.stream(
-                            token: token,
+                            authorization: authorization,
                             include_inactive: include_inactive,
                             limit: limit,
                             page_size: page_size
@@ -87,7 +87,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Boolean] include_inactive Flag indicating whether to include inactive questionnaires or not
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -96,11 +96,11 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(token: :unset, include_inactive: :unset, limit: nil, page_size: nil)
+                    def stream(authorization: :unset, include_inactive: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
-                            token: token,
+                            authorization: authorization,
                             include_inactive: include_inactive,
                             page_size: limits[:page_size], )
 
@@ -124,16 +124,16 @@ module Twilio
                     ##
                     # Retrieve a single page of InsightsQuestionnairesInstance records from the API.
                     # Request is executed immediately.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Boolean] include_inactive Flag indicating whether to include inactive questionnaires or not
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of InsightsQuestionnairesInstance
-                    def page(token: :unset, include_inactive: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(authorization: :unset, include_inactive: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Token' => token,
+                            'Authorization' => authorization,
                             
                             'IncludeInactive' => include_inactive,
                             
@@ -188,25 +188,25 @@ module Twilio
                     end
                     ##
                     # Delete the InsightsQuestionnairesInstance
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
-                        token: :unset
+                        authorization: :unset
                     )
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
                     # Fetch the InsightsQuestionnairesInstance
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [InsightsQuestionnairesInstance] Fetched InsightsQuestionnairesInstance
                     def fetch(
-                        token: :unset
+                        authorization: :unset
                     )
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.fetch('GET', @uri, headers: headers)
                         InsightsQuestionnairesInstance.new(
                             @version,
@@ -221,14 +221,14 @@ module Twilio
                     # @param [String] name The name of this questionnaire
                     # @param [String] description The description of this questionnaire
                     # @param [Array[String]] question_sids The list of questions sids under a questionnaire
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [InsightsQuestionnairesInstance] Updated InsightsQuestionnairesInstance
                     def update(
                         active: nil, 
                         name: :unset, 
                         description: :unset, 
                         question_sids: :unset, 
-                        token: :unset
+                        authorization: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -238,7 +238,7 @@ module Twilio
                             'QuestionSids' => Twilio.serialize_list(question_sids) { |e| e },
                         })
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         InsightsQuestionnairesInstance.new(
                             @version,
@@ -375,27 +375,27 @@ module Twilio
                     
                     ##
                     # Delete the InsightsQuestionnairesInstance
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
-                        token: :unset
+                        authorization: :unset
                     )
 
                         context.delete(
-                            token: token, 
+                            authorization: authorization, 
                         )
                     end
 
                     ##
                     # Fetch the InsightsQuestionnairesInstance
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [InsightsQuestionnairesInstance] Fetched InsightsQuestionnairesInstance
                     def fetch(
-                        token: :unset
+                        authorization: :unset
                     )
 
                         context.fetch(
-                            token: token, 
+                            authorization: authorization, 
                         )
                     end
 
@@ -405,14 +405,14 @@ module Twilio
                     # @param [String] name The name of this questionnaire
                     # @param [String] description The description of this questionnaire
                     # @param [Array[String]] question_sids The list of questions sids under a questionnaire
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [InsightsQuestionnairesInstance] Updated InsightsQuestionnairesInstance
                     def update(
                         active: nil, 
                         name: :unset, 
                         description: :unset, 
                         question_sids: :unset, 
-                        token: :unset
+                        authorization: :unset
                     )
 
                         context.update(
@@ -420,7 +420,7 @@ module Twilio
                             name: name, 
                             description: description, 
                             question_sids: question_sids, 
-                            token: token, 
+                            authorization: authorization, 
                         )
                     end
 

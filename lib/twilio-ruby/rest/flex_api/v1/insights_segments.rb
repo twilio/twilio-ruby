@@ -34,7 +34,7 @@ module Twilio
                     # Lists InsightsSegmentsInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [String] segment_id To unique id of the segment
                     # @param [Array[String]] reservation_id The list of reservation Ids
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -44,9 +44,9 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(token: :unset, segment_id: :unset, reservation_id: :unset, limit: nil, page_size: nil)
+                    def list(authorization: :unset, segment_id: :unset, reservation_id: :unset, limit: nil, page_size: nil)
                         self.stream(
-                            token: token,
+                            authorization: authorization,
                             segment_id: segment_id,
                             reservation_id: reservation_id,
                             limit: limit,
@@ -58,7 +58,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [String] segment_id To unique id of the segment
                     # @param [Array[String]] reservation_id The list of reservation Ids
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -68,11 +68,11 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(token: :unset, segment_id: :unset, reservation_id: :unset, limit: nil, page_size: nil)
+                    def stream(authorization: :unset, segment_id: :unset, reservation_id: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
-                            token: token,
+                            authorization: authorization,
                             segment_id: segment_id,
                             reservation_id: reservation_id,
                             page_size: limits[:page_size], )
@@ -97,17 +97,17 @@ module Twilio
                     ##
                     # Retrieve a single page of InsightsSegmentsInstance records from the API.
                     # Request is executed immediately.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [String] segment_id To unique id of the segment
                     # @param [Array[String]] reservation_id The list of reservation Ids
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of InsightsSegmentsInstance
-                    def page(token: :unset, segment_id: :unset, reservation_id: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(authorization: :unset, segment_id: :unset, reservation_id: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Token' => token,
+                            'Authorization' => authorization,
                             
                             'SegmentId' => segment_id,
                             

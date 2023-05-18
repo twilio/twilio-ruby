@@ -285,7 +285,7 @@ module Twilio
                     def dependent_phone_numbers
                       unless @dependent_phone_numbers
                         @dependent_phone_numbers = DependentPhoneNumberList.new(
-                                @version, account_sid: @solution[:account_sid],  address_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  address_sid: @solution[:sid], )
                       end
                       @dependent_phone_numbers
                     end

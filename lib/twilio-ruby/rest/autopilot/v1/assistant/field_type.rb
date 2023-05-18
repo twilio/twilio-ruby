@@ -228,7 +228,7 @@ module Twilio
 
                         unless @field_values
                             @field_values = FieldValueList.new(
-                                @version, assistant_sid: @solution[:assistant_sid],  field_type_sid: @solution[:sid],  )
+                                @version, assistant_sid: @solution[:assistant_sid],  field_type_sid: @solution[:sid], )
                         end
 
                      @field_values

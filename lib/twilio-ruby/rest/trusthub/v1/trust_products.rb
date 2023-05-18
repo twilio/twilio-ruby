@@ -255,7 +255,7 @@ module Twilio
 
                         unless @trust_products_channel_endpoint_assignment
                             @trust_products_channel_endpoint_assignment = TrustProductsChannelEndpointAssignmentList.new(
-                                @version, trust_product_sid: @solution[:sid],  )
+                                @version, trust_product_sid: @solution[:sid], )
                         end
 
                      @trust_products_channel_endpoint_assignment
@@ -274,7 +274,7 @@ module Twilio
 
                         unless @trust_products_entity_assignments
                             @trust_products_entity_assignments = TrustProductsEntityAssignmentsList.new(
-                                @version, trust_product_sid: @solution[:sid],  )
+                                @version, trust_product_sid: @solution[:sid], )
                         end
 
                      @trust_products_entity_assignments
@@ -293,7 +293,7 @@ module Twilio
 
                         unless @trust_products_evaluations
                             @trust_products_evaluations = TrustProductsEvaluationsList.new(
-                                @version, trust_product_sid: @solution[:sid],  )
+                                @version, trust_product_sid: @solution[:sid], )
                         end
 
                      @trust_products_evaluations

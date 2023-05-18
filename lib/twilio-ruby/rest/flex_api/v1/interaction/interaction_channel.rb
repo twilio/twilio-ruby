@@ -189,7 +189,7 @@ module Twilio
                     def invites
                       unless @invites
                         @invites = InteractionChannelInviteList.new(
-                                @version, interaction_sid: @solution[:interaction_sid],  channel_sid: @solution[:sid],  )
+                                @version, interaction_sid: @solution[:interaction_sid],  channel_sid: @solution[:sid], )
                       end
                       @invites
                     end
@@ -207,7 +207,7 @@ module Twilio
 
                         unless @participants
                             @participants = InteractionChannelParticipantList.new(
-                                @version, interaction_sid: @solution[:interaction_sid],  channel_sid: @solution[:sid],  )
+                                @version, interaction_sid: @solution[:interaction_sid],  channel_sid: @solution[:sid], )
                         end
 
                      @participants

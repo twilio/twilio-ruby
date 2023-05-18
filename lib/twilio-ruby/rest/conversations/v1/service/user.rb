@@ -245,7 +245,7 @@ module Twilio
 
                         unless @user_conversations
                             @user_conversations = UserConversationList.new(
-                                @version, chat_service_sid: @solution[:chat_service_sid],  user_sid: @solution[:sid],  )
+                                @version, chat_service_sid: @solution[:chat_service_sid],  user_sid: @solution[:sid], )
                         end
 
                      @user_conversations

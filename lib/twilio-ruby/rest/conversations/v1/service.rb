@@ -192,7 +192,7 @@ module Twilio
                     def participant_conversations
                       unless @participant_conversations
                         @participant_conversations = ParticipantConversationList.new(
-                                @version, chat_service_sid: @solution[:sid],  )
+                                @version, chat_service_sid: @solution[:sid], )
                       end
                       @participant_conversations
                     end
@@ -210,7 +210,7 @@ module Twilio
 
                         unless @users
                             @users = UserList.new(
-                                @version, chat_service_sid: @solution[:sid],  )
+                                @version, chat_service_sid: @solution[:sid], )
                         end
 
                      @users
@@ -229,7 +229,7 @@ module Twilio
 
                         unless @roles
                             @roles = RoleList.new(
-                                @version, chat_service_sid: @solution[:sid],  )
+                                @version, chat_service_sid: @solution[:sid], )
                         end
 
                      @roles
@@ -258,7 +258,7 @@ module Twilio
 
                         unless @bindings
                             @bindings = BindingList.new(
-                                @version, chat_service_sid: @solution[:sid],  )
+                                @version, chat_service_sid: @solution[:sid], )
                         end
 
                      @bindings
@@ -277,7 +277,7 @@ module Twilio
 
                         unless @conversations
                             @conversations = ConversationList.new(
-                                @version, chat_service_sid: @solution[:sid],  )
+                                @version, chat_service_sid: @solution[:sid], )
                         end
 
                      @conversations

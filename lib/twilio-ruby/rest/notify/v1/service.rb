@@ -295,7 +295,7 @@ module Twilio
                     def notifications
                       unless @notifications
                         @notifications = NotificationList.new(
-                                @version, service_sid: @solution[:sid],  )
+                                @version, service_sid: @solution[:sid], )
                       end
                       @notifications
                     end
@@ -313,7 +313,7 @@ module Twilio
 
                         unless @bindings
                             @bindings = BindingList.new(
-                                @version, service_sid: @solution[:sid],  )
+                                @version, service_sid: @solution[:sid], )
                         end
 
                      @bindings

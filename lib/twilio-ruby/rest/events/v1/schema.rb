@@ -84,7 +84,7 @@ module Twilio
 
                         unless @versions
                             @versions = SchemaVersionList.new(
-                                @version, id: @solution[:id],  )
+                                @version, id: @solution[:id], )
                         end
 
                      @versions

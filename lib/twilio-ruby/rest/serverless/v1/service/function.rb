@@ -222,7 +222,7 @@ module Twilio
 
                         unless @function_versions
                             @function_versions = FunctionVersionList.new(
-                                @version, service_sid: @solution[:service_sid],  function_sid: @solution[:sid],  )
+                                @version, service_sid: @solution[:service_sid],  function_sid: @solution[:sid], )
                         end
 
                      @function_versions

@@ -21,7 +21,12 @@ module Twilio
         @base_url =  "https://numbers.twilio.com"
         @host = "numbers.twilio.com"
         @port = 443
+        @v1 = nil
         @v2 = nil
+      end
+
+      def v1
+        @v1 ||= Numbers::V1.new self
       end
 
       def v2
@@ -31,7 +36,7 @@ module Twilio
       ##
       # Provide a user friendly representation
       def to_s
-        '<Twilio::REST::Numbers::V2>';
+        '<Twilio::REST::Numbers>';
       end
     end
   end

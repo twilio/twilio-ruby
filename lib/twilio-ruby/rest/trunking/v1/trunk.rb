@@ -270,7 +270,7 @@ module Twilio
 
                         unless @credentials_lists
                             @credentials_lists = CredentialListList.new(
-                                @version, trunk_sid: @solution[:sid],  )
+                                @version, trunk_sid: @solution[:sid], )
                         end
 
                      @credentials_lists
@@ -289,7 +289,7 @@ module Twilio
 
                         unless @ip_access_control_lists
                             @ip_access_control_lists = IpAccessControlListList.new(
-                                @version, trunk_sid: @solution[:sid],  )
+                                @version, trunk_sid: @solution[:sid], )
                         end
 
                      @ip_access_control_lists
@@ -308,7 +308,7 @@ module Twilio
 
                         unless @phone_numbers
                             @phone_numbers = PhoneNumberList.new(
-                                @version, trunk_sid: @solution[:sid],  )
+                                @version, trunk_sid: @solution[:sid], )
                         end
 
                      @phone_numbers
@@ -327,7 +327,7 @@ module Twilio
 
                         unless @origination_urls
                             @origination_urls = OriginationUrlList.new(
-                                @version, trunk_sid: @solution[:sid],  )
+                                @version, trunk_sid: @solution[:sid], )
                         end
 
                      @origination_urls

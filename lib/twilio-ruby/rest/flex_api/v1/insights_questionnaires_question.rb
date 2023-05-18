@@ -36,7 +36,7 @@ module Twilio
                     # @param [String] answer_set_id The answer_set for the question.
                     # @param [Boolean] allow_na The flag to enable for disable NA for answer.
                     # @param [String] description The description for the question.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [InsightsQuestionnairesQuestionInstance] Created InsightsQuestionnairesQuestionInstance
                     def create(
                         category_sid: nil, 
@@ -44,7 +44,7 @@ module Twilio
                         answer_set_id: nil, 
                         allow_na: nil, 
                         description: :unset, 
-                        token: :unset
+                        authorization: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -55,7 +55,7 @@ module Twilio
                             'Description' => description,
                         })
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         InsightsQuestionnairesQuestionInstance.new(
                             @version,
@@ -68,7 +68,7 @@ module Twilio
                     # Lists InsightsQuestionnairesQuestionInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Array[String]] category_sid The list of category SIDs
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -77,9 +77,9 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(token: :unset, category_sid: :unset, limit: nil, page_size: nil)
+                    def list(authorization: :unset, category_sid: :unset, limit: nil, page_size: nil)
                         self.stream(
-                            token: token,
+                            authorization: authorization,
                             category_sid: category_sid,
                             limit: limit,
                             page_size: page_size
@@ -90,7 +90,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Array[String]] category_sid The list of category SIDs
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -99,11 +99,11 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(token: :unset, category_sid: :unset, limit: nil, page_size: nil)
+                    def stream(authorization: :unset, category_sid: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
-                            token: token,
+                            authorization: authorization,
                             category_sid: category_sid,
                             page_size: limits[:page_size], )
 
@@ -127,16 +127,16 @@ module Twilio
                     ##
                     # Retrieve a single page of InsightsQuestionnairesQuestionInstance records from the API.
                     # Request is executed immediately.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Array[String]] category_sid The list of category SIDs
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of InsightsQuestionnairesQuestionInstance
-                    def page(token: :unset, category_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(authorization: :unset, category_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Token' => token,
+                            'Authorization' => authorization,
                             
                             'CategorySid' =>  Twilio.serialize_list(category_sid),
                             
@@ -191,13 +191,13 @@ module Twilio
                     end
                     ##
                     # Delete the InsightsQuestionnairesQuestionInstance
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
-                        token: :unset
+                        authorization: :unset
                     )
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -208,7 +208,7 @@ module Twilio
                     # @param [String] question The question.
                     # @param [String] description The description for the question.
                     # @param [String] answer_set_id The answer_set for the question.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [InsightsQuestionnairesQuestionInstance] Updated InsightsQuestionnairesQuestionInstance
                     def update(
                         allow_na: nil, 
@@ -216,7 +216,7 @@ module Twilio
                         question: :unset, 
                         description: :unset, 
                         answer_set_id: :unset, 
-                        token: :unset
+                        authorization: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -227,7 +227,7 @@ module Twilio
                             'AnswerSetId' => answer_set_id,
                         })
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         InsightsQuestionnairesQuestionInstance.new(
                             @version,
@@ -385,14 +385,14 @@ module Twilio
                     
                     ##
                     # Delete the InsightsQuestionnairesQuestionInstance
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
-                        token: :unset
+                        authorization: :unset
                     )
 
                         context.delete(
-                            token: token, 
+                            authorization: authorization, 
                         )
                     end
 
@@ -403,7 +403,7 @@ module Twilio
                     # @param [String] question The question.
                     # @param [String] description The description for the question.
                     # @param [String] answer_set_id The answer_set for the question.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [InsightsQuestionnairesQuestionInstance] Updated InsightsQuestionnairesQuestionInstance
                     def update(
                         allow_na: nil, 
@@ -411,7 +411,7 @@ module Twilio
                         question: :unset, 
                         description: :unset, 
                         answer_set_id: :unset, 
-                        token: :unset
+                        authorization: :unset
                     )
 
                         context.update(
@@ -420,7 +420,7 @@ module Twilio
                             question: question, 
                             description: description, 
                             answer_set_id: answer_set_id, 
-                            token: token, 
+                            authorization: authorization, 
                         )
                     end
 

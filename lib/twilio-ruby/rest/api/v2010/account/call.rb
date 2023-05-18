@@ -431,7 +431,7 @@ module Twilio
                     def events
                       unless @events
                         @events = EventList.new(
-                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid], )
                       end
                       @events
                     end
@@ -442,7 +442,7 @@ module Twilio
                     def user_defined_messages
                       unless @user_defined_messages
                         @user_defined_messages = UserDefinedMessageList.new(
-                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid], )
                       end
                       @user_defined_messages
                     end
@@ -460,7 +460,7 @@ module Twilio
 
                         unless @siprec
                             @siprec = SiprecList.new(
-                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid], )
                         end
 
                      @siprec
@@ -479,7 +479,7 @@ module Twilio
 
                         unless @user_defined_message_subscriptions
                             @user_defined_message_subscriptions = UserDefinedMessageSubscriptionList.new(
-                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid], )
                         end
 
                      @user_defined_message_subscriptions
@@ -498,7 +498,7 @@ module Twilio
 
                         unless @payments
                             @payments = PaymentList.new(
-                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid], )
                         end
 
                      @payments
@@ -517,7 +517,7 @@ module Twilio
 
                         unless @recordings
                             @recordings = RecordingList.new(
-                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid], )
                         end
 
                      @recordings
@@ -536,7 +536,7 @@ module Twilio
 
                         unless @notifications
                             @notifications = NotificationList.new(
-                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid], )
                         end
 
                      @notifications
@@ -566,7 +566,7 @@ module Twilio
 
                         unless @streams
                             @streams = StreamList.new(
-                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  call_sid: @solution[:sid], )
                         end
 
                      @streams

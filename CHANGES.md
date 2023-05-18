@@ -1,6 +1,26 @@
 twilio-ruby changelog
 ===================== 
 
+[2023-05-18] Version 6.0.1
+--------------------------
+**Library - Fix**
+- [PR #654](https://github.com/twilio/twilio-ruby/pull/654): match only against the end of a file path. Thanks to [@pat](https://github.com/pat)!
+
+**Conversations**
+- Added  `AddressCountry` parameter to Address Configuration endpoint, to support regional short code addresses
+- Added query parameters `start_date`, `end_date` and `state` in list Conversations resource for filtering
+
+**Insights**
+- Added annotations parameters to list summary api
+
+**Messaging**
+- Add GET domainByMessagingService endpoint to linkShortening service
+- Add `disable_https` to link shortening domain_config properties
+
+**Numbers**
+- Add bulk_eligibility api under version `/v1`.
+
+
 [2023-05-04] Version 6.0.0
 --------------------------
 **Note:** This release contains breaking changes, check our [upgrade guide](./UPGRADE.md#2023-05-03-5xx-to-6xx) for detailed migration notes.

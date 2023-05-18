@@ -314,7 +314,7 @@ module Twilio
 
                         unless @reservations
                             @reservations = ReservationList.new(
-                                @version, workspace_sid: @solution[:workspace_sid],  task_sid: @solution[:sid],  )
+                                @version, workspace_sid: @solution[:workspace_sid],  task_sid: @solution[:sid], )
                         end
 
                      @reservations

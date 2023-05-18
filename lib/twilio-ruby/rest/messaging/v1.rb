@@ -28,6 +28,7 @@ module Twilio
                     @domain_config_messaging_service = nil
                     @external_campaign = nil
                     @linkshortening_messaging_service = nil
+                    @linkshortening_messaging_service_domain_association = nil
                     @services = nil
                     @usecases = nil
                 end
@@ -132,6 +133,20 @@ module Twilio
                         @linkshortening_messaging_service ||= LinkshorteningMessagingServiceList.new self
                     else
                         LinkshorteningMessagingServiceContext.new(self, domain_sid, messaging_service_sid)
+                    end
+                end
+                ##
+                # @param [String] messaging_service_sid Unique string used to identify the Messaging service that this domain should be associated with.
+                # @return [Twilio::REST::Messaging::V1::LinkshorteningMessagingServiceDomainAssociationContext] if messagingServiceSid was passed.
+                # @return [Twilio::REST::Messaging::V1::LinkshorteningMessagingServiceDomainAssociationList]
+                def linkshortening_messaging_service_domain_association(messaging_service_sid=:unset)
+                    if messaging_service_sid.nil?
+                        raise ArgumentError, 'messaging_service_sid cannot be nil'
+                    end
+                    if messaging_service_sid == :unset
+                        @linkshortening_messaging_service_domain_association ||= LinkshorteningMessagingServiceDomainAssociationList.new self
+                    else
+                        LinkshorteningMessagingServiceDomainAssociationContext.new(self, messaging_service_sid)
                     end
                 end
                 ##

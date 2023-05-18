@@ -234,7 +234,7 @@ module Twilio
 
                         unless @executions
                             @executions = ExecutionList.new(
-                                @version, sid: @solution[:sid], flow_sid: @solution[:sid],  )
+                                @version, flow_sid: @solution[:sid], )
                         end
 
                      @executions
@@ -263,7 +263,7 @@ module Twilio
 
                         unless @revisions
                             @revisions = FlowRevisionList.new(
-                                @version, sid: @solution[:sid], flow_sid: @solution[:sid],  )
+                                @version, sid: @solution[:sid], )
                         end
 
                      @revisions

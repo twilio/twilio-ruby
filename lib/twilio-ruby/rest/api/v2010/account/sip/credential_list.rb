@@ -221,7 +221,7 @@ module Twilio
 
                         unless @credentials
                             @credentials = CredentialList.new(
-                                @version, account_sid: @solution[:account_sid],  credential_list_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  credential_list_sid: @solution[:sid], )
                         end
 
                      @credentials

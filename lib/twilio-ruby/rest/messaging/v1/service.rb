@@ -303,7 +303,7 @@ module Twilio
                     def us_app_to_person_usecases
                       unless @us_app_to_person_usecases
                         @us_app_to_person_usecases = UsAppToPersonUsecaseList.new(
-                                @version, service_sid: @solution[:sid], messaging_service_sid: @solution[:sid],  )
+                                @version, messaging_service_sid: @solution[:sid], )
                       end
                       @us_app_to_person_usecases
                     end
@@ -321,7 +321,7 @@ module Twilio
 
                         unless @alpha_senders
                             @alpha_senders = AlphaSenderList.new(
-                                @version, service_sid: @solution[:sid], messaging_service_sid: @solution[:sid],  )
+                                @version, service_sid: @solution[:sid], )
                         end
 
                      @alpha_senders
@@ -340,7 +340,7 @@ module Twilio
 
                         unless @short_codes
                             @short_codes = ShortCodeList.new(
-                                @version, service_sid: @solution[:sid], messaging_service_sid: @solution[:sid],  )
+                                @version, service_sid: @solution[:sid], )
                         end
 
                      @short_codes
@@ -359,7 +359,7 @@ module Twilio
 
                         unless @us_app_to_person
                             @us_app_to_person = UsAppToPersonList.new(
-                                @version, service_sid: @solution[:sid], messaging_service_sid: @solution[:sid],  )
+                                @version, messaging_service_sid: @solution[:sid], )
                         end
 
                      @us_app_to_person
@@ -378,7 +378,7 @@ module Twilio
 
                         unless @phone_numbers
                             @phone_numbers = PhoneNumberList.new(
-                                @version, service_sid: @solution[:sid], messaging_service_sid: @solution[:sid],  )
+                                @version, service_sid: @solution[:sid], )
                         end
 
                      @phone_numbers

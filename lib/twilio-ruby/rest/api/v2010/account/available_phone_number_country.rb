@@ -170,7 +170,7 @@ module Twilio
                     def voip
                       unless @voip
                         @voip = VoipList.new(
-                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code],  )
+                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code], )
                       end
                       @voip
                     end
@@ -181,7 +181,7 @@ module Twilio
                     def national
                       unless @national
                         @national = NationalList.new(
-                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code],  )
+                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code], )
                       end
                       @national
                     end
@@ -192,7 +192,7 @@ module Twilio
                     def mobile
                       unless @mobile
                         @mobile = MobileList.new(
-                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code],  )
+                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code], )
                       end
                       @mobile
                     end
@@ -203,7 +203,7 @@ module Twilio
                     def machine_to_machine
                       unless @machine_to_machine
                         @machine_to_machine = MachineToMachineList.new(
-                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code],  )
+                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code], )
                       end
                       @machine_to_machine
                     end
@@ -214,7 +214,7 @@ module Twilio
                     def toll_free
                       unless @toll_free
                         @toll_free = TollFreeList.new(
-                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code],  )
+                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code], )
                       end
                       @toll_free
                     end
@@ -225,7 +225,7 @@ module Twilio
                     def shared_cost
                       unless @shared_cost
                         @shared_cost = SharedCostList.new(
-                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code],  )
+                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code], )
                       end
                       @shared_cost
                     end
@@ -236,7 +236,7 @@ module Twilio
                     def local
                       unless @local
                         @local = LocalList.new(
-                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code],  )
+                                @version, account_sid: @solution[:account_sid],  country_code: @solution[:country_code], )
                       end
                       @local
                     end

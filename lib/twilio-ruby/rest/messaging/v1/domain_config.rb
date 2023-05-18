@@ -73,15 +73,21 @@ module Twilio
                     # Update the DomainConfigInstance
                     # @param [String] fallback_url Any requests we receive to this domain that do not match an existing shortened message will be redirected to the fallback url. These will likely be either expired messages, random misdirected traffic, or intentional scraping.
                     # @param [String] callback_url URL to receive click events to your webhook whenever the recipients click on the shortened links
+                    # @param [Boolean] continue_on_failure Boolean field to set customer delivery preference when there is a failure in linkShortening service
+                    # @param [Boolean] disable_https Customer's choice to send links with/without \\\"https://\\\" attached to shortened url. If true, messages will not be sent with https:// at the beginning of the url. If false, messages will be sent with https:// at the beginning of the url. False is the default behavior if it is not specified.
                     # @return [DomainConfigInstance] Updated DomainConfigInstance
                     def update(
                         fallback_url: :unset, 
-                        callback_url: :unset
+                        callback_url: :unset, 
+                        continue_on_failure: :unset, 
+                        disable_https: :unset
                     )
 
                         data = Twilio::Values.of({
                             'FallbackUrl' => fallback_url,
                             'CallbackUrl' => callback_url,
+                            'ContinueOnFailure' => continue_on_failure,
+                            'DisableHttps' => disable_https,
                         })
 
                         payload = @version.update('POST', @uri, data: data)
@@ -155,9 +161,11 @@ module Twilio
                             'config_sid' => payload['config_sid'],
                             'fallback_url' => payload['fallback_url'],
                             'callback_url' => payload['callback_url'],
+                            'continue_on_failure' => payload['continue_on_failure'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'url' => payload['url'],
+                            'disable_https' => payload['disable_https'],
                         }
 
                         # Context
@@ -201,6 +209,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [Boolean] Boolean field to set customer delivery preference when there is a failure in linkShortening service
+                    def continue_on_failure
+                        @properties['continue_on_failure']
+                    end
+                    
+                    ##
                     # @return [Time] Date this Domain Config was created.
                     def date_created
                         @properties['date_created']
@@ -219,6 +233,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [Boolean] Customer's choice to send links with/without \"https://\" attached to shortened url. If true, messages will not be sent with https:// at the beginning of the url. If false, messages will be sent with https:// at the beginning of the url. False is the default behavior if it is not specified.
+                    def disable_https
+                        @properties['disable_https']
+                    end
+                    
+                    ##
                     # Fetch the DomainConfigInstance
                     # @return [DomainConfigInstance] Fetched DomainConfigInstance
                     def fetch
@@ -230,15 +250,21 @@ module Twilio
                     # Update the DomainConfigInstance
                     # @param [String] fallback_url Any requests we receive to this domain that do not match an existing shortened message will be redirected to the fallback url. These will likely be either expired messages, random misdirected traffic, or intentional scraping.
                     # @param [String] callback_url URL to receive click events to your webhook whenever the recipients click on the shortened links
+                    # @param [Boolean] continue_on_failure Boolean field to set customer delivery preference when there is a failure in linkShortening service
+                    # @param [Boolean] disable_https Customer's choice to send links with/without \\\"https://\\\" attached to shortened url. If true, messages will not be sent with https:// at the beginning of the url. If false, messages will be sent with https:// at the beginning of the url. False is the default behavior if it is not specified.
                     # @return [DomainConfigInstance] Updated DomainConfigInstance
                     def update(
                         fallback_url: :unset, 
-                        callback_url: :unset
+                        callback_url: :unset, 
+                        continue_on_failure: :unset, 
+                        disable_https: :unset
                     )
 
                         context.update(
                             fallback_url: fallback_url, 
                             callback_url: callback_url, 
+                            continue_on_failure: continue_on_failure, 
+                            disable_https: disable_https, 
                         )
                     end
 

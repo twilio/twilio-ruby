@@ -17,11 +17,11 @@ module Twilio
     module REST
         class Messaging < MessagingBase
             class V1 < Version
-                class DomainConfigMessagingServiceList < ListResource
+                class LinkshorteningMessagingServiceDomainAssociationList < ListResource
                     ##
-                    # Initialize the DomainConfigMessagingServiceList
+                    # Initialize the LinkshorteningMessagingServiceDomainAssociationList
                     # @param [Version] version Version that contains the resource
-                    # @return [DomainConfigMessagingServiceList] DomainConfigMessagingServiceList
+                    # @return [LinkshorteningMessagingServiceDomainAssociationList] LinkshorteningMessagingServiceDomainAssociationList
                     def initialize(version)
                         super(version)
                         # Path Solution
@@ -34,35 +34,35 @@ module Twilio
 
                     # Provide a user friendly representation
                     def to_s
-                        '#<Twilio.Messaging.V1.DomainConfigMessagingServiceList>'
+                        '#<Twilio.Messaging.V1.LinkshorteningMessagingServiceDomainAssociationList>'
                     end
                 end
 
 
                 ##
                 #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
-                class DomainConfigMessagingServiceContext < InstanceContext
+                class LinkshorteningMessagingServiceDomainAssociationContext < InstanceContext
                     ##
-                    # Initialize the DomainConfigMessagingServiceContext
+                    # Initialize the LinkshorteningMessagingServiceDomainAssociationContext
                     # @param [Version] version Version that contains the resource
                     # @param [String] messaging_service_sid Unique string used to identify the Messaging service that this domain should be associated with.
-                    # @return [DomainConfigMessagingServiceContext] DomainConfigMessagingServiceContext
+                    # @return [LinkshorteningMessagingServiceDomainAssociationContext] LinkshorteningMessagingServiceDomainAssociationContext
                     def initialize(version, messaging_service_sid)
                         super(version)
 
                         # Path Solution
                         @solution = { messaging_service_sid: messaging_service_sid,  }
-                        @uri = "/LinkShortening/MessagingService/#{@solution[:messaging_service_sid]}/DomainConfig"
+                        @uri = "/LinkShortening/MessagingServices/#{@solution[:messaging_service_sid]}/Domain"
 
                         
                     end
                     ##
-                    # Fetch the DomainConfigMessagingServiceInstance
-                    # @return [DomainConfigMessagingServiceInstance] Fetched DomainConfigMessagingServiceInstance
+                    # Fetch the LinkshorteningMessagingServiceDomainAssociationInstance
+                    # @return [LinkshorteningMessagingServiceDomainAssociationInstance] Fetched LinkshorteningMessagingServiceDomainAssociationInstance
                     def fetch
 
                         payload = @version.fetch('GET', @uri)
-                        DomainConfigMessagingServiceInstance.new(
+                        LinkshorteningMessagingServiceDomainAssociationInstance.new(
                             @version,
                             payload,
                             messaging_service_sid: @solution[:messaging_service_sid],
@@ -74,24 +74,24 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Messaging.V1.DomainConfigMessagingServiceContext #{context}>"
+                        "#<Twilio.Messaging.V1.LinkshorteningMessagingServiceDomainAssociationContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
                         context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Messaging.V1.DomainConfigMessagingServiceContext #{context}>"
+                        "#<Twilio.Messaging.V1.LinkshorteningMessagingServiceDomainAssociationContext #{context}>"
                     end
                 end
 
-                class DomainConfigMessagingServicePage < Page
+                class LinkshorteningMessagingServiceDomainAssociationPage < Page
                     ##
-                    # Initialize the DomainConfigMessagingServicePage
+                    # Initialize the LinkshorteningMessagingServiceDomainAssociationPage
                     # @param [Version] version Version that contains the resource
                     # @param [Response] response Response from the API
                     # @param [Hash] solution Path solution for the resource
-                    # @return [DomainConfigMessagingServicePage] DomainConfigMessagingServicePage
+                    # @return [LinkshorteningMessagingServiceDomainAssociationPage] LinkshorteningMessagingServiceDomainAssociationPage
                     def initialize(version, response, solution)
                         super(version, response)
 
@@ -100,42 +100,36 @@ module Twilio
                     end
 
                     ##
-                    # Build an instance of DomainConfigMessagingServiceInstance
+                    # Build an instance of LinkshorteningMessagingServiceDomainAssociationInstance
                     # @param [Hash] payload Payload response from the API
-                    # @return [DomainConfigMessagingServiceInstance] DomainConfigMessagingServiceInstance
+                    # @return [LinkshorteningMessagingServiceDomainAssociationInstance] LinkshorteningMessagingServiceDomainAssociationInstance
                     def get_instance(payload)
-                        DomainConfigMessagingServiceInstance.new(@version, payload)
+                        LinkshorteningMessagingServiceDomainAssociationInstance.new(@version, payload)
                     end
 
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        '<Twilio.Messaging.V1.DomainConfigMessagingServicePage>'
+                        '<Twilio.Messaging.V1.LinkshorteningMessagingServiceDomainAssociationPage>'
                     end
                 end
-                class DomainConfigMessagingServiceInstance < InstanceResource
+                class LinkshorteningMessagingServiceDomainAssociationInstance < InstanceResource
                     ##
-                    # Initialize the DomainConfigMessagingServiceInstance
+                    # Initialize the LinkshorteningMessagingServiceDomainAssociationInstance
                     # @param [Version] version Version that contains the resource
                     # @param [Hash] payload payload that contains response from Twilio
                     # @param [String] account_sid The SID of the
-                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this DomainConfigMessagingService
+                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this LinkshorteningMessagingServiceDomainAssociation
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
-                    # @return [DomainConfigMessagingServiceInstance] DomainConfigMessagingServiceInstance
+                    # @return [LinkshorteningMessagingServiceDomainAssociationInstance] LinkshorteningMessagingServiceDomainAssociationInstance
                     def initialize(version, payload , messaging_service_sid: nil)
                         super(version)
                         
                         # Marshaled Properties
                         @properties = { 
                             'domain_sid' => payload['domain_sid'],
-                            'config_sid' => payload['config_sid'],
                             'messaging_service_sid' => payload['messaging_service_sid'],
-                            'fallback_url' => payload['fallback_url'],
-                            'callback_url' => payload['callback_url'],
-                            'continue_on_failure' => payload['continue_on_failure'],
-                            'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
-                            'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'url' => payload['url'],
                         }
 
@@ -147,10 +141,10 @@ module Twilio
                     ##
                     # Generate an instance context for the instance, the context is capable of
                     # performing various actions.  All instance actions are proxied to the context
-                    # @return [DomainConfigMessagingServiceContext] CallContext for this CallInstance
+                    # @return [LinkshorteningMessagingServiceDomainAssociationContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = DomainConfigMessagingServiceContext.new(@version , @params['messaging_service_sid'])
+                            @instance_context = LinkshorteningMessagingServiceDomainAssociationContext.new(@version , @params['messaging_service_sid'])
                         end
                         @instance_context
                     end
@@ -162,45 +156,9 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique string that we created to identify the Domain config (prefix ZK).
-                    def config_sid
-                        @properties['config_sid']
-                    end
-                    
-                    ##
                     # @return [String] The unique string that identifies the messaging service
                     def messaging_service_sid
                         @properties['messaging_service_sid']
-                    end
-                    
-                    ##
-                    # @return [String] Any requests we receive to this domain that do not match an existing shortened message will be redirected to the fallback url. These will likely be either expired messages, random misdirected traffic, or intentional scraping.
-                    def fallback_url
-                        @properties['fallback_url']
-                    end
-                    
-                    ##
-                    # @return [String] URL to receive click events to your webhook whenever the recipients click on the shortened links.
-                    def callback_url
-                        @properties['callback_url']
-                    end
-                    
-                    ##
-                    # @return [Boolean] Boolean field to set customer delivery preference when there is a failure in linkShortening service
-                    def continue_on_failure
-                        @properties['continue_on_failure']
-                    end
-                    
-                    ##
-                    # @return [Time] Date this Domain Config was created.
-                    def date_created
-                        @properties['date_created']
-                    end
-                    
-                    ##
-                    # @return [Time] Date that this Domain Config was last updated.
-                    def date_updated
-                        @properties['date_updated']
                     end
                     
                     ##
@@ -210,8 +168,8 @@ module Twilio
                     end
                     
                     ##
-                    # Fetch the DomainConfigMessagingServiceInstance
-                    # @return [DomainConfigMessagingServiceInstance] Fetched DomainConfigMessagingServiceInstance
+                    # Fetch the LinkshorteningMessagingServiceDomainAssociationInstance
+                    # @return [LinkshorteningMessagingServiceDomainAssociationInstance] Fetched LinkshorteningMessagingServiceDomainAssociationInstance
                     def fetch
 
                         context.fetch
@@ -221,14 +179,14 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Messaging.V1.DomainConfigMessagingServiceInstance #{values}>"
+                        "<Twilio.Messaging.V1.LinkshorteningMessagingServiceDomainAssociationInstance #{values}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
                         values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Messaging.V1.DomainConfigMessagingServiceInstance #{values}>"
+                        "<Twilio.Messaging.V1.LinkshorteningMessagingServiceDomainAssociationInstance #{values}>"
                     end
                 end
 

@@ -206,7 +206,7 @@ module Twilio
 
                         unless @logs
                             @logs = LogList.new(
-                                @version, service_sid: @solution[:service_sid],  environment_sid: @solution[:sid],  )
+                                @version, service_sid: @solution[:service_sid],  environment_sid: @solution[:sid], )
                         end
 
                      @logs
@@ -225,7 +225,7 @@ module Twilio
 
                         unless @variables
                             @variables = VariableList.new(
-                                @version, service_sid: @solution[:service_sid],  environment_sid: @solution[:sid],  )
+                                @version, service_sid: @solution[:service_sid],  environment_sid: @solution[:sid], )
                         end
 
                      @variables
@@ -244,7 +244,7 @@ module Twilio
 
                         unless @deployments
                             @deployments = DeploymentList.new(
-                                @version, service_sid: @solution[:service_sid],  environment_sid: @solution[:sid],  )
+                                @version, service_sid: @solution[:service_sid],  environment_sid: @solution[:sid], )
                         end
 
                      @deployments

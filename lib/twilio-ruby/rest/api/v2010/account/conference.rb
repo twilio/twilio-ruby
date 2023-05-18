@@ -255,7 +255,7 @@ module Twilio
 
                         unless @recordings
                             @recordings = RecordingList.new(
-                                @version, account_sid: @solution[:account_sid],  conference_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  conference_sid: @solution[:sid], )
                         end
 
                      @recordings
@@ -274,7 +274,7 @@ module Twilio
 
                         unless @participants
                             @participants = ParticipantList.new(
-                                @version, account_sid: @solution[:account_sid],  conference_sid: @solution[:sid],  )
+                                @version, account_sid: @solution[:account_sid],  conference_sid: @solution[:sid], )
                         end
 
                      @participants

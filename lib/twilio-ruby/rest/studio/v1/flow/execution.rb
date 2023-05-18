@@ -252,7 +252,7 @@ module Twilio
 
                         unless @steps
                             @steps = ExecutionStepList.new(
-                                @version, flow_sid: @solution[:flow_sid],  execution_sid: @solution[:sid],  )
+                                @version, flow_sid: @solution[:flow_sid],  execution_sid: @solution[:sid], )
                         end
 
                      @steps

@@ -31,13 +31,13 @@ module Twilio
                     end
                     ##
                     # Fetch the InsightsSettingsAnswerSetsInstance
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [InsightsSettingsAnswerSetsInstance] Fetched InsightsSettingsAnswerSetsInstance
                     def fetch(
-                        token: :unset
+                        authorization: :unset
                     )
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.fetch('GET', @uri, headers: headers)
                         InsightsSettingsAnswerSetsInstance.new(
                             @version,

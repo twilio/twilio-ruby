@@ -34,8 +34,6 @@ module Twilio
                     # @param [String] category_sid The SID of the category 
                     # @param [String] category_name The name of the category
                     # @param [String] segment_id Segment Id of the conversation
-                    # @param [String] user_name Name of the user assessing conversation
-                    # @param [String] user_email Email of the user assessing conversation
                     # @param [String] agent_id The id of the Agent
                     # @param [Float] offset The offset of the conversation.
                     # @param [String] metric_id The question SID selected for assessment
@@ -43,14 +41,12 @@ module Twilio
                     # @param [String] answer_text The answer text selected by user
                     # @param [String] answer_id The id of the answer selected by user
                     # @param [String] questionnaire_sid Questionnaire SID of the associated question
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [AssessmentsInstance] Created AssessmentsInstance
                     def create(
                         category_sid: nil, 
                         category_name: nil, 
                         segment_id: nil, 
-                        user_name: nil, 
-                        user_email: nil, 
                         agent_id: nil, 
                         offset: nil, 
                         metric_id: nil, 
@@ -58,15 +54,13 @@ module Twilio
                         answer_text: nil, 
                         answer_id: nil, 
                         questionnaire_sid: nil, 
-                        token: :unset
+                        authorization: :unset
                     )
 
                         data = Twilio::Values.of({
                             'CategorySid' => category_sid,
                             'CategoryName' => category_name,
                             'SegmentId' => segment_id,
-                            'UserName' => user_name,
-                            'UserEmail' => user_email,
                             'AgentId' => agent_id,
                             'Offset' => offset,
                             'MetricId' => metric_id,
@@ -76,7 +70,7 @@ module Twilio
                             'QuestionnaireSid' => questionnaire_sid,
                         })
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         AssessmentsInstance.new(
                             @version,
@@ -89,7 +83,7 @@ module Twilio
                     # Lists AssessmentsInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [String] segment_id The id of the segment.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -98,9 +92,9 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(token: :unset, segment_id: :unset, limit: nil, page_size: nil)
+                    def list(authorization: :unset, segment_id: :unset, limit: nil, page_size: nil)
                         self.stream(
-                            token: token,
+                            authorization: authorization,
                             segment_id: segment_id,
                             limit: limit,
                             page_size: page_size
@@ -111,7 +105,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [String] segment_id The id of the segment.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -120,11 +114,11 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(token: :unset, segment_id: :unset, limit: nil, page_size: nil)
+                    def stream(authorization: :unset, segment_id: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
-                            token: token,
+                            authorization: authorization,
                             segment_id: segment_id,
                             page_size: limits[:page_size], )
 
@@ -148,16 +142,16 @@ module Twilio
                     ##
                     # Retrieve a single page of AssessmentsInstance records from the API.
                     # Request is executed immediately.
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [String] segment_id The id of the segment.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of AssessmentsInstance
-                    def page(token: :unset, segment_id: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(authorization: :unset, segment_id: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Token' => token,
+                            'Authorization' => authorization,
                             
                             'SegmentId' => segment_id,
                             
@@ -215,13 +209,13 @@ module Twilio
                     # @param [Float] offset The offset of the conversation
                     # @param [String] answer_text The answer text selected by user
                     # @param [String] answer_id The id of the answer selected by user
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [AssessmentsInstance] Updated AssessmentsInstance
                     def update(
                         offset: nil, 
                         answer_text: nil, 
                         answer_id: nil, 
-                        token: :unset
+                        authorization: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -230,7 +224,7 @@ module Twilio
                             'AnswerId' => answer_id,
                         })
 
-                        headers = Twilio::Values.of({ 'Token' => token, })
+                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         AssessmentsInstance.new(
                             @version,
@@ -419,20 +413,20 @@ module Twilio
                     # @param [Float] offset The offset of the conversation
                     # @param [String] answer_text The answer text selected by user
                     # @param [String] answer_id The id of the answer selected by user
-                    # @param [String] token The Token HTTP request header
+                    # @param [String] authorization The Authorization HTTP request header
                     # @return [AssessmentsInstance] Updated AssessmentsInstance
                     def update(
                         offset: nil, 
                         answer_text: nil, 
                         answer_id: nil, 
-                        token: :unset
+                        authorization: :unset
                     )
 
                         context.update(
                             offset: offset, 
                             answer_text: answer_text, 
                             answer_id: answer_id, 
-                            token: token, 
+                            authorization: authorization, 
                         )
                     end
 

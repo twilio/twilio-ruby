@@ -204,7 +204,7 @@ module Twilio
 
                         unless @participants
                             @participants = ParticipantList.new(
-                                @version, room_sid: @solution[:room_sid],  )
+                                @version, room_sid: @solution[:room_sid], )
                         end
 
                      @participants
