@@ -305,6 +305,7 @@ module Twilio
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'url' => payload['url'],
                             'mock' => payload['mock'],
+                            'errors' => payload['errors'],
                         }
 
                         # Context
@@ -465,6 +466,12 @@ module Twilio
                     # @return [Boolean] A boolean that specifies whether campaign is a mock or not. Mock campaigns will be automatically created if using a mock brand. Mock campaigns should only be used for testing purposes.
                     def mock
                         @properties['mock']
+                    end
+                    
+                    ##
+                    # @return [Array<Hash>] Details indicating why a campaign registration failed. These errors can indicate one or more fields that were incorrect or did not meet review requirements.
+                    def errors
+                        @properties['errors']
                     end
                     
                     ##

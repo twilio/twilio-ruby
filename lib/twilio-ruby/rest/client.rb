@@ -72,6 +72,11 @@ module Twilio
                 @insights ||= Insights.new self
             end
             ##
+            # Access the Intelligence Twilio Domain
+            def intelligence
+                @intelligence ||= Intelligence.new self
+            end
+            ##
             # Access the IpMessaging Twilio Domain
             def ip_messaging
                 @ip_messaging ||= IpMessaging.new self

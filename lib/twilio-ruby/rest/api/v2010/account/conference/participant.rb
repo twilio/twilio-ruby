@@ -51,7 +51,7 @@ module Twilio
                     # @param [Boolean] early_media Whether to allow an agent to hear the state of the outbound call, including ringing or disconnect messages. Can be: `true` or `false` and defaults to `true`.
                     # @param [String] max_participants The maximum number of participants in the conference. Can be a positive integer from `2` to `250`. The default value is `250`.
                     # @param [String] conference_record Whether to record the conference the participant is joining. Can be: `true`, `false`, `record-from-start`, and `do-not-record`. The default value is `false`.
-                    # @param [String] conference_trim Whether to trim leading and trailing silence from your recorded conference audio files. Can be: `trim-silence` or `do-not-trim` and defaults to `trim-silence`.
+                    # @param [String] conference_trim Whether to trim leading and trailing silence from the conference recording. Can be: `trim-silence` or `do-not-trim` and defaults to `trim-silence`.
                     # @param [String] conference_status_callback The URL we should call using the `conference_status_callback_method` when the conference events in `conference_status_callback_event` occur. Only the value set by the first participant to join the conference is used. Subsequent `conference_status_callback` values are ignored.
                     # @param [String] conference_status_callback_method The HTTP method we should use to call `conference_status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
                     # @param [Array[String]] conference_status_callback_event The conference state changes that should generate a call to `conference_status_callback`. Can be: `start`, `end`, `join`, `leave`, `mute`, `hold`, `modify`, `speaker`, and `announcement`. Separate multiple values with a space. Defaults to `start end`.
@@ -80,6 +80,7 @@ module Twilio
                     # @param [String] machine_detection_silence_timeout The number of milliseconds of initial silence after which an `unknown` AnsweredBy result will be returned. Possible Values: 2000-10000. Default: 5000.
                     # @param [String] amd_status_callback The URL that we should call using the `amd_status_callback_method` to notify customer application whether the call was answered by human, machine or fax.
                     # @param [String] amd_status_callback_method The HTTP method we should use when calling the `amd_status_callback` URL. Can be: `GET` or `POST` and the default is `POST`.
+                    # @param [String] trim Whether to trim any leading and trailing silence from the participant recording. Can be: `trim-silence` or `do-not-trim` and the default is `trim-silence`.
                     # @return [ParticipantInstance] Created ParticipantInstance
                     def create(
                         from: nil, 
@@ -127,7 +128,8 @@ module Twilio
                         machine_detection_speech_end_threshold: :unset, 
                         machine_detection_silence_timeout: :unset, 
                         amd_status_callback: :unset, 
-                        amd_status_callback_method: :unset
+                        amd_status_callback_method: :unset, 
+                        trim: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -177,6 +179,7 @@ module Twilio
                             'MachineDetectionSilenceTimeout' => machine_detection_silence_timeout,
                             'AmdStatusCallback' => amd_status_callback,
                             'AmdStatusCallbackMethod' => amd_status_callback_method,
+                            'Trim' => trim,
                         })
 
                         payload = @version.create('POST', @uri, data: data)
