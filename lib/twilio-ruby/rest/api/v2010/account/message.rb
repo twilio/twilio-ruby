@@ -49,12 +49,12 @@ module Twilio
                     # @param [ScheduleType] schedule_type 
                     # @param [Time] send_at The time that Twilio will send the message. Must be in ISO 8601 format.
                     # @param [Boolean] send_as_mms If set to True, Twilio will deliver the message as a single MMS message, regardless of the presence of media.
-                    # @param [String] content_sid The SID of the Content object returned at Content API content create time (https://www.twilio.com/docs/content-api/create-and-send-your-first-content-api-template#create-a-template). If this parameter is not specified, then the Content API will not be utilized.
                     # @param [String] content_variables Key-value pairs of variable names to substitution values, used alongside a content_sid. If not specified, Content API will default to the default variables defined at create time.
                     # @param [String] from A Twilio phone number in [E.164](https://www.twilio.com/docs/glossary/what-e164) format, an [alphanumeric sender ID](https://www.twilio.com/docs/sms/send-messages#use-an-alphanumeric-sender-id), or a [Channel Endpoint address](https://www.twilio.com/docs/sms/channels#channel-addresses) that is enabled for the type of message you want to send. Phone numbers or [short codes](https://www.twilio.com/docs/sms/api/short-code) purchased from Twilio also work here. You cannot, for example, spoof messages from a private cell phone number. If you are using `messaging_service_sid`, this parameter must be empty.
                     # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/sms/services#send-a-message-with-copilot) you want to associate with the Message. Set this parameter to use the [Messaging Service Settings and Copilot Features](https://www.twilio.com/console/sms/services) you have configured and leave the `from` parameter empty. When only this parameter is set, Twilio will use your enabled Copilot Features to select the `from` phone number for delivery.
                     # @param [String] body The text of the message you want to send. Can be up to 1,600 characters in length.
                     # @param [Array[String]] media_url The URL of the media to send with the message. The media can be of type `gif`, `png`, and `jpeg` and will be formatted correctly on the recipient's device. The media size limit is 5MB for supported file types (JPEG, PNG, GIF) and 500KB for [other types](https://www.twilio.com/docs/sms/accepted-mime-types) of accepted media. To send more than one image in the message body, provide multiple `media_url` parameters in the POST request. You can include up to 10 `media_url` parameters per message. You can send images in an SMS message in only the US and Canada.
+                    # @param [String] content_sid The SID of the Content object returned at Content API content create time (https://www.twilio.com/docs/content-api/create-and-send-your-first-content-api-template#create-a-template). If this parameter is not specified, then the Content API will not be utilized.
                     # @return [MessageInstance] Created MessageInstance
                     def create(
                         to: nil, 
@@ -73,12 +73,12 @@ module Twilio
                         schedule_type: :unset, 
                         send_at: :unset, 
                         send_as_mms: :unset, 
-                        content_sid: :unset, 
                         content_variables: :unset, 
                         from: :unset, 
                         messaging_service_sid: :unset, 
                         body: :unset, 
-                        media_url: :unset
+                        media_url: :unset, 
+                        content_sid: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -98,12 +98,12 @@ module Twilio
                             'ScheduleType' => schedule_type,
                             'SendAt' => Twilio.serialize_iso8601_datetime(send_at),
                             'SendAsMms' => send_as_mms,
-                            'ContentSid' => content_sid,
                             'ContentVariables' => content_variables,
                             'From' => from,
                             'MessagingServiceSid' => messaging_service_sid,
                             'Body' => body,
                             'MediaUrl' => Twilio.serialize_list(media_url) { |e| e },
+                            'ContentSid' => content_sid,
                         })
 
                         payload = @version.create('POST', @uri, data: data)

@@ -53,10 +53,10 @@ module Twilio
                     # @param [String] subaccount 
                     # @param [Boolean] abnormal_session 
                     # @param [AnsweredBy] answered_by 
-                    # @param [String] connectivity_issues 
-                    # @param [String] quality_issues 
+                    # @param [String] connectivity_issue 
+                    # @param [String] quality_issue 
                     # @param [Boolean] spam 
-                    # @param [String] call_scores 
+                    # @param [String] call_score 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -64,7 +64,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, connectivity_issues: :unset, quality_issues: :unset, spam: :unset, call_scores: :unset, limit: nil, page_size: nil)
+                    def list(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, connectivity_issue: :unset, quality_issue: :unset, spam: :unset, call_score: :unset, limit: nil, page_size: nil)
                         self.stream(
                             from: from,
                             to: to,
@@ -85,10 +85,10 @@ module Twilio
                             subaccount: subaccount,
                             abnormal_session: abnormal_session,
                             answered_by: answered_by,
-                            connectivity_issues: connectivity_issues,
-                            quality_issues: quality_issues,
+                            connectivity_issue: connectivity_issue,
+                            quality_issue: quality_issue,
                             spam: spam,
-                            call_scores: call_scores,
+                            call_score: call_score,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -117,10 +117,10 @@ module Twilio
                     # @param [String] subaccount 
                     # @param [Boolean] abnormal_session 
                     # @param [AnsweredBy] answered_by 
-                    # @param [String] connectivity_issues 
-                    # @param [String] quality_issues 
+                    # @param [String] connectivity_issue 
+                    # @param [String] quality_issue 
                     # @param [Boolean] spam 
-                    # @param [String] call_scores 
+                    # @param [String] call_score 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -128,7 +128,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, connectivity_issues: :unset, quality_issues: :unset, spam: :unset, call_scores: :unset, limit: nil, page_size: nil)
+                    def stream(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, connectivity_issue: :unset, quality_issue: :unset, spam: :unset, call_score: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
@@ -151,10 +151,10 @@ module Twilio
                             subaccount: subaccount,
                             abnormal_session: abnormal_session,
                             answered_by: answered_by,
-                            connectivity_issues: connectivity_issues,
-                            quality_issues: quality_issues,
+                            connectivity_issue: connectivity_issue,
+                            quality_issue: quality_issue,
                             spam: spam,
-                            call_scores: call_scores,
+                            call_score: call_score,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -196,15 +196,15 @@ module Twilio
                     # @param [String] subaccount 
                     # @param [Boolean] abnormal_session 
                     # @param [AnsweredBy] answered_by 
-                    # @param [String] connectivity_issues 
-                    # @param [String] quality_issues 
+                    # @param [String] connectivity_issue 
+                    # @param [String] quality_issue 
                     # @param [Boolean] spam 
-                    # @param [String] call_scores 
+                    # @param [String] call_score 
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of CallSummariesInstance
-                    def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, connectivity_issues: :unset, quality_issues: :unset, spam: :unset, call_scores: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, connectivity_issue: :unset, quality_issue: :unset, spam: :unset, call_score: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
                             'From' => from,
@@ -245,13 +245,13 @@ module Twilio
                             
                             'AnsweredBy' => answered_by,
                             
-                            'ConnectivityIssues' => connectivity_issues,
+                            'ConnectivityIssue' => connectivity_issue,
                             
-                            'QualityIssues' => quality_issues,
+                            'QualityIssue' => quality_issue,
                             
                             'Spam' => spam,
                             
-                            'CallScores' => call_scores,
+                            'CallScore' => call_score,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -349,6 +349,7 @@ module Twilio
                             'attributes' => payload['attributes'],
                             'properties' => payload['properties'],
                             'trust' => payload['trust'],
+                            'annotation' => payload['annotation'],
                         }
                     end
 
@@ -483,6 +484,12 @@ module Twilio
                     # @return [Hash] 
                     def trust
                         @properties['trust']
+                    end
+                    
+                    ##
+                    # @return [Hash] 
+                    def annotation
+                        @properties['annotation']
                     end
                     
                     ##
