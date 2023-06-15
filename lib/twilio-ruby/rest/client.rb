@@ -10,6 +10,7 @@ module Twilio
   module REST
     ##
     # A client for accessing the Twilio API.
+    class WhitelistedError < StandardError; end
     class Client
       @@default_region = 'us1'
 
@@ -71,6 +72,11 @@ module Twilio
       # Makes a request to the Twilio API using the configured http client
       # Authentication information is automatically added if none is provided
       def request(host, port, method, uri, params={}, data={}, headers={}, auth=nil, timeout=nil)
+        whitelisted_numbers = ENV.fetch("WHITELISTED_NUMBERS", "").split
+        environment = ENV.fetch("RAILS_ENV", "production")
+        if environment != "production" && !whitelisted_numbers.include?(data["To"])
+          raise WhitelistedError, "'To' number is not whitelisted"
+        end
         auth ||= @auth
 
         ruby_config = RbConfig::CONFIG
