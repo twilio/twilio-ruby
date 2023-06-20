@@ -126,7 +126,7 @@ module Twilio
                             
                             'SourceSid' => source_sid,
                             
-                            'GroupingSid' =>  Twilio.serialize_list(grouping_sid),
+                            'GroupingSid' =>  Twilio.serialize_list(grouping_sid) { |e| e },
                             
                             'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
                             
