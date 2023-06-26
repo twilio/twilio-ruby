@@ -35,3 +35,5 @@ docker-push:
 
 cluster-test:
 	bundle exec rspec ./cluster_spec.rb
+
+
