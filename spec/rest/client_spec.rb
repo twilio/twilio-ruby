@@ -7,48 +7,6 @@ describe Twilio::REST::ObsoleteClient do
   end
 end
 
-describe Twilio::REST::BaseClient do
-  it 'raise an exception' do
-    expect { Twilio::REST::BaseClient.new }.to raise_error(Twilio::REST::ObsoleteError)
-  end
-end
-
-describe Twilio::REST::IpMessagingClient do
-  it 'raise an exception' do
-    expect { Twilio::REST::IpMessagingClient.new }.to raise_error(Twilio::REST::ObsoleteError)
-  end
-end
-
-describe Twilio::REST::LookupsClient do
-  it 'raise an exception' do
-    expect { Twilio::REST::LookupsClient.new }.to raise_error(Twilio::REST::ObsoleteError)
-  end
-end
-
-describe Twilio::REST::MonitorClient do
-  it 'raise an exception' do
-    expect { Twilio::REST::MonitorClient.new }.to raise_error(Twilio::REST::ObsoleteError)
-  end
-end
-
-describe Twilio::REST::PricingClient do
-  it 'raise an exception' do
-    expect { Twilio::REST::PricingClient.new }.to raise_error(Twilio::REST::ObsoleteError)
-  end
-end
-
-describe Twilio::REST::TaskRouterClient do
-  it 'raise an exception' do
-    expect { Twilio::REST::TaskRouterClient.new }.to raise_error(Twilio::REST::ObsoleteError)
-  end
-end
-
-describe Twilio::REST::TrunkingClient do
-  it 'raise an exception' do
-    expect { Twilio::REST::TrunkingClient.new }.to raise_error(Twilio::REST::ObsoleteError)
-  end
-end
-
 describe Twilio::REST::Client do
   context 'configuration' do
     before do
@@ -250,6 +208,28 @@ describe Twilio::REST::Client do
         @client.edge = 'edge'
         expect(@client.build_uri('https://api.urlEdge.urlRegion.twilio.com')).to eq('https://api.edge.region.twilio.com')
       end
+    end
+  end
+
+  context 'user agent in headers' do
+    before do
+      @client.http_client = Twilio::HTTP::Client.new
+      @connection = Faraday::Connection.new
+      expect(Faraday).to receive(:new).and_yield(@connection).and_return(@connection)
+      allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: {}))
+    end
+
+    it 'use default user agent format' do
+      @client.request('host', 'port', 'GET', 'https://api.twilio.com')
+      expect(@client.http_client.last_request.headers['User-Agent']).to match %r{^twilio-ruby/[0-9.]+(-rc\.[0-9]+)?\s\([\w-]+\s\w+\)\sRuby/[^\s]+$}
+    end
+
+    it 'add user agent extensions' do
+      extensions = ['twilio-run/2.0.0-test', 'flex-plugin/3.4.0']
+      @client.user_agent_extensions = extensions
+      @client.request('host', 'port', 'GET', 'https://api.twilio.com')
+      actual_extensions = @client.http_client.last_request.headers['User-Agent'].split(/ /).last(extensions.size)
+      expect(actual_extensions).to match_array(extensions)
     end
   end
 end

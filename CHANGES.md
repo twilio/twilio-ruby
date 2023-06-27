@@ -1,5 +1,515 @@
 twilio-ruby changelog
-=====================
+===================== 
+
+[2023-06-15] Version 6.1.0
+--------------------------
+**Api**
+- Added `content_sid` as conditional parameter
+- Removed `content_sid` as optional field **(breaking change)**
+
+**Insights**
+- Added `annotation` to list summary output
+
+
+[2023-06-01] Version 6.0.2
+--------------------------
+**Api**
+- Add `Trim` to create Conference Participant API
+
+**Intelligence**
+- First public beta release for Voice Intelligence APIs with client libraries
+
+**Messaging**
+- Add new `errors` attribute to us_app_to_person resource. This attribute will provide additional information about campaign registration errors.
+
+
+[2023-05-18] Version 6.0.1
+--------------------------
+**Library - Fix**
+- [PR #654](https://github.com/twilio/twilio-ruby/pull/654): match only against the end of a file path. Thanks to [@pat](https://github.com/pat)!
+
+**Conversations**
+- Added  `AddressCountry` parameter to Address Configuration endpoint, to support regional short code addresses
+- Added query parameters `start_date`, `end_date` and `state` in list Conversations resource for filtering
+
+**Insights**
+- Added annotations parameters to list summary api
+
+**Messaging**
+- Add GET domainByMessagingService endpoint to linkShortening service
+- Add `disable_https` to link shortening domain_config properties
+
+**Numbers**
+- Add bulk_eligibility api under version `/v1`.
+
+
+[2023-05-04] Version 6.0.0
+--------------------------
+**Note:** This release contains breaking changes, check our [upgrade guide](./UPGRADE.md#2023-05-03-5xx-to-6xx) for detailed migration notes.
+
+**Library - Feature**
+- [PR #651](https://github.com/twilio/twilio-ruby/pull/651): Merge branch '6.x.x-rc' to main. Thanks to [@shrutiburman](https://github.com/shrutiburman)! **(breaking change)**
+
+**Conversations**
+- Remove `start_date`, `end_date` and `state` query parameters from list operation on Conversations resource **(breaking change)**
+
+**Twiml**
+- Add support for new Amazon Polly voices (Q1 2023) for `Say` verb
+
+
+[2023-04-19] Version 5.77.0
+---------------------------
+**Library - Docs**
+- [PR #645](https://github.com/twilio/twilio-ruby/pull/645): consolidate. Thanks to [@stern-shawn](https://github.com/stern-shawn)!
+
+**Messaging**
+- Remove `messaging_service_sids` and `messaging_service_sid_action` from domain config endpoint **(breaking change)**
+- Add error_code and rejection_reason properties to tollfree verification API response
+
+**Numbers**
+- Added the new Eligibility API under version `/v1`.
+
+
+[2023-04-05] Version 5.76.0
+---------------------------
+**Conversations**
+- Expose query parameters `start_date`, `end_date` and `state` in list operation on Conversations resource for sorting and filtering
+
+**Insights**
+- Added answered by filter in Call Summaries
+
+**Lookups**
+- Remove `disposable_phone_number_risk` package **(breaking change)**
+
+**Messaging**
+- Add support for `SOLE_PROPRIETOR` brand type and `SOLE_PROPRIETOR` campaign use case.
+- New Sole Proprietor Brands should be created with `SOLE_PROPRIETOR` brand type. Brand registration requests with `STARTER` brand type will be rejected.
+- New Sole Proprietor Campaigns should be created with `SOLE_PROPRIETOR` campaign use case. Campaign registration requests with `STARTER` campaign use case will be rejected.
+- Add Brand Registrations OTP API
+
+
+[2023-03-22] Version 5.75.0
+---------------------------
+**Library - Chore**
+- [PR #630](https://github.com/twilio/twilio-ruby/pull/630): Accommodate jwt's minor and patch updates. Thanks to [@sato11](https://github.com/sato11)!
+
+**Api**
+- Revert Corrected the data type for `friendly_name` in Available Phone Number Local, Mobile and TollFree resources
+- Corrected the data type for `friendly_name` in Available Phone Number Local, Mobile and TollFree resources **(breaking change)**
+
+**Messaging**
+- Add `linkshortening_messaging_service` resource
+- Add new endpoint for GetDomainConfigByMessagingServiceSid
+- Remove `validated` parameter and add `cert_in_validation` parameter to Link Shortening API **(breaking change)**
+
+
+[2023-03-09] Version 5.74.5
+---------------------------
+**Api**
+- Add new categories for whatsapp template
+
+**Lookups**
+- Remove `validation_results` from the `default_output_properties`
+
+**Supersim**
+- Add ESimProfile's `matching_id` and `activation_code` parameters to libraries
+
+
+[2023-02-22] Version 5.74.4
+---------------------------
+**Api**
+- Remove `scheduled_for` property from message resource
+- Add `scheduled_for` property to message resource
+
+
+[2023-02-08] Version 5.74.3
+---------------------------
+**Lookups**
+- Add `disposable_phone_number_risk` package to the lookup response
+- Add `sms_pumping_risk` package to the lookup response
+
+
+[2023-01-25] Version 5.74.2
+---------------------------
+**Api**
+- Add `public_application_connect_enabled` param to Application resource
+
+**Messaging**
+- Add new tollfree verification API property (ExternalReferenceId)]
+
+**Verify**
+- Add `device_ip` parameter and channel `auto` for sna/sms orchestration
+
+**Twiml**
+- Add support for `<Application>` noun and `<ApplicationSid>` noun, nested `<Parameter>` to `<Hangup>` and `<Leave>` verb
+
+
+[2023-01-11] Version 5.74.1
+---------------------------
+**Library - Chore**
+- [PR #626](https://github.com/twilio/twilio-ruby/pull/626): Bump jwt version max version to 2.6. Thanks to [@MarcPer](https://github.com/MarcPer)!
+
+**Conversations**
+- Add support for creating Multi-Channel Rich Content Messages
+
+**Lookups**
+- Changed the no data message for match postal code from `no_data` to `data_not_available` in identity match package
+
+**Messaging**
+- Add update/edit tollfree verification API
+
+
+[2022-12-14] Version 5.74.0
+---------------------------
+**Api**
+- Add `street_secondary` param to address create and update
+- Make `method` optional for user defined message subscription **(breaking change)**
+
+**Flex**
+- Flex Conversations is now Generally Available
+- Adding the ie1 mapping for authorization api, updating service base uri and base url response attribute **(breaking change)**
+- Change web channels to GA and library visibility to public
+- Changing the uri for authorization api from using Accounts to Insights **(breaking change)**
+
+**Media**
+- Gate Twilio Live endpoints behind beta_feature for EOS
+
+**Messaging**
+- Mark `MessageFlow` as a required field for Campaign Creation **(breaking change)**
+
+**Oauth**
+- updated openid discovery endpoint uri **(breaking change)**
+- Added device code authorization endpoint
+
+**Supersim**
+- Allow filtering the SettingsUpdates resource by `status`
+
+**Twiml**
+- Add new Polly Neural voices
+- Add tr-TR, ar-AE, yue-CN, fi-FI languages to SSML `<lang>` element.
+- Add x-amazon-jyutping, x-amazon-pinyin, x-amazon-pron-kana, x-amazon-yomigana alphabets to SSML `<phoneme>` element.
+- Rename `character` value for SSML `<say-as>` `interpret-as` attribute to `characters`. **(breaking change)**
+- Rename `role` attribute to `format` in SSML `<say-as>` element. **(breaking change)**
+
+
+[2022-11-30] Version 5.73.4
+---------------------------
+**Flex**
+- Adding new `assessments` api in version `v1`
+
+**Lookups**
+- Add `identity_match` package to the lookup response
+
+**Messaging**
+- Added `validated` parameter to Link Shortening API
+
+**Serverless**
+- Add node16 as a valid Build runtime
+- Add ie1 and au1 as supported regions for all endpoints.
+
+
+[2022-11-16] Version 5.73.3
+---------------------------
+**Library - Chore**
+- [PR #621](https://github.com/twilio/twilio-ruby/pull/621): upgrade GitHub Actions dependencies. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Api**
+- Set the Content resource to have public visibility as Preview
+
+**Flex**
+- Adding new parameter `base_url` to 'gooddata' response in version `v1`
+
+**Insights**
+- Added `answered_by` field in List Call Summary
+- Added `answered_by` field in call summary
+
+
+[2022-11-10] Version 5.73.2
+---------------------------
+**Flex**
+- Adding two new authorization API 'user_roles' and 'gooddata' in version `v1`
+
+**Messaging**
+- Add new Campaign properties (MessageFlow, OptInMessage, OptInKeywords, OptOutMessage, OptOutKeywords, HelpMessage, HelpKeywords)
+
+**Twiml**
+- Add new speech models to `Gather`.
+
+
+[2022-10-31] Version 5.73.1
+---------------------------
+**Api**
+- Added `contentSid` and `contentVariables` to Message resource with public visibility as Beta
+- Add `UserDefinedMessageSubscription` and `UserDefinedMessage` resource
+
+**Proxy**
+- Remove FailOnParticipantConflict param from Proxy Session create and update and Proxy Participant create
+
+**Supersim**
+- Update SettingsUpdates resource to remove PackageSid
+
+**Taskrouter**
+- Add `Ordering` query parameter to Workers and TaskQueues for sorting by
+- Add `worker_sid` query param for list reservations endpoint
+
+**Twiml**
+- Add `url` and `method` attributes to `<Conversation>`
+
+
+[2022-10-19] Version 5.73.0
+---------------------------
+**Library - Feature**
+- [PR #619](https://github.com/twilio/twilio-ruby/pull/619): check numeric properties for nil before converting. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Api**
+- Make link shortening parameters public **(breaking change)**
+
+**Oauth**
+- added oauth JWKS endpoint
+- Get userinfo resource
+- OpenID discovery resource
+- Add new API for token endpoint
+
+**Supersim**
+- Add SettingsUpdates resource
+
+**Verify**
+- Update Verify Push endpoints to `ga` maturity
+- Verify BYOT add Channels property to the Get Templates response
+
+**Twiml**
+- Add `requireMatchingInputs` attribute and `input-matching-failed` errorType to `<Prompt>`
+
+
+[2022-10-05] Version 5.72.1
+---------------------------
+**Api**
+- Added `virtual-agent` to `usage_record` API.
+- Add AMD attributes to participant create request
+
+**Twiml**
+- Add AMD attributes to `Number` and `Sip`
+
+
+[2022-09-07] Version 5.72.0
+---------------------------
+**Flex**
+- Removed redundant `close` status from Flex Interactions flow **(breaking change)**
+- Adding `debugger_integration` and `flex_ui_status_report` to Flex Configuration
+
+**Messaging**
+- Add create, list and get tollfree verification API
+
+**Verify**
+- Verify SafeList API endpoints added.
+
+**Video**
+- Add `Anonymize` API
+
+**Twiml**
+- Update `event` value `call-in-progress` to `call-answered`
+
+
+[2022-08-24] Version 5.71.0
+---------------------------
+**Library - Test**
+- [PR #615](https://github.com/twilio/twilio-ruby/pull/615): add test-docker rule. Thanks to [@beebzz](https://github.com/beebzz)!
+
+**Api**
+- Remove `beta feature` from scheduling params and remove optimize parameters. **(breaking change)**
+
+**Routes**
+- Remove Duplicate Create Method - Update Method will work even if Inbound Processing Region is currently empty/404. **(breaking change)**
+
+**Twiml**
+- Add new Polly Neural voices
+- Add new languages to SSML `<lang>`.
+
+
+[2022-08-10] Version 5.70.1
+---------------------------
+**Library - Fix**
+- [PR #614](https://github.com/twilio/twilio-ruby/pull/614): Make RequestValidator#validate fail if URL has no query params. Thanks to [@haffla](https://github.com/haffla)!
+
+**Routes**
+- Inbound Proccessing Region API - Public GA
+
+**Supersim**
+- Allow updating `DataLimit` on a Fleet
+
+
+[2022-07-21] Version 5.70.0
+---------------------------
+**Flex**
+- Add `status`, `error_code`, and `error_message` fields to Interaction `Channel`
+- Adding `messenger` and `gbm` as supported channels for Interactions API
+
+**Messaging**
+- Update alpha_sender docs with new valid characters
+
+**Verify**
+- Reorder Verification Check parameters so `code` stays as the first parameter **(breaking change)**
+- Rollback List Attempts API V2 back to pilot stage.
+
+
+[2022-07-13] Version 5.69.0
+---------------------------
+**Library - Fix**
+- [PR #612](https://github.com/twilio/twilio-ruby/pull/612): useragent regrex unit test for RC branch. Thanks to [@claudiachua](https://github.com/claudiachua)!
+
+**Library - Test**
+- [PR #610](https://github.com/twilio/twilio-ruby/pull/610): Adding misc as PR type. Thanks to [@rakatyal](https://github.com/rakatyal)!
+
+**Conversations**
+- Allowed to use `identity` as part of Participant's resource **(breaking change)**
+
+**Lookups**
+- Remove `enhanced_line_type` from the lookup response **(breaking change)**
+
+**Supersim**
+- Add support for `sim_ip_addresses` resource to helper libraries
+
+**Verify**
+- Changed summary param `service_sid` to `verify_service_sid` to be consistent with list attempts API **(breaking change)**
+- Make `code` optional on Verification check to support `sna` attempts. **(breaking change)**
+
+
+[2022-06-29] Version 5.68.0
+---------------------------
+**Api**
+- Added `amazon-polly` to `usage_record` API.
+
+**Insights**
+- Added `annotation` field in call summary
+- Added new endpoint to fetch/create/update Call Annotations
+
+**Verify**
+- Remove `api.verify.totp` beta flag and set maturity to `beta` for Verify TOTP properties and parameters. **(breaking change)**
+- Changed summary param `verify_service_sid` to `service_sid` to be consistent with list attempts API **(breaking change)**
+
+**Twiml**
+- Add `maxQueueSize` to `Enqueue`
+
+
+[2022-06-15] Version 5.67.3
+---------------------------
+**Lookups**
+- Adding support for Lookup V2 API
+
+**Studio**
+- Corrected PII labels to be 30 days and added context to be PII
+
+**Twiml**
+- Add `statusCallbackMethod` attribute, nested `<Config` and `<Parameter>` elements to `<VirtualAgent>` noun.
+- Add support for new Amazon Polly voices (Q2 2022) for `Say` verb
+- Add support for `<Conversation>` noun
+
+
+[2022-06-01] Version 5.67.2
+---------------------------
+**Library - Chore**
+- [PR #608](https://github.com/twilio/twilio-ruby/pull/608): use Docker 'rc' tag for release candidate images. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+
+[2022-05-18] Version 5.67.1
+---------------------------
+**Api**
+- Add property `media_url` to the recording resources
+
+**Verify**
+- Include `silent` as a channel type in the verifications API.
+
+
+[2022-05-04] Version 5.67.0
+---------------------------
+**Library - Fix**
+- [PR #607](https://github.com/twilio/twilio-ruby/pull/607): Retrieval of OS Info with Ruby Config for User Agent string. Thanks to [@claudiachua](https://github.com/claudiachua)!
+- [PR #606](https://github.com/twilio/twilio-ruby/pull/606): Only require twilio_webhook_authentication if Rack version > 2. Thanks to [@jasonnoble](https://github.com/jasonnoble)!
+- [PR #582](https://github.com/twilio/twilio-ruby/pull/582): avoid JSON::ParserError for all server errors. Thanks to [@dan-jensen](https://github.com/dan-jensen)!
+
+**Library - Feature**
+- [PR #591](https://github.com/twilio/twilio-ruby/pull/591): Add Faraday 2.0 support. Thanks to [@tconst](https://github.com/tconst)!
+
+**Conversations**
+- Expose query parameter `type` in list operation on Address Configurations resource
+
+**Supersim**
+- Add `data_total_billed` and `billed_units` fields to Super SIM UsageRecords API response.
+- Change ESimProfiles `Eid` parameter to optional to enable Activation Code download method support **(breaking change)**
+
+**Verify**
+- Deprecate `push.include_date` parameter in create and update service.
+
+
+[2022-04-20] Version 5.66.2
+---------------------------
+**Library - Chore**
+- [PR #604](https://github.com/twilio/twilio-ruby/pull/604): update the user agent string for twilio-ruby. Thanks to [@claudiachua](https://github.com/claudiachua)!
+
+
+[2022-04-06] Version 5.66.1
+---------------------------
+**Api**
+- Updated `provider_sid` visibility to private
+
+**Verify**
+- Verify List Attempts API summary endpoint added.
+- Update PII documentation for `AccessTokens` `factor_friendly_name` property.
+
+**Voice**
+- make annotation parameter from /Calls API private
+
+
+[2022-03-23] Version 5.66.0
+---------------------------
+**Api**
+- Change `stream` url parameter to non optional
+- Add `verify-totp` and `verify-whatsapp-conversations-business-initiated` categories to `usage_record` API
+
+**Chat**
+- Added v3 Channel update endpoint to support Public to Private channel migration
+
+**Flex**
+- Private Beta release of the Interactions API to support the upcoming release of Flex Conversations at the end of Q1 2022.
+- Adding `channel_configs` object to Flex Configuration
+
+**Media**
+- Add max_duration param to PlayerStreamer
+
+**Supersim**
+- Remove Commands resource, use SmsCommands resource instead **(breaking change)**
+
+**Taskrouter**
+- Add limits to `split_by_wait_time` for Cumulative Statistics Endpoint
+
+**Video**
+- Change recording `status_callback_method` type from `enum` to `http_method` **(breaking change)**
+- Add `status_callback` and `status_callback_method` to composition
+- Add `status_callback` and `status_callback_method` to recording
+
+
+[2022-03-09] Version 5.65.1
+---------------------------
+**Library - Fix**
+- [PR #602](https://github.com/twilio/twilio-ruby/pull/602): don't load webhook authentication if Rack not present. Thanks to [@philnash](https://github.com/philnash)!
+
+**Library - Chore**
+- [PR #599](https://github.com/twilio/twilio-ruby/pull/599): push Datadog Release Metric upon deploy success. Thanks to [@eshanholtz](https://github.com/eshanholtz)!
+
+**Api**
+- Add optional boolean include_soft_deleted parameter to retrieve soft deleted recordings
+
+**Chat**
+- Add `X-Twilio-Wehook-Enabled` header to `delete` method in UserChannel resource
+
+**Numbers**
+- Expose `failure_reason` in the Supporting Documents resources
+
+**Verify**
+- Add optional `metadata` parameter to "verify challenge" endpoint, so the SDK/App can attach relevant information from the device when responding to challenges.
+- remove beta feature flag to list atempt api operations.
+- Add `ttl` and `date_created` properties to `AccessTokens`.
+
 
 [2022-02-23] Version 5.65.0
 ---------------------------

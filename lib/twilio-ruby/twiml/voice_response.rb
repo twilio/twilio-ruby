@@ -69,13 +69,14 @@ module Twilio
       # Create a new <Enqueue> element
       # name:: Friendly name
       # action:: Action URL
+      # max_queue_size:: Maximum size of queue
       # method:: Action URL method
       # wait_url:: Wait URL
       # wait_url_method:: Wait URL method
       # workflow_sid:: TaskRouter Workflow SID
       # keyword_args:: additional attributes
-      def enqueue(name: nil, action: nil, method: nil, wait_url: nil, wait_url_method: nil, workflow_sid: nil, **keyword_args)
-        enqueue = Enqueue.new(name: name, action: action, method: method, wait_url: wait_url, wait_url_method: wait_url_method, workflow_sid: workflow_sid, **keyword_args)
+      def enqueue(name: nil, action: nil, max_queue_size: nil, method: nil, wait_url: nil, wait_url_method: nil, workflow_sid: nil, **keyword_args)
+        enqueue = Enqueue.new(name: name, action: action, max_queue_size: max_queue_size, method: method, wait_url: wait_url, wait_url_method: wait_url_method, workflow_sid: workflow_sid, **keyword_args)
 
         yield(enqueue) if block_given?
         append(enqueue)
@@ -113,7 +114,10 @@ module Twilio
       # Create a new <Hangup> element
       # keyword_args:: additional attributes
       def hangup(**keyword_args)
-        append(Hangup.new(**keyword_args))
+        hangup = Hangup.new(**keyword_args)
+
+        yield(hangup) if block_given?
+        append(hangup)
       end
 
       ##
@@ -186,7 +190,10 @@ module Twilio
       # reason:: Rejection reason
       # keyword_args:: additional attributes
       def reject(reason: nil, **keyword_args)
-        append(Reject.new(reason: reason, **keyword_args))
+        reject = Reject.new(reason: reason, **keyword_args)
+
+        yield(reject) if block_given?
+        append(reject)
       end
 
       ##
@@ -194,7 +201,7 @@ module Twilio
       # message:: Message to say
       # voice:: Voice to use
       # loop:: Times to loop message
-      # language:: Message langauge
+      # language:: Message language
       # keyword_args:: additional attributes
       def say(message: nil, voice: nil, loop: nil, language: nil, **keyword_args)
         say = Say.new(message: message, voice: voice, loop: loop, language: language, **keyword_args)
@@ -250,9 +257,10 @@ module Twilio
       # error_type:: Type of error
       # card_type:: Type of the credit card
       # attempt:: Current attempt count
+      # require_matching_inputs:: Require customer to input requested information twice and verify matching.
       # keyword_args:: additional attributes
-      def prompt(for_: nil, error_type: nil, card_type: nil, attempt: nil, **keyword_args)
-        prompt = Prompt.new(for_: for_, error_type: error_type, card_type: card_type, attempt: attempt, **keyword_args)
+      def prompt(for_: nil, error_type: nil, card_type: nil, attempt: nil, require_matching_inputs: nil, **keyword_args)
+        prompt = Prompt.new(for_: for_, error_type: error_type, card_type: card_type, attempt: attempt, require_matching_inputs: require_matching_inputs, **keyword_args)
 
         yield(prompt) if block_given?
         append(prompt)
@@ -469,7 +477,7 @@ module Twilio
       # message:: Message to say
       # voice:: Voice to use
       # loop:: Times to loop message
-      # language:: Message langauge
+      # language:: Message language
       # keyword_args:: additional attributes
       def say(message: nil, voice: nil, loop: nil, language: nil, **keyword_args)
         say = Say.new(message: message, voice: voice, loop: loop, language: language, **keyword_args)
@@ -612,10 +620,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -699,10 +707,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -830,10 +838,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -929,10 +937,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -1061,10 +1069,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -1171,10 +1179,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -1270,10 +1278,10 @@ module Twilio
       # Create a new <Say-As> element
       # words:: Words to be interpreted
       # interpretAs:: Specify the type of words are spoken
-      # role:: Specify the format of the date when interpret-as is set to date
+      # format:: Specify the format of the date when interpret-as is set to date
       # keyword_args:: additional attributes
-      def say_as(words, interpretAs: nil, role: nil, **keyword_args)
-        append(SsmlSayAs.new(words, interpretAs: interpretAs, role: role, **keyword_args))
+      def say_as(words, interpretAs: nil, format: nil, **keyword_args)
+        append(SsmlSayAs.new(words, interpretAs: interpretAs, format: format, **keyword_args))
       end
 
       ##
@@ -1325,9 +1333,10 @@ module Twilio
       # error_type:: Type of error
       # card_type:: Type of the credit card
       # attempt:: Current attempt count
+      # require_matching_inputs:: Require customer to input requested information twice and verify matching.
       # keyword_args:: additional attributes
-      def prompt(for_: nil, error_type: nil, card_type: nil, attempt: nil, **keyword_args)
-        prompt = Prompt.new(for_: for_, error_type: error_type, card_type: card_type, attempt: attempt, **keyword_args)
+      def prompt(for_: nil, error_type: nil, card_type: nil, attempt: nil, require_matching_inputs: nil, **keyword_args)
+        prompt = Prompt.new(for_: for_, error_type: error_type, card_type: card_type, attempt: attempt, require_matching_inputs: require_matching_inputs, **keyword_args)
 
         yield(prompt) if block_given?
         append(prompt)
@@ -1362,6 +1371,15 @@ module Twilio
         @name = 'Reject'
 
         yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
       end
     end
 
@@ -1418,6 +1436,15 @@ module Twilio
 
         yield(self) if block_given?
       end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
     end
 
     ##
@@ -1435,7 +1462,7 @@ module Twilio
       # message:: Message to say
       # voice:: Voice to use
       # loop:: Times to loop message
-      # language:: Message langauge
+      # language:: Message language
       # keyword_args:: additional attributes
       def say(message: nil, voice: nil, loop: nil, language: nil, **keyword_args)
         say = Say.new(message: message, voice: voice, loop: loop, language: language, **keyword_args)
@@ -1570,9 +1597,16 @@ module Twilio
       # status_callback:: Status callback URL
       # status_callback_method:: Status callback URL method
       # byoc:: BYOC trunk SID (Beta)
+      # machine_detection:: Enable machine detection or end of greeting detection
+      # amd_status_callback_method:: HTTP Method to use with amd_status_callback
+      # amd_status_callback:: The URL we should call to send amd status information to your application
+      # machine_detection_timeout:: Number of seconds to wait for machine detection
+      # machine_detection_speech_threshold:: Number of milliseconds for measuring stick for the length of the speech activity
+      # machine_detection_speech_end_threshold:: Number of milliseconds of silence after speech activity
+      # machine_detection_silence_timeout:: Number of milliseconds of initial silence
       # keyword_args:: additional attributes
-      def number(phone_number, send_digits: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, byoc: nil, **keyword_args)
-        append(Number.new(phone_number, send_digits: send_digits, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, byoc: byoc, **keyword_args))
+      def number(phone_number, send_digits: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, byoc: nil, machine_detection: nil, amd_status_callback_method: nil, amd_status_callback: nil, machine_detection_timeout: nil, machine_detection_speech_threshold: nil, machine_detection_speech_end_threshold: nil, machine_detection_silence_timeout: nil, **keyword_args)
+        append(Number.new(phone_number, send_digits: send_digits, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, byoc: byoc, machine_detection: machine_detection, amd_status_callback_method: amd_status_callback_method, amd_status_callback: amd_status_callback, machine_detection_timeout: machine_detection_timeout, machine_detection_speech_threshold: machine_detection_speech_threshold, machine_detection_speech_end_threshold: machine_detection_speech_end_threshold, machine_detection_silence_timeout: machine_detection_silence_timeout, **keyword_args))
       end
 
       ##
@@ -1605,9 +1639,73 @@ module Twilio
       # status_callback_event:: Status callback events
       # status_callback:: Status callback URL
       # status_callback_method:: Status callback URL method
+      # machine_detection:: Enable machine detection or end of greeting detection
+      # amd_status_callback_method:: HTTP Method to use with amd_status_callback
+      # amd_status_callback:: The URL we should call to send amd status information to your application
+      # machine_detection_timeout:: Number of seconds to wait for machine detection
+      # machine_detection_speech_threshold:: Number of milliseconds for measuring stick for the length of the speech activity
+      # machine_detection_speech_end_threshold:: Number of milliseconds of silence after speech activity
+      # machine_detection_silence_timeout:: Number of milliseconds of initial silence
       # keyword_args:: additional attributes
-      def sip(sip_url, username: nil, password: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
-        append(Sip.new(sip_url, username: username, password: password, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args))
+      def sip(sip_url, username: nil, password: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, machine_detection: nil, amd_status_callback_method: nil, amd_status_callback: nil, machine_detection_timeout: nil, machine_detection_speech_threshold: nil, machine_detection_speech_end_threshold: nil, machine_detection_silence_timeout: nil, **keyword_args)
+        append(Sip.new(sip_url, username: username, password: password, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, machine_detection: machine_detection, amd_status_callback_method: amd_status_callback_method, amd_status_callback: amd_status_callback, machine_detection_timeout: machine_detection_timeout, machine_detection_speech_threshold: machine_detection_speech_threshold, machine_detection_speech_end_threshold: machine_detection_speech_end_threshold, machine_detection_silence_timeout: machine_detection_silence_timeout, **keyword_args))
+      end
+
+      ##
+      # Create a new <Application> element
+      # application_sid:: Application sid
+      # url:: TwiML URL
+      # method:: TwiML URL Method
+      # status_callback_event:: Events to trigger status callback
+      # status_callback:: Status Callback URL
+      # status_callback_method:: Status Callback URL Method
+      # customer_id:: Identity of the customer calling application
+      # copy_parent_to:: Copy parent call To field to called application side, otherwise use the application sid as To field
+      # keyword_args:: additional attributes
+      def application(application_sid: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, customer_id: nil, copy_parent_to: nil, **keyword_args)
+        application = Application.new(application_sid: application_sid, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, customer_id: customer_id, copy_parent_to: copy_parent_to, **keyword_args)
+
+        yield(application) if block_given?
+        append(application)
+      end
+    end
+
+    ##
+    # <Application> TwiML Noun
+    class Application < TwiML
+      def initialize(application_sid: nil, **keyword_args)
+        super(**keyword_args)
+        @name = 'Application'
+        @value = application_sid unless application_sid.nil?
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <ApplicationSid> element
+      # sid:: Application sid to dial
+      # keyword_args:: additional attributes
+      def application_sid(sid, **keyword_args)
+        append(ApplicationSid.new(sid, **keyword_args))
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
+    end
+
+    ##
+    # <ApplicationSid> TwiML Noun
+    class ApplicationSid < TwiML
+      def initialize(sid, **keyword_args)
+        super(**keyword_args)
+        @name = 'ApplicationSid'
+        @value = sid
+        yield(self) if block_given?
       end
     end
 
@@ -1743,9 +1841,45 @@ module Twilio
       # language:: Language to be used by Dialogflow to transcribe speech
       # sentiment_analysis:: Whether sentiment analysis needs to be enabled or not
       # status_callback:: URL to post status callbacks from Twilio
+      # status_callback_method:: HTTP method to use when requesting the status callback URL
       # keyword_args:: additional attributes
-      def virtual_agent(connector_name: nil, language: nil, sentiment_analysis: nil, status_callback: nil, **keyword_args)
-        append(VirtualAgent.new(connector_name: connector_name, language: language, sentiment_analysis: sentiment_analysis, status_callback: status_callback, **keyword_args))
+      def virtual_agent(connector_name: nil, language: nil, sentiment_analysis: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
+        virtual_agent = VirtualAgent.new(connector_name: connector_name, language: language, sentiment_analysis: sentiment_analysis, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args)
+
+        yield(virtual_agent) if block_given?
+        append(virtual_agent)
+      end
+
+      ##
+      # Create a new <Conversation> element
+      # service_instance_sid:: Service instance Sid
+      # inbound_autocreation:: Inbound autocreation
+      # routing_assignment_timeout:: Routing assignment timeout
+      # inbound_timeout:: Inbound timeout
+      # url:: TwiML URL
+      # method:: TwiML URL method
+      # record:: Record
+      # trim:: Trim
+      # recording_status_callback:: Recording status callback URL
+      # recording_status_callback_method:: Recording status callback URL method
+      # recording_status_callback_event:: Recording status callback events
+      # status_callback:: Status callback URL
+      # status_callback_method:: Status callback URL method
+      # status_callback_event:: Events to call status callback URL
+      # keyword_args:: additional attributes
+      def conversation(service_instance_sid: nil, inbound_autocreation: nil, routing_assignment_timeout: nil, inbound_timeout: nil, url: nil, method: nil, record: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, status_callback: nil, status_callback_method: nil, status_callback_event: nil, **keyword_args)
+        append(Conversation.new(service_instance_sid: service_instance_sid, inbound_autocreation: inbound_autocreation, routing_assignment_timeout: routing_assignment_timeout, inbound_timeout: inbound_timeout, url: url, method: method, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, status_callback_event: status_callback_event, **keyword_args))
+      end
+    end
+
+    ##
+    # <Conversation> TwiML Noun
+    class Conversation < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Conversation'
+
+        yield(self) if block_given?
       end
     end
 
@@ -1755,6 +1889,35 @@ module Twilio
       def initialize(**keyword_args)
         super(**keyword_args)
         @name = 'VirtualAgent'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Config> element
+      # name:: The name of the custom config
+      # value:: The value of the custom config
+      # keyword_args:: additional attributes
+      def config(name: nil, value: nil, **keyword_args)
+        append(Config.new(name: name, value: value, **keyword_args))
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
+    end
+
+    ##
+    # <Config> TwiML Noun
+    class Config < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Config'
 
         yield(self) if block_given?
       end

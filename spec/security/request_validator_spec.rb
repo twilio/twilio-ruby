@@ -81,6 +81,11 @@ describe Twilio::Security::RequestValidator do
       expect(validator.validate(url, body, default_signature)).to eq(false)
     end
 
+    it 'should fail validation with body but no query parameters' do
+      url_without_params = url.split('?').first
+      expect(validator.validate(url_without_params, body, default_signature)).to eq(false)
+    end
+
     it 'should validate https urls with ports by stripping them' do
       url_with_port = url.sub('.com', '.com:1234')
       expect(validator.validate(url_with_port, params, default_signature)).to eq(true)
