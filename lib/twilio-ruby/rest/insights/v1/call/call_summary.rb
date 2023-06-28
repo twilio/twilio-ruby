@@ -45,7 +45,7 @@ module Twilio
                     ##
                     # Initialize the CallSummaryContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] call_sid 
+                    # @param [String] call_sid The unique SID identifier of the Call.
                     # @return [CallSummaryContext] CallSummaryContext
                     def initialize(version, call_sid)
                         super(version)
@@ -58,7 +58,7 @@ module Twilio
                     end
                     ##
                     # Fetch the CallSummaryInstance
-                    # @param [ProcessingState] processing_state 
+                    # @param [ProcessingState] processing_state The Processing State of this Call Summary. One of `complete`, `partial` or `all`.
                     # @return [CallSummaryInstance] Fetched CallSummaryInstance
                     def fetch(
                         processing_state: :unset
@@ -176,13 +176,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The unique SID identifier of the Account.
                     def account_sid
                         @properties['account_sid']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The unique SID identifier of the Call.
                     def call_sid
                         @properties['call_sid']
                     end
@@ -212,110 +212,110 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Time] 
+                    # @return [Time] The time at which the Call was created, given in ISO 8601 format. Can be different from `start_time` in the event of queueing due to CPS
                     def created_time
                         @properties['created_time']
                     end
                     
                     ##
-                    # @return [Time] 
+                    # @return [Time] The time at which the Call was started, given in ISO 8601 format.
                     def start_time
                         @properties['start_time']
                     end
                     
                     ##
-                    # @return [Time] 
+                    # @return [Time] The time at which the Call was ended, given in ISO 8601 format.
                     def end_time
                         @properties['end_time']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] Duration between when the call was initiated and the call was ended
                     def duration
                         @properties['duration']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] Duration between when the call was answered and when it ended
                     def connect_duration
                         @properties['connect_duration']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] The calling party.
                     def from
                         @properties['from']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] The called party.
                     def to
                         @properties['to']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains metrics and properties for the Twilio media gateway of a PSTN call.
                     def carrier_edge
                         @properties['carrier_edge']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains metrics and properties for the Twilio media gateway of a Client call.
                     def client_edge
                         @properties['client_edge']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains metrics and properties for the SDK sensor library for Client calls.
                     def sdk_edge
                         @properties['sdk_edge']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains metrics and properties for the Twilio media gateway of a SIP Interface or Trunking call.
                     def sip_edge
                         @properties['sip_edge']
                     end
                     
                     ##
-                    # @return [Array<String>] 
+                    # @return [Array<String>] Tags applied to calls by Voice Insights analysis indicating a condition that could result in subjective degradation of the call quality.
                     def tags
                         @properties['tags']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The URL of this resource.
                     def url
                         @properties['url']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Attributes capturing call-flow-specific details.
                     def attributes
                         @properties['attributes']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains edge-agnostic call-level details.
                     def properties
                         @properties['properties']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains trusted communications details including Branded Call and verified caller ID.
                     def trust
                         @properties['trust']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Programmatically labeled annotations for the Call. Developers can update the Call Summary records with Annotation during or after a Call. Annotations can be updated as long as the Call Summary record is addressable via the API.
                     def annotation
                         @properties['annotation']
                     end
                     
                     ##
                     # Fetch the CallSummaryInstance
-                    # @param [ProcessingState] processing_state 
+                    # @param [ProcessingState] processing_state The Processing State of this Call Summary. One of `complete`, `partial` or `all`.
                     # @return [CallSummaryInstance] Fetched CallSummaryInstance
                     def fetch(
                         processing_state: :unset

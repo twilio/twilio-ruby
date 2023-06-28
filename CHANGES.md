@@ -1,6 +1,21 @@
 twilio-ruby changelog
 ===================== 
 
+[2023-06-28] Version 6.2.0
+--------------------------
+**Library - Fix**
+- [PR #665](https://github.com/twilio/twilio-ruby/pull/665): #663 local jump error due to lack of block passing for recording list. Thanks to [@JYorston](https://github.com/JYorston)!
+
+**Lookups**
+- Add `reassigned_number` package to the lookup response
+
+**Numbers**
+- Add hosted_number_order under version `/v2`.
+- Update properties in Porting and Bulk Porting APIs. **(breaking change)**
+- Added bulk Portability API under version `/v1`.
+- Added Portability API under version `/v1`.
+
+
 [2023-06-15] Version 6.1.0
 --------------------------
 **Api**

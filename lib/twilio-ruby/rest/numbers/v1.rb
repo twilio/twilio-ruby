@@ -22,6 +22,8 @@ module Twilio
                     super
                     @version = 'v1'
                     @bulk_eligibilities = nil
+                    @porting_bulk_portabilities = nil
+                    @porting_portabilities = nil
                 end
 
                 ##
@@ -36,6 +38,34 @@ module Twilio
                         @bulk_eligibilities ||= BulkEligibilityList.new self
                     else
                         BulkEligibilityContext.new(self, request_id)
+                    end
+                end
+                ##
+                # @param [String] sid A 34 character string that uniquely identifies the Portability check.
+                # @return [Twilio::REST::Numbers::V1::PortingBulkPortabilityContext] if sid was passed.
+                # @return [Twilio::REST::Numbers::V1::PortingBulkPortabilityList]
+                def porting_bulk_portabilities(sid=:unset)
+                    if sid.nil?
+                        raise ArgumentError, 'sid cannot be nil'
+                    end
+                    if sid == :unset
+                        @porting_bulk_portabilities ||= PortingBulkPortabilityList.new self
+                    else
+                        PortingBulkPortabilityContext.new(self, sid)
+                    end
+                end
+                ##
+                # @param [String] phone_number The phone number which portability is to be checked. Phone numbers are in E.164 format (e.g. +16175551212).
+                # @return [Twilio::REST::Numbers::V1::PortingPortabilityContext] if phoneNumber was passed.
+                # @return [Twilio::REST::Numbers::V1::PortingPortabilityList]
+                def porting_portabilities(phone_number=:unset)
+                    if phone_number.nil?
+                        raise ArgumentError, 'phone_number cannot be nil'
+                    end
+                    if phone_number == :unset
+                        @porting_portabilities ||= PortingPortabilityList.new self
+                    else
+                        PortingPortabilityContext.new(self, phone_number)
                     end
                 end
                 ##
