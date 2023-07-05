@@ -173,9 +173,9 @@ module Twilio
                     def page(status: :unset, unique_name: :unset, date_created_after: :unset, date_created_before: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            Status' => status,
+                            'Status' => status,
                             
-                            UniqueName' => unique_name,
+                            'UniqueName' => unique_name,
                             
                             'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
                                                         

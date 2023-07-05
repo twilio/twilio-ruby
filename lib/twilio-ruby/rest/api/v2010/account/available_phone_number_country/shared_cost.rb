@@ -185,41 +185,41 @@ module Twilio
                     def page(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, in_locality: :unset, fax_enabled: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            AreaCode' => area_code,
+                            'AreaCode' => area_code,
                             
-                            Contains' => contains,
+                            'Contains' => contains,
                             
-                            SmsEnabled' => sms_enabled,
+                            'SmsEnabled' => sms_enabled,
                             
-                            MmsEnabled' => mms_enabled,
+                            'MmsEnabled' => mms_enabled,
                             
-                            VoiceEnabled' => voice_enabled,
+                            'VoiceEnabled' => voice_enabled,
                             
-                            ExcludeAllAddressRequired' => exclude_all_address_required,
+                            'ExcludeAllAddressRequired' => exclude_all_address_required,
                             
-                            ExcludeLocalAddressRequired' => exclude_local_address_required,
+                            'ExcludeLocalAddressRequired' => exclude_local_address_required,
                             
-                            ExcludeForeignAddressRequired' => exclude_foreign_address_required,
+                            'ExcludeForeignAddressRequired' => exclude_foreign_address_required,
                             
-                            Beta' => beta,
+                            'Beta' => beta,
                             
-                            NearNumber' => near_number,
+                            'NearNumber' => near_number,
                             
-                            NearLatLong' => near_lat_long,
+                            'NearLatLong' => near_lat_long,
                             
-                            Distance' => distance,
+                            'Distance' => distance,
                             
-                            InPostalCode' => in_postal_code,
+                            'InPostalCode' => in_postal_code,
                             
-                            InRegion' => in_region,
+                            'InRegion' => in_region,
                             
-                            InRateCenter' => in_rate_center,
+                            'InRateCenter' => in_rate_center,
                             
-                            InLata' => in_lata,
+                            'InLata' => in_lata,
                             
-                            InLocality' => in_locality,
+                            'InLocality' => in_locality,
                             
-                            FaxEnabled' => fax_enabled,
+                            'FaxEnabled' => fax_enabled,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

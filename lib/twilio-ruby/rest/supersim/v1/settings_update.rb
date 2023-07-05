@@ -102,9 +102,9 @@ module Twilio
                     def page(sim: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            Sim' => sim,
+                            'Sim' => sim,
                             
-                            Status' => status,
+                            'Status' => status,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

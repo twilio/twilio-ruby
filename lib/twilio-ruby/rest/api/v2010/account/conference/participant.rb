@@ -269,11 +269,11 @@ module Twilio
                     def page(muted: :unset, hold: :unset, coaching: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            Muted' => muted,
+                            'Muted' => muted,
                             
-                            Hold' => hold,
+                            'Hold' => hold,
                             
-                            Coaching' => coaching,
+                            'Coaching' => coaching,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

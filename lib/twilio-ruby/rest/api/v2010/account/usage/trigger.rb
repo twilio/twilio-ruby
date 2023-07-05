@@ -148,11 +148,11 @@ module Twilio
                     def page(recurring: :unset, trigger_by: :unset, usage_category: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            Recurring' => recurring,
+                            'Recurring' => recurring,
                             
-                            TriggerBy' => trigger_by,
+                            'TriggerBy' => trigger_by,
                             
-                            UsageCategory' => usage_category,
+                            'UsageCategory' => usage_category,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

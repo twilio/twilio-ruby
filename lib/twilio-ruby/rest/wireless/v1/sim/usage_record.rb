@@ -113,7 +113,7 @@ module Twilio
                                                         
                             'Start' =>  Twilio.serialize_iso8601_datetime(start),
                                                         
-                            Granularity' => granularity,
+                            'Granularity' => granularity,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

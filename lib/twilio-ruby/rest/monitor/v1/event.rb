@@ -122,13 +122,13 @@ module Twilio
                     def page(actor_sid: :unset, event_type: :unset, resource_sid: :unset, source_ip_address: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            ActorSid' => actor_sid,
+                            'ActorSid' => actor_sid,
                             
-                            EventType' => event_type,
+                            'EventType' => event_type,
                             
-                            ResourceSid' => resource_sid,
+                            'ResourceSid' => resource_sid,
                             
-                            SourceIpAddress' => source_ip_address,
+                            'SourceIpAddress' => source_ip_address,
                             
                             'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
                                                         

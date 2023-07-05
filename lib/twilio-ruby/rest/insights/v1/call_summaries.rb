@@ -207,51 +207,51 @@ module Twilio
                     def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, connectivity_issue: :unset, quality_issue: :unset, spam: :unset, call_score: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            From' => from,
+                            'From' => from,
                             
-                            To' => to,
+                            'To' => to,
                             
-                            FromCarrier' => from_carrier,
+                            'FromCarrier' => from_carrier,
                             
-                            ToCarrier' => to_carrier,
+                            'ToCarrier' => to_carrier,
                             
-                            FromCountryCode' => from_country_code,
+                            'FromCountryCode' => from_country_code,
                             
-                            ToCountryCode' => to_country_code,
+                            'ToCountryCode' => to_country_code,
                             
-                            Branded' => branded,
+                            'Branded' => branded,
                             
-                            VerifiedCaller' => verified_caller,
+                            'VerifiedCaller' => verified_caller,
                             
-                            HasTag' => has_tag,
+                            'HasTag' => has_tag,
                             
-                            StartTime' => start_time,
+                            'StartTime' => start_time,
                             
-                            EndTime' => end_time,
+                            'EndTime' => end_time,
                             
-                            CallType' => call_type,
+                            'CallType' => call_type,
                             
-                            CallState' => call_state,
+                            'CallState' => call_state,
                             
-                            Direction' => direction,
+                            'Direction' => direction,
                             
-                            ProcessingState' => processing_state,
+                            'ProcessingState' => processing_state,
                             
-                            SortBy' => sort_by,
+                            'SortBy' => sort_by,
                             
-                            Subaccount' => subaccount,
+                            'Subaccount' => subaccount,
                             
-                            AbnormalSession' => abnormal_session,
+                            'AbnormalSession' => abnormal_session,
                             
-                            AnsweredBy' => answered_by,
+                            'AnsweredBy' => answered_by,
                             
-                            ConnectivityIssue' => connectivity_issue,
+                            'ConnectivityIssue' => connectivity_issue,
                             
-                            QualityIssue' => quality_issue,
+                            'QualityIssue' => quality_issue,
                             
-                            Spam' => spam,
+                            'Spam' => spam,
                             
-                            CallScore' => call_score,
+                            'CallScore' => call_score,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

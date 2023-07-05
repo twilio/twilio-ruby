@@ -140,7 +140,7 @@ module Twilio
                     def page(network_access_profile: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            NetworkAccessProfile' => network_access_profile,
+                            'NetworkAccessProfile' => network_access_profile,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

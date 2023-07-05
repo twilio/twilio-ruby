@@ -149,7 +149,7 @@ module Twilio
                     def page(type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            Type' => type,
+                            'Type' => type,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

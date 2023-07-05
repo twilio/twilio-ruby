@@ -127,9 +127,9 @@ module Twilio
                     def page(in_use: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            InUse' => in_use,
+                            'InUse' => in_use,
                             
-                            Status' => status,
+                            'Status' => status,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

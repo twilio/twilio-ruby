@@ -130,11 +130,11 @@ module Twilio
                                                         
                             'DateCreated>' =>  Twilio.serialize_iso8601_datetime(date_created_after),
                                                         
-                            CallSid' => call_sid,
+                            'CallSid' => call_sid,
                             
-                            ConferenceSid' => conference_sid,
+                            'ConferenceSid' => conference_sid,
                             
-                            IncludeSoftDeleted' => include_soft_deleted,
+                            'IncludeSoftDeleted' => include_soft_deleted,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

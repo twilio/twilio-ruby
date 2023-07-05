@@ -143,11 +143,11 @@ module Twilio
                     def page(order: :unset, from: :unset, bounds: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            Order' => order,
+                            'Order' => order,
                             
-                            From' => from,
+                            'From' => from,
                             
-                            Bounds' => bounds,
+                            'Bounds' => bounds,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

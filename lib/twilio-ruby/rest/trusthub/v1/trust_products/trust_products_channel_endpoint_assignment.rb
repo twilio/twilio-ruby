@@ -127,9 +127,9 @@ module Twilio
                     def page(channel_endpoint_sid: :unset, channel_endpoint_sids: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            ChannelEndpointSid' => channel_endpoint_sid,
+                            'ChannelEndpointSid' => channel_endpoint_sid,
                             
-                            ChannelEndpointSids' => channel_endpoint_sids,
+                            'ChannelEndpointSids' => channel_endpoint_sids,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

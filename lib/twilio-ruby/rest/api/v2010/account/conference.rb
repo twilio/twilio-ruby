@@ -146,9 +146,9 @@ module Twilio
                                                         
                             'DateUpdated>' =>  Twilio.serialize_iso8601_date(date_updated_after),
                                                         
-                            FriendlyName' => friendly_name,
+                            'FriendlyName' => friendly_name,
                             
-                            Status' => status,
+                            'Status' => status,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

@@ -107,7 +107,7 @@ module Twilio
                     def page(log_level: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            LogLevel' => log_level,
+                            'LogLevel' => log_level,
                             
                             'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
                                                         

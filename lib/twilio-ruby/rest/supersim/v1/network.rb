@@ -107,11 +107,11 @@ module Twilio
                     def page(iso_country: :unset, mcc: :unset, mnc: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            IsoCountry' => iso_country,
+                            'IsoCountry' => iso_country,
                             
-                            Mcc' => mcc,
+                            'Mcc' => mcc,
                             
-                            Mnc' => mnc,
+                            'Mnc' => mnc,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,
