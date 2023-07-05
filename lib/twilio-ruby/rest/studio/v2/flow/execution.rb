@@ -131,9 +131,9 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'DateCreatedFrom' =>  Twilio.serialize_iso8601_datetime(date_created_from),
-                            
+                                                        
                             'DateCreatedTo' =>  Twilio.serialize_iso8601_datetime(date_created_to),
-                            
+                                                        
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

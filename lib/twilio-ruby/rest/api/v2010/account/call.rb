@@ -276,17 +276,17 @@ module Twilio
                             'Status' => status,
                             
                             'StartTime' =>  Twilio.serialize_iso8601_datetime(start_time),
-                            
+                                                        
                             'StartTime<' =>  Twilio.serialize_iso8601_datetime(start_time_before),
-                            
+                                                        
                             'StartTime>' =>  Twilio.serialize_iso8601_datetime(start_time_after),
-                            
+                                                        
                             'EndTime' =>  Twilio.serialize_iso8601_datetime(end_time),
-                            
+                                                        
                             'EndTime<' =>  Twilio.serialize_iso8601_datetime(end_time_before),
-                            
+                                                        
                             'EndTime>' =>  Twilio.serialize_iso8601_datetime(end_time_after),
-                            
+                                                        
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

@@ -173,7 +173,7 @@ module Twilio
                             
                             'Priority' => priority,
                             
-                            'AssignmentStatus' =>  Twilio.serialize_list(assignment_status),
+                            'AssignmentStatus' =>  Twilio.serialize_list(assignment_status) { |e| e },
                             
                             'WorkflowSid' => workflow_sid,
                             

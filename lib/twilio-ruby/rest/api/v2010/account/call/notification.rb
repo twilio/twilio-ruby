@@ -118,11 +118,11 @@ module Twilio
                             'Log' => log,
                             
                             'MessageDate' =>  Twilio.serialize_iso8601_date(message_date),
-                            
+                                                        
                             'MessageDate<' =>  Twilio.serialize_iso8601_date(message_date_before),
-                            
+                                                        
                             'MessageDate>' =>  Twilio.serialize_iso8601_date(message_date_after),
-                            
+                                                        
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

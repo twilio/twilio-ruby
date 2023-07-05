@@ -138,7 +138,7 @@ module Twilio
                             
                             'Authorization' => authorization,
                             
-                            'CategorySid' =>  Twilio.serialize_list(category_sid),
+                            'CategorySid' =>  Twilio.serialize_list(category_sid) { |e| e },
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

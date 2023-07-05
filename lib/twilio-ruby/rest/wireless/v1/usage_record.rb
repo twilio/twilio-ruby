@@ -108,9 +108,9 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'End' =>  Twilio.serialize_iso8601_datetime(end_),
-                            
+                                                        
                             'Start' =>  Twilio.serialize_iso8601_datetime(start),
-                            
+                                                        
                             'Granularity' => granularity,
                             
                             'PageToken' => page_token,

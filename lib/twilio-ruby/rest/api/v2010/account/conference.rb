@@ -135,17 +135,17 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'DateCreated' =>  Twilio.serialize_iso8601_date(date_created),
-                            
+                                                        
                             'DateCreated<' =>  Twilio.serialize_iso8601_date(date_created_before),
-                            
+                                                        
                             'DateCreated>' =>  Twilio.serialize_iso8601_date(date_created_after),
-                            
+                                                        
                             'DateUpdated' =>  Twilio.serialize_iso8601_date(date_updated),
-                            
+                                                        
                             'DateUpdated<' =>  Twilio.serialize_iso8601_date(date_updated_before),
-                            
+                                                        
                             'DateUpdated>' =>  Twilio.serialize_iso8601_date(date_updated_after),
-                            
+                                                        
                             'FriendlyName' => friendly_name,
                             
                             'Status' => status,

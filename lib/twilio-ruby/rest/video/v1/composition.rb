@@ -158,9 +158,9 @@ module Twilio
                             'Status' => status,
                             
                             'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
-                            
+                                                        
                             'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
-                            
+                                                        
                             'RoomSid' => room_sid,
                             
                             'PageToken' => page_token,

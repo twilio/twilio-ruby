@@ -55,7 +55,7 @@ module Twilio
                     end
                     ##
                     # Fetch the SettingInstance
-                    # @param [String] subaccount_sid The unique SID identifier of the Subaccount.
+                    # @param [String] subaccount_sid 
                     # @return [SettingInstance] Fetched SettingInstance
                     def fetch(
                         subaccount_sid: :unset
@@ -73,9 +73,9 @@ module Twilio
 
                     ##
                     # Update the SettingInstance
-                    # @param [Boolean] advanced_features A boolean flag to enable Advanced Features for Voice Insights.
-                    # @param [Boolean] voice_trace A boolean flag to enable Voice Trace.
-                    # @param [String] subaccount_sid The unique SID identifier of the Subaccount.
+                    # @param [Boolean] advanced_features 
+                    # @param [Boolean] voice_trace 
+                    # @param [String] subaccount_sid 
                     # @return [SettingInstance] Updated SettingInstance
                     def update(
                         advanced_features: :unset, 
@@ -178,32 +178,32 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique SID identifier of the Account.
+                    # @return [String] 
                     def account_sid
                         @properties['account_sid']
                     end
                     
                     ##
-                    # @return [Boolean] A boolean flag indicating whether Advanced Features for Voice Insights are enabled.
+                    # @return [Boolean] 
                     def advanced_features
                         @properties['advanced_features']
                     end
                     
                     ##
-                    # @return [Boolean] A boolean flag indicating whether Voice Trace is enabled.
+                    # @return [Boolean] 
                     def voice_trace
                         @properties['voice_trace']
                     end
                     
                     ##
-                    # @return [String] The URL of this resource.
+                    # @return [String] 
                     def url
                         @properties['url']
                     end
                     
                     ##
                     # Fetch the SettingInstance
-                    # @param [String] subaccount_sid The unique SID identifier of the Subaccount.
+                    # @param [String] subaccount_sid 
                     # @return [SettingInstance] Fetched SettingInstance
                     def fetch(
                         subaccount_sid: :unset
@@ -216,9 +216,9 @@ module Twilio
 
                     ##
                     # Update the SettingInstance
-                    # @param [Boolean] advanced_features A boolean flag to enable Advanced Features for Voice Insights.
-                    # @param [Boolean] voice_trace A boolean flag to enable Voice Trace.
-                    # @param [String] subaccount_sid The unique SID identifier of the Subaccount.
+                    # @param [Boolean] advanced_features 
+                    # @param [Boolean] voice_trace 
+                    # @param [String] subaccount_sid 
                     # @return [SettingInstance] Updated SettingInstance
                     def update(
                         advanced_features: :unset, 

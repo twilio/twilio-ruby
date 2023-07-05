@@ -126,9 +126,9 @@ module Twilio
                             'Category' => category,
                             
                             'StartDate' =>  Twilio.serialize_iso8601_date(start_date),
-                            
+                                                        
                             'EndDate' =>  Twilio.serialize_iso8601_date(end_date),
-                            
+                                                        
                             'IncludeSubaccounts' => include_subaccounts,
                             
                             'PageToken' => page_token,

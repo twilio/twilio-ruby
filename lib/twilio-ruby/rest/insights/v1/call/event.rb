@@ -36,7 +36,7 @@ module Twilio
                     # Lists EventInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [TwilioEdge] edge The Edge of this Event. One of `unknown_edge`, `carrier_edge`, `sip_edge`, `sdk_edge` or `client_edge`.
+                    # @param [TwilioEdge] edge 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -56,7 +56,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [TwilioEdge] edge The Edge of this Event. One of `unknown_edge`, `carrier_edge`, `sip_edge`, `sdk_edge` or `client_edge`.
+                    # @param [TwilioEdge] edge 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -91,7 +91,7 @@ module Twilio
                     ##
                     # Retrieve a single page of EventInstance records from the API.
                     # Request is executed immediately.
-                    # @param [TwilioEdge] edge The Edge of this Event. One of `unknown_edge`, `carrier_edge`, `sip_edge`, `sdk_edge` or `client_edge`.
+                    # @param [TwilioEdge] edge 
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -191,19 +191,19 @@ module Twilio
 
                     
                     ##
-                    # @return [String] Event time.
+                    # @return [String] 
                     def timestamp
                         @properties['timestamp']
                     end
                     
                     ##
-                    # @return [String] The unique SID identifier of the Call.
+                    # @return [String] 
                     def call_sid
                         @properties['call_sid']
                     end
                     
                     ##
-                    # @return [String] The unique SID identifier of the Account.
+                    # @return [String] 
                     def account_sid
                         @properties['account_sid']
                     end
@@ -215,7 +215,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] Event group.
+                    # @return [String] 
                     def group
                         @properties['group']
                     end
@@ -227,31 +227,31 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] Event name.
+                    # @return [String] 
                     def name
                         @properties['name']
                     end
                     
                     ##
-                    # @return [Hash] Represents the connection between Twilio and our immediate carrier partners. The events here describe the call lifecycle as reported by Twilio's carrier media gateways.
+                    # @return [Hash] 
                     def carrier_edge
                         @properties['carrier_edge']
                     end
                     
                     ##
-                    # @return [Hash] Represents the Twilio media gateway for SIP interface and SIP trunking calls. The events here describe the call lifecycle as reported by Twilio's public media gateways.
+                    # @return [Hash] 
                     def sip_edge
                         @properties['sip_edge']
                     end
                     
                     ##
-                    # @return [Hash] Represents the Voice SDK running locally in the browser or in the Android/iOS application. The events here are emitted by the Voice SDK in response to certain call progress events, network changes, or call quality conditions.
+                    # @return [Hash] 
                     def sdk_edge
                         @properties['sdk_edge']
                     end
                     
                     ##
-                    # @return [Hash] Represents the Twilio media gateway for Client calls. The events here describe the call lifecycle as reported by Twilio's Voice SDK media gateways.
+                    # @return [Hash] 
                     def client_edge
                         @properties['client_edge']
                     end

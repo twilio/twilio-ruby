@@ -58,7 +58,7 @@ module Twilio
                     end
                     ##
                     # Fetch the PhoneNumberInstance
-                    # @param [String] fields A comma-separated list of fields to return. Possible values are caller_name, sim_swap, call_forwarding, live_activity, line_type_intelligence, identity_match, reassigned_number.
+                    # @param [String] fields A comma-separated list of fields to return. Possible values are caller_name, sim_swap, call_forwarding, live_activity, line_type_intelligence, identity_match.
                     # @param [String] country_code The [country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) used if the phone number provided is in national format.
                     # @param [String] first_name User’s first name. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] last_name User’s last name. This query parameter is only used (optionally) for identity_match package requests.
@@ -70,7 +70,6 @@ module Twilio
                     # @param [String] address_country_code User’s country, up to two characters. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] national_id User’s national ID, such as SSN or Passport ID. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] date_of_birth User’s date of birth, in YYYYMMDD format. This query parameter is only used (optionally) for identity_match package requests.
-                    # @param [String] last_verified_date The date you obtained consent to call or text the end-user of the phone number or a date on which you are reasonably certain that the end-user could still be reached at that number. This query parameter is only used (optionally) for reassigned_number package requests.
                     # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
                     def fetch(
                         fields: :unset, 
@@ -84,8 +83,7 @@ module Twilio
                         postal_code: :unset, 
                         address_country_code: :unset, 
                         national_id: :unset, 
-                        date_of_birth: :unset, 
-                        last_verified_date: :unset
+                        date_of_birth: :unset
                     )
 
                         params = Twilio::Values.of({
@@ -101,7 +99,6 @@ module Twilio
                             'AddressCountryCode' => address_country_code,
                             'NationalId' => national_id,
                             'DateOfBirth' => date_of_birth,
-                            'LastVerifiedDate' => last_verified_date,
                         })
                         payload = @version.fetch('GET', @uri, params: params)
                         PhoneNumberInstance.new(
@@ -182,7 +179,6 @@ module Twilio
                             'live_activity' => payload['live_activity'],
                             'line_type_intelligence' => payload['line_type_intelligence'],
                             'identity_match' => payload['identity_match'],
-                            'reassigned_number' => payload['reassigned_number'],
                             'sms_pumping_risk' => payload['sms_pumping_risk'],
                             'url' => payload['url'],
                         }
@@ -276,12 +272,6 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] An object that contains reassigned number information. Reassigned Numbers will return a phone number's reassignment status given a phone number and date
-                    def reassigned_number
-                        @properties['reassigned_number']
-                    end
-                    
-                    ##
                     # @return [Hash] An object that contains information on if a phone number has been currently or previously blocked by Verify Fraud Guard for receiving malicious SMS pumping traffic as well as other signals associated with risky carriers and low conversion rates.
                     def sms_pumping_risk
                         @properties['sms_pumping_risk']
@@ -295,7 +285,7 @@ module Twilio
                     
                     ##
                     # Fetch the PhoneNumberInstance
-                    # @param [String] fields A comma-separated list of fields to return. Possible values are caller_name, sim_swap, call_forwarding, live_activity, line_type_intelligence, identity_match, reassigned_number.
+                    # @param [String] fields A comma-separated list of fields to return. Possible values are caller_name, sim_swap, call_forwarding, live_activity, line_type_intelligence, identity_match.
                     # @param [String] country_code The [country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) used if the phone number provided is in national format.
                     # @param [String] first_name User’s first name. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] last_name User’s last name. This query parameter is only used (optionally) for identity_match package requests.
@@ -307,7 +297,6 @@ module Twilio
                     # @param [String] address_country_code User’s country, up to two characters. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] national_id User’s national ID, such as SSN or Passport ID. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] date_of_birth User’s date of birth, in YYYYMMDD format. This query parameter is only used (optionally) for identity_match package requests.
-                    # @param [String] last_verified_date The date you obtained consent to call or text the end-user of the phone number or a date on which you are reasonably certain that the end-user could still be reached at that number. This query parameter is only used (optionally) for reassigned_number package requests.
                     # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
                     def fetch(
                         fields: :unset, 
@@ -321,8 +310,7 @@ module Twilio
                         postal_code: :unset, 
                         address_country_code: :unset, 
                         national_id: :unset, 
-                        date_of_birth: :unset, 
-                        last_verified_date: :unset
+                        date_of_birth: :unset
                     )
 
                         context.fetch(
@@ -338,7 +326,6 @@ module Twilio
                             address_country_code: address_country_code, 
                             national_id: national_id, 
                             date_of_birth: date_of_birth, 
-                            last_verified_date: last_verified_date, 
                         )
                     end
 

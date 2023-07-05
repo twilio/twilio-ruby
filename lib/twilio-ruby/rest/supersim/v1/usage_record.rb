@@ -145,9 +145,9 @@ module Twilio
                             'Granularity' => granularity,
                             
                             'StartTime' =>  Twilio.serialize_iso8601_datetime(start_time),
-                            
+                                                        
                             'EndTime' =>  Twilio.serialize_iso8601_datetime(end_time),
-                            
+                                                        
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

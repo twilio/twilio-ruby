@@ -133,9 +133,9 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
-                            
+                                                        
                             'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
-                            
+                                                        
                             'ChannelData.To' => channel_data_to,
                             
                             'Country' => country,

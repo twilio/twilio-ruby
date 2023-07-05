@@ -150,7 +150,7 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
-                            
+                                                        
                             'EventType' => event_type,
                             
                             'Minutes' => minutes,
@@ -158,7 +158,7 @@ module Twilio
                             'ReservationSid' => reservation_sid,
                             
                             'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
-                            
+                                                        
                             'TaskQueueSid' => task_queue_sid,
                             
                             'TaskSid' => task_sid,

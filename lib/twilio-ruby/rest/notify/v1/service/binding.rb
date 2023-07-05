@@ -153,12 +153,12 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'StartDate' =>  Twilio.serialize_iso8601_date(start_date),
-                            
+                                                        
                             'EndDate' =>  Twilio.serialize_iso8601_date(end_date),
+                                                        
+                            'Identity' =>  Twilio.serialize_list(identity) { |e| e },
                             
-                            'Identity' =>  Twilio.serialize_list(identity),
-                            
-                            'Tag' =>  Twilio.serialize_list(tag),
+                            'Tag' =>  Twilio.serialize_list(tag) { |e| e },
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

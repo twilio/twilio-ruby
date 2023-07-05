@@ -21,39 +21,9 @@ module Twilio
                 def initialize(domain)
                     super
                     @version = 'v2'
-                    @authorization_documents = nil
-                    @hosted_number_orders = nil
                     @regulatory_compliance = nil
                 end
 
-                ##
-                # @param [String] sid A 34 character string that uniquely identifies this AuthorizationDocument.
-                # @return [Twilio::REST::Numbers::V2::AuthorizationDocumentContext] if sid was passed.
-                # @return [Twilio::REST::Numbers::V2::AuthorizationDocumentList]
-                def authorization_documents(sid=:unset)
-                    if sid.nil?
-                        raise ArgumentError, 'sid cannot be nil'
-                    end
-                    if sid == :unset
-                        @authorization_documents ||= AuthorizationDocumentList.new self
-                    else
-                        AuthorizationDocumentContext.new(self, sid)
-                    end
-                end
-                ##
-                # @param [String] sid A 34 character string that uniquely identifies this HostedNumberOrder.
-                # @return [Twilio::REST::Numbers::V2::HostedNumberOrderContext] if sid was passed.
-                # @return [Twilio::REST::Numbers::V2::HostedNumberOrderList]
-                def hosted_number_orders(sid=:unset)
-                    if sid.nil?
-                        raise ArgumentError, 'sid cannot be nil'
-                    end
-                    if sid == :unset
-                        @hosted_number_orders ||= HostedNumberOrderList.new self
-                    else
-                        HostedNumberOrderContext.new(self, sid)
-                    end
-                end
                 ##
                 # @return [Twilio::REST::Numbers::V2::RegulatoryComplianceList]
                 def regulatory_compliance

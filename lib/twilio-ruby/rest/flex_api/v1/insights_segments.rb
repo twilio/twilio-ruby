@@ -111,7 +111,7 @@ module Twilio
                             
                             'SegmentId' => segment_id,
                             
-                            'ReservationId' =>  Twilio.serialize_list(reservation_id),
+                            'ReservationId' =>  Twilio.serialize_list(reservation_id) { |e| e },
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

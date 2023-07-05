@@ -126,13 +126,13 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
-                            
+                                                        
                             'FriendlyName' => friendly_name,
                             
                             'Minutes' => minutes,
                             
                             'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
-                            
+                                                        
                             'TaskChannel' => task_channel,
                             
                             'SplitByWaitTime' => split_by_wait_time,

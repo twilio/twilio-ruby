@@ -161,9 +161,9 @@ module Twilio
                             'Enabled' => enabled,
                             
                             'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
-                            
+                                                        
                             'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
-                            
+                                                        
                             'FriendlyName' => friendly_name,
                             
                             'PageToken' => page_token,
