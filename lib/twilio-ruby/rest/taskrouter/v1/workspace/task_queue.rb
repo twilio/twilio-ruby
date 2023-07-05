@@ -151,13 +151,9 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'FriendlyName' => friendly_name,
-                            
                             'EvaluateWorkerAttributes' => evaluate_worker_attributes,
-                            
                             'WorkerSid' => worker_sid,
-                            
                             'Ordering' => ordering,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

@@ -99,7 +99,6 @@ module Twilio
                     # @return [Page] Page of UserBindingInstance
                     def page(binding_type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'BindingType' =>  Twilio.serialize_list(binding_type) { |e| e },
                             
                             'PageToken' => page_token,

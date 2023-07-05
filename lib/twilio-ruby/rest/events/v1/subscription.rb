@@ -123,7 +123,6 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'SinkSid' => sink_sid,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

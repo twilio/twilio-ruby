@@ -162,21 +162,13 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'ActivityName' => activity_name,
-                            
                             'ActivitySid' => activity_sid,
-                            
                             'Available' => available,
-                            
                             'FriendlyName' => friendly_name,
-                            
                             'TargetWorkersExpression' => target_workers_expression,
-                            
                             'TaskQueueName' => task_queue_name,
-                            
                             'TaskQueueSid' => task_queue_sid,
-                            
                             'Ordering' => ordering,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

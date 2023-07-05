@@ -149,11 +149,8 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Recurring' => recurring,
-                            
                             'TriggerBy' => trigger_by,
-                            
                             'UsageCategory' => usage_category,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

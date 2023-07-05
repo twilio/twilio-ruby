@@ -133,21 +133,11 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Sim' => sim,
-                            
                             'Fleet' => fleet,
-                            
                             'Network' => network,
-                            
                             'IsoCountry' => iso_country,
-                            
                             'Group' => group,
-                            
-                            'Granularity' => granularity,
-                            
-                            'StartTime' =>  Twilio.serialize_iso8601_datetime(start_time),
-                                                        
-                            'EndTime' =>  Twilio.serialize_iso8601_datetime(end_time),
-                                                        
+                            'Granularity' => granularity,'StartTime' =>  Twilio.serialize_iso8601_datetime(start_time),'EndTime' =>  Twilio.serialize_iso8601_datetime(end_time),
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

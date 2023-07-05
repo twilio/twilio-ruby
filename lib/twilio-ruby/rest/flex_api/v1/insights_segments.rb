@@ -108,10 +108,7 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Authorization' => authorization,
-                            
-                            'SegmentId' => segment_id,
-                            
-                            'ReservationId' =>  Twilio.serialize_list(reservation_id) { |e| e },
+                            'SegmentId' => segment_id,'ReservationId' =>  Twilio.serialize_list(reservation_id) { |e| e },
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

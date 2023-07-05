@@ -128,9 +128,7 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'ChannelEndpointSid' => channel_endpoint_sid,
-                            
                             'ChannelEndpointSids' => channel_endpoint_sids,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

@@ -141,7 +141,6 @@ module Twilio
                     # @return [Page] Page of MemberInstance
                     def page(identity: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Identity' =>  Twilio.serialize_list(identity) { |e| e },
                             
                             'PageToken' => page_token,

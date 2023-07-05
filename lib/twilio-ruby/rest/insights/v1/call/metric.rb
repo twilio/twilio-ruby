@@ -105,9 +105,7 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Edge' => edge,
-                            
                             'Direction' => direction,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

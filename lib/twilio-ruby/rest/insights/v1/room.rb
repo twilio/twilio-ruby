@@ -116,17 +116,10 @@ module Twilio
                     # @return [Page] Page of RoomInstance
                     def page(room_type: :unset, codec: :unset, room_name: :unset, created_after: :unset, created_before: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'RoomType' =>  Twilio.serialize_list(room_type) { |e| e },
-                            
                             'Codec' =>  Twilio.serialize_list(codec) { |e| e },
                             
-                            'RoomName' => room_name,
-                            
-                            'CreatedAfter' =>  Twilio.serialize_iso8601_datetime(created_after),
-                                                        
-                            'CreatedBefore' =>  Twilio.serialize_iso8601_datetime(created_before),
-                                                        
+                            'RoomName' => room_name,'CreatedAfter' =>  Twilio.serialize_iso8601_datetime(created_after),'CreatedBefore' =>  Twilio.serialize_iso8601_datetime(created_before),
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

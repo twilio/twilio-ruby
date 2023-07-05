@@ -270,11 +270,8 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Muted' => muted,
-                            
                             'Hold' => hold,
-                            
                             'Coaching' => coaching,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

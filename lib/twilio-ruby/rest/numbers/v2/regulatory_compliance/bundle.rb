@@ -187,27 +187,13 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Status' => status,
-                            
                             'FriendlyName' => friendly_name,
-                            
                             'RegulationSid' => regulation_sid,
-                            
                             'IsoCountry' => iso_country,
-                            
                             'NumberType' => number_type,
-                            
                             'HasValidUntilDate' => has_valid_until_date,
-                            
                             'SortBy' => sort_by,
-                            
-                            'SortDirection' => sort_direction,
-                            
-                            'ValidUntilDate' =>  Twilio.serialize_iso8601_datetime(valid_until_date),
-                                                        
-                            'ValidUntilDate<' =>  Twilio.serialize_iso8601_datetime(valid_until_date_before),
-                                                        
-                            'ValidUntilDate>' =>  Twilio.serialize_iso8601_datetime(valid_until_date_after),
-                                                        
+                            'SortDirection' => sort_direction,'ValidUntilDate' =>  Twilio.serialize_iso8601_datetime(valid_until_date),'ValidUntilDate<' =>  Twilio.serialize_iso8601_datetime(valid_until_date_before),'ValidUntilDate>' =>  Twilio.serialize_iso8601_datetime(valid_until_date_after),
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

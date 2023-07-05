@@ -203,15 +203,7 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'To' => to,
-                            
-                            'From' => from,
-                            
-                            'DateSent' =>  Twilio.serialize_iso8601_datetime(date_sent),
-                                                        
-                            'DateSent<' =>  Twilio.serialize_iso8601_datetime(date_sent_before),
-                                                        
-                            'DateSent>' =>  Twilio.serialize_iso8601_datetime(date_sent_after),
-                                                        
+                            'From' => from,'DateSent' =>  Twilio.serialize_iso8601_datetime(date_sent),'DateSent<' =>  Twilio.serialize_iso8601_datetime(date_sent_before),'DateSent>' =>  Twilio.serialize_iso8601_datetime(date_sent_after),
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

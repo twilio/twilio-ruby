@@ -161,21 +161,13 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'ServiceSid' => service_sid,
-                            
                             'BeforeStartTime' => before_start_time,
-                            
                             'AfterStartTime' => after_start_time,
-                            
                             'BeforeDateCreated' => before_date_created,
-                            
                             'AfterDateCreated' => after_date_created,
-                            
                             'Status' => status,
-                            
                             'LanguageCode' => language_code,
-                            
                             'SourceSid' => source_sid,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

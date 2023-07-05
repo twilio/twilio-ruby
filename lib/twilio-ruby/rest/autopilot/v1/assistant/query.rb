@@ -144,13 +144,9 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Language' => language,
-                            
                             'ModelBuild' => model_build,
-                            
                             'Status' => status,
-                            
                             'DialogueSid' => dialogue_sid,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

@@ -207,13 +207,9 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Beta' => beta,
-                            
                             'FriendlyName' => friendly_name,
-                            
                             'PhoneNumber' => phone_number,
-                            
                             'Origin' => origin,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

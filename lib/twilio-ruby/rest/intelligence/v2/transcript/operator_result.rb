@@ -100,7 +100,6 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Redacted' => redacted,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

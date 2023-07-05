@@ -157,11 +157,8 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'StartDate' => start_date,
-                            
                             'EndDate' => end_date,
-                            
                             'State' => state,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

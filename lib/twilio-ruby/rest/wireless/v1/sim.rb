@@ -118,15 +118,10 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Status' => status,
-                            
                             'Iccid' => iccid,
-                            
                             'RatePlan' => rate_plan,
-                            
                             'EId' => e_id,
-                            
                             'SimRegistrationCode' => sim_registration_code,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

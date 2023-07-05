@@ -185,15 +185,10 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Status' => status,
-                            
                             'PhoneNumber' => phone_number,
-                            
                             'IncomingPhoneNumberSid' => incoming_phone_number_sid,
-                            
                             'FriendlyName' => friendly_name,
-                            
                             'UniqueName' => unique_name,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

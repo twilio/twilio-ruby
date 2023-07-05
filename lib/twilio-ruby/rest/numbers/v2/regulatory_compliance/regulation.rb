@@ -110,11 +110,8 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'EndUserType' => end_user_type,
-                            
                             'IsoCountry' => iso_country,
-                            
                             'NumberType' => number_type,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

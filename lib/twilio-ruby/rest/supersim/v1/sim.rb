@@ -130,11 +130,8 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Status' => status,
-                            
                             'Fleet' => fleet,
-                            
                             'Iccid' => iccid,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

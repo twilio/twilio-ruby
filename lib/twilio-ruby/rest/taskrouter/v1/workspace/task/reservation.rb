@@ -106,9 +106,7 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'ReservationStatus' => reservation_status,
-                            
                             'WorkerSid' => worker_sid,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

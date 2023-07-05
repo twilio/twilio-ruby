@@ -145,11 +145,8 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Authorization' => authorization,
-                            
                             'SegmentId' => segment_id,
-                            
                             'AgentId' => agent_id,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

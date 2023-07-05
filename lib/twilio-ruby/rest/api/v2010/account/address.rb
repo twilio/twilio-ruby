@@ -157,11 +157,8 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'CustomerName' => customer_name,
-                            
                             'FriendlyName' => friendly_name,
-                            
                             'IsoCountry' => iso_country,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

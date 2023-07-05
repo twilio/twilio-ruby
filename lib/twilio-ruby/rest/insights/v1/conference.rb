@@ -143,25 +143,15 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'ConferenceSid' => conference_sid,
-                            
                             'FriendlyName' => friendly_name,
-                            
                             'Status' => status,
-                            
                             'CreatedAfter' => created_after,
-                            
                             'CreatedBefore' => created_before,
-                            
                             'MixerRegion' => mixer_region,
-                            
                             'Tags' => tags,
-                            
                             'Subaccount' => subaccount,
-                            
                             'DetectedIssues' => detected_issues,
-                            
                             'EndReason' => end_reason,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

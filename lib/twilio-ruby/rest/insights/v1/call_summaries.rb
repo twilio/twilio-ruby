@@ -208,51 +208,28 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'From' => from,
-                            
                             'To' => to,
-                            
                             'FromCarrier' => from_carrier,
-                            
                             'ToCarrier' => to_carrier,
-                            
                             'FromCountryCode' => from_country_code,
-                            
                             'ToCountryCode' => to_country_code,
-                            
                             'Branded' => branded,
-                            
                             'VerifiedCaller' => verified_caller,
-                            
                             'HasTag' => has_tag,
-                            
                             'StartTime' => start_time,
-                            
                             'EndTime' => end_time,
-                            
                             'CallType' => call_type,
-                            
                             'CallState' => call_state,
-                            
                             'Direction' => direction,
-                            
                             'ProcessingState' => processing_state,
-                            
                             'SortBy' => sort_by,
-                            
                             'Subaccount' => subaccount,
-                            
                             'AbnormalSession' => abnormal_session,
-                            
                             'AnsweredBy' => answered_by,
-                            
                             'ConnectivityIssue' => connectivity_issue,
-                            
                             'QualityIssue' => quality_issue,
-                            
                             'Spam' => spam,
-                            
                             'CallScore' => call_score,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

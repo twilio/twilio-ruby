@@ -136,11 +136,8 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Eid' => eid,
-                            
                             'SimSid' => sim_sid,
-                            
                             'Status' => status,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

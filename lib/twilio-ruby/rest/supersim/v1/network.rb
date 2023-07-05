@@ -108,11 +108,8 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'IsoCountry' => iso_country,
-                            
                             'Mcc' => mcc,
-                            
                             'Mnc' => mnc,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

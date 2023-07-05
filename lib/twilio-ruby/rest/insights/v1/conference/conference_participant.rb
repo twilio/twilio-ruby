@@ -110,11 +110,8 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'ParticipantSid' => participant_sid,
-                            
                             'Label' => label,
-                            
                             'Events' => events,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

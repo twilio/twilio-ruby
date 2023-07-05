@@ -136,9 +136,7 @@ module Twilio
                     def page(authorization: :unset, category_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Authorization' => authorization,
-                            
-                            'CategorySid' =>  Twilio.serialize_list(category_sid) { |e| e },
+                            'Authorization' => authorization,'CategorySid' =>  Twilio.serialize_list(category_sid) { |e| e },
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

@@ -148,29 +148,16 @@ module Twilio
                     # @return [Page] Page of EventInstance
                     def page(end_date: :unset, event_type: :unset, minutes: :unset, reservation_sid: :unset, start_date: :unset, task_queue_sid: :unset, task_sid: :unset, worker_sid: :unset, workflow_sid: :unset, task_channel: :unset, sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
-                                                        
                             'EventType' => event_type,
-                            
                             'Minutes' => minutes,
-                            
-                            'ReservationSid' => reservation_sid,
-                            
-                            'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
-                                                        
+                            'ReservationSid' => reservation_sid,'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
                             'TaskQueueSid' => task_queue_sid,
-                            
                             'TaskSid' => task_sid,
-                            
                             'WorkerSid' => worker_sid,
-                            
                             'WorkflowSid' => workflow_sid,
-                            
                             'TaskChannel' => task_channel,
-                            
                             'Sid' => sid,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

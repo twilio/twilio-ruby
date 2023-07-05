@@ -150,13 +150,9 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'Device' => device,
-                            
                             'Sim' => sim,
-                            
                             'Status' => status,
-                            
                             'Direction' => direction,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

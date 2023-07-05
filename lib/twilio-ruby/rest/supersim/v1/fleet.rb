@@ -141,7 +141,6 @@ module Twilio
                         params = Twilio::Values.of({
                             
                             'NetworkAccessProfile' => network_access_profile,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
