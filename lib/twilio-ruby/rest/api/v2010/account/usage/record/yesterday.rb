@@ -115,8 +115,9 @@ module Twilio
                     # @return [Page] Page of YesterdayInstance
                     def page(category: :unset, start_date: :unset, end_date: :unset, include_subaccounts: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
-                            'Category' => category,'StartDate' =>  Twilio.serialize_iso8601_date(start_date),'EndDate' =>  Twilio.serialize_iso8601_date(end_date),
+                            'Category' => category,
+                            'StartDate' =>  Twilio.serialize_iso8601_date(start_date),
+                            'EndDate' =>  Twilio.serialize_iso8601_date(end_date),
                             'IncludeSubaccounts' => include_subaccounts,
                             'PageToken' => page_token,
                             'Page' => page_number,

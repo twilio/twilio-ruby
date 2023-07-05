@@ -103,7 +103,6 @@ module Twilio
                     # @return [Page] Page of MetricInstance
                     def page(edge: :unset, direction: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Edge' => edge,
                             'Direction' => direction,
                             'PageToken' => page_token,

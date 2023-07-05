@@ -148,7 +148,6 @@ module Twilio
                     # @return [Page] Page of AddressConfigurationInstance
                     def page(type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Type' => type,
                             'PageToken' => page_token,
                             'Page' => page_number,

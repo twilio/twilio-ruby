@@ -155,7 +155,6 @@ module Twilio
                     # @return [Page] Page of AddressInstance
                     def page(customer_name: :unset, friendly_name: :unset, iso_country: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'CustomerName' => customer_name,
                             'FriendlyName' => friendly_name,
                             'IsoCountry' => iso_country,

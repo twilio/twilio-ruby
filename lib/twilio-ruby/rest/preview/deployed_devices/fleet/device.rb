@@ -130,7 +130,6 @@ module Twilio
                     # @return [Page] Page of DeviceInstance
                     def page(deployment_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'DeploymentSid' => deployment_sid,
                             'PageToken' => page_token,
                             'Page' => page_number,

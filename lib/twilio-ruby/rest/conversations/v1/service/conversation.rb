@@ -155,7 +155,6 @@ module Twilio
                     # @return [Page] Page of ConversationInstance
                     def page(start_date: :unset, end_date: :unset, state: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'StartDate' => start_date,
                             'EndDate' => end_date,
                             'State' => state,

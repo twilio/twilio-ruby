@@ -103,7 +103,6 @@ module Twilio
                     # @return [Page] Page of ShortCodeInstance
                     def page(friendly_name: :unset, short_code: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'FriendlyName' => friendly_name,
                             'ShortCode' => short_code,
                             'PageToken' => page_token,

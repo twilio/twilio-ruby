@@ -123,7 +123,9 @@ module Twilio
                     # @return [Page] Page of RecordingInstance
                     def page(date_created: :unset, date_created_before: :unset, date_created_after: :unset, call_sid: :unset, conference_sid: :unset, include_soft_deleted: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            'DateCreated' =>  Twilio.serialize_iso8601_datetime(date_created),'DateCreated<' =>  Twilio.serialize_iso8601_datetime(date_created_before),'DateCreated>' =>  Twilio.serialize_iso8601_datetime(date_created_after),
+                            'DateCreated' =>  Twilio.serialize_iso8601_datetime(date_created),
+                            'DateCreated<' =>  Twilio.serialize_iso8601_datetime(date_created_before),
+                            'DateCreated>' =>  Twilio.serialize_iso8601_datetime(date_created_after),
                             'CallSid' => call_sid,
                             'ConferenceSid' => conference_sid,
                             'IncludeSoftDeleted' => include_soft_deleted,

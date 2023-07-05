@@ -131,13 +131,14 @@ module Twilio
                     # @return [Page] Page of UsageRecordInstance
                     def page(sim: :unset, fleet: :unset, network: :unset, iso_country: :unset, group: :unset, granularity: :unset, start_time: :unset, end_time: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Sim' => sim,
                             'Fleet' => fleet,
                             'Network' => network,
                             'IsoCountry' => iso_country,
                             'Group' => group,
-                            'Granularity' => granularity,'StartTime' =>  Twilio.serialize_iso8601_datetime(start_time),'EndTime' =>  Twilio.serialize_iso8601_datetime(end_time),
+                            'Granularity' => granularity,
+                            'StartTime' =>  Twilio.serialize_iso8601_datetime(start_time),
+                            'EndTime' =>  Twilio.serialize_iso8601_datetime(end_time),
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

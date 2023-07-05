@@ -170,9 +170,9 @@ module Twilio
                     # @return [Page] Page of TaskInstance
                     def page(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, ordering: :unset, has_addons: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
+                            'Priority' => priority,
                             
-                            'Priority' => priority,'AssignmentStatus' =>  Twilio.serialize_list(assignment_status) { |e| e },
-                            
+                            'AssignmentStatus' =>  Twilio.serialize_list(assignment_status) { |e| e },
                             'WorkflowSid' => workflow_sid,
                             'WorkflowName' => workflow_name,
                             'TaskQueueSid' => task_queue_sid,

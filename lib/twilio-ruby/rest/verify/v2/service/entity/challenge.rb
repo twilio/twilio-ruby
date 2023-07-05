@@ -145,7 +145,6 @@ module Twilio
                     # @return [Page] Page of ChallengeInstance
                     def page(factor_sid: :unset, status: :unset, order: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'FactorSid' => factor_sid,
                             'Status' => status,
                             'Order' => order,

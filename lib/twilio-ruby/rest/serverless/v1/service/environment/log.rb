@@ -109,8 +109,9 @@ module Twilio
                     # @return [Page] Page of LogInstance
                     def page(function_sid: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
-                            'FunctionSid' => function_sid,'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
+                            'FunctionSid' => function_sid,
+                            'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
+                            'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

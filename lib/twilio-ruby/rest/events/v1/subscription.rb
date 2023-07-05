@@ -121,7 +121,6 @@ module Twilio
                     # @return [Page] Page of SubscriptionInstance
                     def page(sink_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'SinkSid' => sink_sid,
                             'PageToken' => page_token,
                             'Page' => page_number,

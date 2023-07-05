@@ -185,7 +185,6 @@ module Twilio
                     # @return [Page] Page of BundleInstance
                     def page(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Status' => status,
                             'FriendlyName' => friendly_name,
                             'RegulationSid' => regulation_sid,
@@ -193,7 +192,10 @@ module Twilio
                             'NumberType' => number_type,
                             'HasValidUntilDate' => has_valid_until_date,
                             'SortBy' => sort_by,
-                            'SortDirection' => sort_direction,'ValidUntilDate' =>  Twilio.serialize_iso8601_datetime(valid_until_date),'ValidUntilDate<' =>  Twilio.serialize_iso8601_datetime(valid_until_date_before),'ValidUntilDate>' =>  Twilio.serialize_iso8601_datetime(valid_until_date_after),
+                            'SortDirection' => sort_direction,
+                            'ValidUntilDate' =>  Twilio.serialize_iso8601_datetime(valid_until_date),
+                            'ValidUntilDate<' =>  Twilio.serialize_iso8601_datetime(valid_until_date_before),
+                            'ValidUntilDate>' =>  Twilio.serialize_iso8601_datetime(valid_until_date_after),
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

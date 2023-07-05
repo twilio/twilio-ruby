@@ -134,7 +134,6 @@ module Twilio
                     # @return [Page] Page of SmsCommandInstance
                     def page(sim: :unset, status: :unset, direction: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Sim' => sim,
                             'Status' => status,
                             'Direction' => direction,

@@ -126,7 +126,6 @@ module Twilio
                     # @return [Page] Page of SampleInstance
                     def page(language: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Language' => language,
                             'PageToken' => page_token,
                             'Page' => page_number,

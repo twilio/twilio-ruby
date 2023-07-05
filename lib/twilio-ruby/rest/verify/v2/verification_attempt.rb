@@ -131,7 +131,8 @@ module Twilio
                     # @return [Page] Page of VerificationAttemptInstance
                     def page(date_created_after: :unset, date_created_before: :unset, channel_data_to: :unset, country: :unset, channel: :unset, verify_service_sid: :unset, verification_sid: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
+                            'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
+                            'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
                             'ChannelData.To' => channel_data_to,
                             'Country' => country,
                             'Channel' => channel,

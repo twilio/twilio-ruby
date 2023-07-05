@@ -160,7 +160,6 @@ module Twilio
                     # @return [Page] Page of WorkerInstance
                     def page(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, ordering: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'ActivityName' => activity_name,
                             'ActivitySid' => activity_sid,
                             'Available' => available,

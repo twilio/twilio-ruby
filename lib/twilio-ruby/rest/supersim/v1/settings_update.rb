@@ -101,7 +101,6 @@ module Twilio
                     # @return [Page] Page of SettingsUpdateInstance
                     def page(sim: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Sim' => sim,
                             'Status' => status,
                             'PageToken' => page_token,

@@ -106,8 +106,9 @@ module Twilio
                     # @return [Page] Page of AlertInstance
                     def page(log_level: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
-                            'LogLevel' => log_level,'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
+                            'LogLevel' => log_level,
+                            'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
+                            'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

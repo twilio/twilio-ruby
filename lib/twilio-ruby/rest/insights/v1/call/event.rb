@@ -98,7 +98,6 @@ module Twilio
                     # @return [Page] Page of EventInstance
                     def page(edge: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Edge' => edge,
                             'PageToken' => page_token,
                             'Page' => page_number,

@@ -108,7 +108,6 @@ module Twilio
                     # @return [Page] Page of RegulationInstance
                     def page(end_user_type: :unset, iso_country: :unset, number_type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'EndUserType' => end_user_type,
                             'IsoCountry' => iso_country,
                             'NumberType' => number_type,

@@ -206,7 +206,6 @@ module Twilio
                     # @return [Page] Page of CallSummariesInstance
                     def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, connectivity_issue: :unset, quality_issue: :unset, spam: :unset, call_score: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'From' => from,
                             'To' => to,
                             'FromCarrier' => from_carrier,

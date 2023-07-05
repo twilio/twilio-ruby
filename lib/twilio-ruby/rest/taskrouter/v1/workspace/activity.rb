@@ -126,7 +126,6 @@ module Twilio
                     # @return [Page] Page of ActivityInstance
                     def page(friendly_name: :unset, available: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'FriendlyName' => friendly_name,
                             'Available' => available,
                             'PageToken' => page_token,

@@ -118,7 +118,6 @@ module Twilio
                     # @return [Page] Page of DependentHostedNumberOrderInstance
                     def page(status: :unset, phone_number: :unset, incoming_phone_number_sid: :unset, friendly_name: :unset, unique_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Status' => status,
                             'PhoneNumber' => phone_number,
                             'IncomingPhoneNumberSid' => incoming_phone_number_sid,

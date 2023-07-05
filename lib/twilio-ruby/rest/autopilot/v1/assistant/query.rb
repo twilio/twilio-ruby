@@ -142,7 +142,6 @@ module Twilio
                     # @return [Page] Page of QueryInstance
                     def page(language: :unset, model_build: :unset, status: :unset, dialogue_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Language' => language,
                             'ModelBuild' => model_build,
                             'Status' => status,

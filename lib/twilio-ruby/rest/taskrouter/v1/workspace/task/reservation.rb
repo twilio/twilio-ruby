@@ -104,7 +104,6 @@ module Twilio
                     # @return [Page] Page of ReservationInstance
                     def page(reservation_status: :unset, worker_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'ReservationStatus' => reservation_status,
                             'WorkerSid' => worker_sid,
                             'PageToken' => page_token,

@@ -126,7 +126,6 @@ module Twilio
                     # @return [Page] Page of MessageInstance
                     def page(order: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Order' => order,
                             'PageToken' => page_token,
                             'Page' => page_number,

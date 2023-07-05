@@ -140,7 +140,6 @@ module Twilio
                     # @return [Page] Page of RatePlanInstance
                     def page(page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
