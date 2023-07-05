@@ -202,9 +202,9 @@ module Twilio
                     def page(to: :unset, from: :unset, date_sent: :unset, date_sent_before: :unset, date_sent_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'To' => to,
+                            To' => to,
                             
-                            'From' => from,
+                            From' => from,
                             
                             'DateSent' =>  Twilio.serialize_iso8601_datetime(date_sent),
                                                         

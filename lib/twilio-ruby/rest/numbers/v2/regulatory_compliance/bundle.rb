@@ -186,21 +186,21 @@ module Twilio
                     def page(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Status' => status,
+                            Status' => status,
                             
-                            'FriendlyName' => friendly_name,
+                            FriendlyName' => friendly_name,
                             
-                            'RegulationSid' => regulation_sid,
+                            RegulationSid' => regulation_sid,
                             
-                            'IsoCountry' => iso_country,
+                            IsoCountry' => iso_country,
                             
-                            'NumberType' => number_type,
+                            NumberType' => number_type,
                             
-                            'HasValidUntilDate' => has_valid_until_date,
+                            HasValidUntilDate' => has_valid_until_date,
                             
-                            'SortBy' => sort_by,
+                            SortBy' => sort_by,
                             
-                            'SortDirection' => sort_direction,
+                            SortDirection' => sort_direction,
                             
                             'ValidUntilDate' =>  Twilio.serialize_iso8601_datetime(valid_until_date),
                                                         

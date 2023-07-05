@@ -132,17 +132,17 @@ module Twilio
                     def page(sim: :unset, fleet: :unset, network: :unset, iso_country: :unset, group: :unset, granularity: :unset, start_time: :unset, end_time: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Sim' => sim,
+                            Sim' => sim,
                             
-                            'Fleet' => fleet,
+                            Fleet' => fleet,
                             
-                            'Network' => network,
+                            Network' => network,
                             
-                            'IsoCountry' => iso_country,
+                            IsoCountry' => iso_country,
                             
-                            'Group' => group,
+                            Group' => group,
                             
-                            'Granularity' => granularity,
+                            Granularity' => granularity,
                             
                             'StartTime' =>  Twilio.serialize_iso8601_datetime(start_time),
                                                         

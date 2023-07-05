@@ -156,11 +156,11 @@ module Twilio
                     def page(customer_name: :unset, friendly_name: :unset, iso_country: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'CustomerName' => customer_name,
+                            CustomerName' => customer_name,
                             
-                            'FriendlyName' => friendly_name,
+                            FriendlyName' => friendly_name,
                             
-                            'IsoCountry' => iso_country,
+                            IsoCountry' => iso_country,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

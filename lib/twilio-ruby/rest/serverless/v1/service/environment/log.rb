@@ -110,7 +110,7 @@ module Twilio
                     def page(function_sid: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'FunctionSid' => function_sid,
+                            FunctionSid' => function_sid,
                             
                             'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
                                                         

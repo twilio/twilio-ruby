@@ -121,7 +121,7 @@ module Twilio
                             
                             'Codec' =>  Twilio.serialize_list(codec) { |e| e },
                             
-                            'RoomName' => room_name,
+                            RoomName' => room_name,
                             
                             'CreatedAfter' =>  Twilio.serialize_iso8601_datetime(created_after),
                                                         

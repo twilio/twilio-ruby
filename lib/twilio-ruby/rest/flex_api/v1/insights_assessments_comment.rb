@@ -144,11 +144,11 @@ module Twilio
                     def page(authorization: :unset, segment_id: :unset, agent_id: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Authorization' => authorization,
+                            Authorization' => authorization,
                             
-                            'SegmentId' => segment_id,
+                            SegmentId' => segment_id,
                             
-                            'AgentId' => agent_id,
+                            AgentId' => agent_id,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

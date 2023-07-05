@@ -142,25 +142,25 @@ module Twilio
                     def page(conference_sid: :unset, friendly_name: :unset, status: :unset, created_after: :unset, created_before: :unset, mixer_region: :unset, tags: :unset, subaccount: :unset, detected_issues: :unset, end_reason: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'ConferenceSid' => conference_sid,
+                            ConferenceSid' => conference_sid,
                             
-                            'FriendlyName' => friendly_name,
+                            FriendlyName' => friendly_name,
                             
-                            'Status' => status,
+                            Status' => status,
                             
-                            'CreatedAfter' => created_after,
+                            CreatedAfter' => created_after,
                             
-                            'CreatedBefore' => created_before,
+                            CreatedBefore' => created_before,
                             
-                            'MixerRegion' => mixer_region,
+                            MixerRegion' => mixer_region,
                             
-                            'Tags' => tags,
+                            Tags' => tags,
                             
-                            'Subaccount' => subaccount,
+                            Subaccount' => subaccount,
                             
-                            'DetectedIssues' => detected_issues,
+                            DetectedIssues' => detected_issues,
                             
-                            'EndReason' => end_reason,
+                            EndReason' => end_reason,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

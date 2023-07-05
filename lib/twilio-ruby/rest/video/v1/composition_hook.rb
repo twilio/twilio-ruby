@@ -158,13 +158,13 @@ module Twilio
                     def page(enabled: :unset, date_created_after: :unset, date_created_before: :unset, friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Enabled' => enabled,
+                            Enabled' => enabled,
                             
                             'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
                                                         
                             'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
                                                         
-                            'FriendlyName' => friendly_name,
+                            FriendlyName' => friendly_name,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

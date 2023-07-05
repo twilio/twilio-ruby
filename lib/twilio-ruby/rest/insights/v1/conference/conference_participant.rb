@@ -109,11 +109,11 @@ module Twilio
                     def page(participant_sid: :unset, label: :unset, events: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'ParticipantSid' => participant_sid,
+                            ParticipantSid' => participant_sid,
                             
-                            'Label' => label,
+                            Label' => label,
                             
-                            'Events' => events,
+                            Events' => events,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

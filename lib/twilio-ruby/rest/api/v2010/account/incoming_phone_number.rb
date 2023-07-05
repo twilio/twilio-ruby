@@ -206,13 +206,13 @@ module Twilio
                     def page(beta: :unset, friendly_name: :unset, phone_number: :unset, origin: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Beta' => beta,
+                            Beta' => beta,
                             
-                            'FriendlyName' => friendly_name,
+                            FriendlyName' => friendly_name,
                             
-                            'PhoneNumber' => phone_number,
+                            PhoneNumber' => phone_number,
                             
-                            'Origin' => origin,
+                            Origin' => origin,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

@@ -127,15 +127,15 @@ module Twilio
                             
                             'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
                                                         
-                            'FriendlyName' => friendly_name,
+                            FriendlyName' => friendly_name,
                             
-                            'Minutes' => minutes,
+                            Minutes' => minutes,
                             
                             'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
                                                         
-                            'TaskChannel' => task_channel,
+                            TaskChannel' => task_channel,
                             
-                            'SplitByWaitTime' => split_by_wait_time,
+                            SplitByWaitTime' => split_by_wait_time,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

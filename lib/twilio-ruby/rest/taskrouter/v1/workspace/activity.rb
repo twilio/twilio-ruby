@@ -127,9 +127,9 @@ module Twilio
                     def page(friendly_name: :unset, available: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'FriendlyName' => friendly_name,
+                            FriendlyName' => friendly_name,
                             
-                            'Available' => available,
+                            Available' => available,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

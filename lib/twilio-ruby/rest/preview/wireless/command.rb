@@ -149,13 +149,13 @@ module Twilio
                     def page(device: :unset, sim: :unset, status: :unset, direction: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Device' => device,
+                            Device' => device,
                             
-                            'Sim' => sim,
+                            Sim' => sim,
                             
-                            'Status' => status,
+                            Status' => status,
                             
-                            'Direction' => direction,
+                            Direction' => direction,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

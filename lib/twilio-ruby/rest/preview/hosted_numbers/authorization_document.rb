@@ -136,9 +136,9 @@ module Twilio
                     def page(email: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Email' => email,
+                            Email' => email,
                             
-                            'Status' => status,
+                            Status' => status,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

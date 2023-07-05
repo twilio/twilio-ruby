@@ -155,13 +155,13 @@ module Twilio
                     def page(status: :unset, date_created_after: :unset, date_created_before: :unset, room_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Status' => status,
+                            Status' => status,
                             
                             'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
                                                         
                             'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
                                                         
-                            'RoomSid' => room_sid,
+                            RoomSid' => room_sid,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

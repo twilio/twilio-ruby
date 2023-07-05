@@ -136,17 +136,17 @@ module Twilio
                                                         
                             'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
                                                         
-                            'ChannelData.To' => channel_data_to,
+                            ChannelData.To' => channel_data_to,
                             
-                            'Country' => country,
+                            Country' => country,
                             
-                            'Channel' => channel,
+                            Channel' => channel,
                             
-                            'VerifyServiceSid' => verify_service_sid,
+                            VerifyServiceSid' => verify_service_sid,
                             
-                            'VerificationSid' => verification_sid,
+                            VerificationSid' => verification_sid,
                             
-                            'Status' => status,
+                            Status' => status,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,

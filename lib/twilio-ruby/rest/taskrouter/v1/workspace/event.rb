@@ -151,25 +151,25 @@ module Twilio
                             
                             'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
                                                         
-                            'EventType' => event_type,
+                            EventType' => event_type,
                             
-                            'Minutes' => minutes,
+                            Minutes' => minutes,
                             
-                            'ReservationSid' => reservation_sid,
+                            ReservationSid' => reservation_sid,
                             
                             'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
                                                         
-                            'TaskQueueSid' => task_queue_sid,
+                            TaskQueueSid' => task_queue_sid,
                             
-                            'TaskSid' => task_sid,
+                            TaskSid' => task_sid,
                             
-                            'WorkerSid' => worker_sid,
+                            WorkerSid' => worker_sid,
                             
-                            'WorkflowSid' => workflow_sid,
+                            WorkflowSid' => workflow_sid,
                             
-                            'TaskChannel' => task_channel,
+                            TaskChannel' => task_channel,
                             
-                            'Sid' => sid,
+                            Sid' => sid,
                             
                             'PageToken' => page_token,
                             'Page' => page_number,
