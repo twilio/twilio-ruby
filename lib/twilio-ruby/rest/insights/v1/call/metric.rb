@@ -36,8 +36,8 @@ module Twilio
                     # Lists MetricInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [TwilioEdge] edge 
-                    # @param [StreamDirection] direction 
+                    # @param [TwilioEdge] edge The Edge of this Metric. One of `unknown_edge`, `carrier_edge`, `sip_edge`, `sdk_edge` or `client_edge`.
+                    # @param [StreamDirection] direction The Direction of this Metric. One of `unknown`, `inbound`, `outbound` or `both`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -58,8 +58,8 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [TwilioEdge] edge 
-                    # @param [StreamDirection] direction 
+                    # @param [TwilioEdge] edge The Edge of this Metric. One of `unknown_edge`, `carrier_edge`, `sip_edge`, `sdk_edge` or `client_edge`.
+                    # @param [StreamDirection] direction The Direction of this Metric. One of `unknown`, `inbound`, `outbound` or `both`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -95,8 +95,8 @@ module Twilio
                     ##
                     # Retrieve a single page of MetricInstance records from the API.
                     # Request is executed immediately.
-                    # @param [TwilioEdge] edge 
-                    # @param [StreamDirection] direction 
+                    # @param [TwilioEdge] edge The Edge of this Metric. One of `unknown_edge`, `carrier_edge`, `sip_edge`, `sdk_edge` or `client_edge`.
+                    # @param [StreamDirection] direction The Direction of this Metric. One of `unknown`, `inbound`, `outbound` or `both`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -193,19 +193,19 @@ module Twilio
 
                     
                     ##
-                    # @return [String] 
+                    # @return [String] Timestamp of metric sample. Samples are taken every 10 seconds and contain the metrics for the previous 10 seconds.
                     def timestamp
                         @properties['timestamp']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The unique SID identifier of the Call.
                     def call_sid
                         @properties['call_sid']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The unique SID identifier of the Account.
                     def account_sid
                         @properties['account_sid']
                     end
@@ -223,25 +223,25 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains metrics and properties for the Twilio media gateway of a PSTN call.
                     def carrier_edge
                         @properties['carrier_edge']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains metrics and properties for the Twilio media gateway of a SIP Interface or Trunking call.
                     def sip_edge
                         @properties['sip_edge']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains metrics and properties for the SDK sensor library for Client calls.
                     def sdk_edge
                         @properties['sdk_edge']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains metrics and properties for the Twilio media gateway of a Client call.
                     def client_edge
                         @properties['client_edge']
                     end

@@ -34,29 +34,29 @@ module Twilio
                     # Lists CallSummariesInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [String] from 
-                    # @param [String] to 
-                    # @param [String] from_carrier 
-                    # @param [String] to_carrier 
-                    # @param [String] from_country_code 
-                    # @param [String] to_country_code 
-                    # @param [Boolean] branded 
-                    # @param [Boolean] verified_caller 
-                    # @param [Boolean] has_tag 
-                    # @param [String] start_time 
-                    # @param [String] end_time 
-                    # @param [String] call_type 
-                    # @param [String] call_state 
-                    # @param [String] direction 
-                    # @param [ProcessingStateRequest] processing_state 
-                    # @param [SortBy] sort_by 
-                    # @param [String] subaccount 
-                    # @param [Boolean] abnormal_session 
-                    # @param [AnsweredBy] answered_by 
-                    # @param [String] connectivity_issue 
-                    # @param [String] quality_issue 
-                    # @param [Boolean] spam 
-                    # @param [String] call_score 
+                    # @param [String] from A calling party. Could be an E.164 number, a SIP URI, or a Twilio Client registered name.
+                    # @param [String] to A called party. Could be an E.164 number, a SIP URI, or a Twilio Client registered name.
+                    # @param [String] from_carrier An origination carrier.
+                    # @param [String] to_carrier A destination carrier.
+                    # @param [String] from_country_code A source country code based on phone number in From.
+                    # @param [String] to_country_code A destination country code. Based on phone number in To.
+                    # @param [Boolean] branded A boolean flag indicating whether or not the calls were branded using Twilio Branded Calls.
+                    # @param [Boolean] verified_caller A boolean flag indicating whether or not the caller was verified using SHAKEN/STIR.
+                    # @param [Boolean] has_tag A boolean flag indicating the presence of one or more [Voice Insights Call Tags](https://www.twilio.com/docs/voice/voice-insights/api/call/details-call-tags).
+                    # @param [String] start_time A Start time of the calls. xm (x minutes), xh (x hours), xd (x days), 1w, 30m, 3d, 4w or datetime-ISO. Defaults to 4h.
+                    # @param [String] end_time An End Time of the calls. xm (x minutes), xh (x hours), xd (x days), 1w, 30m, 3d, 4w or datetime-ISO. Defaults to 0m.
+                    # @param [String] call_type A Call Type of the calls. One of `carrier`, `sip`, `trunking` or `client`.
+                    # @param [String] call_state A Call State of the calls. One of `ringing`, `completed`, `busy`, `fail`, `noanswer`, `canceled`, `answered`, `undialed`.
+                    # @param [String] direction A Direction of the calls. One of `outbound_api`, `outbound_dial`, `inbound`, `trunking_originating`, `trunking_terminating`.
+                    # @param [ProcessingStateRequest] processing_state A Processing State of the Call Summaries. One of `completed`, `partial` or `all`.
+                    # @param [SortBy] sort_by A Sort By criterion for the returned list of Call Summaries. One of `start_time` or `end_time`.
+                    # @param [String] subaccount A unique SID identifier of a Subaccount.
+                    # @param [Boolean] abnormal_session A boolean flag indicating an abnormal session where the last SIP response was not 200 OK.
+                    # @param [AnsweredBy] answered_by An Answered By value for the calls based on `Answering Machine Detection (AMD)`. One of `unknown`, `machine_start`, `machine_end_beep`, `machine_end_silence`, `machine_end_other`, `human` or `fax`.
+                    # @param [String] connectivity_issue A Connectivity Issue with the calls. One of `no_connectivity_issue`, `invalid_number`, `caller_id`, `dropped_call`, or `number_reachability`.
+                    # @param [String] quality_issue A subjective Quality Issue with the calls. One of `no_quality_issue`, `low_volume`, `choppy_robotic`, `echo`, `dtmf`, `latency`, `owa`, `static_noise`.
+                    # @param [Boolean] spam A boolean flag indicating spam calls.
+                    # @param [String] call_score A Call Score of the calls. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for the rated call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -98,29 +98,29 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [String] from 
-                    # @param [String] to 
-                    # @param [String] from_carrier 
-                    # @param [String] to_carrier 
-                    # @param [String] from_country_code 
-                    # @param [String] to_country_code 
-                    # @param [Boolean] branded 
-                    # @param [Boolean] verified_caller 
-                    # @param [Boolean] has_tag 
-                    # @param [String] start_time 
-                    # @param [String] end_time 
-                    # @param [String] call_type 
-                    # @param [String] call_state 
-                    # @param [String] direction 
-                    # @param [ProcessingStateRequest] processing_state 
-                    # @param [SortBy] sort_by 
-                    # @param [String] subaccount 
-                    # @param [Boolean] abnormal_session 
-                    # @param [AnsweredBy] answered_by 
-                    # @param [String] connectivity_issue 
-                    # @param [String] quality_issue 
-                    # @param [Boolean] spam 
-                    # @param [String] call_score 
+                    # @param [String] from A calling party. Could be an E.164 number, a SIP URI, or a Twilio Client registered name.
+                    # @param [String] to A called party. Could be an E.164 number, a SIP URI, or a Twilio Client registered name.
+                    # @param [String] from_carrier An origination carrier.
+                    # @param [String] to_carrier A destination carrier.
+                    # @param [String] from_country_code A source country code based on phone number in From.
+                    # @param [String] to_country_code A destination country code. Based on phone number in To.
+                    # @param [Boolean] branded A boolean flag indicating whether or not the calls were branded using Twilio Branded Calls.
+                    # @param [Boolean] verified_caller A boolean flag indicating whether or not the caller was verified using SHAKEN/STIR.
+                    # @param [Boolean] has_tag A boolean flag indicating the presence of one or more [Voice Insights Call Tags](https://www.twilio.com/docs/voice/voice-insights/api/call/details-call-tags).
+                    # @param [String] start_time A Start time of the calls. xm (x minutes), xh (x hours), xd (x days), 1w, 30m, 3d, 4w or datetime-ISO. Defaults to 4h.
+                    # @param [String] end_time An End Time of the calls. xm (x minutes), xh (x hours), xd (x days), 1w, 30m, 3d, 4w or datetime-ISO. Defaults to 0m.
+                    # @param [String] call_type A Call Type of the calls. One of `carrier`, `sip`, `trunking` or `client`.
+                    # @param [String] call_state A Call State of the calls. One of `ringing`, `completed`, `busy`, `fail`, `noanswer`, `canceled`, `answered`, `undialed`.
+                    # @param [String] direction A Direction of the calls. One of `outbound_api`, `outbound_dial`, `inbound`, `trunking_originating`, `trunking_terminating`.
+                    # @param [ProcessingStateRequest] processing_state A Processing State of the Call Summaries. One of `completed`, `partial` or `all`.
+                    # @param [SortBy] sort_by A Sort By criterion for the returned list of Call Summaries. One of `start_time` or `end_time`.
+                    # @param [String] subaccount A unique SID identifier of a Subaccount.
+                    # @param [Boolean] abnormal_session A boolean flag indicating an abnormal session where the last SIP response was not 200 OK.
+                    # @param [AnsweredBy] answered_by An Answered By value for the calls based on `Answering Machine Detection (AMD)`. One of `unknown`, `machine_start`, `machine_end_beep`, `machine_end_silence`, `machine_end_other`, `human` or `fax`.
+                    # @param [String] connectivity_issue A Connectivity Issue with the calls. One of `no_connectivity_issue`, `invalid_number`, `caller_id`, `dropped_call`, or `number_reachability`.
+                    # @param [String] quality_issue A subjective Quality Issue with the calls. One of `no_quality_issue`, `low_volume`, `choppy_robotic`, `echo`, `dtmf`, `latency`, `owa`, `static_noise`.
+                    # @param [Boolean] spam A boolean flag indicating spam calls.
+                    # @param [String] call_score A Call Score of the calls. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for the rated call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -177,29 +177,29 @@ module Twilio
                     ##
                     # Retrieve a single page of CallSummariesInstance records from the API.
                     # Request is executed immediately.
-                    # @param [String] from 
-                    # @param [String] to 
-                    # @param [String] from_carrier 
-                    # @param [String] to_carrier 
-                    # @param [String] from_country_code 
-                    # @param [String] to_country_code 
-                    # @param [Boolean] branded 
-                    # @param [Boolean] verified_caller 
-                    # @param [Boolean] has_tag 
-                    # @param [String] start_time 
-                    # @param [String] end_time 
-                    # @param [String] call_type 
-                    # @param [String] call_state 
-                    # @param [String] direction 
-                    # @param [ProcessingStateRequest] processing_state 
-                    # @param [SortBy] sort_by 
-                    # @param [String] subaccount 
-                    # @param [Boolean] abnormal_session 
-                    # @param [AnsweredBy] answered_by 
-                    # @param [String] connectivity_issue 
-                    # @param [String] quality_issue 
-                    # @param [Boolean] spam 
-                    # @param [String] call_score 
+                    # @param [String] from A calling party. Could be an E.164 number, a SIP URI, or a Twilio Client registered name.
+                    # @param [String] to A called party. Could be an E.164 number, a SIP URI, or a Twilio Client registered name.
+                    # @param [String] from_carrier An origination carrier.
+                    # @param [String] to_carrier A destination carrier.
+                    # @param [String] from_country_code A source country code based on phone number in From.
+                    # @param [String] to_country_code A destination country code. Based on phone number in To.
+                    # @param [Boolean] branded A boolean flag indicating whether or not the calls were branded using Twilio Branded Calls.
+                    # @param [Boolean] verified_caller A boolean flag indicating whether or not the caller was verified using SHAKEN/STIR.
+                    # @param [Boolean] has_tag A boolean flag indicating the presence of one or more [Voice Insights Call Tags](https://www.twilio.com/docs/voice/voice-insights/api/call/details-call-tags).
+                    # @param [String] start_time A Start time of the calls. xm (x minutes), xh (x hours), xd (x days), 1w, 30m, 3d, 4w or datetime-ISO. Defaults to 4h.
+                    # @param [String] end_time An End Time of the calls. xm (x minutes), xh (x hours), xd (x days), 1w, 30m, 3d, 4w or datetime-ISO. Defaults to 0m.
+                    # @param [String] call_type A Call Type of the calls. One of `carrier`, `sip`, `trunking` or `client`.
+                    # @param [String] call_state A Call State of the calls. One of `ringing`, `completed`, `busy`, `fail`, `noanswer`, `canceled`, `answered`, `undialed`.
+                    # @param [String] direction A Direction of the calls. One of `outbound_api`, `outbound_dial`, `inbound`, `trunking_originating`, `trunking_terminating`.
+                    # @param [ProcessingStateRequest] processing_state A Processing State of the Call Summaries. One of `completed`, `partial` or `all`.
+                    # @param [SortBy] sort_by A Sort By criterion for the returned list of Call Summaries. One of `start_time` or `end_time`.
+                    # @param [String] subaccount A unique SID identifier of a Subaccount.
+                    # @param [Boolean] abnormal_session A boolean flag indicating an abnormal session where the last SIP response was not 200 OK.
+                    # @param [AnsweredBy] answered_by An Answered By value for the calls based on `Answering Machine Detection (AMD)`. One of `unknown`, `machine_start`, `machine_end_beep`, `machine_end_silence`, `machine_end_other`, `human` or `fax`.
+                    # @param [String] connectivity_issue A Connectivity Issue with the calls. One of `no_connectivity_issue`, `invalid_number`, `caller_id`, `dropped_call`, or `number_reachability`.
+                    # @param [String] quality_issue A subjective Quality Issue with the calls. One of `no_quality_issue`, `low_volume`, `choppy_robotic`, `echo`, `dtmf`, `latency`, `owa`, `static_noise`.
+                    # @param [Boolean] spam A boolean flag indicating spam calls.
+                    # @param [String] call_score A Call Score of the calls. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for the rated call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -331,13 +331,13 @@ module Twilio
 
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The unique SID identifier of the Account.
                     def account_sid
                         @properties['account_sid']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The unique SID identifier of the Call.
                     def call_sid
                         @properties['call_sid']
                     end
@@ -367,97 +367,97 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Time] 
+                    # @return [Time] The time at which the Call was created, given in ISO 8601 format. Can be different from `start_time` in the event of queueing due to CPS
                     def created_time
                         @properties['created_time']
                     end
                     
                     ##
-                    # @return [Time] 
+                    # @return [Time] The time at which the Call was started, given in ISO 8601 format.
                     def start_time
                         @properties['start_time']
                     end
                     
                     ##
-                    # @return [Time] 
+                    # @return [Time] The time at which the Call was ended, given in ISO 8601 format.
                     def end_time
                         @properties['end_time']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] Duration between when the call was initiated and the call was ended
                     def duration
                         @properties['duration']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] Duration between when the call was answered and when it ended
                     def connect_duration
                         @properties['connect_duration']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] The calling party.
                     def from
                         @properties['from']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] The called party.
                     def to
                         @properties['to']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains metrics and properties for the Twilio media gateway of a PSTN call.
                     def carrier_edge
                         @properties['carrier_edge']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains metrics and properties for the Twilio media gateway of a Client call.
                     def client_edge
                         @properties['client_edge']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains metrics and properties for the SDK sensor library for Client calls.
                     def sdk_edge
                         @properties['sdk_edge']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains metrics and properties for the Twilio media gateway of a SIP Interface or Trunking call.
                     def sip_edge
                         @properties['sip_edge']
                     end
                     
                     ##
-                    # @return [Array<String>] 
+                    # @return [Array<String>] Tags applied to calls by Voice Insights analysis indicating a condition that could result in subjective degradation of the call quality.
                     def tags
                         @properties['tags']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The URL of this resource.
                     def url
                         @properties['url']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Attributes capturing call-flow-specific details.
                     def attributes
                         @properties['attributes']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains edge-agnostic call-level details.
                     def properties
                         @properties['properties']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] Contains trusted communications details including Branded Call and verified caller ID.
                     def trust
                         @properties['trust']
                     end
