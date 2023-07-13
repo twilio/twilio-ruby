@@ -1,6 +1,31 @@
 twilio-ruby changelog
 ===================== 
 
+[2023-07-13] Version 6.3.0
+--------------------------
+**Library - Chore**
+- [PR #668](https://github.com/twilio/twilio-ruby/pull/668): remove cacert. Thanks to [@sbansla](https://github.com/sbansla)!
+
+**Flex**
+- Adding `interaction_context_sid` as optional parameter in Interactions API
+
+**Messaging**
+- Making visiblity public for tollfree_verification API
+
+**Numbers**
+- Remove Sms capability property from HNO creation under version `/v2` of HNO API. **(breaking change)**
+- Update required properties in LOA creation under version `/v2` of Authorization document API. **(breaking change)**
+
+**Taskrouter**
+- Add api to fetch task queue statistics for multiple TaskQueues
+
+**Verify**
+- Add `RiskCheck` optional parameter on Verification creation.
+
+**Twiml**
+- Add Google Voices and languages
+
+
 [2023-06-28] Version 6.2.0
 --------------------------
 **Library - Fix**

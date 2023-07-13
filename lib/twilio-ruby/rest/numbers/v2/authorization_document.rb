@@ -34,6 +34,7 @@ module Twilio
                     # @param [String] address_sid A 34 character string that uniquely identifies the Address resource that is associated with this AuthorizationDocument.
                     # @param [String] email Email that this AuthorizationDocument will be sent to for signing.
                     # @param [String] contact_phone_number The contact phone number of the person authorized to sign the Authorization Document.
+                    # @param [Array[String]] hosted_number_order_sids A list of HostedNumberOrder sids that this AuthorizationDocument will authorize for hosting phone number capabilities on Twilio's platform.
                     # @param [String] contact_title The title of the person authorized to sign the Authorization Document for this phone number.
                     # @param [Array[String]] cc_emails Email recipients who will be informed when an Authorization Document has been sent and signed.
                     # @return [AuthorizationDocumentInstance] Created AuthorizationDocumentInstance
@@ -41,6 +42,7 @@ module Twilio
                         address_sid: nil, 
                         email: nil, 
                         contact_phone_number: nil, 
+                        hosted_number_order_sids: nil, 
                         contact_title: :unset, 
                         cc_emails: :unset
                     )
@@ -49,6 +51,7 @@ module Twilio
                             'AddressSid' => address_sid,
                             'Email' => email,
                             'ContactPhoneNumber' => contact_phone_number,
+                            'HostedNumberOrderSids' => Twilio.serialize_list(hosted_number_order_sids) { |e| e },
                             'ContactTitle' => contact_title,
                             'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
                         })

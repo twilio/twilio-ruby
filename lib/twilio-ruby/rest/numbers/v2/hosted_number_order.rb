@@ -331,7 +331,6 @@ module Twilio
                             'status' => payload['status'],
                             'failure_reason' => payload['failure_reason'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
-                            'sms_capability' => payload['sms_capability'],
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'email' => payload['email'],
                             'cc_emails' => payload['cc_emails'],
@@ -422,12 +421,6 @@ module Twilio
                     # @return [Time] The date this resource was created, given as [GMT RFC 2822](http://www.ietf.org/rfc/rfc2822.txt) format.
                     def date_created
                         @properties['date_created']
-                    end
-                    
-                    ##
-                    # @return [Boolean] Whether the SMS capability will be hosted on our platform. Can be `true` of `false`.
-                    def sms_capability
-                        @properties['sms_capability']
                     end
                     
                     ##

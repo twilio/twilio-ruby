@@ -30,6 +30,7 @@ module Twilio
                     @linkshortening_messaging_service = nil
                     @linkshortening_messaging_service_domain_association = nil
                     @services = nil
+                    @tollfree_verifications = nil
                     @usecases = nil
                 end
 
@@ -161,6 +162,20 @@ module Twilio
                         @services ||= ServiceList.new self
                     else
                         ServiceContext.new(self, sid)
+                    end
+                end
+                ##
+                # @param [String] sid The unique string to identify Tollfree Verification.
+                # @return [Twilio::REST::Messaging::V1::TollfreeVerificationContext] if sid was passed.
+                # @return [Twilio::REST::Messaging::V1::TollfreeVerificationList]
+                def tollfree_verifications(sid=:unset)
+                    if sid.nil?
+                        raise ArgumentError, 'sid cannot be nil'
+                    end
+                    if sid == :unset
+                        @tollfree_verifications ||= TollfreeVerificationList.new self
+                    else
+                        TollfreeVerificationContext.new(self, sid)
                     end
                 end
                 ##

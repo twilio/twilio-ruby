@@ -33,15 +33,18 @@ module Twilio
                     # Create the InteractionInstance
                     # @param [Object] channel The Interaction's channel.
                     # @param [Object] routing The Interaction's routing logic.
+                    # @param [String] interaction_context_sid The Interaction context sid is used for adding a context lookup sid
                     # @return [InteractionInstance] Created InteractionInstance
                     def create(
                         channel: nil, 
-                        routing: nil
+                        routing: nil, 
+                        interaction_context_sid: :unset
                     )
 
                         data = Twilio::Values.of({
                             'Channel' => Twilio.serialize_object(channel),
                             'Routing' => Twilio.serialize_object(routing),
+                            'InteractionContextSid' => interaction_context_sid,
                         })
 
                         payload = @version.create('POST', @uri, data: data)
@@ -173,6 +176,7 @@ module Twilio
                             'routing' => payload['routing'],
                             'url' => payload['url'],
                             'links' => payload['links'],
+                            'interaction_context_sid' => payload['interaction_context_sid'],
                         }
 
                         # Context
@@ -219,6 +223,12 @@ module Twilio
                     # @return [Hash] 
                     def links
                         @properties['links']
+                    end
+                    
+                    ##
+                    # @return [String] 
+                    def interaction_context_sid
+                        @properties['interaction_context_sid']
                     end
                     
                     ##

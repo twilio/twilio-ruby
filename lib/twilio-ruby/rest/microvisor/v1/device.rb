@@ -161,17 +161,20 @@ module Twilio
                     # @param [String] unique_name A unique and addressable name to be assigned to this Device by the developer. It may be used in place of the Device SID.
                     # @param [String] target_app The SID or unique name of the App to be targeted to the Device.
                     # @param [Boolean] logging_enabled A Boolean flag specifying whether to enable application logging. Logs will be enabled or extended for 24 hours.
+                    # @param [Boolean] restart_app Set to true to restart the App running on the Device.
                     # @return [DeviceInstance] Updated DeviceInstance
                     def update(
                         unique_name: :unset, 
                         target_app: :unset, 
-                        logging_enabled: :unset
+                        logging_enabled: :unset, 
+                        restart_app: :unset
                     )
 
                         data = Twilio::Values.of({
                             'UniqueName' => unique_name,
                             'TargetApp' => target_app,
                             'LoggingEnabled' => logging_enabled,
+                            'RestartApp' => restart_app,
                         })
 
                         payload = @version.update('POST', @uri, data: data)
@@ -373,17 +376,20 @@ module Twilio
                     # @param [String] unique_name A unique and addressable name to be assigned to this Device by the developer. It may be used in place of the Device SID.
                     # @param [String] target_app The SID or unique name of the App to be targeted to the Device.
                     # @param [Boolean] logging_enabled A Boolean flag specifying whether to enable application logging. Logs will be enabled or extended for 24 hours.
+                    # @param [Boolean] restart_app Set to true to restart the App running on the Device.
                     # @return [DeviceInstance] Updated DeviceInstance
                     def update(
                         unique_name: :unset, 
                         target_app: :unset, 
-                        logging_enabled: :unset
+                        logging_enabled: :unset, 
+                        restart_app: :unset
                     )
 
                         context.update(
                             unique_name: unique_name, 
                             target_app: target_app, 
                             logging_enabled: logging_enabled, 
+                            restart_app: restart_app, 
                         )
                     end
 

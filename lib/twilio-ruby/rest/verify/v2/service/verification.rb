@@ -48,6 +48,7 @@ module Twilio
                     # @param [String] template_sid The message [template](https://www.twilio.com/docs/verify/api/templates). If provided, will override the default template for the Service. SMS and Voice channels only.
                     # @param [String] template_custom_substitutions A stringified JSON object in which the keys are the template's special variables and the values are the variables substitutions.
                     # @param [String] device_ip Strongly encouraged if using the auto channel. The IP address of the client's device. If provided, it has to be a valid IPv4 or IPv6 address.
+                    # @param [RiskCheck] risk_check 
                     # @return [VerificationInstance] Created VerificationInstance
                     def create(
                         to: nil, 
@@ -64,7 +65,8 @@ module Twilio
                         app_hash: :unset, 
                         template_sid: :unset, 
                         template_custom_substitutions: :unset, 
-                        device_ip: :unset
+                        device_ip: :unset, 
+                        risk_check: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -83,6 +85,7 @@ module Twilio
                             'TemplateSid' => template_sid,
                             'TemplateCustomSubstitutions' => template_custom_substitutions,
                             'DeviceIp' => device_ip,
+                            'RiskCheck' => risk_check,
                         })
 
                         payload = @version.create('POST', @uri, data: data)
