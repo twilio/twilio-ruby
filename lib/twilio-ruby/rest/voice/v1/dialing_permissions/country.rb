@@ -123,19 +123,12 @@ module Twilio
                     # @return [Page] Page of CountryInstance
                     def page(iso_code: :unset, continent: :unset, country_code: :unset, low_risk_numbers_enabled: :unset, high_risk_special_numbers_enabled: :unset, high_risk_tollfraud_numbers_enabled: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'IsoCode' => iso_code,
-                            
                             'Continent' => continent,
-                            
                             'CountryCode' => country_code,
-                            
                             'LowRiskNumbersEnabled' => low_risk_numbers_enabled,
-                            
                             'HighRiskSpecialNumbersEnabled' => high_risk_special_numbers_enabled,
-                            
                             'HighRiskTollfraudNumbersEnabled' => high_risk_tollfraud_numbers_enabled,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

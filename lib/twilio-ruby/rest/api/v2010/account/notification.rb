@@ -113,15 +113,10 @@ module Twilio
                     # @return [Page] Page of NotificationInstance
                     def page(log: :unset, message_date: :unset, message_date_before: :unset, message_date_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Log' => log,
-                            
                             'MessageDate' =>  Twilio.serialize_iso8601_date(message_date),
-                            
                             'MessageDate<' =>  Twilio.serialize_iso8601_date(message_date_before),
-                            
                             'MessageDate>' =>  Twilio.serialize_iso8601_date(message_date_after),
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

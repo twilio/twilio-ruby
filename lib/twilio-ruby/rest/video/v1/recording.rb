@@ -121,19 +121,13 @@ module Twilio
                     # @return [Page] Page of RecordingInstance
                     def page(status: :unset, source_sid: :unset, grouping_sid: :unset, date_created_after: :unset, date_created_before: :unset, media_type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Status' => status,
-                            
                             'SourceSid' => source_sid,
                             
-                            'GroupingSid' =>  Twilio.serialize_list(grouping_sid),
-                            
+                            'GroupingSid' =>  Twilio.serialize_list(grouping_sid) { |e| e },
                             'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
-                            
                             'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
-                            
                             'MediaType' => media_type,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

@@ -142,13 +142,9 @@ module Twilio
                     # @return [Page] Page of SyncMapItemInstance
                     def page(order: :unset, from: :unset, bounds: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Order' => order,
-                            
                             'From' => from,
-                            
                             'Bounds' => bounds,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

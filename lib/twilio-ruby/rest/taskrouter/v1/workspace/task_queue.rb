@@ -149,15 +149,10 @@ module Twilio
                     # @return [Page] Page of TaskQueueInstance
                     def page(friendly_name: :unset, evaluate_worker_attributes: :unset, worker_sid: :unset, ordering: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'FriendlyName' => friendly_name,
-                            
                             'EvaluateWorkerAttributes' => evaluate_worker_attributes,
-                            
                             'WorkerSid' => worker_sid,
-                            
                             'Ordering' => ordering,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

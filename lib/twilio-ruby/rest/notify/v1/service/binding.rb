@@ -151,15 +151,12 @@ module Twilio
                     # @return [Page] Page of BindingInstance
                     def page(start_date: :unset, end_date: :unset, identity: :unset, tag: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'StartDate' =>  Twilio.serialize_iso8601_date(start_date),
-                            
                             'EndDate' =>  Twilio.serialize_iso8601_date(end_date),
                             
-                            'Identity' =>  Twilio.serialize_list(identity),
+                            'Identity' =>  Twilio.serialize_list(identity) { |e| e },
                             
-                            'Tag' =>  Twilio.serialize_list(tag),
-                            
+                            'Tag' =>  Twilio.serialize_list(tag) { |e| e },
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

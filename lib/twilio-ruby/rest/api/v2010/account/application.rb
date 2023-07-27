@@ -163,9 +163,7 @@ module Twilio
                     # @return [Page] Page of ApplicationInstance
                     def page(friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'FriendlyName' => friendly_name,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

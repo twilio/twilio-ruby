@@ -271,7 +271,7 @@ module Twilio
                 self.api.v2010.account.keys(sid)
             end
             ##
-            # @param [string] sid The Twilio-provided string that uniquely identifies the Message resource to fetch.
+            # @param [string] sid The SID of the Message resource to be fetched
 
             # @return [Twilio::REST::Api::V2010::AccountContext::MessageInstance] if sid was passed.
             # @return [Twilio::REST::Api::V2010::AccountContext::MessageList]

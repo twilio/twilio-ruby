@@ -36,7 +36,7 @@ module Twilio
                     # @param [String] address_sid Optional. A 34 character string that uniquely identifies the Address resource that represents the address of the owner of this phone number.
                     # @param [String] email Optional. Email of the owner of this phone number that is being hosted.
                     # @param [String] account_sid This defaults to the AccountSid of the authorization the user is using. This can be provided to specify a subaccount to add the HostedNumberOrder to.
-                    # @param [String] friendly_name A 64 character string that is a human readable text that describes this resource.
+                    # @param [String] friendly_name A 128 character string that is a human readable text that describes this resource.
                     # @param [Array[String]] cc_emails Optional. A list of emails that the LOA document for this HostedNumberOrder will be carbon copied to.
                     # @param [String] sms_url The URL that Twilio should request when somebody sends an SMS to the phone number. This will be copied onto the IncomingPhoneNumber resource.
                     # @param [String] sms_method The HTTP method that should be used to request the SmsUrl. Must be either `GET` or `POST`.  This will be copied onto the IncomingPhoneNumber resource.
@@ -102,7 +102,7 @@ module Twilio
                     # @param [Boolean] sms_capability Whether the SMS capability will be hosted on our platform. Can be `true` of `false`.
                     # @param [String] phone_number An E164 formatted phone number hosted by this HostedNumberOrder.
                     # @param [String] incoming_phone_number_sid A 34 character string that uniquely identifies the IncomingPhoneNumber resource created by this HostedNumberOrder.
-                    # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
+                    # @param [String] friendly_name A human readable description of this resource, up to 128 characters.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -130,7 +130,7 @@ module Twilio
                     # @param [Boolean] sms_capability Whether the SMS capability will be hosted on our platform. Can be `true` of `false`.
                     # @param [String] phone_number An E164 formatted phone number hosted by this HostedNumberOrder.
                     # @param [String] incoming_phone_number_sid A 34 character string that uniquely identifies the IncomingPhoneNumber resource created by this HostedNumberOrder.
-                    # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
+                    # @param [String] friendly_name A human readable description of this resource, up to 128 characters.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -173,24 +173,18 @@ module Twilio
                     # @param [Boolean] sms_capability Whether the SMS capability will be hosted on our platform. Can be `true` of `false`.
                     # @param [String] phone_number An E164 formatted phone number hosted by this HostedNumberOrder.
                     # @param [String] incoming_phone_number_sid A 34 character string that uniquely identifies the IncomingPhoneNumber resource created by this HostedNumberOrder.
-                    # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
+                    # @param [String] friendly_name A human readable description of this resource, up to 128 characters.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of HostedNumberOrderInstance
                     def page(status: :unset, sms_capability: :unset, phone_number: :unset, incoming_phone_number_sid: :unset, friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Status' => status,
-                            
                             'SmsCapability' => sms_capability,
-                            
                             'PhoneNumber' => phone_number,
-                            
                             'IncomingPhoneNumberSid' => incoming_phone_number_sid,
-                            
                             'FriendlyName' => friendly_name,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
@@ -400,7 +394,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] A 64 character string that is a human-readable text that describes this resource.
+                    # @return [String] A 128 character string that is a human-readable text that describes this resource.
                     def friendly_name
                         @properties['friendly_name']
                     end

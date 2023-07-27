@@ -134,13 +134,9 @@ module Twilio
                     # @return [Page] Page of CustomerProfilesInstance
                     def page(status: :unset, friendly_name: :unset, policy_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Status' => status,
-                            
                             'FriendlyName' => friendly_name,
-                            
                             'PolicySid' => policy_sid,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

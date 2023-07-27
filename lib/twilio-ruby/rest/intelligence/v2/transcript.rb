@@ -159,23 +159,14 @@ module Twilio
                     # @return [Page] Page of TranscriptInstance
                     def page(service_sid: :unset, before_start_time: :unset, after_start_time: :unset, before_date_created: :unset, after_date_created: :unset, status: :unset, language_code: :unset, source_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'ServiceSid' => service_sid,
-                            
                             'BeforeStartTime' => before_start_time,
-                            
                             'AfterStartTime' => after_start_time,
-                            
                             'BeforeDateCreated' => before_date_created,
-                            
                             'AfterDateCreated' => after_date_created,
-                            
                             'Status' => status,
-                            
                             'LanguageCode' => language_code,
-                            
                             'SourceSid' => source_sid,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

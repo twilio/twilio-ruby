@@ -148,15 +148,10 @@ module Twilio
                     # @return [Page] Page of CommandInstance
                     def page(device: :unset, sim: :unset, status: :unset, direction: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Device' => device,
-                            
                             'Sim' => sim,
-                            
                             'Status' => status,
-                            
                             'Direction' => direction,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

@@ -362,9 +362,11 @@ module Twilio
       # name:: Friendly name given to SIPREC
       # connector_name:: Unique name for Connector
       # track:: Track to be streamed to remote service
+      # status_callback:: Status Callback URL
+      # status_callback_method:: Status Callback URL method
       # keyword_args:: additional attributes
-      def siprec(name: nil, connector_name: nil, track: nil, **keyword_args)
-        siprec = Siprec.new(name: name, connector_name: connector_name, track: track, **keyword_args)
+      def siprec(name: nil, connector_name: nil, track: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
+        siprec = Siprec.new(name: name, connector_name: connector_name, track: track, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args)
 
         yield(siprec) if block_given?
         append(siprec)
@@ -453,9 +455,11 @@ module Twilio
       # name:: Friendly name given to SIPREC
       # connector_name:: Unique name for Connector
       # track:: Track to be streamed to remote service
+      # status_callback:: Status Callback URL
+      # status_callback_method:: Status Callback URL method
       # keyword_args:: additional attributes
-      def siprec(name: nil, connector_name: nil, track: nil, **keyword_args)
-        siprec = Siprec.new(name: name, connector_name: connector_name, track: track, **keyword_args)
+      def siprec(name: nil, connector_name: nil, track: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
+        siprec = Siprec.new(name: name, connector_name: connector_name, track: track, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args)
 
         yield(siprec) if block_given?
         append(siprec)

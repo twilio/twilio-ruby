@@ -132,11 +132,8 @@ module Twilio
                     # @return [Page] Page of InsightsQuestionnairesInstance
                     def page(authorization: :unset, include_inactive: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Authorization' => authorization,
-                            
                             'IncludeInactive' => include_inactive,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

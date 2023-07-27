@@ -134,13 +134,9 @@ module Twilio
                     # @return [Page] Page of EsimProfileInstance
                     def page(eid: :unset, sim_sid: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Eid' => eid,
-                            
                             'SimSid' => sim_sid,
-                            
                             'Status' => status,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

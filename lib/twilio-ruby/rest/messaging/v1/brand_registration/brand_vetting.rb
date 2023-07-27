@@ -121,9 +121,7 @@ module Twilio
                     # @return [Page] Page of BrandVettingInstance
                     def page(vetting_provider: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'VettingProvider' => vetting_provider,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

@@ -126,11 +126,8 @@ module Twilio
                     # @return [Page] Page of SinkInstance
                     def page(in_use: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'InUse' => in_use,
-                            
                             'Status' => status,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

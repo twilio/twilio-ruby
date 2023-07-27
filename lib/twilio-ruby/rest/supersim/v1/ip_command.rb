@@ -145,15 +145,10 @@ module Twilio
                     # @return [Page] Page of IpCommandInstance
                     def page(sim: :unset, sim_iccid: :unset, status: :unset, direction: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Sim' => sim,
-                            
                             'SimIccid' => sim_iccid,
-                            
                             'Status' => status,
-                            
                             'Direction' => direction,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

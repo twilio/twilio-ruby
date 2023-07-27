@@ -128,8 +128,7 @@ module Twilio
                     def page(type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             
-                            'Type' =>  Twilio.serialize_list(type),
-                            
+                            'Type' =>  Twilio.serialize_list(type) { |e| e },
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

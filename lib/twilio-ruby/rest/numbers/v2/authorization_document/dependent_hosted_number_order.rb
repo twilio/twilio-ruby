@@ -39,7 +39,7 @@ module Twilio
                     # @param [Status] status Status of an instance resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5. failed. See the section entitled [Status Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
                     # @param [String] phone_number An E164 formatted phone number hosted by this HostedNumberOrder.
                     # @param [String] incoming_phone_number_sid A 34 character string that uniquely identifies the IncomingPhoneNumber resource created by this HostedNumberOrder.
-                    # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
+                    # @param [String] friendly_name A human readable description of this resource, up to 128 characters.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -65,7 +65,7 @@ module Twilio
                     # @param [Status] status Status of an instance resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5. failed. See the section entitled [Status Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
                     # @param [String] phone_number An E164 formatted phone number hosted by this HostedNumberOrder.
                     # @param [String] incoming_phone_number_sid A 34 character string that uniquely identifies the IncomingPhoneNumber resource created by this HostedNumberOrder.
-                    # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
+                    # @param [String] friendly_name A human readable description of this resource, up to 128 characters.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -106,22 +106,17 @@ module Twilio
                     # @param [Status] status Status of an instance resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5. failed. See the section entitled [Status Values](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents#status-values) for more information on each of these statuses.
                     # @param [String] phone_number An E164 formatted phone number hosted by this HostedNumberOrder.
                     # @param [String] incoming_phone_number_sid A 34 character string that uniquely identifies the IncomingPhoneNumber resource created by this HostedNumberOrder.
-                    # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
+                    # @param [String] friendly_name A human readable description of this resource, up to 128 characters.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of DependentHostedNumberOrderInstance
                     def page(status: :unset, phone_number: :unset, incoming_phone_number_sid: :unset, friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Status' => status,
-                            
                             'PhoneNumber' => phone_number,
-                            
                             'IncomingPhoneNumberSid' => incoming_phone_number_sid,
-                            
                             'FriendlyName' => friendly_name,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
@@ -273,7 +268,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] A human readable description of this resource, up to 64 characters.
+                    # @return [String] A human readable description of this resource, up to 128 characters.
                     def friendly_name
                         @properties['friendly_name']
                     end

@@ -135,11 +135,8 @@ module Twilio
                     # @return [Page] Page of AuthorizationDocumentInstance
                     def page(email: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Email' => email,
-                            
                             'Status' => status,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

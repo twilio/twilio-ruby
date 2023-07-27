@@ -108,13 +108,9 @@ module Twilio
                     # @return [Page] Page of ConferenceParticipantInstance
                     def page(participant_sid: :unset, label: :unset, events: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'ParticipantSid' => participant_sid,
-                            
                             'Label' => label,
-                            
                             'Events' => events,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

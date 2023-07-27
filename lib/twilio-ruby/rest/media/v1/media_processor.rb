@@ -135,11 +135,8 @@ module Twilio
                     # @return [Page] Page of MediaProcessorInstance
                     def page(order: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Order' => order,
-                            
                             'Status' => status,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

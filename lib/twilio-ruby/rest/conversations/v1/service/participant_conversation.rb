@@ -103,11 +103,8 @@ module Twilio
                     # @return [Page] Page of ParticipantConversationInstance
                     def page(identity: :unset, address: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Identity' => identity,
-                            
                             'Address' => address,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

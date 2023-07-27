@@ -145,13 +145,9 @@ module Twilio
                     # @return [Page] Page of RecordingInstance
                     def page(date_created: :unset, date_created_before: :unset, date_created_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'DateCreated' =>  Twilio.serialize_iso8601_date(date_created),
-                            
                             'DateCreated<' =>  Twilio.serialize_iso8601_date(date_created_before),
-                            
                             'DateCreated>' =>  Twilio.serialize_iso8601_date(date_created_after),
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

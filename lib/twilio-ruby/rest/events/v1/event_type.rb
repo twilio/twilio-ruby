@@ -96,9 +96,7 @@ module Twilio
                     # @return [Page] Page of EventTypeInstance
                     def page(schema_id: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'SchemaId' => schema_id,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

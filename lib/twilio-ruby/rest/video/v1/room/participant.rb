@@ -113,15 +113,10 @@ module Twilio
                     # @return [Page] Page of ParticipantInstance
                     def page(status: :unset, identity: :unset, date_created_after: :unset, date_created_before: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Status' => status,
-                            
                             'Identity' => identity,
-                            
                             'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
-                            
                             'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

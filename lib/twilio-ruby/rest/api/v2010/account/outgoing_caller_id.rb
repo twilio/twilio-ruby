@@ -103,11 +103,8 @@ module Twilio
                     # @return [Page] Page of OutgoingCallerIdInstance
                     def page(phone_number: :unset, friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'PhoneNumber' => phone_number,
-                            
                             'FriendlyName' => friendly_name,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

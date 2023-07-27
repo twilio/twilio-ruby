@@ -266,27 +266,16 @@ module Twilio
                     # @return [Page] Page of CallInstance
                     def page(to: :unset, from: :unset, parent_call_sid: :unset, status: :unset, start_time: :unset, start_time_before: :unset, start_time_after: :unset, end_time: :unset, end_time_before: :unset, end_time_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'To' => to,
-                            
                             'From' => from,
-                            
                             'ParentCallSid' => parent_call_sid,
-                            
                             'Status' => status,
-                            
                             'StartTime' =>  Twilio.serialize_iso8601_datetime(start_time),
-                            
                             'StartTime<' =>  Twilio.serialize_iso8601_datetime(start_time_before),
-                            
                             'StartTime>' =>  Twilio.serialize_iso8601_datetime(start_time_after),
-                            
                             'EndTime' =>  Twilio.serialize_iso8601_datetime(end_time),
-                            
                             'EndTime<' =>  Twilio.serialize_iso8601_datetime(end_time_before),
-                            
                             'EndTime>' =>  Twilio.serialize_iso8601_datetime(end_time_after),
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

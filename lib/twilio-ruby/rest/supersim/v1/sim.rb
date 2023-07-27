@@ -128,13 +128,9 @@ module Twilio
                     # @return [Page] Page of SimInstance
                     def page(status: :unset, fleet: :unset, iccid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Status' => status,
-                            
                             'Fleet' => fleet,
-                            
                             'Iccid' => iccid,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

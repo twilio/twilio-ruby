@@ -268,13 +268,9 @@ module Twilio
                     # @return [Page] Page of ParticipantInstance
                     def page(muted: :unset, hold: :unset, coaching: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
-                            
                             'Muted' => muted,
-                            
                             'Hold' => hold,
-                            
                             'Coaching' => coaching,
-                            
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
