@@ -30,7 +30,7 @@ module Twilio
       # rubocop:disable Lint/ShadowedArgument
       def request(host, port, method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil) # rubocop:disable Metrics/MethodLength
         auth ||= @auth
-        headers = generate_headers(method)
+        headers = generate_headers(method, headers)
         uri = build_uri(uri)
 
         if @logger
@@ -105,9 +105,8 @@ module Twilio
         raise RestError.new 'Unexpected response from certificate endpoint', response
       end
 
-      def generate_headers(method)
+      def generate_headers(method, headers)
         ruby_config = RbConfig::CONFIG
-        headers = {}
         headers['User-Agent'] =
           "twilio-ruby/#{Twilio::VERSION} (#{ruby_config['host_os']} #{ruby_config['host_cpu']}) Ruby/#{RUBY_VERSION}"
         headers['Accept-Charset'] = 'utf-8'

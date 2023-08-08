@@ -221,7 +221,7 @@ describe Twilio::REST::Client do
 
     it 'use default user agent format' do
       @client.request('host', 'port', 'GET', 'https://api.twilio.com')
-      expect(@client.http_client.last_request.headers['User-Agent']).to match %r{^twilio-ruby/[0-9.]+(-rc\.[0-9]+)?\s\([\w-]+\s\w+\)\sRuby/[^\s]+$}
+      expect(@client.http_client.last_request.headers['User-Agent']).to match %r{^twilio-ruby/[0-9.]+(-rc\.[0-9]+)?\s\([\w.-]+\s\w+\)\sRuby/[^\s]+$}
     end
 
     it 'add user agent extensions' do
@@ -230,6 +230,12 @@ describe Twilio::REST::Client do
       @client.request('host', 'port', 'GET', 'https://api.twilio.com')
       actual_extensions = @client.http_client.last_request.headers['User-Agent'].split(/ /).last(extensions.size)
       expect(actual_extensions).to match_array(extensions)
+    end
+
+    it 'preserve headers passed' do
+       headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => "true" })
+       @client.request('host', 'port', 'GET', 'https://api.twilio.com',nil,nil, headers)
+       expect(@client.http_client.last_request.headers["X-Twilio-Webhook-Enabled"]).to eq("true")
     end
   end
 end
