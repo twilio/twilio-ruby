@@ -27,7 +27,6 @@ module Twilio
       ##
       # Makes a request to the Twilio API using the configured http client
       # Authentication information is automatically added if none is provided
-      # rubocop:disable Lint/ShadowedArgument
       def request(host, port, method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil) # rubocop:disable Metrics/MethodLength
         auth ||= @auth
         headers = generate_headers(method, headers)
@@ -68,7 +67,6 @@ module Twilio
 
         response
       end
-      # rubocop:enable Lint/ShadowedArgument
 
       ##
       # Build the final request uri
