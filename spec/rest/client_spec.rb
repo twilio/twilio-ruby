@@ -233,9 +233,9 @@ describe Twilio::REST::Client do
     end
 
     it 'preserve headers passed' do
-       headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => "true" })
-       @client.request('host', 'port', 'GET', 'https://api.twilio.com',nil,nil, headers)
-       expect(@client.http_client.last_request.headers["X-Twilio-Webhook-Enabled"]).to eq("true")
+      headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => "true" })
+      @client.request('host', 'port', 'GET', 'https://api.twilio.com', nil, nil, headers)
+      expect(@client.http_client.last_request.headers["X-Twilio-Webhook-Enabled"]).to eq("true")
     end
   end
 end
