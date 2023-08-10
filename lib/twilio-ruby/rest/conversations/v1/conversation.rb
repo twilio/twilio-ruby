@@ -35,7 +35,7 @@ module Twilio
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used to address the resource in place of the resource's `sid` in the URL.
                     # @param [Time] date_created The date that this resource was created.
                     # @param [Time] date_updated The date that this resource was last updated.
-                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs to.
+                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) this conversation belongs to.
                     # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
                     # @param [State] state 
                     # @param [String] timers_inactive ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
@@ -236,7 +236,7 @@ module Twilio
                     # @param [Time] date_created The date that this resource was created.
                     # @param [Time] date_updated The date that this resource was last updated.
                     # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
-                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs to.
+                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) this conversation belongs to.
                     # @param [State] state 
                     # @param [String] timers_inactive ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
                     # @param [String] timers_closed ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
@@ -438,7 +438,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique ID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs to.
+                    # @return [String] The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) this conversation belongs to.
                     def messaging_service_sid
                         @properties['messaging_service_sid']
                     end
@@ -536,7 +536,7 @@ module Twilio
                     # @param [Time] date_created The date that this resource was created.
                     # @param [Time] date_updated The date that this resource was last updated.
                     # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
-                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) this conversation belongs to.
+                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) this conversation belongs to.
                     # @param [State] state 
                     # @param [String] timers_inactive ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
                     # @param [String] timers_closed ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.

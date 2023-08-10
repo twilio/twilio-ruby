@@ -34,7 +34,7 @@ module Twilio
                     ##
                     # Create the MessageInstance
                     # @param [String] to The recipient's phone number in [E.164](https://www.twilio.com/docs/glossary/what-e164) format (for SMS/MMS) or [channel address](https://www.twilio.com/docs/sms/channels#channel-addresses), e.g. `whatsapp:+15552229999`.
-                    # @param [String] status_callback The URL of the endpoint to which Twilio sends [Message status callback requests](https://www.twilio.com/docs/sms/api/message-resource#twilios-request-to-the-statuscallback-url). URL must contain a valid hostname and underscores are not allowed. If you include this parameter with the `messaging_service_sid`, Twilio uses this URL instead of the Status Callback URL of the [Messaging Service](https://www.twilio.com/docs/sms/services/api). 
+                    # @param [String] status_callback The URL of the endpoint to which Twilio sends [Message status callback requests](https://www.twilio.com/docs/sms/api/message-resource#twilios-request-to-the-statuscallback-url). URL must contain a valid hostname and underscores are not allowed. If you include this parameter with the `messaging_service_sid`, Twilio uses this URL instead of the Status Callback URL of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api). 
                     # @param [String] application_sid The SID of the associated [TwiML Application](https://www.twilio.com/docs/usage/api/applications). If this parameter is provided, the `status_callback` parameter of this request is ignored; [Message status callback requests](https://www.twilio.com/docs/sms/api/message-resource#twilios-request-to-the-statuscallback-url) are sent to the TwiML App's `message_status_callback` URL.
                     # @param [Float] max_price The maximum price in US dollars that you are willing to pay for this Message's delivery. The value can have up to four decimal places. When the `max_price` parameter is provided, the cost of a message is checked before it is sent. If the cost exceeds `max_price`, the message is not sent and the Message `status` is `failed`.
                     # @param [Boolean] provide_feedback Boolean indicating whether or not you intend to provide delivery confirmation feedback to Twilio (used in conjunction with the [Message Feedback subresource](https://www.twilio.com/docs/sms/api/message-feedback-resource)). Default value is `false`.
@@ -502,7 +502,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The SID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) associated with the Message resource. The value is `null` if a Messaging Service was not used.
+                    # @return [String] The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) associated with the Message resource. The value is `null` if a Messaging Service was not used.
                     def messaging_service_sid
                         @properties['messaging_service_sid']
                     end

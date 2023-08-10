@@ -63,7 +63,7 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [String] eid List the eSIM Profiles that have been associated with an EId.
-                    # @param [String] sim_sid Find the eSIM Profile resource related to a [Sim](https://www.twilio.com/docs/wireless/api/sim-resource) resource by providing the SIM SID. Will always return an array with either 1 or 0 records.
+                    # @param [String] sim_sid Find the eSIM Profile resource related to a [Sim](https://www.twilio.com/docs/iot/wireless/api/sim-resource) resource by providing the SIM SID. Will always return an array with either 1 or 0 records.
                     # @param [Status] status List the eSIM Profiles that are in a given status.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -87,7 +87,7 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [String] eid List the eSIM Profiles that have been associated with an EId.
-                    # @param [String] sim_sid Find the eSIM Profile resource related to a [Sim](https://www.twilio.com/docs/wireless/api/sim-resource) resource by providing the SIM SID. Will always return an array with either 1 or 0 records.
+                    # @param [String] sim_sid Find the eSIM Profile resource related to a [Sim](https://www.twilio.com/docs/iot/wireless/api/sim-resource) resource by providing the SIM SID. Will always return an array with either 1 or 0 records.
                     # @param [Status] status List the eSIM Profiles that are in a given status.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -126,7 +126,7 @@ module Twilio
                     # Retrieve a single page of EsimProfileInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] eid List the eSIM Profiles that have been associated with an EId.
-                    # @param [String] sim_sid Find the eSIM Profile resource related to a [Sim](https://www.twilio.com/docs/wireless/api/sim-resource) resource by providing the SIM SID. Will always return an array with either 1 or 0 records.
+                    # @param [String] sim_sid Find the eSIM Profile resource related to a [Sim](https://www.twilio.com/docs/iot/wireless/api/sim-resource) resource by providing the SIM SID. Will always return an array with either 1 or 0 records.
                     # @param [Status] status List the eSIM Profiles that are in a given status.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
@@ -309,7 +309,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The SID of the [Sim](https://www.twilio.com/docs/wireless/api/sim-resource) resource that this eSIM Profile controls.
+                    # @return [String] The SID of the [Sim](https://www.twilio.com/docs/iot/wireless/api/sim-resource) resource that this eSIM Profile controls.
                     def sim_sid
                         @properties['sim_sid']
                     end

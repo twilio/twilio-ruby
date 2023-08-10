@@ -58,7 +58,7 @@ module Twilio
                     ##
                     # Update the ChannelInstance
                     # @param [ChannelType] type 
-                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) this channel belongs to.
+                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) this channel belongs to.
                     # @param [ChannelEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ChannelInstance] Updated ChannelInstance
                     def update(
@@ -246,7 +246,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique ID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) this channel belongs to.
+                    # @return [String] The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) this channel belongs to.
                     def messaging_service_sid
                         @properties['messaging_service_sid']
                     end
@@ -260,7 +260,7 @@ module Twilio
                     ##
                     # Update the ChannelInstance
                     # @param [ChannelType] type 
-                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/sms/services/api) this channel belongs to.
+                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) this channel belongs to.
                     # @param [ChannelEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ChannelInstance] Updated ChannelInstance
                     def update(

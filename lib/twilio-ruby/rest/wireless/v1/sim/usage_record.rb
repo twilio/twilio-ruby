@@ -195,7 +195,7 @@ module Twilio
 
                     
                     ##
-                    # @return [String] The SID of the [Sim resource](https://www.twilio.com/docs/wireless/api/sim-resource) that this Usage Record is for.
+                    # @return [String] The SID of the [Sim resource](https://www.twilio.com/docs/iot/wireless/api/sim-resource) that this Usage Record is for.
                     def sim_sid
                         @properties['sim_sid']
                     end
@@ -213,13 +213,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] An object that describes the SIM's usage of Commands during the specified period. See [Commands Usage Object](https://www.twilio.com/docs/wireless/api/sim-usagerecord-resource#commands-usage-object).
+                    # @return [Hash] An object that describes the SIM's usage of Commands during the specified period. See [Commands Usage Object](https://www.twilio.com/docs/iot/wireless/api/sim-usagerecord-resource#commands-usage-object).
                     def commands
                         @properties['commands']
                     end
                     
                     ##
-                    # @return [Hash] An object that describes the SIM's data usage during the specified period. See [Data Usage Object](https://www.twilio.com/docs/wireless/api/sim-usagerecord-resource#data-usage-object).
+                    # @return [Hash] An object that describes the SIM's data usage during the specified period. See [Data Usage Object](https://www.twilio.com/docs/iot/wireless/api/sim-usagerecord-resource#data-usage-object).
                     def data
                         @properties['data']
                     end

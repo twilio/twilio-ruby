@@ -37,12 +37,12 @@ module Twilio
                     # @param [String] fallback_url The URL that we call using `fallback_method` if an error occurs while retrieving or executing the TwiML from the Inbound Request URL. If the `use_inbound_webhook_on_number` field is enabled then the webhook url defined on the phone number will override the `fallback_url` defined for the Messaging Service.
                     # @param [String] fallback_method The HTTP method we should use to call `fallback_url`. Can be: `GET` or `POST`.
                     # @param [String] status_callback The URL we should call to [pass status updates](https://www.twilio.com/docs/sms/api/message-resource#message-status-values) about message delivery.
-                    # @param [Boolean] sticky_sender Whether to enable [Sticky Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service instance.
-                    # @param [Boolean] mms_converter Whether to enable the [MMS Converter](https://www.twilio.com/docs/sms/services#mms-converter) for messages sent through the Service instance.
-                    # @param [Boolean] smart_encoding Whether to enable [Smart Encoding](https://www.twilio.com/docs/sms/services#smart-encoding) for messages sent through the Service instance.
+                    # @param [Boolean] sticky_sender Whether to enable [Sticky Sender](https://www.twilio.com/docs/messaging/services#sticky-sender) on the Service instance.
+                    # @param [Boolean] mms_converter Whether to enable the [MMS Converter](https://www.twilio.com/docs/messaging/services#mms-converter) for messages sent through the Service instance.
+                    # @param [Boolean] smart_encoding Whether to enable [Smart Encoding](https://www.twilio.com/docs/messaging/services#smart-encoding) for messages sent through the Service instance.
                     # @param [ScanMessageContent] scan_message_content 
-                    # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/sms/services#fallback-to-long-code) for messages sent through the Service instance.
-                    # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/sms/services#area-code-geomatch) on the Service Instance.
+                    # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/messaging/services#fallback-to-long-code) for messages sent through the Service instance.
+                    # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
                     # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
                     # @param [Boolean] synchronous_validation Reserved.
                     # @param [String] usecase A string that describes the scenario in which the Messaging Service will be used. Examples: [notification, marketing, verification, poll ..].
@@ -238,12 +238,12 @@ module Twilio
                     # @param [String] fallback_url The URL that we call using `fallback_method` if an error occurs while retrieving or executing the TwiML from the Inbound Request URL. If the `use_inbound_webhook_on_number` field is enabled then the webhook url defined on the phone number will override the `fallback_url` defined for the Messaging Service.
                     # @param [String] fallback_method The HTTP method we should use to call `fallback_url`. Can be: `GET` or `POST`.
                     # @param [String] status_callback The URL we should call to [pass status updates](https://www.twilio.com/docs/sms/api/message-resource#message-status-values) about message delivery.
-                    # @param [Boolean] sticky_sender Whether to enable [Sticky Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service instance.
-                    # @param [Boolean] mms_converter Whether to enable the [MMS Converter](https://www.twilio.com/docs/sms/services#mms-converter) for messages sent through the Service instance.
-                    # @param [Boolean] smart_encoding Whether to enable [Smart Encoding](https://www.twilio.com/docs/sms/services#smart-encoding) for messages sent through the Service instance.
+                    # @param [Boolean] sticky_sender Whether to enable [Sticky Sender](https://www.twilio.com/docs/messaging/services#sticky-sender) on the Service instance.
+                    # @param [Boolean] mms_converter Whether to enable the [MMS Converter](https://www.twilio.com/docs/messaging/services#mms-converter) for messages sent through the Service instance.
+                    # @param [Boolean] smart_encoding Whether to enable [Smart Encoding](https://www.twilio.com/docs/messaging/services#smart-encoding) for messages sent through the Service instance.
                     # @param [ScanMessageContent] scan_message_content 
-                    # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/sms/services#fallback-to-long-code) for messages sent through the Service instance.
-                    # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/sms/services#area-code-geomatch) on the Service Instance.
+                    # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/messaging/services#fallback-to-long-code) for messages sent through the Service instance.
+                    # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
                     # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
                     # @param [Boolean] synchronous_validation Reserved.
                     # @param [String] usecase A string that describes the scenario in which the Messaging Service will be used. Examples: [notification, marketing, verification, poll ..]
@@ -543,19 +543,19 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Boolean] Whether to enable [Sticky Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service instance.
+                    # @return [Boolean] Whether to enable [Sticky Sender](https://www.twilio.com/docs/messaging/services#sticky-sender) on the Service instance.
                     def sticky_sender
                         @properties['sticky_sender']
                     end
                     
                     ##
-                    # @return [Boolean] Whether to enable the [MMS Converter](https://www.twilio.com/docs/sms/services#mms-converter) for messages sent through the Service instance.
+                    # @return [Boolean] Whether to enable the [MMS Converter](https://www.twilio.com/docs/messaging/services#mms-converter) for messages sent through the Service instance.
                     def mms_converter
                         @properties['mms_converter']
                     end
                     
                     ##
-                    # @return [Boolean] Whether to enable [Smart Encoding](https://www.twilio.com/docs/sms/services#smart-encoding) for messages sent through the Service instance.
+                    # @return [Boolean] Whether to enable [Smart Encoding](https://www.twilio.com/docs/messaging/services#smart-encoding) for messages sent through the Service instance.
                     def smart_encoding
                         @properties['smart_encoding']
                     end
@@ -567,13 +567,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Boolean] Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/sms/services#fallback-to-long-code) for messages sent through the Service instance.
+                    # @return [Boolean] Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/messaging/services#fallback-to-long-code) for messages sent through the Service instance.
                     def fallback_to_long_code
                         @properties['fallback_to_long_code']
                     end
                     
                     ##
-                    # @return [Boolean] Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/sms/services#area-code-geomatch) on the Service Instance.
+                    # @return [Boolean] Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
                     def area_code_geomatch
                         @properties['area_code_geomatch']
                     end
@@ -644,12 +644,12 @@ module Twilio
                     # @param [String] fallback_url The URL that we call using `fallback_method` if an error occurs while retrieving or executing the TwiML from the Inbound Request URL. If the `use_inbound_webhook_on_number` field is enabled then the webhook url defined on the phone number will override the `fallback_url` defined for the Messaging Service.
                     # @param [String] fallback_method The HTTP method we should use to call `fallback_url`. Can be: `GET` or `POST`.
                     # @param [String] status_callback The URL we should call to [pass status updates](https://www.twilio.com/docs/sms/api/message-resource#message-status-values) about message delivery.
-                    # @param [Boolean] sticky_sender Whether to enable [Sticky Sender](https://www.twilio.com/docs/sms/services#sticky-sender) on the Service instance.
-                    # @param [Boolean] mms_converter Whether to enable the [MMS Converter](https://www.twilio.com/docs/sms/services#mms-converter) for messages sent through the Service instance.
-                    # @param [Boolean] smart_encoding Whether to enable [Smart Encoding](https://www.twilio.com/docs/sms/services#smart-encoding) for messages sent through the Service instance.
+                    # @param [Boolean] sticky_sender Whether to enable [Sticky Sender](https://www.twilio.com/docs/messaging/services#sticky-sender) on the Service instance.
+                    # @param [Boolean] mms_converter Whether to enable the [MMS Converter](https://www.twilio.com/docs/messaging/services#mms-converter) for messages sent through the Service instance.
+                    # @param [Boolean] smart_encoding Whether to enable [Smart Encoding](https://www.twilio.com/docs/messaging/services#smart-encoding) for messages sent through the Service instance.
                     # @param [ScanMessageContent] scan_message_content 
-                    # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/sms/services#fallback-to-long-code) for messages sent through the Service instance.
-                    # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/sms/services#area-code-geomatch) on the Service Instance.
+                    # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/messaging/services#fallback-to-long-code) for messages sent through the Service instance.
+                    # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
                     # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
                     # @param [Boolean] synchronous_validation Reserved.
                     # @param [String] usecase A string that describes the scenario in which the Messaging Service will be used. Examples: [notification, marketing, verification, poll ..]

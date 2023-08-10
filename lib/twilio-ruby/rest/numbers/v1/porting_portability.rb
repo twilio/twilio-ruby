@@ -58,10 +58,16 @@ module Twilio
                     end
                     ##
                     # Fetch the PortingPortabilityInstance
+                    # @param [String] target_account_sid The SID of the account where the phone number(s) will be ported.
                     # @return [PortingPortabilityInstance] Fetched PortingPortabilityInstance
-                    def fetch
+                    def fetch(
+                        target_account_sid: :unset
+                    )
 
-                        payload = @version.fetch('GET', @uri)
+                        params = Twilio::Values.of({
+                            'TargetAccountSid' => target_account_sid,
+                        })
+                        payload = @version.fetch('GET', @uri, params: params)
                         PortingPortabilityInstance.new(
                             @version,
                             payload,
@@ -129,6 +135,7 @@ module Twilio
                         # Marshaled Properties
                         @properties = { 
                             'phone_number' => payload['phone_number'],
+                            'account_sid' => payload['account_sid'],
                             'portable' => payload['portable'],
                             'pin_and_account_number_required' => payload['pin_and_account_number_required'],
                             'not_portable_reason' => payload['not_portable_reason'],
@@ -160,6 +167,12 @@ module Twilio
                     # @return [String] The phone number which portability is to be checked. Phone numbers are in E.164 format (e.g. +16175551212).
                     def phone_number
                         @properties['phone_number']
+                    end
+                    
+                    ##
+                    # @return [String] The target account sid to which the number will be ported
+                    def account_sid
+                        @properties['account_sid']
                     end
                     
                     ##
@@ -218,10 +231,15 @@ module Twilio
                     
                     ##
                     # Fetch the PortingPortabilityInstance
+                    # @param [String] target_account_sid The SID of the account where the phone number(s) will be ported.
                     # @return [PortingPortabilityInstance] Fetched PortingPortabilityInstance
-                    def fetch
+                    def fetch(
+                        target_account_sid: :unset
+                    )
 
-                        context.fetch
+                        context.fetch(
+                            target_account_sid: target_account_sid, 
+                        )
                     end
 
                     ##

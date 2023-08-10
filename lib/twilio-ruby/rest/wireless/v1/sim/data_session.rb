@@ -194,7 +194,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The SID of the [Sim resource](https://www.twilio.com/docs/wireless/api/sim-resource) that the Data Session is for.
+                    # @return [String] The SID of the [Sim resource](https://www.twilio.com/docs/iot/wireless/api/sim-resource) that the Data Session is for.
                     def sim_sid
                         @properties['sim_sid']
                     end
@@ -230,7 +230,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The friendly name of the mobile operator network that the [SIM](https://www.twilio.com/docs/wireless/api/sim-resource)-connected device is attached to. This is determined by looking up the `operator_mnc`.
+                    # @return [String] The friendly name of the mobile operator network that the [SIM](https://www.twilio.com/docs/iot/wireless/api/sim-resource)-connected device is attached to. This is determined by looking up the `operator_mnc`.
                     def operator_name
                         @properties['operator_name']
                     end
@@ -242,7 +242,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] An object that describes the estimated location in latitude and longitude where the device's Data Session took place. The location is derived from the `cell_id` when the Data Session was last updated. See [Cell Location Estimate Object](https://www.twilio.com/docs/wireless/api/datasession-resource#cell-location-estimate-object). 
+                    # @return [Hash] An object that describes the estimated location in latitude and longitude where the device's Data Session took place. The location is derived from the `cell_id` when the Data Session was last updated. See [Cell Location Estimate Object](https://www.twilio.com/docs/iot/wireless/api/datasession-resource#cell-location-estimate-object). 
                     def cell_location_estimate
                         @properties['cell_location_estimate']
                     end

@@ -70,7 +70,7 @@ module Twilio
                     # memory before returning.
                     # @param [String] sim The SID or unique name of the Sim resource that IP Command was sent to or from.
                     # @param [String] sim_iccid The ICCID of the Sim resource that IP Command was sent to or from.
-                    # @param [Status] status The status of the IP Command. Can be: `queued`, `sent`, `received` or `failed`. See the [IP Command Status Values](https://www.twilio.com/docs/wireless/api/ipcommand-resource#status-values) for a description of each.
+                    # @param [Status] status The status of the IP Command. Can be: `queued`, `sent`, `received` or `failed`. See the [IP Command Status Values](https://www.twilio.com/docs/iot/supersim/api/ipcommand-resource#status-values) for a description of each.
                     # @param [Direction] direction The direction of the IP Command. Can be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term `mobile terminated`, and `from_sim` is synonymous with the term `mobile originated`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -96,7 +96,7 @@ module Twilio
                     # is reached.
                     # @param [String] sim The SID or unique name of the Sim resource that IP Command was sent to or from.
                     # @param [String] sim_iccid The ICCID of the Sim resource that IP Command was sent to or from.
-                    # @param [Status] status The status of the IP Command. Can be: `queued`, `sent`, `received` or `failed`. See the [IP Command Status Values](https://www.twilio.com/docs/wireless/api/ipcommand-resource#status-values) for a description of each.
+                    # @param [Status] status The status of the IP Command. Can be: `queued`, `sent`, `received` or `failed`. See the [IP Command Status Values](https://www.twilio.com/docs/iot/supersim/api/ipcommand-resource#status-values) for a description of each.
                     # @param [Direction] direction The direction of the IP Command. Can be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term `mobile terminated`, and `from_sim` is synonymous with the term `mobile originated`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -137,7 +137,7 @@ module Twilio
                     # Request is executed immediately.
                     # @param [String] sim The SID or unique name of the Sim resource that IP Command was sent to or from.
                     # @param [String] sim_iccid The ICCID of the Sim resource that IP Command was sent to or from.
-                    # @param [Status] status The status of the IP Command. Can be: `queued`, `sent`, `received` or `failed`. See the [IP Command Status Values](https://www.twilio.com/docs/wireless/api/ipcommand-resource#status-values) for a description of each.
+                    # @param [Status] status The status of the IP Command. Can be: `queued`, `sent`, `received` or `failed`. See the [IP Command Status Values](https://www.twilio.com/docs/iot/supersim/api/ipcommand-resource#status-values) for a description of each.
                     # @param [Direction] direction The direction of the IP Command. Can be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term `mobile terminated`, and `from_sim` is synonymous with the term `mobile originated`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state

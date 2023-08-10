@@ -53,10 +53,11 @@ module Twilio
                     # @param [String] subaccount A unique SID identifier of a Subaccount.
                     # @param [Boolean] abnormal_session A boolean flag indicating an abnormal session where the last SIP response was not 200 OK.
                     # @param [AnsweredBy] answered_by An Answered By value for the calls based on `Answering Machine Detection (AMD)`. One of `unknown`, `machine_start`, `machine_end_beep`, `machine_end_silence`, `machine_end_other`, `human` or `fax`.
-                    # @param [String] connectivity_issue A Connectivity Issue with the calls. One of `no_connectivity_issue`, `invalid_number`, `caller_id`, `dropped_call`, or `number_reachability`.
-                    # @param [String] quality_issue A subjective Quality Issue with the calls. One of `no_quality_issue`, `low_volume`, `choppy_robotic`, `echo`, `dtmf`, `latency`, `owa`, `static_noise`.
-                    # @param [Boolean] spam A boolean flag indicating spam calls.
-                    # @param [String] call_score A Call Score of the calls. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for the rated call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
+                    # @param [String] answered_by_annotation Either machine or human.
+                    # @param [String] connectivity_issue_annotation A Connectivity Issue with the calls. One of `no_connectivity_issue`, `invalid_number`, `caller_id`, `dropped_call`, or `number_reachability`.
+                    # @param [String] quality_issue_annotation A subjective Quality Issue with the calls. One of `no_quality_issue`, `low_volume`, `choppy_robotic`, `echo`, `dtmf`, `latency`, `owa`, `static_noise`.
+                    # @param [Boolean] spam_annotation A boolean flag indicating spam calls.
+                    # @param [String] call_score_annotation A Call Score of the calls. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for the rated call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -64,7 +65,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, connectivity_issue: :unset, quality_issue: :unset, spam: :unset, call_score: :unset, limit: nil, page_size: nil)
+                    def list(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, answered_by_annotation: :unset, connectivity_issue_annotation: :unset, quality_issue_annotation: :unset, spam_annotation: :unset, call_score_annotation: :unset, limit: nil, page_size: nil)
                         self.stream(
                             from: from,
                             to: to,
@@ -85,10 +86,11 @@ module Twilio
                             subaccount: subaccount,
                             abnormal_session: abnormal_session,
                             answered_by: answered_by,
-                            connectivity_issue: connectivity_issue,
-                            quality_issue: quality_issue,
-                            spam: spam,
-                            call_score: call_score,
+                            answered_by_annotation: answered_by_annotation,
+                            connectivity_issue_annotation: connectivity_issue_annotation,
+                            quality_issue_annotation: quality_issue_annotation,
+                            spam_annotation: spam_annotation,
+                            call_score_annotation: call_score_annotation,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -117,10 +119,11 @@ module Twilio
                     # @param [String] subaccount A unique SID identifier of a Subaccount.
                     # @param [Boolean] abnormal_session A boolean flag indicating an abnormal session where the last SIP response was not 200 OK.
                     # @param [AnsweredBy] answered_by An Answered By value for the calls based on `Answering Machine Detection (AMD)`. One of `unknown`, `machine_start`, `machine_end_beep`, `machine_end_silence`, `machine_end_other`, `human` or `fax`.
-                    # @param [String] connectivity_issue A Connectivity Issue with the calls. One of `no_connectivity_issue`, `invalid_number`, `caller_id`, `dropped_call`, or `number_reachability`.
-                    # @param [String] quality_issue A subjective Quality Issue with the calls. One of `no_quality_issue`, `low_volume`, `choppy_robotic`, `echo`, `dtmf`, `latency`, `owa`, `static_noise`.
-                    # @param [Boolean] spam A boolean flag indicating spam calls.
-                    # @param [String] call_score A Call Score of the calls. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for the rated call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
+                    # @param [String] answered_by_annotation Either machine or human.
+                    # @param [String] connectivity_issue_annotation A Connectivity Issue with the calls. One of `no_connectivity_issue`, `invalid_number`, `caller_id`, `dropped_call`, or `number_reachability`.
+                    # @param [String] quality_issue_annotation A subjective Quality Issue with the calls. One of `no_quality_issue`, `low_volume`, `choppy_robotic`, `echo`, `dtmf`, `latency`, `owa`, `static_noise`.
+                    # @param [Boolean] spam_annotation A boolean flag indicating spam calls.
+                    # @param [String] call_score_annotation A Call Score of the calls. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for the rated call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -128,7 +131,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, connectivity_issue: :unset, quality_issue: :unset, spam: :unset, call_score: :unset, limit: nil, page_size: nil)
+                    def stream(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, answered_by_annotation: :unset, connectivity_issue_annotation: :unset, quality_issue_annotation: :unset, spam_annotation: :unset, call_score_annotation: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
@@ -151,10 +154,11 @@ module Twilio
                             subaccount: subaccount,
                             abnormal_session: abnormal_session,
                             answered_by: answered_by,
-                            connectivity_issue: connectivity_issue,
-                            quality_issue: quality_issue,
-                            spam: spam,
-                            call_score: call_score,
+                            answered_by_annotation: answered_by_annotation,
+                            connectivity_issue_annotation: connectivity_issue_annotation,
+                            quality_issue_annotation: quality_issue_annotation,
+                            spam_annotation: spam_annotation,
+                            call_score_annotation: call_score_annotation,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -196,15 +200,16 @@ module Twilio
                     # @param [String] subaccount A unique SID identifier of a Subaccount.
                     # @param [Boolean] abnormal_session A boolean flag indicating an abnormal session where the last SIP response was not 200 OK.
                     # @param [AnsweredBy] answered_by An Answered By value for the calls based on `Answering Machine Detection (AMD)`. One of `unknown`, `machine_start`, `machine_end_beep`, `machine_end_silence`, `machine_end_other`, `human` or `fax`.
-                    # @param [String] connectivity_issue A Connectivity Issue with the calls. One of `no_connectivity_issue`, `invalid_number`, `caller_id`, `dropped_call`, or `number_reachability`.
-                    # @param [String] quality_issue A subjective Quality Issue with the calls. One of `no_quality_issue`, `low_volume`, `choppy_robotic`, `echo`, `dtmf`, `latency`, `owa`, `static_noise`.
-                    # @param [Boolean] spam A boolean flag indicating spam calls.
-                    # @param [String] call_score A Call Score of the calls. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for the rated call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
+                    # @param [String] answered_by_annotation Either machine or human.
+                    # @param [String] connectivity_issue_annotation A Connectivity Issue with the calls. One of `no_connectivity_issue`, `invalid_number`, `caller_id`, `dropped_call`, or `number_reachability`.
+                    # @param [String] quality_issue_annotation A subjective Quality Issue with the calls. One of `no_quality_issue`, `low_volume`, `choppy_robotic`, `echo`, `dtmf`, `latency`, `owa`, `static_noise`.
+                    # @param [Boolean] spam_annotation A boolean flag indicating spam calls.
+                    # @param [String] call_score_annotation A Call Score of the calls. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for the rated call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of CallSummariesInstance
-                    def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, connectivity_issue: :unset, quality_issue: :unset, spam: :unset, call_score: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, branded: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, answered_by_annotation: :unset, connectivity_issue_annotation: :unset, quality_issue_annotation: :unset, spam_annotation: :unset, call_score_annotation: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'From' => from,
                             'To' => to,
@@ -225,10 +230,11 @@ module Twilio
                             'Subaccount' => subaccount,
                             'AbnormalSession' => abnormal_session,
                             'AnsweredBy' => answered_by,
-                            'ConnectivityIssue' => connectivity_issue,
-                            'QualityIssue' => quality_issue,
-                            'Spam' => spam,
-                            'CallScore' => call_score,
+                            'AnsweredByAnnotation' => answered_by_annotation,
+                            'ConnectivityIssueAnnotation' => connectivity_issue_annotation,
+                            'QualityIssueAnnotation' => quality_issue_annotation,
+                            'SpamAnnotation' => spam_annotation,
+                            'CallScoreAnnotation' => call_score_annotation,
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

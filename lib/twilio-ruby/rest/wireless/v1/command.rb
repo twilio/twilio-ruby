@@ -32,7 +32,7 @@ module Twilio
                     ##
                     # Create the CommandInstance
                     # @param [String] command The message body of the Command. Can be plain text in text mode or a Base64 encoded byte string in binary mode.
-                    # @param [String] sim The `sid` or `unique_name` of the [SIM](https://www.twilio.com/docs/wireless/api/sim-resource) to send the Command to.
+                    # @param [String] sim The `sid` or `unique_name` of the [SIM](https://www.twilio.com/docs/iot/wireless/api/sim-resource) to send the Command to.
                     # @param [String] callback_method The HTTP method we use to call `callback_url`. Can be: `POST` or `GET`, and the default is `POST`.
                     # @param [String] callback_url The URL we call using the `callback_url` when the Command has finished sending, whether the command was delivered or it failed.
                     # @param [CommandMode] command_mode 
@@ -71,7 +71,7 @@ module Twilio
                     # Lists CommandInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [String] sim The `sid` or `unique_name` of the [Sim resources](https://www.twilio.com/docs/wireless/api/sim-resource) to read.
+                    # @param [String] sim The `sid` or `unique_name` of the [Sim resources](https://www.twilio.com/docs/iot/wireless/api/sim-resource) to read.
                     # @param [Status] status The status of the resources to read. Can be: `queued`, `sent`, `delivered`, `received`, or `failed`.
                     # @param [Direction] direction Only return Commands with this direction value.
                     # @param [Transport] transport Only return Commands with this transport value. Can be: `sms` or `ip`.
@@ -97,7 +97,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [String] sim The `sid` or `unique_name` of the [Sim resources](https://www.twilio.com/docs/wireless/api/sim-resource) to read.
+                    # @param [String] sim The `sid` or `unique_name` of the [Sim resources](https://www.twilio.com/docs/iot/wireless/api/sim-resource) to read.
                     # @param [Status] status The status of the resources to read. Can be: `queued`, `sent`, `delivered`, `received`, or `failed`.
                     # @param [Direction] direction Only return Commands with this direction value.
                     # @param [Transport] transport Only return Commands with this transport value. Can be: `sms` or `ip`.
@@ -138,7 +138,7 @@ module Twilio
                     ##
                     # Retrieve a single page of CommandInstance records from the API.
                     # Request is executed immediately.
-                    # @param [String] sim The `sid` or `unique_name` of the [Sim resources](https://www.twilio.com/docs/wireless/api/sim-resource) to read.
+                    # @param [String] sim The `sid` or `unique_name` of the [Sim resources](https://www.twilio.com/docs/iot/wireless/api/sim-resource) to read.
                     # @param [Status] status The status of the resources to read. Can be: `queued`, `sent`, `delivered`, `received`, or `failed`.
                     # @param [Direction] direction Only return Commands with this direction value.
                     # @param [Transport] transport Only return Commands with this transport value. Can be: `sms` or `ip`.
@@ -322,7 +322,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The SID of the [Sim resource](https://www.twilio.com/docs/wireless/api/sim-resource) that the Command was sent to or from.
+                    # @return [String] The SID of the [Sim resource](https://www.twilio.com/docs/iot/wireless/api/sim-resource) that the Command was sent to or from.
                     def sim_sid
                         @properties['sim_sid']
                     end

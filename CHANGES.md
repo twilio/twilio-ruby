@@ -1,6 +1,25 @@
 twilio-ruby changelog
 ===================== 
 
+[2023-08-10] Version 6.4.0
+--------------------------
+**Library - Fix**
+- [PR #673](https://github.com/twilio/twilio-ruby/pull/673): remove ruby version. Thanks to [@kridai](https://github.com/kridai)!
+- [PR #672](https://github.com/twilio/twilio-ruby/pull/672): revert setting ruby version. Thanks to [@kridai](https://github.com/kridai)!
+- [PR #671](https://github.com/twilio/twilio-ruby/pull/671): fix the headers issue. Thanks to [@kridai](https://github.com/kridai)!
+
+**Insights**
+- Normalize annotations parameters in list summary api to be prefixed
+
+**Numbers**
+- Change Bulk_hosted_sid from BHR to BH prefix in HNO and dependent under version `/v2` API's. **(breaking change)**
+- Added parameter target_account_sid to portability and account_sid to response body
+
+**Verify**
+- Remove beta feature flag to list attempts API.
+- Remove beta feature flag to verifications summary attempts API.
+
+
 [2023-07-27] Version 6.3.1
 --------------------------
 **Api**
