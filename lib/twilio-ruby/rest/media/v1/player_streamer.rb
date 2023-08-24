@@ -32,7 +32,7 @@ module Twilio
                     ##
                     # Create the PlayerStreamerInstance
                     # @param [Boolean] video Specifies whether the PlayerStreamer is configured to stream video. Defaults to `true`.
-                    # @param [String] status_callback The URL to which Twilio will send asynchronous webhook requests for every PlayerStreamer event. See [Status Callbacks](/docs/live/status-callbacks) for more details.
+                    # @param [String] status_callback The URL to which Twilio will send asynchronous webhook requests for every PlayerStreamer event. See [Status Callbacks](/docs/live/api/status-callbacks) for more details.
                     # @param [String] status_callback_method The HTTP method Twilio should use to call the `status_callback` URL. Can be `POST` or `GET` and the default is `POST`.
                     # @param [String] max_duration The maximum time, in seconds, that the PlayerStreamer is active (`created` or `started`) before automatically ends. The default value is 300 seconds, and the maximum value is 90000 seconds. Once this maximum duration is reached, Twilio will end the PlayerStreamer, regardless of whether media is still streaming.
                     # @return [PlayerStreamerInstance] Created PlayerStreamerInstance
@@ -360,7 +360,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The URL to which Twilio will send asynchronous webhook requests for every PlayerStreamer event. See [Status Callbacks](/docs/live/status-callbacks) for more details.
+                    # @return [String] The URL to which Twilio will send asynchronous webhook requests for every PlayerStreamer event. See [Status Callbacks](/docs/live/api/status-callbacks) for more details.
                     def status_callback
                         @properties['status_callback']
                     end

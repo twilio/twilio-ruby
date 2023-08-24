@@ -34,13 +34,13 @@ module Twilio
                     end
                     ##
                     # Create the ParticipantInstance
-                    # @param [String] identity A unique string identifier for the conversation participant as [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource). This parameter is non-null if (and only if) the participant is using the Conversation SDK to communicate. Limited to 256 characters.
-                    # @param [String] messaging_binding_address The address of the participant's device, e.g. a phone or WhatsApp number. Together with the Proxy address, this determines a participant uniquely. This field (with proxy_address) is only null when the participant is interacting from an SDK endpoint (see the 'identity' field).
-                    # @param [String] messaging_binding_proxy_address The address of the Twilio phone number (or WhatsApp number) that the participant is in contact with. This field, together with participant address, is only null when the participant is interacting from an SDK endpoint (see the 'identity' field).
-                    # @param [Time] date_created The date that this resource was created.
-                    # @param [Time] date_updated The date that this resource was last updated.
-                    # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
-                    # @param [String] messaging_binding_projected_address The address of the Twilio phone number that is used in Group MMS. Communication mask for the Conversation participant with Identity.
+                    # @param [String] identity A unique string identifier for the conversation participant as [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource). This parameter is non-null if (and only if) the participant is using the [Conversation SDK](https://www.twilio.com/docs/conversations/sdk-overview) to communicate. Limited to 256 characters.
+                    # @param [String] messaging_binding_address The address of the participant's device, e.g. a phone or WhatsApp number. Together with the Proxy address, this determines a participant uniquely. This field (with `proxy_address`) is only null when the participant is interacting from an SDK endpoint (see the `identity` field).
+                    # @param [String] messaging_binding_proxy_address The address of the Twilio phone number (or WhatsApp number) that the participant is in contact with. This field, together with participant address, is only null when the participant is interacting from an SDK endpoint (see the `identity` field).
+                    # @param [Time] date_created The date on which this resource was created.
+                    # @param [Time] date_updated The date on which this resource was last updated.
+                    # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set `{}` will be returned.
+                    # @param [String] messaging_binding_projected_address The address of the Twilio phone number that is used in Group MMS.
                     # @param [String] role_sid The SID of a conversation-level [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to the participant.
                     # @param [ServiceConversationParticipantEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ParticipantInstance] Created ParticipantInstance
@@ -217,10 +217,10 @@ module Twilio
 
                     ##
                     # Update the ParticipantInstance
-                    # @param [Time] date_created The date that this resource was created.
-                    # @param [Time] date_updated The date that this resource was last updated.
-                    # @param [String] identity A unique string identifier for the conversation participant as [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource). This parameter is non-null if (and only if) the participant is using the Conversation SDK to communicate. Limited to 256 characters.
-                    # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
+                    # @param [Time] date_created The date on which this resource was created.
+                    # @param [Time] date_updated The date on which this resource was last updated.
+                    # @param [String] identity A unique string identifier for the conversation participant as [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource). This parameter is non-null if (and only if) the participant is using the [Conversation SDK](https://www.twilio.com/docs/conversations/sdk-overview) to communicate. Limited to 256 characters.
+                    # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set `{}` will be returned.
                     # @param [String] role_sid The SID of a conversation-level [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to the participant.
                     # @param [String] messaging_binding_proxy_address The address of the Twilio phone number that the participant is in contact with. 'null' value will remove it.
                     # @param [String] messaging_binding_projected_address The address of the Twilio phone number that is used in Group MMS. 'null' value will remove it.
@@ -379,13 +379,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] A unique string identifier for the conversation participant as [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource). This parameter is non-null if (and only if) the participant is using the Conversation SDK to communicate. Limited to 256 characters.
+                    # @return [String] A unique string identifier for the conversation participant as [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource). This parameter is non-null if (and only if) the participant is using the [Conversation SDK](https://www.twilio.com/docs/conversations/sdk-overview) to communicate. Limited to 256 characters.
                     def identity
                         @properties['identity']
                     end
                     
                     ##
-                    # @return [String] An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \"{}\" will be returned.
+                    # @return [String] An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set `{}` will be returned.
                     def attributes
                         @properties['attributes']
                     end
@@ -403,13 +403,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Time] The date that this resource was created.
+                    # @return [Time] The date on which this resource was created.
                     def date_created
                         @properties['date_created']
                     end
                     
                     ##
-                    # @return [Time] The date that this resource was last updated.
+                    # @return [Time] The date on which this resource was last updated.
                     def date_updated
                         @properties['date_updated']
                     end
@@ -455,10 +455,10 @@ module Twilio
 
                     ##
                     # Update the ParticipantInstance
-                    # @param [Time] date_created The date that this resource was created.
-                    # @param [Time] date_updated The date that this resource was last updated.
-                    # @param [String] identity A unique string identifier for the conversation participant as [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource). This parameter is non-null if (and only if) the participant is using the Conversation SDK to communicate. Limited to 256 characters.
-                    # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
+                    # @param [Time] date_created The date on which this resource was created.
+                    # @param [Time] date_updated The date on which this resource was last updated.
+                    # @param [String] identity A unique string identifier for the conversation participant as [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource). This parameter is non-null if (and only if) the participant is using the [Conversation SDK](https://www.twilio.com/docs/conversations/sdk-overview) to communicate. Limited to 256 characters.
+                    # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set `{}` will be returned.
                     # @param [String] role_sid The SID of a conversation-level [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to the participant.
                     # @param [String] messaging_binding_proxy_address The address of the Twilio phone number that the participant is in contact with. 'null' value will remove it.
                     # @param [String] messaging_binding_projected_address The address of the Twilio phone number that is used in Group MMS. 'null' value will remove it.

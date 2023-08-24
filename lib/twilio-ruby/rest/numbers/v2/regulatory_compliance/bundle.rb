@@ -242,8 +242,8 @@ module Twilio
                         @uri = "/RegulatoryCompliance/Bundles/#{@solution[:sid]}"
 
                         # Dependents
-                        @bundle_copies = nil
                         @replace_items = nil
+                        @bundle_copies = nil
                         @item_assignments = nil
                         @evaluations = nil
                     end
@@ -298,17 +298,6 @@ module Twilio
                     end
 
                     ##
-                    # Access the bundle_copies
-                    # @return [BundleCopyList]
-                    # @return [BundleCopyContext]
-                    def bundle_copies
-                      unless @bundle_copies
-                        @bundle_copies = BundleCopyList.new(
-                                @version, bundle_sid: @solution[:sid], )
-                      end
-                      @bundle_copies
-                    end
-                    ##
                     # Access the replace_items
                     # @return [ReplaceItemsList]
                     # @return [ReplaceItemsContext]
@@ -318,6 +307,17 @@ module Twilio
                                 @version, bundle_sid: @solution[:sid], )
                       end
                       @replace_items
+                    end
+                    ##
+                    # Access the bundle_copies
+                    # @return [BundleCopyList]
+                    # @return [BundleCopyContext]
+                    def bundle_copies
+                      unless @bundle_copies
+                        @bundle_copies = BundleCopyList.new(
+                                @version, bundle_sid: @solution[:sid], )
+                      end
+                      @bundle_copies
                     end
                     ##
                     # Access the item_assignments
@@ -557,17 +557,17 @@ module Twilio
                     end
 
                     ##
-                    # Access the bundle_copies
-                    # @return [bundle_copies] bundle_copies
-                    def bundle_copies
-                        context.bundle_copies
-                    end
-
-                    ##
                     # Access the replace_items
                     # @return [replace_items] replace_items
                     def replace_items
                         context.replace_items
+                    end
+
+                    ##
+                    # Access the bundle_copies
+                    # @return [bundle_copies] bundle_copies
+                    def bundle_copies
+                        context.bundle_copies
                     end
 
                     ##

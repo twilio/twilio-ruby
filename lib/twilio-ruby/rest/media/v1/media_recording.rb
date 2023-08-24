@@ -350,7 +350,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The URL to which Twilio will send asynchronous webhook requests for every MediaRecording event. See [Status Callbacks](/docs/live/status-callbacks) for more details.
+                    # @return [String] The URL to which Twilio will send asynchronous webhook requests for every MediaRecording event. See [Status Callbacks](/docs/live/api/status-callbacks) for more details.
                     def status_callback
                         @properties['status_callback']
                     end

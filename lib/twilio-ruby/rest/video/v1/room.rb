@@ -39,7 +39,7 @@ module Twilio
                     # @param [String] max_participants The maximum number of concurrent Participants allowed in the room. Peer-to-peer rooms can have up to 10 Participants. Small Group rooms can have up to 4 Participants. Group rooms can have up to 50 Participants.
                     # @param [Boolean] record_participants_on_connect Whether to start recording when Participants connect. ***This feature is not available in `peer-to-peer` rooms.***
                     # @param [Array[VideoCodec]] video_codecs An array of the video codecs that are supported when publishing a track in the room.  Can be: `VP8` and `H264`.  ***This feature is not available in `peer-to-peer` rooms***
-                    # @param [String] media_region The region for the media server in Group Rooms.  Can be: one of the [available Media Regions](https://www.twilio.com/docs/video/ip-address-whitelisting#group-rooms-media-servers). ***This feature is not available in `peer-to-peer` rooms.***
+                    # @param [String] media_region The region for the media server in Group Rooms.  Can be: one of the [available Media Regions](https://www.twilio.com/docs/video/ip-addresses#group-rooms-media-servers). ***This feature is not available in `peer-to-peer` rooms.***
                     # @param [Object] recording_rules A collection of Recording Rules that describe how to include or exclude matching tracks for recording
                     # @param [Boolean] audio_only When set to true, indicates that the participants in the room will only publish audio. No video tracks will be allowed. Group rooms only.
                     # @param [String] max_participant_duration The maximum number of seconds a Participant can be connected to the room. The maximum possible value is 86400 seconds (24 hours). The default is 14400 seconds (4 hours).
@@ -512,7 +512,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The region for the media server in Group Rooms.  Can be: one of the [available Media Regions](https://www.twilio.com/docs/video/ip-address-whitelisting#media-servers). ***This feature is not available in `peer-to-peer` rooms.***
+                    # @return [String] The region for the media server in Group Rooms.  Can be: one of the [available Media Regions](https://www.twilio.com/docs/video/ip-addresses#media-servers). ***This feature is not available in `peer-to-peer` rooms.***
                     def media_region
                         @properties['media_region']
                     end

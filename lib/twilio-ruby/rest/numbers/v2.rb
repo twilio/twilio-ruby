@@ -22,6 +22,7 @@ module Twilio
                     super
                     @version = 'v2'
                     @authorization_documents = nil
+                    @bulk_hosted_number_orders = nil
                     @hosted_number_orders = nil
                     @regulatory_compliance = nil
                 end
@@ -38,6 +39,20 @@ module Twilio
                         @authorization_documents ||= AuthorizationDocumentList.new self
                     else
                         AuthorizationDocumentContext.new(self, sid)
+                    end
+                end
+                ##
+                # @param [String] sid A 34 character string that uniquely identifies this BulkHostedNumberOrder.
+                # @return [Twilio::REST::Numbers::V2::BulkHostedNumberOrderContext] if sid was passed.
+                # @return [Twilio::REST::Numbers::V2::BulkHostedNumberOrderList]
+                def bulk_hosted_number_orders(sid=:unset)
+                    if sid.nil?
+                        raise ArgumentError, 'sid cannot be nil'
+                    end
+                    if sid == :unset
+                        @bulk_hosted_number_orders ||= BulkHostedNumberOrderList.new self
+                    else
+                        BulkHostedNumberOrderContext.new(self, sid)
                     end
                 end
                 ##

@@ -28,15 +28,28 @@ module Twilio
                         @solution = {  }
                         @uri = "/RegulatoryCompliance"
                         # Components
+                        @supporting_documents = nil
                         @end_users = nil
                         @bundles = nil
                         @supporting_document_types = nil
                         @regulations = nil
                         @end_user_types = nil
-                        @supporting_documents = nil
                     end
                 
 
+                ##
+                # Access the supporting_documents
+                # @return [SupportingDocumentList]
+                # @return [SupportingDocumentContext] if sid was passed.
+                def supporting_documents(sid=:unset)
+                    raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+                    if sid != :unset
+                        return SupportingDocumentContext.new(@version,sid )
+                    end
+
+                    @supporting_documents ||= SupportingDocumentList.new(@version )
+                end
                 ##
                 # Access the end_users
                 # @return [EndUserList]
@@ -101,19 +114,6 @@ module Twilio
                     end
 
                     @end_user_types ||= EndUserTypeList.new(@version )
-                end
-                ##
-                # Access the supporting_documents
-                # @return [SupportingDocumentList]
-                # @return [SupportingDocumentContext] if sid was passed.
-                def supporting_documents(sid=:unset)
-                    raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-                    if sid != :unset
-                        return SupportingDocumentContext.new(@version,sid )
-                    end
-
-                    @supporting_documents ||= SupportingDocumentList.new(@version )
                 end
 
                     # Provide a user friendly representation

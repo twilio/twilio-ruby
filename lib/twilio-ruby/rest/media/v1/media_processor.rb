@@ -31,10 +31,10 @@ module Twilio
                     end
                     ##
                     # Create the MediaProcessorInstance
-                    # @param [String] extension The [Media Extension](/docs/live/api/media-extensions-overview) name or URL. Ex: `video-composer-v2`
-                    # @param [String] extension_context The context of the Media Extension, represented as a JSON dictionary. See the documentation for the specific [Media Extension](/docs/live/api/media-extensions-overview) you are using for more information about the context to send.
-                    # @param [Object] extension_environment User-defined environment variables for the Media Extension, represented as a JSON dictionary of key/value strings. See the documentation for the specific [Media Extension](/docs/live/api/media-extensions-overview) you are using for more information about whether you need to provide this.
-                    # @param [String] status_callback The URL to which Twilio will send asynchronous webhook requests for every MediaProcessor event. See [Status Callbacks](/docs/live/status-callbacks) for details.
+                    # @param [String] extension The [Media Extension](/docs/live/media-extensions-overview) name or URL. Ex: `video-composer-v2`
+                    # @param [String] extension_context The context of the Media Extension, represented as a JSON dictionary. See the documentation for the specific [Media Extension](/docs/live/media-extensions-overview) you are using for more information about the context to send.
+                    # @param [Object] extension_environment User-defined environment variables for the Media Extension, represented as a JSON dictionary of key/value strings. See the documentation for the specific [Media Extension](/docs/live/media-extensions-overview) you are using for more information about whether you need to provide this.
+                    # @param [String] status_callback The URL to which Twilio will send asynchronous webhook requests for every MediaProcessor event. See [Status Callbacks](/docs/live/api/status-callbacks) for details.
                     # @param [String] status_callback_method The HTTP method Twilio should use to call the `status_callback` URL. Can be `POST` or `GET` and the default is `POST`.
                     # @param [String] max_duration The maximum time, in seconds, that the MediaProcessor can run before automatically ends. The default value is 300 seconds, and the maximum value is 90000 seconds. Once this maximum duration is reached, Twilio will end the MediaProcessor, regardless of whether media is still streaming.
                     # @return [MediaProcessorInstance] Created MediaProcessorInstance
@@ -331,13 +331,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The [Media Extension](/docs/live/api/media-extensions-overview) name or URL. Ex: `video-composer-v2`
+                    # @return [String] The [Media Extension](/docs/live/media-extensions-overview) name or URL. Ex: `video-composer-v2`
                     def extension
                         @properties['extension']
                     end
                     
                     ##
-                    # @return [String] The context of the Media Extension, represented as a JSON dictionary. See the documentation for the specific [Media Extension](/docs/live/api/media-extensions-overview) you are using for more information about the context to send.
+                    # @return [String] The context of the Media Extension, represented as a JSON dictionary. See the documentation for the specific [Media Extension](/docs/live/media-extensions-overview) you are using for more information about the context to send.
                     def extension_context
                         @properties['extension_context']
                     end
@@ -361,7 +361,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The URL to which Twilio will send asynchronous webhook requests for every MediaProcessor event. See [Status Callbacks](/docs/live/status-callbacks) for details.
+                    # @return [String] The URL to which Twilio will send asynchronous webhook requests for every MediaProcessor event. See [Status Callbacks](/docs/live/api/status-callbacks) for details.
                     def status_callback
                         @properties['status_callback']
                     end

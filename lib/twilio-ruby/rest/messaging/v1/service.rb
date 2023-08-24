@@ -208,6 +208,7 @@ module Twilio
                         @us_app_to_person = nil
                         @phone_numbers = nil
                         @alpha_senders = nil
+                        @channel_senders = nil
                     end
                     ##
                     # Delete the ServiceInstance
@@ -381,6 +382,25 @@ module Twilio
                         end
 
                      @alpha_senders
+                    end
+                    ##
+                    # Access the channel_senders
+                    # @return [ChannelSenderList]
+                    # @return [ChannelSenderContext] if sid was passed.
+                    def channel_senders(sid=:unset)
+
+                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+                        if sid != :unset
+                            return ChannelSenderContext.new(@version, @solution[:sid],sid )
+                        end
+
+                        unless @channel_senders
+                            @channel_senders = ChannelSenderList.new(
+                                @version, messaging_service_sid: @solution[:sid], )
+                        end
+
+                     @channel_senders
                     end
 
                     ##
@@ -727,6 +747,13 @@ module Twilio
                     # @return [alpha_senders] alpha_senders
                     def alpha_senders
                         context.alpha_senders
+                    end
+
+                    ##
+                    # Access the channel_senders
+                    # @return [channel_senders] channel_senders
+                    def channel_senders
+                        context.channel_senders
                     end
 
                     ##
