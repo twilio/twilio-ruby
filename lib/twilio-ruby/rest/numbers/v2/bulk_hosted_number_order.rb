@@ -45,14 +45,14 @@ module Twilio
                     ##
                     # Initialize the BulkHostedNumberOrderContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] sid A 34 character string that uniquely identifies this BulkHostedNumberOrder.
+                    # @param [String] bulk_hosting_sid A 34 character string that uniquely identifies this BulkHostedNumberOrder.
                     # @return [BulkHostedNumberOrderContext] BulkHostedNumberOrderContext
-                    def initialize(version, sid)
+                    def initialize(version, bulk_hosting_sid)
                         super(version)
 
                         # Path Solution
-                        @solution = { sid: sid,  }
-                        @uri = "/HostedNumber/Orders/Bulk/#{@solution[:sid]}"
+                        @solution = { bulk_hosting_sid: bulk_hosting_sid,  }
+                        @uri = "/HostedNumber/Orders/Bulk/#{@solution[:bulk_hosting_sid]}"
 
                         
                     end
@@ -71,7 +71,7 @@ module Twilio
                         BulkHostedNumberOrderInstance.new(
                             @version,
                             payload,
-                            sid: @solution[:sid],
+                            bulk_hosting_sid: @solution[:bulk_hosting_sid],
                         )
                     end
 
@@ -129,13 +129,12 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [BulkHostedNumberOrderInstance] BulkHostedNumberOrderInstance
-                    def initialize(version, payload , sid: nil)
+                    def initialize(version, payload , bulk_hosting_sid: nil)
                         super(version)
                         
                         # Marshaled Properties
                         @properties = { 
-                            'sid' => payload['sid'],
-                            'account_sid' => payload['account_sid'],
+                            'bulk_hosting_sid' => payload['bulk_hosting_sid'],
                             'request_status' => payload['request_status'],
                             'friendly_name' => payload['friendly_name'],
                             'notification_email' => payload['notification_email'],
@@ -148,7 +147,7 @@ module Twilio
 
                         # Context
                         @instance_context = nil
-                        @params = { 'sid' => sid  || @properties['sid']  , }
+                        @params = { 'bulk_hosting_sid' => bulk_hosting_sid  || @properties['bulk_hosting_sid']  , }
                     end
 
                     ##
@@ -157,21 +156,15 @@ module Twilio
                     # @return [BulkHostedNumberOrderContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = BulkHostedNumberOrderContext.new(@version , @params['sid'])
+                            @instance_context = BulkHostedNumberOrderContext.new(@version , @params['bulk_hosting_sid'])
                         end
                         @instance_context
                     end
                     
                     ##
                     # @return [String] A 34 character string that uniquely identifies this BulkHostedNumberOrder.
-                    def sid
-                        @properties['sid']
-                    end
-                    
-                    ##
-                    # @return [String] A 34 character string that uniquely identifies the account.
-                    def account_sid
-                        @properties['account_sid']
+                    def bulk_hosting_sid
+                        @properties['bulk_hosting_sid']
                     end
                     
                     ##

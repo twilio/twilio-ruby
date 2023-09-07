@@ -116,13 +116,13 @@ module Twilio
 
                     
                     ##
-                    # @return [String] The SID of the [Account](https://www.twilio.com/docs/iam/api/account) that created the MessageFeedback resource.
+                    # @return [String] The SID of the [Account](https://www.twilio.com/docs/iam/api/account) associated with this MessageFeedback resource.
                     def account_sid
                         @properties['account_sid']
                     end
                     
                     ##
-                    # @return [String] The SID of the Message resource for which the feedback was provided.
+                    # @return [String] The SID of the Message resource associated with this MessageFeedback resource.
                     def message_sid
                         @properties['message_sid']
                     end
@@ -134,13 +134,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Time] The date and time in GMT that the resource was created specified in [RFC 2822](https://www.ietf.org/rfc/rfc2822.txt) format.
+                    # @return [Time] The date and time in GMT when this MessageFeedback resource was created, specified in [RFC 2822](https://www.ietf.org/rfc/rfc2822.txt) format.
                     def date_created
                         @properties['date_created']
                     end
                     
                     ##
-                    # @return [Time] The date and time in GMT that the resource was last updated specified in [RFC 2822](https://www.ietf.org/rfc/rfc2822.txt) format.
+                    # @return [Time] The date and time in GMT when this MessageFeedback resource was last updated, specified in [RFC 2822](https://www.ietf.org/rfc/rfc2822.txt) format.
                     def date_updated
                         @properties['date_updated']
                     end

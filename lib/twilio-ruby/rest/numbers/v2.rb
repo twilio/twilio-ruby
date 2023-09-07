@@ -42,17 +42,17 @@ module Twilio
                     end
                 end
                 ##
-                # @param [String] sid A 34 character string that uniquely identifies this BulkHostedNumberOrder.
-                # @return [Twilio::REST::Numbers::V2::BulkHostedNumberOrderContext] if sid was passed.
+                # @param [String] bulk_hosting_sid A 34 character string that uniquely identifies this BulkHostedNumberOrder.
+                # @return [Twilio::REST::Numbers::V2::BulkHostedNumberOrderContext] if bulkHostingSid was passed.
                 # @return [Twilio::REST::Numbers::V2::BulkHostedNumberOrderList]
-                def bulk_hosted_number_orders(sid=:unset)
-                    if sid.nil?
-                        raise ArgumentError, 'sid cannot be nil'
+                def bulk_hosted_number_orders(bulk_hosting_sid=:unset)
+                    if bulk_hosting_sid.nil?
+                        raise ArgumentError, 'bulk_hosting_sid cannot be nil'
                     end
-                    if sid == :unset
+                    if bulk_hosting_sid == :unset
                         @bulk_hosted_number_orders ||= BulkHostedNumberOrderList.new self
                     else
-                        BulkHostedNumberOrderContext.new(self, sid)
+                        BulkHostedNumberOrderContext.new(self, bulk_hosting_sid)
                     end
                 end
                 ##

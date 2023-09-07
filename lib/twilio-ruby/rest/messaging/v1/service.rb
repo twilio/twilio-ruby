@@ -41,7 +41,7 @@ module Twilio
                     # @param [Boolean] mms_converter Whether to enable the [MMS Converter](https://www.twilio.com/docs/messaging/services#mms-converter) for messages sent through the Service instance.
                     # @param [Boolean] smart_encoding Whether to enable [Smart Encoding](https://www.twilio.com/docs/messaging/services#smart-encoding) for messages sent through the Service instance.
                     # @param [ScanMessageContent] scan_message_content 
-                    # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/messaging/services#fallback-to-long-code) for messages sent through the Service instance.
+                    # @param [Boolean] fallback_to_long_code [OBSOLETE] Former feature used to fallback to long code sender after certain short code message failures.
                     # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
                     # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
                     # @param [Boolean] synchronous_validation Reserved.
@@ -243,7 +243,7 @@ module Twilio
                     # @param [Boolean] mms_converter Whether to enable the [MMS Converter](https://www.twilio.com/docs/messaging/services#mms-converter) for messages sent through the Service instance.
                     # @param [Boolean] smart_encoding Whether to enable [Smart Encoding](https://www.twilio.com/docs/messaging/services#smart-encoding) for messages sent through the Service instance.
                     # @param [ScanMessageContent] scan_message_content 
-                    # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/messaging/services#fallback-to-long-code) for messages sent through the Service instance.
+                    # @param [Boolean] fallback_to_long_code [OBSOLETE] Former feature used to fallback to long code sender after certain short code message failures.
                     # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
                     # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
                     # @param [Boolean] synchronous_validation Reserved.
@@ -587,7 +587,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Boolean] Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/messaging/services#fallback-to-long-code) for messages sent through the Service instance.
+                    # @return [Boolean] [OBSOLETE] Former feature used to fallback to long code sender after certain short code message failures.
                     def fallback_to_long_code
                         @properties['fallback_to_long_code']
                     end
@@ -668,7 +668,7 @@ module Twilio
                     # @param [Boolean] mms_converter Whether to enable the [MMS Converter](https://www.twilio.com/docs/messaging/services#mms-converter) for messages sent through the Service instance.
                     # @param [Boolean] smart_encoding Whether to enable [Smart Encoding](https://www.twilio.com/docs/messaging/services#smart-encoding) for messages sent through the Service instance.
                     # @param [ScanMessageContent] scan_message_content 
-                    # @param [Boolean] fallback_to_long_code Whether to enable [Fallback to Long Code](https://www.twilio.com/docs/messaging/services#fallback-to-long-code) for messages sent through the Service instance.
+                    # @param [Boolean] fallback_to_long_code [OBSOLETE] Former feature used to fallback to long code sender after certain short code message failures.
                     # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
                     # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
                     # @param [Boolean] synchronous_validation Reserved.

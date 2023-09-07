@@ -175,6 +175,7 @@ module Twilio
                             'channel_configs' => payload['channel_configs'],
                             'debugger_integration' => payload['debugger_integration'],
                             'flex_ui_status_report' => payload['flex_ui_status_report'],
+                            'agent_conv_end_methods' => payload['agent_conv_end_methods'],
                         }
 
                         # Context
@@ -461,6 +462,12 @@ module Twilio
                     # @return [Hash] Configurable parameters for Flex UI Status report.
                     def flex_ui_status_report
                         @properties['flex_ui_status_report']
+                    end
+                    
+                    ##
+                    # @return [Hash] Agent conversation end methods.
+                    def agent_conv_end_methods
+                        @properties['agent_conv_end_methods']
                     end
                     
                     ##
