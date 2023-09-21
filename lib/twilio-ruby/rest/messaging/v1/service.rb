@@ -45,7 +45,7 @@ module Twilio
                     # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
                     # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
                     # @param [Boolean] synchronous_validation Reserved.
-                    # @param [String] usecase A string that describes the scenario in which the Messaging Service will be used. Examples: [notification, marketing, verification, poll ..].
+                    # @param [String] usecase A string that describes the scenario in which the Messaging Service will be used. Possible values are `notifications`, `marketing`, `verification`, `discussion`, `poll`, `undeclared`.
                     # @param [Boolean] use_inbound_webhook_on_number A boolean value that indicates either the webhook url configured on the phone number will be used or `inbound_request_url`/`fallback_url` url will be called when a message is received from the phone number. If this field is enabled then the webhook url defined on the phone number will override the `inbound_request_url`/`fallback_url` defined for the Messaging Service.
                     # @return [ServiceInstance] Created ServiceInstance
                     def create(
@@ -247,7 +247,7 @@ module Twilio
                     # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
                     # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
                     # @param [Boolean] synchronous_validation Reserved.
-                    # @param [String] usecase A string that describes the scenario in which the Messaging Service will be used. Examples: [notification, marketing, verification, poll ..]
+                    # @param [String] usecase A string that describes the scenario in which the Messaging Service will be used. Possible values are `notifications`, `marketing`, `verification`, `discussion`, `poll`, `undeclared`.
                     # @param [Boolean] use_inbound_webhook_on_number A boolean value that indicates either the webhook url configured on the phone number will be used or `inbound_request_url`/`fallback_url` url will be called when a message is received from the phone number. If this field is enabled then the webhook url defined on the phone number will override the `inbound_request_url`/`fallback_url` defined for the Messaging Service.
                     # @return [ServiceInstance] Updated ServiceInstance
                     def update(
@@ -623,7 +623,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] A string that describes the scenario in which the Messaging Service will be used. Examples: [notification, marketing, verification, poll ..]
+                    # @return [String] A string that describes the scenario in which the Messaging Service will be used. Possible values are `notifications`, `marketing`, `verification`, `discussion`, `poll`, `undeclared`.
                     def usecase
                         @properties['usecase']
                     end
@@ -672,7 +672,7 @@ module Twilio
                     # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
                     # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
                     # @param [Boolean] synchronous_validation Reserved.
-                    # @param [String] usecase A string that describes the scenario in which the Messaging Service will be used. Examples: [notification, marketing, verification, poll ..]
+                    # @param [String] usecase A string that describes the scenario in which the Messaging Service will be used. Possible values are `notifications`, `marketing`, `verification`, `discussion`, `poll`, `undeclared`.
                     # @param [Boolean] use_inbound_webhook_on_number A boolean value that indicates either the webhook url configured on the phone number will be used or `inbound_request_url`/`fallback_url` url will be called when a message is received from the phone number. If this field is enabled then the webhook url defined on the phone number will override the `inbound_request_url`/`fallback_url` defined for the Messaging Service.
                     # @return [ServiceInstance] Updated ServiceInstance
                     def update(

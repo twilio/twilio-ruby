@@ -364,7 +364,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] A 34 character string that uniquely identifies the [IncomingPhoneNumber](https://www.twilio.com/docs/api/rest/incoming-phone-numbers) resource that represents the phone number being hosted.
+                    # @return [String] A 34 character string that uniquely identifies the [IncomingPhoneNumber](https://www.twilio.com/docs/phone-numbers/api/incomingphonenumber-resource) resource that represents the phone number being hosted.
                     def incoming_phone_number_sid
                         @properties['incoming_phone_number_sid']
                     end
@@ -376,7 +376,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] A 34 character string that uniquely identifies the [Authorization Document](https://www.twilio.com/docs/api/phone-numbers/hosted-number-authorization-documents) the user needs to sign.
+                    # @return [String] A 34 character string that uniquely identifies the [Authorization Document](https://www.twilio.com/docs/phone-numbers/hosted-numbers/hosted-numbers-api/authorization-document-resource) the user needs to sign.
                     def signing_document_sid
                         @properties['signing_document_sid']
                     end

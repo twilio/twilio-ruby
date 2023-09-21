@@ -227,7 +227,7 @@ module Twilio
                     def user_channels
                       unless @user_channels
                         @user_channels = UserChannelList.new(
-                                @version, service_sid: @solution[:service_sid],  user_sid: @solution[:sid], )
+                                @version, service_sid: @solution[:service_sid], user_sid: @solution[:sid], )
                       end
                       @user_channels
                     end

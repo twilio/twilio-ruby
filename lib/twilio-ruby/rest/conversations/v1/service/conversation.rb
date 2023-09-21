@@ -36,12 +36,14 @@ module Twilio
                     # @param [String] friendly_name The human-readable name of this conversation, limited to 256 characters. Optional.
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used to address the resource in place of the resource's `sid` in the URL.
                     # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
-                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) this conversation belongs to.
+                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) this conversation belongs to.
                     # @param [Time] date_created The date that this resource was created.
                     # @param [Time] date_updated The date that this resource was last updated.
                     # @param [State] state 
                     # @param [String] timers_inactive ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
                     # @param [String] timers_closed ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
+                    # @param [String] bindings_email_address The default email address that will be used when sending outbound emails in this conversation.
+                    # @param [String] bindings_email_name The default name that will be used when sending outbound emails in this conversation.
                     # @param [ServiceConversationEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ConversationInstance] Created ConversationInstance
                     def create(
@@ -54,6 +56,8 @@ module Twilio
                         state: :unset, 
                         timers_inactive: :unset, 
                         timers_closed: :unset, 
+                        bindings_email_address: :unset, 
+                        bindings_email_name: :unset, 
                         x_twilio_webhook_enabled: :unset
                     )
 
@@ -67,6 +71,8 @@ module Twilio
                             'State' => state,
                             'Timers.Inactive' => timers_inactive,
                             'Timers.Closed' => timers_closed,
+                            'Bindings.Email.Address' => bindings_email_address,
+                            'Bindings.Email.Name' => bindings_email_name,
                         })
 
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
@@ -241,11 +247,13 @@ module Twilio
                     # @param [Time] date_created The date that this resource was created.
                     # @param [Time] date_updated The date that this resource was last updated.
                     # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
-                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) this conversation belongs to.
+                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) this conversation belongs to.
                     # @param [State] state 
                     # @param [String] timers_inactive ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
                     # @param [String] timers_closed ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used to address the resource in place of the resource's `sid` in the URL.
+                    # @param [String] bindings_email_address The default email address that will be used when sending outbound emails in this conversation.
+                    # @param [String] bindings_email_name The default name that will be used when sending outbound emails in this conversation.
                     # @param [ServiceConversationEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ConversationInstance] Updated ConversationInstance
                     def update(
@@ -258,6 +266,8 @@ module Twilio
                         timers_inactive: :unset, 
                         timers_closed: :unset, 
                         unique_name: :unset, 
+                        bindings_email_address: :unset, 
+                        bindings_email_name: :unset, 
                         x_twilio_webhook_enabled: :unset
                     )
 
@@ -271,6 +281,8 @@ module Twilio
                             'Timers.Inactive' => timers_inactive,
                             'Timers.Closed' => timers_closed,
                             'UniqueName' => unique_name,
+                            'Bindings.Email.Address' => bindings_email_address,
+                            'Bindings.Email.Name' => bindings_email_name,
                         })
 
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
@@ -297,7 +309,7 @@ module Twilio
 
                         unless @participants
                             @participants = ParticipantList.new(
-                                @version, chat_service_sid: @solution[:chat_service_sid],  conversation_sid: @solution[:sid], )
+                                @version, chat_service_sid: @solution[:chat_service_sid], conversation_sid: @solution[:sid], )
                         end
 
                      @participants
@@ -316,7 +328,7 @@ module Twilio
 
                         unless @messages
                             @messages = MessageList.new(
-                                @version, chat_service_sid: @solution[:chat_service_sid],  conversation_sid: @solution[:sid], )
+                                @version, chat_service_sid: @solution[:chat_service_sid], conversation_sid: @solution[:sid], )
                         end
 
                      @messages
@@ -335,7 +347,7 @@ module Twilio
 
                         unless @webhooks
                             @webhooks = WebhookList.new(
-                                @version, chat_service_sid: @solution[:chat_service_sid],  conversation_sid: @solution[:sid], )
+                                @version, chat_service_sid: @solution[:chat_service_sid], conversation_sid: @solution[:sid], )
                         end
 
                      @webhooks
@@ -444,7 +456,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) this conversation belongs to.
+                    # @return [String] The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) this conversation belongs to.
                     def messaging_service_sid
                         @properties['messaging_service_sid']
                     end
@@ -542,11 +554,13 @@ module Twilio
                     # @param [Time] date_created The date that this resource was created.
                     # @param [Time] date_updated The date that this resource was last updated.
                     # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
-                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) this conversation belongs to.
+                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) this conversation belongs to.
                     # @param [State] state 
                     # @param [String] timers_inactive ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
                     # @param [String] timers_closed ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used to address the resource in place of the resource's `sid` in the URL.
+                    # @param [String] bindings_email_address The default email address that will be used when sending outbound emails in this conversation.
+                    # @param [String] bindings_email_name The default name that will be used when sending outbound emails in this conversation.
                     # @param [ServiceConversationEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ConversationInstance] Updated ConversationInstance
                     def update(
@@ -559,6 +573,8 @@ module Twilio
                         timers_inactive: :unset, 
                         timers_closed: :unset, 
                         unique_name: :unset, 
+                        bindings_email_address: :unset, 
+                        bindings_email_name: :unset, 
                         x_twilio_webhook_enabled: :unset
                     )
 
@@ -572,6 +588,8 @@ module Twilio
                             timers_inactive: timers_inactive, 
                             timers_closed: timers_closed, 
                             unique_name: unique_name, 
+                            bindings_email_address: bindings_email_address, 
+                            bindings_email_name: bindings_email_name, 
                             x_twilio_webhook_enabled: x_twilio_webhook_enabled, 
                         )
                     end

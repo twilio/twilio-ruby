@@ -193,7 +193,7 @@ module Twilio
                     def new_factors
                       unless @new_factors
                         @new_factors = NewFactorList.new(
-                                @version, service_sid: @solution[:service_sid],  identity: @solution[:identity], )
+                                @version, service_sid: @solution[:service_sid], identity: @solution[:identity], )
                       end
                       @new_factors
                     end
@@ -211,7 +211,7 @@ module Twilio
 
                         unless @factors
                             @factors = FactorList.new(
-                                @version, service_sid: @solution[:service_sid],  identity: @solution[:identity], )
+                                @version, service_sid: @solution[:service_sid], identity: @solution[:identity], )
                         end
 
                      @factors
@@ -230,7 +230,7 @@ module Twilio
 
                         unless @challenges
                             @challenges = ChallengeList.new(
-                                @version, service_sid: @solution[:service_sid],  identity: @solution[:identity], )
+                                @version, service_sid: @solution[:service_sid], identity: @solution[:identity], )
                         end
 
                      @challenges

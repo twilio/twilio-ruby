@@ -159,8 +159,8 @@ module Twilio
 
                     ##
                     # Update the InteractionChannelInstance
-                    # @param [Status] status 
-                    # @param [Object] routing Optional. The state of associated tasks. If not specified, all tasks will be set to `wrapping`.
+                    # @param [UpdateChannelStatus] status 
+                    # @param [Object] routing It changes the state of associated tasks. Routing status is required, When the channel status is set to `inactive`. Allowed Value for routing status is `closed`. Otherwise Optional, if not specified, all tasks will be set to `wrapping`.
                     # @return [InteractionChannelInstance] Updated InteractionChannelInstance
                     def update(
                         status: nil, 
@@ -188,7 +188,7 @@ module Twilio
                     def invites
                       unless @invites
                         @invites = InteractionChannelInviteList.new(
-                                @version, interaction_sid: @solution[:interaction_sid],  channel_sid: @solution[:sid], )
+                                @version, interaction_sid: @solution[:interaction_sid], channel_sid: @solution[:sid], )
                       end
                       @invites
                     end
@@ -206,7 +206,7 @@ module Twilio
 
                         unless @participants
                             @participants = InteractionChannelParticipantList.new(
-                                @version, interaction_sid: @solution[:interaction_sid],  channel_sid: @solution[:sid], )
+                                @version, interaction_sid: @solution[:interaction_sid], channel_sid: @solution[:sid], )
                         end
 
                      @participants
@@ -354,8 +354,8 @@ module Twilio
 
                     ##
                     # Update the InteractionChannelInstance
-                    # @param [Status] status 
-                    # @param [Object] routing Optional. The state of associated tasks. If not specified, all tasks will be set to `wrapping`.
+                    # @param [UpdateChannelStatus] status 
+                    # @param [Object] routing It changes the state of associated tasks. Routing status is required, When the channel status is set to `inactive`. Allowed Value for routing status is `closed`. Otherwise Optional, if not specified, all tasks will be set to `wrapping`.
                     # @return [InteractionChannelInstance] Updated InteractionChannelInstance
                     def update(
                         status: nil, 

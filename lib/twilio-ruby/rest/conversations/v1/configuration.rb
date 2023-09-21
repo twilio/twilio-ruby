@@ -69,7 +69,7 @@ module Twilio
                     ##
                     # Update the ConfigurationInstance
                     # @param [String] default_chat_service_sid The SID of the default [Conversation Service](https://www.twilio.com/docs/conversations/api/service-resource) to use when creating a conversation.
-                    # @param [String] default_messaging_service_sid The SID of the default [Messaging Service](https://www.twilio.com/docs/messaging/services/api) to use when creating a conversation.
+                    # @param [String] default_messaging_service_sid The SID of the default [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) to use when creating a conversation.
                     # @param [String] default_inactive_timer Default ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
                     # @param [String] default_closed_timer Default ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
                     # @return [ConfigurationInstance] Updated ConfigurationInstance
@@ -200,7 +200,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The SID of the default [Messaging Service](https://www.twilio.com/docs/messaging/services/api) used when creating a conversation.
+                    # @return [String] The SID of the default [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) used when creating a conversation.
                     def default_messaging_service_sid
                         @properties['default_messaging_service_sid']
                     end
@@ -240,7 +240,7 @@ module Twilio
                     ##
                     # Update the ConfigurationInstance
                     # @param [String] default_chat_service_sid The SID of the default [Conversation Service](https://www.twilio.com/docs/conversations/api/service-resource) to use when creating a conversation.
-                    # @param [String] default_messaging_service_sid The SID of the default [Messaging Service](https://www.twilio.com/docs/messaging/services/api) to use when creating a conversation.
+                    # @param [String] default_messaging_service_sid The SID of the default [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) to use when creating a conversation.
                     # @param [String] default_inactive_timer Default ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
                     # @param [String] default_closed_timer Default ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
                     # @return [ConfigurationInstance] Updated ConfigurationInstance

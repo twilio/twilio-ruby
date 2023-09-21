@@ -220,7 +220,7 @@ module Twilio
 
                         unless @ip_addresses
                             @ip_addresses = IpAddressList.new(
-                                @version, account_sid: @solution[:account_sid],  ip_access_control_list_sid: @solution[:sid], )
+                                @version, account_sid: @solution[:account_sid], ip_access_control_list_sid: @solution[:sid], )
                         end
 
                      @ip_addresses

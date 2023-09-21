@@ -176,6 +176,7 @@ module Twilio
                             'debugger_integration' => payload['debugger_integration'],
                             'flex_ui_status_report' => payload['flex_ui_status_report'],
                             'agent_conv_end_methods' => payload['agent_conv_end_methods'],
+                            'citrix_voice_vdi' => payload['citrix_voice_vdi'],
                         }
 
                         # Context
@@ -468,6 +469,12 @@ module Twilio
                     # @return [Hash] Agent conversation end methods.
                     def agent_conv_end_methods
                         @properties['agent_conv_end_methods']
+                    end
+                    
+                    ##
+                    # @return [Hash] Citrix voice vdi configuration and settings.
+                    def citrix_voice_vdi
+                        @properties['citrix_voice_vdi']
                     end
                     
                     ##

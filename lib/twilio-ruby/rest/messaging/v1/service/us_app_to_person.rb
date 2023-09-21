@@ -187,7 +187,7 @@ module Twilio
                     ##
                     # Initialize the UsAppToPersonContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) to fetch the resource from.
+                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) to fetch the resource from.
                     # @param [String] sid The SID of the US A2P Compliance resource to fetch `QE2c6890da8086d771620e9b13fadeba0b`.
                     # @return [UsAppToPersonContext] UsAppToPersonContext
                     def initialize(version, messaging_service_sid, sid)
@@ -342,7 +342,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) that the resource is associated with.
+                    # @return [String] The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) that the resource is associated with.
                     def messaging_service_sid
                         @properties['messaging_service_sid']
                     end

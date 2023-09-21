@@ -201,7 +201,7 @@ module Twilio
 
                         unless @sync_list_permissions
                             @sync_list_permissions = SyncListPermissionList.new(
-                                @version, service_sid: @solution[:service_sid],  list_sid: @solution[:sid], )
+                                @version, service_sid: @solution[:service_sid], list_sid: @solution[:sid], )
                         end
 
                      @sync_list_permissions
@@ -220,7 +220,7 @@ module Twilio
 
                         unless @sync_list_items
                             @sync_list_items = SyncListItemList.new(
-                                @version, service_sid: @solution[:service_sid],  list_sid: @solution[:sid], )
+                                @version, service_sid: @solution[:service_sid], list_sid: @solution[:sid], )
                         end
 
                      @sync_list_items
