@@ -22,6 +22,7 @@ module Twilio
                     super
                     @version = '2010-04-01'
                     @accounts = nil
+                    @safelist = nil
                 end
 
                 ##
@@ -120,6 +121,11 @@ module Twilio
                     else
                         AccountContext.new(self, sid)
                     end
+                end
+                ##
+                # @return [Twilio::REST::Api::V2010::SafelistList]
+                def safelist
+                    @safelist ||= SafelistList.new self
                 end
                 ##
                 # Provide a user friendly representation

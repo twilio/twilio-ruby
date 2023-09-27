@@ -32,7 +32,7 @@ module Twilio
                     ##
                     # Create the ExternalCampaignInstance
                     # @param [String] campaign_id ID of the preregistered campaign.
-                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) that the resource is associated with.
+                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) that the resource is associated with.
                     # @return [ExternalCampaignInstance] Created ExternalCampaignInstance
                     def create(
                         campaign_id: nil, 
@@ -131,7 +131,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) that the resource is associated with.
+                    # @return [String] The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) that the resource is associated with.
                     def messaging_service_sid
                         @properties['messaging_service_sid']
                     end

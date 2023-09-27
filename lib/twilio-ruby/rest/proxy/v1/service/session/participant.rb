@@ -213,7 +213,7 @@ module Twilio
 
                         unless @message_interactions
                             @message_interactions = MessageInteractionList.new(
-                                @version, service_sid: @solution[:service_sid],  session_sid: @solution[:session_sid],  participant_sid: @solution[:sid], )
+                                @version, service_sid: @solution[:service_sid], session_sid: @solution[:session_sid], participant_sid: @solution[:sid], )
                         end
 
                      @message_interactions
