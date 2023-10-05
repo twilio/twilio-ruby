@@ -50,7 +50,6 @@ module Twilio
                     # @param [Time] send_at The time that Twilio will send the message. Must be in ISO 8601 format.
                     # @param [Boolean] send_as_mms If set to `true`, Twilio delivers the message as a single MMS message, regardless of the presence of media.
                     # @param [String] content_variables For [Content Editor/API](https://www.twilio.com/docs/content) only: Key-value pairs of [Template variables](https://www.twilio.com/docs/content/using-variables-with-content-api) and their substitution values. `content_sid` parameter must also be provided. If values are not defined in the `content_variables` parameter, the [Template's default placeholder values](https://www.twilio.com/docs/content/content-api-resources#create-templates) are used.
-                    # @param [String] tags A string containing a JSON map of key value pairs of tags to be recorded as metadata for the message. The object may contain up to 10 tags. Keys and values can each be up to 128 characters in length.
                     # @param [RiskCheck] risk_check 
                     # @param [String] from The sender's Twilio phone number (in [E.164](https://en.wikipedia.org/wiki/E.164) format), [alphanumeric sender ID](https://www.twilio.com/docs/sms/send-messages#use-an-alphanumeric-sender-id), [Wireless SIM](https://www.twilio.com/docs/iot/wireless/programmable-wireless-send-machine-machine-sms-commands), [short code](https://www.twilio.com/docs/sms/api/short-code), or [channel address](https://www.twilio.com/docs/messaging/channels) (e.g., `whatsapp:+15554449999`). The value of the `from` parameter must be a sender that is hosted within Twilio and belongs to the Account creating the Message. If you are using `messaging_service_sid`, this parameter can be empty (Twilio assigns a `from` value from the Messaging Service's Sender Pool) or you can provide a specific sender from your Sender Pool.
                     # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/services) you want to associate with the Message. When this parameter is provided and the `from` parameter is omitted, Twilio selects the optimal sender from the Messaging Service's Sender Pool. You may also provide a `from` parameter if you want to use a specific Sender from the Sender Pool.
@@ -76,7 +75,6 @@ module Twilio
                         send_at: :unset, 
                         send_as_mms: :unset, 
                         content_variables: :unset, 
-                        tags: :unset, 
                         risk_check: :unset, 
                         from: :unset, 
                         messaging_service_sid: :unset, 
@@ -103,7 +101,6 @@ module Twilio
                             'SendAt' => Twilio.serialize_iso8601_datetime(send_at),
                             'SendAsMms' => send_as_mms,
                             'ContentVariables' => content_variables,
-                            'Tags' => tags,
                             'RiskCheck' => risk_check,
                             'From' => from,
                             'MessagingServiceSid' => messaging_service_sid,
@@ -417,7 +414,6 @@ module Twilio
                             'price_unit' => payload['price_unit'],
                             'api_version' => payload['api_version'],
                             'subresource_uris' => payload['subresource_uris'],
-                            'tags' => payload['tags'],
                         }
 
                         # Context
@@ -554,12 +550,6 @@ module Twilio
                     # @return [Hash] A list of related resources identified by their URIs relative to `https://api.twilio.com`
                     def subresource_uris
                         @properties['subresource_uris']
-                    end
-                    
-                    ##
-                    # @return [Hash] A string containing a JSON map of key value pairs of tags to be recorded as metadata for the message.
-                    def tags
-                        @properties['tags']
                     end
                     
                     ##
