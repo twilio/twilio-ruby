@@ -40,8 +40,8 @@ module Twilio
           f.options.open_timeout = request.timeout || @timeout
           f.options.timeout = request.timeout || @timeout
 
-          @configure_connection_blocks.each { |block| block.call(f) }
           f.adapter @adapter
+          @configure_connection_blocks.each { |block| block.call(f) }
         end
 
         @last_request = request
