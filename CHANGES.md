@@ -1,6 +1,15 @@
 twilio-ruby changelog
 ===================== 
 
+[2023-10-05] Version 6.7.1
+--------------------------
+**Library - Chore**
+- [PR #678](https://github.com/twilio/twilio-ruby/pull/678): twilio help changes. Thanks to [@kridai](https://github.com/kridai)!
+
+**Lookups**
+- Add test api support for Lookup v2
+
+
 [2023-09-21] Version 6.7.0
 --------------------------
 **Conversations**

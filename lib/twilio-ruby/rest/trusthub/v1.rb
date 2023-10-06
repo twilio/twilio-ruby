@@ -21,6 +21,7 @@ module Twilio
                 def initialize(domain)
                     super
                     @version = 'v1'
+                    @compliance_inquiries = nil
                     @customer_profiles = nil
                     @end_users = nil
                     @end_user_types = nil
@@ -30,6 +31,20 @@ module Twilio
                     @trust_products = nil
                 end
 
+                ##
+                # @param [String] customer_id The unique CustomerId matching the Customer Profile/Compliance Inquiry that should be resumed or resubmitted. This value will have been returned by the initial Compliance Inquiry creation call.
+                # @return [Twilio::REST::Trusthub::V1::ComplianceInquiriesContext] if customerId was passed.
+                # @return [Twilio::REST::Trusthub::V1::ComplianceInquiriesList]
+                def compliance_inquiries(customer_id=:unset)
+                    if customer_id.nil?
+                        raise ArgumentError, 'customer_id cannot be nil'
+                    end
+                    if customer_id == :unset
+                        @compliance_inquiries ||= ComplianceInquiriesList.new self
+                    else
+                        ComplianceInquiriesContext.new(self, customer_id)
+                    end
+                end
                 ##
                 # @param [String] sid The unique string that we created to identify the Customer-Profile resource.
                 # @return [Twilio::REST::Trusthub::V1::CustomerProfilesContext] if sid was passed.
