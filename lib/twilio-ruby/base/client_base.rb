@@ -95,9 +95,9 @@ module Twilio
       end
 
       ##
-      # Validate the new SSL certificate for the Twilio API
+      # Validate the SSL certificates for the Twilio API
       def validate_ssl_certificate
-        response = request('api.twilio.com', '8443', 'GET', 'https://api.twilio.com:8443/.json')
+        response = request('tls-test.twilio.com', '443', 'GET', 'https://tls-test.twilio.com')
         return unless response.status_code < 200 || response.status_code >= 300
 
         raise RestError.new 'Unexpected response from certificate endpoint', response
