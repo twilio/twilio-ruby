@@ -38,7 +38,7 @@ module Twilio
                     # memory before returning.
                     # @param [EndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
                     # @param [String] iso_country The ISO country code of the phone number's country.
-                    # @param [String] number_type The type of phone number that the regulatory requiremnt is restricting.
+                    # @param [String] number_type The type of phone number that the regulatory requirement is restricting.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -62,7 +62,7 @@ module Twilio
                     # is reached.
                     # @param [EndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
                     # @param [String] iso_country The ISO country code of the phone number's country.
-                    # @param [String] number_type The type of phone number that the regulatory requiremnt is restricting.
+                    # @param [String] number_type The type of phone number that the regulatory requirement is restricting.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -101,7 +101,7 @@ module Twilio
                     # Request is executed immediately.
                     # @param [EndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
                     # @param [String] iso_country The ISO country code of the phone number's country.
-                    # @param [String] number_type The type of phone number that the regulatory requiremnt is restricting.
+                    # @param [String] number_type The type of phone number that the regulatory requirement is restricting.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
