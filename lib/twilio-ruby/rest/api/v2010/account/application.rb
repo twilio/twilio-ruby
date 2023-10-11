@@ -48,7 +48,7 @@ module Twilio
                     # @param [String] sms_status_callback The URL we should call using a POST method to send status information about SMS messages sent by the application.
                     # @param [String] message_status_callback The URL we should call using a POST method to send message status information to your application.
                     # @param [String] friendly_name A descriptive string that you create to describe the new application. It can be up to 64 characters long.
-                    # @param [Boolean] public_application_connect_enabled Whether to allow other Twilio accounts to dial this applicaton using Dial verb. Can be: `true` or `false`.
+                    # @param [Boolean] public_application_connect_enabled Whether to allow other Twilio accounts to dial this application using Dial verb. Can be: `true` or `false`.
                     # @return [ApplicationInstance] Created ApplicationInstance
                     def create(
                         api_version: :unset, 
@@ -251,7 +251,7 @@ module Twilio
                     # @param [String] sms_fallback_method The HTTP method we should use to call `sms_fallback_url`. Can be: `GET` or `POST`.
                     # @param [String] sms_status_callback Same as message_status_callback: The URL we should call using a POST method to send status information about SMS messages sent by the application. Deprecated, included for backwards compatibility.
                     # @param [String] message_status_callback The URL we should call using a POST method to send message status information to your application.
-                    # @param [Boolean] public_application_connect_enabled Whether to allow other Twilio accounts to dial this applicaton using Dial verb. Can be: `true` or `false`.
+                    # @param [Boolean] public_application_connect_enabled Whether to allow other Twilio accounts to dial this application using Dial verb. Can be: `true` or `false`.
                     # @return [ApplicationInstance] Updated ApplicationInstance
                     def update(
                         friendly_name: :unset, 
@@ -519,7 +519,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Boolean] Whether to allow other Twilio accounts to dial this applicaton using Dial verb. Can be: `true` or `false`.
+                    # @return [Boolean] Whether to allow other Twilio accounts to dial this application using Dial verb. Can be: `true` or `false`.
                     def public_application_connect_enabled
                         @properties['public_application_connect_enabled']
                     end
@@ -557,7 +557,7 @@ module Twilio
                     # @param [String] sms_fallback_method The HTTP method we should use to call `sms_fallback_url`. Can be: `GET` or `POST`.
                     # @param [String] sms_status_callback Same as message_status_callback: The URL we should call using a POST method to send status information about SMS messages sent by the application. Deprecated, included for backwards compatibility.
                     # @param [String] message_status_callback The URL we should call using a POST method to send message status information to your application.
-                    # @param [Boolean] public_application_connect_enabled Whether to allow other Twilio accounts to dial this applicaton using Dial verb. Can be: `true` or `false`.
+                    # @param [Boolean] public_application_connect_enabled Whether to allow other Twilio accounts to dial this application using Dial verb. Can be: `true` or `false`.
                     # @return [ApplicationInstance] Updated ApplicationInstance
                     def update(
                         friendly_name: :unset, 
