@@ -38,13 +38,15 @@ module Twilio
                     # @param [String] task_channel When MultiTasking is enabled, specify the TaskChannel by passing either its `unique_name` or `sid`. Default value is `default`.
                     # @param [String] workflow_sid The SID of the Workflow that you would like to handle routing for the new Task. If there is only one Workflow defined for the Workspace that you are posting the new task to, this parameter is optional.
                     # @param [String] attributes A URL-encoded JSON string with the attributes of the new task. This value is passed to the Workflow's `assignment_callback_url` when the Task is assigned to a Worker. For example: `{ \\\"task_type\\\": \\\"call\\\", \\\"twilio_call_sid\\\": \\\"CAxxx\\\", \\\"customer_ticket_number\\\": \\\"12345\\\" }`.
+                    # @param [Time] virtual_start_time The virtual start time to assign the new task and override the default. When supplied, the new task will have this virtual start time. When not supplied, the new task will have the virtual start time equal to `date_created`. Value can't be in the future.
                     # @return [TaskInstance] Created TaskInstance
                     def create(
                         timeout: :unset, 
                         priority: :unset, 
                         task_channel: :unset, 
                         workflow_sid: :unset, 
-                        attributes: :unset
+                        attributes: :unset, 
+                        virtual_start_time: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -53,6 +55,7 @@ module Twilio
                             'TaskChannel' => task_channel,
                             'WorkflowSid' => workflow_sid,
                             'Attributes' => attributes,
+                            'VirtualStartTime' => Twilio.serialize_iso8601_datetime(virtual_start_time),
                         })
 
                         payload = @version.create('POST', @uri, data: data)
@@ -75,7 +78,7 @@ module Twilio
                     # @param [String] task_queue_sid The SID of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this SID.
                     # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this friendly name.
                     # @param [String] evaluate_task_attributes The attributes of the Tasks to read. Returns the Tasks that match the attributes specified in this parameter.
-                    # @param [String] ordering How to order the returned Task resources. y default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `Priority` or `DateCreated` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Multiple sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order.
+                    # @param [String] ordering How to order the returned Task resources. By default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `DateCreated`, `Priority`, or `VirtualStartTime` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Pairings of sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order. The only ordering pairing not allowed is DateCreated and VirtualStartTime.
                     # @param [Boolean] has_addons Whether to read Tasks with addons. If `true`, returns only Tasks with addons. If `false`, returns only Tasks without addons.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -111,7 +114,7 @@ module Twilio
                     # @param [String] task_queue_sid The SID of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this SID.
                     # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this friendly name.
                     # @param [String] evaluate_task_attributes The attributes of the Tasks to read. Returns the Tasks that match the attributes specified in this parameter.
-                    # @param [String] ordering How to order the returned Task resources. y default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `Priority` or `DateCreated` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Multiple sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order.
+                    # @param [String] ordering How to order the returned Task resources. By default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `DateCreated`, `Priority`, or `VirtualStartTime` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Pairings of sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order. The only ordering pairing not allowed is DateCreated and VirtualStartTime.
                     # @param [Boolean] has_addons Whether to read Tasks with addons. If `true`, returns only Tasks with addons. If `false`, returns only Tasks without addons.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -162,7 +165,7 @@ module Twilio
                     # @param [String] task_queue_sid The SID of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this SID.
                     # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this friendly name.
                     # @param [String] evaluate_task_attributes The attributes of the Tasks to read. Returns the Tasks that match the attributes specified in this parameter.
-                    # @param [String] ordering How to order the returned Task resources. y default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `Priority` or `DateCreated` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Multiple sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order.
+                    # @param [String] ordering How to order the returned Task resources. By default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `DateCreated`, `Priority`, or `VirtualStartTime` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Pairings of sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order. The only ordering pairing not allowed is DateCreated and VirtualStartTime.
                     # @param [Boolean] has_addons Whether to read Tasks with addons. If `true`, returns only Tasks with addons. If `false`, returns only Tasks without addons.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
@@ -262,6 +265,7 @@ module Twilio
                     # @param [String] reason The reason that the Task was canceled or completed. This parameter is required only if the Task is canceled or completed. Setting this value queues the task for deletion and logs the reason.
                     # @param [String] priority The Task's new priority value. When supplied, the Task takes on the specified priority unless it matches a Workflow Target with a Priority set. Value can be 0 to 2^31^ (2,147,483,647).
                     # @param [String] task_channel When MultiTasking is enabled, specify the TaskChannel with the task to update. Can be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or `default`.
+                    # @param [Time] virtual_start_time The task's new virtual start time value. When supplied, the Task takes on the specified virtual start time. Value can't be in the future.
                     # @param [String] if_match If provided, applies this mutation if (and only if) the [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) header of the Task matches the provided value. This matches the semantics of (and is implemented with) the HTTP [If-Match header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match).
                     # @return [TaskInstance] Updated TaskInstance
                     def update(
@@ -270,6 +274,7 @@ module Twilio
                         reason: :unset, 
                         priority: :unset, 
                         task_channel: :unset, 
+                        virtual_start_time: :unset, 
                         if_match: :unset
                     )
 
@@ -279,6 +284,7 @@ module Twilio
                             'Reason' => reason,
                             'Priority' => priority,
                             'TaskChannel' => task_channel,
+                            'VirtualStartTime' => Twilio.serialize_iso8601_datetime(virtual_start_time),
                         })
 
                         headers = Twilio::Values.of({ 'If-Match' => if_match, })
@@ -390,6 +396,7 @@ module Twilio
                             'workspace_sid' => payload['workspace_sid'],
                             'url' => payload['url'],
                             'links' => payload['links'],
+                            'virtual_start_time' => Twilio.deserialize_iso8601_datetime(payload['virtual_start_time']),
                         }
 
                         # Context
@@ -535,6 +542,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [Time] The date and time in GMT indicating the ordering for routing of the Task specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+                    def virtual_start_time
+                        @properties['virtual_start_time']
+                    end
+                    
+                    ##
                     # Delete the TaskInstance
                     # @param [String] if_match If provided, deletes this Task if (and only if) the [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) header of the Task matches the provided value. This matches the semantics of (and is implemented with) the HTTP [If-Match header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match).
                     # @return [Boolean] True if delete succeeds, false otherwise
@@ -562,6 +575,7 @@ module Twilio
                     # @param [String] reason The reason that the Task was canceled or completed. This parameter is required only if the Task is canceled or completed. Setting this value queues the task for deletion and logs the reason.
                     # @param [String] priority The Task's new priority value. When supplied, the Task takes on the specified priority unless it matches a Workflow Target with a Priority set. Value can be 0 to 2^31^ (2,147,483,647).
                     # @param [String] task_channel When MultiTasking is enabled, specify the TaskChannel with the task to update. Can be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or `default`.
+                    # @param [Time] virtual_start_time The task's new virtual start time value. When supplied, the Task takes on the specified virtual start time. Value can't be in the future.
                     # @param [String] if_match If provided, applies this mutation if (and only if) the [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) header of the Task matches the provided value. This matches the semantics of (and is implemented with) the HTTP [If-Match header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match).
                     # @return [TaskInstance] Updated TaskInstance
                     def update(
@@ -570,6 +584,7 @@ module Twilio
                         reason: :unset, 
                         priority: :unset, 
                         task_channel: :unset, 
+                        virtual_start_time: :unset, 
                         if_match: :unset
                     )
 
@@ -579,6 +594,7 @@ module Twilio
                             reason: reason, 
                             priority: priority, 
                             task_channel: task_channel, 
+                            virtual_start_time: virtual_start_time, 
                             if_match: if_match, 
                         )
                     end

@@ -23,6 +23,7 @@ module Twilio
                     @version = 'v1'
                     @auth_token_promotion = nil
                     @credentials = nil
+                    @safelist = nil
                     @secondary_auth_token = nil
                 end
 
@@ -35,6 +36,11 @@ module Twilio
                 # @return [Twilio::REST::Accounts::V1::CredentialList]
                 def credentials
                     @credentials ||= CredentialList.new self
+                end
+                ##
+                # @return [Twilio::REST::Accounts::V1::SafelistList]
+                def safelist
+                    @safelist ||= SafelistList.new self
                 end
                 ##
                 # @return [Twilio::REST::Accounts::V1::secondaryAuthTokenContext]

@@ -1,6 +1,40 @@
 twilio-ruby changelog
 ===================== 
 
+[2023-10-19] Version 6.8.0
+--------------------------
+**Library - Chore**
+- [PR #682](https://github.com/twilio/twilio-ruby/pull/682): Removing Test Related To Deprecated Endpoint - OAuth. Thanks to [@KobeBrooks](https://github.com/KobeBrooks)!
+
+**Library - Fix**
+- [PR #680](https://github.com/twilio/twilio-ruby/pull/680): update validate ssl method with new endpoint. Thanks to [@AsabuHere](https://github.com/AsabuHere)!
+
+**Accounts**
+- Updated Safelist metadata to correct the docs.
+- Add Global SafeList API changes
+
+**Api**
+- Added optional parameter `CallToken` for create participant api
+
+**Flex**
+- Adding `offline_config` to Flex Configuration
+
+**Intelligence**
+- Deleted `redacted` parameter from fetching transcript in v2 **(breaking change)**
+
+**Lookups**
+- Add new `phone_number_quality_score` package to the lookup response
+- Remove `disposable_phone_number_risk` package **(breaking change)**
+
+**Messaging**
+- Update US App To Person documentation with current `message_samples` requirements
+
+**Taskrouter**
+- Remove beta_feature check on task_queue_bulk_real_time_statistics endpoint
+- Add `virtual_start_time` property to tasks
+- Updating `task_queue_data` format from `map` to `array` in the response of bulk get endpoint of TaskQueue Real Time Statistics API **(breaking change)**
+
+
 [2023-10-05] Version 6.7.1
 --------------------------
 **Library - Chore**
