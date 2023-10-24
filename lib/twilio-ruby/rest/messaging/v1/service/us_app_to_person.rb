@@ -36,7 +36,7 @@ module Twilio
                     # @param [String] brand_registration_sid A2P Brand Registration SID
                     # @param [String] description A short description of what this SMS campaign does. Min length: 40 characters. Max length: 4096 characters.
                     # @param [String] message_flow Required for all Campaigns. Details around how a consumer opts-in to their campaign, therefore giving consent to receive their messages. If multiple opt-in methods can be used for the same campaign, they must all be listed. 40 character minimum. 2048 character maximum.
-                    # @param [Array[String]] message_samples Message samples, at least 1 and up to 5 sample messages (at least 2 for sole proprietor), >=20 chars, <=1024 chars each.
+                    # @param [Array[String]] message_samples An array of sample message strings, min two and max five. Min length for each sample: 20 chars. Max length for each sample: 1024 chars.
                     # @param [String] us_app_to_person_usecase A2P Campaign Use Case. Examples: [ 2FA, EMERGENCY, MARKETING..]
                     # @param [Boolean] has_embedded_links Indicates that this SMS campaign will send messages that contain links.
                     # @param [Boolean] has_embedded_phone Indicates that this SMS campaign will send messages that contain phone numbers.
@@ -354,7 +354,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Array<String>] Message samples, at least 1 and up to 5 sample messages (at least 2 for starter/sole proprietor), >=20 chars, <=1024 chars each.
+                    # @return [Array<String>] An array of sample message strings, min two and max five. Min length for each sample: 20 chars. Max length for each sample: 1024 chars.
                     def message_samples
                         @properties['message_samples']
                     end

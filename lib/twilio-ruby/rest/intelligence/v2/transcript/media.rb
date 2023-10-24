@@ -60,7 +60,7 @@ module Twilio
                     end
                     ##
                     # Fetch the MediaInstance
-                    # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Media. The default is `true` to access redacted media.
+                    # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Media. If redaction is enabled, the default is `true` to access redacted media.
                     # @return [MediaInstance] Fetched MediaInstance
                     def fetch(
                         redacted: :unset
@@ -191,7 +191,7 @@ module Twilio
                     
                     ##
                     # Fetch the MediaInstance
-                    # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Media. The default is `true` to access redacted media.
+                    # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Media. If redaction is enabled, the default is `true` to access redacted media.
                     # @return [MediaInstance] Fetched MediaInstance
                     def fetch(
                         redacted: :unset

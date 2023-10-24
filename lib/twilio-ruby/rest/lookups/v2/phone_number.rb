@@ -184,7 +184,7 @@ module Twilio
                             'identity_match' => payload['identity_match'],
                             'reassigned_number' => payload['reassigned_number'],
                             'sms_pumping_risk' => payload['sms_pumping_risk'],
-                            'disposable_phone_number_risk' => payload['disposable_phone_number_risk'],
+                            'phone_number_quality_score' => payload['phone_number_quality_score'],
                             'url' => payload['url'],
                         }
 
@@ -289,9 +289,9 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] An object that contains information on if a mobile phone number could be a disposable or burner number.
-                    def disposable_phone_number_risk
-                        @properties['disposable_phone_number_risk']
+                    # @return [Hash] An object that contains information of a mobile phone number quality score. Quality score will return a risk score about the phone number.
+                    def phone_number_quality_score
+                        @properties['phone_number_quality_score']
                     end
                     
                     ##

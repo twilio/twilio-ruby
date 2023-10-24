@@ -229,16 +229,10 @@ module Twilio
 
                     ##
                     # Fetch the TranscriptInstance
-                    # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Transcript. The default is `true` to access redacted Transcript.
                     # @return [TranscriptInstance] Fetched TranscriptInstance
-                    def fetch(
-                        redacted: :unset
-                    )
+                    def fetch
 
-                        params = Twilio::Values.of({
-                            'Redacted' => redacted,
-                        })
-                        payload = @version.fetch('GET', @uri, params: params)
+                        payload = @version.fetch('GET', @uri)
                         TranscriptInstance.new(
                             @version,
                             payload,
@@ -478,15 +472,10 @@ module Twilio
 
                     ##
                     # Fetch the TranscriptInstance
-                    # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Transcript. The default is `true` to access redacted Transcript.
                     # @return [TranscriptInstance] Fetched TranscriptInstance
-                    def fetch(
-                        redacted: :unset
-                    )
+                    def fetch
 
-                        context.fetch(
-                            redacted: redacted, 
-                        )
+                        context.fetch
                     end
 
                     ##
