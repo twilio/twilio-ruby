@@ -238,6 +238,14 @@ module Twilio
                         
                     end
                     ##
+                    # Delete the TollfreeVerificationInstance
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete
+
+                        @version.delete('DELETE', @uri)
+                    end
+
+                    ##
                     # Fetch the TollfreeVerificationInstance
                     # @return [TollfreeVerificationInstance] Fetched TollfreeVerificationInstance
                     def fetch
@@ -649,6 +657,14 @@ module Twilio
                         @properties['external_reference_id']
                     end
                     
+                    ##
+                    # Delete the TollfreeVerificationInstance
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete
+
+                        context.delete
+                    end
+
                     ##
                     # Fetch the TollfreeVerificationInstance
                     # @return [TollfreeVerificationInstance] Fetched TollfreeVerificationInstance

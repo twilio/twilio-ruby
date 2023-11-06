@@ -36,6 +36,7 @@ module Twilio
                     @insights_settings_comment = nil
                     @insights_user_roles = nil
                     @interaction = nil
+                    @provisioning_status = nil
                     @web_channel = nil
                 end
 
@@ -176,6 +177,11 @@ module Twilio
                     else
                         InteractionContext.new(self, sid)
                     end
+                end
+                ##
+                # @return [Twilio::REST::FlexApi::V1::provisioningStatusContext]
+                def provisioning_status
+                    @provisioning_status ||= ProvisioningStatusContext.new self
                 end
                 ##
                 # @param [String] sid The SID of the WebChannel resource to fetch.
