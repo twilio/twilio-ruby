@@ -240,6 +240,7 @@ module Twilio
                             'predicted_probability' => payload['predicted_probability'],
                             'label_probabilities' => payload['label_probabilities'],
                             'extract_results' => payload['extract_results'],
+                            'text_generation_results' => payload['text_generation_results'],
                             'transcript_sid' => payload['transcript_sid'],
                             'url' => payload['url'],
                         }
@@ -330,6 +331,12 @@ module Twilio
                     # @return [Hash] List of text extraction results. This might be available on classify-extract model outputs.
                     def extract_results
                         @properties['extract_results']
+                    end
+                    
+                    ##
+                    # @return [Hash] Output of a text generation operator for example Conversation Sumamary.
+                    def text_generation_results
+                        @properties['text_generation_results']
                     end
                     
                     ##

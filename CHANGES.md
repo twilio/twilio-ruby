@@ -1,6 +1,24 @@
 twilio-ruby changelog
 ===================== 
 
+[2023-11-06] Version 6.8.1
+--------------------------
+**Flex**
+- Adding `provisioning_status` for Email Manager
+
+**Intelligence**
+- Add text-generation operator (for example conversation summary) results to existing OperatorResults collection.
+
+**Messaging**
+- Add DELETE support to Tollfree Verification resource
+
+**Serverless**
+- Add node18 as a valid Build runtime
+
+**Verify**
+- Update Verify TOTP maturity to GA.
+
+
 [2023-10-19] Version 6.8.0
 --------------------------
 **Library - Chore**
