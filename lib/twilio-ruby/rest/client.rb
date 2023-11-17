@@ -116,6 +116,7 @@ module Twilio
             def numbers
                 @numbers ||= Numbers.new self
             end
+            ##
             # Access the Preview Twilio Domain
             def preview
                 @preview ||= Preview.new self

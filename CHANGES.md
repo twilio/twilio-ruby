@@ -1,6 +1,29 @@
 twilio-ruby changelog
 ===================== 
 
+[2023-11-17] Version 6.8.2
+--------------------------
+**Library - Chore**
+- [PR #687](https://github.com/twilio/twilio-ruby/pull/687): remove more oauth refrences. Thanks to [@KobeBrooks](https://github.com/KobeBrooks)!
+
+**Api**
+- Update documentation to reflect RiskCheck GA
+
+**Messaging**
+- Add tollfree edit_allowed and edit_reason fields
+- Update Phone Number, Short Code, Alpha Sender, US A2P and Channel Sender documentation
+
+**Taskrouter**
+- Add container attribute to task_queue_bulk_real_time_statistics endpoint
+
+**Trusthub**
+- Rename did to tollfree_phone_number in compliance_tollfree_inquiry.json
+- Add new optional field notification_email to compliance_tollfree_inquiry.json
+
+**Verify**
+- Add `Tags` optional parameter on Verification creation.
+
+
 [2023-11-06] Version 6.8.1
 --------------------------
 **Flex**

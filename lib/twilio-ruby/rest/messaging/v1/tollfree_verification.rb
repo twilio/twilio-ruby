@@ -280,6 +280,7 @@ module Twilio
                     # @param [String] business_contact_last_name The last name of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_email The email address of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_phone The phone number of the contact for the business or organization using the Tollfree number.
+                    # @param [String] edit_reason Describe why the verification is being edited. If the verification was rejected because of a technical issue, such as the website being down, and the issue has been resolved this parameter should be set to something similar to 'Website fixed'.
                     # @return [TollfreeVerificationInstance] Updated TollfreeVerificationInstance
                     def update(
                         business_name: :unset, 
@@ -301,7 +302,8 @@ module Twilio
                         business_contact_first_name: :unset, 
                         business_contact_last_name: :unset, 
                         business_contact_email: :unset, 
-                        business_contact_phone: :unset
+                        business_contact_phone: :unset, 
+                        edit_reason: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -325,6 +327,7 @@ module Twilio
                             'BusinessContactLastName' => business_contact_last_name,
                             'BusinessContactEmail' => business_contact_email,
                             'BusinessContactPhone' => business_contact_phone,
+                            'EditReason' => edit_reason,
                         })
 
                         payload = @version.update('POST', @uri, data: data)
@@ -427,6 +430,7 @@ module Twilio
                             'rejection_reason' => payload['rejection_reason'],
                             'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
                             'edit_expiration' => Twilio.deserialize_iso8601_datetime(payload['edit_expiration']),
+                            'edit_allowed' => payload['edit_allowed'],
                             'resource_links' => payload['resource_links'],
                             'external_reference_id' => payload['external_reference_id'],
                         }
@@ -646,6 +650,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [Boolean] If a rejected verification is allowed to be edited/resubmitted. Some rejection reasons allow editing and some do not.
+                    def edit_allowed
+                        @properties['edit_allowed']
+                    end
+                    
+                    ##
                     # @return [Hash] The URLs of the documents associated with the Tollfree Verification resource.
                     def resource_links
                         @properties['resource_links']
@@ -695,6 +705,7 @@ module Twilio
                     # @param [String] business_contact_last_name The last name of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_email The email address of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_phone The phone number of the contact for the business or organization using the Tollfree number.
+                    # @param [String] edit_reason Describe why the verification is being edited. If the verification was rejected because of a technical issue, such as the website being down, and the issue has been resolved this parameter should be set to something similar to 'Website fixed'.
                     # @return [TollfreeVerificationInstance] Updated TollfreeVerificationInstance
                     def update(
                         business_name: :unset, 
@@ -716,7 +727,8 @@ module Twilio
                         business_contact_first_name: :unset, 
                         business_contact_last_name: :unset, 
                         business_contact_email: :unset, 
-                        business_contact_phone: :unset
+                        business_contact_phone: :unset, 
+                        edit_reason: :unset
                     )
 
                         context.update(
@@ -740,6 +752,7 @@ module Twilio
                             business_contact_last_name: business_contact_last_name, 
                             business_contact_email: business_contact_email, 
                             business_contact_phone: business_contact_phone, 
+                            edit_reason: edit_reason, 
                         )
                     end
 

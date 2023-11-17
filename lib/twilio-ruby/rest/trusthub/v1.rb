@@ -47,18 +47,9 @@ module Twilio
                     end
                 end
                 ##
-                # @param [String] tollfree_id The unique TolfreeId matching the Compliance Tollfree Verification Inquiry that should be resumed or resubmitted. This value will have been returned by the initial Compliance Tollfree Verification Inquiry creation call.
-                # @return [Twilio::REST::Trusthub::V1::ComplianceTollfreeInquiriesContext] if tollfreeId was passed.
                 # @return [Twilio::REST::Trusthub::V1::ComplianceTollfreeInquiriesList]
-                def compliance_tollfree_inquiries(tollfree_id=:unset)
-                    if tollfree_id.nil?
-                        raise ArgumentError, 'tollfree_id cannot be nil'
-                    end
-                    if tollfree_id == :unset
-                        @compliance_tollfree_inquiries ||= ComplianceTollfreeInquiriesList.new self
-                    else
-                        ComplianceTollfreeInquiriesContext.new(self, tollfree_id)
-                    end
+                def compliance_tollfree_inquiries
+                    @compliance_tollfree_inquiries ||= ComplianceTollfreeInquiriesList.new self
                 end
                 ##
                 # @param [String] sid The unique string that we created to identify the Customer-Profile resource.

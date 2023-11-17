@@ -31,14 +31,17 @@ module Twilio
                     end
                     ##
                     # Create the ComplianceTollfreeInquiriesInstance
-                    # @param [String] did The Tollfree phone number to be verified
+                    # @param [String] tollfree_phone_number The Tollfree phone number to be verified
+                    # @param [String] notification_email The notification email to be triggered when verification status is changed
                     # @return [ComplianceTollfreeInquiriesInstance] Created ComplianceTollfreeInquiriesInstance
                     def create(
-                        did: nil
+                        tollfree_phone_number: nil, 
+                        notification_email: nil
                     )
 
                         data = Twilio::Values.of({
-                            'Did' => did,
+                            'TollfreePhoneNumber' => tollfree_phone_number,
+                            'NotificationEmail' => notification_email,
                         })
 
                         payload = @version.create('POST', @uri, data: data)
@@ -54,58 +57,6 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         '#<Twilio.Trusthub.V1.ComplianceTollfreeInquiriesList>'
-                    end
-                end
-
-
-                class ComplianceTollfreeInquiriesContext < InstanceContext
-                    ##
-                    # Initialize the ComplianceTollfreeInquiriesContext
-                    # @param [Version] version Version that contains the resource
-                    # @param [String] tollfree_id The unique TolfreeId matching the Compliance Tollfree Verification Inquiry that should be resumed or resubmitted. This value will have been returned by the initial Compliance Tollfree Verification Inquiry creation call.
-                    # @return [ComplianceTollfreeInquiriesContext] ComplianceTollfreeInquiriesContext
-                    def initialize(version, tollfree_id)
-                        super(version)
-
-                        # Path Solution
-                        @solution = { tollfree_id: tollfree_id,  }
-                        @uri = "/ComplianceInquiries/Tollfree/#{@solution[:tollfree_id]}/Initialize"
-
-                        
-                    end
-                    ##
-                    # Update the ComplianceTollfreeInquiriesInstance
-                    # @param [String] did The Tollfree phone number to be verified
-                    # @return [ComplianceTollfreeInquiriesInstance] Updated ComplianceTollfreeInquiriesInstance
-                    def update(
-                        did: nil
-                    )
-
-                        data = Twilio::Values.of({
-                            'Did' => did,
-                        })
-
-                        payload = @version.update('POST', @uri, data: data)
-                        ComplianceTollfreeInquiriesInstance.new(
-                            @version,
-                            payload,
-                            tollfree_id: @solution[:tollfree_id],
-                        )
-                    end
-
-
-                    ##
-                    # Provide a user friendly representation
-                    def to_s
-                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Trusthub.V1.ComplianceTollfreeInquiriesContext #{context}>"
-                    end
-
-                    ##
-                    # Provide a detailed, user friendly representation
-                    def inspect
-                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Trusthub.V1.ComplianceTollfreeInquiriesContext #{context}>"
                     end
                 end
 
@@ -147,32 +98,18 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [ComplianceTollfreeInquiriesInstance] ComplianceTollfreeInquiriesInstance
-                    def initialize(version, payload , tollfree_id: nil)
+                    def initialize(version, payload )
                         super(version)
                         
                         # Marshaled Properties
                         @properties = { 
                             'inquiry_id' => payload['inquiry_id'],
                             'inquiry_session_token' => payload['inquiry_session_token'],
-                            'tollfree_id' => payload['tollfree_id'],
+                            'registration_id' => payload['registration_id'],
                             'url' => payload['url'],
                         }
-
-                        # Context
-                        @instance_context = nil
-                        @params = { 'tollfree_id' => tollfree_id  || @properties['tollfree_id']  , }
                     end
 
-                    ##
-                    # Generate an instance context for the instance, the context is capable of
-                    # performing various actions.  All instance actions are proxied to the context
-                    # @return [ComplianceTollfreeInquiriesContext] CallContext for this CallInstance
-                    def context
-                        unless @instance_context
-                            @instance_context = ComplianceTollfreeInquiriesContext.new(@version , @params['tollfree_id'])
-                        end
-                        @instance_context
-                    end
                     
                     ##
                     # @return [String] The unique ID used to start an embedded compliance registration session.
@@ -188,8 +125,8 @@ module Twilio
                     
                     ##
                     # @return [String] The TolfreeId matching the Tollfree Profile that should be resumed or resubmitted for editing.
-                    def tollfree_id
-                        @properties['tollfree_id']
+                    def registration_id
+                        @properties['registration_id']
                     end
                     
                     ##
@@ -199,30 +136,15 @@ module Twilio
                     end
                     
                     ##
-                    # Update the ComplianceTollfreeInquiriesInstance
-                    # @param [String] did The Tollfree phone number to be verified
-                    # @return [ComplianceTollfreeInquiriesInstance] Updated ComplianceTollfreeInquiriesInstance
-                    def update(
-                        did: nil
-                    )
-
-                        context.update(
-                            did: did, 
-                        )
-                    end
-
-                    ##
                     # Provide a user friendly representation
                     def to_s
-                        values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Trusthub.V1.ComplianceTollfreeInquiriesInstance #{values}>"
+                        "<Twilio.Trusthub.V1.ComplianceTollfreeInquiriesInstance>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Trusthub.V1.ComplianceTollfreeInquiriesInstance #{values}>"
+                        "<Twilio.Trusthub.V1.ComplianceTollfreeInquiriesInstance>"
                     end
                 end
 
