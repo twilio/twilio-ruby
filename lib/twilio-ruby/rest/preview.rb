@@ -62,16 +62,6 @@ module Twilio
       end
 
       ##
-      # @param [String] sid A 34 character string that uniquely identifies this
-      #   resource.
-      # @return [Twilio::REST::Preview::Understand::AssistantInstance] if sid was passed.
-      # @return [Twilio::REST::Preview::Understand::AssistantList]
-      def assistants(sid=:unset)
-        warn "assistants is deprecated. Use understand.assistants instead."
-        self.understand.assistants(sid)
-      end
-
-      ##
       # @param [String] sid The sid
       # @return [Twilio::REST::Preview::Wireless::CommandInstance] if sid was passed.
       # @return [Twilio::REST::Preview::Wireless::CommandList]
