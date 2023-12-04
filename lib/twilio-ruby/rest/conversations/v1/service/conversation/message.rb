@@ -40,7 +40,7 @@ module Twilio
                     # @param [Time] date_updated The date that this resource was last updated. `null` if the message has not been edited.
                     # @param [String] attributes A string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
                     # @param [String] media_sid The Media SID to be attached to the new Message.
-                    # @param [String] content_sid The unique ID of the multi-channel [Rich Content](https://www.twilio.com/docs/content-api) template, required for template-generated messages.  **Note** that if this field is set, `Body` and `MediaSid` parameters are ignored.
+                    # @param [String] content_sid The unique ID of the multi-channel [Rich Content](https://www.twilio.com/docs/content) template, required for template-generated messages.  **Note** that if this field is set, `Body` and `MediaSid` parameters are ignored.
                     # @param [String] content_variables A structurally valid JSON string that contains values to resolve Rich Content template variables.
                     # @param [String] subject The subject of the message, can be up to 256 characters long.
                     # @param [ServiceConversationMessageEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
@@ -468,7 +468,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique ID of the multi-channel [Rich Content](https://www.twilio.com/docs/content-api) template.
+                    # @return [String] The unique ID of the multi-channel [Rich Content](https://www.twilio.com/docs/content) template.
                     def content_sid
                         @properties['content_sid']
                     end
