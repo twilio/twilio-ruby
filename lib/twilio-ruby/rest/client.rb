@@ -61,6 +61,10 @@ module Twilio
             def frontline_api
                 @frontline_api ||= FrontlineApi.new self
             end
+            # Access the Insights Twilio Domain
+            def insights
+                @insights ||= Insights.new self
+            end
             ##
             # Access the Intelligence Twilio Domain
             def intelligence
