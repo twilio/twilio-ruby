@@ -39,6 +39,7 @@ module Twilio
           f.proxy = "#{@proxy_prot}://#{@proxy_auth}#{@proxy_path}" if @proxy_prot && @proxy_path
           f.options.open_timeout = request.timeout || @timeout
           f.options.timeout = request.timeout || @timeout
+          f.params = request.params.nil? ? {} : request.params
 
           @configure_connection_blocks.each { |block| block.call(f) }
           f.adapter @adapter
@@ -65,7 +66,7 @@ module Twilio
       def send(request)
         @connection.send(request.method.downcase.to_sym,
                          request.url,
-                         request.method == 'GET' ? request.params : request.data)
+                         request.data)
       rescue Faraday::Error => e
         raise Twilio::REST::TwilioError, e
       end

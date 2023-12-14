@@ -19,6 +19,7 @@ require 'rack'
 require 'twilio-ruby'
 require 'rspec/matchers'
 require 'equivalent-xml'
+require 'rspec/core'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
