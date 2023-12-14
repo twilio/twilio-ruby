@@ -220,8 +220,6 @@ module Twilio
                             'connect_app_friendly_name' => payload['connect_app_friendly_name'],
                             'connect_app_homepage_url' => payload['connect_app_homepage_url'],
                             'connect_app_sid' => payload['connect_app_sid'],
-                            'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
-                            'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                             'permissions' => payload['permissions'],
                             'uri' => payload['uri'],
                         }
@@ -276,18 +274,6 @@ module Twilio
                     # @return [String] The SID that we assigned to the Connect App.
                     def connect_app_sid
                         @properties['connect_app_sid']
-                    end
-                    
-                    ##
-                    # @return [Time] The date and time in GMT that the resource was created specified in [RFC 2822](https://www.ietf.org/rfc/rfc2822.txt) format.
-                    def date_created
-                        @properties['date_created']
-                    end
-                    
-                    ##
-                    # @return [Time] The date and time in GMT that the resource was last updated specified in [RFC 2822](https://www.ietf.org/rfc/rfc2822.txt) format.
-                    def date_updated
-                        @properties['date_updated']
                     end
                     
                     ##

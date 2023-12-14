@@ -34,7 +34,7 @@ module Twilio
                     ##
                     # Create the SubscribedEventInstance
                     # @param [String] type Type of event being subscribed to.
-                    # @param [String] schema_version The schema version that the subscription should use.
+                    # @param [String] schema_version The schema version that the Subscription should use.
                     # @return [SubscribedEventInstance] Created SubscribedEventInstance
                     def create(
                         type: nil, 
@@ -148,8 +148,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class SubscribedEventContext < InstanceContext
                     ##
                     # Initialize the SubscribedEventContext
@@ -190,7 +188,7 @@ module Twilio
 
                     ##
                     # Update the SubscribedEventInstance
-                    # @param [String] schema_version The schema version that the subscription should use.
+                    # @param [String] schema_version The schema version that the Subscription should use.
                     # @return [SubscribedEventInstance] Updated SubscribedEventInstance
                     def update(
                         schema_version: :unset
@@ -304,7 +302,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The schema version that the subscription should use.
+                    # @return [String] The schema version that the Subscription should use.
                     def schema_version
                         @properties['schema_version']
                     end
@@ -339,7 +337,7 @@ module Twilio
 
                     ##
                     # Update the SubscribedEventInstance
-                    # @param [String] schema_version The schema version that the subscription should use.
+                    # @param [String] schema_version The schema version that the Subscription should use.
                     # @return [SubscribedEventInstance] Updated SubscribedEventInstance
                     def update(
                         schema_version: :unset
