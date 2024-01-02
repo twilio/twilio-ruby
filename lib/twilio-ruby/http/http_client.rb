@@ -6,7 +6,7 @@ module Twilio
   module HTTP
     class Client
       attr_accessor :adapter
-      attr_reader :timeout, :last_response, :last_request
+      attr_reader :timeout, :last_response, :last_request, :connection
 
       def initialize(proxy_prot = nil, proxy_addr = nil, proxy_port = nil, proxy_user = nil, proxy_pass = nil,
                      ssl_ca_file = nil, timeout: nil)
@@ -39,6 +39,7 @@ module Twilio
           f.proxy = "#{@proxy_prot}://#{@proxy_auth}#{@proxy_path}" if @proxy_prot && @proxy_path
           f.options.open_timeout = request.timeout || @timeout
           f.options.timeout = request.timeout || @timeout
+          f.params = request.params.nil? ? {} : request.params
 
           @configure_connection_blocks.each { |block| block.call(f) }
           f.adapter @adapter
@@ -65,7 +66,7 @@ module Twilio
       def send(request)
         @connection.send(request.method.downcase.to_sym,
                          request.url,
-                         request.method == 'GET' ? request.params : request.data)
+                         request.data)
       rescue Faraday::Error => e
         raise Twilio::REST::TwilioError, e
       end

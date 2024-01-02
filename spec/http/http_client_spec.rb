@@ -133,6 +133,13 @@ describe Twilio::HTTP::Client do
     expect(@client.last_request.timeout).to be_nil
   end
 
+  it 'should contain params in Connection object' do
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: { something: '1' }))
+    params = Twilio::Values.of({ 'abc' => 'xyz' })
+    @client.request('host', 'port', 'DELETE', 'url', params, nil, {}, ['a', 'b'])
+    expect(@client.connection.params).to eq({ 'abc' => 'xyz' })
+  end
+
   describe 'last_response' do
     let(:last_response) { Twilio::Response.new(200, 'body') }
   end
