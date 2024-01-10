@@ -115,6 +115,10 @@ module Twilio
             def preview
                 @preview ||= Preview.new self
             end
+
+            def preview_messaging
+                @preview_messaging ||= PreviewMessaging.new self
+            end
             ##
             # Access the Pricing Twilio Domain
             def pricing
@@ -326,7 +330,6 @@ module Twilio
             def transcriptions(sid=:unset)
                 self.api.v2010.account.transcriptions(sid)
             end
-
 
 
             ##

@@ -27,7 +27,7 @@ module Twilio
       ##
       # Makes a request to the Twilio API using the configured http client
       # Authentication information is automatically added if none is provided
-      def request(host, port, method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil) # rubocop:disable Metrics/MethodLength
+      def request(host, port, method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil, body = nil) # rubocop:disable Metrics/MethodLength
         auth ||= @auth
         headers = generate_headers(method, headers)
         uri = build_uri(uri)
@@ -111,7 +111,7 @@ module Twilio
 
         user_agent_extensions.each { |extension| headers['User-Agent'] += " #{extension}" }
 
-        headers['Content-Type'] = 'application/x-www-form-urlencoded' if method == 'POST' && !headers['Content-Type']
+        headers['Content-Type'] = 'application/x-www-form-urlencoded' if method == 'POST' && !headers["Content-Type"]
 
         headers['Accept'] = 'application/json' unless headers['Accept']
         headers

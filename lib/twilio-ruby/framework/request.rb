@@ -16,26 +16,5 @@ module Twilio
       @timeout = timeout
     end
 
-    def to_s
-      auth = @auth.nil? ? '' : '(' + @auth.join(',') + ')'
-
-      params = ''
-      unless @params.nil? || @params.empty?
-        params = '?' + @params.each.map { |key, value| "#{CGI.escape(key)}=#{CGI.escape(value)}" }.join('&')
-      end
-
-      headers = ''
-      unless @headers.nil? || @headers.empty?
-        headers = "\n" + @headers.each.map { |key, value| "-H \"#{key}\": \"#{value}\"" }.join("\n")
-      end
-
-      data = ''
-      unless @data.nil? || @data.empty?
-        data = @method.equal?('GET') ? "\n -G" : "\n"
-        data += @data.each.map { |key, value| "-d \"#{key}\"=\"#{value}\"" }.join("\n")
-      end
-
-      "#{auth} #{@method} #{@url}#{params}#{data}#{headers}"
-    end
   end
 end
