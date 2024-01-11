@@ -112,6 +112,12 @@ module Twilio
             end
             ##
             # Access the Preview Twilio Domain
+            def preview_messaging
+                @preview_messaging ||= PreviewMessaging.new self
+            end
+
+            ##
+            # Access the Preview Messaging Twilio Domain
             def preview
                 @preview ||= Preview.new self
             end
