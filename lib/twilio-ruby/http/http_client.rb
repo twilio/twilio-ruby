@@ -27,12 +27,14 @@ module Twilio
       end
 
       def _request(request) # rubocop:disable Metrics/MethodLength
-        middle_ware = :url_encoded
-        if request.headers['Content-Type'] == 'application/json'
-          middle_ware = :json
-        elsif request.headers['Content-Type'] == 'application/x-www-form-urlencoded'
-          middle_ware = :url_encoded
-        end
+        middle_ware = case request.headers['Content-Type']
+                      when 'application/json'
+                        :json
+                      when 'application/x-www-form-urlencoded'
+                        :url_encoded
+                      else
+                        :url_encoded
+                      end
         @connection = Faraday.new(url: request.host + ':' + request.port.to_s, ssl: { verify: true }) do |f|
           f.options.params_encoder = Faraday::FlatParamsEncoder
           f.request(middle_ware)
