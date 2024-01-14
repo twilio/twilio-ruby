@@ -1,6 +1,18 @@
 twilio-ruby changelog
 ===================== 
 
+[2024-01-14] Version 6.9.1
+--------------------------
+**Library - Chore**
+- [PR #691](https://github.com/twilio/twilio-ruby/pull/691): Removing tests related to Autopilot and Understand Endpoints - product EoL. Thanks to [@miriamela](https://github.com/miriamela)!
+
+**Library - Fix**
+- [PR #693](https://github.com/twilio/twilio-ruby/pull/693): fixed query param not going for delete. Thanks to [@manisha1997](https://github.com/manisha1997)!
+
+**Push**
+- Migrated to new Push API V4 with Resilient Notification Delivery.
+
+
 [2023-12-14] Version 6.9.0
 --------------------------
 **Api**
