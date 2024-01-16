@@ -32,14 +32,14 @@ module Twilio
       data = ''
       unless @data.nil? || @data.empty?
         data = @method.equal?('GET') ? "\n -G" : "\n"
-        case @headers['Content-Type']
-        when 'application/x-www-form-urlencoded'
-          data += @data.each.map { |key, value| "-d \"#{key}\"=\"#{value}\"" }.join("\n")
-        when 'application/json'
-          data += "-d '#{JSON.generate(@data)}'"
-        else
-          data += @data.each.map { |key, value| "-d \"#{key}\"=\"#{value}\"" }.join("\n")
-        end
+        data += case @headers['Content-Type']
+                when 'application/x-www-form-urlencoded'
+                  @data.each.map { |key, value| "-d \"#{key}\"=\"#{value}\"" }.join("\n")
+                when 'application/json'
+                  "-d '#{JSON.generate(@data)}'"
+                else
+                  @data.each.map { |key, value| "-d \"#{key}\"=\"#{value}\"" }.join("\n")
+                end
       end
 
       "#{auth} #{@method} #{@url}#{params}#{data}#{headers}"
