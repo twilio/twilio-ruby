@@ -7,7 +7,7 @@ posted here._
 -----------------------------
 ### Overview
 
-##### Twilio Ruby Helper Library’s major version 7.0.0 is now available. We ensured that you can upgrade to Ruby helper Library 7.0.0 version without any breaking changes
+##### Twilio Ruby Helper Library’s major version 7.0.0-rc.x is now available. We ensured that you can upgrade to Ruby helper Library 7.0.0-rc.x version without any breaking changes
 
 Twilio Helper libraries now support nested json body while sending requests.
 
