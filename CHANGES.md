@@ -2,10 +2,9 @@ twilio-ruby changelog
 =====================
 
 
-[2024-01-14] Version 7.0.0
+[2024-01-14] Version 7.0.0-rc.0
 --------------------------
-**API**
-- Added Preview Messaging API
+- Release Candidate preparation
 
 
 [2024-01-14] Version 6.9.1
