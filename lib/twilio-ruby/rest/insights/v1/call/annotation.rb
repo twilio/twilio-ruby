@@ -251,7 +251,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The URL of this resource.
                     def url
                         @properties['url']
                     end

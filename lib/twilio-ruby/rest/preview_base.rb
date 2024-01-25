@@ -25,6 +25,7 @@ module Twilio
         @hosted_numbers = nil
         @sync = nil
         @marketplace = nil
+        @understand = nil
         @wireless = nil
       end
 
@@ -42,6 +43,10 @@ module Twilio
 
       def marketplace
         @marketplace ||= Preview::Marketplace.new self
+      end
+
+      def understand
+        @understand ||= Preview::Understand.new self
       end
 
       def wireless

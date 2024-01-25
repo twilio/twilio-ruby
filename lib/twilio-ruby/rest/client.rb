@@ -27,6 +27,11 @@ module Twilio
                 @api ||= Api.new self
             end
             ##
+            # Access the Autopilot Twilio Domain
+            def autopilot
+                @autopilot ||= Autopilot.new self
+            end
+            ##
             # Access the Bulkexports Twilio Domain
             def bulkexports
                 @bulkexports ||= Bulkexports.new self
@@ -110,6 +115,11 @@ module Twilio
             # Access the Numbers Twilio Domain
             def numbers
                 @numbers ||= Numbers.new self
+            end
+            ##
+            # Access the Oauth Twilio Domain
+            def oauth
+                @oauth ||= Oauth.new self
             end
             ##
             # Access the Preview Twilio Domain

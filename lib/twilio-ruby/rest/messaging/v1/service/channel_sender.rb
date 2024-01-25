@@ -292,7 +292,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The absolute URL of the ChannelSender resource.
+                    # @return [String] 
                     def url
                         @properties['url']
                     end
