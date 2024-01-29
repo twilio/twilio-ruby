@@ -34,7 +34,7 @@ module Twilio
                     # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
                     # @param [String] apn_credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) to use for APN Bindings.
                     # @param [String] gcm_credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) to use for GCM Bindings.
-                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/sms/quickstart#messaging-services) to use for SMS Bindings. This parameter must be set in order to send SMS notifications.
+                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/sms/send-messages#messaging-services) to use for SMS Bindings. This parameter must be set in order to send SMS notifications.
                     # @param [String] facebook_messenger_page_id Deprecated.
                     # @param [String] default_apn_notification_protocol_version The protocol version to use for sending APNS notifications. Can be overridden on a Binding by Binding basis when creating a [Binding](https://www.twilio.com/docs/notify/api/binding-resource) resource.
                     # @param [String] default_gcm_notification_protocol_version The protocol version to use for sending GCM notifications. Can be overridden on a Binding by Binding basis when creating a [Binding](https://www.twilio.com/docs/notify/api/binding-resource) resource.
@@ -232,7 +232,7 @@ module Twilio
                     # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
                     # @param [String] apn_credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) to use for APN Bindings.
                     # @param [String] gcm_credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) to use for GCM Bindings.
-                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/sms/quickstart#messaging-services) to use for SMS Bindings. This parameter must be set in order to send SMS notifications.
+                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/sms/send-messages#messaging-services) to use for SMS Bindings. This parameter must be set in order to send SMS notifications.
                     # @param [String] facebook_messenger_page_id Deprecated.
                     # @param [String] default_apn_notification_protocol_version The protocol version to use for sending APNS notifications. Can be overridden on a Binding by Binding basis when creating a [Binding](https://www.twilio.com/docs/notify/api/binding-resource) resource.
                     # @param [String] default_gcm_notification_protocol_version The protocol version to use for sending GCM notifications. Can be overridden on a Binding by Binding basis when creating a [Binding](https://www.twilio.com/docs/notify/api/binding-resource) resource.
@@ -462,7 +462,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The SID of the [Messaging Service](https://www.twilio.com/docs/sms/quickstart#messaging-services) to use for SMS Bindings. In order to send SMS notifications this parameter has to be set.
+                    # @return [String] The SID of the [Messaging Service](https://www.twilio.com/docs/sms/send-messages#messaging-services) to use for SMS Bindings. In order to send SMS notifications this parameter has to be set.
                     def messaging_service_sid
                         @properties['messaging_service_sid']
                     end
@@ -554,7 +554,7 @@ module Twilio
                     # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
                     # @param [String] apn_credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) to use for APN Bindings.
                     # @param [String] gcm_credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) to use for GCM Bindings.
-                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/sms/quickstart#messaging-services) to use for SMS Bindings. This parameter must be set in order to send SMS notifications.
+                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/sms/send-messages#messaging-services) to use for SMS Bindings. This parameter must be set in order to send SMS notifications.
                     # @param [String] facebook_messenger_page_id Deprecated.
                     # @param [String] default_apn_notification_protocol_version The protocol version to use for sending APNS notifications. Can be overridden on a Binding by Binding basis when creating a [Binding](https://www.twilio.com/docs/notify/api/binding-resource) resource.
                     # @param [String] default_gcm_notification_protocol_version The protocol version to use for sending GCM notifications. Can be overridden on a Binding by Binding basis when creating a [Binding](https://www.twilio.com/docs/notify/api/binding-resource) resource.

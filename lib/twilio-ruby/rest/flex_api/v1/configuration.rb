@@ -177,7 +177,6 @@ module Twilio
                             'flex_ui_status_report' => payload['flex_ui_status_report'],
                             'agent_conv_end_methods' => payload['agent_conv_end_methods'],
                             'citrix_voice_vdi' => payload['citrix_voice_vdi'],
-                            'offline_config' => payload['offline_config'],
                         }
 
                         # Context
@@ -476,12 +475,6 @@ module Twilio
                     # @return [Hash] Citrix voice vdi configuration and settings.
                     def citrix_voice_vdi
                         @properties['citrix_voice_vdi']
-                    end
-                    
-                    ##
-                    # @return [Hash] Presence and presence ttl configuration
-                    def offline_config
-                        @properties['offline_config']
                     end
                     
                     ##

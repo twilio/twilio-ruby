@@ -16,50 +16,53 @@
 module Twilio
     module REST
         class Preview < PreviewBase
-            class Sync < Version
-                class ServiceList < ListResource
+            class Understand < Version
+                class AssistantContext < InstanceContext
+
+                     class TaskList < ListResource
                     ##
-                    # Initialize the ServiceList
+                    # Initialize the TaskList
                     # @param [Version] version Version that contains the resource
-                    # @return [ServiceList] ServiceList
-                    def initialize(version)
+                    # @return [TaskList] TaskList
+                    def initialize(version, assistant_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = {  }
-                        @uri = "/Services"
+                        @solution = { assistant_sid: assistant_sid }
+                        @uri = "/Assistants/#{@solution[:assistant_sid]}/Tasks"
                         
                     end
                     ##
-                    # Create the ServiceInstance
-                    # @param [String] friendly_name 
-                    # @param [String] webhook_url 
-                    # @param [Boolean] reachability_webhooks_enabled 
-                    # @param [Boolean] acl_enabled 
-                    # @return [ServiceInstance] Created ServiceInstance
+                    # Create the TaskInstance
+                    # @param [String] unique_name A user-provided string that uniquely identifies this resource as an alternative to the sid. Unique up to 64 characters long.
+                    # @param [String] friendly_name A user-provided string that identifies this resource. It is non-unique and can up to 255 characters long.
+                    # @param [Object] actions A user-provided JSON object encoded as a string to specify the actions for this task. It is optional and non-unique.
+                    # @param [String] actions_url User-provided HTTP endpoint where from the assistant fetches actions
+                    # @return [TaskInstance] Created TaskInstance
                     def create(
+                        unique_name: nil, 
                         friendly_name: :unset, 
-                        webhook_url: :unset, 
-                        reachability_webhooks_enabled: :unset, 
-                        acl_enabled: :unset
+                        actions: :unset, 
+                        actions_url: :unset
                     )
 
                         data = Twilio::Values.of({
+                            'UniqueName' => unique_name,
                             'FriendlyName' => friendly_name,
-                            'WebhookUrl' => webhook_url,
-                            'ReachabilityWebhooksEnabled' => reachability_webhooks_enabled,
-                            'AclEnabled' => acl_enabled,
+                            'Actions' => Twilio.serialize_object(actions),
+                            'ActionsUrl' => actions_url,
                         })
 
                         payload = @version.create('POST', @uri, data: data)
-                        ServiceInstance.new(
+                        TaskInstance.new(
                             @version,
                             payload,
+                            assistant_sid: @solution[:assistant_sid],
                         )
                     end
 
                 
                     ##
-                    # Lists ServiceInstance records from the API as a list.
+                    # Lists TaskInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -97,7 +100,7 @@ module Twilio
                     end
 
                     ##
-                    # When passed a block, yields ServiceInstance records from the API.
+                    # When passed a block, yields TaskInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     def each
@@ -111,12 +114,12 @@ module Twilio
                     end
 
                     ##
-                    # Retrieve a single page of ServiceInstance records from the API.
+                    # Retrieve a single page of TaskInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
-                    # @return [Page] Page of ServiceInstance
+                    # @return [Page] Page of TaskInstance
                     def page(page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
@@ -126,53 +129,55 @@ module Twilio
 
                         response = @version.page('GET', @uri, params: params)
 
-                        ServicePage.new(@version, response, @solution)
+                        TaskPage.new(@version, response, @solution)
                     end
 
                     ##
-                    # Retrieve a single page of ServiceInstance records from the API.
+                    # Retrieve a single page of TaskInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] target_url API-generated URL for the requested results page
-                    # @return [Page] Page of ServiceInstance
+                    # @return [Page] Page of TaskInstance
                     def get_page(target_url)
                         response = @version.domain.request(
                             'GET',
                             target_url
                         )
-                    ServicePage.new(@version, response, @solution)
+                    TaskPage.new(@version, response, @solution)
                     end
                     
 
 
                     # Provide a user friendly representation
                     def to_s
-                        '#<Twilio.Preview.Sync.ServiceList>'
+                        '#<Twilio.Preview.Understand.TaskList>'
                     end
                 end
 
 
                 ##
                 #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
-                class ServiceContext < InstanceContext
+                class TaskContext < InstanceContext
                     ##
-                    # Initialize the ServiceContext
+                    # Initialize the TaskContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] sid 
-                    # @return [ServiceContext] ServiceContext
-                    def initialize(version, sid)
+                    # @param [String] assistant_sid The unique ID of the Assistant.
+                    # @param [String] sid A 34 character string that uniquely identifies this resource.
+                    # @return [TaskContext] TaskContext
+                    def initialize(version, assistant_sid, sid)
                         super(version)
 
                         # Path Solution
-                        @solution = { sid: sid,  }
-                        @uri = "/Services/#{@solution[:sid]}"
+                        @solution = { assistant_sid: assistant_sid, sid: sid,  }
+                        @uri = "/Assistants/#{@solution[:assistant_sid]}/Tasks/#{@solution[:sid]}"
 
                         # Dependents
-                        @sync_lists = nil
-                        @sync_maps = nil
-                        @documents = nil
+                        @task_actions = nil
+                        @statistics = nil
+                        @samples = nil
+                        @fields = nil
                     end
                     ##
-                    # Delete the ServiceInstance
+                    # Delete the TaskInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
@@ -180,127 +185,132 @@ module Twilio
                     end
 
                     ##
-                    # Fetch the ServiceInstance
-                    # @return [ServiceInstance] Fetched ServiceInstance
+                    # Fetch the TaskInstance
+                    # @return [TaskInstance] Fetched TaskInstance
                     def fetch
 
                         payload = @version.fetch('GET', @uri)
-                        ServiceInstance.new(
+                        TaskInstance.new(
                             @version,
                             payload,
+                            assistant_sid: @solution[:assistant_sid],
                             sid: @solution[:sid],
                         )
                     end
 
                     ##
-                    # Update the ServiceInstance
-                    # @param [String] webhook_url 
-                    # @param [String] friendly_name 
-                    # @param [Boolean] reachability_webhooks_enabled 
-                    # @param [Boolean] acl_enabled 
-                    # @return [ServiceInstance] Updated ServiceInstance
+                    # Update the TaskInstance
+                    # @param [String] friendly_name A user-provided string that identifies this resource. It is non-unique and can up to 255 characters long.
+                    # @param [String] unique_name A user-provided string that uniquely identifies this resource as an alternative to the sid. Unique up to 64 characters long.
+                    # @param [Object] actions A user-provided JSON object encoded as a string to specify the actions for this task. It is optional and non-unique.
+                    # @param [String] actions_url User-provided HTTP endpoint where from the assistant fetches actions
+                    # @return [TaskInstance] Updated TaskInstance
                     def update(
-                        webhook_url: :unset, 
                         friendly_name: :unset, 
-                        reachability_webhooks_enabled: :unset, 
-                        acl_enabled: :unset
+                        unique_name: :unset, 
+                        actions: :unset, 
+                        actions_url: :unset
                     )
 
                         data = Twilio::Values.of({
-                            'WebhookUrl' => webhook_url,
                             'FriendlyName' => friendly_name,
-                            'ReachabilityWebhooksEnabled' => reachability_webhooks_enabled,
-                            'AclEnabled' => acl_enabled,
+                            'UniqueName' => unique_name,
+                            'Actions' => Twilio.serialize_object(actions),
+                            'ActionsUrl' => actions_url,
                         })
 
                         payload = @version.update('POST', @uri, data: data)
-                        ServiceInstance.new(
+                        TaskInstance.new(
                             @version,
                             payload,
+                            assistant_sid: @solution[:assistant_sid],
                             sid: @solution[:sid],
                         )
                     end
 
                     ##
-                    # Access the sync_lists
-                    # @return [SyncListList]
-                    # @return [SyncListContext] if sid was passed.
-                    def sync_lists(sid=:unset)
-
-                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-                        if sid != :unset
-                            return SyncListContext.new(@version, @solution[:sid],sid )
-                        end
-
-                        unless @sync_lists
-                            @sync_lists = SyncListList.new(
-                                @version, service_sid: @solution[:sid], )
-                        end
-
-                     @sync_lists
+                    # Access the task_actions
+                    # @return [TaskActionsList]
+                    # @return [TaskActionsContext]
+                    def task_actions
+                        TaskActionsContext.new(
+                                @version,
+                                @solution[:assistant_sid],
+                                @solution[:sid]
+                                )
                     end
                     ##
-                    # Access the sync_maps
-                    # @return [SyncMapList]
-                    # @return [SyncMapContext] if sid was passed.
-                    def sync_maps(sid=:unset)
-
-                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-                        if sid != :unset
-                            return SyncMapContext.new(@version, @solution[:sid],sid )
-                        end
-
-                        unless @sync_maps
-                            @sync_maps = SyncMapList.new(
-                                @version, service_sid: @solution[:sid], )
-                        end
-
-                     @sync_maps
+                    # Access the statistics
+                    # @return [TaskStatisticsList]
+                    # @return [TaskStatisticsContext]
+                    def statistics
+                        TaskStatisticsContext.new(
+                                @version,
+                                @solution[:assistant_sid],
+                                @solution[:sid]
+                                )
                     end
                     ##
-                    # Access the documents
-                    # @return [DocumentList]
-                    # @return [DocumentContext] if sid was passed.
-                    def documents(sid=:unset)
+                    # Access the samples
+                    # @return [SampleList]
+                    # @return [SampleContext] if sid was passed.
+                    def samples(sid=:unset)
 
                         raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
                         if sid != :unset
-                            return DocumentContext.new(@version, @solution[:sid],sid )
+                            return SampleContext.new(@version, @solution[:assistant_sid], @solution[:sid],sid )
                         end
 
-                        unless @documents
-                            @documents = DocumentList.new(
-                                @version, service_sid: @solution[:sid], )
+                        unless @samples
+                            @samples = SampleList.new(
+                                @version, assistant_sid: @solution[:assistant_sid], task_sid: @solution[:sid], )
                         end
 
-                     @documents
+                     @samples
+                    end
+                    ##
+                    # Access the fields
+                    # @return [FieldList]
+                    # @return [FieldContext] if sid was passed.
+                    def fields(sid=:unset)
+
+                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+                        if sid != :unset
+                            return FieldContext.new(@version, @solution[:assistant_sid], @solution[:sid],sid )
+                        end
+
+                        unless @fields
+                            @fields = FieldList.new(
+                                @version, assistant_sid: @solution[:assistant_sid], task_sid: @solution[:sid], )
+                        end
+
+                     @fields
                     end
 
                     ##
                     # Provide a user friendly representation
                     def to_s
                         context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Preview.Sync.ServiceContext #{context}>"
+                        "#<Twilio.Preview.Understand.TaskContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
                         context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Preview.Sync.ServiceContext #{context}>"
+                        "#<Twilio.Preview.Understand.TaskContext #{context}>"
                     end
                 end
 
-                class ServicePage < Page
+                class TaskPage < Page
                     ##
-                    # Initialize the ServicePage
+                    # Initialize the TaskPage
                     # @param [Version] version Version that contains the resource
                     # @param [Response] response Response from the API
                     # @param [Hash] solution Path solution for the resource
-                    # @return [ServicePage] ServicePage
+                    # @return [TaskPage] TaskPage
                     def initialize(version, response, solution)
                         super(version, response)
 
@@ -309,114 +319,84 @@ module Twilio
                     end
 
                     ##
-                    # Build an instance of ServiceInstance
+                    # Build an instance of TaskInstance
                     # @param [Hash] payload Payload response from the API
-                    # @return [ServiceInstance] ServiceInstance
+                    # @return [TaskInstance] TaskInstance
                     def get_instance(payload)
-                        ServiceInstance.new(@version, payload)
+                        TaskInstance.new(@version, payload, assistant_sid: @solution[:assistant_sid])
                     end
 
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        '<Twilio.Preview.Sync.ServicePage>'
+                        '<Twilio.Preview.Understand.TaskPage>'
                     end
                 end
-                class ServiceInstance < InstanceResource
+                class TaskInstance < InstanceResource
                     ##
-                    # Initialize the ServiceInstance
+                    # Initialize the TaskInstance
                     # @param [Version] version Version that contains the resource
                     # @param [Hash] payload payload that contains response from Twilio
                     # @param [String] account_sid The SID of the
-                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Service
+                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Task
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
-                    # @return [ServiceInstance] ServiceInstance
-                    def initialize(version, payload , sid: nil)
+                    # @return [TaskInstance] TaskInstance
+                    def initialize(version, payload , assistant_sid: nil, sid: nil)
                         super(version)
                         
                         # Marshaled Properties
                         @properties = { 
-                            'sid' => payload['sid'],
                             'account_sid' => payload['account_sid'],
-                            'friendly_name' => payload['friendly_name'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
-                            'url' => payload['url'],
-                            'webhook_url' => payload['webhook_url'],
-                            'reachability_webhooks_enabled' => payload['reachability_webhooks_enabled'],
-                            'acl_enabled' => payload['acl_enabled'],
+                            'friendly_name' => payload['friendly_name'],
                             'links' => payload['links'],
+                            'assistant_sid' => payload['assistant_sid'],
+                            'sid' => payload['sid'],
+                            'unique_name' => payload['unique_name'],
+                            'actions_url' => payload['actions_url'],
+                            'url' => payload['url'],
                         }
 
                         # Context
                         @instance_context = nil
-                        @params = { 'sid' => sid  || @properties['sid']  , }
+                        @params = { 'assistant_sid' => assistant_sid  || @properties['assistant_sid']  ,'sid' => sid  || @properties['sid']  , }
                     end
 
                     ##
                     # Generate an instance context for the instance, the context is capable of
                     # performing various actions.  All instance actions are proxied to the context
-                    # @return [ServiceContext] CallContext for this CallInstance
+                    # @return [TaskContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = ServiceContext.new(@version , @params['sid'])
+                            @instance_context = TaskContext.new(@version , @params['assistant_sid'], @params['sid'])
                         end
                         @instance_context
                     end
                     
                     ##
-                    # @return [String] 
-                    def sid
-                        @properties['sid']
-                    end
-                    
-                    ##
-                    # @return [String] 
+                    # @return [String] The unique ID of the Account that created this Task.
                     def account_sid
                         @properties['account_sid']
                     end
                     
                     ##
-                    # @return [String] 
-                    def friendly_name
-                        @properties['friendly_name']
-                    end
-                    
-                    ##
-                    # @return [Time] 
+                    # @return [Time] The date that this resource was created
                     def date_created
                         @properties['date_created']
                     end
                     
                     ##
-                    # @return [Time] 
+                    # @return [Time] The date that this resource was last updated
                     def date_updated
                         @properties['date_updated']
                     end
                     
                     ##
-                    # @return [String] 
-                    def url
-                        @properties['url']
-                    end
-                    
-                    ##
-                    # @return [String] 
-                    def webhook_url
-                        @properties['webhook_url']
-                    end
-                    
-                    ##
-                    # @return [Boolean] 
-                    def reachability_webhooks_enabled
-                        @properties['reachability_webhooks_enabled']
-                    end
-                    
-                    ##
-                    # @return [Boolean] 
-                    def acl_enabled
-                        @properties['acl_enabled']
+                    # @return [String] A user-provided string that identifies this resource. It is non-unique and can up to 255 characters long.
+                    def friendly_name
+                        @properties['friendly_name']
                     end
                     
                     ##
@@ -426,7 +406,37 @@ module Twilio
                     end
                     
                     ##
-                    # Delete the ServiceInstance
+                    # @return [String] The unique ID of the Assistant.
+                    def assistant_sid
+                        @properties['assistant_sid']
+                    end
+                    
+                    ##
+                    # @return [String] A 34 character string that uniquely identifies this resource.
+                    def sid
+                        @properties['sid']
+                    end
+                    
+                    ##
+                    # @return [String] A user-provided string that uniquely identifies this resource as an alternative to the sid. Unique up to 64 characters long.
+                    def unique_name
+                        @properties['unique_name']
+                    end
+                    
+                    ##
+                    # @return [String] User-provided HTTP endpoint where from the assistant fetches actions
+                    def actions_url
+                        @properties['actions_url']
+                    end
+                    
+                    ##
+                    # @return [String] 
+                    def url
+                        @properties['url']
+                    end
+                    
+                    ##
+                    # Delete the TaskInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
@@ -434,72 +444,82 @@ module Twilio
                     end
 
                     ##
-                    # Fetch the ServiceInstance
-                    # @return [ServiceInstance] Fetched ServiceInstance
+                    # Fetch the TaskInstance
+                    # @return [TaskInstance] Fetched TaskInstance
                     def fetch
 
                         context.fetch
                     end
 
                     ##
-                    # Update the ServiceInstance
-                    # @param [String] webhook_url 
-                    # @param [String] friendly_name 
-                    # @param [Boolean] reachability_webhooks_enabled 
-                    # @param [Boolean] acl_enabled 
-                    # @return [ServiceInstance] Updated ServiceInstance
+                    # Update the TaskInstance
+                    # @param [String] friendly_name A user-provided string that identifies this resource. It is non-unique and can up to 255 characters long.
+                    # @param [String] unique_name A user-provided string that uniquely identifies this resource as an alternative to the sid. Unique up to 64 characters long.
+                    # @param [Object] actions A user-provided JSON object encoded as a string to specify the actions for this task. It is optional and non-unique.
+                    # @param [String] actions_url User-provided HTTP endpoint where from the assistant fetches actions
+                    # @return [TaskInstance] Updated TaskInstance
                     def update(
-                        webhook_url: :unset, 
                         friendly_name: :unset, 
-                        reachability_webhooks_enabled: :unset, 
-                        acl_enabled: :unset
+                        unique_name: :unset, 
+                        actions: :unset, 
+                        actions_url: :unset
                     )
 
                         context.update(
-                            webhook_url: webhook_url, 
                             friendly_name: friendly_name, 
-                            reachability_webhooks_enabled: reachability_webhooks_enabled, 
-                            acl_enabled: acl_enabled, 
+                            unique_name: unique_name, 
+                            actions: actions, 
+                            actions_url: actions_url, 
                         )
                     end
 
                     ##
-                    # Access the sync_lists
-                    # @return [sync_lists] sync_lists
-                    def sync_lists
-                        context.sync_lists
+                    # Access the task_actions
+                    # @return [task_actions] task_actions
+                    def task_actions
+                        context.task_actions
                     end
 
                     ##
-                    # Access the sync_maps
-                    # @return [sync_maps] sync_maps
-                    def sync_maps
-                        context.sync_maps
+                    # Access the statistics
+                    # @return [statistics] statistics
+                    def statistics
+                        context.statistics
                     end
 
                     ##
-                    # Access the documents
-                    # @return [documents] documents
-                    def documents
-                        context.documents
+                    # Access the samples
+                    # @return [samples] samples
+                    def samples
+                        context.samples
+                    end
+
+                    ##
+                    # Access the fields
+                    # @return [fields] fields
+                    def fields
+                        context.fields
                     end
 
                     ##
                     # Provide a user friendly representation
                     def to_s
                         values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Preview.Sync.ServiceInstance #{values}>"
+                        "<Twilio.Preview.Understand.TaskInstance #{values}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
                         values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Preview.Sync.ServiceInstance #{values}>"
+                        "<Twilio.Preview.Understand.TaskInstance #{values}>"
                     end
                 end
 
+             end
             end
         end
     end
 end
+
+
