@@ -31,7 +31,7 @@ module Twilio
                     end
                     ##
                     # Create the InstalledAddOnInstance
-                    # @param [String] available_add_on_sid The SID of the AvaliableAddOn to install.
+                    # @param [String] available_add_on_sid The SID of the AvailableAddOn to install.
                     # @param [Boolean] accept_terms_of_service Whether the Terms of Service were accepted.
                     # @param [Object] configuration The JSON object that represents the configuration of the new Add-on being installed.
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. This value must be unique within the Account.

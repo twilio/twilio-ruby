@@ -47,7 +47,7 @@ module Twilio
                     # @param [String] totp_time_step Optional configuration for the TOTP factors. Defines how often, in seconds, are TOTP codes generated. i.e, a new TOTP code is generated every time_step seconds. Must be between 20 and 60 seconds, inclusive. Defaults to 30 seconds
                     # @param [String] totp_code_length Optional configuration for the TOTP factors. Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive. Defaults to 6
                     # @param [String] totp_skew Optional configuration for the TOTP factors. The number of time-steps, past and future, that are valid for validation of TOTP codes. Must be between 0 and 2, inclusive. Defaults to 1
-                    # @param [String] default_template_sid The default message [template](https://www.twilio.com/docs/verify/api/templates). Will be used for all SMS verifications unless explicitly overriden. SMS channel only.
+                    # @param [String] default_template_sid The default message [template](https://www.twilio.com/docs/verify/api/templates). Will be used for all SMS verifications unless explicitly overridden. SMS channel only.
                     # @return [ServiceInstance] Created ServiceInstance
                     def create(
                         friendly_name: nil, 
@@ -251,7 +251,7 @@ module Twilio
                     # @param [String] totp_time_step Optional configuration for the TOTP factors. Defines how often, in seconds, are TOTP codes generated. i.e, a new TOTP code is generated every time_step seconds. Must be between 20 and 60 seconds, inclusive. Defaults to 30 seconds
                     # @param [String] totp_code_length Optional configuration for the TOTP factors. Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive. Defaults to 6
                     # @param [String] totp_skew Optional configuration for the TOTP factors. The number of time-steps, past and future, that are valid for validation of TOTP codes. Must be between 0 and 2, inclusive. Defaults to 1
-                    # @param [String] default_template_sid The default message [template](https://www.twilio.com/docs/verify/api/templates). Will be used for all SMS verifications unless explicitly overriden. SMS channel only.
+                    # @param [String] default_template_sid The default message [template](https://www.twilio.com/docs/verify/api/templates). Will be used for all SMS verifications unless explicitly overridden. SMS channel only.
                     # @return [ServiceInstance] Updated ServiceInstance
                     def update(
                         friendly_name: :unset, 
@@ -663,7 +663,7 @@ module Twilio
                     # @param [String] totp_time_step Optional configuration for the TOTP factors. Defines how often, in seconds, are TOTP codes generated. i.e, a new TOTP code is generated every time_step seconds. Must be between 20 and 60 seconds, inclusive. Defaults to 30 seconds
                     # @param [String] totp_code_length Optional configuration for the TOTP factors. Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive. Defaults to 6
                     # @param [String] totp_skew Optional configuration for the TOTP factors. The number of time-steps, past and future, that are valid for validation of TOTP codes. Must be between 0 and 2, inclusive. Defaults to 1
-                    # @param [String] default_template_sid The default message [template](https://www.twilio.com/docs/verify/api/templates). Will be used for all SMS verifications unless explicitly overriden. SMS channel only.
+                    # @param [String] default_template_sid The default message [template](https://www.twilio.com/docs/verify/api/templates). Will be used for all SMS verifications unless explicitly overridden. SMS channel only.
                     # @return [ServiceInstance] Updated ServiceInstance
                     def update(
                         friendly_name: :unset, 
