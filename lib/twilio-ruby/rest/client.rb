@@ -82,11 +82,6 @@ module Twilio
                 @lookups ||= Lookups.new self
             end
             ##
-            # Access the Media Twilio Domain
-            def media
-                @media ||= Media.new self
-            end
-            ##
             # Access the Messaging Twilio Domain
             def messaging
                 @messaging ||= Messaging.new self
