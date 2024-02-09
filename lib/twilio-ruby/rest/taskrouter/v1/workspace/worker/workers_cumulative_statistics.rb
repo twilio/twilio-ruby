@@ -21,6 +21,7 @@ module Twilio
                 class WorkerContext < InstanceContext
 
                      class WorkersCumulativeStatisticsList < ListResource
+                
                     ##
                     # Initialize the WorkersCumulativeStatisticsList
                     # @param [Version] version Version that contains the resource
@@ -77,6 +78,7 @@ module Twilio
                             'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
                             'TaskChannel' => task_channel,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         WorkersCumulativeStatisticsInstance.new(
                             @version,

@@ -20,6 +20,7 @@ module Twilio
                 class TranscriptContext < InstanceContext
 
                      class OperatorResultList < ListResource
+                
                     ##
                     # Initialize the OperatorResultList
                     # @param [Version] version Version that contains the resource
@@ -131,8 +132,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class OperatorResultContext < InstanceContext
                     ##
                     # Initialize the OperatorResultContext
@@ -160,6 +159,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'Redacted' => redacted,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         OperatorResultInstance.new(
                             @version,
@@ -240,6 +240,7 @@ module Twilio
                             'predicted_probability' => payload['predicted_probability'],
                             'label_probabilities' => payload['label_probabilities'],
                             'extract_results' => payload['extract_results'],
+                            'text_generation_results' => payload['text_generation_results'],
                             'transcript_sid' => payload['transcript_sid'],
                             'url' => payload['url'],
                         }
@@ -330,6 +331,12 @@ module Twilio
                     # @return [Hash] List of text extraction results. This might be available on classify-extract model outputs.
                     def extract_results
                         @properties['extract_results']
+                    end
+                    
+                    ##
+                    # @return [Hash] Output of a text generation operator for example Conversation Sumamary.
+                    def text_generation_results
+                        @properties['text_generation_results']
                     end
                     
                     ##

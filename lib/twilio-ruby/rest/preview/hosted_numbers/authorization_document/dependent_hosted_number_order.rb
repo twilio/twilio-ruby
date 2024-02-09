@@ -20,6 +20,7 @@ module Twilio
                 class AuthorizationDocumentContext < InstanceContext
 
                      class DependentHostedNumberOrderList < ListResource
+                
                     ##
                     # Initialize the DependentHostedNumberOrderList
                     # @param [Version] version Version that contains the resource

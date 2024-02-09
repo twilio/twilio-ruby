@@ -21,6 +21,7 @@ module Twilio
                 class CallContext < InstanceContext
 
                      class FeedbackList < ListResource
+                
                     ##
                     # Initialize the FeedbackList
                     # @param [Version] version Version that contains the resource
@@ -63,6 +64,7 @@ module Twilio
                     # @return [FeedbackInstance] Fetched FeedbackInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         FeedbackInstance.new(
                             @version,
@@ -87,6 +89,7 @@ module Twilio
                             'Issue' => Twilio.serialize_list(issue) { |e| e },
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         FeedbackInstance.new(
                             @version,

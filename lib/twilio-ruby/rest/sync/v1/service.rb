@@ -18,6 +18,7 @@ module Twilio
         class Sync < SyncBase
             class V1 < Version
                 class ServiceList < ListResource
+                
                     ##
                     # Initialize the ServiceList
                     # @param [Version] version Version that contains the resource
@@ -59,6 +60,7 @@ module Twilio
                             'WebhooksFromRestEnabled' => webhooks_from_rest_enabled,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ServiceInstance.new(
                             @version,
@@ -184,6 +186,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -192,6 +195,7 @@ module Twilio
                     # @return [ServiceInstance] Fetched ServiceInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ServiceInstance.new(
                             @version,
@@ -230,6 +234,7 @@ module Twilio
                             'WebhooksFromRestEnabled' => webhooks_from_rest_enabled,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ServiceInstance.new(
                             @version,

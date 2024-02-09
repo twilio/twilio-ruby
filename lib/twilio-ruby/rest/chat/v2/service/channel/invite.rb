@@ -21,6 +21,7 @@ module Twilio
                 class ChannelContext < InstanceContext
 
                      class InviteList < ListResource
+                
                     ##
                     # Initialize the InviteList
                     # @param [Version] version Version that contains the resource
@@ -47,6 +48,7 @@ module Twilio
                             'RoleSid' => role_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         InviteInstance.new(
                             @version,
@@ -179,6 +181,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -187,6 +190,7 @@ module Twilio
                     # @return [InviteInstance] Fetched InviteInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         InviteInstance.new(
                             @version,

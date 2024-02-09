@@ -20,6 +20,7 @@ module Twilio
                 class CredentialList < ListResource
 
                      class AwsList < ListResource
+                
                     ##
                     # Initialize the AwsList
                     # @param [Version] version Version that contains the resource
@@ -49,6 +50,7 @@ module Twilio
                             'AccountSid' => account_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         AwsInstance.new(
                             @version,
@@ -170,6 +172,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -178,6 +181,7 @@ module Twilio
                     # @return [AwsInstance] Fetched AwsInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AwsInstance.new(
                             @version,
@@ -198,6 +202,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         AwsInstance.new(
                             @version,

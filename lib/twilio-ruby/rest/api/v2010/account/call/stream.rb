@@ -21,6 +21,7 @@ module Twilio
                 class CallContext < InstanceContext
 
                      class StreamList < ListResource
+                
                     ##
                     # Initialize the StreamList
                     # @param [Version] version Version that contains the resource
@@ -650,6 +651,7 @@ module Twilio
                             'Parameter99.Value' => parameter99_value,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         StreamInstance.new(
                             @version,
@@ -698,6 +700,7 @@ module Twilio
                             'Status' => status,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         StreamInstance.new(
                             @version,

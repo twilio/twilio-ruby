@@ -18,6 +18,7 @@ module Twilio
         class FlexApi < FlexApiBase
             class V1 < Version
                 class AssessmentsList < ListResource
+                
                     ##
                     # Initialize the AssessmentsList
                     # @param [Version] version Version that contains the resource
@@ -70,6 +71,7 @@ module Twilio
                             'QuestionnaireSid' => questionnaire_sid,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         AssessmentsInstance.new(
@@ -184,8 +186,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class AssessmentsContext < InstanceContext
                     ##
                     # Initialize the AssessmentsContext
@@ -221,6 +221,7 @@ module Twilio
                             'AnswerId' => answer_id,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         AssessmentsInstance.new(

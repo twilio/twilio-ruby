@@ -21,6 +21,7 @@ module Twilio
                 class AvailablePhoneNumberCountryContext < InstanceContext
 
                      class MachineToMachineList < ListResource
+                
                     ##
                     # Initialize the MachineToMachineList
                     # @param [Version] version Version that contains the resource

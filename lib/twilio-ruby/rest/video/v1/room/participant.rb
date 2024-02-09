@@ -20,6 +20,7 @@ module Twilio
                 class RoomContext < InstanceContext
 
                      class ParticipantList < ListResource
+                
                     ##
                     # Initialize the ParticipantList
                     # @param [Version] version Version that contains the resource
@@ -174,6 +175,7 @@ module Twilio
                     # @return [ParticipantInstance] Fetched ParticipantInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ParticipantInstance.new(
                             @version,
@@ -195,6 +197,7 @@ module Twilio
                             'Status' => status,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ParticipantInstance.new(
                             @version,

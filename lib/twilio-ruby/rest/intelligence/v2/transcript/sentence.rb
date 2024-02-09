@@ -20,6 +20,7 @@ module Twilio
                 class TranscriptContext < InstanceContext
 
                      class SentenceList < ListResource
+                
                     ##
                     # Initialize the SentenceList
                     # @param [Version] version Version that contains the resource

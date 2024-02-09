@@ -20,6 +20,7 @@ module Twilio
                 class ConnectionPolicyContext < InstanceContext
 
                      class ConnectionPolicyTargetList < ListResource
+                
                     ##
                     # Initialize the ConnectionPolicyTargetList
                     # @param [Version] version Version that contains the resource
@@ -55,6 +56,7 @@ module Twilio
                             'Enabled' => enabled,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ConnectionPolicyTargetInstance.new(
                             @version,
@@ -178,6 +180,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -186,6 +189,7 @@ module Twilio
                     # @return [ConnectionPolicyTargetInstance] Fetched ConnectionPolicyTargetInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ConnectionPolicyTargetInstance.new(
                             @version,
@@ -219,6 +223,7 @@ module Twilio
                             'Enabled' => enabled,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ConnectionPolicyTargetInstance.new(
                             @version,

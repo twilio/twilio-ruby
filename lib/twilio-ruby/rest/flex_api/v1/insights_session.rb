@@ -18,6 +18,7 @@ module Twilio
         class FlexApi < FlexApiBase
             class V1 < Version
                 class InsightsSessionList < ListResource
+                
                     ##
                     # Initialize the InsightsSessionList
                     # @param [Version] version Version that contains the resource
@@ -39,8 +40,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class InsightsSessionContext < InstanceContext
                     ##
                     # Initialize the InsightsSessionContext
@@ -63,6 +62,7 @@ module Twilio
                         authorization: :unset
                     )
 
+                        
                         headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.create('POST', @uri, headers: headers)
                         InsightsSessionInstance.new(

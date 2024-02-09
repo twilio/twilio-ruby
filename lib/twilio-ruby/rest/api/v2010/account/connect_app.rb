@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class ConnectAppList < ListResource
+                
                     ##
                     # Initialize the ConnectAppList
                     # @param [Version] version Version that contains the resource
@@ -146,6 +147,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -154,6 +156,7 @@ module Twilio
                     # @return [ConnectAppInstance] Fetched ConnectAppInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ConnectAppInstance.new(
                             @version,
@@ -196,6 +199,7 @@ module Twilio
                             'Permissions' => Twilio.serialize_list(permissions) { |e| e },
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ConnectAppInstance.new(
                             @version,

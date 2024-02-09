@@ -18,6 +18,7 @@ module Twilio
         class Accounts < AccountsBase
             class V1 < Version
                 class CredentialList < ListResource
+                
                     ##
                     # Initialize the CredentialList
                     # @param [Version] version Version that contains the resource

@@ -21,6 +21,7 @@ module Twilio
                 class ChannelContext < InstanceContext
 
                      class MessageList < ListResource
+                
                     ##
                     # Initialize the MessageList
                     # @param [Version] version Version that contains the resource
@@ -50,6 +51,7 @@ module Twilio
                             'Attributes' => attributes,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         MessageInstance.new(
                             @version,
@@ -181,6 +183,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -189,6 +192,7 @@ module Twilio
                     # @return [MessageInstance] Fetched MessageInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         MessageInstance.new(
                             @version,
@@ -214,6 +218,7 @@ module Twilio
                             'Attributes' => attributes,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         MessageInstance.new(
                             @version,

@@ -26,6 +26,8 @@ module Twilio
                     @configuration = nil
                     @flex_flow = nil
                     @insights_assessments_comment = nil
+                    @insights_conversational_ai = nil
+                    @insights_conversational_ai_report_insights = nil
                     @insights_conversations = nil
                     @insights_questionnaires = nil
                     @insights_questionnaires_category = nil
@@ -36,6 +38,7 @@ module Twilio
                     @insights_settings_comment = nil
                     @insights_user_roles = nil
                     @interaction = nil
+                    @provisioning_status = nil
                     @web_channel = nil
                 end
 
@@ -90,6 +93,34 @@ module Twilio
                 # @return [Twilio::REST::FlexApi::V1::InsightsAssessmentsCommentList]
                 def insights_assessments_comment
                     @insights_assessments_comment ||= InsightsAssessmentsCommentList.new self
+                end
+                ##
+                # @param [String] instance_sid Sid of Flex Service Instance
+                # @return [Twilio::REST::FlexApi::V1::InsightsConversationalAiContext] if instanceSid was passed.
+                # @return [Twilio::REST::FlexApi::V1::InsightsConversationalAiList]
+                def insights_conversational_ai(instance_sid=:unset)
+                    if instance_sid.nil?
+                        raise ArgumentError, 'instance_sid cannot be nil'
+                    end
+                    if instance_sid == :unset
+                        @insights_conversational_ai ||= InsightsConversationalAiList.new self
+                    else
+                        InsightsConversationalAiContext.new(self, instance_sid)
+                    end
+                end
+                ##
+                # @param [String] instance_sid The Instance SID of the instance for which report insights will be fetched
+                # @return [Twilio::REST::FlexApi::V1::InsightsConversationalAiReportInsightsContext] if instanceSid was passed.
+                # @return [Twilio::REST::FlexApi::V1::InsightsConversationalAiReportInsightsList]
+                def insights_conversational_ai_report_insights(instance_sid=:unset)
+                    if instance_sid.nil?
+                        raise ArgumentError, 'instance_sid cannot be nil'
+                    end
+                    if instance_sid == :unset
+                        @insights_conversational_ai_report_insights ||= InsightsConversationalAiReportInsightsList.new self
+                    else
+                        InsightsConversationalAiReportInsightsContext.new(self, instance_sid)
+                    end
                 end
                 ##
                 # @return [Twilio::REST::FlexApi::V1::InsightsConversationsList]
@@ -176,6 +207,11 @@ module Twilio
                     else
                         InteractionContext.new(self, sid)
                     end
+                end
+                ##
+                # @return [Twilio::REST::FlexApi::V1::provisioningStatusContext]
+                def provisioning_status
+                    @provisioning_status ||= ProvisioningStatusContext.new self
                 end
                 ##
                 # @param [String] sid The SID of the WebChannel resource to fetch.

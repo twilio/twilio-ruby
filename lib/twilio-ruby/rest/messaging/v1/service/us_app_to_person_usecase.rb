@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class UsAppToPersonUsecaseList < ListResource
+                
                     ##
                     # Initialize the UsAppToPersonUsecaseList
                     # @param [Version] version Version that contains the resource
@@ -42,6 +43,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'BrandRegistrationSid' => brand_registration_sid,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         UsAppToPersonUsecaseInstance.new(
                             @version,

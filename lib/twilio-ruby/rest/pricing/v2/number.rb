@@ -18,6 +18,7 @@ module Twilio
         class Pricing < PricingBase
             class V2 < Version
                 class NumberList < ListResource
+                
                     ##
                     # Initialize the NumberList
                     # @param [Version] version Version that contains the resource
@@ -65,6 +66,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'OriginationNumber' => origination_number,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         NumberInstance.new(
                             @version,

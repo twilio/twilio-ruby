@@ -21,6 +21,7 @@ module Twilio
                 class ConversationContext < InstanceContext
 
                      class ParticipantList < ListResource
+                
                     ##
                     # Initialize the ParticipantList
                     # @param [Version] version Version that contains the resource
@@ -67,6 +68,7 @@ module Twilio
                             'RoleSid' => role_sid,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         ParticipantInstance.new(
@@ -196,6 +198,7 @@ module Twilio
                         x_twilio_webhook_enabled: :unset
                     )
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
@@ -205,6 +208,7 @@ module Twilio
                     # @return [ParticipantInstance] Fetched ParticipantInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ParticipantInstance.new(
                             @version,
@@ -253,6 +257,7 @@ module Twilio
                             'LastReadTimestamp' => last_read_timestamp,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         ParticipantInstance.new(

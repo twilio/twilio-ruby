@@ -20,6 +20,7 @@ module Twilio
                 class FleetContext < InstanceContext
 
                      class KeyList < ListResource
+                
                     ##
                     # Initialize the KeyList
                     # @param [Version] version Version that contains the resource
@@ -46,6 +47,7 @@ module Twilio
                             'DeviceSid' => device_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         KeyInstance.new(
                             @version,
@@ -154,8 +156,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class KeyContext < InstanceContext
                     ##
                     # Initialize the KeyContext
@@ -177,6 +177,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -185,6 +186,7 @@ module Twilio
                     # @return [KeyInstance] Fetched KeyInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         KeyInstance.new(
                             @version,
@@ -209,6 +211,7 @@ module Twilio
                             'DeviceSid' => device_sid,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         KeyInstance.new(
                             @version,

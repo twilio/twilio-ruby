@@ -20,6 +20,7 @@ module Twilio
                 class TranscriptContext < InstanceContext
 
                      class MediaList < ListResource
+                
                     ##
                     # Initialize the MediaList
                     # @param [Version] version Version that contains the resource
@@ -41,8 +42,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class MediaContext < InstanceContext
                     ##
                     # Initialize the MediaContext
@@ -69,6 +68,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'Redacted' => redacted,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         MediaInstance.new(
                             @version,

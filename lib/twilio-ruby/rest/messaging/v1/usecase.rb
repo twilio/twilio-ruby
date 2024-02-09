@@ -18,6 +18,7 @@ module Twilio
         class Messaging < MessagingBase
             class V1 < Version
                 class UsecaseList < ListResource
+                
                     ##
                     # Initialize the UsecaseList
                     # @param [Version] version Version that contains the resource
@@ -34,6 +35,7 @@ module Twilio
                     # @return [UsecaseInstance] Fetched UsecaseInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         UsecaseInstance.new(
                             @version,

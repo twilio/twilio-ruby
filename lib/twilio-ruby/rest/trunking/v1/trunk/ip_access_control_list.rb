@@ -20,6 +20,7 @@ module Twilio
                 class TrunkContext < InstanceContext
 
                      class IpAccessControlListList < ListResource
+                
                     ##
                     # Initialize the IpAccessControlListList
                     # @param [Version] version Version that contains the resource
@@ -43,6 +44,7 @@ module Twilio
                             'IpAccessControlListSid' => ip_access_control_list_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         IpAccessControlListInstance.new(
                             @version,
@@ -166,6 +168,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -174,6 +177,7 @@ module Twilio
                     # @return [IpAccessControlListInstance] Fetched IpAccessControlListInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         IpAccessControlListInstance.new(
                             @version,

@@ -18,6 +18,7 @@ module Twilio
         class Api < ApiBase
             class V2010 < Version
                 class AccountList < ListResource
+                
                     ##
                     # Initialize the AccountList
                     # @param [Version] version Version that contains the resource
@@ -41,6 +42,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         AccountInstance.new(
                             @version,
@@ -198,6 +200,7 @@ module Twilio
                     # @return [AccountInstance] Fetched AccountInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AccountInstance.new(
                             @version,
@@ -221,6 +224,7 @@ module Twilio
                             'Status' => status,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         AccountInstance.new(
                             @version,

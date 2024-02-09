@@ -21,6 +21,7 @@ module Twilio
                 class AssetContext < InstanceContext
 
                      class AssetVersionList < ListResource
+                
                     ##
                     # Initialize the AssetVersionList
                     # @param [Version] version Version that contains the resource
@@ -126,8 +127,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class AssetVersionContext < InstanceContext
                     ##
                     # Initialize the AssetVersionContext
@@ -150,6 +149,7 @@ module Twilio
                     # @return [AssetVersionInstance] Fetched AssetVersionInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AssetVersionInstance.new(
                             @version,

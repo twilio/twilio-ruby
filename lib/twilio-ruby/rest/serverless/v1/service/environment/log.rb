@@ -21,6 +21,7 @@ module Twilio
                 class EnvironmentContext < InstanceContext
 
                      class LogList < ListResource
+                
                     ##
                     # Initialize the LogList
                     # @param [Version] version Version that contains the resource
@@ -144,8 +145,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class LogContext < InstanceContext
                     ##
                     # Initialize the LogContext
@@ -168,6 +167,7 @@ module Twilio
                     # @return [LogInstance] Fetched LogInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         LogInstance.new(
                             @version,

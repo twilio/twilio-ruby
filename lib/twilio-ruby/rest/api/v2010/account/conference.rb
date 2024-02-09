@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class ConferenceList < ListResource
+                
                     ##
                     # Initialize the ConferenceList
                     # @param [Version] version Version that contains the resource
@@ -37,11 +38,7 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [Date] date_created The `date_created` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that started on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify  conferences that started on or after midnight on a date, use `>=YYYY-MM-DD`.
-                    # @param [Date] date_created_before The `date_created` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that started on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify  conferences that started on or after midnight on a date, use `>=YYYY-MM-DD`.
-                    # @param [Date] date_created_after The `date_created` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that started on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify  conferences that started on or after midnight on a date, use `>=YYYY-MM-DD`.
                     # @param [Date] date_updated The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
-                    # @param [Date] date_updated_before The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
-                    # @param [Date] date_updated_after The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
                     # @param [String] friendly_name The string that identifies the Conference resources to read.
                     # @param [Status] status The status of the resources to read. Can be: `init`, `in-progress`, or `completed`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -51,14 +48,10 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(date_created: :unset, date_created_before: :unset, date_created_after: :unset, date_updated: :unset, date_updated_before: :unset, date_updated_after: :unset, friendly_name: :unset, status: :unset, limit: nil, page_size: nil)
+                    def list(date_created: :unset, date_updated: :unset, friendly_name: :unset, status: :unset, limit: nil, page_size: nil)
                         self.stream(
                             date_created: date_created,
-                            date_created_before: date_created_before,
-                            date_created_after: date_created_after,
                             date_updated: date_updated,
-                            date_updated_before: date_updated_before,
-                            date_updated_after: date_updated_after,
                             friendly_name: friendly_name,
                             status: status,
                             limit: limit,
@@ -71,11 +64,7 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [Date] date_created The `date_created` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that started on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify  conferences that started on or after midnight on a date, use `>=YYYY-MM-DD`.
-                    # @param [Date] date_created_before The `date_created` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that started on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify  conferences that started on or after midnight on a date, use `>=YYYY-MM-DD`.
-                    # @param [Date] date_created_after The `date_created` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that started on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify  conferences that started on or after midnight on a date, use `>=YYYY-MM-DD`.
                     # @param [Date] date_updated The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
-                    # @param [Date] date_updated_before The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
-                    # @param [Date] date_updated_after The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
                     # @param [String] friendly_name The string that identifies the Conference resources to read.
                     # @param [Status] status The status of the resources to read. Can be: `init`, `in-progress`, or `completed`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -85,16 +74,12 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(date_created: :unset, date_created_before: :unset, date_created_after: :unset, date_updated: :unset, date_updated_before: :unset, date_updated_after: :unset, friendly_name: :unset, status: :unset, limit: nil, page_size: nil)
+                    def stream(date_created: :unset, date_updated: :unset, friendly_name: :unset, status: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
                             date_created: date_created,
-                            date_created_before: date_created_before,
-                            date_created_after: date_created_after,
                             date_updated: date_updated,
-                            date_updated_before: date_updated_before,
-                            date_updated_after: date_updated_after,
                             friendly_name: friendly_name,
                             status: status,
                             page_size: limits[:page_size], )
@@ -120,25 +105,17 @@ module Twilio
                     # Retrieve a single page of ConferenceInstance records from the API.
                     # Request is executed immediately.
                     # @param [Date] date_created The `date_created` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that started on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify  conferences that started on or after midnight on a date, use `>=YYYY-MM-DD`.
-                    # @param [Date] date_created_before The `date_created` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that started on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify  conferences that started on or after midnight on a date, use `>=YYYY-MM-DD`.
-                    # @param [Date] date_created_after The `date_created` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that started on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify  conferences that started on or after midnight on a date, use `>=YYYY-MM-DD`.
                     # @param [Date] date_updated The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
-                    # @param [Date] date_updated_before The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
-                    # @param [Date] date_updated_after The `date_updated` value, specified as `YYYY-MM-DD`, of the resources to read. To read conferences that were last updated on or before midnight on a date, use `<=YYYY-MM-DD`, and to specify conferences that were last updated on or after midnight on a given date, use  `>=YYYY-MM-DD`.
                     # @param [String] friendly_name The string that identifies the Conference resources to read.
                     # @param [Status] status The status of the resources to read. Can be: `init`, `in-progress`, or `completed`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ConferenceInstance
-                    def page(date_created: :unset, date_created_before: :unset, date_created_after: :unset, date_updated: :unset, date_updated_before: :unset, date_updated_after: :unset, friendly_name: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(date_created: :unset, date_updated: :unset, friendly_name: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'DateCreated' =>  Twilio.serialize_iso8601_date(date_created),
-                            'DateCreated<' =>  Twilio.serialize_iso8601_date(date_created_before),
-                            'DateCreated>' =>  Twilio.serialize_iso8601_date(date_created_after),
                             'DateUpdated' =>  Twilio.serialize_iso8601_date(date_updated),
-                            'DateUpdated<' =>  Twilio.serialize_iso8601_date(date_updated_before),
-                            'DateUpdated>' =>  Twilio.serialize_iso8601_date(date_updated_after),
                             'FriendlyName' => friendly_name,
                             'Status' => status,
                             'PageToken' => page_token,
@@ -196,6 +173,7 @@ module Twilio
                     # @return [ConferenceInstance] Fetched ConferenceInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ConferenceInstance.new(
                             @version,
@@ -223,6 +201,7 @@ module Twilio
                             'AnnounceMethod' => announce_method,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ConferenceInstance.new(
                             @version,

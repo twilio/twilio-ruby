@@ -21,6 +21,7 @@ module Twilio
                 class UsageList < ListResource
 
                      class TriggerList < ListResource
+                
                     ##
                     # Initialize the TriggerList
                     # @param [Version] version Version that contains the resource
@@ -62,6 +63,7 @@ module Twilio
                             'TriggerBy' => trigger_by,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         TriggerInstance.new(
                             @version,
@@ -203,6 +205,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -211,6 +214,7 @@ module Twilio
                     # @return [TriggerInstance] Fetched TriggerInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         TriggerInstance.new(
                             @version,
@@ -238,6 +242,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         TriggerInstance.new(
                             @version,

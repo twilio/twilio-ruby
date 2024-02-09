@@ -18,6 +18,7 @@ module Twilio
         class Conversations < ConversationsBase
             class V1 < Version
                 class ConfigurationList < ListResource
+                
                     ##
                     # Initialize the ConfigurationList
                     # @param [Version] version Version that contains the resource
@@ -59,6 +60,7 @@ module Twilio
                     # @return [ConfigurationInstance] Fetched ConfigurationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ConfigurationInstance.new(
                             @version,
@@ -87,6 +89,7 @@ module Twilio
                             'DefaultClosedTimer' => default_closed_timer,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ConfigurationInstance.new(
                             @version,

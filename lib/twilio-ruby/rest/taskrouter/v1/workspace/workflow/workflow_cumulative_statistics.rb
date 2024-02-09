@@ -21,6 +21,7 @@ module Twilio
                 class WorkflowContext < InstanceContext
 
                      class WorkflowCumulativeStatisticsList < ListResource
+                
                     ##
                     # Initialize the WorkflowCumulativeStatisticsList
                     # @param [Version] version Version that contains the resource
@@ -81,6 +82,7 @@ module Twilio
                             'TaskChannel' => task_channel,
                             'SplitByWaitTime' => split_by_wait_time,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         WorkflowCumulativeStatisticsInstance.new(
                             @version,

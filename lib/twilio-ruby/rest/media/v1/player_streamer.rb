@@ -18,6 +18,7 @@ module Twilio
         class Media < MediaBase
             class V1 < Version
                 class PlayerStreamerList < ListResource
+                
                     ##
                     # Initialize the PlayerStreamerList
                     # @param [Version] version Version that contains the resource
@@ -50,6 +51,7 @@ module Twilio
                             'MaxDuration' => max_duration,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         PlayerStreamerInstance.new(
                             @version,
@@ -184,6 +186,7 @@ module Twilio
                     # @return [PlayerStreamerInstance] Fetched PlayerStreamerInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         PlayerStreamerInstance.new(
                             @version,
@@ -204,6 +207,7 @@ module Twilio
                             'Status' => status,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         PlayerStreamerInstance.new(
                             @version,

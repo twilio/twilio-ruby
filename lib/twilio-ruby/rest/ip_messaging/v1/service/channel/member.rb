@@ -21,6 +21,7 @@ module Twilio
                 class ChannelContext < InstanceContext
 
                      class MemberList < ListResource
+                
                     ##
                     # Initialize the MemberList
                     # @param [Version] version Version that contains the resource
@@ -47,6 +48,7 @@ module Twilio
                             'RoleSid' => role_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         MemberInstance.new(
                             @version,
@@ -179,6 +181,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -187,6 +190,7 @@ module Twilio
                     # @return [MemberInstance] Fetched MemberInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         MemberInstance.new(
                             @version,
@@ -212,6 +216,7 @@ module Twilio
                             'LastConsumedMessageIndex' => last_consumed_message_index,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         MemberInstance.new(
                             @version,

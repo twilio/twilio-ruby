@@ -18,6 +18,7 @@ module Twilio
         class Messaging < MessagingBase
             class V1 < Version
                 class ServiceList < ListResource
+                
                     ##
                     # Initialize the ServiceList
                     # @param [Version] version Version that contains the resource
@@ -86,6 +87,7 @@ module Twilio
                             'UseInboundWebhookOnNumber' => use_inbound_webhook_on_number,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ServiceInstance.new(
                             @version,
@@ -187,8 +189,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class ServiceContext < InstanceContext
                     ##
                     # Initialize the ServiceContext
@@ -215,6 +215,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -223,6 +224,7 @@ module Twilio
                     # @return [ServiceInstance] Fetched ServiceInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ServiceInstance.new(
                             @version,
@@ -288,6 +290,7 @@ module Twilio
                             'UseInboundWebhookOnNumber' => use_inbound_webhook_on_number,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ServiceInstance.new(
                             @version,

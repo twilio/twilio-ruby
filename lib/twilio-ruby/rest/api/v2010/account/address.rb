@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class AddressList < ListResource
+                
                     ##
                     # Initialize the AddressList
                     # @param [Version] version Version that contains the resource
@@ -70,6 +71,7 @@ module Twilio
                             'StreetSecondary' => street_secondary,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         AddressInstance.new(
                             @version,
@@ -212,6 +214,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -220,6 +223,7 @@ module Twilio
                     # @return [AddressInstance] Fetched AddressInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AddressInstance.new(
                             @version,
@@ -265,6 +269,7 @@ module Twilio
                             'StreetSecondary' => street_secondary,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         AddressInstance.new(
                             @version,

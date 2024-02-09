@@ -21,6 +21,7 @@ module Twilio
                 class DocumentContext < InstanceContext
 
                      class DocumentPermissionList < ListResource
+                
                     ##
                     # Initialize the DocumentPermissionList
                     # @param [Version] version Version that contains the resource
@@ -126,8 +127,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class DocumentPermissionContext < InstanceContext
                     ##
                     # Initialize the DocumentPermissionContext
@@ -150,6 +149,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -158,6 +158,7 @@ module Twilio
                     # @return [DocumentPermissionInstance] Fetched DocumentPermissionInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         DocumentPermissionInstance.new(
                             @version,
@@ -186,6 +187,7 @@ module Twilio
                             'Manage' => manage,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         DocumentPermissionInstance.new(
                             @version,

@@ -18,6 +18,7 @@ module Twilio
         class Verify < VerifyBase
             class V2 < Version
                 class VerificationAttemptList < ListResource
+                
                     ##
                     # Initialize the VerificationAttemptList
                     # @param [Version] version Version that contains the resource
@@ -191,6 +192,7 @@ module Twilio
                     # @return [VerificationAttemptInstance] Fetched VerificationAttemptInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         VerificationAttemptInstance.new(
                             @version,
@@ -336,7 +338,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] An object containing the charge for this verification attempt related to the channel costs and the currency used. The costs related to the succeeded verifications are not included. May not be immediately available. More information on pricing is available [here](https://www.twilio.com/verify/pricing).
+                    # @return [Hash] An object containing the charge for this verification attempt related to the channel costs and the currency used. The costs related to the succeeded verifications are not included. May not be immediately available. More information on pricing is available [here](https://www.twilio.com/en-us/verify/pricing).
                     def price
                         @properties['price']
                     end

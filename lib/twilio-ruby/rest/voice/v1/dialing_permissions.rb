@@ -18,6 +18,7 @@ module Twilio
         class Voice < VoiceBase
             class V1 < Version
                 class DialingPermissionsList < ListResource
+                
                     ##
                     # Initialize the DialingPermissionsList
                     # @param [Version] version Version that contains the resource

@@ -21,6 +21,7 @@ module Twilio
                 class TaskContext < InstanceContext
 
                      class ReservationList < ListResource
+                
                     ##
                     # Initialize the ReservationList
                     # @param [Version] version Version that contains the resource
@@ -160,6 +161,7 @@ module Twilio
                     # @return [ReservationInstance] Fetched ReservationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ReservationInstance.new(
                             @version,
@@ -225,6 +227,7 @@ module Twilio
                     # @param [String] supervisor The Supervisor SID/URI when executing the Supervise instruction.
                     # @param [Boolean] end_conference_on_customer_exit Whether to end the conference when the customer leaves.
                     # @param [Boolean] beep_on_customer_entrance Whether to play a notification beep when the customer joins.
+                    # @param [String] jitter_buffer_size The jitter buffer size for conference. Can be: `small`, `medium`, `large`, `off`.
                     # @param [String] if_match The If-Match HTTP request header
                     # @return [ReservationInstance] Updated ReservationInstance
                     def update(
@@ -281,6 +284,7 @@ module Twilio
                         supervisor: :unset, 
                         end_conference_on_customer_exit: :unset, 
                         beep_on_customer_entrance: :unset, 
+                        jitter_buffer_size: :unset, 
                         if_match: :unset
                     )
 
@@ -338,8 +342,10 @@ module Twilio
                             'Supervisor' => supervisor,
                             'EndConferenceOnCustomerExit' => end_conference_on_customer_exit,
                             'BeepOnCustomerEntrance' => beep_on_customer_entrance,
+                            'JitterBufferSize' => jitter_buffer_size,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         ReservationInstance.new(
@@ -568,6 +574,7 @@ module Twilio
                     # @param [String] supervisor The Supervisor SID/URI when executing the Supervise instruction.
                     # @param [Boolean] end_conference_on_customer_exit Whether to end the conference when the customer leaves.
                     # @param [Boolean] beep_on_customer_entrance Whether to play a notification beep when the customer joins.
+                    # @param [String] jitter_buffer_size The jitter buffer size for conference. Can be: `small`, `medium`, `large`, `off`.
                     # @param [String] if_match The If-Match HTTP request header
                     # @return [ReservationInstance] Updated ReservationInstance
                     def update(
@@ -624,6 +631,7 @@ module Twilio
                         supervisor: :unset, 
                         end_conference_on_customer_exit: :unset, 
                         beep_on_customer_entrance: :unset, 
+                        jitter_buffer_size: :unset, 
                         if_match: :unset
                     )
 
@@ -681,6 +689,7 @@ module Twilio
                             supervisor: supervisor, 
                             end_conference_on_customer_exit: end_conference_on_customer_exit, 
                             beep_on_customer_entrance: beep_on_customer_entrance, 
+                            jitter_buffer_size: jitter_buffer_size, 
                             if_match: if_match, 
                         )
                     end

@@ -21,6 +21,7 @@ module Twilio
                 class ConfigurationContext < InstanceContext
 
                      class NotificationList < ListResource
+                
                     ##
                     # Initialize the NotificationList
                     # @param [Version] version Version that contains the resource
@@ -62,6 +63,7 @@ module Twilio
                     # @return [NotificationInstance] Fetched NotificationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         NotificationInstance.new(
                             @version,
@@ -118,6 +120,7 @@ module Twilio
                             'NewMessage.WithMedia.Template' => new_message_with_media_template,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         NotificationInstance.new(
                             @version,

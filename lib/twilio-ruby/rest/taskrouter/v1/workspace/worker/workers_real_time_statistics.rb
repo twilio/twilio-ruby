@@ -21,6 +21,7 @@ module Twilio
                 class WorkerContext < InstanceContext
 
                      class WorkersRealTimeStatisticsList < ListResource
+                
                     ##
                     # Initialize the WorkersRealTimeStatisticsList
                     # @param [Version] version Version that contains the resource
@@ -68,6 +69,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'TaskChannel' => task_channel,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         WorkersRealTimeStatisticsInstance.new(
                             @version,

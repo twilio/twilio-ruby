@@ -20,6 +20,7 @@ module Twilio
                 class TrunkContext < InstanceContext
 
                      class CredentialListList < ListResource
+                
                     ##
                     # Initialize the CredentialListList
                     # @param [Version] version Version that contains the resource
@@ -43,6 +44,7 @@ module Twilio
                             'CredentialListSid' => credential_list_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         CredentialListInstance.new(
                             @version,
@@ -166,6 +168,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -174,6 +177,7 @@ module Twilio
                     # @return [CredentialListInstance] Fetched CredentialListInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CredentialListInstance.new(
                             @version,

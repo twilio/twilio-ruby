@@ -18,6 +18,7 @@ module Twilio
         class Media < MediaBase
             class V1 < Version
                 class MediaRecordingList < ListResource
+                
                     ##
                     # Initialize the MediaRecordingList
                     # @param [Version] version Version that contains the resource
@@ -147,8 +148,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class MediaRecordingContext < InstanceContext
                     ##
                     # Initialize the MediaRecordingContext
@@ -169,6 +168,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -177,6 +177,7 @@ module Twilio
                     # @return [MediaRecordingInstance] Fetched MediaRecordingInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         MediaRecordingInstance.new(
                             @version,

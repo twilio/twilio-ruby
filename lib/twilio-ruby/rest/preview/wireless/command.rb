@@ -18,6 +18,7 @@ module Twilio
         class Preview < PreviewBase
             class Wireless < Version
                 class CommandList < ListResource
+                
                     ##
                     # Initialize the CommandList
                     # @param [Version] version Version that contains the resource
@@ -59,6 +60,7 @@ module Twilio
                             'IncludeSid' => include_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         CommandInstance.new(
                             @version,
@@ -184,8 +186,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class CommandContext < InstanceContext
                     ##
                     # Initialize the CommandContext
@@ -206,6 +206,7 @@ module Twilio
                     # @return [CommandInstance] Fetched CommandInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CommandInstance.new(
                             @version,

@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class EnvironmentList < ListResource
+                
                     ##
                     # Initialize the EnvironmentList
                     # @param [Version] version Version that contains the resource
@@ -46,6 +47,7 @@ module Twilio
                             'DomainSuffix' => domain_suffix,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         EnvironmentInstance.new(
                             @version,
@@ -148,8 +150,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class EnvironmentContext < InstanceContext
                     ##
                     # Initialize the EnvironmentContext
@@ -174,6 +174,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -182,6 +183,7 @@ module Twilio
                     # @return [EnvironmentInstance] Fetched EnvironmentInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         EnvironmentInstance.new(
                             @version,

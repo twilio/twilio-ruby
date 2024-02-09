@@ -20,6 +20,7 @@ module Twilio
                 class SimContext < InstanceContext
 
                      class SimIpAddressList < ListResource
+                
                     ##
                     # Initialize the SimIpAddressList
                     # @param [Version] version Version that contains the resource

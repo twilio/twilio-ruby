@@ -21,6 +21,7 @@ module Twilio
                 class RateLimitContext < InstanceContext
 
                      class BucketList < ListResource
+                
                     ##
                     # Initialize the BucketList
                     # @param [Version] version Version that contains the resource
@@ -47,6 +48,7 @@ module Twilio
                             'Interval' => interval,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         BucketInstance.new(
                             @version,
@@ -172,6 +174,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -180,6 +183,7 @@ module Twilio
                     # @return [BucketInstance] Fetched BucketInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         BucketInstance.new(
                             @version,
@@ -205,6 +209,7 @@ module Twilio
                             'Interval' => interval,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         BucketInstance.new(
                             @version,

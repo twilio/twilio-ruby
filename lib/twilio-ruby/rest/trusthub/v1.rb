@@ -22,6 +22,8 @@ module Twilio
                     super
                     @version = 'v1'
                     @compliance_inquiries = nil
+                    @compliance_registration_inquiries = nil
+                    @compliance_tollfree_inquiries = nil
                     @customer_profiles = nil
                     @end_users = nil
                     @end_user_types = nil
@@ -44,6 +46,16 @@ module Twilio
                     else
                         ComplianceInquiriesContext.new(self, customer_id)
                     end
+                end
+                ##
+                # @return [Twilio::REST::Trusthub::V1::ComplianceRegistrationInquiriesList]
+                def compliance_registration_inquiries
+                    @compliance_registration_inquiries ||= ComplianceRegistrationInquiriesList.new self
+                end
+                ##
+                # @return [Twilio::REST::Trusthub::V1::ComplianceTollfreeInquiriesList]
+                def compliance_tollfree_inquiries
+                    @compliance_tollfree_inquiries ||= ComplianceTollfreeInquiriesList.new self
                 end
                 ##
                 # @param [String] sid The unique string that we created to identify the Customer-Profile resource.

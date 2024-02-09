@@ -18,6 +18,7 @@ module Twilio
         class Conversations < ConversationsBase
             class V1 < Version
                 class AddressConfigurationList < ListResource
+                
                     ##
                     # Initialize the AddressConfigurationList
                     # @param [Version] version Version that contains the resource
@@ -74,6 +75,7 @@ module Twilio
                             'AddressCountry' => address_country,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         AddressConfigurationInstance.new(
                             @version,
@@ -201,6 +203,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -209,6 +212,7 @@ module Twilio
                     # @return [AddressConfigurationInstance] Fetched AddressConfigurationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AddressConfigurationInstance.new(
                             @version,
@@ -253,6 +257,7 @@ module Twilio
                             'AutoCreation.StudioRetryCount' => auto_creation_studio_retry_count,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         AddressConfigurationInstance.new(
                             @version,

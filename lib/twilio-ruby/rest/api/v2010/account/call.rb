@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class CallList < ListResource
+                
                     ##
                     # Initialize the CallList
                     # @param [Version] version Version that contains the resource
@@ -146,6 +147,7 @@ module Twilio
                             'ApplicationSid' => application_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         CallInstance.new(
                             @version,
@@ -164,11 +166,7 @@ module Twilio
                     # @param [String] parent_call_sid Only include calls spawned by calls with this SID.
                     # @param [Status] status The status of the calls to include. Can be: `queued`, `ringing`, `in-progress`, `canceled`, `completed`, `failed`, `busy`, or `no-answer`.
                     # @param [Time] start_time Only include calls that started on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that started on this date. You can also specify an inequality, such as `StartTime<=YYYY-MM-DD`, to read calls that started on or before midnight of this date, and `StartTime>=YYYY-MM-DD` to read calls that started on or after midnight of this date.
-                    # @param [Time] start_time_before Only include calls that started on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that started on this date. You can also specify an inequality, such as `StartTime<=YYYY-MM-DD`, to read calls that started on or before midnight of this date, and `StartTime>=YYYY-MM-DD` to read calls that started on or after midnight of this date.
-                    # @param [Time] start_time_after Only include calls that started on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that started on this date. You can also specify an inequality, such as `StartTime<=YYYY-MM-DD`, to read calls that started on or before midnight of this date, and `StartTime>=YYYY-MM-DD` to read calls that started on or after midnight of this date.
                     # @param [Time] end_time Only include calls that ended on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that ended on this date. You can also specify an inequality, such as `EndTime<=YYYY-MM-DD`, to read calls that ended on or before midnight of this date, and `EndTime>=YYYY-MM-DD` to read calls that ended on or after midnight of this date.
-                    # @param [Time] end_time_before Only include calls that ended on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that ended on this date. You can also specify an inequality, such as `EndTime<=YYYY-MM-DD`, to read calls that ended on or before midnight of this date, and `EndTime>=YYYY-MM-DD` to read calls that ended on or after midnight of this date.
-                    # @param [Time] end_time_after Only include calls that ended on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that ended on this date. You can also specify an inequality, such as `EndTime<=YYYY-MM-DD`, to read calls that ended on or before midnight of this date, and `EndTime>=YYYY-MM-DD` to read calls that ended on or after midnight of this date.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -176,18 +174,14 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(to: :unset, from: :unset, parent_call_sid: :unset, status: :unset, start_time: :unset, start_time_before: :unset, start_time_after: :unset, end_time: :unset, end_time_before: :unset, end_time_after: :unset, limit: nil, page_size: nil)
+                    def list(to: :unset, from: :unset, parent_call_sid: :unset, status: :unset, start_time: :unset, end_time: :unset, limit: nil, page_size: nil)
                         self.stream(
                             to: to,
                             from: from,
                             parent_call_sid: parent_call_sid,
                             status: status,
                             start_time: start_time,
-                            start_time_before: start_time_before,
-                            start_time_after: start_time_after,
                             end_time: end_time,
-                            end_time_before: end_time_before,
-                            end_time_after: end_time_after,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -202,11 +196,7 @@ module Twilio
                     # @param [String] parent_call_sid Only include calls spawned by calls with this SID.
                     # @param [Status] status The status of the calls to include. Can be: `queued`, `ringing`, `in-progress`, `canceled`, `completed`, `failed`, `busy`, or `no-answer`.
                     # @param [Time] start_time Only include calls that started on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that started on this date. You can also specify an inequality, such as `StartTime<=YYYY-MM-DD`, to read calls that started on or before midnight of this date, and `StartTime>=YYYY-MM-DD` to read calls that started on or after midnight of this date.
-                    # @param [Time] start_time_before Only include calls that started on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that started on this date. You can also specify an inequality, such as `StartTime<=YYYY-MM-DD`, to read calls that started on or before midnight of this date, and `StartTime>=YYYY-MM-DD` to read calls that started on or after midnight of this date.
-                    # @param [Time] start_time_after Only include calls that started on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that started on this date. You can also specify an inequality, such as `StartTime<=YYYY-MM-DD`, to read calls that started on or before midnight of this date, and `StartTime>=YYYY-MM-DD` to read calls that started on or after midnight of this date.
                     # @param [Time] end_time Only include calls that ended on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that ended on this date. You can also specify an inequality, such as `EndTime<=YYYY-MM-DD`, to read calls that ended on or before midnight of this date, and `EndTime>=YYYY-MM-DD` to read calls that ended on or after midnight of this date.
-                    # @param [Time] end_time_before Only include calls that ended on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that ended on this date. You can also specify an inequality, such as `EndTime<=YYYY-MM-DD`, to read calls that ended on or before midnight of this date, and `EndTime>=YYYY-MM-DD` to read calls that ended on or after midnight of this date.
-                    # @param [Time] end_time_after Only include calls that ended on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that ended on this date. You can also specify an inequality, such as `EndTime<=YYYY-MM-DD`, to read calls that ended on or before midnight of this date, and `EndTime>=YYYY-MM-DD` to read calls that ended on or after midnight of this date.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -214,7 +204,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(to: :unset, from: :unset, parent_call_sid: :unset, status: :unset, start_time: :unset, start_time_before: :unset, start_time_after: :unset, end_time: :unset, end_time_before: :unset, end_time_after: :unset, limit: nil, page_size: nil)
+                    def stream(to: :unset, from: :unset, parent_call_sid: :unset, status: :unset, start_time: :unset, end_time: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
@@ -223,11 +213,7 @@ module Twilio
                             parent_call_sid: parent_call_sid,
                             status: status,
                             start_time: start_time,
-                            start_time_before: start_time_before,
-                            start_time_after: start_time_after,
                             end_time: end_time,
-                            end_time_before: end_time_before,
-                            end_time_after: end_time_after,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -255,27 +241,19 @@ module Twilio
                     # @param [String] parent_call_sid Only include calls spawned by calls with this SID.
                     # @param [Status] status The status of the calls to include. Can be: `queued`, `ringing`, `in-progress`, `canceled`, `completed`, `failed`, `busy`, or `no-answer`.
                     # @param [Time] start_time Only include calls that started on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that started on this date. You can also specify an inequality, such as `StartTime<=YYYY-MM-DD`, to read calls that started on or before midnight of this date, and `StartTime>=YYYY-MM-DD` to read calls that started on or after midnight of this date.
-                    # @param [Time] start_time_before Only include calls that started on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that started on this date. You can also specify an inequality, such as `StartTime<=YYYY-MM-DD`, to read calls that started on or before midnight of this date, and `StartTime>=YYYY-MM-DD` to read calls that started on or after midnight of this date.
-                    # @param [Time] start_time_after Only include calls that started on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that started on this date. You can also specify an inequality, such as `StartTime<=YYYY-MM-DD`, to read calls that started on or before midnight of this date, and `StartTime>=YYYY-MM-DD` to read calls that started on or after midnight of this date.
                     # @param [Time] end_time Only include calls that ended on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that ended on this date. You can also specify an inequality, such as `EndTime<=YYYY-MM-DD`, to read calls that ended on or before midnight of this date, and `EndTime>=YYYY-MM-DD` to read calls that ended on or after midnight of this date.
-                    # @param [Time] end_time_before Only include calls that ended on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that ended on this date. You can also specify an inequality, such as `EndTime<=YYYY-MM-DD`, to read calls that ended on or before midnight of this date, and `EndTime>=YYYY-MM-DD` to read calls that ended on or after midnight of this date.
-                    # @param [Time] end_time_after Only include calls that ended on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read only calls that ended on this date. You can also specify an inequality, such as `EndTime<=YYYY-MM-DD`, to read calls that ended on or before midnight of this date, and `EndTime>=YYYY-MM-DD` to read calls that ended on or after midnight of this date.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of CallInstance
-                    def page(to: :unset, from: :unset, parent_call_sid: :unset, status: :unset, start_time: :unset, start_time_before: :unset, start_time_after: :unset, end_time: :unset, end_time_before: :unset, end_time_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(to: :unset, from: :unset, parent_call_sid: :unset, status: :unset, start_time: :unset, end_time: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'To' => to,
                             'From' => from,
                             'ParentCallSid' => parent_call_sid,
                             'Status' => status,
                             'StartTime' =>  Twilio.serialize_iso8601_datetime(start_time),
-                            'StartTime<' =>  Twilio.serialize_iso8601_datetime(start_time_before),
-                            'StartTime>' =>  Twilio.serialize_iso8601_datetime(start_time_after),
                             'EndTime' =>  Twilio.serialize_iso8601_datetime(end_time),
-                            'EndTime<' =>  Twilio.serialize_iso8601_datetime(end_time_before),
-                            'EndTime>' =>  Twilio.serialize_iso8601_datetime(end_time_after),
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
@@ -351,6 +329,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -359,6 +338,7 @@ module Twilio
                     # @return [CallInstance] Fetched CallInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CallInstance.new(
                             @version,
@@ -404,6 +384,7 @@ module Twilio
                             'TimeLimit' => time_limit,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         CallInstance.new(
                             @version,

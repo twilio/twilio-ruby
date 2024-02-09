@@ -18,6 +18,7 @@ module Twilio
         class Verify < VerifyBase
             class V2 < Version
                 class TemplateList < ListResource
+                
                     ##
                     # Initialize the TemplateList
                     # @param [Version] version Version that contains the resource

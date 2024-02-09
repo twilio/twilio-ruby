@@ -20,6 +20,7 @@ module Twilio
                 class CallContext < InstanceContext
 
                      class CallSummaryList < ListResource
+                
                     ##
                     # Initialize the CallSummaryList
                     # @param [Version] version Version that contains the resource
@@ -67,6 +68,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'ProcessingState' => processing_state,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         CallSummaryInstance.new(
                             @version,

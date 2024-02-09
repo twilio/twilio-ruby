@@ -18,6 +18,7 @@ module Twilio
         class Media < MediaBase
             class V1 < Version
                 class MediaProcessorList < ListResource
+                
                     ##
                     # Initialize the MediaProcessorList
                     # @param [Version] version Version that contains the resource
@@ -56,6 +57,7 @@ module Twilio
                             'MaxDuration' => max_duration,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         MediaProcessorInstance.new(
                             @version,
@@ -189,6 +191,7 @@ module Twilio
                     # @return [MediaProcessorInstance] Fetched MediaProcessorInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         MediaProcessorInstance.new(
                             @version,
@@ -209,6 +212,7 @@ module Twilio
                             'Status' => status,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         MediaProcessorInstance.new(
                             @version,

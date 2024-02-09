@@ -22,6 +22,7 @@ module Twilio
                 class RecordList < ListResource
 
                      class ThisMonthList < ListResource
+                
                     ##
                     # Initialize the ThisMonthList
                     # @param [Version] version Version that contains the resource

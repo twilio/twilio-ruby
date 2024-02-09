@@ -20,6 +20,7 @@ module Twilio
                 class SimContext < InstanceContext
 
                      class BillingPeriodList < ListResource
+                
                     ##
                     # Initialize the BillingPeriodList
                     # @param [Version] version Version that contains the resource

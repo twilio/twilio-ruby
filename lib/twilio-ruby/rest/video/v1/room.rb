@@ -18,6 +18,7 @@ module Twilio
         class Video < VideoBase
             class V1 < Version
                 class RoomList < ListResource
+                
                     ##
                     # Initialize the RoomList
                     # @param [Version] version Version that contains the resource
@@ -83,6 +84,7 @@ module Twilio
                             'LargeRoom' => large_room,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         RoomInstance.new(
                             @version,
@@ -231,6 +233,7 @@ module Twilio
                     # @return [RoomInstance] Fetched RoomInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         RoomInstance.new(
                             @version,
@@ -251,6 +254,7 @@ module Twilio
                             'Status' => status,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         RoomInstance.new(
                             @version,

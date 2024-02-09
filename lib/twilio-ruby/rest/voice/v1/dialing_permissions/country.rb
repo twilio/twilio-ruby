@@ -20,6 +20,7 @@ module Twilio
                 class DialingPermissionsList < ListResource
 
                      class CountryList < ListResource
+                
                     ##
                     # Initialize the CountryList
                     # @param [Version] version Version that contains the resource
@@ -161,8 +162,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class CountryContext < InstanceContext
                     ##
                     # Initialize the CountryContext
@@ -184,6 +183,7 @@ module Twilio
                     # @return [CountryInstance] Fetched CountryInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CountryInstance.new(
                             @version,

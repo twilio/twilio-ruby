@@ -18,6 +18,7 @@ module Twilio
         class Numbers < NumbersBase
             class V2 < Version
                 class BulkHostedNumberOrderList < ListResource
+                
                     ##
                     # Initialize the BulkHostedNumberOrderList
                     # @param [Version] version Version that contains the resource
@@ -26,9 +27,22 @@ module Twilio
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        
+                        @uri = "/HostedNumber/Orders/Bulk"
                         
                     end
+                    ##
+                    # Create the BulkHostedNumberOrderInstance
+                    # @return [BulkHostedNumberOrderInstance] Created BulkHostedNumberOrderInstance
+                    def create
+
+                        
+                        payload = @version.create('POST', @uri)
+                        BulkHostedNumberOrderInstance.new(
+                            @version,
+                            payload,
+                        )
+                    end
+
                 
 
 
@@ -39,8 +53,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class BulkHostedNumberOrderContext < InstanceContext
                     ##
                     # Initialize the BulkHostedNumberOrderContext
@@ -67,6 +79,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'OrderStatus' => order_status,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         BulkHostedNumberOrderInstance.new(
                             @version,

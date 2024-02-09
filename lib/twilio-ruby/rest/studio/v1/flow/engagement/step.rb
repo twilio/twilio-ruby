@@ -21,6 +21,7 @@ module Twilio
                 class EngagementContext < InstanceContext
 
                      class StepList < ListResource
+                
                     ##
                     # Initialize the StepList
                     # @param [Version] version Version that contains the resource
@@ -149,6 +150,7 @@ module Twilio
                     # @return [StepInstance] Fetched StepInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         StepInstance.new(
                             @version,

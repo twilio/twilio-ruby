@@ -21,6 +21,7 @@ module Twilio
                 class AvailablePhoneNumberCountryContext < InstanceContext
 
                      class TollFreeList < ListResource
+                
                     ##
                     # Initialize the TollFreeList
                     # @param [Version] version Version that contains the resource

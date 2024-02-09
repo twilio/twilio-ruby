@@ -21,6 +21,7 @@ module Twilio
                 class SessionContext < InstanceContext
 
                      class ParticipantList < ListResource
+                
                     ##
                     # Initialize the ParticipantList
                     # @param [Version] version Version that contains the resource
@@ -53,6 +54,7 @@ module Twilio
                             'ProxyIdentifierSid' => proxy_identifier_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ParticipantInstance.new(
                             @version,
@@ -156,8 +158,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class ParticipantContext < InstanceContext
                     ##
                     # Initialize the ParticipantContext
@@ -181,6 +181,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -189,6 +190,7 @@ module Twilio
                     # @return [ParticipantInstance] Fetched ParticipantInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ParticipantInstance.new(
                             @version,

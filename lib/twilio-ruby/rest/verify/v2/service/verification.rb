@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class VerificationList < ListResource
+                
                     ##
                     # Initialize the VerificationList
                     # @param [Version] version Version that contains the resource
@@ -49,6 +50,7 @@ module Twilio
                     # @param [String] template_custom_substitutions A stringified JSON object in which the keys are the template's special variables and the values are the variables substitutions.
                     # @param [String] device_ip Strongly encouraged if using the auto channel. The IP address of the client's device. If provided, it has to be a valid IPv4 or IPv6 address.
                     # @param [RiskCheck] risk_check 
+                    # @param [String] tags A string containing a JSON map of key value pairs of tags to be recorded as metadata for the message. The object may contain up to 10 tags. Keys and values can each be up to 128 characters in length.
                     # @return [VerificationInstance] Created VerificationInstance
                     def create(
                         to: nil, 
@@ -66,7 +68,8 @@ module Twilio
                         template_sid: :unset, 
                         template_custom_substitutions: :unset, 
                         device_ip: :unset, 
-                        risk_check: :unset
+                        risk_check: :unset, 
+                        tags: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -86,8 +89,10 @@ module Twilio
                             'TemplateCustomSubstitutions' => template_custom_substitutions,
                             'DeviceIp' => device_ip,
                             'RiskCheck' => risk_check,
+                            'Tags' => tags,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         VerificationInstance.new(
                             @version,
@@ -127,6 +132,7 @@ module Twilio
                     # @return [VerificationInstance] Fetched VerificationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         VerificationInstance.new(
                             @version,
@@ -148,6 +154,7 @@ module Twilio
                             'Status' => status,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         VerificationInstance.new(
                             @version,

@@ -18,6 +18,7 @@ module Twilio
         class Voice < VoiceBase
             class V1 < Version
                 class SourceIpMappingList < ListResource
+                
                     ##
                     # Initialize the SourceIpMappingList
                     # @param [Version] version Version that contains the resource
@@ -44,6 +45,7 @@ module Twilio
                             'SipDomainSid' => sip_domain_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         SourceIpMappingInstance.new(
                             @version,
@@ -165,6 +167,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -173,6 +176,7 @@ module Twilio
                     # @return [SourceIpMappingInstance] Fetched SourceIpMappingInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SourceIpMappingInstance.new(
                             @version,
@@ -193,6 +197,7 @@ module Twilio
                             'SipDomainSid' => sip_domain_sid,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SourceIpMappingInstance.new(
                             @version,

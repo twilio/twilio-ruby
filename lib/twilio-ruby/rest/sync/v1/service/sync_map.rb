@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class SyncMapList < ListResource
+                
                     ##
                     # Initialize the SyncMapList
                     # @param [Version] version Version that contains the resource
@@ -49,6 +50,7 @@ module Twilio
                             'CollectionTtl' => collection_ttl,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         SyncMapInstance.new(
                             @version,
@@ -174,6 +176,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -182,6 +185,7 @@ module Twilio
                     # @return [SyncMapInstance] Fetched SyncMapInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SyncMapInstance.new(
                             @version,
@@ -206,6 +210,7 @@ module Twilio
                             'CollectionTtl' => collection_ttl,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SyncMapInstance.new(
                             @version,

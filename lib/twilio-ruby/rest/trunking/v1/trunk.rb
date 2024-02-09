@@ -18,6 +18,7 @@ module Twilio
         class Trunking < TrunkingBase
             class V1 < Version
                 class TrunkList < ListResource
+                
                     ##
                     # Initialize the TrunkList
                     # @param [Version] version Version that contains the resource
@@ -62,6 +63,7 @@ module Twilio
                             'TransferCallerId' => transfer_caller_id,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         TrunkInstance.new(
                             @version,
@@ -188,6 +190,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -196,6 +199,7 @@ module Twilio
                     # @return [TrunkInstance] Fetched TrunkInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         TrunkInstance.new(
                             @version,
@@ -237,6 +241,7 @@ module Twilio
                             'TransferCallerId' => transfer_caller_id,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         TrunkInstance.new(
                             @version,

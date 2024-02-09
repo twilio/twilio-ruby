@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class ChannelSenderList < ListResource
+                
                     ##
                     # Initialize the ChannelSenderList
                     # @param [Version] version Version that contains the resource
@@ -125,8 +126,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class ChannelSenderContext < InstanceContext
                     ##
                     # Initialize the ChannelSenderContext
@@ -148,6 +147,7 @@ module Twilio
                     # @return [ChannelSenderInstance] Fetched ChannelSenderInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ChannelSenderInstance.new(
                             @version,
@@ -292,7 +292,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The absolute URL of the ChannelSender resource.
                     def url
                         @properties['url']
                     end

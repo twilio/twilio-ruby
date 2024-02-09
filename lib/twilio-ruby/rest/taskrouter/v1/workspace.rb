@@ -18,6 +18,7 @@ module Twilio
         class Taskrouter < TaskrouterBase
             class V1 < Version
                 class WorkspaceList < ListResource
+                
                     ##
                     # Initialize the WorkspaceList
                     # @param [Version] version Version that contains the resource
@@ -56,6 +57,7 @@ module Twilio
                             'PrioritizeQueueOrder' => prioritize_queue_order,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         WorkspaceInstance.new(
                             @version,
@@ -193,6 +195,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -201,6 +204,7 @@ module Twilio
                     # @return [WorkspaceInstance] Fetched WorkspaceInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         WorkspaceInstance.new(
                             @version,
@@ -239,6 +243,7 @@ module Twilio
                             'PrioritizeQueueOrder' => prioritize_queue_order,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         WorkspaceInstance.new(
                             @version,

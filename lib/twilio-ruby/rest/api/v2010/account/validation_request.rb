@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class ValidationRequestList < ListResource
+                
                     ##
                     # Initialize the ValidationRequestList
                     # @param [Version] version Version that contains the resource
@@ -58,6 +59,7 @@ module Twilio
                             'StatusCallbackMethod' => status_callback_method,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ValidationRequestInstance.new(
                             @version,

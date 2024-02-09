@@ -20,6 +20,7 @@ module Twilio
                 class CustomerProfilesContext < InstanceContext
 
                      class CustomerProfilesChannelEndpointAssignmentList < ListResource
+                
                     ##
                     # Initialize the CustomerProfilesChannelEndpointAssignmentList
                     # @param [Version] version Version that contains the resource
@@ -46,6 +47,7 @@ module Twilio
                             'ChannelEndpointSid' => channel_endpoint_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         CustomerProfilesChannelEndpointAssignmentInstance.new(
                             @version,
@@ -181,6 +183,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -189,6 +192,7 @@ module Twilio
                     # @return [CustomerProfilesChannelEndpointAssignmentInstance] Fetched CustomerProfilesChannelEndpointAssignmentInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CustomerProfilesChannelEndpointAssignmentInstance.new(
                             @version,

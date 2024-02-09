@@ -18,6 +18,7 @@ module Twilio
         class Monitor < MonitorBase
             class V1 < Version
                 class EventList < ListResource
+                
                     ##
                     # Initialize the EventList
                     # @param [Version] version Version that contains the resource
@@ -179,6 +180,7 @@ module Twilio
                     # @return [EventInstance] Fetched EventInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         EventInstance.new(
                             @version,

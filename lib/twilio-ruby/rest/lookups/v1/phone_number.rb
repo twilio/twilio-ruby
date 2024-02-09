@@ -18,6 +18,7 @@ module Twilio
         class Lookups < LookupsBase
             class V1 < Version
                 class PhoneNumberList < ListResource
+                
                     ##
                     # Initialize the PhoneNumberList
                     # @param [Version] version Version that contains the resource
@@ -74,6 +75,7 @@ module Twilio
                             'AddOns' => Twilio.serialize_list(add_ons) { |e| e },
                         })
                         params.merge!(Twilio.prefixed_collapsible_map(add_ons_data, 'AddOns'))
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         PhoneNumberInstance.new(
                             @version,

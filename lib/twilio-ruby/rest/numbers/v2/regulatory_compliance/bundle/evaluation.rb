@@ -21,6 +21,7 @@ module Twilio
                 class BundleContext < InstanceContext
 
                      class EvaluationList < ListResource
+                
                     ##
                     # Initialize the EvaluationList
                     # @param [Version] version Version that contains the resource
@@ -37,6 +38,7 @@ module Twilio
                     # @return [EvaluationInstance] Created EvaluationInstance
                     def create
 
+                        
                         payload = @version.create('POST', @uri)
                         EvaluationInstance.new(
                             @version,
@@ -160,6 +162,7 @@ module Twilio
                     # @return [EvaluationInstance] Fetched EvaluationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         EvaluationInstance.new(
                             @version,

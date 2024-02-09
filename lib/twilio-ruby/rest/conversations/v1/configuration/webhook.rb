@@ -20,6 +20,7 @@ module Twilio
                 class ConfigurationContext < InstanceContext
 
                      class WebhookList < ListResource
+                
                     ##
                     # Initialize the WebhookList
                     # @param [Version] version Version that contains the resource
@@ -60,6 +61,7 @@ module Twilio
                     # @return [WebhookInstance] Fetched WebhookInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         WebhookInstance.new(
                             @version,
@@ -91,6 +93,7 @@ module Twilio
                             'Target' => target,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         WebhookInstance.new(
                             @version,

@@ -20,6 +20,7 @@ module Twilio
                 class RegulatoryComplianceList < ListResource
 
                      class SupportingDocumentList < ListResource
+                
                     ##
                     # Initialize the SupportingDocumentList
                     # @param [Version] version Version that contains the resource
@@ -49,6 +50,7 @@ module Twilio
                             'Attributes' => Twilio.serialize_object(attributes),
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         SupportingDocumentInstance.new(
                             @version,
@@ -170,6 +172,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -178,6 +181,7 @@ module Twilio
                     # @return [SupportingDocumentInstance] Fetched SupportingDocumentInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SupportingDocumentInstance.new(
                             @version,
@@ -201,6 +205,7 @@ module Twilio
                             'Attributes' => Twilio.serialize_object(attributes),
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SupportingDocumentInstance.new(
                             @version,

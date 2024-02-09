@@ -18,6 +18,7 @@ module Twilio
         class Accounts < AccountsBase
             class V1 < Version
                 class AuthTokenPromotionList < ListResource
+                
                     ##
                     # Initialize the AuthTokenPromotionList
                     # @param [Version] version Version that contains the resource
@@ -58,6 +59,7 @@ module Twilio
                     # @return [AuthTokenPromotionInstance] Updated AuthTokenPromotionInstance
                     def update
 
+                        
                         payload = @version.update('POST', @uri)
                         AuthTokenPromotionInstance.new(
                             @version,

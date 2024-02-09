@@ -21,6 +21,7 @@ module Twilio
                 class CallContext < InstanceContext
 
                      class EventList < ListResource
+                
                     ##
                     # Initialize the EventList
                     # @param [Version] version Version that contains the resource

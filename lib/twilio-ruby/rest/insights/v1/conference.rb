@@ -18,6 +18,7 @@ module Twilio
         class Insights < InsightsBase
             class V1 < Version
                 class ConferenceList < ListResource
+                
                     ##
                     # Initialize the ConferenceList
                     # @param [Version] version Version that contains the resource
@@ -204,6 +205,7 @@ module Twilio
                     # @return [ConferenceInstance] Fetched ConferenceInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ConferenceInstance.new(
                             @version,

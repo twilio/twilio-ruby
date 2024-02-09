@@ -18,6 +18,7 @@ module Twilio
         class Intelligence < IntelligenceBase
             class V2 < Version
                 class TranscriptList < ListResource
+                
                     ##
                     # Initialize the TranscriptList
                     # @param [Version] version Version that contains the resource
@@ -50,6 +51,7 @@ module Twilio
                             'MediaStartTime' => Twilio.serialize_iso8601_datetime(media_start_time),
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         TranscriptInstance.new(
                             @version,
@@ -199,8 +201,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class TranscriptContext < InstanceContext
                     ##
                     # Initialize the TranscriptContext
@@ -224,6 +224,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -232,6 +233,7 @@ module Twilio
                     # @return [TranscriptInstance] Fetched TranscriptInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         TranscriptInstance.new(
                             @version,
@@ -415,7 +417,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Boolean] Data logging allows Twilio to improve the quality of the speech recognition through using customer data to refine its speech recognition models.
+                    # @return [Boolean] Data logging allows Twilio to improve the quality of the speech recognition & language understanding services through using customer data to refine, fine tune and evaluate machine learning models. Note: Data logging cannot be activated via API, only via www.twilio.com, as it requires additional consent.
                     def data_logging
                         @properties['data_logging']
                     end

@@ -20,6 +20,7 @@ module Twilio
                 class AppContext < InstanceContext
 
                      class AppManifestList < ListResource
+                
                     ##
                     # Initialize the AppManifestList
                     # @param [Version] version Version that contains the resource
@@ -41,8 +42,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class AppManifestContext < InstanceContext
                     ##
                     # Initialize the AppManifestContext
@@ -63,6 +62,7 @@ module Twilio
                     # @return [AppManifestInstance] Fetched AppManifestInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AppManifestInstance.new(
                             @version,

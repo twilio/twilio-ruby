@@ -20,6 +20,7 @@ module Twilio
                 class VoiceList < ListResource
 
                      class NumberList < ListResource
+                
                     ##
                     # Initialize the NumberList
                     # @param [Version] version Version that contains the resource
@@ -61,6 +62,7 @@ module Twilio
                     # @return [NumberInstance] Fetched NumberInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         NumberInstance.new(
                             @version,

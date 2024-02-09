@@ -21,6 +21,7 @@ module Twilio
                 class InteractionChannelContext < InstanceContext
 
                      class InteractionChannelParticipantList < ListResource
+                
                     ##
                     # Initialize the InteractionChannelParticipantList
                     # @param [Version] version Version that contains the resource
@@ -47,6 +48,7 @@ module Twilio
                             'MediaProperties' => Twilio.serialize_object(media_properties),
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         InteractionChannelParticipantInstance.new(
                             @version,
@@ -179,6 +181,7 @@ module Twilio
                             'Status' => status,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         InteractionChannelParticipantInstance.new(
                             @version,

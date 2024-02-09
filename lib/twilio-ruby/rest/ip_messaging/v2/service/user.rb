@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class UserList < ListResource
+                
                     ##
                     # Initialize the UserList
                     # @param [Version] version Version that contains the resource
@@ -54,6 +55,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         UserInstance.new(
@@ -180,6 +182,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -188,6 +191,7 @@ module Twilio
                     # @return [UserInstance] Fetched UserInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         UserInstance.new(
                             @version,
@@ -217,6 +221,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         UserInstance.new(

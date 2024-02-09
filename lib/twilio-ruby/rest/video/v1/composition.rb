@@ -18,6 +18,7 @@ module Twilio
         class Video < VideoBase
             class V1 < Version
                 class CompositionList < ListResource
+                
                     ##
                     # Initialize the CompositionList
                     # @param [Version] version Version that contains the resource
@@ -65,6 +66,7 @@ module Twilio
                             'Trim' => trim,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         CompositionInstance.new(
                             @version,
@@ -210,6 +212,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -218,6 +221,7 @@ module Twilio
                     # @return [CompositionInstance] Fetched CompositionInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CompositionInstance.new(
                             @version,

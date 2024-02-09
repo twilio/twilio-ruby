@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class NewSigningKeyList < ListResource
+                
                     ##
                     # Initialize the NewSigningKeyList
                     # @param [Version] version Version that contains the resource
@@ -43,6 +44,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         NewSigningKeyInstance.new(
                             @version,

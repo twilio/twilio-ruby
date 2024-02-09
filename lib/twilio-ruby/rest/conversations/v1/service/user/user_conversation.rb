@@ -21,6 +21,7 @@ module Twilio
                 class UserContext < InstanceContext
 
                      class UserConversationList < ListResource
+                
                     ##
                     # Initialize the UserConversationList
                     # @param [Version] version Version that contains the resource
@@ -148,6 +149,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -156,6 +158,7 @@ module Twilio
                     # @return [UserConversationInstance] Fetched UserConversationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         UserConversationInstance.new(
                             @version,
@@ -184,6 +187,7 @@ module Twilio
                             'LastReadMessageIndex' => last_read_message_index,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         UserConversationInstance.new(
                             @version,

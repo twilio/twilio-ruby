@@ -22,6 +22,7 @@ module Twilio
                 class RecordList < ListResource
 
                      class YesterdayList < ListResource
+                
                     ##
                     # Initialize the YesterdayList
                     # @param [Version] version Version that contains the resource

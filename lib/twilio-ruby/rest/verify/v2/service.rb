@@ -18,6 +18,7 @@ module Twilio
         class Verify < VerifyBase
             class V2 < Version
                 class ServiceList < ListResource
+                
                     ##
                     # Initialize the ServiceList
                     # @param [Version] version Version that contains the resource
@@ -48,6 +49,7 @@ module Twilio
                     # @param [String] totp_code_length Optional configuration for the TOTP factors. Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive. Defaults to 6
                     # @param [String] totp_skew Optional configuration for the TOTP factors. The number of time-steps, past and future, that are valid for validation of TOTP codes. Must be between 0 and 2, inclusive. Defaults to 1
                     # @param [String] default_template_sid The default message [template](https://www.twilio.com/docs/verify/api/templates). Will be used for all SMS verifications unless explicitly overriden. SMS channel only.
+                    # @param [Boolean] verify_event_subscription_enabled Whether to allow verifications from the service to reach the stream-events sinks if configured
                     # @return [ServiceInstance] Created ServiceInstance
                     def create(
                         friendly_name: nil, 
@@ -66,7 +68,8 @@ module Twilio
                         totp_time_step: :unset, 
                         totp_code_length: :unset, 
                         totp_skew: :unset, 
-                        default_template_sid: :unset
+                        default_template_sid: :unset, 
+                        verify_event_subscription_enabled: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -87,8 +90,10 @@ module Twilio
                             'Totp.CodeLength' => totp_code_length,
                             'Totp.Skew' => totp_skew,
                             'DefaultTemplateSid' => default_template_sid,
+                            'VerifyEventSubscriptionEnabled' => verify_event_subscription_enabled,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ServiceInstance.new(
                             @version,
@@ -217,6 +222,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -225,6 +231,7 @@ module Twilio
                     # @return [ServiceInstance] Fetched ServiceInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ServiceInstance.new(
                             @version,
@@ -252,6 +259,7 @@ module Twilio
                     # @param [String] totp_code_length Optional configuration for the TOTP factors. Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive. Defaults to 6
                     # @param [String] totp_skew Optional configuration for the TOTP factors. The number of time-steps, past and future, that are valid for validation of TOTP codes. Must be between 0 and 2, inclusive. Defaults to 1
                     # @param [String] default_template_sid The default message [template](https://www.twilio.com/docs/verify/api/templates). Will be used for all SMS verifications unless explicitly overriden. SMS channel only.
+                    # @param [Boolean] verify_event_subscription_enabled Whether to allow verifications from the service to reach the stream-events sinks if configured
                     # @return [ServiceInstance] Updated ServiceInstance
                     def update(
                         friendly_name: :unset, 
@@ -270,7 +278,8 @@ module Twilio
                         totp_time_step: :unset, 
                         totp_code_length: :unset, 
                         totp_skew: :unset, 
-                        default_template_sid: :unset
+                        default_template_sid: :unset, 
+                        verify_event_subscription_enabled: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -291,8 +300,10 @@ module Twilio
                             'Totp.CodeLength' => totp_code_length,
                             'Totp.Skew' => totp_skew,
                             'DefaultTemplateSid' => default_template_sid,
+                            'VerifyEventSubscriptionEnabled' => verify_event_subscription_enabled,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ServiceInstance.new(
                             @version,
@@ -499,6 +510,7 @@ module Twilio
                             'push' => payload['push'],
                             'totp' => payload['totp'],
                             'default_template_sid' => payload['default_template_sid'],
+                            'verify_event_subscription_enabled' => payload['verify_event_subscription_enabled'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'url' => payload['url'],
@@ -606,6 +618,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [Boolean] Whether to allow verifications from the service to reach the stream-events sinks if configured
+                    def verify_event_subscription_enabled
+                        @properties['verify_event_subscription_enabled']
+                    end
+                    
+                    ##
                     # @return [Time] The date and time in GMT when the resource was created specified in [RFC 2822](https://www.ietf.org/rfc/rfc2822.txt) format.
                     def date_created
                         @properties['date_created']
@@ -664,6 +682,7 @@ module Twilio
                     # @param [String] totp_code_length Optional configuration for the TOTP factors. Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive. Defaults to 6
                     # @param [String] totp_skew Optional configuration for the TOTP factors. The number of time-steps, past and future, that are valid for validation of TOTP codes. Must be between 0 and 2, inclusive. Defaults to 1
                     # @param [String] default_template_sid The default message [template](https://www.twilio.com/docs/verify/api/templates). Will be used for all SMS verifications unless explicitly overriden. SMS channel only.
+                    # @param [Boolean] verify_event_subscription_enabled Whether to allow verifications from the service to reach the stream-events sinks if configured
                     # @return [ServiceInstance] Updated ServiceInstance
                     def update(
                         friendly_name: :unset, 
@@ -682,7 +701,8 @@ module Twilio
                         totp_time_step: :unset, 
                         totp_code_length: :unset, 
                         totp_skew: :unset, 
-                        default_template_sid: :unset
+                        default_template_sid: :unset, 
+                        verify_event_subscription_enabled: :unset
                     )
 
                         context.update(
@@ -703,6 +723,7 @@ module Twilio
                             totp_code_length: totp_code_length, 
                             totp_skew: totp_skew, 
                             default_template_sid: default_template_sid, 
+                            verify_event_subscription_enabled: verify_event_subscription_enabled, 
                         )
                     end
 

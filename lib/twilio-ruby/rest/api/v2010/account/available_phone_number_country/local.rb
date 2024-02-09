@@ -21,6 +21,7 @@ module Twilio
                 class AvailablePhoneNumberCountryContext < InstanceContext
 
                      class LocalList < ListResource
+                
                     ##
                     # Initialize the LocalList
                     # @param [Version] version Version that contains the resource

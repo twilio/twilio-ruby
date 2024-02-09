@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class NotificationList < ListResource
+                
                     ##
                     # Initialize the NotificationList
                     # @param [Version] version Version that contains the resource
@@ -170,6 +171,7 @@ module Twilio
                     # @return [NotificationInstance] Fetched NotificationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         NotificationInstance.new(
                             @version,

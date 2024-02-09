@@ -21,6 +21,7 @@ module Twilio
                 class EntityContext < InstanceContext
 
                      class NewFactorList < ListResource
+                
                     ##
                     # Initialize the NewFactorList
                     # @param [Version] version Version that contains the resource
@@ -83,6 +84,7 @@ module Twilio
                             'Metadata' => Twilio.serialize_object(metadata),
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         NewFactorInstance.new(
                             @version,

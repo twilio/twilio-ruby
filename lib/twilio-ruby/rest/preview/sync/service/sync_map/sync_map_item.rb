@@ -21,6 +21,7 @@ module Twilio
                 class SyncMapContext < InstanceContext
 
                      class SyncMapItemList < ListResource
+                
                     ##
                     # Initialize the SyncMapItemList
                     # @param [Version] version Version that contains the resource
@@ -47,6 +48,7 @@ module Twilio
                             'Data' => Twilio.serialize_object(data),
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         SyncMapItemInstance.new(
                             @version,
@@ -168,8 +170,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class SyncMapItemContext < InstanceContext
                     ##
                     # Initialize the SyncMapItemContext
@@ -195,6 +195,7 @@ module Twilio
                         if_match: :unset
                     )
 
+                        
                         headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
@@ -204,6 +205,7 @@ module Twilio
                     # @return [SyncMapItemInstance] Fetched SyncMapItemInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SyncMapItemInstance.new(
                             @version,
@@ -228,6 +230,7 @@ module Twilio
                             'Data' => Twilio.serialize_object(data),
                         })
 
+                        
                         headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         SyncMapItemInstance.new(

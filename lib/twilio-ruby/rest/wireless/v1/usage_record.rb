@@ -18,6 +18,7 @@ module Twilio
         class Wireless < WirelessBase
             class V1 < Version
                 class UsageRecordList < ListResource
+                
                     ##
                     # Initialize the UsageRecordList
                     # @param [Version] version Version that contains the resource

@@ -18,6 +18,7 @@ module Twilio
         class Messaging < MessagingBase
             class V1 < Version
                 class DeactivationsList < ListResource
+                
                     ##
                     # Initialize the DeactivationsList
                     # @param [Version] version Version that contains the resource
@@ -64,6 +65,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'Date' => Twilio.serialize_iso8601_date(date),
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         DeactivationsInstance.new(
                             @version,

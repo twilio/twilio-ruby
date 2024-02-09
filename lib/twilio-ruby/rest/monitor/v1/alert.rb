@@ -18,6 +18,7 @@ module Twilio
         class Monitor < MonitorBase
             class V1 < Version
                 class AlertList < ListResource
+                
                     ##
                     # Initialize the AlertList
                     # @param [Version] version Version that contains the resource
@@ -161,6 +162,7 @@ module Twilio
                     # @return [AlertInstance] Fetched AlertInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AlertInstance.new(
                             @version,

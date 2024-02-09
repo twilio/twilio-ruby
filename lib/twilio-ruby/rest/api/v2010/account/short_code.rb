@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class ShortCodeList < ListResource
+                
                     ##
                     # Initialize the ShortCodeList
                     # @param [Version] version Version that contains the resource
@@ -158,6 +159,7 @@ module Twilio
                     # @return [ShortCodeInstance] Fetched ShortCodeInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ShortCodeInstance.new(
                             @version,
@@ -194,6 +196,7 @@ module Twilio
                             'SmsFallbackMethod' => sms_fallback_method,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ShortCodeInstance.new(
                             @version,

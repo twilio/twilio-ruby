@@ -21,6 +21,7 @@ module Twilio
                 class UsageList < ListResource
 
                      class RecordList < ListResource
+                
                     ##
                     # Initialize the RecordList
                     # @param [Version] version Version that contains the resource

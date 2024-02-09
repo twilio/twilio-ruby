@@ -21,6 +21,7 @@ module Twilio
                 class SipList < ListResource
 
                      class DomainList < ListResource
+                
                     ##
                     # Initialize the DomainList
                     # @param [Version] version Version that contains the resource
@@ -80,6 +81,7 @@ module Twilio
                             'EmergencyCallerSid' => emergency_caller_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         DomainInstance.new(
                             @version,
@@ -206,6 +208,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -214,6 +217,7 @@ module Twilio
                     # @return [DomainInstance] Fetched DomainInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         DomainInstance.new(
                             @version,
@@ -271,6 +275,7 @@ module Twilio
                             'EmergencyCallerSid' => emergency_caller_sid,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         DomainInstance.new(
                             @version,

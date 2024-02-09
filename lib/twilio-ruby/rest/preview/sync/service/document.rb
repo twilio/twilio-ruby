@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class DocumentList < ListResource
+                
                     ##
                     # Initialize the DocumentList
                     # @param [Version] version Version that contains the resource
@@ -46,6 +47,7 @@ module Twilio
                             'Data' => Twilio.serialize_object(data),
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         DocumentInstance.new(
                             @version,
@@ -148,8 +150,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class DocumentContext < InstanceContext
                     ##
                     # Initialize the DocumentContext
@@ -172,6 +172,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -180,6 +181,7 @@ module Twilio
                     # @return [DocumentInstance] Fetched DocumentInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         DocumentInstance.new(
                             @version,
@@ -203,6 +205,7 @@ module Twilio
                             'Data' => Twilio.serialize_object(data),
                         })
 
+                        
                         headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         DocumentInstance.new(

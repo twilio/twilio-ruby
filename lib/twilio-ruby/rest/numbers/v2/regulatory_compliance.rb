@@ -18,6 +18,7 @@ module Twilio
         class Numbers < NumbersBase
             class V2 < Version
                 class RegulatoryComplianceList < ListResource
+                
                     ##
                     # Initialize the RegulatoryComplianceList
                     # @param [Version] version Version that contains the resource

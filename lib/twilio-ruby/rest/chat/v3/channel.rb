@@ -18,6 +18,7 @@ module Twilio
         class Chat < ChatBase
             class V3 < Version
                 class ChannelList < ListResource
+                
                     ##
                     # Initialize the ChannelList
                     # @param [Version] version Version that contains the resource
@@ -72,6 +73,7 @@ module Twilio
                             'MessagingServiceSid' => messaging_service_sid,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         ChannelInstance.new(

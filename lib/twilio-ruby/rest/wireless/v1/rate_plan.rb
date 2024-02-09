@@ -18,6 +18,7 @@ module Twilio
         class Wireless < WirelessBase
             class V1 < Version
                 class RatePlanList < ListResource
+                
                     ##
                     # Initialize the RatePlanList
                     # @param [Version] version Version that contains the resource
@@ -71,6 +72,7 @@ module Twilio
                             'InternationalRoamingDataLimit' => international_roaming_data_limit,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         RatePlanInstance.new(
                             @version,
@@ -192,6 +194,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -200,6 +203,7 @@ module Twilio
                     # @return [RatePlanInstance] Fetched RatePlanInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         RatePlanInstance.new(
                             @version,
@@ -223,6 +227,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         RatePlanInstance.new(
                             @version,

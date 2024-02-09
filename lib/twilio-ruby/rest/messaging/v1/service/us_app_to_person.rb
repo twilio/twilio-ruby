@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class UsAppToPersonList < ListResource
+                
                     ##
                     # Initialize the UsAppToPersonList
                     # @param [Version] version Version that contains the resource
@@ -46,6 +47,9 @@ module Twilio
                     # @param [Array[String]] opt_in_keywords If end users can text in a keyword to start receiving messages from this campaign, those keywords must be provided. This field is required if end users can text in a keyword to start receiving messages from this campaign. Values must be alphanumeric. 255 character maximum.
                     # @param [Array[String]] opt_out_keywords End users should be able to text in a keyword to stop receiving messages from this campaign. Those keywords must be provided. This field is required if managing opt out keywords yourself (i.e. not using Twilio's Default or Advanced Opt Out features). Values must be alphanumeric. 255 character maximum.
                     # @param [Array[String]] help_keywords End users should be able to text in a keyword to receive help. Those keywords must be provided as part of the campaign registration request. This field is required if managing help keywords yourself (i.e. not using Twilio's Default or Advanced Opt Out features). Values must be alphanumeric. 255 character maximum.
+                    # @param [Boolean] subscriber_opt_in A boolean that specifies whether campaign has Subscriber Optin or not.
+                    # @param [Boolean] age_gated A boolean that specifies whether campaign is age gated or not.
+                    # @param [Boolean] direct_lending A boolean that specifies whether campaign allows direct lending or not.
                     # @return [UsAppToPersonInstance] Created UsAppToPersonInstance
                     def create(
                         brand_registration_sid: nil, 
@@ -60,7 +64,10 @@ module Twilio
                         help_message: :unset, 
                         opt_in_keywords: :unset, 
                         opt_out_keywords: :unset, 
-                        help_keywords: :unset
+                        help_keywords: :unset, 
+                        subscriber_opt_in: :unset, 
+                        age_gated: :unset, 
+                        direct_lending: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -77,8 +84,12 @@ module Twilio
                             'OptInKeywords' => Twilio.serialize_list(opt_in_keywords) { |e| e },
                             'OptOutKeywords' => Twilio.serialize_list(opt_out_keywords) { |e| e },
                             'HelpKeywords' => Twilio.serialize_list(help_keywords) { |e| e },
+                            'SubscriberOptIn' => subscriber_opt_in,
+                            'AgeGated' => age_gated,
+                            'DirectLending' => direct_lending,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         UsAppToPersonInstance.new(
                             @version,
@@ -181,14 +192,12 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class UsAppToPersonContext < InstanceContext
                     ##
                     # Initialize the UsAppToPersonContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) to fetch the resource from.
-                    # @param [String] sid The SID of the US A2P Compliance resource to fetch `QE2c6890da8086d771620e9b13fadeba0b`.
+                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/services/api) to update the resource from.
+                    # @param [String] sid The SID of the US A2P Compliance resource to update `QE2c6890da8086d771620e9b13fadeba0b`.
                     # @return [UsAppToPersonContext] UsAppToPersonContext
                     def initialize(version, messaging_service_sid, sid)
                         super(version)
@@ -204,6 +213,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -212,7 +222,48 @@ module Twilio
                     # @return [UsAppToPersonInstance] Fetched UsAppToPersonInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
+                        UsAppToPersonInstance.new(
+                            @version,
+                            payload,
+                            messaging_service_sid: @solution[:messaging_service_sid],
+                            sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the UsAppToPersonInstance
+                    # @param [Boolean] has_embedded_links Indicates that this SMS campaign will send messages that contain links.
+                    # @param [Boolean] has_embedded_phone Indicates that this SMS campaign will send messages that contain phone numbers.
+                    # @param [Array[String]] message_samples An array of sample message strings, min two and max five. Min length for each sample: 20 chars. Max length for each sample: 1024 chars.
+                    # @param [String] message_flow Required for all Campaigns. Details around how a consumer opts-in to their campaign, therefore giving consent to receive their messages. If multiple opt-in methods can be used for the same campaign, they must all be listed. 40 character minimum. 2048 character maximum.
+                    # @param [String] description A short description of what this SMS campaign does. Min length: 40 characters. Max length: 4096 characters.
+                    # @param [Boolean] age_gated A boolean that specifies whether campaign requires age gate for federally legal content.
+                    # @param [Boolean] direct_lending A boolean that specifies whether campaign allows direct lending or not.
+                    # @return [UsAppToPersonInstance] Updated UsAppToPersonInstance
+                    def update(
+                        has_embedded_links: nil, 
+                        has_embedded_phone: nil, 
+                        message_samples: nil, 
+                        message_flow: nil, 
+                        description: nil, 
+                        age_gated: nil, 
+                        direct_lending: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'HasEmbeddedLinks' => has_embedded_links,
+                            'HasEmbeddedPhone' => has_embedded_phone,
+                            'MessageSamples' => Twilio.serialize_list(message_samples) { |e| e },
+                            'MessageFlow' => message_flow,
+                            'Description' => description,
+                            'AgeGated' => age_gated,
+                            'DirectLending' => direct_lending,
+                        })
+
+                        
+                        payload = @version.update('POST', @uri, data: data)
                         UsAppToPersonInstance.new(
                             @version,
                             payload,
@@ -289,6 +340,9 @@ module Twilio
                             'us_app_to_person_usecase' => payload['us_app_to_person_usecase'],
                             'has_embedded_links' => payload['has_embedded_links'],
                             'has_embedded_phone' => payload['has_embedded_phone'],
+                            'subscriber_opt_in' => payload['subscriber_opt_in'],
+                            'age_gated' => payload['age_gated'],
+                            'direct_lending' => payload['direct_lending'],
                             'campaign_status' => payload['campaign_status'],
                             'campaign_id' => payload['campaign_id'],
                             'is_externally_registered' => payload['is_externally_registered'],
@@ -375,6 +429,24 @@ module Twilio
                     # @return [Boolean] Indicates that this SMS campaign will send messages that contain phone numbers.
                     def has_embedded_phone
                         @properties['has_embedded_phone']
+                    end
+                    
+                    ##
+                    # @return [Boolean] A boolean that specifies whether campaign has Subscriber Optin or not.
+                    def subscriber_opt_in
+                        @properties['subscriber_opt_in']
+                    end
+                    
+                    ##
+                    # @return [Boolean] A boolean that specifies whether campaign is age gated or not.
+                    def age_gated
+                        @properties['age_gated']
+                    end
+                    
+                    ##
+                    # @return [Boolean] A boolean that specifies whether campaign allows direct lending or not.
+                    def direct_lending
+                        @properties['direct_lending']
                     end
                     
                     ##
@@ -487,6 +559,37 @@ module Twilio
                     def fetch
 
                         context.fetch
+                    end
+
+                    ##
+                    # Update the UsAppToPersonInstance
+                    # @param [Boolean] has_embedded_links Indicates that this SMS campaign will send messages that contain links.
+                    # @param [Boolean] has_embedded_phone Indicates that this SMS campaign will send messages that contain phone numbers.
+                    # @param [Array[String]] message_samples An array of sample message strings, min two and max five. Min length for each sample: 20 chars. Max length for each sample: 1024 chars.
+                    # @param [String] message_flow Required for all Campaigns. Details around how a consumer opts-in to their campaign, therefore giving consent to receive their messages. If multiple opt-in methods can be used for the same campaign, they must all be listed. 40 character minimum. 2048 character maximum.
+                    # @param [String] description A short description of what this SMS campaign does. Min length: 40 characters. Max length: 4096 characters.
+                    # @param [Boolean] age_gated A boolean that specifies whether campaign requires age gate for federally legal content.
+                    # @param [Boolean] direct_lending A boolean that specifies whether campaign allows direct lending or not.
+                    # @return [UsAppToPersonInstance] Updated UsAppToPersonInstance
+                    def update(
+                        has_embedded_links: nil, 
+                        has_embedded_phone: nil, 
+                        message_samples: nil, 
+                        message_flow: nil, 
+                        description: nil, 
+                        age_gated: nil, 
+                        direct_lending: nil
+                    )
+
+                        context.update(
+                            has_embedded_links: has_embedded_links, 
+                            has_embedded_phone: has_embedded_phone, 
+                            message_samples: message_samples, 
+                            message_flow: message_flow, 
+                            description: description, 
+                            age_gated: age_gated, 
+                            direct_lending: direct_lending, 
+                        )
                     end
 
                     ##

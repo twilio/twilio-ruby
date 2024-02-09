@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class UsageList < ListResource
+                
                     ##
                     # Initialize the UsageList
                     # @param [Version] version Version that contains the resource

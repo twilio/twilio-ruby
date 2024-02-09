@@ -18,6 +18,7 @@ module Twilio
         class Voice < VoiceBase
             class V1 < Version
                 class ByocTrunkList < ListResource
+                
                     ##
                     # Initialize the ByocTrunkList
                     # @param [Version] version Version that contains the resource
@@ -68,6 +69,7 @@ module Twilio
                             'FromDomainSid' => from_domain_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ByocTrunkInstance.new(
                             @version,
@@ -189,6 +191,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -197,6 +200,7 @@ module Twilio
                     # @return [ByocTrunkInstance] Fetched ByocTrunkInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ByocTrunkInstance.new(
                             @version,
@@ -244,6 +248,7 @@ module Twilio
                             'FromDomainSid' => from_domain_sid,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ByocTrunkInstance.new(
                             @version,

@@ -20,6 +20,7 @@ module Twilio
                 class TrunkContext < InstanceContext
 
                      class OriginationUrlList < ListResource
+                
                     ##
                     # Initialize the OriginationUrlList
                     # @param [Version] version Version that contains the resource
@@ -55,6 +56,7 @@ module Twilio
                             'SipUrl' => sip_url,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         OriginationUrlInstance.new(
                             @version,
@@ -178,6 +180,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -186,6 +189,7 @@ module Twilio
                     # @return [OriginationUrlInstance] Fetched OriginationUrlInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         OriginationUrlInstance.new(
                             @version,
@@ -219,6 +223,7 @@ module Twilio
                             'SipUrl' => sip_url,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         OriginationUrlInstance.new(
                             @version,

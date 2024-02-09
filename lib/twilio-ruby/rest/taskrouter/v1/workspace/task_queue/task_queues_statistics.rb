@@ -21,6 +21,7 @@ module Twilio
                 class TaskQueueList < ListResource
 
                      class TaskQueuesStatisticsList < ListResource
+                
                     ##
                     # Initialize the TaskQueuesStatisticsList
                     # @param [Version] version Version that contains the resource

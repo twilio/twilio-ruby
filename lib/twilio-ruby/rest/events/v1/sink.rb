@@ -18,6 +18,7 @@ module Twilio
         class Events < EventsBase
             class V1 < Version
                 class SinkList < ListResource
+                
                     ##
                     # Initialize the SinkList
                     # @param [Version] version Version that contains the resource
@@ -47,6 +48,7 @@ module Twilio
                             'SinkType' => sink_type,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         SinkInstance.new(
                             @version,
@@ -160,8 +162,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class SinkContext < InstanceContext
                     ##
                     # Initialize the SinkContext
@@ -184,6 +184,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -192,6 +193,7 @@ module Twilio
                     # @return [SinkInstance] Fetched SinkInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SinkInstance.new(
                             @version,
@@ -212,6 +214,7 @@ module Twilio
                             'Description' => description,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SinkInstance.new(
                             @version,

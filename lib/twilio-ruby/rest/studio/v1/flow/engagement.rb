@@ -20,6 +20,7 @@ module Twilio
                 class FlowContext < InstanceContext
 
                      class EngagementList < ListResource
+                
                     ##
                     # Initialize the EngagementList
                     # @param [Version] version Version that contains the resource
@@ -49,6 +50,7 @@ module Twilio
                             'Parameters' => Twilio.serialize_object(parameters),
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         EngagementInstance.new(
                             @version,
@@ -174,6 +176,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -182,6 +185,7 @@ module Twilio
                     # @return [EngagementInstance] Fetched EngagementInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         EngagementInstance.new(
                             @version,

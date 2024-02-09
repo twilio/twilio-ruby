@@ -18,6 +18,7 @@ module Twilio
         class Content < ContentBase
             class V1 < Version
                 class ContentAndApprovalsList < ListResource
+                
                     ##
                     # Initialize the ContentAndApprovalsList
                     # @param [Version] version Version that contains the resource

@@ -22,6 +22,7 @@ module Twilio
                 class ParticipantContext < InstanceContext
 
                      class MessageInteractionList < ListResource
+                
                     ##
                     # Initialize the MessageInteractionList
                     # @param [Version] version Version that contains the resource
@@ -48,6 +49,7 @@ module Twilio
                             'MediaUrl' => Twilio.serialize_list(media_url) { |e| e },
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         MessageInteractionInstance.new(
                             @version,
@@ -152,8 +154,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class MessageInteractionContext < InstanceContext
                     ##
                     # Initialize the MessageInteractionContext
@@ -177,6 +177,7 @@ module Twilio
                     # @return [MessageInteractionInstance] Fetched MessageInteractionInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         MessageInteractionInstance.new(
                             @version,

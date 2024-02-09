@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class ChannelList < ListResource
+                
                     ##
                     # Initialize the ChannelList
                     # @param [Version] version Version that contains the resource
@@ -52,6 +53,7 @@ module Twilio
                             'Type' => type,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ChannelInstance.new(
                             @version,
@@ -185,6 +187,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -193,6 +196,7 @@ module Twilio
                     # @return [ChannelInstance] Fetched ChannelInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ChannelInstance.new(
                             @version,
@@ -220,6 +224,7 @@ module Twilio
                             'Attributes' => attributes,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ChannelInstance.new(
                             @version,

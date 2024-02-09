@@ -20,6 +20,7 @@ module Twilio
                 class PlayerStreamerContext < InstanceContext
 
                      class PlaybackGrantList < ListResource
+                
                     ##
                     # Initialize the PlaybackGrantList
                     # @param [Version] version Version that contains the resource
@@ -71,6 +72,7 @@ module Twilio
                             'AccessControlAllowOrigin' => access_control_allow_origin,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         PlaybackGrantInstance.new(
                             @version,
@@ -84,6 +86,7 @@ module Twilio
                     # @return [PlaybackGrantInstance] Fetched PlaybackGrantInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         PlaybackGrantInstance.new(
                             @version,

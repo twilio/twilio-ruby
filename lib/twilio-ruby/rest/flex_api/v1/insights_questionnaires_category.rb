@@ -18,6 +18,7 @@ module Twilio
         class FlexApi < FlexApiBase
             class V1 < Version
                 class InsightsQuestionnairesCategoryList < ListResource
+                
                     ##
                     # Initialize the InsightsQuestionnairesCategoryList
                     # @param [Version] version Version that contains the resource
@@ -43,6 +44,7 @@ module Twilio
                             'Name' => name,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         InsightsQuestionnairesCategoryInstance.new(
@@ -151,8 +153,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class InsightsQuestionnairesCategoryContext < InstanceContext
                     ##
                     # Initialize the InsightsQuestionnairesCategoryContext
@@ -176,6 +176,7 @@ module Twilio
                         authorization: :unset
                     )
 
+                        
                         headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
@@ -194,6 +195,7 @@ module Twilio
                             'Name' => name,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         InsightsQuestionnairesCategoryInstance.new(

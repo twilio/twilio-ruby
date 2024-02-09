@@ -18,6 +18,7 @@ module Twilio
         class Numbers < NumbersBase
             class V1 < Version
                 class BulkEligibilityList < ListResource
+                
                     ##
                     # Initialize the BulkEligibilityList
                     # @param [Version] version Version that contains the resource
@@ -26,9 +27,22 @@ module Twilio
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        
+                        @uri = "/HostedNumber/Eligibility/Bulk"
                         
                     end
+                    ##
+                    # Create the BulkEligibilityInstance
+                    # @return [BulkEligibilityInstance] Created BulkEligibilityInstance
+                    def create
+
+                        
+                        payload = @version.create('POST', @uri)
+                        BulkEligibilityInstance.new(
+                            @version,
+                            payload,
+                        )
+                    end
+
                 
 
 
@@ -39,8 +53,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class BulkEligibilityContext < InstanceContext
                     ##
                     # Initialize the BulkEligibilityContext
@@ -61,6 +73,7 @@ module Twilio
                     # @return [BulkEligibilityInstance] Fetched BulkEligibilityInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         BulkEligibilityInstance.new(
                             @version,

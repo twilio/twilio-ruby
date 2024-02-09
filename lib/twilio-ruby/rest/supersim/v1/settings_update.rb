@@ -18,6 +18,7 @@ module Twilio
         class Supersim < SupersimBase
             class V1 < Version
                 class SettingsUpdateList < ListResource
+                
                     ##
                     # Initialize the SettingsUpdateList
                     # @param [Version] version Version that contains the resource

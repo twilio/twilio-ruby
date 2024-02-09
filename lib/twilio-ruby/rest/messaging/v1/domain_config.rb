@@ -18,6 +18,7 @@ module Twilio
         class Messaging < MessagingBase
             class V1 < Version
                 class DomainConfigList < ListResource
+                
                     ##
                     # Initialize the DomainConfigList
                     # @param [Version] version Version that contains the resource
@@ -39,8 +40,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class DomainConfigContext < InstanceContext
                     ##
                     # Initialize the DomainConfigContext
@@ -61,6 +60,7 @@ module Twilio
                     # @return [DomainConfigInstance] Fetched DomainConfigInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         DomainConfigInstance.new(
                             @version,
@@ -90,6 +90,7 @@ module Twilio
                             'DisableHttps' => disable_https,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         DomainConfigInstance.new(
                             @version,

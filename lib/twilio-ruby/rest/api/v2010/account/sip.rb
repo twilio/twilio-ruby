@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class SipList < ListResource
+                
                     ##
                     # Initialize the SipList
                     # @param [Version] version Version that contains the resource

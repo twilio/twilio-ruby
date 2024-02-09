@@ -18,6 +18,7 @@ module Twilio
         class Trusthub < TrusthubBase
             class V1 < Version
                 class TrustProductsList < ListResource
+                
                     ##
                     # Initialize the TrustProductsList
                     # @param [Version] version Version that contains the resource
@@ -50,6 +51,7 @@ module Twilio
                             'StatusCallback' => status_callback,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         TrustProductsInstance.new(
                             @version,
@@ -192,6 +194,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -200,6 +203,7 @@ module Twilio
                     # @return [TrustProductsInstance] Fetched TrustProductsInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         TrustProductsInstance.new(
                             @version,
@@ -229,6 +233,7 @@ module Twilio
                             'Email' => email,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         TrustProductsInstance.new(
                             @version,

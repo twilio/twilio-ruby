@@ -18,6 +18,7 @@ module Twilio
         class Preview < PreviewBase
             class Wireless < Version
                 class RatePlanList < ListResource
+                
                     ##
                     # Initialize the RatePlanList
                     # @param [Version] version Version that contains the resource
@@ -68,6 +69,7 @@ module Twilio
                             'InternationalRoaming' => Twilio.serialize_list(international_roaming) { |e| e },
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         RatePlanInstance.new(
                             @version,
@@ -169,8 +171,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class RatePlanContext < InstanceContext
                     ##
                     # Initialize the RatePlanContext
@@ -191,6 +191,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -199,6 +200,7 @@ module Twilio
                     # @return [RatePlanInstance] Fetched RatePlanInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         RatePlanInstance.new(
                             @version,
@@ -222,6 +224,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         RatePlanInstance.new(
                             @version,

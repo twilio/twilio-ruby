@@ -21,6 +21,7 @@ module Twilio
                 class UserContext < InstanceContext
 
                      class UserChannelList < ListResource
+                
                     ##
                     # Initialize the UserChannelList
                     # @param [Version] version Version that contains the resource

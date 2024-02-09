@@ -18,6 +18,7 @@ module Twilio
         class FlexApi < FlexApiBase
             class V1 < Version
                 class WebChannelList < ListResource
+                
                     ##
                     # Initialize the WebChannelList
                     # @param [Version] version Version that contains the resource
@@ -56,6 +57,7 @@ module Twilio
                             'PreEngagementData' => pre_engagement_data,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         WebChannelInstance.new(
                             @version,
@@ -177,6 +179,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -185,6 +188,7 @@ module Twilio
                     # @return [WebChannelInstance] Fetched WebChannelInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         WebChannelInstance.new(
                             @version,
@@ -208,6 +212,7 @@ module Twilio
                             'PostEngagementData' => post_engagement_data,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         WebChannelInstance.new(
                             @version,

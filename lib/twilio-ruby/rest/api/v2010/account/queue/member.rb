@@ -21,6 +21,7 @@ module Twilio
                 class QueueContext < InstanceContext
 
                      class MemberList < ListResource
+                
                     ##
                     # Initialize the MemberList
                     # @param [Version] version Version that contains the resource
@@ -148,6 +149,7 @@ module Twilio
                     # @return [MemberInstance] Fetched MemberInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         MemberInstance.new(
                             @version,
@@ -173,6 +175,7 @@ module Twilio
                             'Method' => method,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         MemberInstance.new(
                             @version,

@@ -20,6 +20,7 @@ module Twilio
                 class WorkspaceContext < InstanceContext
 
                      class TaskQueueList < ListResource
+                
                     ##
                     # Initialize the TaskQueueList
                     # @param [Version] version Version that contains the resource
@@ -30,6 +31,7 @@ module Twilio
                         @solution = { workspace_sid: workspace_sid }
                         @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues"
                         # Components
+                        @bulk_real_time_statistics = nil
                         @statistics = nil
                     end
                     ##
@@ -59,6 +61,7 @@ module Twilio
                             'AssignmentActivitySid' => assignment_activity_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         TaskQueueInstance.new(
                             @version,
@@ -178,6 +181,13 @@ module Twilio
                     
 
                 ##
+                # Access the bulk_real_time_statistics
+                # @return [TaskQueueBulkRealTimeStatisticsList]
+                # @return [TaskQueueBulkRealTimeStatisticsContext]
+                def bulk_real_time_statistics
+                    @bulk_real_time_statistics ||= TaskQueueBulkRealTimeStatisticsList.new(@version, workspace_sid: @solution[:workspace_sid] )
+                end
+                ##
                 # Access the statistics
                 # @return [TaskQueuesStatisticsList]
                 # @return [TaskQueuesStatisticsContext]
@@ -216,6 +226,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -224,6 +235,7 @@ module Twilio
                     # @return [TaskQueueInstance] Fetched TaskQueueInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         TaskQueueInstance.new(
                             @version,
@@ -260,6 +272,7 @@ module Twilio
                             'TaskOrder' => task_order,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         TaskQueueInstance.new(
                             @version,

@@ -20,6 +20,7 @@ module Twilio
                 class InstalledAddOnContext < InstanceContext
 
                      class InstalledAddOnExtensionList < ListResource
+                
                     ##
                     # Initialize the InstalledAddOnExtensionList
                     # @param [Version] version Version that contains the resource
@@ -125,8 +126,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
                 class InstalledAddOnExtensionContext < InstanceContext
                     ##
                     # Initialize the InstalledAddOnExtensionContext
@@ -148,6 +147,7 @@ module Twilio
                     # @return [InstalledAddOnExtensionInstance] Fetched InstalledAddOnExtensionInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         InstalledAddOnExtensionInstance.new(
                             @version,
@@ -169,6 +169,7 @@ module Twilio
                             'Enabled' => enabled,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         InstalledAddOnExtensionInstance.new(
                             @version,

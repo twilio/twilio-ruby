@@ -21,6 +21,7 @@ module Twilio
                 class EntityContext < InstanceContext
 
                      class ChallengeList < ListResource
+                
                     ##
                     # Initialize the ChallengeList
                     # @param [Version] version Version that contains the resource
@@ -59,6 +60,7 @@ module Twilio
                             'AuthPayload' => auth_payload,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ChallengeInstance.new(
                             @version,
@@ -203,6 +205,7 @@ module Twilio
                     # @return [ChallengeInstance] Fetched ChallengeInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ChallengeInstance.new(
                             @version,
@@ -228,6 +231,7 @@ module Twilio
                             'Metadata' => Twilio.serialize_object(metadata),
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ChallengeInstance.new(
                             @version,

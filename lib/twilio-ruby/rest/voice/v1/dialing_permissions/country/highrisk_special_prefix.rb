@@ -21,6 +21,7 @@ module Twilio
                 class CountryContext < InstanceContext
 
                      class HighriskSpecialPrefixList < ListResource
+                
                     ##
                     # Initialize the HighriskSpecialPrefixList
                     # @param [Version] version Version that contains the resource

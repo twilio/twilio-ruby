@@ -87,6 +87,11 @@ module Twilio
                 @media ||= Media.new self
             end
             ##
+            # Access the PreviewMessaging Twilio Domain
+            def preview_messaging
+                @preview_messaging ||= PreviewMessaging.new self
+            end
+            ##
             # Access the Messaging Twilio Domain
             def messaging
                 @messaging ||= Messaging.new self
@@ -115,11 +120,6 @@ module Twilio
             # Access the Preview Twilio Domain
             def preview
                 @preview ||= Preview.new self
-            end
-            ##
-            # Access the Preview messaging Twilio Domain
-            def preview_messaging
-                @preview_messaging ||= PreviewMessaging.new self
             end
             ##
             # Access the Pricing Twilio Domain
@@ -224,7 +224,7 @@ module Twilio
             def available_phone_numbers(countryCode=:unset)
                 self.api.v2010.account.available_phone_numbers(countryCode)
             end
-
+            
             ##
             # @param [string] sid The SID of the Call resource to fetch.
 
@@ -273,8 +273,8 @@ module Twilio
             def messages(sid=:unset)
                 self.api.v2010.account.messages(sid)
             end
-
-
+            
+            
             ##
             # @param [string] sid The Twilio-provided string that uniquely identifies the Notification resource to fetch.
 
@@ -322,8 +322,8 @@ module Twilio
             def signing_keys(sid=:unset)
                 self.api.v2010.account.signing_keys(sid)
             end
-
-
+            
+            
             ##
             # @param [string] sid The Twilio-provided string that uniquely identifies the Transcription resource to fetch.
 
@@ -332,8 +332,8 @@ module Twilio
             def transcriptions(sid=:unset)
                 self.api.v2010.account.transcriptions(sid)
             end
-
-
+            
+            
 
             ##
             # Provide a user friendly representation

@@ -18,6 +18,7 @@ module Twilio
         class Verify < VerifyBase
             class V2 < Version
                 class FormList < ListResource
+                
                     ##
                     # Initialize the FormList
                     # @param [Version] version Version that contains the resource
@@ -39,8 +40,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class FormContext < InstanceContext
                     ##
                     # Initialize the FormContext
@@ -61,6 +60,7 @@ module Twilio
                     # @return [FormInstance] Fetched FormInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         FormInstance.new(
                             @version,
