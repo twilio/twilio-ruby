@@ -18,6 +18,7 @@ module Twilio
         class Conversations < ConversationsBase
             class V1 < Version
                 class ParticipantConversationList < ListResource
+                
                     ##
                     # Initialize the ParticipantConversationList
                     # @param [Version] version Version that contains the resource

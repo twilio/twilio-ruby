@@ -20,6 +20,7 @@ module Twilio
                 class RegulatoryComplianceList < ListResource
 
                      class EndUserTypeList < ListResource
+                
                     ##
                     # Initialize the EndUserTypeList
                     # @param [Version] version Version that contains the resource
@@ -145,6 +146,7 @@ module Twilio
                     # @return [EndUserTypeInstance] Fetched EndUserTypeInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         EndUserTypeInstance.new(
                             @version,

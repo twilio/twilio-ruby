@@ -20,6 +20,7 @@ module Twilio
                 class WorkspaceContext < InstanceContext
 
                      class TaskChannelList < ListResource
+                
                     ##
                     # Initialize the TaskChannelList
                     # @param [Version] version Version that contains the resource
@@ -49,6 +50,7 @@ module Twilio
                             'ChannelOptimizedRouting' => channel_optimized_routing,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         TaskChannelInstance.new(
                             @version,
@@ -172,6 +174,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -180,6 +183,7 @@ module Twilio
                     # @return [TaskChannelInstance] Fetched TaskChannelInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         TaskChannelInstance.new(
                             @version,
@@ -204,6 +208,7 @@ module Twilio
                             'ChannelOptimizedRouting' => channel_optimized_routing,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         TaskChannelInstance.new(
                             @version,

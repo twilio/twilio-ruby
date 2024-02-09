@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class PhoneNumberList < ListResource
+                
                     ##
                     # Initialize the PhoneNumberList
                     # @param [Version] version Version that contains the resource
@@ -49,6 +50,7 @@ module Twilio
                             'IsReserved' => is_reserved,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         PhoneNumberInstance.new(
                             @version,
@@ -174,6 +176,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -182,6 +185,7 @@ module Twilio
                     # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         PhoneNumberInstance.new(
                             @version,
@@ -203,6 +207,7 @@ module Twilio
                             'IsReserved' => is_reserved,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         PhoneNumberInstance.new(
                             @version,

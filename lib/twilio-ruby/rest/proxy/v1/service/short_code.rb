@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class ShortCodeList < ListResource
+                
                     ##
                     # Initialize the ShortCodeList
                     # @param [Version] version Version that contains the resource
@@ -33,7 +34,7 @@ module Twilio
                     end
                     ##
                     # Create the ShortCodeInstance
-                    # @param [String] sid The SID of a Twilio [ShortCode](https://www.twilio.com/docs/sms/api/short-code) resource that represents the short code you would like to assign to your Proxy Service.
+                    # @param [String] sid The SID of a Twilio [ShortCode](https://www.twilio.com/en-us/messaging/channels/sms/short-codes) resource that represents the short code you would like to assign to your Proxy Service.
                     # @return [ShortCodeInstance] Created ShortCodeInstance
                     def create(
                         sid: nil
@@ -43,6 +44,7 @@ module Twilio
                             'Sid' => sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ShortCodeInstance.new(
                             @version,
@@ -168,6 +170,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -176,6 +179,7 @@ module Twilio
                     # @return [ShortCodeInstance] Fetched ShortCodeInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ShortCodeInstance.new(
                             @version,
@@ -197,6 +201,7 @@ module Twilio
                             'IsReserved' => is_reserved,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ShortCodeInstance.new(
                             @version,

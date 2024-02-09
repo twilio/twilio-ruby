@@ -18,6 +18,7 @@ module Twilio
         class Numbers < NumbersBase
             class V1 < Version
                 class PortingBulkPortabilityList < ListResource
+                
                     ##
                     # Initialize the PortingBulkPortabilityList
                     # @param [Version] version Version that contains the resource
@@ -41,6 +42,7 @@ module Twilio
                             'PhoneNumbers' => Twilio.serialize_list(phone_numbers) { |e| e },
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         PortingBulkPortabilityInstance.new(
                             @version,
@@ -80,6 +82,7 @@ module Twilio
                     # @return [PortingBulkPortabilityInstance] Fetched PortingBulkPortabilityInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         PortingBulkPortabilityInstance.new(
                             @version,

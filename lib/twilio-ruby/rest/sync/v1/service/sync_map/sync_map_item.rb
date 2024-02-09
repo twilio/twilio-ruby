@@ -21,6 +21,7 @@ module Twilio
                 class SyncMapContext < InstanceContext
 
                      class SyncMapItemList < ListResource
+                
                     ##
                     # Initialize the SyncMapItemList
                     # @param [Version] version Version that contains the resource
@@ -56,6 +57,7 @@ module Twilio
                             'CollectionTtl' => collection_ttl,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         SyncMapItemInstance.new(
                             @version,
@@ -202,6 +204,7 @@ module Twilio
                         if_match: :unset
                     )
 
+                        
                         headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
@@ -211,6 +214,7 @@ module Twilio
                     # @return [SyncMapItemInstance] Fetched SyncMapItemInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SyncMapItemInstance.new(
                             @version,
@@ -244,6 +248,7 @@ module Twilio
                             'CollectionTtl' => collection_ttl,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         SyncMapItemInstance.new(

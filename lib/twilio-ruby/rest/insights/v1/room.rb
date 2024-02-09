@@ -18,6 +18,7 @@ module Twilio
         class Insights < InsightsBase
             class V1 < Version
                 class RoomList < ListResource
+                
                     ##
                     # Initialize the RoomList
                     # @param [Version] version Version that contains the resource
@@ -178,6 +179,7 @@ module Twilio
                     # @return [RoomInstance] Fetched RoomInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         RoomInstance.new(
                             @version,

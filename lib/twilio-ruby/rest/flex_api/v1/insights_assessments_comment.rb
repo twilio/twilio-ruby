@@ -18,6 +18,7 @@ module Twilio
         class FlexApi < FlexApiBase
             class V1 < Version
                 class InsightsAssessmentsCommentList < ListResource
+                
                     ##
                     # Initialize the InsightsAssessmentsCommentList
                     # @param [Version] version Version that contains the resource
@@ -58,6 +59,7 @@ module Twilio
                             'Offset' => offset,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         InsightsAssessmentsCommentInstance.new(

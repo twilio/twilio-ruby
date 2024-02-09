@@ -21,6 +21,7 @@ module Twilio
                 class UserContext < InstanceContext
 
                      class UserChannelList < ListResource
+                
                     ##
                     # Initialize the UserChannelList
                     # @param [Version] version Version that contains the resource
@@ -151,6 +152,7 @@ module Twilio
                         x_twilio_webhook_enabled: :unset
                     )
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
@@ -160,6 +162,7 @@ module Twilio
                     # @return [UserChannelInstance] Fetched UserChannelInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         UserChannelInstance.new(
                             @version,
@@ -188,6 +191,7 @@ module Twilio
                             'LastConsumptionTimestamp' => Twilio.serialize_iso8601_datetime(last_consumption_timestamp),
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         UserChannelInstance.new(
                             @version,

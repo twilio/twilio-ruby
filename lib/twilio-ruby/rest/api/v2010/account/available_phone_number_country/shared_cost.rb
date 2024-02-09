@@ -21,6 +21,7 @@ module Twilio
                 class AvailablePhoneNumberCountryContext < InstanceContext
 
                      class SharedCostList < ListResource
+                
                     ##
                     # Initialize the SharedCostList
                     # @param [Version] version Version that contains the resource

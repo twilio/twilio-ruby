@@ -20,6 +20,7 @@ module Twilio
                 class DeviceContext < InstanceContext
 
                      class DeviceConfigList < ListResource
+                
                     ##
                     # Initialize the DeviceConfigList
                     # @param [Version] version Version that contains the resource
@@ -46,6 +47,7 @@ module Twilio
                             'Value' => value,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         DeviceConfigInstance.new(
                             @version,
@@ -171,6 +173,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -179,6 +182,7 @@ module Twilio
                     # @return [DeviceConfigInstance] Fetched DeviceConfigInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         DeviceConfigInstance.new(
                             @version,
@@ -200,6 +204,7 @@ module Twilio
                             'Value' => value,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         DeviceConfigInstance.new(
                             @version,

@@ -18,6 +18,7 @@ module Twilio
         class Bulkexports < BulkexportsBase
             class V1 < Version
                 class ExportConfigurationList < ListResource
+                
                     ##
                     # Initialize the ExportConfigurationList
                     # @param [Version] version Version that contains the resource
@@ -59,6 +60,7 @@ module Twilio
                     # @return [ExportConfigurationInstance] Fetched ExportConfigurationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ExportConfigurationInstance.new(
                             @version,
@@ -85,6 +87,7 @@ module Twilio
                             'WebhookMethod' => webhook_method,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ExportConfigurationInstance.new(
                             @version,

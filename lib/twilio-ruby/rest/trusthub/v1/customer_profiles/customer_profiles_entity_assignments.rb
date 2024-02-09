@@ -20,6 +20,7 @@ module Twilio
                 class CustomerProfilesContext < InstanceContext
 
                      class CustomerProfilesEntityAssignmentsList < ListResource
+                
                     ##
                     # Initialize the CustomerProfilesEntityAssignmentsList
                     # @param [Version] version Version that contains the resource
@@ -43,6 +44,7 @@ module Twilio
                             'ObjectSid' => object_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         CustomerProfilesEntityAssignmentsInstance.new(
                             @version,
@@ -166,6 +168,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -174,6 +177,7 @@ module Twilio
                     # @return [CustomerProfilesEntityAssignmentsInstance] Fetched CustomerProfilesEntityAssignmentsInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CustomerProfilesEntityAssignmentsInstance.new(
                             @version,

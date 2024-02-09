@@ -18,6 +18,7 @@ module Twilio
         class Content < ContentBase
             class V1 < Version
                 class ContentAndApprovalsList < ListResource
+                
                     ##
                     # Initialize the ContentAndApprovalsList
                     # @param [Version] version Version that contains the resource
@@ -221,7 +222,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] The [Content types](https://www.twilio.com/docs/content-api/content-types-overview) (e.g. twilio/text) for this Content resource.
+                    # @return [Hash] The [Content types](https://www.twilio.com/docs/content/content-types-overview) (e.g. twilio/text) for this Content resource.
                     def types
                         @properties['types']
                     end

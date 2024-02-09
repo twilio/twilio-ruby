@@ -22,6 +22,7 @@ module Twilio
                 class IpAccessControlListContext < InstanceContext
 
                      class IpAddressList < ListResource
+                
                     ##
                     # Initialize the IpAddressList
                     # @param [Version] version Version that contains the resource
@@ -51,6 +52,7 @@ module Twilio
                             'CidrPrefixLength' => cidr_prefix_length,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         IpAddressInstance.new(
                             @version,
@@ -176,6 +178,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -184,6 +187,7 @@ module Twilio
                     # @return [IpAddressInstance] Fetched IpAddressInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         IpAddressInstance.new(
                             @version,
@@ -212,6 +216,7 @@ module Twilio
                             'CidrPrefixLength' => cidr_prefix_length,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         IpAddressInstance.new(
                             @version,

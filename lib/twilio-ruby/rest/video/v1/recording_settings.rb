@@ -18,6 +18,7 @@ module Twilio
         class Video < VideoBase
             class V1 < Version
                 class RecordingSettingsList < ListResource
+                
                     ##
                     # Initialize the RecordingSettingsList
                     # @param [Version] version Version that contains the resource
@@ -58,7 +59,7 @@ module Twilio
                     # @param [String] friendly_name A descriptive string that you create to describe the resource and be shown to users in the console
                     # @param [String] aws_credentials_sid The SID of the stored Credential resource.
                     # @param [String] encryption_key_sid The SID of the Public Key resource to use for encryption.
-                    # @param [String] aws_s3_url The URL of the AWS S3 bucket where the recordings should be stored. We only support DNS-compliant URLs like `https://documentation-example-twilio-bucket/recordings`, where `recordings` is the path in which you want the recordings to be stored. This URL accepts only URI-valid characters, as described in the <a href='https://tools.ietf.org/html/rfc3986#section-2'>RFC 3986</a>.
+                    # @param [String] aws_s3_url The URL of the AWS S3 bucket where the recordings should be stored. We only support DNS-compliant URLs like `https://documentation-example-twilio-bucket/recordings`, where `recordings` is the path in which you want the recordings to be stored. This URL accepts only URI-valid characters, as described in the [RFC 3986](https://tools.ietf.org/html/rfc3986#section-2).
                     # @param [Boolean] aws_storage_enabled Whether all recordings should be written to the `aws_s3_url`. When `false`, all recordings are stored in our cloud.
                     # @param [Boolean] encryption_enabled Whether all recordings should be stored in an encrypted form. The default is `false`.
                     # @return [RecordingSettingsInstance] Created RecordingSettingsInstance
@@ -80,6 +81,7 @@ module Twilio
                             'EncryptionEnabled' => encryption_enabled,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         RecordingSettingsInstance.new(
                             @version,
@@ -92,6 +94,7 @@ module Twilio
                     # @return [RecordingSettingsInstance] Fetched RecordingSettingsInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         RecordingSettingsInstance.new(
                             @version,
@@ -203,7 +206,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The URL of the AWS S3 bucket where the recordings are stored. We only support DNS-compliant URLs like `https://documentation-example-twilio-bucket/recordings`, where `recordings` is the path in which you want the recordings to be stored. This URL accepts only URI-valid characters, as described in the <a href='https://tools.ietf.org/html/rfc3986#section-2'>RFC 3986</a>.
+                    # @return [String] The URL of the AWS S3 bucket where the recordings are stored. We only support DNS-compliant URLs like `https://documentation-example-twilio-bucket/recordings`, where `recordings` is the path in which you want the recordings to be stored. This URL accepts only URI-valid characters, as described in the [RFC 3986](https://tools.ietf.org/html/rfc3986#section-2).
                     def aws_s3_url
                         @properties['aws_s3_url']
                     end
@@ -237,7 +240,7 @@ module Twilio
                     # @param [String] friendly_name A descriptive string that you create to describe the resource and be shown to users in the console
                     # @param [String] aws_credentials_sid The SID of the stored Credential resource.
                     # @param [String] encryption_key_sid The SID of the Public Key resource to use for encryption.
-                    # @param [String] aws_s3_url The URL of the AWS S3 bucket where the recordings should be stored. We only support DNS-compliant URLs like `https://documentation-example-twilio-bucket/recordings`, where `recordings` is the path in which you want the recordings to be stored. This URL accepts only URI-valid characters, as described in the <a href='https://tools.ietf.org/html/rfc3986#section-2'>RFC 3986</a>.
+                    # @param [String] aws_s3_url The URL of the AWS S3 bucket where the recordings should be stored. We only support DNS-compliant URLs like `https://documentation-example-twilio-bucket/recordings`, where `recordings` is the path in which you want the recordings to be stored. This URL accepts only URI-valid characters, as described in the [RFC 3986](https://tools.ietf.org/html/rfc3986#section-2).
                     # @param [Boolean] aws_storage_enabled Whether all recordings should be written to the `aws_s3_url`. When `false`, all recordings are stored in our cloud.
                     # @param [Boolean] encryption_enabled Whether all recordings should be stored in an encrypted form. The default is `false`.
                     # @return [RecordingSettingsInstance] Created RecordingSettingsInstance

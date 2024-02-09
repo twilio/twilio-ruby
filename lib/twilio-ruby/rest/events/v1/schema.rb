@@ -18,6 +18,7 @@ module Twilio
         class Events < EventsBase
             class V1 < Version
                 class SchemaList < ListResource
+                
                     ##
                     # Initialize the SchemaList
                     # @param [Version] version Version that contains the resource
@@ -39,8 +40,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class SchemaContext < InstanceContext
                     ##
                     # Initialize the SchemaContext
@@ -62,6 +61,7 @@ module Twilio
                     # @return [SchemaInstance] Fetched SchemaInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SchemaInstance.new(
                             @version,

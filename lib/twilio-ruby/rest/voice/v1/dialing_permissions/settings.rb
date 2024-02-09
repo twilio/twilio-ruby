@@ -20,6 +20,7 @@ module Twilio
                 class DialingPermissionsList < ListResource
 
                      class SettingsList < ListResource
+                
                     ##
                     # Initialize the SettingsList
                     # @param [Version] version Version that contains the resource
@@ -62,6 +63,7 @@ module Twilio
                     # @return [SettingsInstance] Fetched SettingsInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SettingsInstance.new(
                             @version,
@@ -81,6 +83,7 @@ module Twilio
                             'DialingPermissionsInheritance' => dialing_permissions_inheritance,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SettingsInstance.new(
                             @version,

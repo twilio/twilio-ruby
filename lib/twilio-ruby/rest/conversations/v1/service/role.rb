@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class RoleList < ListResource
+                
                     ##
                     # Initialize the RoleList
                     # @param [Version] version Version that contains the resource
@@ -49,6 +50,7 @@ module Twilio
                             'Permission' => Twilio.serialize_list(permission) { |e| e },
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         RoleInstance.new(
                             @version,
@@ -172,6 +174,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -180,6 +183,7 @@ module Twilio
                     # @return [RoleInstance] Fetched RoleInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         RoleInstance.new(
                             @version,
@@ -201,6 +205,7 @@ module Twilio
                             'Permission' => Twilio.serialize_list(permission) { |e| e },
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         RoleInstance.new(
                             @version,

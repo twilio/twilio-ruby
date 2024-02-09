@@ -18,6 +18,7 @@ module Twilio
         class Preview < PreviewBase
             class DeployedDevices < Version
                 class FleetList < ListResource
+                
                     ##
                     # Initialize the FleetList
                     # @param [Version] version Version that contains the resource
@@ -41,6 +42,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         FleetInstance.new(
                             @version,
@@ -158,16 +160,17 @@ module Twilio
                         @uri = "/Fleets/#{@solution[:sid]}"
 
                         # Dependents
+                        @certificates = nil
                         @devices = nil
                         @keys = nil
                         @deployments = nil
-                        @certificates = nil
                     end
                     ##
                     # Delete the FleetInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -176,6 +179,7 @@ module Twilio
                     # @return [FleetInstance] Fetched FleetInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         FleetInstance.new(
                             @version,
@@ -199,6 +203,7 @@ module Twilio
                             'DefaultDeploymentSid' => default_deployment_sid,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         FleetInstance.new(
                             @version,
@@ -207,6 +212,25 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Access the certificates
+                    # @return [CertificateList]
+                    # @return [CertificateContext] if sid was passed.
+                    def certificates(sid=:unset)
+
+                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+                        if sid != :unset
+                            return CertificateContext.new(@version, @solution[:sid],sid )
+                        end
+
+                        unless @certificates
+                            @certificates = CertificateList.new(
+                                @version, fleet_sid: @solution[:sid], )
+                        end
+
+                     @certificates
+                    end
                     ##
                     # Access the devices
                     # @return [DeviceList]
@@ -263,25 +287,6 @@ module Twilio
                         end
 
                      @deployments
-                    end
-                    ##
-                    # Access the certificates
-                    # @return [CertificateList]
-                    # @return [CertificateContext] if sid was passed.
-                    def certificates(sid=:unset)
-
-                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-                        if sid != :unset
-                            return CertificateContext.new(@version, @solution[:sid],sid )
-                        end
-
-                        unless @certificates
-                            @certificates = CertificateList.new(
-                                @version, fleet_sid: @solution[:sid], )
-                        end
-
-                     @certificates
                     end
 
                     ##
@@ -456,6 +461,13 @@ module Twilio
                     end
 
                     ##
+                    # Access the certificates
+                    # @return [certificates] certificates
+                    def certificates
+                        context.certificates
+                    end
+
+                    ##
                     # Access the devices
                     # @return [devices] devices
                     def devices
@@ -474,13 +486,6 @@ module Twilio
                     # @return [deployments] deployments
                     def deployments
                         context.deployments
-                    end
-
-                    ##
-                    # Access the certificates
-                    # @return [certificates] certificates
-                    def certificates
-                        context.certificates
                     end
 
                     ##

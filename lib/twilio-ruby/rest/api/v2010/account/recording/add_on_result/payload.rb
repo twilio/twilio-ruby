@@ -22,6 +22,7 @@ module Twilio
                 class AddOnResultContext < InstanceContext
 
                      class PayloadList < ListResource
+                
                     ##
                     # Initialize the PayloadList
                     # @param [Version] version Version that contains the resource
@@ -150,6 +151,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -158,6 +160,7 @@ module Twilio
                     # @return [PayloadInstance] Fetched PayloadInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         PayloadInstance.new(
                             @version,

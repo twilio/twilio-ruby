@@ -18,6 +18,7 @@ module Twilio
         class FlexApi < FlexApiBase
             class V1 < Version
                 class InsightsSettingsCommentList < ListResource
+                
                     ##
                     # Initialize the InsightsSettingsCommentList
                     # @param [Version] version Version that contains the resource
@@ -37,6 +38,7 @@ module Twilio
                         authorization: :unset
                     )
 
+                        
                         headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.fetch('GET', @uri, headers: headers)
                         InsightsSettingsCommentInstance.new(

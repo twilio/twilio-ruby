@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class ConferenceList < ListResource
+                
                     ##
                     # Initialize the ConferenceList
                     # @param [Version] version Version that contains the resource
@@ -196,6 +197,7 @@ module Twilio
                     # @return [ConferenceInstance] Fetched ConferenceInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ConferenceInstance.new(
                             @version,
@@ -223,6 +225,7 @@ module Twilio
                             'AnnounceMethod' => announce_method,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ConferenceInstance.new(
                             @version,

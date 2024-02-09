@@ -21,6 +21,7 @@ module Twilio
                 class ExecutionContext < InstanceContext
 
                      class ExecutionStepList < ListResource
+                
                     ##
                     # Initialize the ExecutionStepList
                     # @param [Version] version Version that contains the resource
@@ -149,6 +150,7 @@ module Twilio
                     # @return [ExecutionStepInstance] Fetched ExecutionStepInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ExecutionStepInstance.new(
                             @version,

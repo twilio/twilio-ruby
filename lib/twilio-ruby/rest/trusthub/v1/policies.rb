@@ -18,6 +18,7 @@ module Twilio
         class Trusthub < TrusthubBase
             class V1 < Version
                 class PoliciesList < ListResource
+                
                     ##
                     # Initialize the PoliciesList
                     # @param [Version] version Version that contains the resource
@@ -143,6 +144,7 @@ module Twilio
                     # @return [PoliciesInstance] Fetched PoliciesInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         PoliciesInstance.new(
                             @version,

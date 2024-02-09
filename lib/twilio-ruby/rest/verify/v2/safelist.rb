@@ -18,6 +18,7 @@ module Twilio
         class Verify < VerifyBase
             class V2 < Version
                 class SafelistList < ListResource
+                
                     ##
                     # Initialize the SafelistList
                     # @param [Version] version Version that contains the resource
@@ -41,6 +42,7 @@ module Twilio
                             'PhoneNumber' => phone_number,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         SafelistInstance.new(
                             @version,
@@ -80,6 +82,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -88,6 +91,7 @@ module Twilio
                     # @return [SafelistInstance] Fetched SafelistInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SafelistInstance.new(
                             @version,

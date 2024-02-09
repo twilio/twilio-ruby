@@ -21,6 +21,7 @@ module Twilio
                 class SyncMapContext < InstanceContext
 
                      class SyncMapPermissionList < ListResource
+                
                     ##
                     # Initialize the SyncMapPermissionList
                     # @param [Version] version Version that contains the resource
@@ -150,6 +151,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -158,6 +160,7 @@ module Twilio
                     # @return [SyncMapPermissionInstance] Fetched SyncMapPermissionInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SyncMapPermissionInstance.new(
                             @version,
@@ -186,6 +189,7 @@ module Twilio
                             'Manage' => manage,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SyncMapPermissionInstance.new(
                             @version,

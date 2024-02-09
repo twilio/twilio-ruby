@@ -18,6 +18,7 @@ module Twilio
         class Video < VideoBase
             class V1 < Version
                 class RecordingList < ListResource
+                
                     ##
                     # Initialize the RecordingList
                     # @param [Version] version Version that contains the resource
@@ -180,6 +181,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -188,6 +190,7 @@ module Twilio
                     # @return [RecordingInstance] Fetched RecordingInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         RecordingInstance.new(
                             @version,

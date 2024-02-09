@@ -22,6 +22,7 @@ module Twilio
                 class MessageContext < InstanceContext
 
                      class DeliveryReceiptList < ListResource
+                
                     ##
                     # Initialize the DeliveryReceiptList
                     # @param [Version] version Version that contains the resource
@@ -150,6 +151,7 @@ module Twilio
                     # @return [DeliveryReceiptInstance] Fetched DeliveryReceiptInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         DeliveryReceiptInstance.new(
                             @version,

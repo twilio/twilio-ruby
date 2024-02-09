@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class ShortCodeList < ListResource
+                
                     ##
                     # Initialize the ShortCodeList
                     # @param [Version] version Version that contains the resource
@@ -43,6 +44,7 @@ module Twilio
                             'ShortCodeSid' => short_code_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ShortCodeInstance.new(
                             @version,
@@ -168,6 +170,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -176,6 +179,7 @@ module Twilio
                     # @return [ShortCodeInstance] Fetched ShortCodeInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ShortCodeInstance.new(
                             @version,

@@ -22,6 +22,7 @@ module Twilio
                 class ChallengeContext < InstanceContext
 
                      class NotificationList < ListResource
+                
                     ##
                     # Initialize the NotificationList
                     # @param [Version] version Version that contains the resource
@@ -45,6 +46,7 @@ module Twilio
                             'Ttl' => ttl,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         NotificationInstance.new(
                             @version,

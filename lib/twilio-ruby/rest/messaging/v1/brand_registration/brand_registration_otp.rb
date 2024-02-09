@@ -20,6 +20,7 @@ module Twilio
                 class BrandRegistrationContext < InstanceContext
 
                      class BrandRegistrationOtpList < ListResource
+                
                     ##
                     # Initialize the BrandRegistrationOtpList
                     # @param [Version] version Version that contains the resource
@@ -36,6 +37,7 @@ module Twilio
                     # @return [BrandRegistrationOtpInstance] Created BrandRegistrationOtpInstance
                     def create
 
+                        
                         payload = @version.create('POST', @uri)
                         BrandRegistrationOtpInstance.new(
                             @version,

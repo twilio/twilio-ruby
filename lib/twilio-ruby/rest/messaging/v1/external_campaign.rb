@@ -18,6 +18,7 @@ module Twilio
         class Messaging < MessagingBase
             class V1 < Version
                 class ExternalCampaignList < ListResource
+                
                     ##
                     # Initialize the ExternalCampaignList
                     # @param [Version] version Version that contains the resource
@@ -44,6 +45,7 @@ module Twilio
                             'MessagingServiceSid' => messaging_service_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ExternalCampaignInstance.new(
                             @version,

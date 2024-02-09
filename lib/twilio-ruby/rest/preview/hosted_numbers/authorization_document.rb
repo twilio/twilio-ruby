@@ -18,6 +18,7 @@ module Twilio
         class Preview < PreviewBase
             class HostedNumbers < Version
                 class AuthorizationDocumentList < ListResource
+                
                     ##
                     # Initialize the AuthorizationDocumentList
                     # @param [Version] version Version that contains the resource
@@ -56,6 +57,7 @@ module Twilio
                             'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         AuthorizationDocumentInstance.new(
                             @version,
@@ -192,6 +194,7 @@ module Twilio
                     # @return [AuthorizationDocumentInstance] Fetched AuthorizationDocumentInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AuthorizationDocumentInstance.new(
                             @version,
@@ -230,6 +233,7 @@ module Twilio
                             'ContactPhoneNumber' => contact_phone_number,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         AuthorizationDocumentInstance.new(
                             @version,

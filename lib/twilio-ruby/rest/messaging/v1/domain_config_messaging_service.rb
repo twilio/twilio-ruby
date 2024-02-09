@@ -18,6 +18,7 @@ module Twilio
         class Messaging < MessagingBase
             class V1 < Version
                 class DomainConfigMessagingServiceList < ListResource
+                
                     ##
                     # Initialize the DomainConfigMessagingServiceList
                     # @param [Version] version Version that contains the resource
@@ -61,6 +62,7 @@ module Twilio
                     # @return [DomainConfigMessagingServiceInstance] Fetched DomainConfigMessagingServiceInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         DomainConfigMessagingServiceInstance.new(
                             @version,

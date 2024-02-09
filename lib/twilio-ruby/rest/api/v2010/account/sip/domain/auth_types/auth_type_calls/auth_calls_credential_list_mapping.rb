@@ -24,6 +24,7 @@ module Twilio
                 class AuthTypeCallsList < ListResource
 
                      class AuthCallsCredentialListMappingList < ListResource
+                
                     ##
                     # Initialize the AuthCallsCredentialListMappingList
                     # @param [Version] version Version that contains the resource
@@ -47,6 +48,7 @@ module Twilio
                             'CredentialListSid' => credential_list_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         AuthCallsCredentialListMappingInstance.new(
                             @version,
@@ -172,6 +174,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -180,6 +183,7 @@ module Twilio
                     # @return [AuthCallsCredentialListMappingInstance] Fetched AuthCallsCredentialListMappingInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AuthCallsCredentialListMappingInstance.new(
                             @version,

@@ -21,6 +21,7 @@ module Twilio
                 class IncomingPhoneNumberContext < InstanceContext
 
                      class AssignedAddOnList < ListResource
+                
                     ##
                     # Initialize the AssignedAddOnList
                     # @param [Version] version Version that contains the resource
@@ -44,6 +45,7 @@ module Twilio
                             'InstalledAddOnSid' => installed_add_on_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         AssignedAddOnInstance.new(
                             @version,
@@ -172,6 +174,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -180,6 +183,7 @@ module Twilio
                     # @return [AssignedAddOnInstance] Fetched AssignedAddOnInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AssignedAddOnInstance.new(
                             @version,

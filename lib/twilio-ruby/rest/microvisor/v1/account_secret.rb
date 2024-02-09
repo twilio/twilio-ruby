@@ -18,6 +18,7 @@ module Twilio
         class Microvisor < MicrovisorBase
             class V1 < Version
                 class AccountSecretList < ListResource
+                
                     ##
                     # Initialize the AccountSecretList
                     # @param [Version] version Version that contains the resource
@@ -44,6 +45,7 @@ module Twilio
                             'Value' => value,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         AccountSecretInstance.new(
                             @version,
@@ -167,6 +169,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -175,6 +178,7 @@ module Twilio
                     # @return [AccountSecretInstance] Fetched AccountSecretInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AccountSecretInstance.new(
                             @version,
@@ -195,6 +199,7 @@ module Twilio
                             'Value' => value,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         AccountSecretInstance.new(
                             @version,

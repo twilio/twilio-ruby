@@ -21,6 +21,7 @@ module Twilio
                 class CallContext < InstanceContext
 
                      class UserDefinedMessageSubscriptionList < ListResource
+                
                     ##
                     # Initialize the UserDefinedMessageSubscriptionList
                     # @param [Version] version Version that contains the resource
@@ -50,6 +51,7 @@ module Twilio
                             'Method' => method,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         UserDefinedMessageSubscriptionInstance.new(
                             @version,
@@ -91,6 +93,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 

@@ -18,6 +18,7 @@ module Twilio
         class Supersim < SupersimBase
             class V1 < Version
                 class IpCommandList < ListResource
+                
                     ##
                     # Initialize the IpCommandList
                     # @param [Version] version Version that contains the resource
@@ -56,6 +57,7 @@ module Twilio
                             'CallbackMethod' => callback_method,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         IpCommandInstance.new(
                             @version,
@@ -203,6 +205,7 @@ module Twilio
                     # @return [IpCommandInstance] Fetched IpCommandInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         IpCommandInstance.new(
                             @version,

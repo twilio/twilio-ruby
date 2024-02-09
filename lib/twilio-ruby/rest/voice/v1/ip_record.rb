@@ -18,6 +18,7 @@ module Twilio
         class Voice < VoiceBase
             class V1 < Version
                 class IpRecordList < ListResource
+                
                     ##
                     # Initialize the IpRecordList
                     # @param [Version] version Version that contains the resource
@@ -47,6 +48,7 @@ module Twilio
                             'CidrPrefixLength' => cidr_prefix_length,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         IpRecordInstance.new(
                             @version,
@@ -168,6 +170,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -176,6 +179,7 @@ module Twilio
                     # @return [IpRecordInstance] Fetched IpRecordInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         IpRecordInstance.new(
                             @version,
@@ -196,6 +200,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         IpRecordInstance.new(
                             @version,

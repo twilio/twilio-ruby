@@ -18,6 +18,7 @@ module Twilio
         class FlexApi < FlexApiBase
             class V1 < Version
                 class FlexFlowList < ListResource
+                
                     ##
                     # Initialize the FlexFlowList
                     # @param [Version] version Version that contains the resource
@@ -89,6 +90,7 @@ module Twilio
                             'Integration.RetryCount' => integration_retry_count,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         FlexFlowInstance.new(
                             @version,
@@ -216,6 +218,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -224,6 +227,7 @@ module Twilio
                     # @return [FlexFlowInstance] Fetched FlexFlowInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         FlexFlowInstance.new(
                             @version,
@@ -292,6 +296,7 @@ module Twilio
                             'Integration.RetryCount' => integration_retry_count,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         FlexFlowInstance.new(
                             @version,

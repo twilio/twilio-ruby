@@ -18,6 +18,7 @@ module Twilio
         class FrontlineApi < FrontlineApiBase
             class V1 < Version
                 class UserList < ListResource
+                
                     ##
                     # Initialize the UserList
                     # @param [Version] version Version that contains the resource
@@ -61,6 +62,7 @@ module Twilio
                     # @return [UserInstance] Fetched UserInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         UserInstance.new(
                             @version,
@@ -90,6 +92,7 @@ module Twilio
                             'IsAvailable' => is_available,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         UserInstance.new(
                             @version,

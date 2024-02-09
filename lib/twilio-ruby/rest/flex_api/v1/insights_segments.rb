@@ -18,6 +18,7 @@ module Twilio
         class FlexApi < FlexApiBase
             class V1 < Version
                 class InsightsSegmentsList < ListResource
+                
                     ##
                     # Initialize the InsightsSegmentsList
                     # @param [Version] version Version that contains the resource

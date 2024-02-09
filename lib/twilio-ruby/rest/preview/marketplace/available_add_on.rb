@@ -18,6 +18,7 @@ module Twilio
         class Preview < PreviewBase
             class Marketplace < Version
                 class AvailableAddOnList < ListResource
+                
                     ##
                     # Initialize the AvailableAddOnList
                     # @param [Version] version Version that contains the resource
@@ -146,6 +147,7 @@ module Twilio
                     # @return [AvailableAddOnInstance] Fetched AvailableAddOnInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AvailableAddOnInstance.new(
                             @version,

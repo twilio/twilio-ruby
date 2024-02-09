@@ -18,6 +18,7 @@ module Twilio
         class FlexApi < FlexApiBase
             class V1 < Version
                 class InteractionList < ListResource
+                
                     ##
                     # Initialize the InteractionList
                     # @param [Version] version Version that contains the resource
@@ -47,6 +48,7 @@ module Twilio
                             'InteractionContextSid' => interaction_context_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         InteractionInstance.new(
                             @version,
@@ -85,6 +87,7 @@ module Twilio
                     # @return [InteractionInstance] Fetched InteractionInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         InteractionInstance.new(
                             @version,

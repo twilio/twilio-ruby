@@ -18,6 +18,7 @@ module Twilio
         class Lookups < LookupsBase
             class V2 < Version
                 class PhoneNumberList < ListResource
+                
                     ##
                     # Initialize the PhoneNumberList
                     # @param [Version] version Version that contains the resource
@@ -103,6 +104,7 @@ module Twilio
                             'DateOfBirth' => date_of_birth,
                             'LastVerifiedDate' => last_verified_date,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         PhoneNumberInstance.new(
                             @version,

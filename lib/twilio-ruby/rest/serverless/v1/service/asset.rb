@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class AssetList < ListResource
+                
                     ##
                     # Initialize the AssetList
                     # @param [Version] version Version that contains the resource
@@ -43,6 +44,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         AssetInstance.new(
                             @version,
@@ -169,6 +171,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -177,6 +180,7 @@ module Twilio
                     # @return [AssetInstance] Fetched AssetInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AssetInstance.new(
                             @version,
@@ -198,6 +202,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         AssetInstance.new(
                             @version,

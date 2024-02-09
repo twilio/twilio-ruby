@@ -21,6 +21,7 @@ module Twilio
                 class CallList < ListResource
 
                      class FeedbackSummaryList < ListResource
+                
                     ##
                     # Initialize the FeedbackSummaryList
                     # @param [Version] version Version that contains the resource
@@ -56,6 +57,7 @@ module Twilio
                             'StatusCallbackMethod' => status_callback_method,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         FeedbackSummaryInstance.new(
                             @version,
@@ -95,6 +97,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -103,6 +106,7 @@ module Twilio
                     # @return [FeedbackSummaryInstance] Fetched FeedbackSummaryInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         FeedbackSummaryInstance.new(
                             @version,

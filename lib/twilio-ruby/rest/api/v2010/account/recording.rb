@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class RecordingList < ListResource
+                
                     ##
                     # Initialize the RecordingList
                     # @param [Version] version Version that contains the resource
@@ -184,6 +185,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -198,6 +200,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'IncludeSoftDeleted' => include_soft_deleted,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         RecordingInstance.new(
                             @version,

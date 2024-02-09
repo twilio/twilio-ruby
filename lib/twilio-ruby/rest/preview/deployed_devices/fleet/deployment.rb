@@ -20,6 +20,7 @@ module Twilio
                 class FleetContext < InstanceContext
 
                      class DeploymentList < ListResource
+                
                     ##
                     # Initialize the DeploymentList
                     # @param [Version] version Version that contains the resource
@@ -46,6 +47,7 @@ module Twilio
                             'SyncServiceSid' => sync_service_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         DeploymentInstance.new(
                             @version,
@@ -171,6 +173,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -179,6 +182,7 @@ module Twilio
                     # @return [DeploymentInstance] Fetched DeploymentInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         DeploymentInstance.new(
                             @version,
@@ -203,6 +207,7 @@ module Twilio
                             'SyncServiceSid' => sync_service_sid,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         DeploymentInstance.new(
                             @version,

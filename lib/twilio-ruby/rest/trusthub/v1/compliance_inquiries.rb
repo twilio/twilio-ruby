@@ -18,6 +18,7 @@ module Twilio
         class Trusthub < TrusthubBase
             class V1 < Version
                 class ComplianceInquiriesList < ListResource
+                
                     ##
                     # Initialize the ComplianceInquiriesList
                     # @param [Version] version Version that contains the resource
@@ -32,15 +33,19 @@ module Twilio
                     ##
                     # Create the ComplianceInquiriesInstance
                     # @param [String] primary_profile_sid The unique SID identifier of the Primary Customer Profile that should be used as a parent. Only necessary when creating a secondary Customer Profile.
+                    # @param [String] notification_email The email address that approval status updates will be sent to. If not specified, the email address associated with your primary customer profile will be used.
                     # @return [ComplianceInquiriesInstance] Created ComplianceInquiriesInstance
                     def create(
-                        primary_profile_sid: nil
+                        primary_profile_sid: nil, 
+                        notification_email: :unset
                     )
 
                         data = Twilio::Values.of({
                             'PrimaryProfileSid' => primary_profile_sid,
+                            'NotificationEmail' => notification_email,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ComplianceInquiriesInstance.new(
                             @version,
@@ -85,6 +90,7 @@ module Twilio
                             'PrimaryProfileSid' => primary_profile_sid,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ComplianceInquiriesInstance.new(
                             @version,

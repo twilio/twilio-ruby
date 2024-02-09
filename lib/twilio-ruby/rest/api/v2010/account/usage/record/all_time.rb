@@ -22,6 +22,7 @@ module Twilio
                 class RecordList < ListResource
 
                      class AllTimeList < ListResource
+                
                     ##
                     # Initialize the AllTimeList
                     # @param [Version] version Version that contains the resource

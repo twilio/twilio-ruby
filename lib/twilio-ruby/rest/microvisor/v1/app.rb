@@ -18,6 +18,7 @@ module Twilio
         class Microvisor < MicrovisorBase
             class V1 < Version
                 class AppList < ListResource
+                
                     ##
                     # Initialize the AppList
                     # @param [Version] version Version that contains the resource
@@ -146,6 +147,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -154,6 +156,7 @@ module Twilio
                     # @return [AppInstance] Fetched AppInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AppInstance.new(
                             @version,

@@ -20,6 +20,7 @@ module Twilio
                 class TrustProductsContext < InstanceContext
 
                      class TrustProductsChannelEndpointAssignmentList < ListResource
+                
                     ##
                     # Initialize the TrustProductsChannelEndpointAssignmentList
                     # @param [Version] version Version that contains the resource
@@ -46,6 +47,7 @@ module Twilio
                             'ChannelEndpointSid' => channel_endpoint_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         TrustProductsChannelEndpointAssignmentInstance.new(
                             @version,
@@ -181,6 +183,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -189,6 +192,7 @@ module Twilio
                     # @return [TrustProductsChannelEndpointAssignmentInstance] Fetched TrustProductsChannelEndpointAssignmentInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         TrustProductsChannelEndpointAssignmentInstance.new(
                             @version,

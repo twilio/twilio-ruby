@@ -18,6 +18,7 @@ module Twilio
         class Supersim < SupersimBase
             class V1 < Version
                 class SmsCommandList < ListResource
+                
                     ##
                     # Initialize the SmsCommandList
                     # @param [Version] version Version that contains the resource
@@ -50,6 +51,7 @@ module Twilio
                             'CallbackUrl' => callback_url,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         SmsCommandInstance.new(
                             @version,
@@ -191,6 +193,7 @@ module Twilio
                     # @return [SmsCommandInstance] Fetched SmsCommandInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SmsCommandInstance.new(
                             @version,

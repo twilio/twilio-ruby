@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class ApplicationList < ListResource
+                
                     ##
                     # Initialize the ApplicationList
                     # @param [Version] version Version that contains the resource
@@ -88,6 +89,7 @@ module Twilio
                             'PublicApplicationConnectEnabled' => public_application_connect_enabled,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ApplicationInstance.new(
                             @version,
@@ -217,6 +219,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -225,6 +228,7 @@ module Twilio
                     # @return [ApplicationInstance] Fetched ApplicationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ApplicationInstance.new(
                             @version,
@@ -291,6 +295,7 @@ module Twilio
                             'PublicApplicationConnectEnabled' => public_application_connect_enabled,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ApplicationInstance.new(
                             @version,

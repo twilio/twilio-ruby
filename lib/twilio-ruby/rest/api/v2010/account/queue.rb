@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class QueueList < ListResource
+                
                     ##
                     # Initialize the QueueList
                     # @param [Version] version Version that contains the resource
@@ -46,6 +47,7 @@ module Twilio
                             'MaxSize' => max_size,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         QueueInstance.new(
                             @version,
@@ -170,6 +172,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -178,6 +181,7 @@ module Twilio
                     # @return [QueueInstance] Fetched QueueInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         QueueInstance.new(
                             @version,
@@ -202,6 +206,7 @@ module Twilio
                             'MaxSize' => max_size,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         QueueInstance.new(
                             @version,

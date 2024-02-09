@@ -18,6 +18,7 @@ module Twilio
         class Messaging < MessagingBase
             class V1 < Version
                 class LinkshorteningMessagingServiceList < ListResource
+                
                     ##
                     # Initialize the LinkshorteningMessagingServiceList
                     # @param [Version] version Version that contains the resource
@@ -62,6 +63,7 @@ module Twilio
                     # @return [LinkshorteningMessagingServiceInstance] Created LinkshorteningMessagingServiceInstance
                     def create
 
+                        
                         payload = @version.create('POST', @uri)
                         LinkshorteningMessagingServiceInstance.new(
                             @version,
@@ -76,6 +78,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 

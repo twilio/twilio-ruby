@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class SyncStreamList < ListResource
+                
                     ##
                     # Initialize the SyncStreamList
                     # @param [Version] version Version that contains the resource
@@ -46,6 +47,7 @@ module Twilio
                             'Ttl' => ttl,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         SyncStreamInstance.new(
                             @version,
@@ -170,6 +172,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -178,6 +181,7 @@ module Twilio
                     # @return [SyncStreamInstance] Fetched SyncStreamInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SyncStreamInstance.new(
                             @version,
@@ -199,6 +203,7 @@ module Twilio
                             'Ttl' => ttl,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SyncStreamInstance.new(
                             @version,

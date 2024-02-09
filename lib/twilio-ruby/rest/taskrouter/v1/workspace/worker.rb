@@ -20,6 +20,7 @@ module Twilio
                 class WorkspaceContext < InstanceContext
 
                      class WorkerList < ListResource
+                
                     ##
                     # Initialize the WorkerList
                     # @param [Version] version Version that contains the resource
@@ -50,6 +51,7 @@ module Twilio
                             'Attributes' => attributes,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         WorkerInstance.new(
                             @version,
@@ -235,6 +237,7 @@ module Twilio
                         if_match: :unset
                     )
 
+                        
                         headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
@@ -244,6 +247,7 @@ module Twilio
                     # @return [WorkerInstance] Fetched WorkerInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         WorkerInstance.new(
                             @version,
@@ -276,6 +280,7 @@ module Twilio
                             'RejectPendingReservations' => reject_pending_reservations,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         WorkerInstance.new(

@@ -18,6 +18,7 @@ module Twilio
         class Pricing < PricingBase
             class V1 < Version
                 class MessagingList < ListResource
+                
                     ##
                     # Initialize the MessagingList
                     # @param [Version] version Version that contains the resource

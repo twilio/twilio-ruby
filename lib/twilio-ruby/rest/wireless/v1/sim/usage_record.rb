@@ -20,6 +20,7 @@ module Twilio
                 class SimContext < InstanceContext
 
                      class UsageRecordList < ListResource
+                
                     ##
                     # Initialize the UsageRecordList
                     # @param [Version] version Version that contains the resource

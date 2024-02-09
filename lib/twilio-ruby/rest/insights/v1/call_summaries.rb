@@ -18,6 +18,7 @@ module Twilio
         class Insights < InsightsBase
             class V1 < Version
                 class CallSummariesList < ListResource
+                
                     ##
                     # Initialize the CallSummariesList
                     # @param [Version] version Version that contains the resource

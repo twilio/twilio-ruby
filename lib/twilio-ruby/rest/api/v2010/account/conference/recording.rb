@@ -21,6 +21,7 @@ module Twilio
                 class ConferenceContext < InstanceContext
 
                      class RecordingList < ListResource
+                
                     ##
                     # Initialize the RecordingList
                     # @param [Version] version Version that contains the resource
@@ -166,6 +167,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -174,6 +176,7 @@ module Twilio
                     # @return [RecordingInstance] Fetched RecordingInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         RecordingInstance.new(
                             @version,
@@ -199,6 +202,7 @@ module Twilio
                             'PauseBehavior' => pause_behavior,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         RecordingInstance.new(
                             @version,

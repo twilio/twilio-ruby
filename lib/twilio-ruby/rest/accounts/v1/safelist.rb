@@ -18,6 +18,7 @@ module Twilio
         class Accounts < AccountsBase
             class V1 < Version
                 class SafelistList < ListResource
+                
                     ##
                     # Initialize the SafelistList
                     # @param [Version] version Version that contains the resource
@@ -41,6 +42,7 @@ module Twilio
                             'PhoneNumber' => phone_number,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         SafelistInstance.new(
                             @version,
@@ -59,6 +61,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'PhoneNumber' => phone_number,
                         })
+                        
                         @version.delete('DELETE', @uri, params: params)
                     end
 
@@ -73,6 +76,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'PhoneNumber' => phone_number,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         SafelistInstance.new(
                             @version,

@@ -22,6 +22,7 @@ module Twilio
                 class DomainContext < InstanceContext
 
                      class AuthTypesList < ListResource
+                
                     ##
                     # Initialize the AuthTypesList
                     # @param [Version] version Version that contains the resource

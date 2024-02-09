@@ -20,6 +20,7 @@ module Twilio
                 class FlowContext < InstanceContext
 
                      class FlowRevisionList < ListResource
+                
                     ##
                     # Initialize the FlowRevisionList
                     # @param [Version] version Version that contains the resource
@@ -146,6 +147,7 @@ module Twilio
                     # @return [FlowRevisionInstance] Fetched FlowRevisionInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         FlowRevisionInstance.new(
                             @version,

@@ -18,6 +18,7 @@ module Twilio
         class Preview < PreviewBase
             class Marketplace < Version
                 class InstalledAddOnList < ListResource
+                
                     ##
                     # Initialize the InstalledAddOnList
                     # @param [Version] version Version that contains the resource
@@ -50,6 +51,7 @@ module Twilio
                             'UniqueName' => unique_name,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         InstalledAddOnInstance.new(
                             @version,
@@ -174,6 +176,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -182,6 +185,7 @@ module Twilio
                     # @return [InstalledAddOnInstance] Fetched InstalledAddOnInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         InstalledAddOnInstance.new(
                             @version,
@@ -205,6 +209,7 @@ module Twilio
                             'UniqueName' => unique_name,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         InstalledAddOnInstance.new(
                             @version,

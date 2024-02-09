@@ -18,6 +18,7 @@ module Twilio
         class Numbers < NumbersBase
             class V2 < Version
                 class BulkHostedNumberOrderList < ListResource
+                
                     ##
                     # Initialize the BulkHostedNumberOrderList
                     # @param [Version] version Version that contains the resource
@@ -67,6 +68,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'OrderStatus' => order_status,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         BulkHostedNumberOrderInstance.new(
                             @version,

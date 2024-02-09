@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class BalanceList < ListResource
+                
                     ##
                     # Initialize the BalanceList
                     # @param [Version] version Version that contains the resource
@@ -36,6 +37,7 @@ module Twilio
                     # @return [BalanceInstance] Fetched BalanceInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         BalanceInstance.new(
                             @version,

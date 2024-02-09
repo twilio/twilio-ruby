@@ -20,6 +20,7 @@ module Twilio
                 class InstalledAddOnContext < InstanceContext
 
                      class InstalledAddOnExtensionList < ListResource
+                
                     ##
                     # Initialize the InstalledAddOnExtensionList
                     # @param [Version] version Version that contains the resource
@@ -148,6 +149,7 @@ module Twilio
                     # @return [InstalledAddOnExtensionInstance] Fetched InstalledAddOnExtensionInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         InstalledAddOnExtensionInstance.new(
                             @version,
@@ -169,6 +171,7 @@ module Twilio
                             'Enabled' => enabled,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         InstalledAddOnExtensionInstance.new(
                             @version,

@@ -22,6 +22,7 @@ module Twilio
                 class AssignedAddOnContext < InstanceContext
 
                      class AssignedAddOnExtensionList < ListResource
+                
                     ##
                     # Initialize the AssignedAddOnExtensionList
                     # @param [Version] version Version that contains the resource
@@ -152,6 +153,7 @@ module Twilio
                     # @return [AssignedAddOnExtensionInstance] Fetched AssignedAddOnExtensionInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AssignedAddOnExtensionInstance.new(
                             @version,

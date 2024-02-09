@@ -21,6 +21,7 @@ module Twilio
                 class EngagementContext < InstanceContext
 
                      class EngagementContextList < ListResource
+                
                     ##
                     # Initialize the EngagementContextList
                     # @param [Version] version Version that contains the resource
@@ -63,6 +64,7 @@ module Twilio
                     # @return [EngagementContextInstance] Fetched EngagementContextInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         EngagementContextInstance.new(
                             @version,

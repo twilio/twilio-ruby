@@ -21,6 +21,7 @@ module Twilio
                 class BuildContext < InstanceContext
 
                      class BuildStatusList < ListResource
+                
                     ##
                     # Initialize the BuildStatusList
                     # @param [Version] version Version that contains the resource
@@ -65,6 +66,7 @@ module Twilio
                     # @return [BuildStatusInstance] Fetched BuildStatusInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         BuildStatusInstance.new(
                             @version,

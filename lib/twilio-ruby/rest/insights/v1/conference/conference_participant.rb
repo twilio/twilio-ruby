@@ -20,6 +20,7 @@ module Twilio
                 class ConferenceContext < InstanceContext
 
                      class ConferenceParticipantList < ListResource
+                
                     ##
                     # Initialize the ConferenceParticipantList
                     # @param [Version] version Version that contains the resource
@@ -173,6 +174,7 @@ module Twilio
                             'Events' => events,
                             'Metrics' => metrics,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         ConferenceParticipantInstance.new(
                             @version,

@@ -18,6 +18,7 @@ module Twilio
         class Supersim < SupersimBase
             class V1 < Version
                 class SimList < ListResource
+                
                     ##
                     # Initialize the SimList
                     # @param [Version] version Version that contains the resource
@@ -44,6 +45,7 @@ module Twilio
                             'RegistrationCode' => registration_code,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         SimInstance.new(
                             @version,
@@ -187,6 +189,7 @@ module Twilio
                     # @return [SimInstance] Fetched SimInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SimInstance.new(
                             @version,
@@ -222,6 +225,7 @@ module Twilio
                             'AccountSid' => account_sid,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SimInstance.new(
                             @version,

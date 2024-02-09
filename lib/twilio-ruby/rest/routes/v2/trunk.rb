@@ -18,6 +18,7 @@ module Twilio
         class Routes < RoutesBase
             class V2 < Version
                 class TrunkList < ListResource
+                
                     ##
                     # Initialize the TrunkList
                     # @param [Version] version Version that contains the resource
@@ -59,6 +60,7 @@ module Twilio
                     # @return [TrunkInstance] Fetched TrunkInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         TrunkInstance.new(
                             @version,
@@ -82,6 +84,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         TrunkInstance.new(
                             @version,

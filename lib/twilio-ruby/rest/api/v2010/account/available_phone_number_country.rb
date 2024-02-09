@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class AvailablePhoneNumberCountryList < ListResource
+                
                     ##
                     # Initialize the AvailablePhoneNumberCountryList
                     # @param [Version] version Version that contains the resource
@@ -153,6 +154,7 @@ module Twilio
                     # @return [AvailablePhoneNumberCountryInstance] Fetched AvailablePhoneNumberCountryInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AvailablePhoneNumberCountryInstance.new(
                             @version,

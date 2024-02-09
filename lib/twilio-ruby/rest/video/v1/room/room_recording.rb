@@ -20,6 +20,7 @@ module Twilio
                 class RoomContext < InstanceContext
 
                      class RoomRecordingList < ListResource
+                
                     ##
                     # Initialize the RoomRecordingList
                     # @param [Version] version Version that contains the resource
@@ -170,6 +171,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -178,6 +180,7 @@ module Twilio
                     # @return [RoomRecordingInstance] Fetched RoomRecordingInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         RoomRecordingInstance.new(
                             @version,

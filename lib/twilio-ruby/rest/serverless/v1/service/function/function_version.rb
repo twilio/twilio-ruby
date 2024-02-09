@@ -21,6 +21,7 @@ module Twilio
                 class FunctionContext < InstanceContext
 
                      class FunctionVersionList < ListResource
+                
                     ##
                     # Initialize the FunctionVersionList
                     # @param [Version] version Version that contains the resource
@@ -151,6 +152,7 @@ module Twilio
                     # @return [FunctionVersionInstance] Fetched FunctionVersionInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         FunctionVersionInstance.new(
                             @version,

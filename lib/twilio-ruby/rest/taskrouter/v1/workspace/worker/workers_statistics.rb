@@ -21,6 +21,7 @@ module Twilio
                 class WorkerList < ListResource
 
                      class WorkersStatisticsList < ListResource
+                
                     ##
                     # Initialize the WorkersStatisticsList
                     # @param [Version] version Version that contains the resource
@@ -86,6 +87,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                             'TaskChannel' => task_channel,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         WorkersStatisticsInstance.new(
                             @version,

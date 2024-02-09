@@ -20,6 +20,7 @@ module Twilio
                 class BrandRegistrationContext < InstanceContext
 
                      class BrandVettingList < ListResource
+                
                     ##
                     # Initialize the BrandVettingList
                     # @param [Version] version Version that contains the resource
@@ -46,6 +47,7 @@ module Twilio
                             'VettingId' => vetting_id,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         BrandVettingInstance.new(
                             @version,
@@ -177,6 +179,7 @@ module Twilio
                     # @return [BrandVettingInstance] Fetched BrandVettingInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         BrandVettingInstance.new(
                             @version,

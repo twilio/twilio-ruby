@@ -20,6 +20,7 @@ module Twilio
                 class InteractionContext < InstanceContext
 
                      class InteractionChannelList < ListResource
+                
                     ##
                     # Initialize the InteractionChannelList
                     # @param [Version] version Version that contains the resource
@@ -148,6 +149,7 @@ module Twilio
                     # @return [InteractionChannelInstance] Fetched InteractionChannelInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         InteractionChannelInstance.new(
                             @version,
@@ -172,6 +174,7 @@ module Twilio
                             'Routing' => Twilio.serialize_object(routing),
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         InteractionChannelInstance.new(
                             @version,

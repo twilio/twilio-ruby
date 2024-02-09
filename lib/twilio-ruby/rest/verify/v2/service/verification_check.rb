@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class VerificationCheckList < ListResource
+                
                     ##
                     # Initialize the VerificationCheckList
                     # @param [Version] version Version that contains the resource
@@ -55,6 +56,7 @@ module Twilio
                             'Payee' => payee,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         VerificationCheckInstance.new(
                             @version,

@@ -20,6 +20,7 @@ module Twilio
                 class SimContext < InstanceContext
 
                      class UsageList < ListResource
+                
                     ##
                     # Initialize the UsageList
                     # @param [Version] version Version that contains the resource
@@ -72,6 +73,7 @@ module Twilio
                             'End' => end_,
                             'Start' => start,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         UsageInstance.new(
                             @version,

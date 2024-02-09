@@ -21,6 +21,7 @@ module Twilio
                 class ChannelContext < InstanceContext
 
                      class MessageList < ListResource
+                
                     ##
                     # Initialize the MessageList
                     # @param [Version] version Version that contains the resource
@@ -64,6 +65,7 @@ module Twilio
                             'MediaSid' => media_sid,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         MessageInstance.new(
@@ -199,6 +201,7 @@ module Twilio
                         x_twilio_webhook_enabled: :unset
                     )
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
@@ -208,6 +211,7 @@ module Twilio
                     # @return [MessageInstance] Fetched MessageInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         MessageInstance.new(
                             @version,
@@ -247,6 +251,7 @@ module Twilio
                             'From' => from,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         MessageInstance.new(

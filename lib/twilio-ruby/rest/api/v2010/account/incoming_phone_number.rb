@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class IncomingPhoneNumberList < ListResource
+                
                     ##
                     # Initialize the IncomingPhoneNumberList
                     # @param [Version] version Version that contains the resource
@@ -115,6 +116,7 @@ module Twilio
                             'AreaCode' => area_code,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         IncomingPhoneNumberInstance.new(
                             @version,
@@ -284,6 +286,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -292,6 +295,7 @@ module Twilio
                     # @return [IncomingPhoneNumberInstance] Fetched IncomingPhoneNumberInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         IncomingPhoneNumberInstance.new(
                             @version,
@@ -379,6 +383,7 @@ module Twilio
                             'BundleSid' => bundle_sid,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         IncomingPhoneNumberInstance.new(
                             @version,

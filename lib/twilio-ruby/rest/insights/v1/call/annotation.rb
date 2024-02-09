@@ -20,6 +20,7 @@ module Twilio
                 class CallContext < InstanceContext
 
                      class AnnotationList < ListResource
+                
                     ##
                     # Initialize the AnnotationList
                     # @param [Version] version Version that contains the resource
@@ -63,6 +64,7 @@ module Twilio
                     # @return [AnnotationInstance] Fetched AnnotationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AnnotationInstance.new(
                             @version,
@@ -101,6 +103,7 @@ module Twilio
                             'Incident' => incident,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         AnnotationInstance.new(
                             @version,
@@ -251,7 +254,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The URL of this resource.
+                    # @return [String] 
                     def url
                         @properties['url']
                     end

@@ -18,6 +18,7 @@ module Twilio
         class Supersim < SupersimBase
             class V1 < Version
                 class NetworkAccessProfileList < ListResource
+                
                     ##
                     # Initialize the NetworkAccessProfileList
                     # @param [Version] version Version that contains the resource
@@ -44,6 +45,7 @@ module Twilio
                             'Networks' => Twilio.serialize_list(networks) { |e| e },
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         NetworkAccessProfileInstance.new(
                             @version,
@@ -168,6 +170,7 @@ module Twilio
                     # @return [NetworkAccessProfileInstance] Fetched NetworkAccessProfileInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         NetworkAccessProfileInstance.new(
                             @version,
@@ -188,6 +191,7 @@ module Twilio
                             'UniqueName' => unique_name,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         NetworkAccessProfileInstance.new(
                             @version,

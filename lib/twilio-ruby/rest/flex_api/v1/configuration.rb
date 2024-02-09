@@ -18,6 +18,7 @@ module Twilio
         class FlexApi < FlexApiBase
             class V1 < Version
                 class ConfigurationList < ListResource
+                
                     ##
                     # Initialize the ConfigurationList
                     # @param [Version] version Version that contains the resource
@@ -64,6 +65,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'UiVersion' => ui_version,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         ConfigurationInstance.new(
                             @version,
@@ -147,6 +149,7 @@ module Twilio
                             'messaging_service_instance_sid' => payload['messaging_service_instance_sid'],
                             'chat_service_instance_sid' => payload['chat_service_instance_sid'],
                             'flex_service_instance_sid' => payload['flex_service_instance_sid'],
+                            'flex_instance_sid' => payload['flex_instance_sid'],
                             'ui_language' => payload['ui_language'],
                             'ui_attributes' => payload['ui_attributes'],
                             'ui_dependencies' => payload['ui_dependencies'],
@@ -177,6 +180,7 @@ module Twilio
                             'flex_ui_status_report' => payload['flex_ui_status_report'],
                             'agent_conv_end_methods' => payload['agent_conv_end_methods'],
                             'citrix_voice_vdi' => payload['citrix_voice_vdi'],
+                            'offline_config' => payload['offline_config'],
                         }
 
                         # Context
@@ -295,6 +299,12 @@ module Twilio
                     # @return [String] The SID of the Flex service instance.
                     def flex_service_instance_sid
                         @properties['flex_service_instance_sid']
+                    end
+                    
+                    ##
+                    # @return [String] The SID of the Flex instance.
+                    def flex_instance_sid
+                        @properties['flex_instance_sid']
                     end
                     
                     ##
@@ -475,6 +485,12 @@ module Twilio
                     # @return [Hash] Citrix voice vdi configuration and settings.
                     def citrix_voice_vdi
                         @properties['citrix_voice_vdi']
+                    end
+                    
+                    ##
+                    # @return [Hash] Presence and presence ttl configuration
+                    def offline_config
+                        @properties['offline_config']
                     end
                     
                     ##

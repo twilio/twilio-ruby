@@ -20,6 +20,7 @@ module Twilio
                 class RegulatoryComplianceList < ListResource
 
                      class SupportingDocumentTypeList < ListResource
+                
                     ##
                     # Initialize the SupportingDocumentTypeList
                     # @param [Version] version Version that contains the resource
@@ -145,6 +146,7 @@ module Twilio
                     # @return [SupportingDocumentTypeInstance] Fetched SupportingDocumentTypeInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SupportingDocumentTypeInstance.new(
                             @version,

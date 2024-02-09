@@ -18,6 +18,7 @@ module Twilio
         class Content < ContentBase
             class V1 < Version
                 class ContentList < ListResource
+                
                     ##
                     # Initialize the ContentList
                     # @param [Version] version Version that contains the resource
@@ -146,6 +147,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -154,6 +156,7 @@ module Twilio
                     # @return [ContentInstance] Fetched ContentInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ContentInstance.new(
                             @version,
@@ -302,7 +305,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] The [Content types](https://www.twilio.com/docs/content-api/content-types-overview) (e.g. twilio/text) for this Content resource.
+                    # @return [Hash] The [Content types](https://www.twilio.com/docs/content/content-types-overview) (e.g. twilio/text) for this Content resource.
                     def types
                         @properties['types']
                     end

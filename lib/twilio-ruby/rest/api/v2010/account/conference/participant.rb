@@ -21,6 +21,7 @@ module Twilio
                 class ConferenceContext < InstanceContext
 
                      class ParticipantList < ListResource
+                
                     ##
                     # Initialize the ParticipantList
                     # @param [Version] version Version that contains the resource
@@ -81,6 +82,7 @@ module Twilio
                     # @param [String] amd_status_callback The URL that we should call using the `amd_status_callback_method` to notify customer application whether the call was answered by human, machine or fax.
                     # @param [String] amd_status_callback_method The HTTP method we should use when calling the `amd_status_callback` URL. Can be: `GET` or `POST` and the default is `POST`.
                     # @param [String] trim Whether to trim any leading and trailing silence from the participant recording. Can be: `trim-silence` or `do-not-trim` and the default is `trim-silence`.
+                    # @param [String] call_token A token string needed to invoke a forwarded call. A call_token is generated when an incoming call is received on a Twilio number. Pass an incoming call's call_token value to a forwarded call via the call_token parameter when creating a new call. A forwarded call should bear the same CallerID of the original incoming call.
                     # @return [ParticipantInstance] Created ParticipantInstance
                     def create(
                         from: nil, 
@@ -129,7 +131,8 @@ module Twilio
                         machine_detection_silence_timeout: :unset, 
                         amd_status_callback: :unset, 
                         amd_status_callback_method: :unset, 
-                        trim: :unset
+                        trim: :unset, 
+                        call_token: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -180,8 +183,10 @@ module Twilio
                             'AmdStatusCallback' => amd_status_callback,
                             'AmdStatusCallbackMethod' => amd_status_callback_method,
                             'Trim' => trim,
+                            'CallToken' => call_token,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ParticipantInstance.new(
                             @version,
@@ -325,6 +330,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -333,6 +339,7 @@ module Twilio
                     # @return [ParticipantInstance] Fetched ParticipantInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ParticipantInstance.new(
                             @version,
@@ -388,6 +395,7 @@ module Twilio
                             'CallSidToCoach' => call_sid_to_coach,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ParticipantInstance.new(
                             @version,

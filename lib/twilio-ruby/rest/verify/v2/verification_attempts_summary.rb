@@ -18,6 +18,7 @@ module Twilio
         class Verify < VerifyBase
             class V2 < Version
                 class VerificationAttemptsSummaryList < ListResource
+                
                     ##
                     # Initialize the VerificationAttemptsSummaryList
                     # @param [Version] version Version that contains the resource
@@ -79,6 +80,7 @@ module Twilio
                             'Channel' => channel,
                             'DestinationPrefix' => destination_prefix,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         VerificationAttemptsSummaryInstance.new(
                             @version,

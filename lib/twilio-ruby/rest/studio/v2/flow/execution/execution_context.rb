@@ -21,6 +21,7 @@ module Twilio
                 class ExecutionContext < InstanceContext
 
                      class ExecutionContextList < ListResource
+                
                     ##
                     # Initialize the ExecutionContextList
                     # @param [Version] version Version that contains the resource
@@ -63,6 +64,7 @@ module Twilio
                     # @return [ExecutionContextInstance] Fetched ExecutionContextInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ExecutionContextInstance.new(
                             @version,

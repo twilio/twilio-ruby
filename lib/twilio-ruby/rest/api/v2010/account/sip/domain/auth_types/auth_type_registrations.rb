@@ -23,6 +23,7 @@ module Twilio
                 class AuthTypesList < ListResource
 
                      class AuthTypeRegistrationsList < ListResource
+                
                     ##
                     # Initialize the AuthTypeRegistrationsList
                     # @param [Version] version Version that contains the resource

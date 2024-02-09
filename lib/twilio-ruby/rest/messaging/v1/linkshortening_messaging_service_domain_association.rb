@@ -18,6 +18,7 @@ module Twilio
         class Messaging < MessagingBase
             class V1 < Version
                 class LinkshorteningMessagingServiceDomainAssociationList < ListResource
+                
                     ##
                     # Initialize the LinkshorteningMessagingServiceDomainAssociationList
                     # @param [Version] version Version that contains the resource
@@ -61,6 +62,7 @@ module Twilio
                     # @return [LinkshorteningMessagingServiceDomainAssociationInstance] Fetched LinkshorteningMessagingServiceDomainAssociationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         LinkshorteningMessagingServiceDomainAssociationInstance.new(
                             @version,

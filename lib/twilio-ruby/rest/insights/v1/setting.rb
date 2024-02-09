@@ -18,6 +18,7 @@ module Twilio
         class Insights < InsightsBase
             class V1 < Version
                 class SettingList < ListResource
+                
                     ##
                     # Initialize the SettingList
                     # @param [Version] version Version that contains the resource
@@ -64,6 +65,7 @@ module Twilio
                         params = Twilio::Values.of({
                             'SubaccountSid' => subaccount_sid,
                         })
+                        
                         payload = @version.fetch('GET', @uri, params: params)
                         SettingInstance.new(
                             @version,
@@ -89,6 +91,7 @@ module Twilio
                             'SubaccountSid' => subaccount_sid,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SettingInstance.new(
                             @version,

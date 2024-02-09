@@ -18,6 +18,7 @@ module Twilio
         class Routes < RoutesBase
             class V2 < Version
                 class SipDomainList < ListResource
+                
                     ##
                     # Initialize the SipDomainList
                     # @param [Version] version Version that contains the resource
@@ -59,6 +60,7 @@ module Twilio
                     # @return [SipDomainInstance] Fetched SipDomainInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SipDomainInstance.new(
                             @version,
@@ -82,6 +84,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SipDomainInstance.new(
                             @version,

@@ -20,6 +20,7 @@ module Twilio
                 class TrustProductsContext < InstanceContext
 
                      class TrustProductsEvaluationsList < ListResource
+                
                     ##
                     # Initialize the TrustProductsEvaluationsList
                     # @param [Version] version Version that contains the resource
@@ -43,6 +44,7 @@ module Twilio
                             'PolicySid' => policy_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         TrustProductsEvaluationsInstance.new(
                             @version,
@@ -166,6 +168,7 @@ module Twilio
                     # @return [TrustProductsEvaluationsInstance] Fetched TrustProductsEvaluationsInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         TrustProductsEvaluationsInstance.new(
                             @version,

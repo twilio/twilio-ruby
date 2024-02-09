@@ -20,6 +20,7 @@ module Twilio
                 class CustomerProfilesContext < InstanceContext
 
                      class CustomerProfilesEvaluationsList < ListResource
+                
                     ##
                     # Initialize the CustomerProfilesEvaluationsList
                     # @param [Version] version Version that contains the resource
@@ -43,6 +44,7 @@ module Twilio
                             'PolicySid' => policy_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         CustomerProfilesEvaluationsInstance.new(
                             @version,
@@ -166,6 +168,7 @@ module Twilio
                     # @return [CustomerProfilesEvaluationsInstance] Fetched CustomerProfilesEvaluationsInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CustomerProfilesEvaluationsInstance.new(
                             @version,

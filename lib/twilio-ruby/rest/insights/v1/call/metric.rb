@@ -20,6 +20,7 @@ module Twilio
                 class CallContext < InstanceContext
 
                      class MetricList < ListResource
+                
                     ##
                     # Initialize the MetricList
                     # @param [Version] version Version that contains the resource

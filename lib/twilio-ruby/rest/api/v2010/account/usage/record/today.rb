@@ -22,6 +22,7 @@ module Twilio
                 class RecordList < ListResource
 
                      class TodayList < ListResource
+                
                     ##
                     # Initialize the TodayList
                     # @param [Version] version Version that contains the resource

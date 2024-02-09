@@ -18,6 +18,7 @@ module Twilio
         class Studio < StudioBase
             class V2 < Version
                 class FlowValidateList < ListResource
+                
                     ##
                     # Initialize the FlowValidateList
                     # @param [Version] version Version that contains the resource
@@ -50,6 +51,7 @@ module Twilio
                             'CommitMessage' => commit_message,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         FlowValidateInstance.new(
                             @version,

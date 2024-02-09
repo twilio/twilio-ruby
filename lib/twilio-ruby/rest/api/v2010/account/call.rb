@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class CallList < ListResource
+                
                     ##
                     # Initialize the CallList
                     # @param [Version] version Version that contains the resource
@@ -146,6 +147,7 @@ module Twilio
                             'ApplicationSid' => application_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         CallInstance.new(
                             @version,
@@ -351,6 +353,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -359,6 +362,7 @@ module Twilio
                     # @return [CallInstance] Fetched CallInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CallInstance.new(
                             @version,
@@ -404,6 +408,7 @@ module Twilio
                             'TimeLimit' => time_limit,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         CallInstance.new(
                             @version,

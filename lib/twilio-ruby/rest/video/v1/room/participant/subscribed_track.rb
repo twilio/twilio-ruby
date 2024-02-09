@@ -21,6 +21,7 @@ module Twilio
                 class ParticipantContext < InstanceContext
 
                      class SubscribedTrackList < ListResource
+                
                     ##
                     # Initialize the SubscribedTrackList
                     # @param [Version] version Version that contains the resource
@@ -148,6 +149,7 @@ module Twilio
                     # @return [SubscribedTrackInstance] Fetched SubscribedTrackInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SubscribedTrackInstance.new(
                             @version,

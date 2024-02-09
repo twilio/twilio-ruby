@@ -20,6 +20,7 @@ module Twilio
                 class RegulatoryComplianceList < ListResource
 
                      class RegulationList < ListResource
+                
                     ##
                     # Initialize the RegulationList
                     # @param [Version] version Version that contains the resource
@@ -163,6 +164,7 @@ module Twilio
                     # @return [RegulationInstance] Fetched RegulationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         RegulationInstance.new(
                             @version,

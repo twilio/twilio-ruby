@@ -20,6 +20,7 @@ module Twilio
                 class ContentContext < InstanceContext
 
                      class ApprovalFetchList < ListResource
+                
                     ##
                     # Initialize the ApprovalFetchList
                     # @param [Version] version Version that contains the resource
@@ -63,6 +64,7 @@ module Twilio
                     # @return [ApprovalFetchInstance] Fetched ApprovalFetchInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ApprovalFetchInstance.new(
                             @version,

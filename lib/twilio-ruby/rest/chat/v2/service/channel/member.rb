@@ -21,6 +21,7 @@ module Twilio
                 class ChannelContext < InstanceContext
 
                      class MemberList < ListResource
+                
                     ##
                     # Initialize the MemberList
                     # @param [Version] version Version that contains the resource
@@ -64,6 +65,7 @@ module Twilio
                             'Attributes' => attributes,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         MemberInstance.new(
@@ -200,6 +202,7 @@ module Twilio
                         x_twilio_webhook_enabled: :unset
                     )
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
@@ -209,6 +212,7 @@ module Twilio
                     # @return [MemberInstance] Fetched MemberInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         MemberInstance.new(
                             @version,
@@ -248,6 +252,7 @@ module Twilio
                             'Attributes' => attributes,
                         })
 
+                        
                         headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         MemberInstance.new(

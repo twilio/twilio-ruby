@@ -20,6 +20,7 @@ module Twilio
                 class WorkspaceContext < InstanceContext
 
                      class TaskList < ListResource
+                
                     ##
                     # Initialize the TaskList
                     # @param [Version] version Version that contains the resource
@@ -58,6 +59,7 @@ module Twilio
                             'VirtualStartTime' => Twilio.serialize_iso8601_datetime(virtual_start_time),
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         TaskInstance.new(
                             @version,
@@ -79,7 +81,7 @@ module Twilio
                     # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this friendly name.
                     # @param [String] evaluate_task_attributes The attributes of the Tasks to read. Returns the Tasks that match the attributes specified in this parameter.
                     # @param [String] ordering How to order the returned Task resources. By default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `DateCreated`, `Priority`, or `VirtualStartTime` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Pairings of sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order. The only ordering pairing not allowed is DateCreated and VirtualStartTime.
-                    # @param [Boolean] has_addons Whether to read Tasks with addons. If `true`, returns only Tasks with addons. If `false`, returns only Tasks without addons.
+                    # @param [Boolean] has_addons Whether to read Tasks with Add-ons. If `true`, returns only Tasks with Add-ons. If `false`, returns only Tasks without Add-ons.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -115,7 +117,7 @@ module Twilio
                     # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this friendly name.
                     # @param [String] evaluate_task_attributes The attributes of the Tasks to read. Returns the Tasks that match the attributes specified in this parameter.
                     # @param [String] ordering How to order the returned Task resources. By default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `DateCreated`, `Priority`, or `VirtualStartTime` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Pairings of sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order. The only ordering pairing not allowed is DateCreated and VirtualStartTime.
-                    # @param [Boolean] has_addons Whether to read Tasks with addons. If `true`, returns only Tasks with addons. If `false`, returns only Tasks without addons.
+                    # @param [Boolean] has_addons Whether to read Tasks with Add-ons. If `true`, returns only Tasks with Add-ons. If `false`, returns only Tasks without Add-ons.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -166,7 +168,7 @@ module Twilio
                     # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this friendly name.
                     # @param [String] evaluate_task_attributes The attributes of the Tasks to read. Returns the Tasks that match the attributes specified in this parameter.
                     # @param [String] ordering How to order the returned Task resources. By default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `DateCreated`, `Priority`, or `VirtualStartTime` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Pairings of sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order. The only ordering pairing not allowed is DateCreated and VirtualStartTime.
-                    # @param [Boolean] has_addons Whether to read Tasks with addons. If `true`, returns only Tasks with addons. If `false`, returns only Tasks without addons.
+                    # @param [Boolean] has_addons Whether to read Tasks with Add-ons. If `true`, returns only Tasks with Add-ons. If `false`, returns only Tasks without Add-ons.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -240,6 +242,7 @@ module Twilio
                         if_match: :unset
                     )
 
+                        
                         headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
@@ -249,6 +252,7 @@ module Twilio
                     # @return [TaskInstance] Fetched TaskInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         TaskInstance.new(
                             @version,
@@ -287,6 +291,7 @@ module Twilio
                             'VirtualStartTime' => Twilio.serialize_iso8601_datetime(virtual_start_time),
                         })
 
+                        
                         headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         TaskInstance.new(
@@ -440,7 +445,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] An object that contains the [addon](https://www.twilio.com/docs/taskrouter/marketplace) data for all installed addons.
+                    # @return [String] An object that contains the [Add-on](https://www.twilio.com/docs/add-ons) data for all installed Add-ons.
                     def addons
                         @properties['addons']
                     end

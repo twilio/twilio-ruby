@@ -20,6 +20,7 @@ module Twilio
                 class RoomContext < InstanceContext
 
                      class RecordingRulesList < ListResource
+                
                     ##
                     # Initialize the RecordingRulesList
                     # @param [Version] version Version that contains the resource
@@ -36,6 +37,7 @@ module Twilio
                     # @return [RecordingRulesInstance] Fetched RecordingRulesInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         RecordingRulesInstance.new(
                             @version,
@@ -56,6 +58,7 @@ module Twilio
                             'Rules' => Twilio.serialize_object(rules),
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         RecordingRulesInstance.new(
                             @version,

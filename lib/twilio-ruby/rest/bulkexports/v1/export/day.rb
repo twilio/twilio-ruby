@@ -20,6 +20,7 @@ module Twilio
                 class ExportContext < InstanceContext
 
                      class DayList < ListResource
+                
                     ##
                     # Initialize the DayList
                     # @param [Version] version Version that contains the resource
@@ -146,6 +147,7 @@ module Twilio
                     # @return [DayInstance] Fetched DayInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         DayInstance.new(
                             @version,

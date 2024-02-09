@@ -21,6 +21,7 @@ module Twilio
                 class AddressContext < InstanceContext
 
                      class DependentPhoneNumberList < ListResource
+                
                     ##
                     # Initialize the DependentPhoneNumberList
                     # @param [Version] version Version that contains the resource

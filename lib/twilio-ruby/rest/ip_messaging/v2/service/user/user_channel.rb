@@ -21,6 +21,7 @@ module Twilio
                 class UserContext < InstanceContext
 
                      class UserChannelList < ListResource
+                
                     ##
                     # Initialize the UserChannelList
                     # @param [Version] version Version that contains the resource
@@ -148,6 +149,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -156,6 +158,7 @@ module Twilio
                     # @return [UserChannelInstance] Fetched UserChannelInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         UserChannelInstance.new(
                             @version,
@@ -184,6 +187,7 @@ module Twilio
                             'LastConsumptionTimestamp' => Twilio.serialize_iso8601_datetime(last_consumption_timestamp),
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         UserChannelInstance.new(
                             @version,

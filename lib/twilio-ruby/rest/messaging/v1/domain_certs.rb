@@ -18,6 +18,7 @@ module Twilio
         class Messaging < MessagingBase
             class V1 < Version
                 class DomainCertsList < ListResource
+                
                     ##
                     # Initialize the DomainCertsList
                     # @param [Version] version Version that contains the resource
@@ -61,6 +62,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -69,6 +71,7 @@ module Twilio
                     # @return [DomainCertsInstance] Fetched DomainCertsInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         DomainCertsInstance.new(
                             @version,
@@ -89,6 +92,7 @@ module Twilio
                             'TlsCert' => tls_cert,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         DomainCertsInstance.new(
                             @version,

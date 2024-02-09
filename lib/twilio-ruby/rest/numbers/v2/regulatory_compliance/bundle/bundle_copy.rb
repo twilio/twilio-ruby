@@ -21,6 +21,7 @@ module Twilio
                 class BundleContext < InstanceContext
 
                      class BundleCopyList < ListResource
+                
                     ##
                     # Initialize the BundleCopyList
                     # @param [Version] version Version that contains the resource
@@ -44,6 +45,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         BundleCopyInstance.new(
                             @version,

@@ -21,6 +21,7 @@ module Twilio
                 class InteractionChannelContext < InstanceContext
 
                      class InteractionChannelInviteList < ListResource
+                
                     ##
                     # Initialize the InteractionChannelInviteList
                     # @param [Version] version Version that contains the resource
@@ -44,6 +45,7 @@ module Twilio
                             'Routing' => Twilio.serialize_object(routing),
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         InteractionChannelInviteInstance.new(
                             @version,

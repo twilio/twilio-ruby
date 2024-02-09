@@ -21,6 +21,7 @@ module Twilio
                 class SyncStreamContext < InstanceContext
 
                      class StreamMessageList < ListResource
+                
                     ##
                     # Initialize the StreamMessageList
                     # @param [Version] version Version that contains the resource
@@ -44,6 +45,7 @@ module Twilio
                             'Data' => Twilio.serialize_object(data),
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         StreamMessageInstance.new(
                             @version,

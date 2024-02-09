@@ -18,6 +18,7 @@ module Twilio
         class Preview < PreviewBase
             class Wireless < Version
                 class SimList < ListResource
+                
                     ##
                     # Initialize the SimList
                     # @param [Version] version Version that contains the resource
@@ -176,6 +177,7 @@ module Twilio
                     # @return [SimInstance] Fetched SimInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SimInstance.new(
                             @version,
@@ -241,6 +243,7 @@ module Twilio
                             'VoiceUrl' => voice_url,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SimInstance.new(
                             @version,

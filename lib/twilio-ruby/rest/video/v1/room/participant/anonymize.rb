@@ -21,6 +21,7 @@ module Twilio
                 class ParticipantContext < InstanceContext
 
                      class AnonymizeList < ListResource
+                
                     ##
                     # Initialize the AnonymizeList
                     # @param [Version] version Version that contains the resource
@@ -63,6 +64,7 @@ module Twilio
                     # @return [AnonymizeInstance] Updated AnonymizeInstance
                     def update
 
+                        
                         payload = @version.update('POST', @uri)
                         AnonymizeInstance.new(
                             @version,

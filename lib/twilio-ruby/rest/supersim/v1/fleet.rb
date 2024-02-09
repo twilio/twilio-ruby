@@ -18,6 +18,7 @@ module Twilio
         class Supersim < SupersimBase
             class V1 < Version
                 class FleetList < ListResource
+                
                     ##
                     # Initialize the FleetList
                     # @param [Version] version Version that contains the resource
@@ -65,6 +66,7 @@ module Twilio
                             'SmsCommandsMethod' => sms_commands_method,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         FleetInstance.new(
                             @version,
@@ -194,6 +196,7 @@ module Twilio
                     # @return [FleetInstance] Fetched FleetInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         FleetInstance.new(
                             @version,
@@ -232,6 +235,7 @@ module Twilio
                             'DataLimit' => data_limit,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         FleetInstance.new(
                             @version,

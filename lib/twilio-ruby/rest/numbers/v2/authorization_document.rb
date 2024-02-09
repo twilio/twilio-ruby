@@ -18,6 +18,7 @@ module Twilio
         class Numbers < NumbersBase
             class V2 < Version
                 class AuthorizationDocumentList < ListResource
+                
                     ##
                     # Initialize the AuthorizationDocumentList
                     # @param [Version] version Version that contains the resource
@@ -56,6 +57,7 @@ module Twilio
                             'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         AuthorizationDocumentInstance.new(
                             @version,
@@ -192,6 +194,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -200,6 +203,7 @@ module Twilio
                     # @return [AuthorizationDocumentInstance] Fetched AuthorizationDocumentInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AuthorizationDocumentInstance.new(
                             @version,

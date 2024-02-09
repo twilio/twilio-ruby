@@ -18,6 +18,7 @@ module Twilio
         class Preview < PreviewBase
             class Sync < Version
                 class ServiceList < ListResource
+                
                     ##
                     # Initialize the ServiceList
                     # @param [Version] version Version that contains the resource
@@ -50,6 +51,7 @@ module Twilio
                             'AclEnabled' => acl_enabled,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ServiceInstance.new(
                             @version,
@@ -167,15 +169,16 @@ module Twilio
                         @uri = "/Services/#{@solution[:sid]}"
 
                         # Dependents
-                        @sync_lists = nil
                         @sync_maps = nil
                         @documents = nil
+                        @sync_lists = nil
                     end
                     ##
                     # Delete the ServiceInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -184,6 +187,7 @@ module Twilio
                     # @return [ServiceInstance] Fetched ServiceInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ServiceInstance.new(
                             @version,
@@ -213,6 +217,7 @@ module Twilio
                             'AclEnabled' => acl_enabled,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ServiceInstance.new(
                             @version,
@@ -221,25 +226,6 @@ module Twilio
                         )
                     end
 
-                    ##
-                    # Access the sync_lists
-                    # @return [SyncListList]
-                    # @return [SyncListContext] if sid was passed.
-                    def sync_lists(sid=:unset)
-
-                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-                        if sid != :unset
-                            return SyncListContext.new(@version, @solution[:sid],sid )
-                        end
-
-                        unless @sync_lists
-                            @sync_lists = SyncListList.new(
-                                @version, service_sid: @solution[:sid], )
-                        end
-
-                     @sync_lists
-                    end
                     ##
                     # Access the sync_maps
                     # @return [SyncMapList]
@@ -277,6 +263,25 @@ module Twilio
                         end
 
                      @documents
+                    end
+                    ##
+                    # Access the sync_lists
+                    # @return [SyncListList]
+                    # @return [SyncListContext] if sid was passed.
+                    def sync_lists(sid=:unset)
+
+                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+                        if sid != :unset
+                            return SyncListContext.new(@version, @solution[:sid],sid )
+                        end
+
+                        unless @sync_lists
+                            @sync_lists = SyncListList.new(
+                                @version, service_sid: @solution[:sid], )
+                        end
+
+                     @sync_lists
                     end
 
                     ##
@@ -464,13 +469,6 @@ module Twilio
                     end
 
                     ##
-                    # Access the sync_lists
-                    # @return [sync_lists] sync_lists
-                    def sync_lists
-                        context.sync_lists
-                    end
-
-                    ##
                     # Access the sync_maps
                     # @return [sync_maps] sync_maps
                     def sync_maps
@@ -482,6 +480,13 @@ module Twilio
                     # @return [documents] documents
                     def documents
                         context.documents
+                    end
+
+                    ##
+                    # Access the sync_lists
+                    # @return [sync_lists] sync_lists
+                    def sync_lists
+                        context.sync_lists
                     end
 
                     ##

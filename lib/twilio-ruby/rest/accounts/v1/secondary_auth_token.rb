@@ -18,6 +18,7 @@ module Twilio
         class Accounts < AccountsBase
             class V1 < Version
                 class SecondaryAuthTokenList < ListResource
+                
                     ##
                     # Initialize the SecondaryAuthTokenList
                     # @param [Version] version Version that contains the resource
@@ -58,6 +59,7 @@ module Twilio
                     # @return [SecondaryAuthTokenInstance] Created SecondaryAuthTokenInstance
                     def create
 
+                        
                         payload = @version.create('POST', @uri)
                         SecondaryAuthTokenInstance.new(
                             @version,
@@ -70,6 +72,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 

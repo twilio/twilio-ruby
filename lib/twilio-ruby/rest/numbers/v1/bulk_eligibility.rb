@@ -18,6 +18,7 @@ module Twilio
         class Numbers < NumbersBase
             class V1 < Version
                 class BulkEligibilityList < ListResource
+                
                     ##
                     # Initialize the BulkEligibilityList
                     # @param [Version] version Version that contains the resource
@@ -61,6 +62,7 @@ module Twilio
                     # @return [BulkEligibilityInstance] Fetched BulkEligibilityInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         BulkEligibilityInstance.new(
                             @version,

@@ -21,6 +21,7 @@ module Twilio
                 class WorkerContext < InstanceContext
 
                      class WorkerChannelList < ListResource
+                
                     ##
                     # Initialize the WorkerChannelList
                     # @param [Version] version Version that contains the resource
@@ -148,6 +149,7 @@ module Twilio
                     # @return [WorkerChannelInstance] Fetched WorkerChannelInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         WorkerChannelInstance.new(
                             @version,
@@ -173,6 +175,7 @@ module Twilio
                             'Available' => available,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         WorkerChannelInstance.new(
                             @version,

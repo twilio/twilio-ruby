@@ -18,6 +18,7 @@ module Twilio
         class Insights < InsightsBase
             class V1 < Version
                 class CallList < ListResource
+                
                     ##
                     # Initialize the CallList
                     # @param [Version] version Version that contains the resource
@@ -63,6 +64,7 @@ module Twilio
                     # @return [CallInstance] Fetched CallInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CallInstance.new(
                             @version,

@@ -21,6 +21,7 @@ module Twilio
                 class ParticipantContext < InstanceContext
 
                      class SubscribeRulesList < ListResource
+                
                     ##
                     # Initialize the SubscribeRulesList
                     # @param [Version] version Version that contains the resource
@@ -37,6 +38,7 @@ module Twilio
                     # @return [SubscribeRulesInstance] Fetched SubscribeRulesInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SubscribeRulesInstance.new(
                             @version,
@@ -58,6 +60,7 @@ module Twilio
                             'Rules' => Twilio.serialize_object(rules),
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SubscribeRulesInstance.new(
                             @version,

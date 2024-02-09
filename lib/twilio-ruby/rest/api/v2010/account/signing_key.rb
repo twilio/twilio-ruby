@@ -20,6 +20,7 @@ module Twilio
                 class AccountContext < InstanceContext
 
                      class SigningKeyList < ListResource
+                
                     ##
                     # Initialize the SigningKeyList
                     # @param [Version] version Version that contains the resource
@@ -146,6 +147,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -154,6 +156,7 @@ module Twilio
                     # @return [SigningKeyInstance] Fetched SigningKeyInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         SigningKeyInstance.new(
                             @version,
@@ -175,6 +178,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         SigningKeyInstance.new(
                             @version,

@@ -21,6 +21,7 @@ module Twilio
                 class SessionContext < InstanceContext
 
                      class InteractionList < ListResource
+                
                     ##
                     # Initialize the InteractionList
                     # @param [Version] version Version that contains the resource
@@ -150,6 +151,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -158,6 +160,7 @@ module Twilio
                     # @return [InteractionInstance] Fetched InteractionInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         InteractionInstance.new(
                             @version,
@@ -307,7 +310,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The SID of the inbound resource; either the [Call](https://www.twilio.com/docs/voice/api/call-resource) or [Message](https://www.twilio.com/docs/sms/api/message.
+                    # @return [String] The SID of the inbound resource; either the [Call](https://www.twilio.com/docs/voice/api/call-resource) or [Message](https://www.twilio.com/docs/sms/api/message-resource).
                     def inbound_resource_sid
                         @properties['inbound_resource_sid']
                     end

@@ -18,6 +18,7 @@ module Twilio
         class Bulkexports < BulkexportsBase
             class V1 < Version
                 class ExportList < ListResource
+                
                     ##
                     # Initialize the ExportList
                     # @param [Version] version Version that contains the resource
@@ -75,6 +76,7 @@ module Twilio
                     # @return [ExportInstance] Fetched ExportInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ExportInstance.new(
                             @version,

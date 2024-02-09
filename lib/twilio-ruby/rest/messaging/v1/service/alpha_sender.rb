@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class AlphaSenderList < ListResource
+                
                     ##
                     # Initialize the AlphaSenderList
                     # @param [Version] version Version that contains the resource
@@ -43,6 +44,7 @@ module Twilio
                             'AlphaSender' => alpha_sender,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         AlphaSenderInstance.new(
                             @version,
@@ -168,6 +170,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -176,6 +179,7 @@ module Twilio
                     # @return [AlphaSenderInstance] Fetched AlphaSenderInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AlphaSenderInstance.new(
                             @version,

@@ -20,6 +20,7 @@ module Twilio
                 class FleetContext < InstanceContext
 
                      class CertificateList < ListResource
+                
                     ##
                     # Initialize the CertificateList
                     # @param [Version] version Version that contains the resource
@@ -49,6 +50,7 @@ module Twilio
                             'DeviceSid' => device_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         CertificateInstance.new(
                             @version,
@@ -180,6 +182,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -188,6 +191,7 @@ module Twilio
                     # @return [CertificateInstance] Fetched CertificateInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CertificateInstance.new(
                             @version,
@@ -212,6 +216,7 @@ module Twilio
                             'DeviceSid' => device_sid,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         CertificateInstance.new(
                             @version,

@@ -22,6 +22,7 @@ module Twilio
                 class DomainContext < InstanceContext
 
                      class CredentialListMappingList < ListResource
+                
                     ##
                     # Initialize the CredentialListMappingList
                     # @param [Version] version Version that contains the resource
@@ -45,6 +46,7 @@ module Twilio
                             'CredentialListSid' => credential_list_sid,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         CredentialListMappingInstance.new(
                             @version,
@@ -170,6 +172,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -178,6 +181,7 @@ module Twilio
                     # @return [CredentialListMappingInstance] Fetched CredentialListMappingInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CredentialListMappingInstance.new(
                             @version,

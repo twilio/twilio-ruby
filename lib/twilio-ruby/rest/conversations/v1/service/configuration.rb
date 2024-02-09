@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class ConfigurationList < ListResource
+                
                     ##
                     # Initialize the ConfigurationList
                     # @param [Version] version Version that contains the resource
@@ -63,6 +64,7 @@ module Twilio
                     # @return [ConfigurationInstance] Fetched ConfigurationInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ConfigurationInstance.new(
                             @version,
@@ -92,6 +94,7 @@ module Twilio
                             'ReachabilityEnabled' => reachability_enabled,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ConfigurationInstance.new(
                             @version,

@@ -18,6 +18,7 @@ module Twilio
         class Voice < VoiceBase
             class V1 < Version
                 class ArchivedCallList < ListResource
+                
                     ##
                     # Initialize the ArchivedCallList
                     # @param [Version] version Version that contains the resource
@@ -62,6 +63,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 

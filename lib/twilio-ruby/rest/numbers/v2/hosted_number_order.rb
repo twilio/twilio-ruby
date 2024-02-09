@@ -18,6 +18,7 @@ module Twilio
         class Numbers < NumbersBase
             class V2 < Version
                 class HostedNumberOrderList < ListResource
+                
                     ##
                     # Initialize the HostedNumberOrderList
                     # @param [Version] version Version that contains the resource
@@ -86,6 +87,7 @@ module Twilio
                             'ContactTitle' => contact_title,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         HostedNumberOrderInstance.new(
                             @version,
@@ -239,6 +241,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -247,6 +250,7 @@ module Twilio
                     # @return [HostedNumberOrderInstance] Fetched HostedNumberOrderInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         HostedNumberOrderInstance.new(
                             @version,

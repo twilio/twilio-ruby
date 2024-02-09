@@ -18,6 +18,7 @@ module Twilio
         class Microvisor < MicrovisorBase
             class V1 < Version
                 class DeviceList < ListResource
+                
                     ##
                     # Initialize the DeviceList
                     # @param [Version] version Version that contains the resource
@@ -147,6 +148,7 @@ module Twilio
                     # @return [DeviceInstance] Fetched DeviceInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         DeviceInstance.new(
                             @version,
@@ -176,6 +178,7 @@ module Twilio
                             'RestartApp' => restart_app,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         DeviceInstance.new(
                             @version,

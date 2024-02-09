@@ -20,6 +20,7 @@ module Twilio
                 class DialingPermissionsList < ListResource
 
                      class BulkCountryUpdateList < ListResource
+                
                     ##
                     # Initialize the BulkCountryUpdateList
                     # @param [Version] version Version that contains the resource
@@ -43,6 +44,7 @@ module Twilio
                             'UpdateRequest' => update_request,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         BulkCountryUpdateInstance.new(
                             @version,

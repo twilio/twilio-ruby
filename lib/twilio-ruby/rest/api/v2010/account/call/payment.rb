@@ -21,6 +21,7 @@ module Twilio
                 class CallContext < InstanceContext
 
                      class PaymentList < ListResource
+                
                     ##
                     # Initialize the PaymentList
                     # @param [Version] version Version that contains the resource
@@ -89,6 +90,7 @@ module Twilio
                             'ValidCardTypes' => valid_card_types,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         PaymentInstance.new(
                             @version,
@@ -148,6 +150,7 @@ module Twilio
                             'Status' => status,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         PaymentInstance.new(
                             @version,

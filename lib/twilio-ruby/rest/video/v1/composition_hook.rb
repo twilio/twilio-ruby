@@ -18,6 +18,7 @@ module Twilio
         class Video < VideoBase
             class V1 < Version
                 class CompositionHookList < ListResource
+                
                     ##
                     # Initialize the CompositionHookList
                     # @param [Version] version Version that contains the resource
@@ -68,6 +69,7 @@ module Twilio
                             'Trim' => trim,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         CompositionHookInstance.new(
                             @version,
@@ -213,6 +215,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -221,6 +224,7 @@ module Twilio
                     # @return [CompositionHookInstance] Fetched CompositionHookInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CompositionHookInstance.new(
                             @version,
@@ -268,6 +272,7 @@ module Twilio
                             'StatusCallbackMethod' => status_callback_method,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         CompositionHookInstance.new(
                             @version,

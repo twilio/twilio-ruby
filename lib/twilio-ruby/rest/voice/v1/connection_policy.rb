@@ -18,6 +18,7 @@ module Twilio
         class Voice < VoiceBase
             class V1 < Version
                 class ConnectionPolicyList < ListResource
+                
                     ##
                     # Initialize the ConnectionPolicyList
                     # @param [Version] version Version that contains the resource
@@ -41,6 +42,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         ConnectionPolicyInstance.new(
                             @version,
@@ -163,6 +165,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -171,6 +174,7 @@ module Twilio
                     # @return [ConnectionPolicyInstance] Fetched ConnectionPolicyInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         ConnectionPolicyInstance.new(
                             @version,
@@ -191,6 +195,7 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         ConnectionPolicyInstance.new(
                             @version,

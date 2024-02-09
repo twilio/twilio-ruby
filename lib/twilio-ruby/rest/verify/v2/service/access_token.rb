@@ -20,6 +20,7 @@ module Twilio
                 class ServiceContext < InstanceContext
 
                      class AccessTokenList < ListResource
+                
                     ##
                     # Initialize the AccessTokenList
                     # @param [Version] version Version that contains the resource
@@ -52,6 +53,7 @@ module Twilio
                             'Ttl' => ttl,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         AccessTokenInstance.new(
                             @version,
@@ -91,6 +93,7 @@ module Twilio
                     # @return [AccessTokenInstance] Fetched AccessTokenInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         AccessTokenInstance.new(
                             @version,

@@ -18,6 +18,7 @@ module Twilio
         class Notify < NotifyBase
             class V1 < Version
                 class CredentialList < ListResource
+                
                     ##
                     # Initialize the CredentialList
                     # @param [Version] version Version that contains the resource
@@ -59,6 +60,7 @@ module Twilio
                             'Secret' => secret,
                         })
 
+                        
                         payload = @version.create('POST', @uri, data: data)
                         CredentialInstance.new(
                             @version,
@@ -182,6 +184,7 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        
                         @version.delete('DELETE', @uri)
                     end
 
@@ -190,6 +193,7 @@ module Twilio
                     # @return [CredentialInstance] Fetched CredentialInstance
                     def fetch
 
+                        
                         payload = @version.fetch('GET', @uri)
                         CredentialInstance.new(
                             @version,
@@ -225,6 +229,7 @@ module Twilio
                             'Secret' => secret,
                         })
 
+                        
                         payload = @version.update('POST', @uri, data: data)
                         CredentialInstance.new(
                             @version,
