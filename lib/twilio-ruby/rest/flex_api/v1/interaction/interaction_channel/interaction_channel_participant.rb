@@ -37,15 +37,18 @@ module Twilio
                     # Create the InteractionChannelParticipantInstance
                     # @param [Type] type 
                     # @param [Object] media_properties JSON representing the Media Properties for the new Participant.
+                    # @param [Object] routing_properties Object representing the Routing Properties for the new Participant.
                     # @return [InteractionChannelParticipantInstance] Created InteractionChannelParticipantInstance
                     def create(
                         type: nil, 
-                        media_properties: nil
+                        media_properties: nil, 
+                        routing_properties: :unset
                     )
 
                         data = Twilio::Values.of({
                             'Type' => type,
                             'MediaProperties' => Twilio.serialize_object(media_properties),
+                            'RoutingProperties' => Twilio.serialize_object(routing_properties),
                         })
 
                         
@@ -256,6 +259,7 @@ module Twilio
                             'interaction_sid' => payload['interaction_sid'],
                             'channel_sid' => payload['channel_sid'],
                             'url' => payload['url'],
+                            'routing_properties' => payload['routing_properties'],
                         }
 
                         # Context
@@ -302,6 +306,12 @@ module Twilio
                     # @return [String] 
                     def url
                         @properties['url']
+                    end
+                    
+                    ##
+                    # @return [Hash] The Participant's routing properties.
+                    def routing_properties
+                        @properties['routing_properties']
                     end
                     
                     ##

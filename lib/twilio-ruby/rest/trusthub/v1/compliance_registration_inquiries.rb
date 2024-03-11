@@ -35,7 +35,7 @@ module Twilio
                     # @param [EndUserType] end_user_type 
                     # @param [PhoneNumberType] phone_number_type 
                     # @param [BusinessIdentityType] business_identity_type 
-                    # @param [String] business_registration_authority The authority that registered the business
+                    # @param [BusinessRegistrationAuthority] business_registration_authority 
                     # @param [String] business_legal_name he name of the business or organization using the Tollfree number.
                     # @param [String] notification_email he email address to receive the notification about the verification result.
                     # @param [Boolean] accepted_notification_receipt The email address to receive the notification about the verification result.
@@ -62,6 +62,12 @@ module Twilio
                     # @param [Boolean] use_address_as_emergency_address Use the business address as the emergency address
                     # @param [String] file_name The name of the verification document to upload
                     # @param [String] file The verification document to upload
+                    # @param [String] first_name The first name of the Individual User.
+                    # @param [String] last_name The last name of the Individual User.
+                    # @param [String] date_of_birth The date of birth of the Individual User.
+                    # @param [String] individual_email The email address of the Individual User.
+                    # @param [String] individual_phone The phone number of the Individual User.
+                    # @param [Boolean] is_isv_embed Indicates if the inquiry is being started from an ISV embedded component.
                     # @return [ComplianceRegistrationInquiriesInstance] Created ComplianceRegistrationInquiriesInstance
                     def create(
                         end_user_type: nil, 
@@ -93,7 +99,13 @@ module Twilio
                         emergency_address_country_code: :unset, 
                         use_address_as_emergency_address: :unset, 
                         file_name: :unset, 
-                        file: :unset
+                        file: :unset, 
+                        first_name: :unset, 
+                        last_name: :unset, 
+                        date_of_birth: :unset, 
+                        individual_email: :unset, 
+                        individual_phone: :unset, 
+                        is_isv_embed: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -127,6 +139,12 @@ module Twilio
                             'UseAddressAsEmergencyAddress' => use_address_as_emergency_address,
                             'FileName' => file_name,
                             'File' => file,
+                            'FirstName' => first_name,
+                            'LastName' => last_name,
+                            'DateOfBirth' => date_of_birth,
+                            'IndividualEmail' => individual_email,
+                            'IndividualPhone' => individual_phone,
+                            'IsIsvEmbed' => is_isv_embed,
                         })
 
                         
