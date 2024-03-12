@@ -32,11 +32,13 @@ module Twilio
                     end
                     ##
                     # Create the BulkEligibilityInstance
+                    # @param [Object] body 
                     # @return [BulkEligibilityInstance] Created BulkEligibilityInstance
-                    def create
+                    def create(body: :unset
+                    )
 
-                        
-                        payload = @version.create('POST', @uri)
+                        headers = Twilio::Values.of({"Content-Type"=> "application/json"})
+                        payload = @version.create('POST', @uri, data: body.to_json, headers: headers)
                         BulkEligibilityInstance.new(
                             @version,
                             payload,

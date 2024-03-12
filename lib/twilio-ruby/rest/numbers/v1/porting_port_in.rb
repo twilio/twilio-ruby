@@ -32,11 +32,13 @@ module Twilio
                     end
                     ##
                     # Create the PortingPortInInstance
+                    # @param [Object] body 
                     # @return [PortingPortInInstance] Created PortingPortInInstance
-                    def create
+                    def create(body: :unset
+                    )
 
-                        
-                        payload = @version.create('POST', @uri)
+                        headers = Twilio::Values.of({"Content-Type"=> "application/json"})
+                        payload = @version.create('POST', @uri, data: body.to_json, headers: headers)
                         PortingPortInInstance.new(
                             @version,
                             payload,

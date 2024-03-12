@@ -30,8 +30,7 @@ module Twilio
                         # Path Solution
                         @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Calls.json"
-                        # Components
-                        @feedback_summaries = nil
+                        
                     end
                     ##
                     # Create the CallInstance
@@ -278,19 +277,6 @@ module Twilio
                     end
                     
 
-                ##
-                # Access the feedback_summaries
-                # @return [FeedbackSummaryList]
-                # @return [FeedbackSummaryContext] if sid was passed.
-                def feedback_summaries(sid=:unset)
-                    raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-                    if sid != :unset
-                        return FeedbackSummaryContext.new(@version, @solution[:account_sid],sid )
-                    end
-
-                    @feedback_summaries ||= FeedbackSummaryList.new(@version, account_sid: @solution[:account_sid] )
-                end
 
                     # Provide a user friendly representation
                     def to_s
@@ -321,7 +307,6 @@ module Twilio
                         @payments = nil
                         @recordings = nil
                         @notifications = nil
-                        @feedback = nil
                         @streams = nil
                     end
                     ##
@@ -510,17 +495,6 @@ module Twilio
                         end
 
                      @notifications
-                    end
-                    ##
-                    # Access the feedback
-                    # @return [FeedbackList]
-                    # @return [FeedbackContext]
-                    def feedback
-                        FeedbackContext.new(
-                                @version,
-                                @solution[:account_sid],
-                                @solution[:sid]
-                                )
                     end
                     ##
                     # Access the streams
@@ -900,13 +874,6 @@ module Twilio
                     # @return [notifications] notifications
                     def notifications
                         context.notifications
-                    end
-
-                    ##
-                    # Access the feedback
-                    # @return [feedback] feedback
-                    def feedback
-                        context.feedback
                     end
 
                     ##

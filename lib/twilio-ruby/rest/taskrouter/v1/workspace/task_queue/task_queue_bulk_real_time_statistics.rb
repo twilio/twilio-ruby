@@ -35,11 +35,13 @@ module Twilio
                     end
                     ##
                     # Create the TaskQueueBulkRealTimeStatisticsInstance
+                    # @param [Object] body 
                     # @return [TaskQueueBulkRealTimeStatisticsInstance] Created TaskQueueBulkRealTimeStatisticsInstance
-                    def create
+                    def create(body: :unset
+                    )
 
-                        
-                        payload = @version.create('POST', @uri)
+                        headers = Twilio::Values.of({"Content-Type"=> "application/json"})
+                        payload = @version.create('POST', @uri, data: body.to_json, headers: headers)
                         TaskQueueBulkRealTimeStatisticsInstance.new(
                             @version,
                             payload,

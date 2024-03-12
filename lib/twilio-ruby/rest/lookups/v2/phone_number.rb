@@ -57,7 +57,7 @@ module Twilio
                     end
                     ##
                     # Fetch the PhoneNumberInstance
-                    # @param [String] fields A comma-separated list of fields to return. Possible values are caller_name, sim_swap, call_forwarding, live_activity, line_type_intelligence, identity_match, reassigned_number.
+                    # @param [String] fields A comma-separated list of fields to return. Possible values are validation, caller_name, sim_swap, call_forwarding, line_status, line_type_intelligence, identity_match, reassigned_number, sms_pumping_risk, phone_number_quality_score.
                     # @param [String] country_code The [country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) used if the phone number provided is in national format.
                     # @param [String] first_name User’s first name. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] last_name User’s last name. This query parameter is only used (optionally) for identity_match package requests.
@@ -179,7 +179,7 @@ module Twilio
                             'caller_name' => payload['caller_name'],
                             'sim_swap' => payload['sim_swap'],
                             'call_forwarding' => payload['call_forwarding'],
-                            'live_activity' => payload['live_activity'],
+                            'line_status' => payload['line_status'],
                             'line_type_intelligence' => payload['line_type_intelligence'],
                             'identity_match' => payload['identity_match'],
                             'reassigned_number' => payload['reassigned_number'],
@@ -259,9 +259,9 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] An object that contains live activity information for a mobile phone number.
-                    def live_activity
-                        @properties['live_activity']
+                    # @return [Hash] An object that contains line status information for a mobile phone number.
+                    def line_status
+                        @properties['line_status']
                     end
                     
                     ##
@@ -302,7 +302,7 @@ module Twilio
                     
                     ##
                     # Fetch the PhoneNumberInstance
-                    # @param [String] fields A comma-separated list of fields to return. Possible values are caller_name, sim_swap, call_forwarding, live_activity, line_type_intelligence, identity_match, reassigned_number.
+                    # @param [String] fields A comma-separated list of fields to return. Possible values are validation, caller_name, sim_swap, call_forwarding, line_status, line_type_intelligence, identity_match, reassigned_number, sms_pumping_risk, phone_number_quality_score.
                     # @param [String] country_code The [country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) used if the phone number provided is in national format.
                     # @param [String] first_name User’s first name. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] last_name User’s last name. This query parameter is only used (optionally) for identity_match package requests.

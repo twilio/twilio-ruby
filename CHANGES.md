@@ -2,6 +2,46 @@ twilio-ruby changelog
 =====================
 
 
+[2024-03-12] Version 7.0.0-rc.2
+-------------------------------
+**Library - Chore**
+- [PR #714](https://github.com/twilio/twilio-ruby/pull/714): enable cluster test. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+
+**Api**
+- Correct precedence documentation for application_sid vs status_callback in message creation
+- Mark MaxPrice as deprecated
+- remove feedback and feedback summary from call resource
+
+**Flex**
+- Making `plugins` visibility to public
+- Adding `routing_properties` to Interactions Channels Participant
+
+**Lookups**
+- Add new `line_status` package to the lookup response
+- Remove `live_activity` package from the lookup response **(breaking change)**
+
+**Messaging**
+- Add new `errors` attribute to the Brand Registration resource.
+- Mark `brand_feedback` attribute as deprecated.
+- Mark `failure_reason` attribute as deprecated.
+- The new `errors` attribute is expected to provide additional information about Brand registration failures and feedback (if any has been provided by The Campaign Registry). Consumers should use this attribute instead of `brand_feedback` and `failure_reason`.
+- Add tollfree multiple rejection reasons response array
+
+**Numbers**
+- Correcting mount_name for porting port in fetch API
+
+**Trusthub**
+- Add new field in statusCallbackUrl in compliance_registration.
+- Add new field in isvRegisteringForSelfOrTenant in compliance_registration.
+- Add ENUM for businessRegistrationAuthority in compliance_registration. **(breaking change)**
+- Add new field in isIsvEmbed in compliance_registration.
+- Add additional optional fields in compliance_registration for Individual business type.
+
+**Twiml**
+- Expanded description of Action parameter for Message verb
+- Add support for new Amazon Polly and Google voices (Q1 2024) for `Say` verb
+
+
 [2024-02-09] Version 7.0.0-rc.1
 -------------------------------
 **Library - Chore**

@@ -53,7 +53,7 @@ module Twilio
                     # @param [String] business_contact_first_name The first name of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_last_name The last name of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_email The email address of the contact for the business or organization using the Tollfree number.
-                    # @param [String] business_contact_phone The phone number of the contact for the business or organization using the Tollfree number.
+                    # @param [String] business_contact_phone The E.164 formatted phone number of the contact for the business or organization using the Tollfree number.
                     # @param [String] external_reference_id An optional external reference ID supplied by customer and echoed back on status retrieval.
                     # @return [TollfreeVerificationInstance] Created TollfreeVerificationInstance
                     def create(
@@ -281,7 +281,7 @@ module Twilio
                     # @param [String] business_contact_first_name The first name of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_last_name The last name of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_email The email address of the contact for the business or organization using the Tollfree number.
-                    # @param [String] business_contact_phone The phone number of the contact for the business or organization using the Tollfree number.
+                    # @param [String] business_contact_phone The E.164 formatted phone number of the contact for the business or organization using the Tollfree number.
                     # @param [String] edit_reason Describe why the verification is being edited. If the verification was rejected because of a technical issue, such as the website being down, and the issue has been resolved this parameter should be set to something similar to 'Website fixed'.
                     # @return [TollfreeVerificationInstance] Updated TollfreeVerificationInstance
                     def update(
@@ -434,6 +434,7 @@ module Twilio
                             'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
                             'edit_expiration' => Twilio.deserialize_iso8601_datetime(payload['edit_expiration']),
                             'edit_allowed' => payload['edit_allowed'],
+                            'rejection_reasons' => payload['rejection_reasons'],
                             'resource_links' => payload['resource_links'],
                             'external_reference_id' => payload['external_reference_id'],
                         }
@@ -563,7 +564,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The phone number of the contact for the business or organization using the Tollfree number.
+                    # @return [String] The E.164 formatted phone number of the contact for the business or organization using the Tollfree number.
                     def business_contact_phone
                         @properties['business_contact_phone']
                     end
@@ -659,6 +660,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [Array<Hash>] A list of rejection reasons and codes describing why a Tollfree Verification has been rejected.
+                    def rejection_reasons
+                        @properties['rejection_reasons']
+                    end
+                    
+                    ##
                     # @return [Hash] The URLs of the documents associated with the Tollfree Verification resource.
                     def resource_links
                         @properties['resource_links']
@@ -707,7 +714,7 @@ module Twilio
                     # @param [String] business_contact_first_name The first name of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_last_name The last name of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_email The email address of the contact for the business or organization using the Tollfree number.
-                    # @param [String] business_contact_phone The phone number of the contact for the business or organization using the Tollfree number.
+                    # @param [String] business_contact_phone The E.164 formatted phone number of the contact for the business or organization using the Tollfree number.
                     # @param [String] edit_reason Describe why the verification is being edited. If the verification was rejected because of a technical issue, such as the website being down, and the issue has been resolved this parameter should be set to something similar to 'Website fixed'.
                     # @return [TollfreeVerificationInstance] Updated TollfreeVerificationInstance
                     def update(

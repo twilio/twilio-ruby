@@ -32,11 +32,13 @@ module Twilio
                     end
                     ##
                     # Create the BulkHostedNumberOrderInstance
+                    # @param [Object] body 
                     # @return [BulkHostedNumberOrderInstance] Created BulkHostedNumberOrderInstance
-                    def create
+                    def create(body: :unset
+                    )
 
-                        
-                        payload = @version.create('POST', @uri)
+                        headers = Twilio::Values.of({"Content-Type"=> "application/json"})
+                        payload = @version.create('POST', @uri, data: body.to_json, headers: headers)
                         BulkHostedNumberOrderInstance.new(
                             @version,
                             payload,
