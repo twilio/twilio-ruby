@@ -36,6 +36,12 @@ module Twilio
                     @insights_settings_comment = nil
                     @insights_user_roles = nil
                     @interaction = nil
+                    @plugins = nil
+                    @plugin_archive = nil
+                    @plugin_configurations = nil
+                    @plugin_configuration_archive = nil
+                    @plugin_releases = nil
+                    @plugin_version_archive = nil
                     @provisioning_status = nil
                     @web_channel = nil
                 end
@@ -176,6 +182,112 @@ module Twilio
                         @interaction ||= InteractionList.new self
                     else
                         InteractionContext.new(self, sid)
+                    end
+                end
+                ##
+                # @param [String] sid The SID of the Flex Plugin resource to fetch.
+                # @return [Twilio::REST::FlexApi::V1::PluginContext] if sid was passed.
+                # @return [Twilio::REST::FlexApi::V1::PluginList]
+                def plugins(sid=:unset)
+                    if sid.nil?
+                        raise ArgumentError, 'sid cannot be nil'
+                    end
+                    if sid == :unset
+                        @plugins ||= PluginList.new self
+                    else
+                        PluginContext.new(self, sid)
+                    end
+                end
+                ##
+                # @param [String] sid The SID of the Flex Plugin resource to archive.
+                # @return [Twilio::REST::FlexApi::V1::PluginArchiveContext] if sid was passed.
+                # @return [Twilio::REST::FlexApi::V1::PluginArchiveList]
+                def plugin_archive(sid=:unset)
+                    if sid.nil?
+                        raise ArgumentError, 'sid cannot be nil'
+                    end
+                    if sid == :unset
+                        @plugin_archive ||= PluginArchiveList.new self
+                    else
+                        PluginArchiveContext.new(self, sid)
+                    end
+                end
+                ##
+                # @param [String] sid The SID of the Flex Plugin Configuration resource to fetch.
+                # @return [Twilio::REST::FlexApi::V1::PluginConfigurationContext] if sid was passed.
+                # @return [Twilio::REST::FlexApi::V1::PluginConfigurationList]
+                def plugin_configurations(sid=:unset)
+                    if sid.nil?
+                        raise ArgumentError, 'sid cannot be nil'
+                    end
+                    if sid == :unset
+                        @plugin_configurations ||= PluginConfigurationList.new self
+                    else
+                        PluginConfigurationContext.new(self, sid)
+                    end
+                end
+                ##
+                # @param [String] sid The SID of the Flex Plugin Configuration resource to archive.
+                # @return [Twilio::REST::FlexApi::V1::PluginConfigurationArchiveContext] if sid was passed.
+                # @return [Twilio::REST::FlexApi::V1::PluginConfigurationArchiveList]
+                def plugin_configuration_archive(sid=:unset)
+                    if sid.nil?
+                        raise ArgumentError, 'sid cannot be nil'
+                    end
+                    if sid == :unset
+                        @plugin_configuration_archive ||= PluginConfigurationArchiveList.new self
+                    else
+                        PluginConfigurationArchiveContext.new(self, sid)
+                    end
+                end
+                ##
+                # @param [String] sid The SID of the Flex Plugin Release resource to fetch.
+                # @return [Twilio::REST::FlexApi::V1::PluginReleaseContext] if sid was passed.
+                # @return [Twilio::REST::FlexApi::V1::PluginReleaseList]
+                def plugin_releases(sid=:unset)
+                    if sid.nil?
+                        raise ArgumentError, 'sid cannot be nil'
+                    end
+                    if sid == :unset
+                        @plugin_releases ||= PluginReleaseList.new self
+                    else
+                        PluginReleaseContext.new(self, sid)
+                    end
+                end
+                ##
+                # @param [String] plugin_sid The SID of the Flex Plugin the resource to belongs to.
+                # @param [String] sid The SID of the Flex Plugin Version resource to archive.
+                # @return [Twilio::REST::FlexApi::V1::PluginVersionArchiveContext] if pluginSid was passed.
+                # @return [Twilio::REST::FlexApi::V1::PluginVersionArchiveList]
+                def plugin_version_archive(plugin_sid=:unset, sid=:unset)
+                    if plugin_sid.nil?
+                        raise ArgumentError, 'plugin_sid cannot be nil'
+                    end
+                    if sid.nil?
+                        raise ArgumentError, 'sid cannot be nil'
+                    end
+                    if plugin_sid == :unset && sid == :unset
+                        @plugin_version_archive ||= PluginVersionArchiveList.new self
+                    else
+                        PluginVersionArchiveContext.new(self, plugin_sid, sid)
+                    end
+                end
+                ##
+                # @param [String] plugin_sid The SID of the Flex Plugin the resource to belongs to.
+                # @param [String] sid The SID of the Flex Plugin Version resource to archive.
+                # @return [Twilio::REST::FlexApi::V1::PluginVersionArchiveContext] if sid was passed.
+                # @return [Twilio::REST::FlexApi::V1::PluginVersionArchiveList]
+                def plugin_version_archive(plugin_sid=:unset, sid=:unset)
+                    if plugin_sid.nil?
+                        raise ArgumentError, 'plugin_sid cannot be nil'
+                    end
+                    if sid.nil?
+                        raise ArgumentError, 'sid cannot be nil'
+                    end
+                    if plugin_sid == :unset && sid == :unset
+                        @plugin_version_archive ||= PluginVersionArchiveList.new self
+                    else
+                        PluginVersionArchiveContext.new(self, plugin_sid, sid)
                     end
                 end
                 ##

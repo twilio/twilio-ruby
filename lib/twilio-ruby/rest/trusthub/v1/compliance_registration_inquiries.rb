@@ -68,6 +68,8 @@ module Twilio
                     # @param [String] individual_email The email address of the Individual User.
                     # @param [String] individual_phone The phone number of the Individual User.
                     # @param [Boolean] is_isv_embed Indicates if the inquiry is being started from an ISV embedded component.
+                    # @param [String] isv_registering_for_self_or_tenant Indicates if the isv registering for self or tenant.
+                    # @param [String] status_callback_url The url we call to inform you of bundle changes.
                     # @return [ComplianceRegistrationInquiriesInstance] Created ComplianceRegistrationInquiriesInstance
                     def create(
                         end_user_type: nil, 
@@ -105,7 +107,9 @@ module Twilio
                         date_of_birth: :unset, 
                         individual_email: :unset, 
                         individual_phone: :unset, 
-                        is_isv_embed: :unset
+                        is_isv_embed: :unset, 
+                        isv_registering_for_self_or_tenant: :unset, 
+                        status_callback_url: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -145,6 +149,8 @@ module Twilio
                             'IndividualEmail' => individual_email,
                             'IndividualPhone' => individual_phone,
                             'IsIsvEmbed' => is_isv_embed,
+                            'IsvRegisteringForSelfOrTenant' => isv_registering_for_self_or_tenant,
+                            'StatusCallbackUrl' => status_callback_url,
                         })
 
                         

@@ -23,7 +23,7 @@ module Twilio
                     @version = 'v1'
                     @bulk_eligibilities = nil
                     @porting_bulk_portabilities = nil
-                    @porting_port_ins = nil
+                    @porting_port_ins_fetch = nil
                     @porting_portabilities = nil
                 end
 
@@ -59,12 +59,12 @@ module Twilio
                 # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.
                 # @return [Twilio::REST::Numbers::V1::PortingPortInFetchContext] if portInRequestSid was passed.
                 # @return [Twilio::REST::Numbers::V1::PortingPortInFetchList]
-                def porting_port_ins(port_in_request_sid=:unset)
+                def porting_port_ins_fetch(port_in_request_sid=:unset)
                     if port_in_request_sid.nil?
                         raise ArgumentError, 'port_in_request_sid cannot be nil'
                     end
                     if port_in_request_sid == :unset
-                        @porting_port_ins ||= PortingPortInFetchList.new self
+                        @porting_port_ins_fetch ||= PortingPortInFetchList.new self
                     else
                         PortingPortInFetchContext.new(self, port_in_request_sid)
                     end
