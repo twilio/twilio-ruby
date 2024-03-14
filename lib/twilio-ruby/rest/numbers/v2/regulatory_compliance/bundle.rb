@@ -84,6 +84,8 @@ module Twilio
                     # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
                     # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
                     # @param [Time] valid_until_date Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
+                    # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
+                    # @param [Time] valid_until_date_after Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -91,7 +93,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, limit: nil, page_size: nil)
+                    def list(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, limit: nil, page_size: nil)
                         self.stream(
                             status: status,
                             friendly_name: friendly_name,
@@ -102,6 +104,8 @@ module Twilio
                             sort_by: sort_by,
                             sort_direction: sort_direction,
                             valid_until_date: valid_until_date,
+                            valid_until_date_before: valid_until_date_before,
+                            valid_until_date_after: valid_until_date_after,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -120,6 +124,8 @@ module Twilio
                     # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
                     # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
                     # @param [Time] valid_until_date Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
+                    # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
+                    # @param [Time] valid_until_date_after Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -127,7 +133,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, limit: nil, page_size: nil)
+                    def stream(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
@@ -140,6 +146,8 @@ module Twilio
                             sort_by: sort_by,
                             sort_direction: sort_direction,
                             valid_until_date: valid_until_date,
+                            valid_until_date_before: valid_until_date_before,
+                            valid_until_date_after: valid_until_date_after,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -171,11 +179,13 @@ module Twilio
                     # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
                     # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
                     # @param [Time] valid_until_date Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
+                    # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
+                    # @param [Time] valid_until_date_after Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of BundleInstance
-                    def page(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'Status' => status,
                             'FriendlyName' => friendly_name,
@@ -186,6 +196,8 @@ module Twilio
                             'SortBy' => sort_by,
                             'SortDirection' => sort_direction,
                             'ValidUntilDate' =>  Twilio.serialize_iso8601_datetime(valid_until_date),
+                            'ValidUntilDate<' =>  Twilio.serialize_iso8601_datetime(valid_until_date_before),
+                            'ValidUntilDate>' =>  Twilio.serialize_iso8601_datetime(valid_until_date_after),
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

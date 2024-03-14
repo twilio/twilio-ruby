@@ -117,6 +117,11 @@ module Twilio
                 @numbers ||= Numbers.new self
             end
             ##
+            # Access the Oauth Twilio Domain
+            def oauth
+                @oauth ||= Oauth.new self
+            end
+            ##
             # Access the Preview Twilio Domain
             def preview
                 @preview ||= Preview.new self

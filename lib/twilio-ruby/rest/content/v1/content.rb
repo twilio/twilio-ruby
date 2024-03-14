@@ -85,6 +85,34 @@ module Twilio
                         end
                     end
 
+                    class CatalogItem
+                            # @param [id]: [String] 
+                            # @param [section_title]: [String] 
+                            # @param [name]: [String] 
+                            # @param [media_url]: [String] 
+                            # @param [price]: [Float] 
+                            # @param [description]: [String] 
+                        attr_accessor :id, :section_title, :name, :media_url, :price, :description
+                        def initialize(payload)
+                                @id = payload["id"]
+                                @section_title = payload["section_title"]
+                                @name = payload["name"]
+                                @media_url = payload["media_url"]
+                                @price = payload["price"]
+                                @description = payload["description"]
+                        end
+                        def to_json(options = {})
+                        {
+                                id: @id,
+                                section_title: @section_title,
+                                name: @name,
+                                media_url: @media_url,
+                                price: @price,
+                                description: @description,
+                        }.to_json(options)
+                        end
+                    end
+
                     class ContentCreateRequest
                             # @param [friendly_name]: [String] User defined name of the content
                             # @param [variables]: [Hash<String, String>] Key value pairs of variable name to value
@@ -183,6 +211,34 @@ module Twilio
                         end
                     end
 
+                    class TwilioCatalog
+                            # @param [title]: [String] 
+                            # @param [body]: [String] 
+                            # @param [subtitle]: [String] 
+                            # @param [id]: [String] 
+                            # @param [items]: [Array<ContentList.CatalogItem>] 
+                            # @param [dynamic_items]: [String] 
+                        attr_accessor :title, :body, :subtitle, :id, :items, :dynamic_items
+                        def initialize(payload)
+                                @title = payload["title"]
+                                @body = payload["body"]
+                                @subtitle = payload["subtitle"]
+                                @id = payload["id"]
+                                @items = payload["items"]
+                                @dynamic_items = payload["dynamic_items"]
+                        end
+                        def to_json(options = {})
+                        {
+                                title: @title,
+                                body: @body,
+                                subtitle: @subtitle,
+                                id: @id,
+                                items: @items,
+                                dynamic_items: @dynamic_items,
+                        }.to_json(options)
+                        end
+                    end
+
                     class TwilioListPicker
                             # @param [body]: [String] 
                             # @param [button]: [String] 
@@ -274,9 +330,10 @@ module Twilio
                             # @param [twilio_call_to_action]: [ContentList.TwilioCallToAction] 
                             # @param [twilio_quick_reply]: [ContentList.TwilioQuickReply] 
                             # @param [twilio_card]: [ContentList.TwilioCard] 
+                            # @param [twilio_catalog]: [ContentList.TwilioCatalog] 
                             # @param [whatsapp_card]: [ContentList.WhatsappCard] 
                             # @param [whatsapp_authentication]: [ContentList.WhatsappAuthentication] 
-                        attr_accessor :twilio_text, :twilio_media, :twilio_location, :twilio_list_picker, :twilio_call_to_action, :twilio_quick_reply, :twilio_card, :whatsapp_card, :whatsapp_authentication
+                        attr_accessor :twilio_text, :twilio_media, :twilio_location, :twilio_list_picker, :twilio_call_to_action, :twilio_quick_reply, :twilio_card, :twilio_catalog, :whatsapp_card, :whatsapp_authentication
                         def initialize(payload)
                                 @twilio_text = payload["twilio_text"]
                                 @twilio_media = payload["twilio_media"]
@@ -285,6 +342,7 @@ module Twilio
                                 @twilio_call_to_action = payload["twilio_call_to_action"]
                                 @twilio_quick_reply = payload["twilio_quick_reply"]
                                 @twilio_card = payload["twilio_card"]
+                                @twilio_catalog = payload["twilio_catalog"]
                                 @whatsapp_card = payload["whatsapp_card"]
                                 @whatsapp_authentication = payload["whatsapp_authentication"]
                         end
@@ -297,6 +355,7 @@ module Twilio
                                 twilio_call_to_action: @twilio_call_to_action,
                                 twilio_quick_reply: @twilio_quick_reply,
                                 twilio_card: @twilio_card,
+                                twilio_catalog: @twilio_catalog,
                                 whatsapp_card: @whatsapp_card,
                                 whatsapp_authentication: @whatsapp_authentication,
                         }.to_json(options)
