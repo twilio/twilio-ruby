@@ -38,6 +38,8 @@ module Twilio
           params_hash = {}
         end
 
+        return false unless valid_body
+
         # Check signature of the url with and without port numbers
         # since signature generation on the back end is inconsistent
         valid_signature_with_port = secure_compare(build_signature_for(url_with_port, params_hash), signature)
