@@ -22,7 +22,9 @@ module Twilio
                     super
                     @version = 'v1'
                     @bulk_eligibilities = nil
+                    @eligibilities = nil
                     @porting_bulk_portabilities = nil
+                    @porting_port_ins = nil
                     @porting_port_ins_fetch = nil
                     @porting_portabilities = nil
                 end
@@ -42,6 +44,11 @@ module Twilio
                     end
                 end
                 ##
+                # @return [Twilio::REST::Numbers::V1::EligibilityList]
+                def eligibilities
+                    @eligibilities ||= EligibilityList.new self
+                end
+                ##
                 # @param [String] sid A 34 character string that uniquely identifies the Portability check.
                 # @return [Twilio::REST::Numbers::V1::PortingBulkPortabilityContext] if sid was passed.
                 # @return [Twilio::REST::Numbers::V1::PortingBulkPortabilityList]
@@ -53,6 +60,25 @@ module Twilio
                         @porting_bulk_portabilities ||= PortingBulkPortabilityList.new self
                     else
                         PortingBulkPortabilityContext.new(self, sid)
+                    end
+                end
+                ##
+                # @return [Twilio::REST::Numbers::V1::PortingPortInList]
+                def porting_port_ins
+                    @porting_port_ins ||= PortingPortInList.new self
+                end
+                ##
+                # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.
+                # @return [Twilio::REST::Numbers::V1::PortingPortInFetchContext] if portInRequestSid was passed.
+                # @return [Twilio::REST::Numbers::V1::PortingPortInFetchList]
+                def porting_port_ins_fetch(port_in_request_sid=:unset)
+                    if port_in_request_sid.nil?
+                        raise ArgumentError, 'port_in_request_sid cannot be nil'
+                    end
+                    if port_in_request_sid == :unset
+                        @porting_port_ins_fetch ||= PortingPortInFetchList.new self
+                    else
+                        PortingPortInFetchContext.new(self, port_in_request_sid)
                     end
                 end
                 ##
