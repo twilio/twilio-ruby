@@ -18,7 +18,7 @@ module Twilio
         class Numbers < NumbersBase
             class V1 < Version
                 class PortingPortInFetchList < ListResource
-                
+
                     ##
                     # Initialize the PortingPortInFetchList
                     # @param [Version] version Version that contains the resource
@@ -27,10 +27,10 @@ module Twilio
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        
-                        
+
+
                     end
-                
+
 
 
                     # Provide a user friendly representation
@@ -40,8 +40,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class PortingPortInFetchContext < InstanceContext
                     ##
                     # Initialize the PortingPortInFetchContext
@@ -55,14 +53,14 @@ module Twilio
                         @solution = { port_in_request_sid: port_in_request_sid,  }
                         @uri = "/Porting/PortIn/#{@solution[:port_in_request_sid]}"
 
-                        
+
                     end
                     ##
                     # Fetch the PortingPortInFetchInstance
                     # @return [PortingPortInFetchInstance] Fetched PortingPortInFetchInstance
                     def fetch
 
-                        
+
                         payload = @version.fetch('GET', @uri)
                         PortingPortInFetchInstance.new(
                             @version,
@@ -127,9 +125,9 @@ module Twilio
                     # @return [PortingPortInFetchInstance] PortingPortInFetchInstance
                     def initialize(version, payload , port_in_request_sid: nil)
                         super(version)
-                        
+
                         # Marshaled Properties
-                        @properties = { 
+                        @properties = {
                             'port_in_request_sid' => payload['port_in_request_sid'],
                             'url' => payload['url'],
                             'account_sid' => payload['account_sid'],
@@ -157,67 +155,67 @@ module Twilio
                         end
                         @instance_context
                     end
-                    
+
                     ##
                     # @return [String] The SID of the Port In request. This is a unique identifier of the port in request.
                     def port_in_request_sid
                         @properties['port_in_request_sid']
                     end
-                    
+
                     ##
                     # @return [String] The URL of this Port In request
                     def url
                         @properties['url']
                     end
-                    
+
                     ##
                     # @return [String] The Account SID that the numbers will be added to after they are ported into Twilio.
                     def account_sid
                         @properties['account_sid']
                     end
-                    
+
                     ##
                     # @return [Array<String>] List of emails for getting notifications about the LOA signing process. Allowed Max 10 emails.
                     def notification_emails
                         @properties['notification_emails']
                     end
-                    
+
                     ##
                     # @return [Date] Minimum number of days in the future (at least 2 days) needs to be established with the Ops team for validation.
                     def target_port_in_date
                         @properties['target_port_in_date']
                     end
-                    
+
                     ##
                     # @return [String] Minimum hour in the future needs to be established with the Ops team for validation.
                     def target_port_in_time_range_start
                         @properties['target_port_in_time_range_start']
                     end
-                    
+
                     ##
                     # @return [String] Maximum hour in the future needs to be established with the Ops team for validation.
                     def target_port_in_time_range_end
                         @properties['target_port_in_time_range_end']
                     end
-                    
+
                     ##
-                    # @return [Hash] The information for the losing carrier. 
+                    # @return [Hash] The information for the losing carrier.
                     def losing_carrier_information
                         @properties['losing_carrier_information']
                     end
-                    
+
                     ##
                     # @return [Array<Hash>] The list of phone numbers to Port in. Phone numbers are in E.164 format (e.g. +16175551212).
                     def phone_numbers
                         @properties['phone_numbers']
                     end
-                    
+
                     ##
                     # @return [Array<String>] The list of documents SID referencing a utility bills
                     def documents
                         @properties['documents']
                     end
-                    
+
                     ##
                     # Fetch the PortingPortInFetchInstance
                     # @return [PortingPortInFetchInstance] Fetched PortingPortInFetchInstance

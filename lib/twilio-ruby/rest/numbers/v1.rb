@@ -22,7 +22,9 @@ module Twilio
                     super
                     @version = 'v1'
                     @bulk_eligibilities = nil
+                    @eligibilities = nil
                     @porting_bulk_portabilities = nil
+                    @porting_port_ins = nil
                     @porting_port_ins_fetch = nil
                     @porting_portabilities = nil
                 end
@@ -42,6 +44,11 @@ module Twilio
                     end
                 end
                 ##
+                # @return [Twilio::REST::Numbers::V1::EligibilityList]
+                def eligibilities
+                    @eligibilities ||= EligibilityList.new self
+                end
+                ##
                 # @param [String] sid A 34 character string that uniquely identifies the Portability check.
                 # @return [Twilio::REST::Numbers::V1::PortingBulkPortabilityContext] if sid was passed.
                 # @return [Twilio::REST::Numbers::V1::PortingBulkPortabilityList]
@@ -54,6 +61,11 @@ module Twilio
                     else
                         PortingBulkPortabilityContext.new(self, sid)
                     end
+                end
+                ##
+                # @return [Twilio::REST::Numbers::V1::PortingPortInList]
+                def porting_port_ins
+                    @porting_port_ins ||= PortingPortInList.new self
                 end
                 ##
                 # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.

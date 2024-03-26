@@ -9,11 +9,10 @@ module Twilio
       attr_reader :timeout, :last_response, :last_request, :connection
 
       def initialize(proxy_prot = nil, proxy_addr = nil, proxy_port = nil, proxy_user = nil, proxy_pass = nil,
-                     ssl_ca_file = nil, timeout: nil)
+                     timeout: nil)
         @proxy_prot = proxy_prot
         @proxy_path = "#{proxy_addr}:#{proxy_port}" if proxy_addr && proxy_port
         @proxy_auth = "#{proxy_user}:#{proxy_pass}@" if proxy_pass && proxy_user
-        @ssl_ca_file = ssl_ca_file
         @timeout = timeout
         @adapter = Faraday.default_adapter
         @configure_connection_blocks = []
@@ -27,9 +26,17 @@ module Twilio
       end
 
       def _request(request) # rubocop:disable Metrics/MethodLength
+        middle_ware = case request.headers['Content-Type']
+                      when 'application/json'
+                        :json
+                      when 'application/x-www-form-urlencoded'
+                        :url_encoded
+                      else
+                        :url_encoded
+                      end
         @connection = Faraday.new(url: request.host + ':' + request.port.to_s, ssl: { verify: true }) do |f|
           f.options.params_encoder = Faraday::FlatParamsEncoder
-          f.request :url_encoded
+          f.request(middle_ware)
           f.headers = request.headers
           if Faraday::VERSION.start_with?('2.')
             f.request(:authorization, :basic, request.auth[0], request.auth[1])

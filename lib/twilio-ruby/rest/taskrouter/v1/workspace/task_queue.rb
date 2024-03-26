@@ -31,6 +31,7 @@ module Twilio
                         @solution = { workspace_sid: workspace_sid }
                         @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues"
                         # Components
+                        @bulk_real_time_statistics = nil
                         @statistics = nil
                         @bulk_real_time_statistics = nil
                     end
@@ -180,6 +181,13 @@ module Twilio
                     end
                     
 
+                ##
+                # Access the bulk_real_time_statistics
+                # @return [TaskQueueBulkRealTimeStatisticsList]
+                # @return [TaskQueueBulkRealTimeStatisticsContext]
+                def bulk_real_time_statistics
+                    @bulk_real_time_statistics ||= TaskQueueBulkRealTimeStatisticsList.new(@version, workspace_sid: @solution[:workspace_sid] )
+                end
                 ##
                 # Access the statistics
                 # @return [TaskQueuesStatisticsList]

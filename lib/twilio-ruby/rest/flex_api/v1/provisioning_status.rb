@@ -18,7 +18,7 @@ module Twilio
         class FlexApi < FlexApiBase
             class V1 < Version
                 class ProvisioningStatusList < ListResource
-                
+
                     ##
                     # Initialize the ProvisioningStatusList
                     # @param [Version] version Version that contains the resource
@@ -27,10 +27,10 @@ module Twilio
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        
-                        
+
+
                     end
-                
+
 
 
                     # Provide a user friendly representation
@@ -40,8 +40,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class ProvisioningStatusContext < InstanceContext
                     ##
                     # Initialize the ProvisioningStatusContext
@@ -54,14 +52,14 @@ module Twilio
                         @solution = {  }
                         @uri = "/account/provision/status"
 
-                        
+
                     end
                     ##
                     # Fetch the ProvisioningStatusInstance
                     # @return [ProvisioningStatusInstance] Fetched ProvisioningStatusInstance
                     def fetch
 
-                        
+
                         payload = @version.fetch('GET', @uri)
                         ProvisioningStatusInstance.new(
                             @version,
@@ -125,9 +123,9 @@ module Twilio
                     # @return [ProvisioningStatusInstance] ProvisioningStatusInstance
                     def initialize(version, payload )
                         super(version)
-                        
+
                         # Marshaled Properties
-                        @properties = { 
+                        @properties = {
                             'status' => payload['status'],
                             'url' => payload['url'],
                         }
@@ -147,19 +145,19 @@ module Twilio
                         end
                         @instance_context
                     end
-                    
+
                     ##
-                    # @return [Status] 
+                    # @return [Status]
                     def status
                         @properties['status']
                     end
-                    
+
                     ##
                     # @return [String] The absolute URL of the resource.
                     def url
                         @properties['url']
                     end
-                    
+
                     ##
                     # Fetch the ProvisioningStatusInstance
                     # @return [ProvisioningStatusInstance] Fetched ProvisioningStatusInstance
