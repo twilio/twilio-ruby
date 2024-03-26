@@ -82,6 +82,10 @@ module Twilio
                 @lookups ||= Lookups.new self
             end
             ##
+            # Access the PreviewMessaging Twilio Domain
+            def preview_messaging
+                @preview_messaging ||= PreviewMessaging.new self
+            end
             ##
             # Access the Messaging Twilio Domain
             def messaging
@@ -106,6 +110,11 @@ module Twilio
             # Access the Numbers Twilio Domain
             def numbers
                 @numbers ||= Numbers.new self
+            end
+            ##
+            # Access the Oauth Twilio Domain
+            def oauth
+                @oauth ||= Oauth.new self
             end
             ##
             # Access the Preview Twilio Domain

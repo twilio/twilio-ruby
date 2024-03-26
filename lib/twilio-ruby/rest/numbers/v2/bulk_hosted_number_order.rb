@@ -27,9 +27,24 @@ module Twilio
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        
+                        @uri = "/HostedNumber/Orders/Bulk"
                         
                     end
+                    ##
+                    # Create the BulkHostedNumberOrderInstance
+                    # @param [Object] body 
+                    # @return [BulkHostedNumberOrderInstance] Created BulkHostedNumberOrderInstance
+                    def create(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({"Content-Type"=> "application/json"})
+                        payload = @version.create('POST', @uri, data: body.to_json, headers: headers)
+                        BulkHostedNumberOrderInstance.new(
+                            @version,
+                            payload,
+                        )
+                    end
+
                 
 
 
@@ -40,8 +55,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class BulkHostedNumberOrderContext < InstanceContext
                     ##
                     # Initialize the BulkHostedNumberOrderContext
