@@ -1,6 +1,6 @@
 module Twilio
     module REST
-      class Media < MediaBase;
+      class Oauth < OauthBase;
       end
     end
 end

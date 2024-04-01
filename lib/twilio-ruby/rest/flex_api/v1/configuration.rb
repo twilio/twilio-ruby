@@ -73,6 +73,21 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ConfigurationInstance
+                    # @param [Object] body 
+                    # @return [ConfigurationInstance] Updated ConfigurationInstance
+                    def update(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({"Content-Type"=> "application/json"})
+                        payload = @version.update('POST', @uri, data: body.to_json, headers: headers)
+                        ConfigurationInstance.new(
+                            @version,
+                            payload,
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -503,6 +518,17 @@ module Twilio
 
                         context.fetch(
                             ui_version: ui_version, 
+                        )
+                    end
+
+                    ##
+                    # Update the ConfigurationInstance
+                    # @param [Object] body 
+                    # @return [ConfigurationInstance] Updated ConfigurationInstance
+                    def update(body: :unset
+                    )
+
+                        context.update(
                         )
                     end
 

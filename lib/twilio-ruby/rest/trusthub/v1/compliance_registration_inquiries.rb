@@ -68,6 +68,9 @@ module Twilio
                     # @param [String] individual_email The email address of the Individual User.
                     # @param [String] individual_phone The phone number of the Individual User.
                     # @param [Boolean] is_isv_embed Indicates if the inquiry is being started from an ISV embedded component.
+                    # @param [String] isv_registering_for_self_or_tenant Indicates if the isv registering for self or tenant.
+                    # @param [String] status_callback_url The url we call to inform you of bundle changes.
+                    # @param [String] theme_set_id Theme id for styling the inquiry form.
                     # @return [ComplianceRegistrationInquiriesInstance] Created ComplianceRegistrationInquiriesInstance
                     def create(
                         end_user_type: nil, 
@@ -105,7 +108,10 @@ module Twilio
                         date_of_birth: :unset, 
                         individual_email: :unset, 
                         individual_phone: :unset, 
-                        is_isv_embed: :unset
+                        is_isv_embed: :unset, 
+                        isv_registering_for_self_or_tenant: :unset, 
+                        status_callback_url: :unset, 
+                        theme_set_id: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -145,6 +151,9 @@ module Twilio
                             'IndividualEmail' => individual_email,
                             'IndividualPhone' => individual_phone,
                             'IsIsvEmbed' => is_isv_embed,
+                            'IsvRegisteringForSelfOrTenant' => isv_registering_for_self_or_tenant,
+                            'StatusCallbackUrl' => status_callback_url,
+                            'ThemeSetId' => theme_set_id,
                         })
 
                         
@@ -161,6 +170,62 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         '#<Twilio.Trusthub.V1.ComplianceRegistrationInquiriesList>'
+                    end
+                end
+
+
+                class ComplianceRegistrationInquiriesContext < InstanceContext
+                    ##
+                    # Initialize the ComplianceRegistrationInquiriesContext
+                    # @param [Version] version Version that contains the resource
+                    # @param [String] registration_id The unique RegistrationId matching the Regulatory Compliance Inquiry that should be resumed or resubmitted. This value will have been returned by the initial Regulatory Compliance Inquiry creation call.
+                    # @return [ComplianceRegistrationInquiriesContext] ComplianceRegistrationInquiriesContext
+                    def initialize(version, registration_id)
+                        super(version)
+
+                        # Path Solution
+                        @solution = { registration_id: registration_id,  }
+                        @uri = "/ComplianceInquiries/Registration/#{@solution[:registration_id]}/RegulatoryCompliance/GB/Initialize"
+
+                        
+                    end
+                    ##
+                    # Update the ComplianceRegistrationInquiriesInstance
+                    # @param [Boolean] is_isv_embed Indicates if the inquiry is being started from an ISV embedded component.
+                    # @param [String] theme_set_id Theme id for styling the inquiry form.
+                    # @return [ComplianceRegistrationInquiriesInstance] Updated ComplianceRegistrationInquiriesInstance
+                    def update(
+                        is_isv_embed: :unset, 
+                        theme_set_id: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'IsIsvEmbed' => is_isv_embed,
+                            'ThemeSetId' => theme_set_id,
+                        })
+
+                        
+                        payload = @version.update('POST', @uri, data: data)
+                        ComplianceRegistrationInquiriesInstance.new(
+                            @version,
+                            payload,
+                            registration_id: @solution[:registration_id],
+                        )
+                    end
+
+
+                    ##
+                    # Provide a user friendly representation
+                    def to_s
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
+                        "#<Twilio.Trusthub.V1.ComplianceRegistrationInquiriesContext #{context}>"
+                    end
+
+                    ##
+                    # Provide a detailed, user friendly representation
+                    def inspect
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
+                        "#<Twilio.Trusthub.V1.ComplianceRegistrationInquiriesContext #{context}>"
                     end
                 end
 
@@ -202,7 +267,7 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [ComplianceRegistrationInquiriesInstance] ComplianceRegistrationInquiriesInstance
-                    def initialize(version, payload )
+                    def initialize(version, payload , registration_id: nil)
                         super(version)
                         
                         # Marshaled Properties
@@ -212,8 +277,22 @@ module Twilio
                             'registration_id' => payload['registration_id'],
                             'url' => payload['url'],
                         }
+
+                        # Context
+                        @instance_context = nil
+                        @params = { 'registration_id' => registration_id  || @properties['registration_id']  , }
                     end
 
+                    ##
+                    # Generate an instance context for the instance, the context is capable of
+                    # performing various actions.  All instance actions are proxied to the context
+                    # @return [ComplianceRegistrationInquiriesContext] CallContext for this CallInstance
+                    def context
+                        unless @instance_context
+                            @instance_context = ComplianceRegistrationInquiriesContext.new(@version , @params['registration_id'])
+                        end
+                        @instance_context
+                    end
                     
                     ##
                     # @return [String] The unique ID used to start an embedded compliance registration session.
@@ -240,15 +319,33 @@ module Twilio
                     end
                     
                     ##
+                    # Update the ComplianceRegistrationInquiriesInstance
+                    # @param [Boolean] is_isv_embed Indicates if the inquiry is being started from an ISV embedded component.
+                    # @param [String] theme_set_id Theme id for styling the inquiry form.
+                    # @return [ComplianceRegistrationInquiriesInstance] Updated ComplianceRegistrationInquiriesInstance
+                    def update(
+                        is_isv_embed: :unset, 
+                        theme_set_id: :unset
+                    )
+
+                        context.update(
+                            is_isv_embed: is_isv_embed, 
+                            theme_set_id: theme_set_id, 
+                        )
+                    end
+
+                    ##
                     # Provide a user friendly representation
                     def to_s
-                        "<Twilio.Trusthub.V1.ComplianceRegistrationInquiriesInstance>"
+                        values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                        "<Twilio.Trusthub.V1.ComplianceRegistrationInquiriesInstance #{values}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        "<Twilio.Trusthub.V1.ComplianceRegistrationInquiriesInstance>"
+                        values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+                        "<Twilio.Trusthub.V1.ComplianceRegistrationInquiriesInstance #{values}>"
                     end
                 end
 

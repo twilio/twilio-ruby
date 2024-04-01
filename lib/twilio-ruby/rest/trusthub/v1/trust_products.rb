@@ -33,8 +33,8 @@ module Twilio
                     ##
                     # Create the TrustProductsInstance
                     # @param [String] friendly_name The string that you assigned to describe the resource.
-                    # @param [String] email The email address that will receive updates when the Customer-Profile resource changes status.
-                    # @param [String] policy_sid The unique string of a policy that is associated to the Customer-Profile resource.
+                    # @param [String] email The email address that will receive updates when the Trust Product resource changes status.
+                    # @param [String] policy_sid The unique string of a policy that is associated to the Trust Product resource.
                     # @param [String] status_callback The URL we call to inform your application of status changes.
                     # @return [TrustProductsInstance] Created TrustProductsInstance
                     def create(
@@ -64,9 +64,9 @@ module Twilio
                     # Lists TrustProductsInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [Status] status The verification status of the Customer-Profile resource.
+                    # @param [Status] status The verification status of the Trust Product resource.
                     # @param [String] friendly_name The string that you assigned to describe the resource.
-                    # @param [String] policy_sid The unique string of a policy that is associated to the Customer-Profile resource.
+                    # @param [String] policy_sid The unique string of a policy that is associated to the Trust Product resource.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -88,9 +88,9 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [Status] status The verification status of the Customer-Profile resource.
+                    # @param [Status] status The verification status of the Trust Product resource.
                     # @param [String] friendly_name The string that you assigned to describe the resource.
-                    # @param [String] policy_sid The unique string of a policy that is associated to the Customer-Profile resource.
+                    # @param [String] policy_sid The unique string of a policy that is associated to the Trust Product resource.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -127,9 +127,9 @@ module Twilio
                     ##
                     # Retrieve a single page of TrustProductsInstance records from the API.
                     # Request is executed immediately.
-                    # @param [Status] status The verification status of the Customer-Profile resource.
+                    # @param [Status] status The verification status of the Trust Product resource.
                     # @param [String] friendly_name The string that you assigned to describe the resource.
-                    # @param [String] policy_sid The unique string of a policy that is associated to the Customer-Profile resource.
+                    # @param [String] policy_sid The unique string of a policy that is associated to the Trust Product resource.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -175,7 +175,7 @@ module Twilio
                     ##
                     # Initialize the TrustProductsContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] sid The unique string that we created to identify the Customer-Profile resource.
+                    # @param [String] sid The unique string that we created to identify the Trust Product resource.
                     # @return [TrustProductsContext] TrustProductsContext
                     def initialize(version, sid)
                         super(version)
@@ -217,7 +217,7 @@ module Twilio
                     # @param [Status] status 
                     # @param [String] status_callback The URL we call to inform your application of status changes.
                     # @param [String] friendly_name The string that you assigned to describe the resource.
-                    # @param [String] email The email address that will receive updates when the Customer-Profile resource changes status.
+                    # @param [String] email The email address that will receive updates when the Trust Product resource changes status.
                     # @return [TrustProductsInstance] Updated TrustProductsInstance
                     def update(
                         status: :unset, 
@@ -389,19 +389,19 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique string that we created to identify the Customer-Profile resource.
+                    # @return [String] The unique string that we created to identify the Trust Product resource.
                     def sid
                         @properties['sid']
                     end
                     
                     ##
-                    # @return [String] The SID of the [Account](https://www.twilio.com/docs/iam/api/account) that created the Customer-Profile resource.
+                    # @return [String] The SID of the [Account](https://www.twilio.com/docs/iam/api/account) that created the Trust Product resource.
                     def account_sid
                         @properties['account_sid']
                     end
                     
                     ##
-                    # @return [String] The unique string of a policy that is associated to the Customer-Profile resource.
+                    # @return [String] The unique string of the policy that is associated with the Trust Product resource.
                     def policy_sid
                         @properties['policy_sid']
                     end
@@ -419,13 +419,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Time] The date and time in GMT in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format when the resource will be valid until.
+                    # @return [Time] The date and time in GMT in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format until which the resource will be valid.
                     def valid_until
                         @properties['valid_until']
                     end
                     
                     ##
-                    # @return [String] The email address that will receive updates when the Customer-Profile resource changes status.
+                    # @return [String] The email address that will receive updates when the Trust Product resource changes status.
                     def email
                         @properties['email']
                     end
@@ -449,13 +449,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The absolute URL of the Customer-Profile resource.
+                    # @return [String] The absolute URL of the Trust Product resource.
                     def url
                         @properties['url']
                     end
                     
                     ##
-                    # @return [Hash] The URLs of the Assigned Items of the Customer-Profile resource.
+                    # @return [Hash] The URLs of the Assigned Items of the Trust Product resource.
                     def links
                         @properties['links']
                     end
@@ -481,7 +481,7 @@ module Twilio
                     # @param [Status] status 
                     # @param [String] status_callback The URL we call to inform your application of status changes.
                     # @param [String] friendly_name The string that you assigned to describe the resource.
-                    # @param [String] email The email address that will receive updates when the Customer-Profile resource changes status.
+                    # @param [String] email The email address that will receive updates when the Trust Product resource changes status.
                     # @return [TrustProductsInstance] Updated TrustProductsInstance
                     def update(
                         status: :unset, 

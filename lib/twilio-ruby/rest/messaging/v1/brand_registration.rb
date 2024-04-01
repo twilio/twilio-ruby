@@ -156,8 +156,6 @@ module Twilio
                 end
 
 
-                ##
-                #PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
                 class BrandRegistrationContext < InstanceContext
                     ##
                     # Initialize the BrandRegistrationContext
@@ -302,6 +300,7 @@ module Twilio
                             'status' => payload['status'],
                             'tcr_id' => payload['tcr_id'],
                             'failure_reason' => payload['failure_reason'],
+                            'errors' => payload['errors'],
                             'url' => payload['url'],
                             'brand_score' => payload['brand_score'] == nil ? payload['brand_score'] : payload['brand_score'].to_i,
                             'brand_feedback' => payload['brand_feedback'],
@@ -385,9 +384,15 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] A reason why brand registration has failed. Only applicable when status is FAILED.
+                    # @return [String] DEPRECATED. A reason why brand registration has failed. Only applicable when status is FAILED.
                     def failure_reason
                         @properties['failure_reason']
+                    end
+                    
+                    ##
+                    # @return [Array<Hash>] A list of errors that occurred during the brand registration process.
+                    def errors
+                        @properties['errors']
                     end
                     
                     ##
@@ -403,7 +408,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Array<BrandFeedback>] Feedback on how to improve brand score
+                    # @return [Array<BrandFeedback>] DEPRECATED. Feedback on how to improve brand score
                     def brand_feedback
                         @properties['brand_feedback']
                     end

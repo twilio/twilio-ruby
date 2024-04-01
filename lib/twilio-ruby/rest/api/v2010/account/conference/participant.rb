@@ -478,6 +478,7 @@ module Twilio
                             'hold' => payload['hold'],
                             'start_conference_on_enter' => payload['start_conference_on_enter'],
                             'status' => payload['status'],
+                            'queue_time' => payload['queue_time'],
                             'uri' => payload['uri'],
                         }
 
@@ -573,6 +574,12 @@ module Twilio
                     # @return [Status] 
                     def status
                         @properties['status']
+                    end
+                    
+                    ##
+                    # @return [String] The wait time in milliseconds before participant's call is placed. Only available in the response to a create participant request.
+                    def queue_time
+                        @properties['queue_time']
                     end
                     
                     ##

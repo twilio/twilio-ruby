@@ -10,28 +10,28 @@
 # frozen_string_literal: true
 module Twilio
   module REST
-    class MediaBase < Domain
+    class OauthBase < Domain
       ##
-      # Initialize media domain
+      # Initialize oauth domain
       #
       # @param twilio - The twilio client
       #
       def initialize(twilio)
         super(twilio)
-        @base_url =  "https://media.twilio.com"
-        @host = "media.twilio.com"
+        @base_url =  "https://oauth.twilio.com"
+        @host = "oauth.twilio.com"
         @port = 443
         @v1 = nil
       end
 
       def v1
-        @v1 ||= Media::V1.new self
+        @v1 ||= Oauth::V1.new self
       end
 
       ##
       # Provide a user friendly representation
       def to_s
-        '<Twilio::REST::Media::V1>';
+        '<Twilio::REST::Oauth::V1>';
       end
     end
   end

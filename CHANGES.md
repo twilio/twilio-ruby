@@ -1,5 +1,77 @@
 twilio-ruby changelog
-===================== 
+=====================
+
+[2024-04-01] Version 7.0.0
+--------------------------
+**Note:** This release contains breaking changes, check our [upgrade guide](./UPGRADE.md#2024-01-19-6xx-to-7xx) for detailed migration notes.
+
+**Library - Feature**
+- [PR #719](https://github.com/twilio/twilio-ruby/pull/719): Merge '7.0.0-rc' into main. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)! **(breaking change)**
+
+**Library - Chore**
+- [PR #715](https://github.com/twilio/twilio-ruby/pull/715): remove media endpoint. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+
+**Api**
+- Add property `queue_time` to conference participant resource
+- Update RiskCheck documentation
+- Correct call filtering by start and end time documentation, clarifying that times are UTC.
+
+**Flex**
+- Adding optional parameter to `plugins`
+
+**Media**
+- Remove API: MediaProcessor
+
+**Messaging**
+- Remove Sending-Window due to test failure
+- Add Sending-Window as a response property to Messaging Services, gated by a beta feature flag
+
+**Numbers**
+- Correct valid_until_date field to be visible in Bundles resource
+- Adding port_in_status field to the Port In resource and phone_number_status and sid fields to the Port In Phone Number resource
+
+**Oauth**
+- Modified token endpoint response
+- Added refresh_token and scope as optional parameter to token endpoint
+- Add new APIs for vendor authorize and token endpoints
+
+**Trusthub**
+- Add update inquiry endpoint in compliance_registration.
+- Add new field in themeSetId in compliance_registration.
+
+**Voice**
+- Correct call filtering by start and end time documentation, clarifying that times are UTC.
+
+**Twiml**
+- Add support for new Google voices (Q1 2024) for `Say` verb - gu-IN voices
+- Add support for new Amazon Polly and Google voices (Q1 2024) for `Say` verb - Niamh (en-IE) and Sofie (da-DK) voices
+
+
+[2024-03-12] Version 6.12.1
+---------------------------
+**Api**
+- Correct precedence documentation for application_sid vs status_callback in message creation
+- Mark MaxPrice as deprecated
+
+**Flex**
+- Making `plugins` visibility to public
+
+**Messaging**
+- Add new `errors` attribute to the Brand Registration resource.
+- Mark `brand_feedback` attribute as deprecated.
+- Mark `failure_reason` attribute as deprecated.
+- The new `errors` attribute is expected to provide additional information about Brand registration failures and feedback (if any has been provided by The Campaign Registry). Consumers should use this attribute instead of `brand_feedback` and `failure_reason`.
+
+**Numbers**
+- Correcting mount_name for porting port in fetch API
+
+**Trusthub**
+- Add new field in statusCallbackUrl in compliance_registration.
+- Add new field in isvRegisteringForSelfOrTenant in compliance_registration.
+
+**Twiml**
+- Expanded description of Action parameter for Message verb
+
 
 [2024-02-27] Version 6.12.0
 ---------------------------
