@@ -135,6 +135,7 @@ module Twilio
                             'target_port_in_date' => Twilio.deserialize_iso8601_date(payload['target_port_in_date']),
                             'target_port_in_time_range_start' => payload['target_port_in_time_range_start'],
                             'target_port_in_time_range_end' => payload['target_port_in_time_range_end'],
+                            'port_in_request_status' => payload['port_in_request_status'],
                             'losing_carrier_information' => payload['losing_carrier_information'],
                             'phone_numbers' => payload['phone_numbers'],
                             'documents' => payload['documents'],
@@ -196,6 +197,12 @@ module Twilio
                     # @return [String] Maximum hour in the future needs to be established with the Ops team for validation.
                     def target_port_in_time_range_end
                         @properties['target_port_in_time_range_end']
+                    end
+                    
+                    ##
+                    # @return [String] The status of the port in request. The possible values are: In progress, Completed, Expired, In review, Waiting for Signature, Action Required, and Canceled.
+                    def port_in_request_status
+                        @properties['port_in_request_status']
                     end
                     
                     ##

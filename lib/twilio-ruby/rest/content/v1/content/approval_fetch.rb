@@ -25,10 +25,10 @@ module Twilio
                     # Initialize the ApprovalFetchList
                     # @param [Version] version Version that contains the resource
                     # @return [ApprovalFetchList] ApprovalFetchList
-                    def initialize(version, sid: nil)
+                    def initialize(version, content_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { sid: sid }
+                        @solution = { content_sid: content_sid }
                         
                         
                     end
@@ -46,14 +46,14 @@ module Twilio
                     ##
                     # Initialize the ApprovalFetchContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] sid The Twilio-provided string that uniquely identifies the Content resource whose approval information to fetch.
+                    # @param [String] content_sid The Twilio-provided string that uniquely identifies the Content resource whose approval information to fetch.
                     # @return [ApprovalFetchContext] ApprovalFetchContext
-                    def initialize(version, sid)
+                    def initialize(version, content_sid)
                         super(version)
 
                         # Path Solution
-                        @solution = { sid: sid,  }
-                        @uri = "/Content/#{@solution[:sid]}/ApprovalRequests"
+                        @solution = { content_sid: content_sid,  }
+                        @uri = "/Content/#{@solution[:content_sid]}/ApprovalRequests"
 
                         
                     end
@@ -67,7 +67,7 @@ module Twilio
                         ApprovalFetchInstance.new(
                             @version,
                             payload,
-                            sid: @solution[:sid],
+                            content_sid: @solution[:content_sid],
                         )
                     end
 
@@ -106,7 +106,7 @@ module Twilio
                     # @param [Hash] payload Payload response from the API
                     # @return [ApprovalFetchInstance] ApprovalFetchInstance
                     def get_instance(payload)
-                        ApprovalFetchInstance.new(@version, payload, sid: @solution[:sid])
+                        ApprovalFetchInstance.new(@version, payload, content_sid: @solution[:content_sid])
                     end
 
                     ##
@@ -125,7 +125,7 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [ApprovalFetchInstance] ApprovalFetchInstance
-                    def initialize(version, payload , sid: nil)
+                    def initialize(version, payload , content_sid: nil)
                         super(version)
                         
                         # Marshaled Properties
@@ -138,7 +138,7 @@ module Twilio
 
                         # Context
                         @instance_context = nil
-                        @params = { 'sid' => sid  || @properties['sid']  , }
+                        @params = { 'content_sid' => content_sid  || @properties['content_sid']  , }
                     end
 
                     ##
@@ -147,7 +147,7 @@ module Twilio
                     # @return [ApprovalFetchContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = ApprovalFetchContext.new(@version , @params['sid'])
+                            @instance_context = ApprovalFetchContext.new(@version , @params['content_sid'])
                         end
                         @instance_context
                     end

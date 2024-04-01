@@ -38,14 +38,18 @@ module Twilio
                     # @param [String] code JWT token related to the authorization code grant type.
                     # @param [String] redirect_uri The redirect uri
                     # @param [String] audience The targeted audience uri
+                    # @param [String] refresh_token JWT token related to refresh access token.
+                    # @param [String] scope The scope of token
                     # @return [TokenInstance] Created TokenInstance
                     def create(
                         grant_type: nil, 
                         client_id: nil, 
-                        client_secret: nil, 
+                        client_secret: :unset, 
                         code: :unset, 
                         redirect_uri: :unset, 
-                        audience: :unset
+                        audience: :unset, 
+                        refresh_token: :unset, 
+                        scope: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -55,6 +59,8 @@ module Twilio
                             'Code' => code,
                             'RedirectUri' => redirect_uri,
                             'Audience' => audience,
+                            'RefreshToken' => refresh_token,
+                            'Scope' => scope,
                         })
 
                         
@@ -121,7 +127,7 @@ module Twilio
                             'refresh_token' => payload['refresh_token'],
                             'id_token' => payload['id_token'],
                             'token_type' => payload['token_type'],
-                            'expires_in' => Twilio.deserialize_iso8601_datetime(payload['expires_in']),
+                            'expires_in' => payload['expires_in'],
                         }
                     end
 
@@ -151,7 +157,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Time] 
+                    # @return [String] 
                     def expires_in
                         @properties['expires_in']
                     end

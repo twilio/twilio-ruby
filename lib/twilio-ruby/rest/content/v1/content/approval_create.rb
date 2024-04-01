@@ -41,11 +41,11 @@ module Twilio
                     # Initialize the ApprovalCreateList
                     # @param [Version] version Version that contains the resource
                     # @return [ApprovalCreateList] ApprovalCreateList
-                    def initialize(version, sid: nil)
+                    def initialize(version, content_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = { sid: sid }
-                        @uri = "/Content/#{@solution[:sid]}/ApprovalRequests/whatsapp"
+                        @solution = { content_sid: content_sid }
+                        @uri = "/Content/#{@solution[:content_sid]}/ApprovalRequests/whatsapp"
                         
                     end
                     ##
@@ -60,7 +60,7 @@ module Twilio
                         ApprovalCreateInstance.new(
                             @version,
                             payload,
-                            sid: @solution[:sid],
+                            content_sid: @solution[:content_sid],
                         )
                     end
 
@@ -92,7 +92,7 @@ module Twilio
                     # @param [Hash] payload Payload response from the API
                     # @return [ApprovalCreateInstance] ApprovalCreateInstance
                     def get_instance(payload)
-                        ApprovalCreateInstance.new(@version, payload, sid: @solution[:sid])
+                        ApprovalCreateInstance.new(@version, payload, content_sid: @solution[:content_sid])
                     end
 
                     ##
@@ -111,7 +111,7 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [ApprovalCreateInstance] ApprovalCreateInstance
-                    def initialize(version, payload , sid: nil)
+                    def initialize(version, payload , content_sid: nil)
                         super(version)
                         
                         # Marshaled Properties

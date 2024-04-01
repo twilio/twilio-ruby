@@ -48,9 +48,18 @@ module Twilio
                     end
                 end
                 ##
+                # @param [String] registration_id The unique RegistrationId matching the Regulatory Compliance Inquiry that should be resumed or resubmitted. This value will have been returned by the initial Regulatory Compliance Inquiry creation call.
+                # @return [Twilio::REST::Trusthub::V1::ComplianceRegistrationInquiriesContext] if registrationId was passed.
                 # @return [Twilio::REST::Trusthub::V1::ComplianceRegistrationInquiriesList]
-                def compliance_registration_inquiries
-                    @compliance_registration_inquiries ||= ComplianceRegistrationInquiriesList.new self
+                def compliance_registration_inquiries(registration_id=:unset)
+                    if registration_id.nil?
+                        raise ArgumentError, 'registration_id cannot be nil'
+                    end
+                    if registration_id == :unset
+                        @compliance_registration_inquiries ||= ComplianceRegistrationInquiriesList.new self
+                    else
+                        ComplianceRegistrationInquiriesContext.new(self, registration_id)
+                    end
                 end
                 ##
                 # @return [Twilio::REST::Trusthub::V1::ComplianceTollfreeInquiriesList]
@@ -142,7 +151,7 @@ module Twilio
                     end
                 end
                 ##
-                # @param [String] sid The unique string that we created to identify the Customer-Profile resource.
+                # @param [String] sid The unique string that we created to identify the Trust Product resource.
                 # @return [Twilio::REST::Trusthub::V1::TrustProductsContext] if sid was passed.
                 # @return [Twilio::REST::Trusthub::V1::TrustProductsList]
                 def trust_products(sid=:unset)
