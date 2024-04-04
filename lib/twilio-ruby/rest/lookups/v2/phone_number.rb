@@ -57,7 +57,7 @@ module Twilio
                     end
                     ##
                     # Fetch the PhoneNumberInstance
-                    # @param [String] fields A comma-separated list of fields to return. Possible values are validation, caller_name, sim_swap, call_forwarding, line_status, line_type_intelligence, identity_match, reassigned_number, sms_pumping_risk, phone_number_quality_score.
+                    # @param [String] fields A comma-separated list of fields to return. Possible values are validation, caller_name, sim_swap, call_forwarding, line_status, line_type_intelligence, identity_match, reassigned_number, sms_pumping_risk, phone_number_quality_score, pre_fill.
                     # @param [String] country_code The [country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) used if the phone number provided is in national format.
                     # @param [String] first_name User’s first name. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] last_name User’s last name. This query parameter is only used (optionally) for identity_match package requests.
@@ -70,6 +70,7 @@ module Twilio
                     # @param [String] national_id User’s national ID, such as SSN or Passport ID. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] date_of_birth User’s date of birth, in YYYYMMDD format. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] last_verified_date The date you obtained consent to call or text the end-user of the phone number or a date on which you are reasonably certain that the end-user could still be reached at that number. This query parameter is only used (optionally) for reassigned_number package requests.
+                    # @param [String] verification_sid The unique identifier associated with a verification process through verify API. This query parameter is only used (optionally) for pre_fill package requests.
                     # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
                     def fetch(
                         fields: :unset, 
@@ -84,7 +85,8 @@ module Twilio
                         address_country_code: :unset, 
                         national_id: :unset, 
                         date_of_birth: :unset, 
-                        last_verified_date: :unset
+                        last_verified_date: :unset, 
+                        verification_sid: :unset
                     )
 
                         params = Twilio::Values.of({
@@ -101,6 +103,7 @@ module Twilio
                             'NationalId' => national_id,
                             'DateOfBirth' => date_of_birth,
                             'LastVerifiedDate' => last_verified_date,
+                            'VerificationSid' => verification_sid,
                         })
                         
                         payload = @version.fetch('GET', @uri, params: params)
@@ -185,6 +188,7 @@ module Twilio
                             'reassigned_number' => payload['reassigned_number'],
                             'sms_pumping_risk' => payload['sms_pumping_risk'],
                             'phone_number_quality_score' => payload['phone_number_quality_score'],
+                            'pre_fill' => payload['pre_fill'],
                             'url' => payload['url'],
                         }
 
@@ -295,6 +299,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [Hash] An object that contains pre fill information. pre_fill will return PII information associated with the phone number like first name, last name, address line, country code, state and postal code. 
+                    def pre_fill
+                        @properties['pre_fill']
+                    end
+                    
+                    ##
                     # @return [String] The absolute URL of the resource.
                     def url
                         @properties['url']
@@ -302,7 +312,7 @@ module Twilio
                     
                     ##
                     # Fetch the PhoneNumberInstance
-                    # @param [String] fields A comma-separated list of fields to return. Possible values are validation, caller_name, sim_swap, call_forwarding, line_status, line_type_intelligence, identity_match, reassigned_number, sms_pumping_risk, phone_number_quality_score.
+                    # @param [String] fields A comma-separated list of fields to return. Possible values are validation, caller_name, sim_swap, call_forwarding, line_status, line_type_intelligence, identity_match, reassigned_number, sms_pumping_risk, phone_number_quality_score, pre_fill.
                     # @param [String] country_code The [country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) used if the phone number provided is in national format.
                     # @param [String] first_name User’s first name. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] last_name User’s last name. This query parameter is only used (optionally) for identity_match package requests.
@@ -315,6 +325,7 @@ module Twilio
                     # @param [String] national_id User’s national ID, such as SSN or Passport ID. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] date_of_birth User’s date of birth, in YYYYMMDD format. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] last_verified_date The date you obtained consent to call or text the end-user of the phone number or a date on which you are reasonably certain that the end-user could still be reached at that number. This query parameter is only used (optionally) for reassigned_number package requests.
+                    # @param [String] verification_sid The unique identifier associated with a verification process through verify API. This query parameter is only used (optionally) for pre_fill package requests.
                     # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
                     def fetch(
                         fields: :unset, 
@@ -329,7 +340,8 @@ module Twilio
                         address_country_code: :unset, 
                         national_id: :unset, 
                         date_of_birth: :unset, 
-                        last_verified_date: :unset
+                        last_verified_date: :unset, 
+                        verification_sid: :unset
                     )
 
                         context.fetch(
@@ -346,6 +358,7 @@ module Twilio
                             national_id: national_id, 
                             date_of_birth: date_of_birth, 
                             last_verified_date: last_verified_date, 
+                            verification_sid: verification_sid, 
                         )
                     end
 
