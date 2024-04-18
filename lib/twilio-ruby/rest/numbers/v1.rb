@@ -26,6 +26,7 @@ module Twilio
                     @porting_bulk_portabilities = nil
                     @porting_port_ins = nil
                     @porting_port_ins_fetch = nil
+                    @porting_port_in_phone_number = nil
                     @porting_portabilities = nil
                 end
 
@@ -63,9 +64,18 @@ module Twilio
                     end
                 end
                 ##
+                # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.
+                # @return [Twilio::REST::Numbers::V1::PortingPortInContext] if portInRequestSid was passed.
                 # @return [Twilio::REST::Numbers::V1::PortingPortInList]
-                def porting_port_ins
-                    @porting_port_ins ||= PortingPortInList.new self
+                def porting_port_ins(port_in_request_sid=:unset)
+                    if port_in_request_sid.nil?
+                        raise ArgumentError, 'port_in_request_sid cannot be nil'
+                    end
+                    if port_in_request_sid == :unset
+                        @porting_port_ins ||= PortingPortInList.new self
+                    else
+                        PortingPortInContext.new(self, port_in_request_sid)
+                    end
                 end
                 ##
                 # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.
@@ -79,6 +89,42 @@ module Twilio
                         @porting_port_ins_fetch ||= PortingPortInFetchList.new self
                     else
                         PortingPortInFetchContext.new(self, port_in_request_sid)
+                    end
+                end
+                ##
+                # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.
+                # @param [String] phone_number_sid The SID of the Port In request phone number. This is a unique identifier of the phone number.
+                # @return [Twilio::REST::Numbers::V1::PortingPortInPhoneNumberContext] if portInRequestSid was passed.
+                # @return [Twilio::REST::Numbers::V1::PortingPortInPhoneNumberList]
+                def porting_port_in_phone_number(port_in_request_sid=:unset, phone_number_sid=:unset)
+                    if port_in_request_sid.nil?
+                        raise ArgumentError, 'port_in_request_sid cannot be nil'
+                    end
+                    if phone_number_sid.nil?
+                        raise ArgumentError, 'phone_number_sid cannot be nil'
+                    end
+                    if port_in_request_sid == :unset && phone_number_sid == :unset
+                        @porting_port_in_phone_number ||= PortingPortInPhoneNumberList.new self
+                    else
+                        PortingPortInPhoneNumberContext.new(self, port_in_request_sid, phone_number_sid)
+                    end
+                end
+                ##
+                # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.
+                # @param [String] phone_number_sid The SID of the Port In request phone number. This is a unique identifier of the phone number.
+                # @return [Twilio::REST::Numbers::V1::PortingPortInPhoneNumberContext] if phoneNumberSid was passed.
+                # @return [Twilio::REST::Numbers::V1::PortingPortInPhoneNumberList]
+                def porting_port_in_phone_number(port_in_request_sid=:unset, phone_number_sid=:unset)
+                    if port_in_request_sid.nil?
+                        raise ArgumentError, 'port_in_request_sid cannot be nil'
+                    end
+                    if phone_number_sid.nil?
+                        raise ArgumentError, 'phone_number_sid cannot be nil'
+                    end
+                    if port_in_request_sid == :unset && phone_number_sid == :unset
+                        @porting_port_in_phone_number ||= PortingPortInPhoneNumberList.new self
+                    else
+                        PortingPortInPhoneNumberContext.new(self, port_in_request_sid, phone_number_sid)
                     end
                 end
                 ##

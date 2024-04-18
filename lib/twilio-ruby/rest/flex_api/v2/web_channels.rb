@@ -36,12 +36,14 @@ module Twilio
                     # @param [String] chat_friendly_name The Conversation's friendly name. See the [Conversation resource](https://www.twilio.com/docs/conversations/api/conversation-resource) for an example.
                     # @param [String] customer_friendly_name The Conversation participant's friendly name. See the [Conversation Participant Resource](https://www.twilio.com/docs/conversations/api/conversation-participant-resource) for an example.
                     # @param [String] pre_engagement_data The pre-engagement data.
+                    # @param [String] ui_version The Ui-Version HTTP request header
                     # @return [WebChannelsInstance] Created WebChannelsInstance
                     def create(
                         address_sid: nil, 
                         chat_friendly_name: :unset, 
                         customer_friendly_name: :unset, 
-                        pre_engagement_data: :unset
+                        pre_engagement_data: :unset, 
+                        ui_version: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -52,7 +54,8 @@ module Twilio
                         })
 
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        headers = Twilio::Values.of({ 'Ui-Version' => ui_version, })
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         WebChannelsInstance.new(
                             @version,
                             payload,

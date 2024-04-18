@@ -35,11 +35,11 @@ module Twilio
                     end
                     ##
                     # Create the StreamInstance
-                    # @param [String] url Relative or absolute url where WebSocket connection will be established.
-                    # @param [String] name The user-specified name of this Stream, if one was given when the Stream was created. This may be used to stop the Stream.
+                    # @param [String] url Relative or absolute URL where WebSocket connection will be established.
+                    # @param [String] name The user-specified name of this Stream, if one was given when the Stream was created. This can be used to stop the Stream.
                     # @param [Track] track 
-                    # @param [String] status_callback Absolute URL of the status callback.
-                    # @param [String] status_callback_method The http method for the status_callback (one of GET, POST).
+                    # @param [String] status_callback Absolute URL to which Twilio sends status callback HTTP requests.
+                    # @param [String] status_callback_method The HTTP method Twilio uses when sending `status_callback` requests. Possible values are `GET` and `POST`. Default is `POST`.
                     # @param [String] parameter1_name Parameter name
                     # @param [String] parameter1_value Parameter value
                     # @param [String] parameter2_name Parameter name
@@ -677,7 +677,7 @@ module Twilio
                     # @param [Version] version Version that contains the resource
                     # @param [String] account_sid The SID of the [Account](https://www.twilio.com/docs/iam/api/account) that created this Stream resource.
                     # @param [String] call_sid The SID of the [Call](https://www.twilio.com/docs/voice/api/call-resource) the Stream resource is associated with.
-                    # @param [String] sid The SID of the Stream resource, or the `name` used when creating the resource
+                    # @param [String] sid The SID or the `name` of the Stream resource to be stopped
                     # @return [StreamContext] StreamContext
                     def initialize(version, account_sid, call_sid, sid)
                         super(version)
@@ -814,7 +814,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The user-specified name of this Stream, if one was given when the Stream was created. This may be used to stop the Stream.
+                    # @return [String] The user-specified name of this Stream, if one was given when the Stream was created. This can be used to stop the Stream.
                     def name
                         @properties['name']
                     end

@@ -17,61 +17,47 @@ module Twilio
     module REST
         class Numbers < NumbersBase
             class V1 < Version
-                class PortingPortInList < ListResource
+                class PortingPortInPhoneNumberList < ListResource
                 
                     ##
-                    # Initialize the PortingPortInList
+                    # Initialize the PortingPortInPhoneNumberList
                     # @param [Version] version Version that contains the resource
-                    # @return [PortingPortInList] PortingPortInList
+                    # @return [PortingPortInPhoneNumberList] PortingPortInPhoneNumberList
                     def initialize(version)
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        @uri = "/Porting/PortIn"
+                        
                         
                     end
-                    ##
-                    # Create the PortingPortInInstance
-                    # @param [Object] body 
-                    # @return [PortingPortInInstance] Created PortingPortInInstance
-                    def create(body: :unset
-                    )
-
-                        headers = Twilio::Values.of({"Content-Type"=> "application/json"})
-                        payload = @version.create('POST', @uri, data: body.to_json, headers: headers)
-                        PortingPortInInstance.new(
-                            @version,
-                            payload,
-                        )
-                    end
-
                 
 
 
                     # Provide a user friendly representation
                     def to_s
-                        '#<Twilio.Numbers.V1.PortingPortInList>'
+                        '#<Twilio.Numbers.V1.PortingPortInPhoneNumberList>'
                     end
                 end
 
 
-                class PortingPortInContext < InstanceContext
+                class PortingPortInPhoneNumberContext < InstanceContext
                     ##
-                    # Initialize the PortingPortInContext
+                    # Initialize the PortingPortInPhoneNumberContext
                     # @param [Version] version Version that contains the resource
                     # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.
-                    # @return [PortingPortInContext] PortingPortInContext
-                    def initialize(version, port_in_request_sid)
+                    # @param [String] phone_number_sid The SID of the Port In request phone number. This is a unique identifier of the phone number.
+                    # @return [PortingPortInPhoneNumberContext] PortingPortInPhoneNumberContext
+                    def initialize(version, port_in_request_sid, phone_number_sid)
                         super(version)
 
                         # Path Solution
-                        @solution = { port_in_request_sid: port_in_request_sid,  }
-                        @uri = "/Porting/PortIn/#{@solution[:port_in_request_sid]}"
+                        @solution = { port_in_request_sid: port_in_request_sid, phone_number_sid: phone_number_sid,  }
+                        @uri = "/Porting/PortIn/#{@solution[:port_in_request_sid]}/PhoneNumber/#{@solution[:phone_number_sid]}"
 
                         
                     end
                     ##
-                    # Delete the PortingPortInInstance
+                    # Delete the PortingPortInPhoneNumberInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
@@ -84,24 +70,24 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Numbers.V1.PortingPortInContext #{context}>"
+                        "#<Twilio.Numbers.V1.PortingPortInPhoneNumberContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
                         context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Numbers.V1.PortingPortInContext #{context}>"
+                        "#<Twilio.Numbers.V1.PortingPortInPhoneNumberContext #{context}>"
                     end
                 end
 
-                class PortingPortInPage < Page
+                class PortingPortInPhoneNumberPage < Page
                     ##
-                    # Initialize the PortingPortInPage
+                    # Initialize the PortingPortInPhoneNumberPage
                     # @param [Version] version Version that contains the resource
                     # @param [Response] response Response from the API
                     # @param [Hash] solution Path solution for the resource
-                    # @return [PortingPortInPage] PortingPortInPage
+                    # @return [PortingPortInPhoneNumberPage] PortingPortInPhoneNumberPage
                     def initialize(version, response, solution)
                         super(version, response)
 
@@ -110,68 +96,51 @@ module Twilio
                     end
 
                     ##
-                    # Build an instance of PortingPortInInstance
+                    # Build an instance of PortingPortInPhoneNumberInstance
                     # @param [Hash] payload Payload response from the API
-                    # @return [PortingPortInInstance] PortingPortInInstance
+                    # @return [PortingPortInPhoneNumberInstance] PortingPortInPhoneNumberInstance
                     def get_instance(payload)
-                        PortingPortInInstance.new(@version, payload)
+                        PortingPortInPhoneNumberInstance.new(@version, payload)
                     end
 
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        '<Twilio.Numbers.V1.PortingPortInPage>'
+                        '<Twilio.Numbers.V1.PortingPortInPhoneNumberPage>'
                     end
                 end
-                class PortingPortInInstance < InstanceResource
+                class PortingPortInPhoneNumberInstance < InstanceResource
                     ##
-                    # Initialize the PortingPortInInstance
+                    # Initialize the PortingPortInPhoneNumberInstance
                     # @param [Version] version Version that contains the resource
                     # @param [Hash] payload payload that contains response from Twilio
                     # @param [String] account_sid The SID of the
-                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this PortingPortIn
+                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this PortingPortInPhoneNumber
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
-                    # @return [PortingPortInInstance] PortingPortInInstance
-                    def initialize(version, payload , port_in_request_sid: nil)
+                    # @return [PortingPortInPhoneNumberInstance] PortingPortInPhoneNumberInstance
+                    def initialize(version , port_in_request_sid: nil, phone_number_sid: nil)
                         super(version)
                         
-                        # Marshaled Properties
-                        @properties = { 
-                            'port_in_request_sid' => payload['port_in_request_sid'],
-                            'url' => payload['url'],
-                        }
 
                         # Context
                         @instance_context = nil
-                        @params = { 'port_in_request_sid' => port_in_request_sid  || @properties['port_in_request_sid']  , }
+                        @params = { 'port_in_request_sid' => port_in_request_sid  || @properties['port_in_request_sid']  ,'phone_number_sid' => phone_number_sid  || @properties['phone_number_sid']  , }
                     end
 
                     ##
                     # Generate an instance context for the instance, the context is capable of
                     # performing various actions.  All instance actions are proxied to the context
-                    # @return [PortingPortInContext] CallContext for this CallInstance
+                    # @return [PortingPortInPhoneNumberContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = PortingPortInContext.new(@version , @params['port_in_request_sid'])
+                            @instance_context = PortingPortInPhoneNumberContext.new(@version , @params['port_in_request_sid'], @params['phone_number_sid'])
                         end
                         @instance_context
                     end
                     
                     ##
-                    # @return [String] The SID of the Port In request. This is a unique identifier of the port in request.
-                    def port_in_request_sid
-                        @properties['port_in_request_sid']
-                    end
-                    
-                    ##
-                    # @return [String] 
-                    def url
-                        @properties['url']
-                    end
-                    
-                    ##
-                    # Delete the PortingPortInInstance
+                    # Delete the PortingPortInPhoneNumberInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
@@ -182,14 +151,14 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Numbers.V1.PortingPortInInstance #{values}>"
+                        "<Twilio.Numbers.V1.PortingPortInPhoneNumberInstance #{values}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
                         values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Numbers.V1.PortingPortInInstance #{values}>"
+                        "<Twilio.Numbers.V1.PortingPortInPhoneNumberInstance #{values}>"
                     end
                 end
 
