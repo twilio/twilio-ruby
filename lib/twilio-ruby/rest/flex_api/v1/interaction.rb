@@ -38,7 +38,7 @@ module Twilio
                     # @return [InteractionInstance] Created InteractionInstance
                     def create(
                         channel: nil, 
-                        routing: nil, 
+                        routing: :unset, 
                         interaction_context_sid: :unset
                     )
 

@@ -23,11 +23,12 @@ module Twilio
                     @version = 'v1'
                     @bulk_eligibilities = nil
                     @eligibilities = nil
-                    @porting_bulk_portabilities = nil
                     @porting_port_ins = nil
-                    @porting_port_ins_fetch = nil
                     @porting_port_in_phone_number = nil
                     @porting_portabilities = nil
+                    @porting_webhook_configurations = nil
+                    @porting_webhook_configurations_delete = nil
+                    @porting_webhook_configuration_fetch = nil
                 end
 
                 ##
@@ -50,20 +51,6 @@ module Twilio
                     @eligibilities ||= EligibilityList.new self
                 end
                 ##
-                # @param [String] sid A 34 character string that uniquely identifies the Portability check.
-                # @return [Twilio::REST::Numbers::V1::PortingBulkPortabilityContext] if sid was passed.
-                # @return [Twilio::REST::Numbers::V1::PortingBulkPortabilityList]
-                def porting_bulk_portabilities(sid=:unset)
-                    if sid.nil?
-                        raise ArgumentError, 'sid cannot be nil'
-                    end
-                    if sid == :unset
-                        @porting_bulk_portabilities ||= PortingBulkPortabilityList.new self
-                    else
-                        PortingBulkPortabilityContext.new(self, sid)
-                    end
-                end
-                ##
                 # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.
                 # @return [Twilio::REST::Numbers::V1::PortingPortInContext] if portInRequestSid was passed.
                 # @return [Twilio::REST::Numbers::V1::PortingPortInList]
@@ -79,21 +66,7 @@ module Twilio
                 end
                 ##
                 # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.
-                # @return [Twilio::REST::Numbers::V1::PortingPortInFetchContext] if portInRequestSid was passed.
-                # @return [Twilio::REST::Numbers::V1::PortingPortInFetchList]
-                def porting_port_ins_fetch(port_in_request_sid=:unset)
-                    if port_in_request_sid.nil?
-                        raise ArgumentError, 'port_in_request_sid cannot be nil'
-                    end
-                    if port_in_request_sid == :unset
-                        @porting_port_ins_fetch ||= PortingPortInFetchList.new self
-                    else
-                        PortingPortInFetchContext.new(self, port_in_request_sid)
-                    end
-                end
-                ##
-                # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.
-                # @param [String] phone_number_sid The SID of the Port In request phone number. This is a unique identifier of the phone number.
+                # @param [String] phone_number_sid The SID of the Phone number. This is a unique identifier of the phone number.
                 # @return [Twilio::REST::Numbers::V1::PortingPortInPhoneNumberContext] if portInRequestSid was passed.
                 # @return [Twilio::REST::Numbers::V1::PortingPortInPhoneNumberList]
                 def porting_port_in_phone_number(port_in_request_sid=:unset, phone_number_sid=:unset)
@@ -111,7 +84,7 @@ module Twilio
                 end
                 ##
                 # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.
-                # @param [String] phone_number_sid The SID of the Port In request phone number. This is a unique identifier of the phone number.
+                # @param [String] phone_number_sid The SID of the Phone number. This is a unique identifier of the phone number.
                 # @return [Twilio::REST::Numbers::V1::PortingPortInPhoneNumberContext] if phoneNumberSid was passed.
                 # @return [Twilio::REST::Numbers::V1::PortingPortInPhoneNumberList]
                 def porting_port_in_phone_number(port_in_request_sid=:unset, phone_number_sid=:unset)
@@ -140,6 +113,30 @@ module Twilio
                     else
                         PortingPortabilityContext.new(self, phone_number)
                     end
+                end
+                ##
+                # @return [Twilio::REST::Numbers::V1::PortingWebhookConfigurationList]
+                def porting_webhook_configurations
+                    @porting_webhook_configurations ||= PortingWebhookConfigurationList.new self
+                end
+                ##
+                # @param [String] webhook_type The of the webhook type of the configuration to be deleted
+                # @return [Twilio::REST::Numbers::V1::PortingWebhookConfigurationDeleteContext] if webhookType was passed.
+                # @return [Twilio::REST::Numbers::V1::PortingWebhookConfigurationDeleteList]
+                def porting_webhook_configurations_delete(webhook_type=:unset)
+                    if webhook_type.nil?
+                        raise ArgumentError, 'webhook_type cannot be nil'
+                    end
+                    if webhook_type == :unset
+                        @porting_webhook_configurations_delete ||= PortingWebhookConfigurationDeleteList.new self
+                    else
+                        PortingWebhookConfigurationDeleteContext.new(self, webhook_type)
+                    end
+                end
+                ##
+                # @return [Twilio::REST::Numbers::V1::PortingWebhookConfigurationFetchList]
+                def porting_webhook_configuration_fetch
+                    @porting_webhook_configuration_fetch ||= PortingWebhookConfigurationFetchList.new self
                 end
                 ##
                 # Provide a user friendly representation

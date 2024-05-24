@@ -79,6 +79,20 @@ module Twilio
                         @version.delete('DELETE', @uri)
                     end
 
+                    ##
+                    # Fetch the PortingPortInInstance
+                    # @return [PortingPortInInstance] Fetched PortingPortInInstance
+                    def fetch
+
+                        
+                        payload = @version.fetch('GET', @uri)
+                        PortingPortInInstance.new(
+                            @version,
+                            payload,
+                            port_in_request_sid: @solution[:port_in_request_sid],
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -140,6 +154,15 @@ module Twilio
                         @properties = { 
                             'port_in_request_sid' => payload['port_in_request_sid'],
                             'url' => payload['url'],
+                            'account_sid' => payload['account_sid'],
+                            'notification_emails' => payload['notification_emails'],
+                            'target_port_in_date' => Twilio.deserialize_iso8601_date(payload['target_port_in_date']),
+                            'target_port_in_time_range_start' => payload['target_port_in_time_range_start'],
+                            'target_port_in_time_range_end' => payload['target_port_in_time_range_end'],
+                            'port_in_request_status' => payload['port_in_request_status'],
+                            'losing_carrier_information' => payload['losing_carrier_information'],
+                            'phone_numbers' => payload['phone_numbers'],
+                            'documents' => payload['documents'],
                         }
 
                         # Context
@@ -165,9 +188,63 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The URL of this Port In request
                     def url
                         @properties['url']
+                    end
+                    
+                    ##
+                    # @return [String] The Account SID that the numbers will be added to after they are ported into Twilio.
+                    def account_sid
+                        @properties['account_sid']
+                    end
+                    
+                    ##
+                    # @return [Array<String>] List of emails for getting notifications about the LOA signing process. Allowed Max 10 emails.
+                    def notification_emails
+                        @properties['notification_emails']
+                    end
+                    
+                    ##
+                    # @return [Date] Minimum number of days in the future (at least 2 days) needs to be established with the Ops team for validation.
+                    def target_port_in_date
+                        @properties['target_port_in_date']
+                    end
+                    
+                    ##
+                    # @return [String] Minimum hour in the future needs to be established with the Ops team for validation.
+                    def target_port_in_time_range_start
+                        @properties['target_port_in_time_range_start']
+                    end
+                    
+                    ##
+                    # @return [String] Maximum hour in the future needs to be established with the Ops team for validation.
+                    def target_port_in_time_range_end
+                        @properties['target_port_in_time_range_end']
+                    end
+                    
+                    ##
+                    # @return [String] The status of the port in request. The possible values are: In progress, Completed, Expired, In review, Waiting for Signature, Action Required, and Canceled.
+                    def port_in_request_status
+                        @properties['port_in_request_status']
+                    end
+                    
+                    ##
+                    # @return [Hash] The information for the losing carrier. 
+                    def losing_carrier_information
+                        @properties['losing_carrier_information']
+                    end
+                    
+                    ##
+                    # @return [Array<Hash>] The list of phone numbers to Port in. Phone numbers are in E.164 format (e.g. +16175551212).
+                    def phone_numbers
+                        @properties['phone_numbers']
+                    end
+                    
+                    ##
+                    # @return [Array<String>] The list of documents SID referencing a utility bills
+                    def documents
+                        @properties['documents']
                     end
                     
                     ##
@@ -176,6 +253,14 @@ module Twilio
                     def delete
 
                         context.delete
+                    end
+
+                    ##
+                    # Fetch the PortingPortInInstance
+                    # @return [PortingPortInInstance] Fetched PortingPortInInstance
+                    def fetch
+
+                        context.fetch
                     end
 
                     ##

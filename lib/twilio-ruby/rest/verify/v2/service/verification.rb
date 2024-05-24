@@ -287,7 +287,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The status of the verification. One of: `pending`, `approved`, or `canceled`
+                    # @return [String] The status of the verification. Can be: `pending`, `approved`, `canceled`, `max_attempts_reached`, `deleted`, `failed` or `expired`.
                     def status
                         @properties['status']
                     end

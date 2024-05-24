@@ -45,7 +45,7 @@ module Twilio
                     # Initialize the PortingPortInPhoneNumberContext
                     # @param [Version] version Version that contains the resource
                     # @param [String] port_in_request_sid The SID of the Port In request. This is a unique identifier of the port in request.
-                    # @param [String] phone_number_sid The SID of the Port In request phone number. This is a unique identifier of the phone number.
+                    # @param [String] phone_number_sid The SID of the Phone number. This is a unique identifier of the phone number.
                     # @return [PortingPortInPhoneNumberContext] PortingPortInPhoneNumberContext
                     def initialize(version, port_in_request_sid, phone_number_sid)
                         super(version)
@@ -63,6 +63,21 @@ module Twilio
 
                         
                         @version.delete('DELETE', @uri)
+                    end
+
+                    ##
+                    # Fetch the PortingPortInPhoneNumberInstance
+                    # @return [PortingPortInPhoneNumberInstance] Fetched PortingPortInPhoneNumberInstance
+                    def fetch
+
+                        
+                        payload = @version.fetch('GET', @uri)
+                        PortingPortInPhoneNumberInstance.new(
+                            @version,
+                            payload,
+                            port_in_request_sid: @solution[:port_in_request_sid],
+                            phone_number_sid: @solution[:phone_number_sid],
+                        )
                     end
 
 
@@ -119,9 +134,26 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [PortingPortInPhoneNumberInstance] PortingPortInPhoneNumberInstance
-                    def initialize(version , port_in_request_sid: nil, phone_number_sid: nil)
+                    def initialize(version, payload , port_in_request_sid: nil, phone_number_sid: nil)
                         super(version)
                         
+                        # Marshaled Properties
+                        @properties = { 
+                            'port_in_request_sid' => payload['port_in_request_sid'],
+                            'phone_number_sid' => payload['phone_number_sid'],
+                            'url' => payload['url'],
+                            'account_sid' => payload['account_sid'],
+                            'phone_number_type' => payload['phone_number_type'],
+                            'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                            'country' => payload['country'],
+                            'missing_required_fields' => payload['missing_required_fields'],
+                            'status_last_time_updated_timestamp' => Twilio.deserialize_iso8601_datetime(payload['status_last_time_updated_timestamp']),
+                            'phone_number' => payload['phone_number'],
+                            'portable' => payload['portable'],
+                            'not_portability_reason' => payload['not_portability_reason'],
+                            'not_portability_reason_code' => payload['not_portability_reason_code'],
+                            'port_in_phone_number_status' => payload['port_in_phone_number_status'],
+                        }
 
                         # Context
                         @instance_context = nil
@@ -140,11 +172,103 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] The SID of the Port In request. This is a unique identifier of the port in request.
+                    def port_in_request_sid
+                        @properties['port_in_request_sid']
+                    end
+                    
+                    ##
+                    # @return [String] The SID of the Port In request phone number. This is a unique identifier of the phone number.
+                    def phone_number_sid
+                        @properties['phone_number_sid']
+                    end
+                    
+                    ##
+                    # @return [String] 
+                    def url
+                        @properties['url']
+                    end
+                    
+                    ##
+                    # @return [String] The SID of the account that the phone number belongs to.
+                    def account_sid
+                        @properties['account_sid']
+                    end
+                    
+                    ##
+                    # @return [String] The type of the phone number.
+                    def phone_number_type
+                        @properties['phone_number_type']
+                    end
+                    
+                    ##
+                    # @return [Time] The date when the phone number was created.
+                    def date_created
+                        @properties['date_created']
+                    end
+                    
+                    ##
+                    # @return [String] The country of the phone number.
+                    def country
+                        @properties['country']
+                    end
+                    
+                    ##
+                    # @return [Boolean] The phone number is missing required fields.
+                    def missing_required_fields
+                        @properties['missing_required_fields']
+                    end
+                    
+                    ##
+                    # @return [Time] The timestamp when the status was last updated.
+                    def status_last_time_updated_timestamp
+                        @properties['status_last_time_updated_timestamp']
+                    end
+                    
+                    ##
+                    # @return [String] The phone number.
+                    def phone_number
+                        @properties['phone_number']
+                    end
+                    
+                    ##
+                    # @return [Boolean] The phone number is portable.
+                    def portable
+                        @properties['portable']
+                    end
+                    
+                    ##
+                    # @return [String] The reason why the phone number is not portable.
+                    def not_portability_reason
+                        @properties['not_portability_reason']
+                    end
+                    
+                    ##
+                    # @return [String] The code of the reason why the phone number is not portable.
+                    def not_portability_reason_code
+                        @properties['not_portability_reason_code']
+                    end
+                    
+                    ##
+                    # @return [String] The status of the phone number in the port in request.
+                    def port_in_phone_number_status
+                        @properties['port_in_phone_number_status']
+                    end
+                    
+                    ##
                     # Delete the PortingPortInPhoneNumberInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
                         context.delete
+                    end
+
+                    ##
+                    # Fetch the PortingPortInPhoneNumberInstance
+                    # @return [PortingPortInPhoneNumberInstance] Fetched PortingPortInPhoneNumberInstance
+                    def fetch
+
+                        context.fetch
                     end
 
                     ##

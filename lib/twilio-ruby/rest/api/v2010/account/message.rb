@@ -510,7 +510,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) associated with the Message resource. The value is `null` if a Messaging Service was not used.
+                    # @return [String] The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) associated with the Message resource. A unique default value is assigned if a Messaging Service is not used.
                     def messaging_service_sid
                         @properties['messaging_service_sid']
                     end

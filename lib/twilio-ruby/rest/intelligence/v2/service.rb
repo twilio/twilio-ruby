@@ -36,7 +36,7 @@ module Twilio
                     # @param [Boolean] auto_transcribe Instructs the Speech Recognition service to automatically transcribe all recordings made on the account.
                     # @param [Boolean] data_logging Data logging allows Twilio to improve the quality of the speech recognition & language understanding services through using customer data to refine, fine tune and evaluate machine learning models. Note: Data logging cannot be activated via API, only via www.twilio.com, as it requires additional consent.
                     # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
-                    # @param [String] language_code The default language code of the audio.
+                    # @param [String] language_code The language code set during Service creation determines the Transcription language for all call recordings processed by that Service. The default is en-US if no language code is set. A Service can only support one language code, and it cannot be updated once it's set.
                     # @param [Boolean] auto_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts made on this service.
                     # @param [Boolean] media_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts media made on this service. The auto_redaction flag must be enabled, results in error otherwise.
                     # @param [String] webhook_url The URL Twilio will request when executing the Webhook.
@@ -211,7 +211,6 @@ module Twilio
                     # @param [Boolean] auto_transcribe Instructs the Speech Recognition service to automatically transcribe all recordings made on the account.
                     # @param [Boolean] data_logging Data logging allows Twilio to improve the quality of the speech recognition & language understanding services through using customer data to refine, fine tune and evaluate machine learning models. Note: Data logging cannot be activated via API, only via www.twilio.com, as it requires additional consent.
                     # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
-                    # @param [String] language_code The default language code of the audio.
                     # @param [String] unique_name Provides a unique and addressable name to be assigned to this Service, assigned by the developer, to be optionally used in addition to SID.
                     # @param [Boolean] auto_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts made on this service.
                     # @param [Boolean] media_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts media made on this service. The auto_redaction flag must be enabled, results in error otherwise.
@@ -223,7 +222,6 @@ module Twilio
                         auto_transcribe: :unset, 
                         data_logging: :unset, 
                         friendly_name: :unset, 
-                        language_code: :unset, 
                         unique_name: :unset, 
                         auto_redaction: :unset, 
                         media_redaction: :unset, 
@@ -236,7 +234,6 @@ module Twilio
                             'AutoTranscribe' => auto_transcribe,
                             'DataLogging' => data_logging,
                             'FriendlyName' => friendly_name,
-                            'LanguageCode' => language_code,
                             'UniqueName' => unique_name,
                             'AutoRedaction' => auto_redaction,
                             'MediaRedaction' => media_redaction,
@@ -327,6 +324,7 @@ module Twilio
                             'url' => payload['url'],
                             'webhook_url' => payload['webhook_url'],
                             'webhook_http_method' => payload['webhook_http_method'],
+                            'read_only_attached_operator_sids' => payload['read_only_attached_operator_sids'],
                             'version' => payload['version'] == nil ? payload['version'] : payload['version'].to_i,
                         }
 
@@ -395,7 +393,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The default language code of the audio.
+                    # @return [String] The language code set during Service creation determines the Transcription language for all call recordings processed by that Service. The default is en-US if no language code is set. A Service can only support one language code, and it cannot be updated once it's set.
                     def language_code
                         @properties['language_code']
                     end
@@ -431,6 +429,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [Array<String>] Operator sids attached to this service, read only
+                    def read_only_attached_operator_sids
+                        @properties['read_only_attached_operator_sids']
+                    end
+                    
+                    ##
                     # @return [String] The version number of this Service.
                     def version
                         @properties['version']
@@ -457,7 +461,6 @@ module Twilio
                     # @param [Boolean] auto_transcribe Instructs the Speech Recognition service to automatically transcribe all recordings made on the account.
                     # @param [Boolean] data_logging Data logging allows Twilio to improve the quality of the speech recognition & language understanding services through using customer data to refine, fine tune and evaluate machine learning models. Note: Data logging cannot be activated via API, only via www.twilio.com, as it requires additional consent.
                     # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
-                    # @param [String] language_code The default language code of the audio.
                     # @param [String] unique_name Provides a unique and addressable name to be assigned to this Service, assigned by the developer, to be optionally used in addition to SID.
                     # @param [Boolean] auto_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts made on this service.
                     # @param [Boolean] media_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts media made on this service. The auto_redaction flag must be enabled, results in error otherwise.
@@ -469,7 +472,6 @@ module Twilio
                         auto_transcribe: :unset, 
                         data_logging: :unset, 
                         friendly_name: :unset, 
-                        language_code: :unset, 
                         unique_name: :unset, 
                         auto_redaction: :unset, 
                         media_redaction: :unset, 
@@ -482,7 +484,6 @@ module Twilio
                             auto_transcribe: auto_transcribe, 
                             data_logging: data_logging, 
                             friendly_name: friendly_name, 
-                            language_code: language_code, 
                             unique_name: unique_name, 
                             auto_redaction: auto_redaction, 
                             media_redaction: media_redaction, 

@@ -216,8 +216,8 @@ module Twilio
 
                         # Dependents
                         @sentences = nil
-                        @operator_results = nil
                         @media = nil
+                        @operator_results = nil
                     end
                     ##
                     # Delete the TranscriptInstance
@@ -254,6 +254,16 @@ module Twilio
                       @sentences
                     end
                     ##
+                    # Access the media
+                    # @return [MediaList]
+                    # @return [MediaContext]
+                    def media
+                        MediaContext.new(
+                                @version,
+                                @solution[:sid]
+                                )
+                    end
+                    ##
                     # Access the operator_results
                     # @return [OperatorResultList]
                     # @return [OperatorResultContext] if sid was passed.
@@ -271,16 +281,6 @@ module Twilio
                         end
 
                      @operator_results
-                    end
-                    ##
-                    # Access the media
-                    # @return [MediaList]
-                    # @return [MediaContext]
-                    def media
-                        MediaContext.new(
-                                @version,
-                                @solution[:sid]
-                                )
                     end
 
                     ##
@@ -488,17 +488,17 @@ module Twilio
                     end
 
                     ##
-                    # Access the operator_results
-                    # @return [operator_results] operator_results
-                    def operator_results
-                        context.operator_results
-                    end
-
-                    ##
                     # Access the media
                     # @return [media] media
                     def media
                         context.media
+                    end
+
+                    ##
+                    # Access the operator_results
+                    # @return [operator_results] operator_results
+                    def operator_results
+                        context.operator_results
                     end
 
                     ##

@@ -257,7 +257,7 @@ module Twilio
 
                         unless @sync_streams
                             @sync_streams = SyncStreamList.new(
-                                @version, service_sid: @solution[:sid], )
+                                @version, )
                         end
 
                      @sync_streams
@@ -276,7 +276,7 @@ module Twilio
 
                         unless @sync_lists
                             @sync_lists = SyncListList.new(
-                                @version, service_sid: @solution[:sid], )
+                                @version, )
                         end
 
                      @sync_lists
@@ -295,7 +295,7 @@ module Twilio
 
                         unless @sync_maps
                             @sync_maps = SyncMapList.new(
-                                @version, service_sid: @solution[:sid], )
+                                @version, )
                         end
 
                      @sync_maps

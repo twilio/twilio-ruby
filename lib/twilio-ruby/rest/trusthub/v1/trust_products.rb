@@ -370,6 +370,7 @@ module Twilio
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'url' => payload['url'],
                             'links' => payload['links'],
+                            'errors' => payload['errors'],
                         }
 
                         # Context
@@ -458,6 +459,12 @@ module Twilio
                     # @return [Hash] The URLs of the Assigned Items of the Trust Product resource.
                     def links
                         @properties['links']
+                    end
+                    
+                    ##
+                    # @return [Array<Hash>] The error codes associated with the rejection of the Trust Product.
+                    def errors
+                        @properties['errors']
                     end
                     
                     ##

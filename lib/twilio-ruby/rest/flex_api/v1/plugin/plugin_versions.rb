@@ -273,6 +273,7 @@ module Twilio
                             'changelog' => payload['changelog'],
                             'private' => payload['private'],
                             'archived' => payload['archived'],
+                            'validated' => payload['validated'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'url' => payload['url'],
                         }
@@ -330,7 +331,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Boolean] Whether to inject credentials while accessing this Plugin Version. The default value is false.
+                    # @return [Boolean] Whether the Flex Plugin Version is validated. The default value is false.
                     def private
                         @properties['private']
                     end
@@ -339,6 +340,12 @@ module Twilio
                     # @return [Boolean] Whether the Flex Plugin Version is archived. The default value is false.
                     def archived
                         @properties['archived']
+                    end
+                    
+                    ##
+                    # @return [Boolean] 
+                    def validated
+                        @properties['validated']
                     end
                     
                     ##
