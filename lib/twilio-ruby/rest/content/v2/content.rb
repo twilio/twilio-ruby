@@ -35,6 +35,15 @@ module Twilio
                     # Lists ContentInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
+                    # @param [String] sort_by_date Whether to sort by ascending or descending date updated
+                    # @param [String] sort_by_content_name Whether to sort by ascending or descending content name
+                    # @param [Time] date_created_after Filter by >=[date-time]
+                    # @param [Time] date_created_before Filter by <=[date-time]
+                    # @param [String] content_name Filter by Regex Pattern in content name
+                    # @param [String] content Filter by Regex Pattern in template content
+                    # @param [Array[String]] language Filter by array of valid language(s)
+                    # @param [Array[String]] content_type Filter by array of contentType(s)
+                    # @param [Array[String]] channel_eligibility Filter by array of ChannelEligibility(s), where ChannelEligibility=<channel>:<status>
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -42,8 +51,17 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(limit: nil, page_size: nil)
+                    def list(sort_by_date: :unset, sort_by_content_name: :unset, date_created_after: :unset, date_created_before: :unset, content_name: :unset, content: :unset, language: :unset, content_type: :unset, channel_eligibility: :unset, limit: nil, page_size: nil)
                         self.stream(
+                            sort_by_date: sort_by_date,
+                            sort_by_content_name: sort_by_content_name,
+                            date_created_after: date_created_after,
+                            date_created_before: date_created_before,
+                            content_name: content_name,
+                            content: content,
+                            language: language,
+                            content_type: content_type,
+                            channel_eligibility: channel_eligibility,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -53,6 +71,15 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
+                    # @param [String] sort_by_date Whether to sort by ascending or descending date updated
+                    # @param [String] sort_by_content_name Whether to sort by ascending or descending content name
+                    # @param [Time] date_created_after Filter by >=[date-time]
+                    # @param [Time] date_created_before Filter by <=[date-time]
+                    # @param [String] content_name Filter by Regex Pattern in content name
+                    # @param [String] content Filter by Regex Pattern in template content
+                    # @param [Array[String]] language Filter by array of valid language(s)
+                    # @param [Array[String]] content_type Filter by array of contentType(s)
+                    # @param [Array[String]] channel_eligibility Filter by array of ChannelEligibility(s), where ChannelEligibility=<channel>:<status>
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -60,10 +87,19 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(limit: nil, page_size: nil)
+                    def stream(sort_by_date: :unset, sort_by_content_name: :unset, date_created_after: :unset, date_created_before: :unset, content_name: :unset, content: :unset, language: :unset, content_type: :unset, channel_eligibility: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
+                            sort_by_date: sort_by_date,
+                            sort_by_content_name: sort_by_content_name,
+                            date_created_after: date_created_after,
+                            date_created_before: date_created_before,
+                            content_name: content_name,
+                            content: content,
+                            language: language,
+                            content_type: content_type,
+                            channel_eligibility: channel_eligibility,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -86,12 +122,33 @@ module Twilio
                     ##
                     # Retrieve a single page of ContentInstance records from the API.
                     # Request is executed immediately.
+                    # @param [String] sort_by_date Whether to sort by ascending or descending date updated
+                    # @param [String] sort_by_content_name Whether to sort by ascending or descending content name
+                    # @param [Time] date_created_after Filter by >=[date-time]
+                    # @param [Time] date_created_before Filter by <=[date-time]
+                    # @param [String] content_name Filter by Regex Pattern in content name
+                    # @param [String] content Filter by Regex Pattern in template content
+                    # @param [Array[String]] language Filter by array of valid language(s)
+                    # @param [Array[String]] content_type Filter by array of contentType(s)
+                    # @param [Array[String]] channel_eligibility Filter by array of ChannelEligibility(s), where ChannelEligibility=<channel>:<status>
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ContentInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(sort_by_date: :unset, sort_by_content_name: :unset, date_created_after: :unset, date_created_before: :unset, content_name: :unset, content: :unset, language: :unset, content_type: :unset, channel_eligibility: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
+                            'SortByDate' => sort_by_date,
+                            'SortByContentName' => sort_by_content_name,
+                            'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
+                            'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
+                            'ContentName' => content_name,
+                            'Content' => content,
+                            
+                            'Language' =>  Twilio.serialize_list(language) { |e| e },
+                            
+                            'ContentType' =>  Twilio.serialize_list(content_type) { |e| e },
+                            
+                            'ChannelEligibility' =>  Twilio.serialize_list(channel_eligibility) { |e| e },
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

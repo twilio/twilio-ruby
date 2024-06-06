@@ -29,6 +29,7 @@ module Twilio
                     @porting_webhook_configurations = nil
                     @porting_webhook_configurations_delete = nil
                     @porting_webhook_configuration_fetch = nil
+                    @signing_request_configurations = nil
                 end
 
                 ##
@@ -137,6 +138,11 @@ module Twilio
                 # @return [Twilio::REST::Numbers::V1::PortingWebhookConfigurationFetchList]
                 def porting_webhook_configuration_fetch
                     @porting_webhook_configuration_fetch ||= PortingWebhookConfigurationFetchList.new self
+                end
+                ##
+                # @return [Twilio::REST::Numbers::V1::SigningRequestConfigurationList]
+                def signing_request_configurations
+                    @signing_request_configurations ||= SigningRequestConfigurationList.new self
                 end
                 ##
                 # Provide a user friendly representation

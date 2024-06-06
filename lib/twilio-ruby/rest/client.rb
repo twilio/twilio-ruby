@@ -82,6 +82,11 @@ module Twilio
                 @lookups ||= Lookups.new self
             end
             ##
+            # Access the Marketplace Twilio Domain
+            def marketplace
+                @marketplace ||= Marketplace.new self
+            end
+            ##
             # Access the Messaging Twilio Domain
             def messaging
                 @messaging ||= Messaging.new self

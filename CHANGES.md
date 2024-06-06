@@ -1,6 +1,21 @@
 twilio-ruby changelog
 =====================
 
+[2024-06-06] Version 7.1.1
+--------------------------
+**Library - Chore**
+- [PR #721](https://github.com/twilio/twilio-ruby/pull/721): adding rexml to Gemfile. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+
+**Api**
+- Mark MaxPrice as obsolete
+
+**Lookups**
+- Update examples for `phone_number_quality_score`
+
+**Messaging**
+- List tollfree verifications on parent account and all sub-accounts
+
+
 [2024-05-24] Version 7.1.0
 --------------------------
 **Library - Chore**
