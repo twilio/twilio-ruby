@@ -61,8 +61,9 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri)
+                        @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
@@ -70,8 +71,9 @@ module Twilio
                     # @return [PortingPortInPhoneNumberInstance] Fetched PortingPortInPhoneNumberInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         PortingPortInPhoneNumberInstance.new(
                             @version,
                             payload,
@@ -147,12 +149,15 @@ module Twilio
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'country' => payload['country'],
                             'missing_required_fields' => payload['missing_required_fields'],
-                            'status_last_time_updated_timestamp' => Twilio.deserialize_iso8601_datetime(payload['status_last_time_updated_timestamp']),
+                            'last_updated' => Twilio.deserialize_iso8601_datetime(payload['last_updated']),
                             'phone_number' => payload['phone_number'],
                             'portable' => payload['portable'],
                             'not_portability_reason' => payload['not_portability_reason'],
-                            'not_portability_reason_code' => payload['not_portability_reason_code'],
+                            'not_portability_reason_code' => payload['not_portability_reason_code'] == nil ? payload['not_portability_reason_code'] : payload['not_portability_reason_code'].to_i,
                             'port_in_phone_number_status' => payload['port_in_phone_number_status'],
+                            'port_out_pin' => payload['port_out_pin'] == nil ? payload['port_out_pin'] : payload['port_out_pin'].to_i,
+                            'rejection_reason' => payload['rejection_reason'],
+                            'rejection_reason_code' => payload['rejection_reason_code'] == nil ? payload['rejection_reason_code'] : payload['rejection_reason_code'].to_i,
                         }
 
                         # Context
@@ -221,8 +226,8 @@ module Twilio
                     
                     ##
                     # @return [Time] The timestamp when the status was last updated.
-                    def status_last_time_updated_timestamp
-                        @properties['status_last_time_updated_timestamp']
+                    def last_updated
+                        @properties['last_updated']
                     end
                     
                     ##
@@ -253,6 +258,24 @@ module Twilio
                     # @return [String] The status of the phone number in the port in request.
                     def port_in_phone_number_status
                         @properties['port_in_phone_number_status']
+                    end
+                    
+                    ##
+                    # @return [String] The pin required for the losing carrier to port out the phone number.
+                    def port_out_pin
+                        @properties['port_out_pin']
+                    end
+                    
+                    ##
+                    # @return [String] The rejection reason returned by the vendor.
+                    def rejection_reason
+                        @properties['rejection_reason']
+                    end
+                    
+                    ##
+                    # @return [String] The rejection reason code returned by the vendor.
+                    def rejection_reason_code
+                        @properties['rejection_reason_code']
                     end
                     
                     ##

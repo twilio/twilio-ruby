@@ -92,8 +92,9 @@ module Twilio
                             'Tags' => tags,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         VerificationInstance.new(
                             @version,
                             payload,
@@ -132,8 +133,9 @@ module Twilio
                     # @return [VerificationInstance] Fetched VerificationInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         VerificationInstance.new(
                             @version,
                             payload,
@@ -154,8 +156,9 @@ module Twilio
                             'Status' => status,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         VerificationInstance.new(
                             @version,
                             payload,

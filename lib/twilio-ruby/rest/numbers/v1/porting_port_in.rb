@@ -37,8 +37,9 @@ module Twilio
                     def create(body: :unset
                     )
 
-                        headers = Twilio::Values.of({"Content-Type"=> "application/json"})
-                        payload = @version.create('POST', @uri, data: body.to_json, headers: headers)
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        payload = @version.create('POST', @uri, headers: headers, data: body.to_json)
                         PortingPortInInstance.new(
                             @version,
                             payload,
@@ -75,8 +76,9 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri)
+                        @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
@@ -84,8 +86,9 @@ module Twilio
                     # @return [PortingPortInInstance] Fetched PortingPortInInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         PortingPortInInstance.new(
                             @version,
                             payload,
@@ -163,6 +166,7 @@ module Twilio
                             'losing_carrier_information' => payload['losing_carrier_information'],
                             'phone_numbers' => payload['phone_numbers'],
                             'documents' => payload['documents'],
+                            'date_created' => Twilio.deserialize_iso8601_date(payload['date_created']),
                         }
 
                         # Context
@@ -245,6 +249,12 @@ module Twilio
                     # @return [Array<String>] The list of documents SID referencing a utility bills
                     def documents
                         @properties['documents']
+                    end
+                    
+                    ##
+                    # @return [Date] 
+                    def date_created
+                        @properties['date_created']
                     end
                     
                     ##

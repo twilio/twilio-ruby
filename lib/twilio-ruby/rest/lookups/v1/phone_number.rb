@@ -75,8 +75,9 @@ module Twilio
                             'AddOns' => Twilio.serialize_list(add_ons) { |e| e },
                         })
                         params.merge!(Twilio.prefixed_collapsible_map(add_ons_data, 'AddOns'))
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri, params: params)
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         PhoneNumberInstance.new(
                             @version,
                             payload,

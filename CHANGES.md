@@ -1,6 +1,30 @@
 twilio-ruby changelog
 =====================
 
+[2024-06-18] Version 7.2.0
+--------------------------
+**Library - Chore**
+- [PR #723](https://github.com/twilio/twilio-ruby/pull/723): adding contentType in post and put. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+
+**Events**
+- Add `status` and `documentation_url` to Event Types
+
+**Lookups**
+- Removed unused `fraud` lookups in V1 only to facilitate rest proxy migration
+
+**Numbers**
+- Add date_created field to the Get Port In Request API
+- Rename the `status_last_time_updated_timestamp` field to `last_updated` in the Get Port In Phone Number API **(breaking change)**
+- Add Rejection reason and rejection reason code to the Get Port In Phone Number API
+- Remove the carrier information from the Portability API
+
+**Proxy**
+- Change property `type` from enum to ienum
+
+**Trusthub**
+- Add skipMessagingUseCase field in compliance_tollfree_inquiry.
+
+
 [2024-06-06] Version 7.1.1
 --------------------------
 **Library - Chore**

@@ -59,8 +59,9 @@ module Twilio
                     # @return [AuthTokenPromotionInstance] Updated AuthTokenPromotionInstance
                     def update
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri)
+                        payload = @version.update('POST', @uri, headers: headers)
                         AuthTokenPromotionInstance.new(
                             @version,
                             payload,

@@ -49,8 +49,9 @@ module Twilio
                             'MediaUrl' => Twilio.serialize_list(media_url) { |e| e },
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         MessageInteractionInstance.new(
                             @version,
                             payload,
@@ -177,8 +178,9 @@ module Twilio
                     # @return [MessageInteractionInstance] Fetched MessageInteractionInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         MessageInteractionInstance.new(
                             @version,
                             payload,

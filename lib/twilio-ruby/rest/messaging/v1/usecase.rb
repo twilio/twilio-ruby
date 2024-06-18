@@ -35,8 +35,9 @@ module Twilio
                     # @return [UsecaseInstance] Fetched UsecaseInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         UsecaseInstance.new(
                             @version,
                             payload,

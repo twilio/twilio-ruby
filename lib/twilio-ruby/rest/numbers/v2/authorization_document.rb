@@ -57,8 +57,9 @@ module Twilio
                             'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         AuthorizationDocumentInstance.new(
                             @version,
                             payload,
@@ -192,8 +193,9 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri)
+                        @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
@@ -201,8 +203,9 @@ module Twilio
                     # @return [AuthorizationDocumentInstance] Fetched AuthorizationDocumentInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         AuthorizationDocumentInstance.new(
                             @version,
                             payload,

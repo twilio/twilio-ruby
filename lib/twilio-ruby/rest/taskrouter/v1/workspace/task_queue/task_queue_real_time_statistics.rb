@@ -70,8 +70,9 @@ module Twilio
                         params = Twilio::Values.of({
                             'TaskChannel' => task_channel,
                         })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri, params: params)
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         TaskQueueRealTimeStatisticsInstance.new(
                             @version,
                             payload,

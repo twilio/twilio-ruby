@@ -53,8 +53,8 @@ module Twilio
                             'PreEngagementData' => pre_engagement_data,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Ui-Version' => ui_version, })
                         
-                        headers = Twilio::Values.of({ 'Ui-Version' => ui_version, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         WebChannelsInstance.new(
                             @version,

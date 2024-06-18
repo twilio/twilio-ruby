@@ -48,8 +48,9 @@ module Twilio
                             'Types' => Twilio.serialize_list(types) { |e| Twilio.serialize_object(e) },
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         SubscriptionInstance.new(
                             @version,
                             payload,
@@ -177,8 +178,9 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri)
+                        @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
@@ -186,8 +188,9 @@ module Twilio
                     # @return [SubscriptionInstance] Fetched SubscriptionInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         SubscriptionInstance.new(
                             @version,
                             payload,
@@ -210,8 +213,9 @@ module Twilio
                             'SinkSid' => sink_sid,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         SubscriptionInstance.new(
                             @version,
                             payload,

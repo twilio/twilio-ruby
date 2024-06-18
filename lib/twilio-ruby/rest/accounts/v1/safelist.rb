@@ -42,8 +42,9 @@ module Twilio
                             'PhoneNumber' => phone_number,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         SafelistInstance.new(
                             @version,
                             payload,
@@ -61,8 +62,9 @@ module Twilio
                         params = Twilio::Values.of({
                             'PhoneNumber' => phone_number,
                         })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri, params: params)
+                        @version.delete('DELETE', @uri, params: params, headers: headers)
                     end
 
                     ##
@@ -76,8 +78,9 @@ module Twilio
                         params = Twilio::Values.of({
                             'PhoneNumber' => phone_number,
                         })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri, params: params)
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         SafelistInstance.new(
                             @version,
                             payload,

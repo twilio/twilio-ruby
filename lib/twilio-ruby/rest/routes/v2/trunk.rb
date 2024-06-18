@@ -60,8 +60,9 @@ module Twilio
                     # @return [TrunkInstance] Fetched TrunkInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         TrunkInstance.new(
                             @version,
                             payload,
@@ -84,8 +85,9 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         TrunkInstance.new(
                             @version,
                             payload,

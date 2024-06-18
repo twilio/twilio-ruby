@@ -51,8 +51,9 @@ module Twilio
                             'RoutingProperties' => Twilio.serialize_object(routing_properties),
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         InteractionChannelParticipantInstance.new(
                             @version,
                             payload,
@@ -184,8 +185,9 @@ module Twilio
                             'Status' => status,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         InteractionChannelParticipantInstance.new(
                             @version,
                             payload,

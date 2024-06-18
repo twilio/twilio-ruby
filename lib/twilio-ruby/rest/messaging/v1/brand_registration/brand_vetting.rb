@@ -47,8 +47,9 @@ module Twilio
                             'VettingId' => vetting_id,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         BrandVettingInstance.new(
                             @version,
                             payload,
@@ -177,8 +178,9 @@ module Twilio
                     # @return [BrandVettingInstance] Fetched BrandVettingInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         BrandVettingInstance.new(
                             @version,
                             payload,

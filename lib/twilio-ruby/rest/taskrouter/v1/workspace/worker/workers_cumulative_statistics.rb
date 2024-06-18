@@ -78,8 +78,9 @@ module Twilio
                             'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
                             'TaskChannel' => task_channel,
                         })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri, params: params)
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         WorkersCumulativeStatisticsInstance.new(
                             @version,
                             payload,

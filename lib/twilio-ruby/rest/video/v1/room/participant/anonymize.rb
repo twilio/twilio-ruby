@@ -64,8 +64,9 @@ module Twilio
                     # @return [AnonymizeInstance] Updated AnonymizeInstance
                     def update
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri)
+                        payload = @version.update('POST', @uri, headers: headers)
                         AnonymizeInstance.new(
                             @version,
                             payload,

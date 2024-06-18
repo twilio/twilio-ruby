@@ -62,8 +62,9 @@ module Twilio
                     # @return [FlowTestUserInstance] Fetched FlowTestUserInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         FlowTestUserInstance.new(
                             @version,
                             payload,
@@ -83,8 +84,9 @@ module Twilio
                             'TestUsers' => Twilio.serialize_list(test_users) { |e| e },
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         FlowTestUserInstance.new(
                             @version,
                             payload,

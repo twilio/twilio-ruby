@@ -59,8 +59,9 @@ module Twilio
                             'StatusCallbackMethod' => status_callback_method,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         ValidationRequestInstance.new(
                             @version,
                             payload,

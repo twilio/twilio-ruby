@@ -50,8 +50,8 @@ module Twilio
                             'Description' => description,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
                         
-                        headers = Twilio::Values.of({ 'Flex-Metadata' => flex_metadata, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         PluginInstance.new(
                             @version,
@@ -183,8 +183,8 @@ module Twilio
                         flex_metadata: :unset
                     )
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
                         
-                        headers = Twilio::Values.of({ 'Flex-Metadata' => flex_metadata, })
                         payload = @version.fetch('GET', @uri, headers: headers)
                         PluginInstance.new(
                             @version,
@@ -210,8 +210,8 @@ module Twilio
                             'Description' => description,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
                         
-                        headers = Twilio::Values.of({ 'Flex-Metadata' => flex_metadata, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         PluginInstance.new(
                             @version,

@@ -149,8 +149,9 @@ module Twilio
                     # @return [PublishedTrackInstance] Fetched PublishedTrackInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         PublishedTrackInstance.new(
                             @version,
                             payload,

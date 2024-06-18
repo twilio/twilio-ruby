@@ -60,8 +60,9 @@ module Twilio
                     # @return [ConfigurationInstance] Fetched ConfigurationInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         ConfigurationInstance.new(
                             @version,
                             payload,
@@ -89,8 +90,9 @@ module Twilio
                             'DefaultClosedTimer' => default_closed_timer,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         ConfigurationInstance.new(
                             @version,
                             payload,

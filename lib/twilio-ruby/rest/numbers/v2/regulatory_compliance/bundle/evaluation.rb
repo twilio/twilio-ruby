@@ -38,8 +38,9 @@ module Twilio
                     # @return [EvaluationInstance] Created EvaluationInstance
                     def create
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri)
+                        payload = @version.create('POST', @uri, headers: headers)
                         EvaluationInstance.new(
                             @version,
                             payload,
@@ -162,8 +163,9 @@ module Twilio
                     # @return [EvaluationInstance] Fetched EvaluationInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         EvaluationInstance.new(
                             @version,
                             payload,

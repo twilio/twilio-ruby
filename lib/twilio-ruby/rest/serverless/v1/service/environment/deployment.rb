@@ -45,8 +45,9 @@ module Twilio
                             'BuildSid' => build_sid,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         DeploymentInstance.new(
                             @version,
                             payload,
@@ -171,8 +172,9 @@ module Twilio
                     # @return [DeploymentInstance] Fetched DeploymentInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         DeploymentInstance.new(
                             @version,
                             payload,

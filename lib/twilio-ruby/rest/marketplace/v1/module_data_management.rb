@@ -60,8 +60,9 @@ module Twilio
                     # @return [ModuleDataManagementInstance] Fetched ModuleDataManagementInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         ModuleDataManagementInstance.new(
                             @version,
                             payload,
@@ -93,8 +94,9 @@ module Twilio
                             'Support' => support,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         ModuleDataManagementInstance.new(
                             @version,
                             payload,

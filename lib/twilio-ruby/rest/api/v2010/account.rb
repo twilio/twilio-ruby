@@ -42,8 +42,9 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         AccountInstance.new(
                             @version,
                             payload,
@@ -200,8 +201,9 @@ module Twilio
                     # @return [AccountInstance] Fetched AccountInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         AccountInstance.new(
                             @version,
                             payload,
@@ -224,8 +226,9 @@ module Twilio
                             'Status' => status,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         AccountInstance.new(
                             @version,
                             payload,

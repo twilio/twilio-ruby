@@ -174,8 +174,9 @@ module Twilio
                             'Events' => events,
                             'Metrics' => metrics,
                         })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri, params: params)
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         ConferenceParticipantInstance.new(
                             @version,
                             payload,

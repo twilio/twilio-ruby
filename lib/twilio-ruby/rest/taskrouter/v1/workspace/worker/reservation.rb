@@ -155,8 +155,9 @@ module Twilio
                     # @return [ReservationInstance] Fetched ReservationInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         ReservationInstance.new(
                             @version,
                             payload,
@@ -333,8 +334,8 @@ module Twilio
                             'JitterBufferSize' => jitter_buffer_size,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
                         
-                        headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         ReservationInstance.new(
                             @version,

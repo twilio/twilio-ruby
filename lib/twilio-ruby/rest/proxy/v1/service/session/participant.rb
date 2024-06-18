@@ -54,8 +54,9 @@ module Twilio
                             'ProxyIdentifierSid' => proxy_identifier_sid,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         ParticipantInstance.new(
                             @version,
                             payload,
@@ -181,8 +182,9 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri)
+                        @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
@@ -190,8 +192,9 @@ module Twilio
                     # @return [ParticipantInstance] Fetched ParticipantInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         ParticipantInstance.new(
                             @version,
                             payload,

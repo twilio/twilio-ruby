@@ -149,8 +149,9 @@ module Twilio
                     # @return [MemberInstance] Fetched MemberInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         MemberInstance.new(
                             @version,
                             payload,
@@ -175,8 +176,9 @@ module Twilio
                             'Method' => method,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         MemberInstance.new(
                             @version,
                             payload,

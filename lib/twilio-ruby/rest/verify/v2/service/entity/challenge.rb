@@ -60,8 +60,9 @@ module Twilio
                             'AuthPayload' => auth_payload,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         ChallengeInstance.new(
                             @version,
                             payload,
@@ -205,8 +206,9 @@ module Twilio
                     # @return [ChallengeInstance] Fetched ChallengeInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         ChallengeInstance.new(
                             @version,
                             payload,
@@ -231,8 +233,9 @@ module Twilio
                             'Metadata' => Twilio.serialize_object(metadata),
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         ChallengeInstance.new(
                             @version,
                             payload,

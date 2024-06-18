@@ -66,8 +66,9 @@ module Twilio
                         params = Twilio::Values.of({
                             'TargetAccountSid' => target_account_sid,
                         })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri, params: params)
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         PortingPortabilityInstance.new(
                             @version,
                             payload,
@@ -142,8 +143,6 @@ module Twilio
                             'not_portable_reason_code' => payload['not_portable_reason_code'] == nil ? payload['not_portable_reason_code'] : payload['not_portable_reason_code'].to_i,
                             'number_type' => payload['number_type'],
                             'country' => payload['country'],
-                            'messaging_carrier' => payload['messaging_carrier'],
-                            'voice_carrier' => payload['voice_carrier'],
                             'url' => payload['url'],
                         }
 
@@ -209,18 +208,6 @@ module Twilio
                     # @return [String] Country the phone number belongs to.
                     def country
                         @properties['country']
-                    end
-                    
-                    ##
-                    # @return [String] Current messaging carrier of the phone number
-                    def messaging_carrier
-                        @properties['messaging_carrier']
-                    end
-                    
-                    ##
-                    # @return [String] Current voice carrier of the phone number
-                    def voice_carrier
-                        @properties['voice_carrier']
                     end
                     
                     ##

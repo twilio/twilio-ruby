@@ -45,8 +45,9 @@ module Twilio
                             'RegistrationCode' => registration_code,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         SimInstance.new(
                             @version,
                             payload,
@@ -187,8 +188,9 @@ module Twilio
                     # @return [SimInstance] Fetched SimInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         SimInstance.new(
                             @version,
                             payload,
@@ -223,8 +225,9 @@ module Twilio
                             'AccountSid' => account_sid,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         SimInstance.new(
                             @version,
                             payload,

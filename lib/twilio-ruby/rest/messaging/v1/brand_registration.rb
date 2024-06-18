@@ -54,8 +54,9 @@ module Twilio
                             'SkipAutomaticSecVet' => skip_automatic_sec_vet,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         BrandRegistrationInstance.new(
                             @version,
                             payload,
@@ -178,8 +179,9 @@ module Twilio
                     # @return [BrandRegistrationInstance] Fetched BrandRegistrationInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         BrandRegistrationInstance.new(
                             @version,
                             payload,
@@ -192,8 +194,9 @@ module Twilio
                     # @return [BrandRegistrationInstance] Updated BrandRegistrationInstance
                     def update
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri)
+                        payload = @version.update('POST', @uri, headers: headers)
                         BrandRegistrationInstance.new(
                             @version,
                             payload,

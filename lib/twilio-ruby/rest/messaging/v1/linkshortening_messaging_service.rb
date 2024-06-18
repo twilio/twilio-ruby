@@ -61,8 +61,9 @@ module Twilio
                     # @return [LinkshorteningMessagingServiceInstance] Created LinkshorteningMessagingServiceInstance
                     def create
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri)
+                        payload = @version.create('POST', @uri, headers: headers)
                         LinkshorteningMessagingServiceInstance.new(
                             @version,
                             payload,
@@ -76,8 +77,9 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri)
+                        @version.delete('DELETE', @uri, headers: headers)
                     end
 
 

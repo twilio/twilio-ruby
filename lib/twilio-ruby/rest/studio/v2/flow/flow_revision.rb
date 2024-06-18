@@ -147,8 +147,9 @@ module Twilio
                     # @return [FlowRevisionInstance] Fetched FlowRevisionInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         FlowRevisionInstance.new(
                             @version,
                             payload,

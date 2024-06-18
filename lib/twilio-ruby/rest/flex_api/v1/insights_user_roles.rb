@@ -62,8 +62,8 @@ module Twilio
                         authorization: :unset
                     )
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
                         
-                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.fetch('GET', @uri, headers: headers)
                         InsightsUserRolesInstance.new(
                             @version,

@@ -150,8 +150,9 @@ module Twilio
                     # @return [EventTypeInstance] Fetched EventTypeInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         EventTypeInstance.new(
                             @version,
                             payload,
@@ -223,6 +224,8 @@ module Twilio
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'description' => payload['description'],
+                            'status' => payload['status'],
+                            'documentation_url' => payload['documentation_url'],
                             'url' => payload['url'],
                             'links' => payload['links'],
                         }
@@ -271,6 +274,18 @@ module Twilio
                     # @return [String] A human readable description for this Event Type.
                     def description
                         @properties['description']
+                    end
+                    
+                    ##
+                    # @return [String] A string that describes how this Event Type can be used. For example: `available`, `deprecated`, `restricted`, `discontinued`. When the status is `available`, the Event Type can be used normally.
+                    def status
+                        @properties['status']
+                    end
+                    
+                    ##
+                    # @return [String] The URL to the documentation or to the most relevant Twilio Changelog entry of this Event Type.
+                    def documentation_url
+                        @properties['documentation_url']
                     end
                     
                     ##

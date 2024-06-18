@@ -37,8 +37,9 @@ module Twilio
                     # @return [BrandRegistrationOtpInstance] Created BrandRegistrationOtpInstance
                     def create
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri)
+                        payload = @version.create('POST', @uri, headers: headers)
                         BrandRegistrationOtpInstance.new(
                             @version,
                             payload,

@@ -197,8 +197,9 @@ module Twilio
                     # @return [ConferenceInstance] Fetched ConferenceInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         ConferenceInstance.new(
                             @version,
                             payload,
@@ -225,8 +226,9 @@ module Twilio
                             'AnnounceMethod' => announce_method,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         ConferenceInstance.new(
                             @version,
                             payload,

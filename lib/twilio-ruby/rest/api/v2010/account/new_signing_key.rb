@@ -44,8 +44,9 @@ module Twilio
                             'FriendlyName' => friendly_name,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         NewSigningKeyInstance.new(
                             @version,
                             payload,
