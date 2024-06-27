@@ -327,6 +327,7 @@ module Twilio
                         # Dependents
                         @events = nil
                         @user_defined_messages = nil
+                        @transcriptions = nil
                         @siprec = nil
                         @user_defined_message_subscriptions = nil
                         @payments = nil
@@ -428,6 +429,25 @@ module Twilio
                                 @version, account_sid: @solution[:account_sid], call_sid: @solution[:sid], )
                       end
                       @user_defined_messages
+                    end
+                    ##
+                    # Access the transcriptions
+                    # @return [TranscriptionList]
+                    # @return [TranscriptionContext] if sid was passed.
+                    def transcriptions(sid=:unset)
+
+                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+                        if sid != :unset
+                            return TranscriptionContext.new(@version, @solution[:account_sid], @solution[:sid],sid )
+                        end
+
+                        unless @transcriptions
+                            @transcriptions = TranscriptionList.new(
+                                @version, account_sid: @solution[:account_sid], call_sid: @solution[:sid], )
+                        end
+
+                     @transcriptions
                     end
                     ##
                     # Access the siprec
@@ -867,6 +887,13 @@ module Twilio
                     # @return [user_defined_messages] user_defined_messages
                     def user_defined_messages
                         context.user_defined_messages
+                    end
+
+                    ##
+                    # Access the transcriptions
+                    # @return [transcriptions] transcriptions
+                    def transcriptions
+                        context.transcriptions
                     end
 
                     ##

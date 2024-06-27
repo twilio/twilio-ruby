@@ -21,8 +21,8 @@ module Twilio
 
                      class InstalledAddOnUsageList < ListResource
                 
-                    class CreateMarketplaceBillingUsageRequest
-                            # @param [billable_items]: [Array<InstalledAddOnUsageList.CreateMarketplaceBillingUsageRequestBillableItems>] 
+                    class CreateBillingUsageRequest
+                            # @param [billable_items]: [Array<InstalledAddOnUsageList.CreateBillingUsageRequestBillableItems>] 
                         attr_accessor :billable_items
                         def initialize(payload)
                                 @billable_items = payload["billable_items"]
@@ -34,7 +34,7 @@ module Twilio
                         end
                     end
 
-                    class CreateMarketplaceBillingUsageRequestBillableItems
+                    class CreateBillingUsageRequestBillableItems
                             # @param [quantity]: [Float] 
                             # @param [sid]: [String] 
                         attr_accessor :quantity, :sid
@@ -63,14 +63,14 @@ module Twilio
                     end
                     ##
                     # Create the InstalledAddOnUsageInstance
-                    # @param [CreateMarketplaceBillingUsageRequest] create_marketplace_billing_usage_request 
+                    # @param [CreateBillingUsageRequest] create_billing_usage_request 
                     # @return [InstalledAddOnUsageInstance] Created InstalledAddOnUsageInstance
-                    def create(create_marketplace_billing_usage_request: nil
+                    def create(create_billing_usage_request: nil
                     )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
-                        payload = @version.create('POST', @uri, headers: headers, data: create_marketplace_billing_usage_request.to_json)
+                        payload = @version.create('POST', @uri, headers: headers, data: create_billing_usage_request.to_json)
                         InstalledAddOnUsageInstance.new(
                             @version,
                             payload,
@@ -137,7 +137,7 @@ module Twilio
 
                     
                     ##
-                    # @return [Array<MarketplaceInstalledAddOnBillingUsageResponseBillableItems>] 
+                    # @return [Array<MarketplaceV1InstalledAddOnBillingUsageResponseBillableItems>] 
                     def billable_items
                         @properties['billable_items']
                     end
