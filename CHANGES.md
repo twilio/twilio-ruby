@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+[2024-07-02] Version 7.2.2
+--------------------------
+**Intelligence**
+- Deprecate account flag api.twilio-intelligence.v2
+
+
 [2024-06-27] Version 7.2.1
 --------------------------
 **Api**
