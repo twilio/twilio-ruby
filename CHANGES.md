@@ -1,6 +1,11 @@
 twilio-ruby changelog
 =====================
 
+[2024-07-02] Version 7.2.3
+--------------------------
+**Rubygems**
+- Add docs link to gemspec
+
 [2024-07-02] Version 7.2.2
 --------------------------
 **Intelligence**
