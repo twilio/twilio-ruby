@@ -14,7 +14,8 @@ Gem::Specification.new do |spec|
                        'building TwiML, and generating Twilio JWT Capability Tokens'
   spec.homepage      = 'https://github.com/twilio/twilio-ruby'
   spec.license       = 'MIT'
-  spec.metadata      = { 'documentation_uri' => 'https://www.twilio.com/docs/libraries/reference/twilio-ruby/', 'yard.run' => 'yri' } # use "yard" to build full HTML docs
+  spec.metadata      = { 'documentation_uri' => 'https://www.twilio.com/docs/libraries/reference/twilio-ruby/',
+                         'yard.run' => 'yri' } # use "yard" to build full HTML docs
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match?(%r{^(spec)/}) }
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
