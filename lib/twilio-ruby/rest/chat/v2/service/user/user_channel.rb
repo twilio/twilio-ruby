@@ -152,8 +152,8 @@ module Twilio
                         x_twilio_webhook_enabled: :unset
                     )
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         
-                        headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -162,8 +162,9 @@ module Twilio
                     # @return [UserChannelInstance] Fetched UserChannelInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         UserChannelInstance.new(
                             @version,
                             payload,
@@ -191,8 +192,9 @@ module Twilio
                             'LastConsumptionTimestamp' => Twilio.serialize_iso8601_datetime(last_consumption_timestamp),
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         UserChannelInstance.new(
                             @version,
                             payload,

@@ -37,8 +37,9 @@ module Twilio
                     # @return [SinkTestInstance] Created SinkTestInstance
                     def create
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri)
+                        payload = @version.create('POST', @uri, headers: headers)
                         SinkTestInstance.new(
                             @version,
                             payload,

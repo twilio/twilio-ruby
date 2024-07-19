@@ -51,8 +51,9 @@ module Twilio
                             'StatusCallback' => status_callback,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         TrustProductsInstance.new(
                             @version,
                             payload,
@@ -194,8 +195,9 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri)
+                        @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
@@ -203,8 +205,9 @@ module Twilio
                     # @return [TrustProductsInstance] Fetched TrustProductsInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         TrustProductsInstance.new(
                             @version,
                             payload,
@@ -233,8 +236,9 @@ module Twilio
                             'Email' => email,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         TrustProductsInstance.new(
                             @version,
                             payload,
@@ -370,6 +374,7 @@ module Twilio
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'url' => payload['url'],
                             'links' => payload['links'],
+                            'errors' => payload['errors'],
                         }
 
                         # Context
@@ -458,6 +463,12 @@ module Twilio
                     # @return [Hash] The URLs of the Assigned Items of the Trust Product resource.
                     def links
                         @properties['links']
+                    end
+                    
+                    ##
+                    # @return [Array<Hash>] The error codes associated with the rejection of the Trust Product.
+                    def errors
+                        @properties['errors']
                     end
                     
                     ##

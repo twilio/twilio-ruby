@@ -40,6 +40,9 @@ module Twilio
                     # @param [String] workflow_sid The SID of the Workflow that you would like to handle routing for the new Task. If there is only one Workflow defined for the Workspace that you are posting the new task to, this parameter is optional.
                     # @param [String] attributes A URL-encoded JSON string with the attributes of the new task. This value is passed to the Workflow's `assignment_callback_url` when the Task is assigned to a Worker. For example: `{ \\\"task_type\\\": \\\"call\\\", \\\"twilio_call_sid\\\": \\\"CAxxx\\\", \\\"customer_ticket_number\\\": \\\"12345\\\" }`.
                     # @param [Time] virtual_start_time The virtual start time to assign the new task and override the default. When supplied, the new task will have this virtual start time. When not supplied, the new task will have the virtual start time equal to `date_created`. Value can't be in the future.
+                    # @param [String] routing_target A SID of a Worker, Queue, or Workflow to route a Task to
+                    # @param [String] ignore_capacity A boolean indicating if a new task should respect a worker's capacity during assignment
+                    # @param [String] task_queue_sid The SID of the TaskQueue in which the Task belongs
                     # @return [TaskInstance] Created TaskInstance
                     def create(
                         timeout: :unset, 
@@ -47,7 +50,10 @@ module Twilio
                         task_channel: :unset, 
                         workflow_sid: :unset, 
                         attributes: :unset, 
-                        virtual_start_time: :unset
+                        virtual_start_time: :unset, 
+                        routing_target: :unset, 
+                        ignore_capacity: :unset, 
+                        task_queue_sid: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -57,10 +63,14 @@ module Twilio
                             'WorkflowSid' => workflow_sid,
                             'Attributes' => attributes,
                             'VirtualStartTime' => Twilio.serialize_iso8601_datetime(virtual_start_time),
+                            'RoutingTarget' => routing_target,
+                            'IgnoreCapacity' => ignore_capacity,
+                            'TaskQueueSid' => task_queue_sid,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         TaskInstance.new(
                             @version,
                             payload,
@@ -80,6 +90,7 @@ module Twilio
                     # @param [String] task_queue_sid The SID of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this SID.
                     # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this friendly name.
                     # @param [String] evaluate_task_attributes The attributes of the Tasks to read. Returns the Tasks that match the attributes specified in this parameter.
+                    # @param [String] routing_target A SID of a Worker, Queue, or Workflow to route a Task to
                     # @param [String] ordering How to order the returned Task resources. By default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `DateCreated`, `Priority`, or `VirtualStartTime` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Pairings of sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order. The only ordering pairing not allowed is DateCreated and VirtualStartTime.
                     # @param [Boolean] has_addons Whether to read Tasks with Add-ons. If `true`, returns only Tasks with Add-ons. If `false`, returns only Tasks without Add-ons.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -89,7 +100,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, ordering: :unset, has_addons: :unset, limit: nil, page_size: nil)
+                    def list(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, routing_target: :unset, ordering: :unset, has_addons: :unset, limit: nil, page_size: nil)
                         self.stream(
                             priority: priority,
                             assignment_status: assignment_status,
@@ -98,6 +109,7 @@ module Twilio
                             task_queue_sid: task_queue_sid,
                             task_queue_name: task_queue_name,
                             evaluate_task_attributes: evaluate_task_attributes,
+                            routing_target: routing_target,
                             ordering: ordering,
                             has_addons: has_addons,
                             limit: limit,
@@ -116,6 +128,7 @@ module Twilio
                     # @param [String] task_queue_sid The SID of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this SID.
                     # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this friendly name.
                     # @param [String] evaluate_task_attributes The attributes of the Tasks to read. Returns the Tasks that match the attributes specified in this parameter.
+                    # @param [String] routing_target A SID of a Worker, Queue, or Workflow to route a Task to
                     # @param [String] ordering How to order the returned Task resources. By default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `DateCreated`, `Priority`, or `VirtualStartTime` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Pairings of sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order. The only ordering pairing not allowed is DateCreated and VirtualStartTime.
                     # @param [Boolean] has_addons Whether to read Tasks with Add-ons. If `true`, returns only Tasks with Add-ons. If `false`, returns only Tasks without Add-ons.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
@@ -125,7 +138,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, ordering: :unset, has_addons: :unset, limit: nil, page_size: nil)
+                    def stream(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, routing_target: :unset, ordering: :unset, has_addons: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
@@ -136,6 +149,7 @@ module Twilio
                             task_queue_sid: task_queue_sid,
                             task_queue_name: task_queue_name,
                             evaluate_task_attributes: evaluate_task_attributes,
+                            routing_target: routing_target,
                             ordering: ordering,
                             has_addons: has_addons,
                             page_size: limits[:page_size], )
@@ -167,13 +181,14 @@ module Twilio
                     # @param [String] task_queue_sid The SID of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this SID.
                     # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this friendly name.
                     # @param [String] evaluate_task_attributes The attributes of the Tasks to read. Returns the Tasks that match the attributes specified in this parameter.
+                    # @param [String] routing_target A SID of a Worker, Queue, or Workflow to route a Task to
                     # @param [String] ordering How to order the returned Task resources. By default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `DateCreated`, `Priority`, or `VirtualStartTime` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Pairings of sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order. The only ordering pairing not allowed is DateCreated and VirtualStartTime.
                     # @param [Boolean] has_addons Whether to read Tasks with Add-ons. If `true`, returns only Tasks with Add-ons. If `false`, returns only Tasks without Add-ons.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of TaskInstance
-                    def page(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, ordering: :unset, has_addons: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, routing_target: :unset, ordering: :unset, has_addons: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'Priority' => priority,
                             
@@ -183,6 +198,7 @@ module Twilio
                             'TaskQueueSid' => task_queue_sid,
                             'TaskQueueName' => task_queue_name,
                             'EvaluateTaskAttributes' => evaluate_task_attributes,
+                            'RoutingTarget' => routing_target,
                             'Ordering' => ordering,
                             'HasAddons' => has_addons,
                             'PageToken' => page_token,
@@ -242,8 +258,8 @@ module Twilio
                         if_match: :unset
                     )
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
                         
-                        headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -252,8 +268,9 @@ module Twilio
                     # @return [TaskInstance] Fetched TaskInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         TaskInstance.new(
                             @version,
                             payload,
@@ -291,8 +308,8 @@ module Twilio
                             'VirtualStartTime' => Twilio.serialize_iso8601_datetime(virtual_start_time),
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
                         
-                        headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         TaskInstance.new(
                             @version,
@@ -402,6 +419,8 @@ module Twilio
                             'url' => payload['url'],
                             'links' => payload['links'],
                             'virtual_start_time' => Twilio.deserialize_iso8601_datetime(payload['virtual_start_time']),
+                            'ignore_capacity' => payload['ignore_capacity'],
+                            'routing_target' => payload['routing_target'],
                         }
 
                         # Context
@@ -550,6 +569,18 @@ module Twilio
                     # @return [Time] The date and time in GMT indicating the ordering for routing of the Task specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
                     def virtual_start_time
                         @properties['virtual_start_time']
+                    end
+                    
+                    ##
+                    # @return [Boolean] A boolean indicating if a new task should respect a worker's capacity during assignment
+                    def ignore_capacity
+                        @properties['ignore_capacity']
+                    end
+                    
+                    ##
+                    # @return [String] A SID of a Worker, Queue, or Workflow to route a Task to
+                    def routing_target
+                        @properties['routing_target']
                     end
                     
                     ##

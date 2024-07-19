@@ -45,8 +45,9 @@ module Twilio
                             'NotificationEmail' => notification_email,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         ComplianceInquiriesInstance.new(
                             @version,
                             payload,
@@ -90,8 +91,9 @@ module Twilio
                             'PrimaryProfileSid' => primary_profile_sid,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         ComplianceInquiriesInstance.new(
                             @version,
                             payload,

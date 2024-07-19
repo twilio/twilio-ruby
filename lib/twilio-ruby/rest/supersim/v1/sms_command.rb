@@ -51,8 +51,9 @@ module Twilio
                             'CallbackUrl' => callback_url,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         SmsCommandInstance.new(
                             @version,
                             payload,
@@ -191,8 +192,9 @@ module Twilio
                     # @return [SmsCommandInstance] Fetched SmsCommandInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         SmsCommandInstance.new(
                             @version,
                             payload,

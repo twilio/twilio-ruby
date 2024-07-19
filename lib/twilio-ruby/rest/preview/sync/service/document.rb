@@ -47,8 +47,9 @@ module Twilio
                             'Data' => Twilio.serialize_object(data),
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         DocumentInstance.new(
                             @version,
                             payload,
@@ -172,8 +173,9 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri)
+                        @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
@@ -181,8 +183,9 @@ module Twilio
                     # @return [DocumentInstance] Fetched DocumentInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         DocumentInstance.new(
                             @version,
                             payload,
@@ -205,8 +208,8 @@ module Twilio
                             'Data' => Twilio.serialize_object(data),
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
                         
-                        headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         DocumentInstance.new(
                             @version,
@@ -230,7 +233,7 @@ module Twilio
 
                         unless @document_permissions
                             @document_permissions = DocumentPermissionList.new(
-                                @version, service_sid: @solution[:service_sid], document_sid: @solution[:sid], )
+                                @version, )
                         end
 
                      @document_permissions

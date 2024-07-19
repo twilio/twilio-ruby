@@ -60,8 +60,9 @@ module Twilio
                     # @return [DomainConfigInstance] Fetched DomainConfigInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         DomainConfigInstance.new(
                             @version,
                             payload,
@@ -90,8 +91,9 @@ module Twilio
                             'DisableHttps' => disable_https,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         DomainConfigInstance.new(
                             @version,
                             payload,

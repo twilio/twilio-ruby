@@ -424,8 +424,9 @@ module Twilio
                     def create(content_create_request: nil
                     )
 
-                        headers = Twilio::Values.of({"Content-Type"=> "application/json"})
-                        payload = @version.create('POST', @uri, data: content_create_request.to_json, headers: headers)
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        payload = @version.create('POST', @uri, headers: headers, data: content_create_request.to_json)
                         ContentInstance.new(
                             @version,
                             payload,
@@ -548,8 +549,9 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri)
+                        @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
@@ -557,8 +559,9 @@ module Twilio
                     # @return [ContentInstance] Fetched ContentInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         ContentInstance.new(
                             @version,
                             payload,

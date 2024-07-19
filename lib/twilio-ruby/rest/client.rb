@@ -62,6 +62,11 @@ module Twilio
                 @frontline_api ||= FrontlineApi.new self
             end
             ##
+            # Access the PreviewIam Twilio Domain
+            def preview_iam
+                @preview_iam ||= PreviewIam.new self
+            end
+            ##
             # Access the Insights Twilio Domain
             def insights
                 @insights ||= Insights.new self
@@ -82,9 +87,9 @@ module Twilio
                 @lookups ||= Lookups.new self
             end
             ##
-            # Access the PreviewMessaging Twilio Domain
-            def preview_messaging
-                @preview_messaging ||= PreviewMessaging.new self
+            # Access the Marketplace Twilio Domain
+            def marketplace
+                @marketplace ||= Marketplace.new self
             end
             ##
             # Access the Messaging Twilio Domain

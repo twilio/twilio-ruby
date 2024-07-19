@@ -21,9 +21,46 @@ module Twilio
                 def initialize(domain)
                     super
                     @version = 'v2'
+                    @flex_user = nil
                     @web_channels = nil
                 end
 
+                ##
+                # @param [String] instance_sid The unique ID created by Twilio to identify a Flex instance.
+                # @param [String] flex_user_sid The unique id for the flex user to be retrieved.
+                # @return [Twilio::REST::FlexApi::V2::FlexUserContext] if instanceSid was passed.
+                # @return [Twilio::REST::FlexApi::V2::FlexUserList]
+                def flex_user(instance_sid=:unset, flex_user_sid=:unset)
+                    if instance_sid.nil?
+                        raise ArgumentError, 'instance_sid cannot be nil'
+                    end
+                    if flex_user_sid.nil?
+                        raise ArgumentError, 'flex_user_sid cannot be nil'
+                    end
+                    if instance_sid == :unset && flex_user_sid == :unset
+                        @flex_user ||= FlexUserList.new self
+                    else
+                        FlexUserContext.new(self, instance_sid, flex_user_sid)
+                    end
+                end
+                ##
+                # @param [String] instance_sid The unique ID created by Twilio to identify a Flex instance.
+                # @param [String] flex_user_sid The unique id for the flex user to be retrieved.
+                # @return [Twilio::REST::FlexApi::V2::FlexUserContext] if flexUserSid was passed.
+                # @return [Twilio::REST::FlexApi::V2::FlexUserList]
+                def flex_user(instance_sid=:unset, flex_user_sid=:unset)
+                    if instance_sid.nil?
+                        raise ArgumentError, 'instance_sid cannot be nil'
+                    end
+                    if flex_user_sid.nil?
+                        raise ArgumentError, 'flex_user_sid cannot be nil'
+                    end
+                    if instance_sid == :unset && flex_user_sid == :unset
+                        @flex_user ||= FlexUserList.new self
+                    else
+                        FlexUserContext.new(self, instance_sid, flex_user_sid)
+                    end
+                end
                 ##
                 # @return [Twilio::REST::FlexApi::V2::WebChannelsList]
                 def web_channels

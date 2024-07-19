@@ -57,8 +57,9 @@ module Twilio
                             'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         AuthorizationDocumentInstance.new(
                             @version,
                             payload,
@@ -192,8 +193,9 @@ module Twilio
                     # @return [AuthorizationDocumentInstance] Fetched AuthorizationDocumentInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         AuthorizationDocumentInstance.new(
                             @version,
                             payload,
@@ -231,8 +233,9 @@ module Twilio
                             'ContactPhoneNumber' => contact_phone_number,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         AuthorizationDocumentInstance.new(
                             @version,
                             payload,

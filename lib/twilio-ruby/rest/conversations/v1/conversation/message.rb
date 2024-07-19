@@ -70,8 +70,8 @@ module Twilio
                             'Subject' => subject,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         
-                        headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         MessageInstance.new(
                             @version,
@@ -205,8 +205,8 @@ module Twilio
                         x_twilio_webhook_enabled: :unset
                     )
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         
-                        headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -215,8 +215,9 @@ module Twilio
                     # @return [MessageInstance] Fetched MessageInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         MessageInstance.new(
                             @version,
                             payload,
@@ -254,8 +255,8 @@ module Twilio
                             'Subject' => subject,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         
-                        headers = Twilio::Values.of({ 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         MessageInstance.new(
                             @version,

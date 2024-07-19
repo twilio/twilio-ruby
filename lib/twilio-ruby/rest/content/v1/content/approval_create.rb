@@ -55,8 +55,9 @@ module Twilio
                     def create(content_approval_request: nil
                     )
 
-                        headers = Twilio::Values.of({"Content-Type"=> "application/json"})
-                        payload = @version.create('POST', @uri, data: content_approval_request.to_json, headers: headers)
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        payload = @version.create('POST', @uri, headers: headers, data: content_approval_request.to_json)
                         ApprovalCreateInstance.new(
                             @version,
                             payload,

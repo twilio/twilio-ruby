@@ -51,8 +51,9 @@ module Twilio
                             'CommitMessage' => commit_message,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         FlowValidateInstance.new(
                             @version,
                             payload,

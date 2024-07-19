@@ -35,16 +35,12 @@ module Twilio
                     # @param [String] unique_name The Flex Plugin's unique name.
                     # @param [String] friendly_name The Flex Plugin's friendly name.
                     # @param [String] description A descriptive string that you create to describe the plugin resource. It can be up to 500 characters long
-                    # @param [String] cli_version The version of Flex Plugins CLI used to create this plugin
-                    # @param [String] validate_status The validation status of the plugin, indicating whether it has been validated
                     # @param [String] flex_metadata The Flex-Metadata HTTP request header
                     # @return [PluginInstance] Created PluginInstance
                     def create(
                         unique_name: nil, 
                         friendly_name: :unset, 
                         description: :unset, 
-                        cli_version: :unset, 
-                        validate_status: :unset, 
                         flex_metadata: :unset
                     )
 
@@ -52,12 +48,10 @@ module Twilio
                             'UniqueName' => unique_name,
                             'FriendlyName' => friendly_name,
                             'Description' => description,
-                            'CliVersion' => cli_version,
-                            'ValidateStatus' => validate_status,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
                         
-                        headers = Twilio::Values.of({ 'Flex-Metadata' => flex_metadata, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         PluginInstance.new(
                             @version,
@@ -189,8 +183,8 @@ module Twilio
                         flex_metadata: :unset
                     )
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
                         
-                        headers = Twilio::Values.of({ 'Flex-Metadata' => flex_metadata, })
                         payload = @version.fetch('GET', @uri, headers: headers)
                         PluginInstance.new(
                             @version,
@@ -216,8 +210,8 @@ module Twilio
                             'Description' => description,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
                         
-                        headers = Twilio::Values.of({ 'Flex-Metadata' => flex_metadata, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         PluginInstance.new(
                             @version,

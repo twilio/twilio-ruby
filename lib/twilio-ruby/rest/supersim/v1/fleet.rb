@@ -66,8 +66,9 @@ module Twilio
                             'SmsCommandsMethod' => sms_commands_method,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         FleetInstance.new(
                             @version,
                             payload,
@@ -194,8 +195,9 @@ module Twilio
                     # @return [FleetInstance] Fetched FleetInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         FleetInstance.new(
                             @version,
                             payload,
@@ -233,8 +235,9 @@ module Twilio
                             'DataLimit' => data_limit,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         FleetInstance.new(
                             @version,
                             payload,

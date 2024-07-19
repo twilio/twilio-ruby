@@ -53,6 +53,8 @@ module Twilio
                     # @param [String] business_contact_last_name The last name of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_email The email address of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_phone The phone number of the contact for the business or organization using the Tollfree number.
+                    # @param [String] theme_set_id Theme id for styling the inquiry form.
+                    # @param [Boolean] skip_messaging_use_case Skip the messaging use case screen of the inquiry form.
                     # @return [ComplianceTollfreeInquiriesInstance] Created ComplianceTollfreeInquiriesInstance
                     def create(
                         tollfree_phone_number: nil, 
@@ -75,7 +77,9 @@ module Twilio
                         business_contact_first_name: :unset, 
                         business_contact_last_name: :unset, 
                         business_contact_email: :unset, 
-                        business_contact_phone: :unset
+                        business_contact_phone: :unset, 
+                        theme_set_id: :unset, 
+                        skip_messaging_use_case: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -100,10 +104,13 @@ module Twilio
                             'BusinessContactLastName' => business_contact_last_name,
                             'BusinessContactEmail' => business_contact_email,
                             'BusinessContactPhone' => business_contact_phone,
+                            'ThemeSetId' => theme_set_id,
+                            'SkipMessagingUseCase' => skip_messaging_use_case,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         ComplianceTollfreeInquiriesInstance.new(
                             @version,
                             payload,

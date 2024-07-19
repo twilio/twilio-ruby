@@ -146,8 +146,9 @@ module Twilio
                     # @return [DeviceInstance] Fetched DeviceInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         DeviceInstance.new(
                             @version,
                             payload,
@@ -176,8 +177,9 @@ module Twilio
                             'RestartApp' => restart_app,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         DeviceInstance.new(
                             @version,
                             payload,

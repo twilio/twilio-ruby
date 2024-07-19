@@ -111,8 +111,9 @@ module Twilio
                             'BundleSid' => bundle_sid,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         LocalInstance.new(
                             @version,
                             payload,

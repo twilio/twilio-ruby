@@ -156,8 +156,8 @@ module Twilio
                         flex_metadata: :unset
                     )
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
                         
-                        headers = Twilio::Values.of({ 'Flex-Metadata' => flex_metadata, })
                         payload = @version.fetch('GET', @uri, headers: headers)
                         ConfiguredPluginInstance.new(
                             @version,

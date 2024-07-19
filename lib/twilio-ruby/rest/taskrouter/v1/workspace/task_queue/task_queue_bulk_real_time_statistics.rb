@@ -40,8 +40,9 @@ module Twilio
                     def create(body: :unset
                     )
 
-                        headers = Twilio::Values.of({"Content-Type"=> "application/json"})
-                        payload = @version.create('POST', @uri, data: body.to_json, headers: headers)
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        payload = @version.create('POST', @uri, headers: headers, data: body.to_json)
                         TaskQueueBulkRealTimeStatisticsInstance.new(
                             @version,
                             payload,

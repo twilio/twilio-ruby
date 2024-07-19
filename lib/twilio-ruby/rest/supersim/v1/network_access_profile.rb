@@ -45,8 +45,9 @@ module Twilio
                             'Networks' => Twilio.serialize_list(networks) { |e| e },
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         NetworkAccessProfileInstance.new(
                             @version,
                             payload,
@@ -168,8 +169,9 @@ module Twilio
                     # @return [NetworkAccessProfileInstance] Fetched NetworkAccessProfileInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         NetworkAccessProfileInstance.new(
                             @version,
                             payload,
@@ -189,8 +191,9 @@ module Twilio
                             'UniqueName' => unique_name,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         NetworkAccessProfileInstance.new(
                             @version,
                             payload,

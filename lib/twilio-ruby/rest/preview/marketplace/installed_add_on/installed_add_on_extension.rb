@@ -147,8 +147,9 @@ module Twilio
                     # @return [InstalledAddOnExtensionInstance] Fetched InstalledAddOnExtensionInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         InstalledAddOnExtensionInstance.new(
                             @version,
                             payload,
@@ -169,8 +170,9 @@ module Twilio
                             'Enabled' => enabled,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         InstalledAddOnExtensionInstance.new(
                             @version,
                             payload,

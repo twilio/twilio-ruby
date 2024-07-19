@@ -57,8 +57,9 @@ module Twilio
                             'CollectionTtl' => collection_ttl,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         SyncMapItemInstance.new(
                             @version,
                             payload,
@@ -204,8 +205,8 @@ module Twilio
                         if_match: :unset
                     )
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
                         
-                        headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -214,8 +215,9 @@ module Twilio
                     # @return [SyncMapItemInstance] Fetched SyncMapItemInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         SyncMapItemInstance.new(
                             @version,
                             payload,
@@ -248,8 +250,8 @@ module Twilio
                             'CollectionTtl' => collection_ttl,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
                         
-                        headers = Twilio::Values.of({ 'If-Match' => if_match, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         SyncMapItemInstance.new(
                             @version,

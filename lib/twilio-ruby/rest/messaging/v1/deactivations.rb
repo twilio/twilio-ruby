@@ -65,8 +65,9 @@ module Twilio
                         params = Twilio::Values.of({
                             'Date' => Twilio.serialize_iso8601_date(date),
                         })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri, params: params)
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         DeactivationsInstance.new(
                             @version,
                             payload,

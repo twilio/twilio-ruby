@@ -61,8 +61,9 @@ module Twilio
                     # @return [WebhookInstance] Fetched WebhookInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         WebhookInstance.new(
                             @version,
                             payload,
@@ -93,8 +94,9 @@ module Twilio
                             'Target' => target,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         WebhookInstance.new(
                             @version,
                             payload,

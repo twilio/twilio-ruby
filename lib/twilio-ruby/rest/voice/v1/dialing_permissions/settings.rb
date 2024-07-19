@@ -61,8 +61,9 @@ module Twilio
                     # @return [SettingsInstance] Fetched SettingsInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         SettingsInstance.new(
                             @version,
                             payload,
@@ -81,8 +82,9 @@ module Twilio
                             'DialingPermissionsInheritance' => dialing_permissions_inheritance,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         SettingsInstance.new(
                             @version,
                             payload,

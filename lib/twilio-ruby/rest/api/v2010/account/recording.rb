@@ -185,8 +185,9 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri)
+                        @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
@@ -200,8 +201,9 @@ module Twilio
                         params = Twilio::Values.of({
                             'IncludeSoftDeleted' => include_soft_deleted,
                         })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri, params: params)
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         RecordingInstance.new(
                             @version,
                             payload,
@@ -417,7 +419,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The number of channels in the final recording file. Can be: `1` or `2`. You can split a call with two legs into two separate recording channels if you record using [TwiML Dial](https://www.twilio.com/docs/voice/twiml/dial#record) or the [Outbound Rest API](https://www.twilio.com/docs/voice/make-calls#manage-your-outbound-call).
+                    # @return [String] The number of channels in the final recording file. Can be: `1` or `2`.
                     def channels
                         @properties['channels']
                     end

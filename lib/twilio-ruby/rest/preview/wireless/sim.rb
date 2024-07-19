@@ -175,8 +175,9 @@ module Twilio
                     # @return [SimInstance] Fetched SimInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         SimInstance.new(
                             @version,
                             payload,
@@ -241,8 +242,9 @@ module Twilio
                             'VoiceUrl' => voice_url,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         SimInstance.new(
                             @version,
                             payload,

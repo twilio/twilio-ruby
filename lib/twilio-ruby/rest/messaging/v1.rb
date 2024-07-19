@@ -165,7 +165,7 @@ module Twilio
                     end
                 end
                 ##
-                # @param [String] sid The unique string to identify Tollfree Verification.
+                # @param [String] sid A unique string identifying a Tollfree Verification.
                 # @return [Twilio::REST::Messaging::V1::TollfreeVerificationContext] if sid was passed.
                 # @return [Twilio::REST::Messaging::V1::TollfreeVerificationList]
                 def tollfree_verifications(sid=:unset)

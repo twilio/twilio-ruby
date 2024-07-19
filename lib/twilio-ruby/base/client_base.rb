@@ -111,7 +111,10 @@ module Twilio
 
         user_agent_extensions.each { |extension| headers['User-Agent'] += " #{extension}" }
 
-        headers['Content-Type'] = 'application/x-www-form-urlencoded' if method == 'POST' && !headers['Content-Type']
+        if ['POST', 'PUT'].include?(method) && !headers['Content-Type']
+          headers['Content-Type'] =
+            'application/x-www-form-urlencoded'
+        end
 
         headers['Accept'] = 'application/json' unless headers['Accept']
         headers

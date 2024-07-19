@@ -95,8 +95,9 @@ module Twilio
                             'Tag' => Twilio.serialize_list(tag) { |e| e },
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         NotificationInstance.new(
                             @version,
                             payload,

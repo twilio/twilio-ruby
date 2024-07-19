@@ -44,8 +44,9 @@ module Twilio
                             'UniqueName' => unique_name,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         SyncListInstance.new(
                             @version,
                             payload,
@@ -170,8 +171,9 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri)
+                        @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
@@ -179,8 +181,9 @@ module Twilio
                     # @return [SyncListInstance] Fetched SyncListInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         SyncListInstance.new(
                             @version,
                             payload,
@@ -203,7 +206,7 @@ module Twilio
 
                         unless @sync_list_permissions
                             @sync_list_permissions = SyncListPermissionList.new(
-                                @version, service_sid: @solution[:service_sid], list_sid: @solution[:sid], )
+                                @version, )
                         end
 
                      @sync_list_permissions
@@ -222,7 +225,7 @@ module Twilio
 
                         unless @sync_list_items
                             @sync_list_items = SyncListItemList.new(
-                                @version, service_sid: @solution[:service_sid], list_sid: @solution[:sid], )
+                                @version, )
                         end
 
                      @sync_list_items

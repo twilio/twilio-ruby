@@ -40,6 +40,7 @@ module Twilio
                     # @param [EndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
                     # @param [String] iso_country The ISO country code of the phone number's country.
                     # @param [String] number_type The type of phone number that the regulatory requiremnt is restricting.
+                    # @param [Boolean] include_constraints A boolean parameter indicating whether to include constraints or not for supporting end user, documents and their fields
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -47,11 +48,12 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(end_user_type: :unset, iso_country: :unset, number_type: :unset, limit: nil, page_size: nil)
+                    def list(end_user_type: :unset, iso_country: :unset, number_type: :unset, include_constraints: :unset, limit: nil, page_size: nil)
                         self.stream(
                             end_user_type: end_user_type,
                             iso_country: iso_country,
                             number_type: number_type,
+                            include_constraints: include_constraints,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -64,6 +66,7 @@ module Twilio
                     # @param [EndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
                     # @param [String] iso_country The ISO country code of the phone number's country.
                     # @param [String] number_type The type of phone number that the regulatory requiremnt is restricting.
+                    # @param [Boolean] include_constraints A boolean parameter indicating whether to include constraints or not for supporting end user, documents and their fields
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -71,13 +74,14 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(end_user_type: :unset, iso_country: :unset, number_type: :unset, limit: nil, page_size: nil)
+                    def stream(end_user_type: :unset, iso_country: :unset, number_type: :unset, include_constraints: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
                             end_user_type: end_user_type,
                             iso_country: iso_country,
                             number_type: number_type,
+                            include_constraints: include_constraints,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -103,15 +107,17 @@ module Twilio
                     # @param [EndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
                     # @param [String] iso_country The ISO country code of the phone number's country.
                     # @param [String] number_type The type of phone number that the regulatory requiremnt is restricting.
+                    # @param [Boolean] include_constraints A boolean parameter indicating whether to include constraints or not for supporting end user, documents and their fields
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of RegulationInstance
-                    def page(end_user_type: :unset, iso_country: :unset, number_type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(end_user_type: :unset, iso_country: :unset, number_type: :unset, include_constraints: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'EndUserType' => end_user_type,
                             'IsoCountry' => iso_country,
                             'NumberType' => number_type,
+                            'IncludeConstraints' => include_constraints,
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
@@ -161,11 +167,18 @@ module Twilio
                     end
                     ##
                     # Fetch the RegulationInstance
+                    # @param [Boolean] include_constraints A boolean parameter indicating whether to include constraints or not for supporting end user, documents and their fields
                     # @return [RegulationInstance] Fetched RegulationInstance
-                    def fetch
+                    def fetch(
+                        include_constraints: :unset
+                    )
 
+                        params = Twilio::Values.of({
+                            'IncludeConstraints' => include_constraints,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         RegulationInstance.new(
                             @version,
                             payload,
@@ -301,10 +314,15 @@ module Twilio
                     
                     ##
                     # Fetch the RegulationInstance
+                    # @param [Boolean] include_constraints A boolean parameter indicating whether to include constraints or not for supporting end user, documents and their fields
                     # @return [RegulationInstance] Fetched RegulationInstance
-                    def fetch
+                    def fetch(
+                        include_constraints: :unset
+                    )
 
-                        context.fetch
+                        context.fetch(
+                            include_constraints: include_constraints, 
+                        )
                     end
 
                     ##

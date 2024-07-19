@@ -43,8 +43,9 @@ module Twilio
                         params = Twilio::Values.of({
                             'BrandRegistrationSid' => brand_registration_sid,
                         })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri, params: params)
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         UsAppToPersonUsecaseInstance.new(
                             @version,
                             payload,

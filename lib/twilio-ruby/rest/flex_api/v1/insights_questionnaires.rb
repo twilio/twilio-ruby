@@ -53,8 +53,8 @@ module Twilio
                             'QuestionSids' => Twilio.serialize_list(question_sids) { |e| e },
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
                         
-                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         InsightsQuestionnairesInstance.new(
                             @version,
@@ -191,8 +191,8 @@ module Twilio
                         authorization: :unset
                     )
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
                         
-                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -204,8 +204,8 @@ module Twilio
                         authorization: :unset
                     )
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
                         
-                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.fetch('GET', @uri, headers: headers)
                         InsightsQuestionnairesInstance.new(
                             @version,
@@ -237,8 +237,8 @@ module Twilio
                             'QuestionSids' => Twilio.serialize_list(question_sids) { |e| e },
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
                         
-                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         InsightsQuestionnairesInstance.new(
                             @version,

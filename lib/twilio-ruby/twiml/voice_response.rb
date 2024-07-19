@@ -371,16 +371,48 @@ module Twilio
         yield(siprec) if block_given?
         append(siprec)
       end
+
+      ##
+      # Create a new <Transcription> element
+      # name:: Friendly name given to the Transcription
+      # track:: Track to be analyze by the provider
+      # status_callback_url:: Status Callback URL
+      # status_callback_method:: Status Callback URL method
+      # inbound_track_label:: Friendly name given to the Inbound Track
+      # outbound_track_label:: Friendly name given to the Outbound Track Label
+      # partial_results:: Indicates if partial results are going to be send to the customer
+      # language_code:: Language Code used by the transcription engine
+      # transcription_engine:: Transcription Engine to be used
+      # profanity_filter:: Enable Profanity Filter
+      # speech_model:: Speech Model used by the transcription engine
+      # hints:: Hints to be provided to the transcription engine
+      # enable_automatic_punctuation:: Enable Automatic Punctuation
+      # keyword_args:: additional attributes
+      def transcription(name: nil, track: nil, status_callback_url: nil, status_callback_method: nil, inbound_track_label: nil, outbound_track_label: nil, partial_results: nil, language_code: nil, transcription_engine: nil, profanity_filter: nil, speech_model: nil, hints: nil, enable_automatic_punctuation: nil, **keyword_args)
+        transcription = Transcription.new(name: name, track: track, status_callback_url: status_callback_url, status_callback_method: status_callback_method, inbound_track_label: inbound_track_label, outbound_track_label: outbound_track_label, partial_results: partial_results, language_code: language_code, transcription_engine: transcription_engine, profanity_filter: profanity_filter, speech_model: speech_model, hints: hints, enable_automatic_punctuation: enable_automatic_punctuation, **keyword_args)
+
+        yield(transcription) if block_given?
+        append(transcription)
+      end
     end
 
     ##
-    # <Siprec> TwiML Noun
-    class Siprec < TwiML
+    # <Transcription> TwiML Noun
+    class Transcription < TwiML
       def initialize(**keyword_args)
         super(**keyword_args)
-        @name = 'Siprec'
+        @name = 'Transcription'
 
         yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Config> element
+      # name:: The name of the custom config
+      # value:: The value of the custom config
+      # keyword_args:: additional attributes
+      def config(name: nil, value: nil, **keyword_args)
+        append(Config.new(name: name, value: value, **keyword_args))
       end
 
       ##
@@ -401,6 +433,37 @@ module Twilio
         @name = 'Parameter'
 
         yield(self) if block_given?
+      end
+    end
+
+    ##
+    # <Config> TwiML Noun
+    class Config < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Config'
+
+        yield(self) if block_given?
+      end
+    end
+
+    ##
+    # <Siprec> TwiML Noun
+    class Siprec < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Siprec'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
       end
     end
 
@@ -463,6 +526,29 @@ module Twilio
 
         yield(siprec) if block_given?
         append(siprec)
+      end
+
+      ##
+      # Create a new <Transcription> element
+      # name:: Friendly name given to the Transcription
+      # track:: Track to be analyze by the provider
+      # status_callback_url:: Status Callback URL
+      # status_callback_method:: Status Callback URL method
+      # inbound_track_label:: Friendly name given to the Inbound Track
+      # outbound_track_label:: Friendly name given to the Outbound Track Label
+      # partial_results:: Indicates if partial results are going to be send to the customer
+      # language_code:: Language Code used by the transcription engine
+      # transcription_engine:: Transcription Engine to be used
+      # profanity_filter:: Enable Profanity Filter
+      # speech_model:: Speech Model used by the transcription engine
+      # hints:: Hints to be provided to the transcription engine
+      # enable_automatic_punctuation:: Enable Automatic Punctuation
+      # keyword_args:: additional attributes
+      def transcription(name: nil, track: nil, status_callback_url: nil, status_callback_method: nil, inbound_track_label: nil, outbound_track_label: nil, partial_results: nil, language_code: nil, transcription_engine: nil, profanity_filter: nil, speech_model: nil, hints: nil, enable_automatic_punctuation: nil, **keyword_args)
+        transcription = Transcription.new(name: name, track: track, status_callback_url: status_callback_url, status_callback_method: status_callback_method, inbound_track_label: inbound_track_label, outbound_track_label: outbound_track_label, partial_results: partial_results, language_code: language_code, transcription_engine: transcription_engine, profanity_filter: profanity_filter, speech_model: speech_model, hints: hints, enable_automatic_punctuation: enable_automatic_punctuation, **keyword_args)
+
+        yield(transcription) if block_given?
+        append(transcription)
       end
     end
 
@@ -1913,17 +1999,6 @@ module Twilio
       # keyword_args:: additional attributes
       def parameter(name: nil, value: nil, **keyword_args)
         append(Parameter.new(name: name, value: value, **keyword_args))
-      end
-    end
-
-    ##
-    # <Config> TwiML Noun
-    class Config < TwiML
-      def initialize(**keyword_args)
-        super(**keyword_args)
-        @name = 'Config'
-
-        yield(self) if block_given?
       end
     end
 

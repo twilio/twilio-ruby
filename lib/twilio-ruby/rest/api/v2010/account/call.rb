@@ -146,8 +146,9 @@ module Twilio
                             'ApplicationSid' => application_sid,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         CallInstance.new(
                             @version,
                             payload,
@@ -326,6 +327,7 @@ module Twilio
                         # Dependents
                         @events = nil
                         @user_defined_messages = nil
+                        @transcriptions = nil
                         @siprec = nil
                         @user_defined_message_subscriptions = nil
                         @payments = nil
@@ -338,8 +340,9 @@ module Twilio
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        @version.delete('DELETE', @uri)
+                        @version.delete('DELETE', @uri, headers: headers)
                     end
 
                     ##
@@ -347,8 +350,9 @@ module Twilio
                     # @return [CallInstance] Fetched CallInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         CallInstance.new(
                             @version,
                             payload,
@@ -393,8 +397,9 @@ module Twilio
                             'TimeLimit' => time_limit,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         CallInstance.new(
                             @version,
                             payload,
@@ -424,6 +429,25 @@ module Twilio
                                 @version, account_sid: @solution[:account_sid], call_sid: @solution[:sid], )
                       end
                       @user_defined_messages
+                    end
+                    ##
+                    # Access the transcriptions
+                    # @return [TranscriptionList]
+                    # @return [TranscriptionContext] if sid was passed.
+                    def transcriptions(sid=:unset)
+
+                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+                        if sid != :unset
+                            return TranscriptionContext.new(@version, @solution[:account_sid], @solution[:sid],sid )
+                        end
+
+                        unless @transcriptions
+                            @transcriptions = TranscriptionList.new(
+                                @version, account_sid: @solution[:account_sid], call_sid: @solution[:sid], )
+                        end
+
+                     @transcriptions
                     end
                     ##
                     # Access the siprec
@@ -727,7 +751,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The charge for this call, in the currency associated with the account. Populated after the call is completed. May not be immediately available.
+                    # @return [String] The charge for this call, in the currency associated with the account. Populated after the call is completed. May not be immediately available. The price associated with a call only reflects the charge for connectivity.  Charges for other call-related features such as Answering Machine Detection, Text-To-Speech, and SIP REFER are not included in this value.
                     def price
                         @properties['price']
                     end
@@ -863,6 +887,13 @@ module Twilio
                     # @return [user_defined_messages] user_defined_messages
                     def user_defined_messages
                         context.user_defined_messages
+                    end
+
+                    ##
+                    # Access the transcriptions
+                    # @return [transcriptions] transcriptions
+                    def transcriptions
+                        context.transcriptions
                     end
 
                     ##

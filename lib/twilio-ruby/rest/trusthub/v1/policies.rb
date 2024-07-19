@@ -144,8 +144,9 @@ module Twilio
                     # @return [PoliciesInstance] Fetched PoliciesInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         PoliciesInstance.new(
                             @version,
                             payload,

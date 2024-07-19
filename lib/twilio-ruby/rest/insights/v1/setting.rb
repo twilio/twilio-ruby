@@ -65,8 +65,9 @@ module Twilio
                         params = Twilio::Values.of({
                             'SubaccountSid' => subaccount_sid,
                         })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri, params: params)
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         SettingInstance.new(
                             @version,
                             payload,
@@ -91,8 +92,9 @@ module Twilio
                             'SubaccountSid' => subaccount_sid,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         SettingInstance.new(
                             @version,
                             payload,

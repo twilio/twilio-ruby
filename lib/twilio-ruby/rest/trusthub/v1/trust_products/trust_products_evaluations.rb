@@ -44,8 +44,9 @@ module Twilio
                             'PolicySid' => policy_sid,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         TrustProductsEvaluationsInstance.new(
                             @version,
                             payload,
@@ -168,8 +169,9 @@ module Twilio
                     # @return [TrustProductsEvaluationsInstance] Fetched TrustProductsEvaluationsInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         TrustProductsEvaluationsInstance.new(
                             @version,
                             payload,

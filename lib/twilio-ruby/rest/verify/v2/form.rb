@@ -60,8 +60,9 @@ module Twilio
                     # @return [FormInstance] Fetched FormInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         FormInstance.new(
                             @version,
                             payload,

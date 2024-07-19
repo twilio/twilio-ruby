@@ -56,8 +56,9 @@ module Twilio
                             'Payee' => payee,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         VerificationCheckInstance.new(
                             @version,
                             payload,
@@ -164,7 +165,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The status of the verification. Can be: `pending`, `approved`, or `canceled`.
+                    # @return [String] The status of the verification. Can be: `pending`, `approved`, `canceled`, `max_attempts_reached`, `deleted`, `failed` or `expired`.
                     def status
                         @properties['status']
                     end

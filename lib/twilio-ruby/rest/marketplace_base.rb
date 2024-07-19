@@ -10,28 +10,28 @@
 # frozen_string_literal: true
 module Twilio
   module REST
-    class PreviewMessagingBase < Domain
+    class MarketplaceBase < Domain
       ##
-      # Initialize previewMessaging domain
+      # Initialize marketplace domain
       #
       # @param twilio - The twilio client
       #
       def initialize(twilio)
         super(twilio)
-        @base_url =  "https://preview.messaging.twilio.com"
-        @host = "preview.messaging.twilio.com"
+        @base_url =  "https://marketplace.twilio.com"
+        @host = "marketplace.twilio.com"
         @port = 443
         @v1 = nil
       end
 
       def v1
-        @v1 ||= PreviewMessaging::V1.new self
+        @v1 ||= Marketplace::V1.new self
       end
 
       ##
       # Provide a user friendly representation
       def to_s
-        '<Twilio::REST::PreviewMessaging::V1>';
+        '<Twilio::REST::Marketplace::V1>';
       end
     end
   end

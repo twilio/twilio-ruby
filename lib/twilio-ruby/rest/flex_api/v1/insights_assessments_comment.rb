@@ -59,8 +59,8 @@ module Twilio
                             'Offset' => offset,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
                         
-                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         InsightsAssessmentsCommentInstance.new(
                             @version,

@@ -62,8 +62,9 @@ module Twilio
                     # @return [AnnotationInstance] Fetched AnnotationInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         AnnotationInstance.new(
                             @version,
                             payload,
@@ -101,8 +102,9 @@ module Twilio
                             'Incident' => incident,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         AnnotationInstance.new(
                             @version,
                             payload,

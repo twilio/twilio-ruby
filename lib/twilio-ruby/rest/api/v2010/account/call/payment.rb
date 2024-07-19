@@ -90,8 +90,9 @@ module Twilio
                             'ValidCardTypes' => valid_card_types,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         PaymentInstance.new(
                             @version,
                             payload,
@@ -148,8 +149,9 @@ module Twilio
                             'Status' => status,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         PaymentInstance.new(
                             @version,
                             payload,

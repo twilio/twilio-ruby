@@ -45,8 +45,9 @@ module Twilio
                             'FromBundleSid' => from_bundle_sid,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         ReplaceItemsInstance.new(
                             @version,
                             payload,

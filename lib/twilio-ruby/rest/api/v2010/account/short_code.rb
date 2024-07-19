@@ -159,8 +159,9 @@ module Twilio
                     # @return [ShortCodeInstance] Fetched ShortCodeInstance
                     def fetch
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri)
+                        payload = @version.fetch('GET', @uri, headers: headers)
                         ShortCodeInstance.new(
                             @version,
                             payload,
@@ -196,8 +197,9 @@ module Twilio
                             'SmsFallbackMethod' => sms_fallback_method,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.update('POST', @uri, data: data)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         ShortCodeInstance.new(
                             @version,
                             payload,

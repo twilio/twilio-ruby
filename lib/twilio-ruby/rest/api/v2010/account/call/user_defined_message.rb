@@ -48,8 +48,9 @@ module Twilio
                             'IdempotencyKey' => idempotency_key,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         UserDefinedMessageInstance.new(
                             @version,
                             payload,

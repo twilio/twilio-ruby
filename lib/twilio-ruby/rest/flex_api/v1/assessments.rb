@@ -71,8 +71,8 @@ module Twilio
                             'QuestionnaireSid' => questionnaire_sid,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
                         
-                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         AssessmentsInstance.new(
                             @version,
@@ -221,8 +221,8 @@ module Twilio
                             'AnswerId' => answer_id,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
                         
-                        headers = Twilio::Values.of({ 'Authorization' => authorization, })
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         AssessmentsInstance.new(
                             @version,

@@ -84,8 +84,9 @@ module Twilio
                             'Metadata' => Twilio.serialize_object(metadata),
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.create('POST', @uri, data: data)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         NewFactorInstance.new(
                             @version,
                             payload,

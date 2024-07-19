@@ -80,8 +80,9 @@ module Twilio
                             'TaskChannel' => task_channel,
                             'SplitByWaitTime' => split_by_wait_time,
                         })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        payload = @version.fetch('GET', @uri, params: params)
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         WorkspaceStatisticsInstance.new(
                             @version,
                             payload,

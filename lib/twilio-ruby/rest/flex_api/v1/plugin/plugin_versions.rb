@@ -38,6 +38,8 @@ module Twilio
                     # @param [String] plugin_url The URL of the Flex Plugin Version bundle
                     # @param [String] changelog The changelog of the Flex Plugin Version.
                     # @param [Boolean] private Whether this Flex Plugin Version requires authorization.
+                    # @param [String] cli_version The version of Flex Plugins CLI used to create this plugin
+                    # @param [String] validate_status The validation status of the plugin, indicating whether it has been validated
                     # @param [String] flex_metadata The Flex-Metadata HTTP request header
                     # @return [PluginVersionsInstance] Created PluginVersionsInstance
                     def create(
@@ -45,6 +47,8 @@ module Twilio
                         plugin_url: nil, 
                         changelog: :unset, 
                         private: :unset, 
+                        cli_version: :unset, 
+                        validate_status: :unset, 
                         flex_metadata: :unset
                     )
 
@@ -53,10 +57,12 @@ module Twilio
                             'PluginUrl' => plugin_url,
                             'Changelog' => changelog,
                             'Private' => private,
+                            'CliVersion' => cli_version,
+                            'ValidateStatus' => validate_status,
                         })
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
                         
-                        headers = Twilio::Values.of({ 'Flex-Metadata' => flex_metadata, })
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         PluginVersionsInstance.new(
                             @version,
@@ -189,8 +195,8 @@ module Twilio
                         flex_metadata: :unset
                     )
 
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
                         
-                        headers = Twilio::Values.of({ 'Flex-Metadata' => flex_metadata, })
                         payload = @version.fetch('GET', @uri, headers: headers)
                         PluginVersionsInstance.new(
                             @version,
@@ -267,6 +273,7 @@ module Twilio
                             'changelog' => payload['changelog'],
                             'private' => payload['private'],
                             'archived' => payload['archived'],
+                            'validated' => payload['validated'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'url' => payload['url'],
                         }
@@ -324,7 +331,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Boolean] Whether to inject credentials while accessing this Plugin Version. The default value is false.
+                    # @return [Boolean] Whether the Flex Plugin Version is validated. The default value is false.
                     def private
                         @properties['private']
                     end
@@ -333,6 +340,12 @@ module Twilio
                     # @return [Boolean] Whether the Flex Plugin Version is archived. The default value is false.
                     def archived
                         @properties['archived']
+                    end
+                    
+                    ##
+                    # @return [Boolean] 
+                    def validated
+                        @properties['validated']
                     end
                     
                     ##
