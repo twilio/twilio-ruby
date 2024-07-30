@@ -62,11 +62,6 @@ module Twilio
                 @frontline_api ||= FrontlineApi.new self
             end
             ##
-            # Access the PreviewIam Twilio Domain
-            def preview_iam
-                @preview_iam ||= PreviewIam.new self
-            end
-            ##
             # Access the Insights Twilio Domain
             def insights
                 @insights ||= Insights.new self
