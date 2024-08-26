@@ -23,6 +23,7 @@ module Twilio
                     @version = 'v2'
                     @authorization_documents = nil
                     @bulk_hosted_number_orders = nil
+                    @bundle_clone = nil
                     @hosted_number_orders = nil
                     @regulatory_compliance = nil
                 end
@@ -53,6 +54,20 @@ module Twilio
                         @bulk_hosted_number_orders ||= BulkHostedNumberOrderList.new self
                     else
                         BulkHostedNumberOrderContext.new(self, bulk_hosting_sid)
+                    end
+                end
+                ##
+                # @param [String] bundle_sid The unique string that identifies the Bundle to be cloned.
+                # @return [Twilio::REST::Numbers::V2::BundleCloneContext] if bundleSid was passed.
+                # @return [Twilio::REST::Numbers::V2::BundleCloneList]
+                def bundle_clone(bundle_sid=:unset)
+                    if bundle_sid.nil?
+                        raise ArgumentError, 'bundle_sid cannot be nil'
+                    end
+                    if bundle_sid == :unset
+                        @bundle_clone ||= BundleCloneList.new self
+                    else
+                        BundleCloneContext.new(self, bundle_sid)
                     end
                 end
                 ##

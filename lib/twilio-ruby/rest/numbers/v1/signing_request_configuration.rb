@@ -47,6 +47,102 @@ module Twilio
                     end
 
                 
+                    ##
+                    # Lists SigningRequestConfigurationInstance records from the API as a list.
+                    # Unlike stream(), this operation is eager and will load `limit` records into
+                    # memory before returning.
+                    # @param [String] country The country ISO code to apply this configuration, this is an optional field, Example: US, MX
+                    # @param [String] product The product or service for which is requesting the signature, this is an optional field, Example: Porting, Hosting
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list(country: :unset, product: :unset, limit: nil, page_size: nil)
+                        self.stream(
+                            country: country,
+                            product: product,
+                            limit: limit,
+                            page_size: page_size
+                        ).entries
+                    end
+
+                    ##
+                    # Streams Instance records from the API as an Enumerable.
+                    # This operation lazily loads records as efficiently as possible until the limit
+                    # is reached.
+                    # @param [String] country The country ISO code to apply this configuration, this is an optional field, Example: US, MX
+                    # @param [String] product The product or service for which is requesting the signature, this is an optional field, Example: Porting, Hosting
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Enumerable] Enumerable that will yield up to limit results
+                    def stream(country: :unset, product: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+
+                        page = self.page(
+                            country: country,
+                            product: product,
+                            page_size: limits[:page_size], )
+
+                        @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # When passed a block, yields SigningRequestConfigurationInstance records from the API.
+                    # This operation lazily loads records as efficiently as possible until the limit
+                    # is reached.
+                    def each
+                        limits = @version.read_limits
+
+                        page = self.page(page_size: limits[:page_size], )
+
+                        @version.stream(page,
+                            limit: limits[:limit],
+                            page_limit: limits[:page_limit]).each {|x| yield x}
+                    end
+
+                    ##
+                    # Retrieve a single page of SigningRequestConfigurationInstance records from the API.
+                    # Request is executed immediately.
+                    # @param [String] country The country ISO code to apply this configuration, this is an optional field, Example: US, MX
+                    # @param [String] product The product or service for which is requesting the signature, this is an optional field, Example: Porting, Hosting
+                    # @param [String] page_token PageToken provided by the API
+                    # @param [Integer] page_number Page Number, this value is simply for client state
+                    # @param [Integer] page_size Number of records to return, defaults to 50
+                    # @return [Page] Page of SigningRequestConfigurationInstance
+                    def page(country: :unset, product: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                        params = Twilio::Values.of({
+                            'Country' => country,
+                            'Product' => product,
+                            'PageToken' => page_token,
+                            'Page' => page_number,
+                            'PageSize' => page_size,
+                        })
+
+                        response = @version.page('GET', @uri, params: params)
+
+                        SigningRequestConfigurationPage.new(@version, response, @solution)
+                    end
+
+                    ##
+                    # Retrieve a single page of SigningRequestConfigurationInstance records from the API.
+                    # Request is executed immediately.
+                    # @param [String] target_url API-generated URL for the requested results page
+                    # @return [Page] Page of SigningRequestConfigurationInstance
+                    def get_page(target_url)
+                        response = @version.domain.request(
+                            'GET',
+                            target_url
+                        )
+                    SigningRequestConfigurationPage.new(@version, response, @solution)
+                    end
+                    
 
 
                     # Provide a user friendly representation

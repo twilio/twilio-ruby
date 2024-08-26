@@ -28,8 +28,8 @@ module Twilio
                     @porting_portabilities = nil
                     @porting_webhook_configurations = nil
                     @porting_webhook_configurations_delete = nil
+                    @porting_webhook_configuration_fetch = nil
                     @signing_request_configurations = nil
-                    @webhook = nil
                 end
 
                 ##
@@ -102,7 +102,7 @@ module Twilio
                     end
                 end
                 ##
-                # @param [String] phone_number The phone number which portability is to be checked. Phone numbers are in E.164 format (e.g. +16175551212).
+                # @param [String] phone_number Phone number to check portability in e164 format.
                 # @return [Twilio::REST::Numbers::V1::PortingPortabilityContext] if phoneNumber was passed.
                 # @return [Twilio::REST::Numbers::V1::PortingPortabilityList]
                 def porting_portabilities(phone_number=:unset)
@@ -121,7 +121,7 @@ module Twilio
                     @porting_webhook_configurations ||= PortingWebhookConfigurationList.new self
                 end
                 ##
-                # @param [String] webhook_type The of the webhook type of the configuration to be deleted
+                # @param [String] webhook_type The webhook type for the configuration to be delete. `PORT_IN`, `PORT_OUT`
                 # @return [Twilio::REST::Numbers::V1::PortingWebhookConfigurationDeleteContext] if webhookType was passed.
                 # @return [Twilio::REST::Numbers::V1::PortingWebhookConfigurationDeleteList]
                 def porting_webhook_configurations_delete(webhook_type=:unset)
@@ -135,14 +135,14 @@ module Twilio
                     end
                 end
                 ##
+                # @return [Twilio::REST::Numbers::V1::PortingWebhookConfigurationFetchList]
+                def porting_webhook_configuration_fetch
+                    @porting_webhook_configuration_fetch ||= PortingWebhookConfigurationFetchList.new self
+                end
+                ##
                 # @return [Twilio::REST::Numbers::V1::SigningRequestConfigurationList]
                 def signing_request_configurations
                     @signing_request_configurations ||= SigningRequestConfigurationList.new self
-                end
-                ##
-                # @return [Twilio::REST::Numbers::V1::WebhookList]
-                def webhook
-                    @webhook ||= WebhookList.new self
                 end
                 ##
                 # Provide a user friendly representation

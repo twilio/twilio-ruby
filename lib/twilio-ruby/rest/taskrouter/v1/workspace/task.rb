@@ -41,7 +41,7 @@ module Twilio
                     # @param [String] attributes A URL-encoded JSON string with the attributes of the new task. This value is passed to the Workflow's `assignment_callback_url` when the Task is assigned to a Worker. For example: `{ \\\"task_type\\\": \\\"call\\\", \\\"twilio_call_sid\\\": \\\"CAxxx\\\", \\\"customer_ticket_number\\\": \\\"12345\\\" }`.
                     # @param [Time] virtual_start_time The virtual start time to assign the new task and override the default. When supplied, the new task will have this virtual start time. When not supplied, the new task will have the virtual start time equal to `date_created`. Value can't be in the future.
                     # @param [String] routing_target A SID of a Worker, Queue, or Workflow to route a Task to
-                    # @param [String] ignore_capacity A boolean indicating if a new task should respect a worker's capacity during assignment
+                    # @param [String] ignore_capacity A boolean that indicates if the Task should respect a Worker's capacity and availability during assignment. This field can only be used when the `RoutingTarget` field is set to a Worker SID. By setting `IgnoreCapacity` to a value of `true`, `1`, or `yes`, the Task will be routed to the Worker without respecting their capacity and availability. Any other value will enforce the Worker's capacity and availability. The default value of `IgnoreCapacity` is `true` when the `RoutingTarget` is set to a Worker SID. 
                     # @param [String] task_queue_sid The SID of the TaskQueue in which the Task belongs
                     # @return [TaskInstance] Created TaskInstance
                     def create(
@@ -572,7 +572,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Boolean] A boolean indicating if a new task should respect a worker's capacity during assignment
+                    # @return [Boolean] A boolean that indicates if the Task should respect a Worker's capacity and availability during assignment. This field can only be used when the `RoutingTarget` field is set to a Worker SID. By setting `IgnoreCapacity` to a value of `true`, `1`, or `yes`, the Task will be routed to the Worker without respecting their capacity and availability. Any other value will enforce the Worker's capacity and availability. The default value of `IgnoreCapacity` is `true` when the `RoutingTarget` is set to a Worker SID. 
                     def ignore_capacity
                         @properties['ignore_capacity']
                     end

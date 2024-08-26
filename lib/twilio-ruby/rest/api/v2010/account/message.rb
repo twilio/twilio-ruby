@@ -484,7 +484,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The description of the `error_code` if the Message `status` is `failed` or `undelivered`. If no error was encountered, the value is `null`.
+                    # @return [String] The description of the `error_code` if the Message `status` is `failed` or `undelivered`. If no error was encountered, the value is `null`. The value returned in this field for a specific error cause is subject to change as Twilio improves errors. Users should not use the `error_code` and `error_message` fields programmatically.
                     def error_message
                         @properties['error_message']
                     end
@@ -538,7 +538,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The [error code](https://www.twilio.com/docs/api/errors) returned if the Message `status` is `failed` or `undelivered`. If no error was encountered, the value is `null`.
+                    # @return [String] The [error code](https://www.twilio.com/docs/api/errors) returned if the Message `status` is `failed` or `undelivered`. If no error was encountered, the value is `null`. The value returned in this field for a specific error cause is subject to change as Twilio improves errors. Users should not use the `error_code` and `error_message` fields programmatically.
                     def error_code
                         @properties['error_code']
                     end

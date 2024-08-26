@@ -34,15 +34,18 @@ module Twilio
                     # Create the ExternalCampaignInstance
                     # @param [String] campaign_id ID of the preregistered campaign.
                     # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) that the resource is associated with.
+                    # @param [Boolean] cnp_migration Customers should use this flag during the ERC registration process to indicate to Twilio that the campaign being registered is undergoing CNP migration. It is important for the user to first trigger the CNP migration process for said campaign in their CSP portal and have Twilio accept the sharing request, before making this api call.
                     # @return [ExternalCampaignInstance] Created ExternalCampaignInstance
                     def create(
                         campaign_id: nil, 
-                        messaging_service_sid: nil
+                        messaging_service_sid: nil, 
+                        cnp_migration: :unset
                     )
 
                         data = Twilio::Values.of({
                             'CampaignId' => campaign_id,
                             'MessagingServiceSid' => messaging_service_sid,
+                            'CnpMigration' => cnp_migration,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })

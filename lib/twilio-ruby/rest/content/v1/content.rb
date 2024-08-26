@@ -85,6 +85,53 @@ module Twilio
                         end
                     end
 
+                    class CarouselAction
+                            # @param [type]: [CarouselActionType] 
+                            # @param [title]: [String] 
+                            # @param [url]: [String] 
+                            # @param [phone]: [String] 
+                            # @param [id]: [String] 
+                        attr_accessor :type, :title, :url, :phone, :id
+                        def initialize(payload)
+                                @type = payload["type"]
+                                @title = payload["title"]
+                                @url = payload["url"]
+                                @phone = payload["phone"]
+                                @id = payload["id"]
+                        end
+                        def to_json(options = {})
+                        {
+                                type: @type,
+                                title: @title,
+                                url: @url,
+                                phone: @phone,
+                                id: @id,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CarouselCard
+                            # @param [title]: [String] 
+                            # @param [body]: [String] 
+                            # @param [media]: [String] 
+                            # @param [actions]: [Array<ContentList.CarouselAction>] 
+                        attr_accessor :title, :body, :media, :actions
+                        def initialize(payload)
+                                @title = payload["title"]
+                                @body = payload["body"]
+                                @media = payload["media"]
+                                @actions = payload["actions"]
+                        end
+                        def to_json(options = {})
+                        {
+                                title: @title,
+                                body: @body,
+                                media: @media,
+                                actions: @actions,
+                        }.to_json(options)
+                        end
+                    end
+
                     class CatalogItem
                             # @param [id]: [String] 
                             # @param [section_title]: [String] 
@@ -211,6 +258,22 @@ module Twilio
                         end
                     end
 
+                    class TwilioCarousel
+                            # @param [body]: [String] 
+                            # @param [cards]: [Array<ContentList.CarouselCard>] 
+                        attr_accessor :body, :cards
+                        def initialize(payload)
+                                @body = payload["body"]
+                                @cards = payload["cards"]
+                        end
+                        def to_json(options = {})
+                        {
+                                body: @body,
+                                cards: @cards,
+                        }.to_json(options)
+                        end
+                    end
+
                     class TwilioCatalog
                             # @param [title]: [String] 
                             # @param [body]: [String] 
@@ -331,9 +394,10 @@ module Twilio
                             # @param [twilio_quick_reply]: [ContentList.TwilioQuickReply] 
                             # @param [twilio_card]: [ContentList.TwilioCard] 
                             # @param [twilio_catalog]: [ContentList.TwilioCatalog] 
+                            # @param [twilio_carousel]: [ContentList.TwilioCarousel] 
                             # @param [whatsapp_card]: [ContentList.WhatsappCard] 
                             # @param [whatsapp_authentication]: [ContentList.WhatsappAuthentication] 
-                        attr_accessor :twilio_text, :twilio_media, :twilio_location, :twilio_list_picker, :twilio_call_to_action, :twilio_quick_reply, :twilio_card, :twilio_catalog, :whatsapp_card, :whatsapp_authentication
+                        attr_accessor :twilio_text, :twilio_media, :twilio_location, :twilio_list_picker, :twilio_call_to_action, :twilio_quick_reply, :twilio_card, :twilio_catalog, :twilio_carousel, :whatsapp_card, :whatsapp_authentication
                         def initialize(payload)
                                 @twilio_text = payload["twilio_text"]
                                 @twilio_media = payload["twilio_media"]
@@ -343,6 +407,7 @@ module Twilio
                                 @twilio_quick_reply = payload["twilio_quick_reply"]
                                 @twilio_card = payload["twilio_card"]
                                 @twilio_catalog = payload["twilio_catalog"]
+                                @twilio_carousel = payload["twilio_carousel"]
                                 @whatsapp_card = payload["whatsapp_card"]
                                 @whatsapp_authentication = payload["whatsapp_authentication"]
                         end
@@ -356,6 +421,7 @@ module Twilio
                                 twilio_quick_reply: @twilio_quick_reply,
                                 twilio_card: @twilio_card,
                                 twilio_catalog: @twilio_catalog,
+                                twilio_carousel: @twilio_carousel,
                                 whatsapp_card: @whatsapp_card,
                                 whatsapp_authentication: @whatsapp_authentication,
                         }.to_json(options)

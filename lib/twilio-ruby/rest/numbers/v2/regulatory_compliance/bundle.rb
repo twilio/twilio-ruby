@@ -41,6 +41,7 @@ module Twilio
                     # @param [String] iso_country The [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
                     # @param [EndUserType] end_user_type 
                     # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll free`.
+                    # @param [Boolean] is_test Indicates that Bundle is a Test Bundle and will be Auto-Rejected
                     # @return [BundleInstance] Created BundleInstance
                     def create(
                         friendly_name: nil, 
@@ -49,7 +50,8 @@ module Twilio
                         regulation_sid: :unset, 
                         iso_country: :unset, 
                         end_user_type: :unset, 
-                        number_type: :unset
+                        number_type: :unset, 
+                        is_test: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -60,6 +62,7 @@ module Twilio
                             'IsoCountry' => iso_country,
                             'EndUserType' => end_user_type,
                             'NumberType' => number_type,
+                            'IsTest' => is_test,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })

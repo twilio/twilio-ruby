@@ -44,7 +44,7 @@ module Twilio
                     ##
                     # Initialize the PortingWebhookConfigurationDeleteContext
                     # @param [Version] version Version that contains the resource
-                    # @param [WebhookType] webhook_type The of the webhook type of the configuration to be deleted
+                    # @param [WebhookType] webhook_type The webhook type for the configuration to be delete. `PORT_IN`, `PORT_OUT`
                     # @return [PortingWebhookConfigurationDeleteContext] PortingWebhookConfigurationDeleteContext
                     def initialize(version, webhook_type)
                         super(version)

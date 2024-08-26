@@ -144,7 +144,8 @@ module Twilio
                         @solution = { account_sid: account_sid, reference_sid: reference_sid, add_on_result_sid: add_on_result_sid, sid: sid,  }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Recordings/#{@solution[:reference_sid]}/AddOnResults/#{@solution[:add_on_result_sid]}/Payloads/#{@solution[:sid]}.json"
 
-                        
+                        # Dependents
+                        @data = nil
                     end
                     ##
                     # Delete the PayloadInstance
@@ -174,6 +175,19 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Access the data
+                    # @return [DataList]
+                    # @return [DataContext]
+                    def data
+                        DataContext.new(
+                                @version,
+                                @solution[:account_sid],
+                                @solution[:reference_sid],
+                                @solution[:add_on_result_sid],
+                                @solution[:sid]
+                                )
+                    end
 
                     ##
                     # Provide a user friendly representation
@@ -342,6 +356,13 @@ module Twilio
                     def fetch
 
                         context.fetch
+                    end
+
+                    ##
+                    # Access the data
+                    # @return [data] data
+                    def data
+                        context.data
                     end
 
                     ##

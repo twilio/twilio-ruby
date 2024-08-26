@@ -34,15 +34,18 @@ module Twilio
                     # Create the ComplianceInquiriesInstance
                     # @param [String] primary_profile_sid The unique SID identifier of the Primary Customer Profile that should be used as a parent. Only necessary when creating a secondary Customer Profile.
                     # @param [String] notification_email The email address that approval status updates will be sent to. If not specified, the email address associated with your primary customer profile will be used.
+                    # @param [String] theme_set_id Theme id for styling the inquiry form.
                     # @return [ComplianceInquiriesInstance] Created ComplianceInquiriesInstance
                     def create(
                         primary_profile_sid: nil, 
-                        notification_email: :unset
+                        notification_email: :unset, 
+                        theme_set_id: :unset
                     )
 
                         data = Twilio::Values.of({
                             'PrimaryProfileSid' => primary_profile_sid,
                             'NotificationEmail' => notification_email,
+                            'ThemeSetId' => theme_set_id,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -82,13 +85,16 @@ module Twilio
                     ##
                     # Update the ComplianceInquiriesInstance
                     # @param [String] primary_profile_sid The unique SID identifier of the Primary Customer Profile that should be used as a parent. Only necessary when creating a secondary Customer Profile.
+                    # @param [String] theme_set_id Theme id for styling the inquiry form.
                     # @return [ComplianceInquiriesInstance] Updated ComplianceInquiriesInstance
                     def update(
-                        primary_profile_sid: nil
+                        primary_profile_sid: nil, 
+                        theme_set_id: :unset
                     )
 
                         data = Twilio::Values.of({
                             'PrimaryProfileSid' => primary_profile_sid,
+                            'ThemeSetId' => theme_set_id,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -209,13 +215,16 @@ module Twilio
                     ##
                     # Update the ComplianceInquiriesInstance
                     # @param [String] primary_profile_sid The unique SID identifier of the Primary Customer Profile that should be used as a parent. Only necessary when creating a secondary Customer Profile.
+                    # @param [String] theme_set_id Theme id for styling the inquiry form.
                     # @return [ComplianceInquiriesInstance] Updated ComplianceInquiriesInstance
                     def update(
-                        primary_profile_sid: nil
+                        primary_profile_sid: nil, 
+                        theme_set_id: :unset
                     )
 
                         context.update(
                             primary_profile_sid: primary_profile_sid, 
+                            theme_set_id: theme_set_id, 
                         )
                     end
 

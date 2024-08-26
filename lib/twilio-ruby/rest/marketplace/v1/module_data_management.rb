@@ -77,13 +77,15 @@ module Twilio
                     # @param [String] documentation 
                     # @param [String] policies 
                     # @param [String] support 
+                    # @param [String] configuration 
                     # @return [ModuleDataManagementInstance] Updated ModuleDataManagementInstance
                     def update(
                         module_info: :unset, 
                         description: :unset, 
                         documentation: :unset, 
                         policies: :unset, 
-                        support: :unset
+                        support: :unset, 
+                        configuration: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -92,6 +94,7 @@ module Twilio
                             'Documentation' => documentation,
                             'Policies' => policies,
                             'Support' => support,
+                            'Configuration' => configuration,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -170,6 +173,7 @@ module Twilio
                             'policies' => payload['policies'],
                             'module_info' => payload['module_info'],
                             'documentation' => payload['documentation'],
+                            'configuration' => payload['configuration'],
                         }
 
                         # Context
@@ -189,45 +193,51 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] URL to query the subresource.
                     def url
                         @properties['url']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] ModuleSid that identifies this Listing.
                     def sid
                         @properties['sid']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] A JSON object describing the module and is displayed under the Description tab of the Module detail page. You can define the main body of the description, highlight key features or aspects of the module and if applicable, provide code samples for developers
                     def description
                         @properties['description']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] A JSON object containing information on how customers can obtain support for the module. Use this parameter to provide details such as contact information and support description.
                     def support
                         @properties['support']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] A JSON object describing the module's privacy and legal policies and is displayed under the Policies tab of the Module detail page. The maximum file size for Policies is 5MB
                     def policies
                         @properties['policies']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] A JSON object containing essential attributes that define a module. This information is presented on the Module detail page in the Twilio Marketplace Catalog. You can pass the following attributes in the JSON object
                     def module_info
                         @properties['module_info']
                     end
                     
                     ##
-                    # @return [Hash] 
+                    # @return [Hash] A JSON object for providing comprehensive information, instructions, and resources related to the module
                     def documentation
                         @properties['documentation']
+                    end
+                    
+                    ##
+                    # @return [Hash] A JSON object for providing listing specific configuration. Contains button setup, notification url, among others.
+                    def configuration
+                        @properties['configuration']
                     end
                     
                     ##
@@ -245,13 +255,15 @@ module Twilio
                     # @param [String] documentation 
                     # @param [String] policies 
                     # @param [String] support 
+                    # @param [String] configuration 
                     # @return [ModuleDataManagementInstance] Updated ModuleDataManagementInstance
                     def update(
                         module_info: :unset, 
                         description: :unset, 
                         documentation: :unset, 
                         policies: :unset, 
-                        support: :unset
+                        support: :unset, 
+                        configuration: :unset
                     )
 
                         context.update(
@@ -260,6 +272,7 @@ module Twilio
                             documentation: documentation, 
                             policies: policies, 
                             support: support, 
+                            configuration: configuration, 
                         )
                     end
 

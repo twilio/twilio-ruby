@@ -44,7 +44,7 @@ module Twilio
                     ##
                     # Initialize the PortingPortabilityContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] phone_number The phone number which portability is to be checked. Phone numbers are in E.164 format (e.g. +16175551212).
+                    # @param [String] phone_number Phone number to check portability in e164 format.
                     # @return [PortingPortabilityContext] PortingPortabilityContext
                     def initialize(version, phone_number)
                         super(version)
@@ -57,7 +57,7 @@ module Twilio
                     end
                     ##
                     # Fetch the PortingPortabilityInstance
-                    # @param [String] target_account_sid The SID of the account where the phone number(s) will be ported.
+                    # @param [String] target_account_sid Account Sid to which the number will be ported. This can be used to determine if a sub account already has the number in its inventory or a different sub account. If this is not provided, the authenticated account will be assumed to be the target account.
                     # @return [PortingPortabilityInstance] Fetched PortingPortabilityInstance
                     def fetch(
                         target_account_sid: :unset
@@ -169,19 +169,19 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The target account sid to which the number will be ported
+                    # @return [String] Account Sid that the phone number belongs to in Twilio. This is only returned for phone numbers that already exist in Twilio’s inventory and belong to your account or sub account.
                     def account_sid
                         @properties['account_sid']
                     end
                     
                     ##
-                    # @return [Boolean] Boolean flag specifying if phone number is portable or not.
+                    # @return [Boolean] Boolean flag indicates if the phone number can be ported into Twilio through the Porting API or not.
                     def portable
                         @properties['portable']
                     end
                     
                     ##
-                    # @return [Boolean] Boolean flag specifying if PIN and account number is required for the phone number.
+                    # @return [Boolean] Indicates if the port in process will require a personal identification number (PIN) and an account number for this phone number. If this is true you will be required to submit both a PIN and account number from the losing carrier for this number when opening a port in request. These fields will be required in order to complete the port in process to Twilio.
                     def pin_and_account_number_required
                         @properties['pin_and_account_number_required']
                     end
@@ -193,7 +193,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The Portability Reason Code for the phone number if it cannot be ported into Twilio, `null` otherwise. One of `22131`, `22132`, `22130`, `22133`, `22102` or `22135`.
+                    # @return [String] The Portability Reason Code for the phone number if it cannot be ported into Twilio, `null` otherwise.
                     def not_portable_reason_code
                         @properties['not_portable_reason_code']
                     end
@@ -218,7 +218,7 @@ module Twilio
                     
                     ##
                     # Fetch the PortingPortabilityInstance
-                    # @param [String] target_account_sid The SID of the account where the phone number(s) will be ported.
+                    # @param [String] target_account_sid Account Sid to which the number will be ported. This can be used to determine if a sub account already has the number in its inventory or a different sub account. If this is not provided, the authenticated account will be assumed to be the target account.
                     # @return [PortingPortabilityInstance] Fetched PortingPortabilityInstance
                     def fetch(
                         target_account_sid: :unset
