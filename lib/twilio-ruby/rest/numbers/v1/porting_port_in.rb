@@ -166,7 +166,7 @@ module Twilio
                             'losing_carrier_information' => payload['losing_carrier_information'],
                             'phone_numbers' => payload['phone_numbers'],
                             'documents' => payload['documents'],
-                            'date_created' => Twilio.deserialize_iso8601_date(payload['date_created']),
+                            'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                         }
 
                         # Context
@@ -252,7 +252,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Date] 
+                    # @return [Time] 
                     def date_created
                         @properties['date_created']
                     end

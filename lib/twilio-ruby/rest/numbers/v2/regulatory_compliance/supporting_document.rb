@@ -283,6 +283,7 @@ module Twilio
                             'mime_type' => payload['mime_type'],
                             'status' => payload['status'],
                             'failure_reason' => payload['failure_reason'],
+                            'errors' => payload['errors'],
                             'type' => payload['type'],
                             'attributes' => payload['attributes'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
@@ -340,6 +341,12 @@ module Twilio
                     # @return [String] The failure reason of the Supporting Document Resource.
                     def failure_reason
                         @properties['failure_reason']
+                    end
+                    
+                    ##
+                    # @return [Array<Hash>] A list of errors that occurred during the registering RC Bundle
+                    def errors
+                        @properties['errors']
                     end
                     
                     ##
