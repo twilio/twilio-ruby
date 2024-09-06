@@ -40,6 +40,59 @@ module Twilio
                             # @param [title]: [String] 
                             # @param [url]: [String] 
                             # @param [phone]: [String] 
+                            # @param [code]: [String] 
+                        attr_accessor :type, :title, :url, :phone, :code
+                        def initialize(payload)
+                                @type = payload["type"]
+                                @title = payload["title"]
+                                @url = payload["url"]
+                                @phone = payload["phone"]
+                                @code = payload["code"]
+                        end
+                        def to_json(options = {})
+                        {
+                                type: @type,
+                                title: @title,
+                                url: @url,
+                                phone: @phone,
+                                code: @code,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CardAction
+                            # @param [type]: [CardActionType] 
+                            # @param [title]: [String] 
+                            # @param [url]: [String] 
+                            # @param [phone]: [String] 
+                            # @param [id]: [String] 
+                            # @param [code]: [String] 
+                        attr_accessor :type, :title, :url, :phone, :id, :code
+                        def initialize(payload)
+                                @type = payload["type"]
+                                @title = payload["title"]
+                                @url = payload["url"]
+                                @phone = payload["phone"]
+                                @id = payload["id"]
+                                @code = payload["code"]
+                        end
+                        def to_json(options = {})
+                        {
+                                type: @type,
+                                title: @title,
+                                url: @url,
+                                phone: @phone,
+                                id: @id,
+                                code: @code,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CarouselAction
+                            # @param [type]: [CarouselActionType] 
+                            # @param [title]: [String] 
+                            # @param [url]: [String] 
+                            # @param [phone]: [String] 
                             # @param [id]: [String] 
                         attr_accessor :type, :title, :url, :phone, :id
                         def initialize(payload)
@@ -60,27 +113,24 @@ module Twilio
                         end
                     end
 
-                    class CardAction
-                            # @param [type]: [CardActionType] 
+                    class CarouselCard
                             # @param [title]: [String] 
-                            # @param [url]: [String] 
-                            # @param [phone]: [String] 
-                            # @param [id]: [String] 
-                        attr_accessor :type, :title, :url, :phone, :id
+                            # @param [body]: [String] 
+                            # @param [media]: [String] 
+                            # @param [actions]: [Array<ContentList.CarouselAction>] 
+                        attr_accessor :title, :body, :media, :actions
                         def initialize(payload)
-                                @type = payload["type"]
                                 @title = payload["title"]
-                                @url = payload["url"]
-                                @phone = payload["phone"]
-                                @id = payload["id"]
+                                @body = payload["body"]
+                                @media = payload["media"]
+                                @actions = payload["actions"]
                         end
                         def to_json(options = {})
                         {
-                                type: @type,
                                 title: @title,
-                                url: @url,
-                                phone: @phone,
-                                id: @id,
+                                body: @body,
+                                media: @media,
+                                actions: @actions,
                         }.to_json(options)
                         end
                     end
@@ -131,6 +181,69 @@ module Twilio
                                 variables: @variables,
                                 language: @language,
                                 types: @types,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class FlowsPage
+                            # @param [id]: [String] 
+                            # @param [next_page_id]: [String] 
+                            # @param [title]: [String] 
+                            # @param [subtitle]: [String] 
+                            # @param [layout]: [Array<ContentList.FlowsPageComponent>] 
+                        attr_accessor :id, :next_page_id, :title, :subtitle, :layout
+                        def initialize(payload)
+                                @id = payload["id"]
+                                @next_page_id = payload["next_page_id"]
+                                @title = payload["title"]
+                                @subtitle = payload["subtitle"]
+                                @layout = payload["layout"]
+                        end
+                        def to_json(options = {})
+                        {
+                                id: @id,
+                                next_page_id: @next_page_id,
+                                title: @title,
+                                subtitle: @subtitle,
+                                layout: @layout,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class FlowsPageComponent
+                            # @param [label]: [String] 
+                            # @param [type]: [String] 
+                            # @param [text]: [String] 
+                            # @param [options]: [Array<ContentList.FlowsPageComponentSelectItem>] 
+                        attr_accessor :label, :type, :text, :options
+                        def initialize(payload)
+                                @label = payload["label"]
+                                @type = payload["type"]
+                                @text = payload["text"]
+                                @options = payload["options"]
+                        end
+                        def to_json(options = {})
+                        {
+                                label: @label,
+                                type: @type,
+                                text: @text,
+                                options: @options,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class FlowsPageComponentSelectItem
+                            # @param [id]: [String] 
+                            # @param [title]: [String] 
+                        attr_accessor :id, :title
+                        def initialize(payload)
+                                @id = payload["id"]
+                                @title = payload["title"]
+                        end
+                        def to_json(options = {})
+                        {
+                                id: @id,
+                                title: @title,
                         }.to_json(options)
                         end
                     end
@@ -211,6 +324,22 @@ module Twilio
                         end
                     end
 
+                    class TwilioCarousel
+                            # @param [body]: [String] 
+                            # @param [cards]: [Array<ContentList.CarouselCard>] 
+                        attr_accessor :body, :cards
+                        def initialize(payload)
+                                @body = payload["body"]
+                                @cards = payload["cards"]
+                        end
+                        def to_json(options = {})
+                        {
+                                body: @body,
+                                cards: @cards,
+                        }.to_json(options)
+                        end
+                    end
+
                     class TwilioCatalog
                             # @param [title]: [String] 
                             # @param [body]: [String] 
@@ -235,6 +364,34 @@ module Twilio
                                 id: @id,
                                 items: @items,
                                 dynamic_items: @dynamic_items,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class TwilioFlows
+                            # @param [body]: [String] 
+                            # @param [button_text]: [String] 
+                            # @param [subtitle]: [String] 
+                            # @param [media_url]: [String] 
+                            # @param [pages]: [Array<ContentList.FlowsPage>] 
+                            # @param [type]: [String] 
+                        attr_accessor :body, :button_text, :subtitle, :media_url, :pages, :type
+                        def initialize(payload)
+                                @body = payload["body"]
+                                @button_text = payload["button_text"]
+                                @subtitle = payload["subtitle"]
+                                @media_url = payload["media_url"]
+                                @pages = payload["pages"]
+                                @type = payload["type"]
+                        end
+                        def to_json(options = {})
+                        {
+                                body: @body,
+                                button_text: @button_text,
+                                subtitle: @subtitle,
+                                media_url: @media_url,
+                                pages: @pages,
+                                type: @type,
                         }.to_json(options)
                         end
                     end
@@ -331,9 +488,11 @@ module Twilio
                             # @param [twilio_quick_reply]: [ContentList.TwilioQuickReply] 
                             # @param [twilio_card]: [ContentList.TwilioCard] 
                             # @param [twilio_catalog]: [ContentList.TwilioCatalog] 
+                            # @param [twilio_carousel]: [ContentList.TwilioCarousel] 
+                            # @param [twilio_flows]: [ContentList.TwilioFlows] 
                             # @param [whatsapp_card]: [ContentList.WhatsappCard] 
                             # @param [whatsapp_authentication]: [ContentList.WhatsappAuthentication] 
-                        attr_accessor :twilio_text, :twilio_media, :twilio_location, :twilio_list_picker, :twilio_call_to_action, :twilio_quick_reply, :twilio_card, :twilio_catalog, :whatsapp_card, :whatsapp_authentication
+                        attr_accessor :twilio_text, :twilio_media, :twilio_location, :twilio_list_picker, :twilio_call_to_action, :twilio_quick_reply, :twilio_card, :twilio_catalog, :twilio_carousel, :twilio_flows, :whatsapp_card, :whatsapp_authentication
                         def initialize(payload)
                                 @twilio_text = payload["twilio_text"]
                                 @twilio_media = payload["twilio_media"]
@@ -343,6 +502,8 @@ module Twilio
                                 @twilio_quick_reply = payload["twilio_quick_reply"]
                                 @twilio_card = payload["twilio_card"]
                                 @twilio_catalog = payload["twilio_catalog"]
+                                @twilio_carousel = payload["twilio_carousel"]
+                                @twilio_flows = payload["twilio_flows"]
                                 @whatsapp_card = payload["whatsapp_card"]
                                 @whatsapp_authentication = payload["whatsapp_authentication"]
                         end
@@ -356,6 +517,8 @@ module Twilio
                                 twilio_quick_reply: @twilio_quick_reply,
                                 twilio_card: @twilio_card,
                                 twilio_catalog: @twilio_catalog,
+                                twilio_carousel: @twilio_carousel,
+                                twilio_flows: @twilio_flows,
                                 whatsapp_card: @whatsapp_card,
                                 whatsapp_authentication: @whatsapp_authentication,
                         }.to_json(options)

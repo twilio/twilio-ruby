@@ -10,23 +10,28 @@
 # frozen_string_literal: true
 module Twilio
   module REST
-    class PreviewIamBase < Domain
+    class IamBase < Domain
       ##
-      # Initialize previewIam domain
+      # Initialize iam domain
       #
       # @param twilio - The twilio client
       #
       def initialize(twilio)
         super(twilio)
-        @base_url =  "https://preview-iam.twilio.com"
-        @host = "preview-iam.twilio.com"
+        @base_url =  "https://iam.twilio.com"
+        @host = "iam.twilio.com"
         @port = 443
+        @v1 = nil
+      end
+
+      def v1
+        @v1 ||= Iam::V1.new self
       end
 
       ##
       # Provide a user friendly representation
       def to_s
-        '<Twilio::REST::PreviewIam>';
+        '<Twilio::REST::Iam::V1>';
       end
     end
   end

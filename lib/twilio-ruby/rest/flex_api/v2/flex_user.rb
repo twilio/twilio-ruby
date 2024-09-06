@@ -45,7 +45,7 @@ module Twilio
                     # Initialize the FlexUserContext
                     # @param [Version] version Version that contains the resource
                     # @param [String] instance_sid The unique ID created by Twilio to identify a Flex instance.
-                    # @param [String] flex_user_sid The unique id for the flex user to be retrieved.
+                    # @param [String] flex_user_sid The unique id for the flex user.
                     # @return [FlexUserContext] FlexUserContext
                     def initialize(version, instance_sid, flex_user_sid)
                         super(version)
@@ -64,6 +64,44 @@ module Twilio
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
+                        FlexUserInstance.new(
+                            @version,
+                            payload,
+                            instance_sid: @solution[:instance_sid],
+                            flex_user_sid: @solution[:flex_user_sid],
+                        )
+                    end
+
+                    ##
+                    # Update the FlexUserInstance
+                    # @param [String] first_name First name of the User.
+                    # @param [String] last_name Last name of the User.
+                    # @param [String] email Email of the User.
+                    # @param [String] friendly_name Friendly name of the User.
+                    # @param [String] user_sid The unique SID identifier of the Twilio Unified User.
+                    # @param [String] locale The locale preference of the user.
+                    # @return [FlexUserInstance] Updated FlexUserInstance
+                    def update(
+                        first_name: :unset, 
+                        last_name: :unset, 
+                        email: :unset, 
+                        friendly_name: :unset, 
+                        user_sid: :unset, 
+                        locale: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FirstName' => first_name,
+                            'LastName' => last_name,
+                            'Email' => email,
+                            'FriendlyName' => friendly_name,
+                            'UserSid' => user_sid,
+                            'Locale' => locale,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         FlexUserInstance.new(
                             @version,
                             payload,
@@ -143,6 +181,8 @@ module Twilio
                             'username' => payload['username'],
                             'email' => payload['email'],
                             'friendly_name' => payload['friendly_name'],
+                            'locale' => payload['locale'],
+                            'roles' => payload['roles'],
                             'created_date' => Twilio.deserialize_iso8601_datetime(payload['created_date']),
                             'updated_date' => Twilio.deserialize_iso8601_datetime(payload['updated_date']),
                             'version' => payload['version'] == nil ? payload['version'] : payload['version'].to_i,
@@ -238,6 +278,18 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] The locale preference of the user.
+                    def locale
+                        @properties['locale']
+                    end
+                    
+                    ##
+                    # @return [Array<String>] The roles of the user.
+                    def roles
+                        @properties['roles']
+                    end
+                    
+                    ##
                     # @return [Time] The date that this user was created, given in ISO 8601 format.
                     def created_date
                         @properties['created_date']
@@ -267,6 +319,34 @@ module Twilio
                     def fetch
 
                         context.fetch
+                    end
+
+                    ##
+                    # Update the FlexUserInstance
+                    # @param [String] first_name First name of the User.
+                    # @param [String] last_name Last name of the User.
+                    # @param [String] email Email of the User.
+                    # @param [String] friendly_name Friendly name of the User.
+                    # @param [String] user_sid The unique SID identifier of the Twilio Unified User.
+                    # @param [String] locale The locale preference of the user.
+                    # @return [FlexUserInstance] Updated FlexUserInstance
+                    def update(
+                        first_name: :unset, 
+                        last_name: :unset, 
+                        email: :unset, 
+                        friendly_name: :unset, 
+                        user_sid: :unset, 
+                        locale: :unset
+                    )
+
+                        context.update(
+                            first_name: first_name, 
+                            last_name: last_name, 
+                            email: email, 
+                            friendly_name: friendly_name, 
+                            user_sid: user_sid, 
+                            locale: locale, 
+                        )
                     end
 
                     ##

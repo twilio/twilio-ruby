@@ -166,7 +166,7 @@ module Twilio
                             'losing_carrier_information' => payload['losing_carrier_information'],
                             'phone_numbers' => payload['phone_numbers'],
                             'documents' => payload['documents'],
-                            'date_created' => Twilio.deserialize_iso8601_date(payload['date_created']),
+                            'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                         }
 
                         # Context
@@ -198,31 +198,31 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The Account SID that the numbers will be added to after they are ported into Twilio.
+                    # @return [String] Account Sid or subaccount where the phone number(s) will be Ported
                     def account_sid
                         @properties['account_sid']
                     end
                     
                     ##
-                    # @return [Array<String>] List of emails for getting notifications about the LOA signing process. Allowed Max 10 emails.
+                    # @return [Array<String>] Additional emails to send a copy of the signed LOA to.
                     def notification_emails
                         @properties['notification_emails']
                     end
                     
                     ##
-                    # @return [Date] Minimum number of days in the future (at least 2 days) needs to be established with the Ops team for validation.
+                    # @return [Date] Target date to port the number. We cannot guarantee that this date will be honored by the other carriers, please work with Ops to get a confirmation of the firm order commitment (FOC) date. Expected format is ISO Local Date, example: ‘2011-12-03`. This date must be at least 7 days in the future for US ports and 10 days in the future for Japanese ports. (This value is only available for custom porting customers.)
                     def target_port_in_date
                         @properties['target_port_in_date']
                     end
                     
                     ##
-                    # @return [String] Minimum hour in the future needs to be established with the Ops team for validation.
+                    # @return [String] The earliest time that the port should occur on the target port in date. Expected format is ISO Offset Time, example: ‘10:15:00-08:00'. (This value is only available for custom porting customers.)
                     def target_port_in_time_range_start
                         @properties['target_port_in_time_range_start']
                     end
                     
                     ##
-                    # @return [String] Maximum hour in the future needs to be established with the Ops team for validation.
+                    # @return [String] The latest time that the port should occur on the target port in date. Expected format is ISO Offset Time, example: ‘10:15:00-08:00'.  (This value is only available for custom porting customers.)
                     def target_port_in_time_range_end
                         @properties['target_port_in_time_range_end']
                     end
@@ -234,25 +234,25 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] The information for the losing carrier. 
+                    # @return [Hash] Details regarding the customer’s information with the losing carrier. These values will be used to generate the letter of authorization and should match the losing carrier’s data as closely as possible to ensure the port is accepted.
                     def losing_carrier_information
                         @properties['losing_carrier_information']
                     end
                     
                     ##
-                    # @return [Array<Hash>] The list of phone numbers to Port in. Phone numbers are in E.164 format (e.g. +16175551212).
+                    # @return [Array<Hash>] 
                     def phone_numbers
                         @properties['phone_numbers']
                     end
                     
                     ##
-                    # @return [Array<String>] The list of documents SID referencing a utility bills
+                    # @return [Array<String>] List of document SIDs for all phone numbers included in the port in request. At least one document SID referring to a document of the type Utility Bill is required.
                     def documents
                         @properties['documents']
                     end
                     
                     ##
-                    # @return [Date] 
+                    # @return [Time] 
                     def date_created
                         @properties['date_created']
                     end

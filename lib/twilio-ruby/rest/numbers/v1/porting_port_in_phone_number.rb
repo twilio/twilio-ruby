@@ -158,6 +158,7 @@ module Twilio
                             'port_out_pin' => payload['port_out_pin'] == nil ? payload['port_out_pin'] : payload['port_out_pin'].to_i,
                             'rejection_reason' => payload['rejection_reason'],
                             'rejection_reason_code' => payload['rejection_reason_code'] == nil ? payload['rejection_reason_code'] : payload['rejection_reason_code'].to_i,
+                            'port_date' => Twilio.deserialize_iso8601_datetime(payload['port_date']),
                         }
 
                         # Context
@@ -177,105 +178,111 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The SID of the Port In request. This is a unique identifier of the port in request.
+                    # @return [String] The unique identifier for the port in request that this phone number is associated with.
                     def port_in_request_sid
                         @properties['port_in_request_sid']
                     end
                     
                     ##
-                    # @return [String] The SID of the Port In request phone number. This is a unique identifier of the phone number.
+                    # @return [String] The unique identifier for this phone number associated with this port in request.
                     def phone_number_sid
                         @properties['phone_number_sid']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] URL reference for this resource.
                     def url
                         @properties['url']
                     end
                     
                     ##
-                    # @return [String] The SID of the account that the phone number belongs to.
+                    # @return [String] Account Sid or subaccount where the phone number(s) will be Ported.
                     def account_sid
                         @properties['account_sid']
                     end
                     
                     ##
-                    # @return [String] The type of the phone number.
+                    # @return [String] The number type of the phone number. This can be: toll-free, local, mobile or unknown. This field may be null if the number is not portable or if the portability for a number has not yet been evaluated.
                     def phone_number_type
                         @properties['phone_number_type']
                     end
                     
                     ##
-                    # @return [Time] The date when the phone number was created.
+                    # @return [Time] The timestamp for when this port in phone number was created.
                     def date_created
                         @properties['date_created']
                     end
                     
                     ##
-                    # @return [String] The country of the phone number.
+                    # @return [String] The ISO country code that this number is associated with. This field may be null if the number is not portable or if the portability for a number has not yet been evaluated.
                     def country
                         @properties['country']
                     end
                     
                     ##
-                    # @return [Boolean] The phone number is missing required fields.
+                    # @return [Boolean] Indicates if the phone number is missing required fields such as a PIN or account number. This field may be null if the number is not portable or if the portability for a number has not yet been evaluated.
                     def missing_required_fields
                         @properties['missing_required_fields']
                     end
                     
                     ##
-                    # @return [Time] The timestamp when the status was last updated.
+                    # @return [Time] Timestamp indicating when the Port In Phone Number resource was last modified.
                     def last_updated
                         @properties['last_updated']
                     end
                     
                     ##
-                    # @return [String] The phone number.
+                    # @return [String] Phone number to be ported. This will be in the E164 Format.
                     def phone_number
                         @properties['phone_number']
                     end
                     
                     ##
-                    # @return [Boolean] The phone number is portable.
+                    # @return [Boolean] If the number is portable by Twilio or not. This field may be null if the number portability has not yet been evaluated. If a number is not portable reference the `not_portability_reason_code` and `not_portability_reason` fields for more details
                     def portable
                         @properties['portable']
                     end
                     
                     ##
-                    # @return [String] The reason why the phone number is not portable.
+                    # @return [String] The not portability reason code description. This field may be null if the number is portable or if the portability for a number has not yet been evaluated.
                     def not_portability_reason
                         @properties['not_portability_reason']
                     end
                     
                     ##
-                    # @return [String] The code of the reason why the phone number is not portable.
+                    # @return [String] The not portability reason code. This field may be null if the number is portable or if the portability for a number has not yet been evaluated.
                     def not_portability_reason_code
                         @properties['not_portability_reason_code']
                     end
                     
                     ##
-                    # @return [String] The status of the phone number in the port in request.
+                    # @return [String] The status of the port in phone number.
                     def port_in_phone_number_status
                         @properties['port_in_phone_number_status']
                     end
                     
                     ##
-                    # @return [String] The pin required for the losing carrier to port out the phone number.
+                    # @return [String] The pin required by the losing carrier to do the port out.
                     def port_out_pin
                         @properties['port_out_pin']
                     end
                     
                     ##
-                    # @return [String] The rejection reason returned by the vendor.
+                    # @return [String] The description of the rejection reason provided by the losing carrier. This field may be null if the number has not been rejected by the losing carrier.
                     def rejection_reason
                         @properties['rejection_reason']
                     end
                     
                     ##
-                    # @return [String] The rejection reason code returned by the vendor.
+                    # @return [String] The code for the rejection reason provided by the losing carrier. This field may be null if the number has not been rejected by the losing carrier.
                     def rejection_reason_code
                         @properties['rejection_reason_code']
+                    end
+                    
+                    ##
+                    # @return [Time] The timestamp the phone number will be ported. This will only be set once a port date has been confirmed. Not all carriers can guarantee a specific time on the port date. Twilio will try its best to get the port completed by this time on the port date. Please subscribe to webhooks for confirmation on when a port has actually been completed.
+                    def port_date
+                        @properties['port_date']
                     end
                     
                     ##

@@ -110,7 +110,7 @@ module Twilio
                     end
                 end
                 ##
-                # @param [String] sid A 34 character string that uniquely identifies this Operator Type.
+                # @param [String] sid Either a 34 character string that uniquely identifies this Operator Type or the unique name that references an Operator Type.
                 # @return [Twilio::REST::Intelligence::V2::OperatorTypeContext] if sid was passed.
                 # @return [Twilio::REST::Intelligence::V2::OperatorTypeList]
                 def operator_type(sid=:unset)

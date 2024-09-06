@@ -227,7 +227,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The total number of Workers available for Tasks in the TaskQueue.
+                    # @return [String] The total number of Workers in the TaskQueue with an `available` status. Workers with an `available` status may already have active interactions or may have none.
                     def total_available_workers
                         @properties['total_available_workers']
                     end

@@ -128,7 +128,7 @@ module Twilio
                     ##
                     # Initialize the OperatorTypeContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] sid A 34 character string that uniquely identifies this Operator Type.
+                    # @param [String] sid Either a 34 character string that uniquely identifies this Operator Type or the unique name that references an Operator Type.
                     # @return [OperatorTypeContext] OperatorTypeContext
                     def initialize(version, sid)
                         super(version)

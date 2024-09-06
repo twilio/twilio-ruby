@@ -17,12 +17,12 @@ module Twilio
     module REST
         class Numbers < NumbersBase
             class V1 < Version
-                class WebhookList < ListResource
+                class PortingWebhookConfigurationFetchList < ListResource
                 
                     ##
-                    # Initialize the WebhookList
+                    # Initialize the PortingWebhookConfigurationFetchList
                     # @param [Version] version Version that contains the resource
-                    # @return [WebhookList] WebhookList
+                    # @return [PortingWebhookConfigurationFetchList] PortingWebhookConfigurationFetchList
                     def initialize(version)
                         super(version)
                         # Path Solution
@@ -31,14 +31,14 @@ module Twilio
                         
                     end
                     ##
-                    # Fetch the WebhookInstance
-                    # @return [WebhookInstance] Fetched WebhookInstance
+                    # Fetch the PortingWebhookConfigurationFetchInstance
+                    # @return [PortingWebhookConfigurationFetchInstance] Fetched PortingWebhookConfigurationFetchInstance
                     def fetch
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
-                        WebhookInstance.new(
+                        PortingWebhookConfigurationFetchInstance.new(
                             @version,
                             payload,
                         )
@@ -49,17 +49,17 @@ module Twilio
 
                     # Provide a user friendly representation
                     def to_s
-                        '#<Twilio.Numbers.V1.WebhookList>'
+                        '#<Twilio.Numbers.V1.PortingWebhookConfigurationFetchList>'
                     end
                 end
 
-                class WebhookPage < Page
+                class PortingWebhookConfigurationFetchPage < Page
                     ##
-                    # Initialize the WebhookPage
+                    # Initialize the PortingWebhookConfigurationFetchPage
                     # @param [Version] version Version that contains the resource
                     # @param [Response] response Response from the API
                     # @param [Hash] solution Path solution for the resource
-                    # @return [WebhookPage] WebhookPage
+                    # @return [PortingWebhookConfigurationFetchPage] PortingWebhookConfigurationFetchPage
                     def initialize(version, response, solution)
                         super(version, response)
 
@@ -68,29 +68,29 @@ module Twilio
                     end
 
                     ##
-                    # Build an instance of WebhookInstance
+                    # Build an instance of PortingWebhookConfigurationFetchInstance
                     # @param [Hash] payload Payload response from the API
-                    # @return [WebhookInstance] WebhookInstance
+                    # @return [PortingWebhookConfigurationFetchInstance] PortingWebhookConfigurationFetchInstance
                     def get_instance(payload)
-                        WebhookInstance.new(@version, payload)
+                        PortingWebhookConfigurationFetchInstance.new(@version, payload)
                     end
 
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        '<Twilio.Numbers.V1.WebhookPage>'
+                        '<Twilio.Numbers.V1.PortingWebhookConfigurationFetchPage>'
                     end
                 end
-                class WebhookInstance < InstanceResource
+                class PortingWebhookConfigurationFetchInstance < InstanceResource
                     ##
-                    # Initialize the WebhookInstance
+                    # Initialize the PortingWebhookConfigurationFetchInstance
                     # @param [Version] version Version that contains the resource
                     # @param [Hash] payload payload that contains response from Twilio
                     # @param [String] account_sid The SID of the
-                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Webhook
+                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this PortingWebhookConfigurationFetch
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
-                    # @return [WebhookInstance] WebhookInstance
+                    # @return [PortingWebhookConfigurationFetchInstance] PortingWebhookConfigurationFetchInstance
                     def initialize(version, payload )
                         super(version)
                         
@@ -113,19 +113,19 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] Webhook URL to send a request when a port in request or port in phone number event happens
+                    # @return [String] The complete webhook url that will be called when a notification event for port in request or port in phone number happens
                     def port_in_target_url
                         @properties['port_in_target_url']
                     end
                     
                     ##
-                    # @return [String] Webhook URL to send a request when a port out phone number event happens
+                    # @return [String] The complete webhook url that will be called when a notification event for a port out phone number happens.
                     def port_out_target_url
                         @properties['port_out_target_url']
                     end
                     
                     ##
-                    # @return [Array<String>] List of notification events to send a request to the webhook URL
+                    # @return [Array<String>] A list to filter what notification events to receive for this account and its sub accounts. If it is an empty list, then it means that there are no filters for the notifications events to send in each webhook and all events will get sent.
                     def notifications_of
                         @properties['notifications_of']
                     end
@@ -145,13 +145,13 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        "<Twilio.Numbers.V1.WebhookInstance>"
+                        "<Twilio.Numbers.V1.PortingWebhookConfigurationFetchInstance>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        "<Twilio.Numbers.V1.WebhookInstance>"
+                        "<Twilio.Numbers.V1.PortingWebhookConfigurationFetchInstance>"
                     end
                 end
 

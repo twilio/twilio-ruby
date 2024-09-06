@@ -32,6 +32,28 @@ module Twilio
                         @uri = "/Services/#{@solution[:messaging_service_sid]}/ChannelSenders"
                         
                     end
+                    ##
+                    # Create the ChannelSenderInstance
+                    # @param [String] sid The SID of the Channel Sender being added to the Service.
+                    # @return [ChannelSenderInstance] Created ChannelSenderInstance
+                    def create(
+                        sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Sid' => sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
+                        ChannelSenderInstance.new(
+                            @version,
+                            payload,
+                            messaging_service_sid: @solution[:messaging_service_sid],
+                        )
+                    end
+
                 
                     ##
                     # Lists ChannelSenderInstance records from the API as a list.
@@ -142,6 +164,16 @@ module Twilio
 
                         
                     end
+                    ##
+                    # Delete the ChannelSenderInstance
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        @version.delete('DELETE', @uri, headers: headers)
+                    end
+
                     ##
                     # Fetch the ChannelSenderInstance
                     # @return [ChannelSenderInstance] Fetched ChannelSenderInstance
@@ -298,6 +330,14 @@ module Twilio
                         @properties['url']
                     end
                     
+                    ##
+                    # Delete the ChannelSenderInstance
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete
+
+                        context.delete
+                    end
+
                     ##
                     # Fetch the ChannelSenderInstance
                     # @return [ChannelSenderInstance] Fetched ChannelSenderInstance

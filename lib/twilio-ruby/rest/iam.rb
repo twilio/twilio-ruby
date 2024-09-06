@@ -1,6 +1,6 @@
 module Twilio
     module REST
-      class PreviewIam < PreviewIamBase;
+      class Iam < IamBase;
       end
     end
 end

@@ -24,6 +24,7 @@ module Twilio
                     @available_add_ons = nil
                     @installed_add_ons = nil
                     @module_data_management = nil
+                    @referral_conversion = nil
                 end
 
                 ##
@@ -55,7 +56,7 @@ module Twilio
                     end
                 end
                 ##
-                # @param [String] sid 
+                # @param [String] sid The unique identifier of a Listing.
                 # @return [Twilio::REST::Marketplace::V1::ModuleDataManagementContext] if sid was passed.
                 # @return [Twilio::REST::Marketplace::V1::ModuleDataManagementList]
                 def module_data_management(sid=:unset)
@@ -67,6 +68,11 @@ module Twilio
                     else
                         ModuleDataManagementContext.new(self, sid)
                     end
+                end
+                ##
+                # @return [Twilio::REST::Marketplace::V1::referralConversionContext]
+                def referral_conversion
+                    @referral_conversion ||= ReferralConversionContext.new self
                 end
                 ##
                 # Provide a user friendly representation

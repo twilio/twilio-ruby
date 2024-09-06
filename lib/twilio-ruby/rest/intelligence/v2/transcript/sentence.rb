@@ -38,6 +38,7 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Sentences. If redaction is enabled, the default is `true` to access redacted sentences.
+                    # @param [Boolean] word_timestamps Returns word level timestamps information, if word_timestamps is enabled. The default is `false`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -45,9 +46,10 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(redacted: :unset, limit: nil, page_size: nil)
+                    def list(redacted: :unset, word_timestamps: :unset, limit: nil, page_size: nil)
                         self.stream(
                             redacted: redacted,
+                            word_timestamps: word_timestamps,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -58,6 +60,7 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Sentences. If redaction is enabled, the default is `true` to access redacted sentences.
+                    # @param [Boolean] word_timestamps Returns word level timestamps information, if word_timestamps is enabled. The default is `false`.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -65,11 +68,12 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(redacted: :unset, limit: nil, page_size: nil)
+                    def stream(redacted: :unset, word_timestamps: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
                             redacted: redacted,
+                            word_timestamps: word_timestamps,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -93,13 +97,15 @@ module Twilio
                     # Retrieve a single page of SentenceInstance records from the API.
                     # Request is executed immediately.
                     # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Sentences. If redaction is enabled, the default is `true` to access redacted sentences.
+                    # @param [Boolean] word_timestamps Returns word level timestamps information, if word_timestamps is enabled. The default is `false`.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of SentenceInstance
-                    def page(redacted: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(redacted: :unset, word_timestamps: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'Redacted' => redacted,
+                            'WordTimestamps' => word_timestamps,
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
@@ -181,6 +187,7 @@ module Twilio
                             'transcript' => payload['transcript'],
                             'sid' => payload['sid'],
                             'confidence' => payload['confidence'],
+                            'words' => payload['words'],
                         }
                     end
 
@@ -225,6 +232,12 @@ module Twilio
                     # @return [Float] 
                     def confidence
                         @properties['confidence']
+                    end
+                    
+                    ##
+                    # @return [Array<Hash>] Detailed information for each of the words of the given Sentence.
+                    def words
+                        @properties['words']
                     end
                     
                     ##
