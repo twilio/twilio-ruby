@@ -22,30 +22,17 @@ module Twilio
                      class InstalledAddOnUsageList < ListResource
                 
                     class MarketplaceV1InstalledAddOnInstalledAddOnUsage
+                            # @param [total_submitted]: [Float] Total amount in local currency that was billed in this request. Aggregates all billable_items that were successfully submitted.
                             # @param [billable_items]: [Array<InstalledAddOnUsageList.MarketplaceV1InstalledAddOnInstalledAddOnUsageBillableItems>] 
-                        attr_accessor :billable_items
+                        attr_accessor :total_submitted, :billable_items
                         def initialize(payload)
+                                @total_submitted = payload["total_submitted"]
                                 @billable_items = payload["billable_items"]
                         end
                         def to_json(options = {})
                         {
+                                total_submitted: @total_submitted,
                                 billable_items: @billable_items,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class MarketplaceV1InstalledAddOnInstalledAddOnUsageBillableItems
-                            # @param [quantity]: [Float] Any floating number greater than 0.
-                            # @param [sid]: [String] BillingSid to use for billing.
-                        attr_accessor :quantity, :sid
-                        def initialize(payload)
-                                @quantity = payload["quantity"]
-                                @sid = payload["sid"]
-                        end
-                        def to_json(options = {})
-                        {
-                                quantity: @quantity,
-                                sid: @sid,
                         }.to_json(options)
                         end
                     end
@@ -130,22 +117,22 @@ module Twilio
                         
                         # Marshaled Properties
                         @properties = { 
-                            'billable_items' => payload['billable_items'],
                             'total_submitted' => payload['total_submitted'],
+                            'billable_items' => payload['billable_items'],
                         }
                     end
 
                     
                     ##
-                    # @return [Array<MarketplaceV1InstalledAddOnBillingUsageResponseBillableItems>] 
-                    def billable_items
-                        @properties['billable_items']
+                    # @return [Float] Total amount in local currency that was billed in this request. Aggregates all billable_items that were successfully submitted.
+                    def total_submitted
+                        @properties['total_submitted']
                     end
                     
                     ##
-                    # @return [Float] Represents the total quantity submitted.
-                    def total_submitted
-                        @properties['total_submitted']
+                    # @return [Array<InstalledAddOnUsageList.MarketplaceV1InstalledAddOnInstalledAddOnUsageBillableItems>] 
+                    def billable_items
+                        @properties['billable_items']
                     end
                     
                     ##

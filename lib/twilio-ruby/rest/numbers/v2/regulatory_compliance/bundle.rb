@@ -40,7 +40,7 @@ module Twilio
                     # @param [String] regulation_sid The unique string of a regulation that is associated to the Bundle resource.
                     # @param [String] iso_country The [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
                     # @param [EndUserType] end_user_type 
-                    # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll free`.
+                    # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll-free`.
                     # @param [Boolean] is_test Indicates that Bundle is a Test Bundle and will be Auto-Rejected
                     # @return [BundleInstance] Created BundleInstance
                     def create(
@@ -83,7 +83,7 @@ module Twilio
                     # @param [String] friendly_name The string that you assigned to describe the resource. The column can contain 255 variable characters.
                     # @param [String] regulation_sid The unique string of a [Regulation resource](https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations) that is associated to the Bundle resource.
                     # @param [String] iso_country The 2-digit [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
-                    # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `tollfree`.
+                    # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll-free`.
                     # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid Bundle until a specified expiration date.
                     # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
                     # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
@@ -123,7 +123,7 @@ module Twilio
                     # @param [String] friendly_name The string that you assigned to describe the resource. The column can contain 255 variable characters.
                     # @param [String] regulation_sid The unique string of a [Regulation resource](https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations) that is associated to the Bundle resource.
                     # @param [String] iso_country The 2-digit [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
-                    # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `tollfree`.
+                    # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll-free`.
                     # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid Bundle until a specified expiration date.
                     # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
                     # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
@@ -178,7 +178,7 @@ module Twilio
                     # @param [String] friendly_name The string that you assigned to describe the resource. The column can contain 255 variable characters.
                     # @param [String] regulation_sid The unique string of a [Regulation resource](https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations) that is associated to the Bundle resource.
                     # @param [String] iso_country The 2-digit [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
-                    # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `tollfree`.
+                    # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll-free`.
                     # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid Bundle until a specified expiration date.
                     # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
                     # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.

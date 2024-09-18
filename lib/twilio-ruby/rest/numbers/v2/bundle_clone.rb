@@ -58,7 +58,7 @@ module Twilio
                     ##
                     # Create the BundleCloneInstance
                     # @param [String] target_account_sid The SID of the [Account](https://www.twilio.com/docs/iam/api/account) where the bundle needs to be cloned.
-                    # @param [Boolean] move_to_draft This is to determine whether the cloned bundle needs to be in draft state or not.
+                    # @param [Boolean] move_to_draft If set to true, the cloned bundle will be in the DRAFT state, else it will be twilio-approved
                     # @param [String] friendly_name The string that you assigned to describe the cloned bundle.
                     # @return [BundleCloneInstance] Created BundleCloneInstance
                     def create(
@@ -240,7 +240,7 @@ module Twilio
                     ##
                     # Create the BundleCloneInstance
                     # @param [String] target_account_sid The SID of the [Account](https://www.twilio.com/docs/iam/api/account) where the bundle needs to be cloned.
-                    # @param [Boolean] move_to_draft This is to determine whether the cloned bundle needs to be in draft state or not.
+                    # @param [Boolean] move_to_draft If set to true, the cloned bundle will be in the DRAFT state, else it will be twilio-approved
                     # @param [String] friendly_name The string that you assigned to describe the cloned bundle.
                     # @return [BundleCloneInstance] Created BundleCloneInstance
                     def create(

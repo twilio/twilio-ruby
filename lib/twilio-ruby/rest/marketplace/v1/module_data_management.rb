@@ -44,7 +44,7 @@ module Twilio
                     ##
                     # Initialize the ModuleDataManagementContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] sid 
+                    # @param [String] sid SID that uniquely identifies the Listing.
                     # @return [ModuleDataManagementContext] ModuleDataManagementContext
                     def initialize(version, sid)
                         super(version)
@@ -72,12 +72,13 @@ module Twilio
 
                     ##
                     # Update the ModuleDataManagementInstance
-                    # @param [String] module_info 
-                    # @param [String] description 
-                    # @param [String] documentation 
-                    # @param [String] policies 
-                    # @param [String] support 
-                    # @param [String] configuration 
+                    # @param [String] module_info A JSON object containing essential attributes that define a Listing.
+                    # @param [String] description A JSON object describing the Listing. You can define the main body of the description, highlight key features or aspects of the Listing, and provide code samples for developers if applicable.
+                    # @param [String] documentation A JSON object for providing comprehensive information, instructions, and resources related to the Listing.
+                    # @param [String] policies A JSON object describing the Listing's privacy and legal policies. The maximum file size for Policies is 5MB.
+                    # @param [String] support A JSON object containing information on how Marketplace users can obtain support for the Listing. Use this parameter to provide details such as contact information and support description.
+                    # @param [String] configuration A JSON object for providing Listing-specific configuration. Contains button setup, notification URL, and more.
+                    # @param [String] pricing A JSON object for providing Listing's purchase options.
                     # @return [ModuleDataManagementInstance] Updated ModuleDataManagementInstance
                     def update(
                         module_info: :unset, 
@@ -85,7 +86,8 @@ module Twilio
                         documentation: :unset, 
                         policies: :unset, 
                         support: :unset, 
-                        configuration: :unset
+                        configuration: :unset, 
+                        pricing: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -95,6 +97,7 @@ module Twilio
                             'Policies' => policies,
                             'Support' => support,
                             'Configuration' => configuration,
+                            'Pricing' => pricing,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -174,6 +177,7 @@ module Twilio
                             'module_info' => payload['module_info'],
                             'documentation' => payload['documentation'],
                             'configuration' => payload['configuration'],
+                            'pricing' => payload['pricing'],
                         }
 
                         # Context
@@ -241,6 +245,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [Hash] A JSON object for providing Listing specific pricing information.
+                    def pricing
+                        @properties['pricing']
+                    end
+                    
+                    ##
                     # Fetch the ModuleDataManagementInstance
                     # @return [ModuleDataManagementInstance] Fetched ModuleDataManagementInstance
                     def fetch
@@ -250,12 +260,13 @@ module Twilio
 
                     ##
                     # Update the ModuleDataManagementInstance
-                    # @param [String] module_info 
-                    # @param [String] description 
-                    # @param [String] documentation 
-                    # @param [String] policies 
-                    # @param [String] support 
-                    # @param [String] configuration 
+                    # @param [String] module_info A JSON object containing essential attributes that define a Listing.
+                    # @param [String] description A JSON object describing the Listing. You can define the main body of the description, highlight key features or aspects of the Listing, and provide code samples for developers if applicable.
+                    # @param [String] documentation A JSON object for providing comprehensive information, instructions, and resources related to the Listing.
+                    # @param [String] policies A JSON object describing the Listing's privacy and legal policies. The maximum file size for Policies is 5MB.
+                    # @param [String] support A JSON object containing information on how Marketplace users can obtain support for the Listing. Use this parameter to provide details such as contact information and support description.
+                    # @param [String] configuration A JSON object for providing Listing-specific configuration. Contains button setup, notification URL, and more.
+                    # @param [String] pricing A JSON object for providing Listing's purchase options.
                     # @return [ModuleDataManagementInstance] Updated ModuleDataManagementInstance
                     def update(
                         module_info: :unset, 
@@ -263,7 +274,8 @@ module Twilio
                         documentation: :unset, 
                         policies: :unset, 
                         support: :unset, 
-                        configuration: :unset
+                        configuration: :unset, 
+                        pricing: :unset
                     )
 
                         context.update(
@@ -273,6 +285,7 @@ module Twilio
                             policies: policies, 
                             support: support, 
                             configuration: configuration, 
+                            pricing: pricing, 
                         )
                     end
 
