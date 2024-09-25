@@ -22,6 +22,8 @@ module Twilio
                     super
                     @version = 'v1'
                     @auth_token_promotion = nil
+                    @bulk_consents = nil
+                    @bulk_contacts = nil
                     @credentials = nil
                     @safelist = nil
                     @secondary_auth_token = nil
@@ -31,6 +33,16 @@ module Twilio
                 # @return [Twilio::REST::Accounts::V1::authTokenPromotionContext]
                 def auth_token_promotion
                     @auth_token_promotion ||= AuthTokenPromotionContext.new self
+                end
+                ##
+                # @return [Twilio::REST::Accounts::V1::BulkConsentsList]
+                def bulk_consents
+                    @bulk_consents ||= BulkConsentsList.new self
+                end
+                ##
+                # @return [Twilio::REST::Accounts::V1::BulkContactsList]
+                def bulk_contacts
+                    @bulk_contacts ||= BulkContactsList.new self
                 end
                 ##
                 # @return [Twilio::REST::Accounts::V1::CredentialList]

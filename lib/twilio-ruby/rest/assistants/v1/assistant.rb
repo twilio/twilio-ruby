@@ -326,7 +326,8 @@ module Twilio
                         # Dependents
                         @feedbacks = nil
                         @messages = nil
-                        @tools = nil
+                        @assistants_tools = nil
+                        @assistants_knowledge = nil
                     end
                     ##
                     # Delete the AssistantInstance
@@ -377,7 +378,7 @@ module Twilio
                     def feedbacks
                       unless @feedbacks
                         @feedbacks = FeedbackList.new(
-                                @version, )
+                                @version, id: @solution[:id], )
                       end
                       @feedbacks
                     end
@@ -388,20 +389,47 @@ module Twilio
                     def messages
                       unless @messages
                         @messages = MessageList.new(
-                                @version, )
+                                @version, id: @solution[:id], )
                       end
                       @messages
                     end
                     ##
-                    # Access the tools
-                    # @return [ToolList]
-                    # @return [ToolContext]
-                    def tools
-                      unless @tools
-                        @tools = ToolList.new(
+                    # Access the assistants_tools
+                    # @return [AssistantsToolList]
+                    # @return [AssistantsToolContext] if sid was passed.
+                    def assistants_tools(id=:unset)
+
+                        raise ArgumentError, 'id cannot be nil' if id.nil?
+
+                        if id != :unset
+                            return AssistantsToolContext.new(@version, @solution[:id],id )
+                        end
+
+                        unless @assistants_tools
+                            @assistants_tools = AssistantsToolList.new(
                                 @version, )
-                      end
-                      @tools
+                        end
+
+                     @assistants_tools
+                    end
+                    ##
+                    # Access the assistants_knowledge
+                    # @return [AssistantsKnowledgeList]
+                    # @return [AssistantsKnowledgeContext] if sid was passed.
+                    def assistants_knowledge(id=:unset)
+
+                        raise ArgumentError, 'id cannot be nil' if id.nil?
+
+                        if id != :unset
+                            return AssistantsKnowledgeContext.new(@version, @solution[:id],id )
+                        end
+
+                        unless @assistants_knowledge
+                            @assistants_knowledge = AssistantsKnowledgeList.new(
+                                @version, )
+                        end
+
+                     @assistants_knowledge
                     end
 
                     ##
@@ -468,6 +496,7 @@ module Twilio
                             'model' => payload['model'],
                             'name' => payload['name'],
                             'owner' => payload['owner'],
+                            'url' => payload['url'],
                             'personality_prompt' => payload['personality_prompt'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
@@ -525,6 +554,12 @@ module Twilio
                     # @return [String] The owner/company of the assistant.
                     def owner
                         @properties['owner']
+                    end
+                    
+                    ##
+                    # @return [String] The url of the assistant resource.
+                    def url
+                        @properties['url']
                     end
                     
                     ##
@@ -599,10 +634,17 @@ module Twilio
                     end
 
                     ##
-                    # Access the tools
-                    # @return [tools] tools
-                    def tools
-                        context.tools
+                    # Access the assistants_tools
+                    # @return [assistants_tools] assistants_tools
+                    def assistants_tools
+                        context.assistants_tools
+                    end
+
+                    ##
+                    # Access the assistants_knowledge
+                    # @return [assistants_knowledge] assistants_knowledge
+                    def assistants_knowledge
+                        context.assistants_knowledge
                     end
 
                     ##

@@ -346,6 +346,21 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the ToolInstance
+                    # @return [ToolInstance] Fetched ToolInstance
+                    def fetch
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        payload = @version.fetch('GET', @uri, headers: headers)
+                        ToolInstance.new(
+                            @version,
+                            payload,
+                            id: @solution[:id],
+                        )
+                    end
+
+                    ##
                     # Update the ToolInstance
                     # @param [AssistantsV1ServiceUpdateToolRequest] assistants_v1_service_update_tool_request 
                     # @return [ToolInstance] Updated ToolInstance
@@ -429,8 +444,10 @@ module Twilio
                             'name' => payload['name'],
                             'requires_auth' => payload['requires_auth'],
                             'type' => payload['type'],
+                            'url' => payload['url'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
+                            'policies' => payload['policies'],
                         }
 
                         # Context
@@ -498,6 +515,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] The url of the tool resource.
+                    def url
+                        @properties['url']
+                    end
+                    
+                    ##
                     # @return [Time] The date and time in GMT when the Tool was created specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
                     def date_created
                         @properties['date_created']
@@ -510,11 +533,25 @@ module Twilio
                     end
                     
                     ##
+                    # @return [Array<AssistantsV1ServicePolicy>] The Policies associated with the tool.
+                    def policies
+                        @properties['policies']
+                    end
+                    
+                    ##
                     # Delete the ToolInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
 
                         context.delete
+                    end
+
+                    ##
+                    # Fetch the ToolInstance
+                    # @return [ToolInstance] Fetched ToolInstance
+                    def fetch
+
+                        context.fetch
                     end
 
                     ##

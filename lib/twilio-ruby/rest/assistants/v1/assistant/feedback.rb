@@ -17,7 +17,7 @@ module Twilio
     module REST
         class Assistants < AssistantsBase
             class V1 < Version
-                class Assistant < InstanceContext
+                class AssistantContext < InstanceContext
 
                      class FeedbackList < ListResource
                 

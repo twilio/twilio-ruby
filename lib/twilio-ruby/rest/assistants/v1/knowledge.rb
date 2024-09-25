@@ -184,8 +184,7 @@ module Twilio
                         # Path Solution
                         @solution = {  }
                         @uri = "/Knowledge"
-                        # Components
-                        @search = nil
+                        
                     end
                     ##
                     # Create the KnowledgeInstance
@@ -295,13 +294,6 @@ module Twilio
                     end
                     
 
-                ##
-                # Access the search
-                # @return [SearchList]
-                # @return [SearchContext]
-                def search
-                    @search ||= SearchList.new(@version )
-                end
 
                     # Provide a user friendly representation
                     def to_s
@@ -325,7 +317,7 @@ module Twilio
 
                         # Dependents
                         @chunks = nil
-                        @status = nil
+                        @knowledge_status = nil
                     end
                     ##
                     # Delete the KnowledgeInstance
@@ -381,15 +373,14 @@ module Twilio
                       @chunks
                     end
                     ##
-                    # Access the status
-                    # @return [StatusList]
-                    # @return [StatusContext]
-                    def status
-                      unless @status
-                        @status = StatusList.new(
-                                @version, )
-                      end
-                      @status
+                    # Access the knowledge_status
+                    # @return [KnowledgeStatusList]
+                    # @return [KnowledgeStatusContext]
+                    def knowledge_status
+                        KnowledgeStatusContext.new(
+                                @version,
+                                @solution[:id]
+                                )
                     end
 
                     ##
@@ -457,6 +448,7 @@ module Twilio
                             'name' => payload['name'],
                             'status' => payload['status'],
                             'type' => payload['type'],
+                            'url' => payload['url'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                         }
@@ -520,6 +512,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] The url of the knowledge resource.
+                    def url
+                        @properties['url']
+                    end
+                    
+                    ##
                     # @return [Time] The date and time in GMT when the Knowledge was created specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
                     def date_created
                         @properties['date_created']
@@ -566,10 +564,10 @@ module Twilio
                     end
 
                     ##
-                    # Access the status
-                    # @return [status] status
-                    def status
-                        context.status
+                    # Access the knowledge_status
+                    # @return [knowledge_status] knowledge_status
+                    def knowledge_status
+                        context.knowledge_status
                     end
 
                     ##
