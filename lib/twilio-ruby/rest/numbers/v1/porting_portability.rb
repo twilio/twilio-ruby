@@ -58,13 +58,16 @@ module Twilio
                     ##
                     # Fetch the PortingPortabilityInstance
                     # @param [String] target_account_sid Account Sid to which the number will be ported. This can be used to determine if a sub account already has the number in its inventory or a different sub account. If this is not provided, the authenticated account will be assumed to be the target account.
+                    # @param [String] address_sid Address Sid of customer to which the number will be ported.
                     # @return [PortingPortabilityInstance] Fetched PortingPortabilityInstance
                     def fetch(
-                        target_account_sid: :unset
+                        target_account_sid: :unset, 
+                        address_sid: :unset
                     )
 
                         params = Twilio::Values.of({
                             'TargetAccountSid' => target_account_sid,
+                            'AddressSid' => address_sid,
                         })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
@@ -219,13 +222,16 @@ module Twilio
                     ##
                     # Fetch the PortingPortabilityInstance
                     # @param [String] target_account_sid Account Sid to which the number will be ported. This can be used to determine if a sub account already has the number in its inventory or a different sub account. If this is not provided, the authenticated account will be assumed to be the target account.
+                    # @param [String] address_sid Address Sid of customer to which the number will be ported.
                     # @return [PortingPortabilityInstance] Fetched PortingPortabilityInstance
                     def fetch(
-                        target_account_sid: :unset
+                        target_account_sid: :unset, 
+                        address_sid: :unset
                     )
 
                         context.fetch(
                             target_account_sid: target_account_sid, 
+                            address_sid: address_sid, 
                         )
                     end
 

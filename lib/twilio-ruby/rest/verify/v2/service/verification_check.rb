@@ -39,13 +39,15 @@ module Twilio
                     # @param [String] verification_sid A SID that uniquely identifies the Verification Check. Either this parameter or the `to` phone number/[email](https://www.twilio.com/docs/verify/email) must be specified.
                     # @param [String] amount The amount of the associated PSD2 compliant transaction. Requires the PSD2 Service flag enabled.
                     # @param [String] payee The payee of the associated PSD2 compliant transaction. Requires the PSD2 Service flag enabled.
+                    # @param [String] sna_client_token A sna client token received in sna url invocation response needs to be passed in Verification Check request and should match to get successful response.
                     # @return [VerificationCheckInstance] Created VerificationCheckInstance
                     def create(
                         code: :unset, 
                         to: :unset, 
                         verification_sid: :unset, 
                         amount: :unset, 
-                        payee: :unset
+                        payee: :unset, 
+                        sna_client_token: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -54,6 +56,7 @@ module Twilio
                             'VerificationSid' => verification_sid,
                             'Amount' => amount,
                             'Payee' => payee,
+                            'SnaClientToken' => sna_client_token,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })

@@ -1,6 +1,19 @@
 twilio-ruby changelog
 =====================
 
+[2024-10-03] Version 7.3.3
+--------------------------
+**Messaging**
+- Add A2P external campaign CnpMigration flag
+
+**Numbers**
+- Add address sid to portability API
+
+**Verify**
+- Add `SnaClientToken` optional parameter on Verification check.
+- Add `EnableSnaClientToken` optional parameter for Verification creation.
+
+
 [2024-09-25] Version 7.3.2
 --------------------------
 **Accounts**

@@ -21,15 +21,10 @@ module Twilio
         @base_url =  "https://preview.twilio.com"
         @host = "preview.twilio.com"
         @port = 443
-        @deployed_devices = nil
         @hosted_numbers = nil
         @sync = nil
         @marketplace = nil
         @wireless = nil
-      end
-
-      def deployed_devices
-        @deployed_devices ||= Preview::DeployedDevices.new self
       end
 
       def hosted_numbers
