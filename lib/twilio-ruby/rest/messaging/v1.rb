@@ -29,6 +29,7 @@ module Twilio
                     @external_campaign = nil
                     @linkshortening_messaging_service = nil
                     @linkshortening_messaging_service_domain_association = nil
+                    @request_managed_cert = nil
                     @services = nil
                     @tollfree_verifications = nil
                     @usecases = nil
@@ -148,6 +149,20 @@ module Twilio
                         @linkshortening_messaging_service_domain_association ||= LinkshorteningMessagingServiceDomainAssociationList.new self
                     else
                         LinkshorteningMessagingServiceDomainAssociationContext.new(self, messaging_service_sid)
+                    end
+                end
+                ##
+                # @param [String] domain_sid Unique string used to identify the domain that this certificate should be associated with.
+                # @return [Twilio::REST::Messaging::V1::RequestManagedCertContext] if domainSid was passed.
+                # @return [Twilio::REST::Messaging::V1::RequestManagedCertList]
+                def request_managed_cert(domain_sid=:unset)
+                    if domain_sid.nil?
+                        raise ArgumentError, 'domain_sid cannot be nil'
+                    end
+                    if domain_sid == :unset
+                        @request_managed_cert ||= RequestManagedCertList.new self
+                    else
+                        RequestManagedCertContext.new(self, domain_sid)
                     end
                 end
                 ##

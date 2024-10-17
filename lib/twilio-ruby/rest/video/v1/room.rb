@@ -35,14 +35,14 @@ module Twilio
                     # @param [Boolean] enable_turn Deprecated, now always considered to be true.
                     # @param [RoomType] type 
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used as a `room_sid` in place of the resource's `sid` in the URL to address the resource, assuming it does not contain any [reserved characters](https://tools.ietf.org/html/rfc3986#section-2.2) that would need to be URL encoded. This value is unique for `in-progress` rooms. SDK clients can use this name to connect to the room. REST API clients can use this name in place of the Room SID to interact with the room as long as the room is `in-progress`.
-                    # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application on every room event. See [Status Callbacks](https://www.twilio.com/docs/video/api/status-callbacks) for more info.
-                    # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be `POST` or `GET`.
-                    # @param [String] max_participants The maximum number of concurrent Participants allowed in the room. Peer-to-peer rooms can have up to 10 Participants. Small Group rooms can have up to 4 Participants. Group rooms can have up to 50 Participants.
-                    # @param [Boolean] record_participants_on_connect Whether to start recording when Participants connect. ***This feature is not available in `peer-to-peer` rooms.***
-                    # @param [Array[VideoCodec]] video_codecs An array of the video codecs that are supported when publishing a track in the room.  Can be: `VP8` and `H264`.  ***This feature is not available in `peer-to-peer` rooms***
-                    # @param [String] media_region The region for the media server in Group Rooms.  Can be: one of the [available Media Regions](https://www.twilio.com/docs/video/ip-addresses#group-rooms-media-servers). ***This feature is not available in `peer-to-peer` rooms.***
+                    # @param [String] status_callback The URL Twilio should call using the `status_callback_method` to send status information to your application on every room event. See [Status Callbacks](https://www.twilio.com/docs/video/api/status-callbacks) for more info.
+                    # @param [String] status_callback_method The HTTP method Twilio should use to call `status_callback`. Can be `POST` or `GET`.
+                    # @param [String] max_participants The maximum number of concurrent Participants allowed in the room. The maximum allowed value is 50.
+                    # @param [Boolean] record_participants_on_connect Whether to start recording when Participants connect.
+                    # @param [Array[VideoCodec]] video_codecs An array of the video codecs that are supported when publishing a track in the room.  Can be: `VP8` and `H264`.
+                    # @param [String] media_region The region for the Room's media server.  Can be one of the [available Media Regions](https://www.twilio.com/docs/video/ip-addresses#group-rooms-media-servers).
                     # @param [Object] recording_rules A collection of Recording Rules that describe how to include or exclude matching tracks for recording
-                    # @param [Boolean] audio_only When set to true, indicates that the participants in the room will only publish audio. No video tracks will be allowed. Group rooms only.
+                    # @param [Boolean] audio_only When set to true, indicates that the participants in the room will only publish audio. No video tracks will be allowed.
                     # @param [String] max_participant_duration The maximum number of seconds a Participant can be connected to the room. The maximum possible value is 86400 seconds (24 hours). The default is 14400 seconds (4 hours).
                     # @param [String] empty_room_timeout Configures how long (in minutes) a room will remain active after last participant leaves. Valid values range from 1 to 60 minutes (no fractions).
                     # @param [String] unused_room_timeout Configures how long (in minutes) a room will remain active if no one joins. Valid values range from 1 to 60 minutes (no fractions).
@@ -417,7 +417,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The unique string that we created to identify the Room resource.
+                    # @return [String] The unique string that Twilio created to identify the Room resource.
                     def sid
                         @properties['sid']
                     end
@@ -459,13 +459,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The URL we call using the `status_callback_method` to send status information to your application on every room event. See [Status Callbacks](https://www.twilio.com/docs/video/api/status-callbacks) for more info.
+                    # @return [String] The URL Twilio calls using the `status_callback_method` to send status information to your application on every room event. See [Status Callbacks](https://www.twilio.com/docs/video/api/status-callbacks) for more info.
                     def status_callback
                         @properties['status_callback']
                     end
                     
                     ##
-                    # @return [String] The HTTP method we use to call `status_callback`. Can be `POST` or `GET` and defaults to `POST`.
+                    # @return [String] The HTTP method Twilio uses to call `status_callback`. Can be `POST` or `GET` and defaults to `POST`.
                     def status_callback_method
                         @properties['status_callback_method']
                     end
@@ -507,25 +507,25 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Boolean] Whether to start recording when Participants connect. ***This feature is not available in `peer-to-peer` rooms.***
+                    # @return [Boolean] Whether to start recording when Participants connect.
                     def record_participants_on_connect
                         @properties['record_participants_on_connect']
                     end
                     
                     ##
-                    # @return [Array<VideoCodec>] An array of the video codecs that are supported when publishing a track in the room.  Can be: `VP8` and `H264`.  ***This feature is not available in `peer-to-peer` rooms***
+                    # @return [Array<VideoCodec>] An array of the video codecs that are supported when publishing a track in the room.  Can be: `VP8` and `H264`.
                     def video_codecs
                         @properties['video_codecs']
                     end
                     
                     ##
-                    # @return [String] The region for the media server in Group Rooms.  Can be: one of the [available Media Regions](https://www.twilio.com/docs/video/ip-addresses#media-servers). ***This feature is not available in `peer-to-peer` rooms.***
+                    # @return [String] The region for the Room's media server.  Can be one of the [available Media Regions](https://www.twilio.com/docs/video/ip-addresses#media-servers).
                     def media_region
                         @properties['media_region']
                     end
                     
                     ##
-                    # @return [Boolean] When set to true, indicates that the participants in the room will only publish audio. No video tracks will be allowed. Group rooms only.
+                    # @return [Boolean] When set to true, indicates that the participants in the room will only publish audio. No video tracks will be allowed.
                     def audio_only
                         @properties['audio_only']
                     end
