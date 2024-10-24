@@ -24,6 +24,7 @@ module Twilio
                     @address_configurations = nil
                     @configuration = nil
                     @conversations = nil
+                    @conversation_with_participants = nil
                     @credentials = nil
                     @participant_conversations = nil
                     @roles = nil
@@ -63,6 +64,11 @@ module Twilio
                     else
                         ConversationContext.new(self, sid)
                     end
+                end
+                ##
+                # @return [Twilio::REST::Conversations::V1::ConversationWithParticipantsList]
+                def conversation_with_participants
+                    @conversation_with_participants ||= ConversationWithParticipantsList.new self
                 end
                 ##
                 # @param [String] sid A 34 character string that uniquely identifies this resource.

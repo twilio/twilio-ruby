@@ -56,8 +56,8 @@ module Twilio
                         @uri = "/Services/#{@solution[:chat_service_sid]}/Configuration"
 
                         # Dependents
-                        @notifications = nil
                         @webhooks = nil
+                        @notifications = nil
                     end
                     ##
                     # Fetch the ConfigurationInstance
@@ -106,21 +106,21 @@ module Twilio
                     end
 
                     ##
-                    # Access the notifications
-                    # @return [NotificationList]
-                    # @return [NotificationContext]
-                    def notifications
-                        NotificationContext.new(
-                                @version,
-                                @solution[:chat_service_sid]
-                                )
-                    end
-                    ##
                     # Access the webhooks
                     # @return [WebhookList]
                     # @return [WebhookContext]
                     def webhooks
                         WebhookContext.new(
+                                @version,
+                                @solution[:chat_service_sid]
+                                )
+                    end
+                    ##
+                    # Access the notifications
+                    # @return [NotificationList]
+                    # @return [NotificationContext]
+                    def notifications
+                        NotificationContext.new(
                                 @version,
                                 @solution[:chat_service_sid]
                                 )
@@ -282,17 +282,17 @@ module Twilio
                     end
 
                     ##
-                    # Access the notifications
-                    # @return [notifications] notifications
-                    def notifications
-                        context.notifications
-                    end
-
-                    ##
                     # Access the webhooks
                     # @return [webhooks] webhooks
                     def webhooks
                         context.webhooks
+                    end
+
+                    ##
+                    # Access the notifications
+                    # @return [notifications] notifications
+                    def notifications
+                        context.notifications
                     end
 
                     ##

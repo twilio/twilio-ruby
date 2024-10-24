@@ -214,8 +214,8 @@ module Twilio
 
                         # Dependents
                         @participants = nil
-                        @messages = nil
                         @webhooks = nil
+                        @messages = nil
                     end
                     ##
                     # Delete the ConversationInstance
@@ -321,25 +321,6 @@ module Twilio
                      @participants
                     end
                     ##
-                    # Access the messages
-                    # @return [MessageList]
-                    # @return [MessageContext] if sid was passed.
-                    def messages(sid=:unset)
-
-                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-                        if sid != :unset
-                            return MessageContext.new(@version, @solution[:chat_service_sid], @solution[:sid],sid )
-                        end
-
-                        unless @messages
-                            @messages = MessageList.new(
-                                @version, chat_service_sid: @solution[:chat_service_sid], conversation_sid: @solution[:sid], )
-                        end
-
-                     @messages
-                    end
-                    ##
                     # Access the webhooks
                     # @return [WebhookList]
                     # @return [WebhookContext] if sid was passed.
@@ -357,6 +338,25 @@ module Twilio
                         end
 
                      @webhooks
+                    end
+                    ##
+                    # Access the messages
+                    # @return [MessageList]
+                    # @return [MessageContext] if sid was passed.
+                    def messages(sid=:unset)
+
+                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+                        if sid != :unset
+                            return MessageContext.new(@version, @solution[:chat_service_sid], @solution[:sid],sid )
+                        end
+
+                        unless @messages
+                            @messages = MessageList.new(
+                                @version, chat_service_sid: @solution[:chat_service_sid], conversation_sid: @solution[:sid], )
+                        end
+
+                     @messages
                     end
 
                     ##
@@ -608,17 +608,17 @@ module Twilio
                     end
 
                     ##
-                    # Access the messages
-                    # @return [messages] messages
-                    def messages
-                        context.messages
-                    end
-
-                    ##
                     # Access the webhooks
                     # @return [webhooks] webhooks
                     def webhooks
                         context.webhooks
+                    end
+
+                    ##
+                    # Access the messages
+                    # @return [messages] messages
+                    def messages
+                        context.messages
                     end
 
                     ##

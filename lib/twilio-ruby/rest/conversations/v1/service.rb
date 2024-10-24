@@ -160,9 +160,10 @@ module Twilio
 
                         # Dependents
                         @participant_conversations = nil
+                        @conversation_with_participants = nil
+                        @configuration = nil
                         @users = nil
                         @roles = nil
-                        @configuration = nil
                         @bindings = nil
                         @conversations = nil
                     end
@@ -203,6 +204,27 @@ module Twilio
                       @participant_conversations
                     end
                     ##
+                    # Access the conversation_with_participants
+                    # @return [ConversationWithParticipantsList]
+                    # @return [ConversationWithParticipantsContext]
+                    def conversation_with_participants
+                      unless @conversation_with_participants
+                        @conversation_with_participants = ConversationWithParticipantsList.new(
+                                @version, chat_service_sid: @solution[:sid], )
+                      end
+                      @conversation_with_participants
+                    end
+                    ##
+                    # Access the configuration
+                    # @return [ConfigurationList]
+                    # @return [ConfigurationContext]
+                    def configuration
+                        ConfigurationContext.new(
+                                @version,
+                                @solution[:sid]
+                                )
+                    end
+                    ##
                     # Access the users
                     # @return [UserList]
                     # @return [UserContext] if sid was passed.
@@ -239,16 +261,6 @@ module Twilio
                         end
 
                      @roles
-                    end
-                    ##
-                    # Access the configuration
-                    # @return [ConfigurationList]
-                    # @return [ConfigurationContext]
-                    def configuration
-                        ConfigurationContext.new(
-                                @version,
-                                @solution[:sid]
-                                )
                     end
                     ##
                     # Access the bindings
@@ -438,6 +450,20 @@ module Twilio
                     end
 
                     ##
+                    # Access the conversation_with_participants
+                    # @return [conversation_with_participants] conversation_with_participants
+                    def conversation_with_participants
+                        context.conversation_with_participants
+                    end
+
+                    ##
+                    # Access the configuration
+                    # @return [configuration] configuration
+                    def configuration
+                        context.configuration
+                    end
+
+                    ##
                     # Access the users
                     # @return [users] users
                     def users
@@ -449,13 +475,6 @@ module Twilio
                     # @return [roles] roles
                     def roles
                         context.roles
-                    end
-
-                    ##
-                    # Access the configuration
-                    # @return [configuration] configuration
-                    def configuration
-                        context.configuration
                     end
 
                     ##

@@ -70,9 +70,9 @@ module Twilio
                     end
                 end
                 ##
-                # @return [Twilio::REST::Marketplace::V1::referralConversionContext]
+                # @return [Twilio::REST::Marketplace::V1::ReferralConversionList]
                 def referral_conversion
-                    @referral_conversion ||= ReferralConversionContext.new self
+                    @referral_conversion ||= ReferralConversionList.new self
                 end
                 ##
                 # Provide a user friendly representation
