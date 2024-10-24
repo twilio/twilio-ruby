@@ -54,15 +54,6 @@ module Twilio
 
       ##
       # @param [String] sid The sid
-      # @return [Twilio::REST::Preview::Sync::ServiceInstance] if sid was passed.
-      # @return [Twilio::REST::Preview::Sync::ServiceList]
-      def services(sid=:unset)
-        warn "services is deprecated. Use sync.services instead."
-        self.sync.services(sid)
-      end
-
-      ##
-      # @param [String] sid The sid
       # @return [Twilio::REST::Preview::Wireless::CommandInstance] if sid was passed.
       # @return [Twilio::REST::Preview::Wireless::CommandList]
       def commands(sid=:unset)

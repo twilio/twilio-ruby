@@ -22,17 +22,12 @@ module Twilio
         @host = "preview.twilio.com"
         @port = 443
         @hosted_numbers = nil
-        @sync = nil
         @marketplace = nil
         @wireless = nil
       end
 
       def hosted_numbers
         @hosted_numbers ||= Preview::HostedNumbers.new self
-      end
-
-      def sync
-        @sync ||= Preview::Sync.new self
       end
 
       def marketplace
