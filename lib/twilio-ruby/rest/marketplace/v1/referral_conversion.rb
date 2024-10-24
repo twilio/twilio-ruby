@@ -40,31 +40,7 @@ module Twilio
                         super(version)
                         # Path Solution
                         @solution = {  }
-                        
-                        
-                    end
-                
-
-
-                    # Provide a user friendly representation
-                    def to_s
-                        '#<Twilio.Marketplace.V1.ReferralConversionList>'
-                    end
-                end
-
-
-                class ReferralConversionContext < InstanceContext
-                    ##
-                    # Initialize the ReferralConversionContext
-                    # @param [Version] version Version that contains the resource
-                    # @return [ReferralConversionContext] ReferralConversionContext
-                    def initialize(version)
-                        super(version)
-
-                        # Path Solution
-                        @solution = {  }
                         @uri = "/ReferralConversion"
-
                         
                     end
                     ##
@@ -83,19 +59,12 @@ module Twilio
                         )
                     end
 
+                
 
-                    ##
+
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Marketplace.V1.ReferralConversionContext #{context}>"
-                    end
-
-                    ##
-                    # Provide a detailed, user friendly representation
-                    def inspect
-                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Marketplace.V1.ReferralConversionContext #{context}>"
+                        '#<Twilio.Marketplace.V1.ReferralConversionList>'
                     end
                 end
 
@@ -144,22 +113,8 @@ module Twilio
                         @properties = { 
                             'converted_account_sid' => payload['converted_account_sid'],
                         }
-
-                        # Context
-                        @instance_context = nil
-                        @params = {  }
                     end
 
-                    ##
-                    # Generate an instance context for the instance, the context is capable of
-                    # performing various actions.  All instance actions are proxied to the context
-                    # @return [ReferralConversionContext] CallContext for this CallInstance
-                    def context
-                        unless @instance_context
-                            @instance_context = ReferralConversionContext.new(@version )
-                        end
-                        @instance_context
-                    end
                     
                     ##
                     # @return [String] 
@@ -168,28 +123,15 @@ module Twilio
                     end
                     
                     ##
-                    # Create the ReferralConversionInstance
-                    # @param [CreateReferralConversionRequest] create_referral_conversion_request 
-                    # @return [ReferralConversionInstance] Created ReferralConversionInstance
-                    def create(create_referral_conversion_request: nil
-                    )
-
-                        context.create(
-                        )
-                    end
-
-                    ##
                     # Provide a user friendly representation
                     def to_s
-                        values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Marketplace.V1.ReferralConversionInstance #{values}>"
+                        "<Twilio.Marketplace.V1.ReferralConversionInstance>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Marketplace.V1.ReferralConversionInstance #{values}>"
+                        "<Twilio.Marketplace.V1.ReferralConversionInstance>"
                     end
                 end
 
