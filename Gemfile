@@ -1,6 +1,5 @@
-source 'https://rubygems.org'
-gem 'simplecov', require: false, group: :test
-gemspec
+# frozen_string_literal: true
 
-gem "base64"
-gem "rexml"
+source "https://rubygems.org"
+
+# gem "rails"

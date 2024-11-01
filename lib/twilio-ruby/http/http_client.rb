@@ -38,11 +38,12 @@ module Twilio
           f.options.params_encoder = Faraday::FlatParamsEncoder
           f.request(middle_ware)
           f.headers = request.headers
-          if Faraday::VERSION.start_with?('2.')
-            f.request(:authorization, :basic, request.auth[0], request.auth[1])
-          else
-            f.request(:basic_auth, request.auth[0], request.auth[1])
-          end
+          f.headers['Authorization'] = 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFjTlFMbXpUWThMVGM1UTdxX3dzciJ9.eyJodHRwOi8vdHdpbGlvL3ZhbGlkcmVnaW9ucyI6InVzMSIsImh0dHA6Ly90d2lsaW8vYWN0Ijp7InN1YiI6Ik9SNjU3ZGRkZjM4NWMwNGI2MWYxOTJiMWQ3YTM3MDNjNTkifSwiaHR0cDovL3R3aWxpby9zdWIiOiJPUTM0ZGEwNWUxNTE2MTJkYzVkZjI0NTgzY2QyMjFkZmU0IiwiaHR0cDovL3R3aWxpby90eXAiOiJ2bmQudHdpbGlvLm9hdXRoLmF0K2p3dDsiLCJpc3MiOiJodHRwczovL2FwaS50d2lsaW8uYXV0aDBhcHAuY29tLyIsInN1YiI6IkVpMEZUTkptTEFMZnp5NkQ4OUtobVlzaWpHRkswRElEQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2FwaS50d2lsaW8uY29tL3YyL29yZ2FuaXphdGlvbnMiLCJpYXQiOjE3MzAzNzY5NDIsImV4cCI6MTczMDQ2MzM0MiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoiRWkwRlROSm1MQUxmenk2RDg5S2htWXNpakdGSzBESUQifQ.a5XfABzmxlL7EHorXSOL-uFSnOwBCgC40kR3PycjhXMi8X1jlz3CLHm5O3NzZ7dRRg9p8sL3s7mTDCDbaW9BfokHVEnXFSvVa61tl9WIHZpfpXcaKFNeT5ryMcTJE-_jivB0EyJfX1xnTiceGsDy6KcKXN0R5zVy-d707yoEvOgy1Gw8J9JaWNPirVf3Te8qs0sV0oW6fbbX_ZHTWzfjU1msY3CSowqQXEQXGfGhWxUyt9MzprY4smE_QCak0_OMxCzx2U5D9dJ7bvZSgM9iCbsd7MF0PuPg5EUeL-meG-k0HwLHxC9S7iQqXM1MjyB-qAqpKdmnvDIaE8DDJ5tiTA'
+          # if Faraday::VERSION.start_with?('2.')
+          # f.request(:authorization, :basic, "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkFjTlFMbXpUWThMVGM1UTdxX3dzciJ9.eyJodHRwOi8vdHdpbGlvL3ZhbGlkcmVnaW9ucyI6InVzMSIsImh0dHA6Ly90d2lsaW8vYWN0Ijp7InN1YiI6Ik9SNjU3ZGRkZjM4NWMwNGI2MWYxOTJiMWQ3YTM3MDNjNTkifSwiaHR0cDovL3R3aWxpby9zdWIiOiJPUTM0ZGEwNWUxNTE2MTJkYzVkZjI0NTgzY2QyMjFkZmU0IiwiaHR0cDovL3R3aWxpby90eXAiOiJ2bmQudHdpbGlvLm9hdXRoLmF0K2p3dDsiLCJpc3MiOiJodHRwczovL2FwaS50d2lsaW8uYXV0aDBhcHAuY29tLyIsInN1YiI6IkVpMEZUTkptTEFMZnp5NkQ4OUtobVlzaWpHRkswRElEQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2FwaS50d2lsaW8uY29tL3YyL29yZ2FuaXphdGlvbnMiLCJpYXQiOjE3MzAyNzQ3NDIsImV4cCI6MTczMDM2MTE0MiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoiRWkwRlROSm1MQUxmenk2RDg5S2htWXNpakdGSzBESUQifQ.GZBPTTWgvJExD949qOvQzQZxQRoqzcbyiL-2u9yc4QBo9UjU12hNoqWdqqCTYUwrffvEIkEdsqaZP87iYM95K0ayoW3MsdVO_MzLxSy-5_IaI3efdDEBO3fBb5dQhbflxnR5e2npSdSD3mkGUYVOdxKZKkQ4Waw1sLlBEfFGysZgh1_JJk_nFS8DVIaYF-pVtWLCyjstTO8EwyUdt1eNvU-119lWhIk8qiEDSzCM2AHbVot_7njTIHpByd8i_PeLjkhUSdEnX2IPkUbY6LzQHDD1fUm9hGWnWyjaaLLcEKYFkfeb-fHskQLoWO0Hyc4GbnwXpXokzL37HncEb2G3tw")
+          # else
+          #   f.request(:basic_auth, request.auth[0], request.auth[1])
+          # end
           f.proxy = "#{@proxy_prot}://#{@proxy_auth}#{@proxy_path}" if @proxy_prot && @proxy_path
           f.options.open_timeout = request.timeout || @timeout
           f.options.timeout = request.timeout || @timeout
