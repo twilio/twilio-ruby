@@ -24,10 +24,15 @@ module Twilio
         @host = "preview-iam.twilio.com"
         @port = 443
         @organizations = nil
+        @v1 = nil
       end
 
       def organizations( organization_sid = nil)
         @organizations ||= PreviewIam::Organizations.new(self, organization_sid)
+      end
+
+      def v1
+        @v1 ||= PreviewIam::V1.new(self)
       end
 
       ##
