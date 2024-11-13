@@ -10,7 +10,7 @@ module Twilio
 
       # rubocop:disable Metrics/ParameterLists
       def initialize(username = nil, password = nil, account_sid = nil, region = nil, http_client = nil, logger = nil,
-                     user_agent_extensions = nil, credential_provider = nil)
+                     user_agent_extensions = nil) # rubocop:disable Metrics/ParameterLists
         @username = username || Twilio.account_sid
         @password = password || Twilio.auth_token
         @region = region || Twilio.region
@@ -21,7 +21,11 @@ module Twilio
         @http_client = http_client || Twilio.http_client || Twilio::HTTP::Client.new
         @logger = logger || Twilio.logger
         @user_agent_extensions = user_agent_extensions || []
+      end
+
+      def credential_provider(credential_provider = nil)
         @credential_provider = credential_provider
+        self
       end
       # rubocop:enable Metrics/ParameterLists
 
