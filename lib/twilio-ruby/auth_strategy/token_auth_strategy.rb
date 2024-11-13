@@ -1,7 +1,9 @@
 require_relative 'auth_strategy'
 require_relative './../credential/auth_type'
 module Twilio
+
   module REST
+
     class TokenAuthStrategy < AuthStrategy
       attr_accessor :token_manager, :token, :lock
 
