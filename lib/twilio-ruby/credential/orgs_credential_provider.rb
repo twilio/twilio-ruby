@@ -9,11 +9,10 @@ module Twilio
     class OrgsCredentialProvider < CredentialProvider
       attr_accessor :grant_type, :client_id, :client_secret, :orgs_token, :auth_strategy
 
-      def initialize(client_id, client_secret, orgs_token=nil)
+      def initialize(client_id, client_secret, orgs_token = nil)
         super(AuthType::ORGS_TOKEN)
-        if client_id.nil? || client_secret.nil?
-          raise ArgumentError, 'client_id and client_secret are required'
-        end
+        raise ArgumentError, 'client_id and client_secret are required' if client_id.nil? || client_secret.nil?
+
         @grant_type = 'client_credentials'
         @client_id = client_id
         @client_secret = client_secret
@@ -28,7 +27,7 @@ module Twilio
         if @auth_strategy.nil?
           @auth_strategy = TokenAuthStrategy.new(@orgs_token)
         end
-        return @auth_strategy
+        @auth_strategy
       end
     end
   end

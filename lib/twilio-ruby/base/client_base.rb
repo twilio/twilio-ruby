@@ -52,7 +52,7 @@ module Twilio
           @logger.debug("Request Params:#{params}")
         end
 
-        auth = @credential_provider.to_auth_strategy.auth_string if not @credential_provider.nil?
+        auth = @credential_provider.to_auth_strategy.auth_string if @credential_provider
 
         response = @http_client.request(
           host,

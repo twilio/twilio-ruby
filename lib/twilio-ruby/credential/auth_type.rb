@@ -3,7 +3,6 @@
 module Twilio
   module REST
     class AuthType
-
       BASIC = 'basic'
       ORGS_TOKEN = 'orgs_token'
       API_KEY = 'api_key'
