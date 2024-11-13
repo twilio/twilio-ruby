@@ -28,8 +28,6 @@ module Twilio
         decoded_token = JWT.decode(@token, nil, false)
         exp = decoded_token[0]['exp']
         Time.at(exp) < Time.now
-        rescure JWT::DecodeError
-        true
       end
 
       def requires_authentication
