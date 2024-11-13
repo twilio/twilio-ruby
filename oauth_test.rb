@@ -1,4 +1,3 @@
-# # frozen_string_literal: true
 require './lib/twilio-ruby'
 require './lib/twilio-ruby/base/client_base'
 require './lib/twilio-ruby/credential/orgs_credential_provider'
