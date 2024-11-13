@@ -6,6 +6,6 @@ credentialProvider = Twilio::REST::OrgsCredentialProvider.new(ENV['CLIENT_ID'], 
 client = Twilio::REST::Client.new().credential_provider(credentialProvider)
 response = client.preview_iam.organizations(ENV['ORG_SID'])
                  .accounts('').fetch
-# client_2 = Twilio::REST::Client.new(ENV['SID'], ENV['TOKEN'])
+client_2 = Twilio::REST::Client.new(ENV['SID'], ENV['TOKEN'])
 # response = client_2.messages.create(from: ENV['FROM'], to: ENV['TO'], body: 'Hello World')
 puts response
