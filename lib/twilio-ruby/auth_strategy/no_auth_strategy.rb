@@ -1,6 +1,7 @@
 module Twilio
 
   module REST
+
     class NoAuthStrategy < AuthStrategy
       def initialize
         super(AuthType::NONE)
