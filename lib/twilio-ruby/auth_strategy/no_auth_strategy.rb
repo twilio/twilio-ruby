@@ -1,5 +1,4 @@
 module Twilio
-
   module REST
 
     class NoAuthStrategy < AuthStrategy

@@ -1,9 +1,7 @@
 require_relative 'auth_strategy'
 require_relative './../credential/auth_type'
 module Twilio
-
   module REST
-
     class TokenAuthStrategy < AuthStrategy
       attr_accessor :token_manager, :token, :lock
 
@@ -21,14 +19,12 @@ module Twilio
 
       def fetch_token
         @lock.synchronize do
-          if @token.nil? || is_token_expired || @token == ''
-            @token = @token_manager.fetch_access_token
-          end
+          @token = @token_manager.fetch_access_token if @token.nil? || token_expired? || @token == ''
           return @token
         end
       end
 
-      def is_token_expired
+      def token_expired?
         decoded_token = JWT.decode(@token, nil, false)
         exp = decoded_token[0]['exp']
         Time.at(exp) < Time.now

@@ -1,5 +1,4 @@
 module Twilio
-
   module REST
     class AuthStrategy
       attr_accessor :auth_type
