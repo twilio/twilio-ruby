@@ -21,12 +21,8 @@ module Twilio
       end
 
       def to_auth_strategy
-        if @orgs_token.nil?
-          @orgs_token = TokenManager.new(@grant_type, @client_id, @client_secret)
-        end
-        if @auth_strategy.nil?
-          @auth_strategy = TokenAuthStrategy.new(@orgs_token)
-        end
+        @orgs_token = TokenManager.new(@grant_type, @client_id, @client_secret) if @orgs_token.nil?
+        @auth_strategy = TokenAuthStrategy.new(@orgs_token) if @auth_strategy.nil?
         @auth_strategy
       end
     end
