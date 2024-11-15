@@ -45,7 +45,7 @@ module Twilio
                     # @param [String] timers_closed ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
                     # @param [String] bindings_email_address The default email address that will be used when sending outbound emails in this conversation.
                     # @param [String] bindings_email_name The default name that will be used when sending outbound emails in this conversation.
-                    # @param [Array[String]] participant The participant to be added to the conversation in JSON format. The parameters are as in [Participant Resource](https://www.twilio.com/docs/conversations/api/conversation-participant-resource). The maximum number of participants that can be added in a single request is 10.
+                    # @param [Array[String]] participant The participant to be added to the conversation in JSON format. The JSON object attributes are as parameters in [Participant Resource](https://www.twilio.com/docs/conversations/api/conversation-participant-resource). The maximum number of participants that can be added in a single request is 10.
                     # @param [ServiceConversationWithParticipantsEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
                     # @return [ConversationWithParticipantsInstance] Created ConversationWithParticipantsInstance
                     def create(
