@@ -1,6 +1,20 @@
 twilio-ruby changelog
 =====================
 
+[2024-11-15] Version 7.3.6
+--------------------------
+**Library - Chore**
+- [PR #732](https://github.com/twilio/twilio-ruby/pull/732): removed preview sync api. Thanks to [@sbansla](https://github.com/sbansla)!
+
+**Api**
+- Added `ivr-virtual-agent-custom-voices` and `ivr-virtual-agent-genai` to `usage_record` API.
+- Add open-api file tag to realtime_transcriptions
+
+**Taskrouter**
+- Add `api-tag` property to workers reservation
+- Add `api-tag` property to task reservation
+
+
 [2024-10-24] Version 7.3.5
 --------------------------
 **Conversations**
