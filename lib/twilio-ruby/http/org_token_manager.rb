@@ -1,6 +1,6 @@
 module Twilio
   module REST
-    class TokenManager
+    class OrgTokenManager
       attr_accessor :grant_type, :client_id, :client_secret, :code, :redirect_uri, :audience, :refresh_token, :scope
 
       def initialize(grant_type, client_id, client_secret, code = nil, redirect_uri = nil, audience = nil,

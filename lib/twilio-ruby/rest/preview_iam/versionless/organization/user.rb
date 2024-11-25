@@ -16,8 +16,10 @@
 module Twilio
     module REST
         class PreviewIam < PreviewIamBase
-            class Organizations < Version
-                class UserList < ListResource
+            class Versionless < Version
+                class OrganizationContext < InstanceContext
+
+                     class UserList < ListResource
 
                     class ScimUser
                             # @param [id]: [String] Unique Twilio user sid
@@ -92,8 +94,7 @@ module Twilio
                     # Create the UserInstance
                     # @param [ScimUser] scim_user
                     # @return [UserInstance] Created UserInstance
-                    def create(scim_user: nil
-                    )
+                    def create(scim_user: nil)
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
@@ -118,7 +119,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(filter: :unset, limit: nil, page_size: nil)
+                    def list(filter: :unset , limit: nil, page_size: nil)
                         self.stream(
                             filter: filter,
                             limit: limit,
@@ -138,7 +139,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(filter: :unset, limit: nil, page_size: nil)
+                    def stream(filter: :unset , limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
@@ -170,7 +171,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of UserInstance
-                    def page(filter: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(filter: :unset , page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'filter' => filter,
                             'PageToken' => page_token,
@@ -200,7 +201,7 @@ module Twilio
 
                     # Provide a user friendly representation
                     def to_s
-                        '#<Twilio.PreviewIam.Organizations.UserList>'
+                        '#<Twilio.PreviewIam.Versionless.UserList>'
                     end
                 end
 
@@ -272,14 +273,14 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.PreviewIam.Organizations.UserContext #{context}>"
+                        "#<Twilio.PreviewIam.Versionless.UserContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
                         context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.PreviewIam.Organizations.UserContext #{context}>"
+                        "#<Twilio.PreviewIam.Versionless.UserContext #{context}>"
                     end
                 end
 
@@ -308,7 +309,7 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        '<Twilio.PreviewIam.Organizations.UserPage>'
+                        '<Twilio.PreviewIam.Versionless.UserPage>'
                     end
                 end
                 class UserInstance < InstanceResource
@@ -490,18 +491,21 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.PreviewIam.Organizations.UserInstance #{values}>"
+                        "<Twilio.PreviewIam.Versionless.UserInstance #{values}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
                         values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.PreviewIam.Organizations.UserInstance #{values}>"
+                        "<Twilio.PreviewIam.Versionless.UserInstance #{values}>"
                     end
                 end
 
+             end
             end
         end
     end
 end
+
+

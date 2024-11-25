@@ -16,21 +16,23 @@
 module Twilio
     module REST
         class PreviewIam < PreviewIamBase
-            class Organizations < Version
-                class AccountList < ListResource
+            class Versionless < Version
+                class OrganizationContext < InstanceContext
 
+                     class AccountList < ListResource
+                
                     ##
                     # Initialize the AccountList
                     # @param [Version] version Version that contains the resource
                     # @return [AccountList] AccountList
-                    def initialize(version, organization_sid)
+                    def initialize(version, organization_sid: nil)
                         super(version)
                         # Path Solution
                         @solution = { organization_sid: organization_sid }
                         @uri = "/#{@solution[:organization_sid]}/Accounts"
-
+                        
                     end
-
+                
                     ##
                     # Lists AccountInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
@@ -114,12 +116,12 @@ module Twilio
                         )
                     AccountPage.new(@version, response, @solution)
                     end
-
+                    
 
 
                     # Provide a user friendly representation
                     def to_s
-                        '#<Twilio.PreviewIam.Organizations.AccountList>'
+                        '#<Twilio.PreviewIam.Versionless.AccountList>'
                     end
                 end
 
@@ -128,8 +130,8 @@ module Twilio
                     ##
                     # Initialize the AccountContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] organization_sid
-                    # @param [String] account_sid
+                    # @param [String] organization_sid 
+                    # @param [String] account_sid 
                     # @return [AccountContext] AccountContext
                     def initialize(version, organization_sid, account_sid)
                         super(version)
@@ -138,7 +140,7 @@ module Twilio
                         @solution = { organization_sid: organization_sid, account_sid: account_sid,  }
                         @uri = "/#{@solution[:organization_sid]}/Accounts/#{@solution[:account_sid]}"
 
-
+                        
                     end
                     ##
                     # Fetch the AccountInstance
@@ -146,7 +148,7 @@ module Twilio
                     def fetch
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-
+                        
                         payload = @version.fetch('GET', @uri, headers: headers)
                         AccountInstance.new(
                             @version,
@@ -161,14 +163,14 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.PreviewIam.Organizations.AccountContext #{context}>"
+                        "#<Twilio.PreviewIam.Versionless.AccountContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
                         context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.PreviewIam.Organizations.AccountContext #{context}>"
+                        "#<Twilio.PreviewIam.Versionless.AccountContext #{context}>"
                     end
                 end
 
@@ -197,7 +199,7 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        '<Twilio.PreviewIam.Organizations.AccountPage>'
+                        '<Twilio.PreviewIam.Versionless.AccountPage>'
                     end
                 end
                 class AccountInstance < InstanceResource
@@ -212,9 +214,9 @@ module Twilio
                     # @return [AccountInstance] AccountInstance
                     def initialize(version, payload , organization_sid: nil, account_sid: nil)
                         super(version)
-
+                        
                         # Marshaled Properties
-                        @properties = {
+                        @properties = { 
                             'account_sid' => payload['account_sid'],
                             'friendly_name' => payload['friendly_name'],
                             'status' => payload['status'],
@@ -237,37 +239,37 @@ module Twilio
                         end
                         @instance_context
                     end
-
+                    
                     ##
                     # @return [String] Twilio account sid
                     def account_sid
                         @properties['account_sid']
                     end
-
+                    
                     ##
                     # @return [String] Account friendly name
                     def friendly_name
                         @properties['friendly_name']
                     end
-
+                    
                     ##
                     # @return [String] Account status
                     def status
                         @properties['status']
                     end
-
+                    
                     ##
                     # @return [String] Twilio account sid
                     def owner_sid
                         @properties['owner_sid']
                     end
-
+                    
                     ##
                     # @return [Time] The date and time when the account was created in the system
                     def date_created
                         @properties['date_created']
                     end
-
+                    
                     ##
                     # Fetch the AccountInstance
                     # @return [AccountInstance] Fetched AccountInstance
@@ -280,18 +282,21 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.PreviewIam.Organizations.AccountInstance #{values}>"
+                        "<Twilio.PreviewIam.Versionless.AccountInstance #{values}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
                         values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.PreviewIam.Organizations.AccountInstance #{values}>"
+                        "<Twilio.PreviewIam.Versionless.AccountInstance #{values}>"
                     end
                 end
 
+             end
             end
         end
     end
 end
+
+

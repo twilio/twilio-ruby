@@ -16,9 +16,11 @@
 module Twilio
     module REST
         class PreviewIam < PreviewIamBase
-            class Organizations < Version
-                class RoleAssignmentList < ListResource
-                
+            class Versionless < Version
+                class OrganizationContext < InstanceContext
+
+                     class RoleAssignmentList < ListResource
+
                     class PublicApiCreateRoleAssignmentRequest
                             # @param [role_sid]: [String] Twilio Role Sid representing assigned role
                             # @param [scope]: [String] Twilio Sid representing scope of this assignment
@@ -47,14 +49,13 @@ module Twilio
                         # Path Solution
                         @solution = { organization_sid: organization_sid }
                         @uri = "/#{@solution[:organization_sid]}/RoleAssignments"
-                        
+
                     end
                     ##
                     # Create the RoleAssignmentInstance
-                    # @param [PublicApiCreateRoleAssignmentRequest] public_api_create_role_assignment_request 
+                    # @param [PublicApiCreateRoleAssignmentRequest] public_api_create_role_assignment_request
                     # @return [RoleAssignmentInstance] Created RoleAssignmentInstance
-                    def create(public_api_create_role_assignment_request: nil
-                    )
+                    def create(public_api_create_role_assignment_request: nil)
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
@@ -66,13 +67,13 @@ module Twilio
                         )
                     end
 
-                
+
                     ##
                     # Lists RoleAssignmentInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [String] identity 
-                    # @param [String] scope 
+                    # @param [String] identity
+                    # @param [String] scope
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -80,7 +81,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(identity: :unset, scope: :unset, limit: nil, page_size: nil)
+                    def list(identity: :unset, scope: :unset , limit: nil, page_size: nil)
                         self.stream(
                             identity: identity,
                             scope: scope,
@@ -93,8 +94,8 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [String] identity 
-                    # @param [String] scope 
+                    # @param [String] identity
+                    # @param [String] scope
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -102,7 +103,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(identity: :unset, scope: :unset, limit: nil, page_size: nil)
+                    def stream(identity: :unset, scope: :unset , limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
@@ -130,13 +131,13 @@ module Twilio
                     ##
                     # Retrieve a single page of RoleAssignmentInstance records from the API.
                     # Request is executed immediately.
-                    # @param [String] identity 
-                    # @param [String] scope 
+                    # @param [String] identity
+                    # @param [String] scope
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of RoleAssignmentInstance
-                    def page(identity: :unset, scope: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(identity: :unset, scope: :unset , page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'Identity' => identity,
                             'Scope' => scope,
@@ -162,12 +163,12 @@ module Twilio
                         )
                     RoleAssignmentPage.new(@version, response, @solution)
                     end
-                    
+
 
 
                     # Provide a user friendly representation
                     def to_s
-                        '#<Twilio.PreviewIam.Organizations.RoleAssignmentList>'
+                        '#<Twilio.PreviewIam.Versionless.RoleAssignmentList>'
                     end
                 end
 
@@ -176,8 +177,8 @@ module Twilio
                     ##
                     # Initialize the RoleAssignmentContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] organization_sid 
-                    # @param [String] role_assignment_sid 
+                    # @param [String] organization_sid
+                    # @param [String] role_assignment_sid
                     # @return [RoleAssignmentContext] RoleAssignmentContext
                     def initialize(version, organization_sid, role_assignment_sid)
                         super(version)
@@ -186,7 +187,7 @@ module Twilio
                         @solution = { organization_sid: organization_sid, role_assignment_sid: role_assignment_sid,  }
                         @uri = "/#{@solution[:organization_sid]}/RoleAssignments/#{@solution[:role_assignment_sid]}"
 
-                        
+
                     end
                     ##
                     # Delete the RoleAssignmentInstance
@@ -194,7 +195,7 @@ module Twilio
                     def delete
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-                        
+
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -203,14 +204,14 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.PreviewIam.Organizations.RoleAssignmentContext #{context}>"
+                        "#<Twilio.PreviewIam.Versionless.RoleAssignmentContext #{context}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
                         context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.PreviewIam.Organizations.RoleAssignmentContext #{context}>"
+                        "#<Twilio.PreviewIam.Versionless.RoleAssignmentContext #{context}>"
                     end
                 end
 
@@ -239,7 +240,7 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        '<Twilio.PreviewIam.Organizations.RoleAssignmentPage>'
+                        '<Twilio.PreviewIam.Versionless.RoleAssignmentPage>'
                     end
                 end
                 class RoleAssignmentInstance < InstanceResource
@@ -254,9 +255,9 @@ module Twilio
                     # @return [RoleAssignmentInstance] RoleAssignmentInstance
                     def initialize(version, payload , organization_sid: nil, role_assignment_sid: nil)
                         super(version)
-                        
+
                         # Marshaled Properties
-                        @properties = { 
+                        @properties = {
                             'sid' => payload['sid'],
                             'role_sid' => payload['role_sid'],
                             'scope' => payload['scope'],
@@ -282,55 +283,55 @@ module Twilio
                         end
                         @instance_context
                     end
-                    
+
                     ##
                     # @return [String] Twilio Role Assignment Sid representing this role assignment
                     def sid
                         @properties['sid']
                     end
-                    
+
                     ##
                     # @return [String] Twilio Role Sid representing assigned role
                     def role_sid
                         @properties['role_sid']
                     end
-                    
+
                     ##
                     # @return [String] Twilio Sid representing identity of this assignment
                     def scope
                         @properties['scope']
                     end
-                    
+
                     ##
                     # @return [String] Twilio Sid representing scope of this assignment
                     def identity
                         @properties['identity']
                     end
-                    
+
                     ##
                     # @return [String] Twilio-specific error code
                     def code
                         @properties['code']
                     end
-                    
+
                     ##
                     # @return [String] Error message
                     def message
                         @properties['message']
                     end
-                    
+
                     ##
                     # @return [String] Link to Error Code References
                     def more_info
                         @properties['more_info']
                     end
-                    
+
                     ##
                     # @return [String] HTTP response status code
                     def status
                         @properties['status']
                     end
-                    
+
                     ##
                     # Delete the RoleAssignmentInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
@@ -343,18 +344,21 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.PreviewIam.Organizations.RoleAssignmentInstance #{values}>"
+                        "<Twilio.PreviewIam.Versionless.RoleAssignmentInstance #{values}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
                         values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.PreviewIam.Organizations.RoleAssignmentInstance #{values}>"
+                        "<Twilio.PreviewIam.Versionless.RoleAssignmentInstance #{values}>"
                     end
                 end
 
+             end
             end
         end
     end
 end
+
+

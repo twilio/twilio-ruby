@@ -28,7 +28,7 @@ module Twilio
       end
 
       def organizations( organization_sid = nil)
-        @organizations ||= PreviewIam::Organizations.new(self, organization_sid)
+        @organizations ||= PreviewIam::Versionless.new(self).organization(organization_sid)
       end
 
       def v1
