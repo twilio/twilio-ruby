@@ -18,7 +18,6 @@ module Twilio
 
       def request(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
         url = uri.match(/^http/) ? uri : absolute_url(uri)
-
         @client.request(
           @base_url,
           @port,
