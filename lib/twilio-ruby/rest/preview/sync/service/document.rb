@@ -233,7 +233,7 @@ module Twilio
 
                         unless @document_permissions
                             @document_permissions = DocumentPermissionList.new(
-                                @version, )
+                                @version, service_sid: @solution[:service_sid], document_sid: @solution[:sid], )
                         end
 
                      @document_permissions

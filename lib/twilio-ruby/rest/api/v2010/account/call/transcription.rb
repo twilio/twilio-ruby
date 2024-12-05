@@ -48,6 +48,7 @@ module Twilio
                     # @param [String] speech_model Recognition model used by the transcription engine, among those supported by the provider
                     # @param [String] hints A Phrase contains words and phrase \\\"hints\\\" so that the speech recognition engine is more likely to recognize them.
                     # @param [Boolean] enable_automatic_punctuation The provider will add punctuation to recognition result
+                    # @param [String] intelligence_service The SID or the unique name of the [IntelligentService](https://www.twilio.com/docs/voice/intelligence/api/service-resource) to process the transcription.
                     # @return [TranscriptionInstance] Created TranscriptionInstance
                     def create(
                         name: :unset, 
@@ -62,7 +63,8 @@ module Twilio
                         profanity_filter: :unset, 
                         speech_model: :unset, 
                         hints: :unset, 
-                        enable_automatic_punctuation: :unset
+                        enable_automatic_punctuation: :unset, 
+                        intelligence_service: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -79,6 +81,7 @@ module Twilio
                             'SpeechModel' => speech_model,
                             'Hints' => hints,
                             'EnableAutomaticPunctuation' => enable_automatic_punctuation,
+                            'IntelligenceService' => intelligence_service,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
