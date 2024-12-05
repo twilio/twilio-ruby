@@ -66,6 +66,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
+                        headers['Accept'] = 'application/scim+json'
+                        
                         payload = @version.fetch('GET', @uri, headers: headers)
                         OrganizationInstance.new(
                             @version,
@@ -89,17 +93,17 @@ module Twilio
                     # Access the role_assignments
                     # @return [RoleAssignmentList]
                     # @return [RoleAssignmentContext] if sid was passed.
-                    def role_assignments(role_assignment_sid=:unset)
+                    def role_assignments(sid=:unset)
 
-                        raise ArgumentError, 'role_assignment_sid cannot be nil' if role_assignment_sid.nil?
+                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
 
-                        if role_assignment_sid != :unset
-                            return RoleAssignmentContext.new(@version, @solution[:organization_sid],role_assignment_sid )
+                        if sid != :unset
+                            return RoleAssignmentContext.new(@version, @solution[:organization_sid],sid )
                         end
 
                         unless @role_assignments
                             @role_assignments = RoleAssignmentList.new(
-                                @version, )
+                                @version, organization_sid: @solution[:organization_sid], )
                         end
 
                      @role_assignments
@@ -127,12 +131,12 @@ module Twilio
                     # Access the users
                     # @return [UserList]
                     # @return [UserContext] if sid was passed.
-                    def users(user_sid=:unset)
+                    def users(id=:unset)
 
-                        raise ArgumentError, 'user_sid cannot be nil' if user_sid.nil?
+                        raise ArgumentError, 'id cannot be nil' if id.nil?
 
-                        if user_sid != :unset
-                            return UserContext.new(@version, @solution[:organization_sid],user_sid )
+                        if id != :unset
+                            return UserContext.new(@version, @solution[:organization_sid],id )
                         end
 
                         unless @users
