@@ -65,10 +65,6 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
-                        
-                        
-                        
-                        
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         TokenInstance.new(
                             @version,

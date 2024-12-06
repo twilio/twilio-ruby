@@ -20,7 +20,7 @@ module Twilio
                 class OrganizationContext < InstanceContext
 
                      class RoleAssignmentList < ListResource
-                
+
                     class PublicApiCreateRoleAssignmentRequest
                             # @param [role_sid]: [String] Twilio Role Sid representing assigned role
                             # @param [scope]: [String] Twilio Sid representing scope of this assignment
@@ -39,7 +39,6 @@ module Twilio
                         }.to_json(options)
                         end
                     end
-
 
                     ##
                     # Initialize the RoleAssignmentList
@@ -65,6 +64,7 @@ module Twilio
                         
                         
                          headers['Accept'] = '*/*'
+                      
                         payload = @version.create('POST', @uri, headers: headers, data: public_api_create_role_assignment_request.to_json)
                         RoleAssignmentInstance.new(
                             @version,
@@ -73,13 +73,10 @@ module Twilio
                         )
                     end
 
-                
                     ##
                     # Lists RoleAssignmentInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [String] identity 
-                    # @param [String] scope 
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -88,6 +85,7 @@ module Twilio
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
                     def list(identity: :unset, scope: :unset, limit: nil, page_size: nil)
+
                         self.stream(
                             identity: identity,
                             scope: scope,
@@ -172,7 +170,6 @@ module Twilio
                         )
                     RoleAssignmentPage.new(@version, response, @solution)
                     end
-                    
 
 
                     # Provide a user friendly representation
@@ -196,7 +193,6 @@ module Twilio
                         @solution = { organization_sid: organization_sid, sid: sid,  }
                         @uri = "/#{@solution[:organization_sid]}/RoleAssignments/#{@solution[:sid]}"
 
-                        
                     end
                     ##
                     # Delete the RoleAssignmentInstance
@@ -300,49 +296,41 @@ module Twilio
                     def sid
                         @properties['sid']
                     end
-                    
                     ##
                     # @return [String] Twilio Role Sid representing assigned role
                     def role_sid
                         @properties['role_sid']
                     end
-                    
                     ##
                     # @return [String] Twilio Sid representing identity of this assignment
                     def scope
                         @properties['scope']
                     end
-                    
                     ##
                     # @return [String] Twilio Sid representing scope of this assignment
                     def identity
                         @properties['identity']
                     end
-                    
                     ##
                     # @return [String] Twilio-specific error code
                     def code
                         @properties['code']
                     end
-                    
                     ##
                     # @return [String] Error message
                     def message
                         @properties['message']
                     end
-                    
                     ##
                     # @return [String] Link to Error Code References
                     def more_info
                         @properties['more_info']
                     end
-                    
                     ##
                     # @return [String] HTTP response status code
                     def status
                         @properties['status']
                     end
-                    
                     ##
                     # Delete the RoleAssignmentInstance
                     # @return [Boolean] True if delete succeeds, false otherwise

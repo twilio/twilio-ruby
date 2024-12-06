@@ -20,7 +20,6 @@ module Twilio
                 class OrganizationContext < InstanceContext
 
                      class UserList < ListResource
-                
                     class ScimUser
                             # @param [id]: [String] Unique Twilio user sid
                             # @param [external_id]: [String] External unique resource id defined by provisioning client
@@ -78,8 +77,6 @@ module Twilio
                         }.to_json(options)
                         end
                     end
-
-
                     ##
                     # Initialize the UserList
                     # @param [Version] version Version that contains the resource
@@ -103,7 +100,7 @@ module Twilio
                         headers['Content-Type'] = 'application/scim+json'
                         
                         headers['Accept'] = 'application/scim+json'
-                        
+                       
                         payload = @version.create('POST', @uri, headers: headers, data: scim_user.to_json)
                         UserInstance.new(
                             @version,
@@ -112,7 +109,6 @@ module Twilio
                         )
                     end
 
-                
                     ##
                     # Lists UserInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
@@ -205,8 +201,6 @@ module Twilio
                         )
                     UserPage.new(@version, response, @solution)
                     end
-                    
-
 
                     # Provide a user friendly representation
                     def to_s
@@ -228,8 +222,6 @@ module Twilio
                         # Path Solution
                         @solution = { organization_sid: organization_sid, id: id,  }
                         @uri = "/#{@solution[:organization_sid]}/scim/Users/#{@solution[:id]}"
-
-                        
                     end
                     ##
                     # Delete the UserInstance
@@ -253,8 +245,7 @@ module Twilio
                         
                         
                         headers['Accept'] = 'application/scim+json'
-                        
-                        payload = @version.fetch('GET', @uri, headers: headers)
+                         payload = @version.fetch('GET', @uri, headers: headers)
                         UserInstance.new(
                             @version,
                             payload,
@@ -385,19 +376,18 @@ module Twilio
                     def id
                         @properties['id']
                     end
-                    
                     ##
                     # @return [String] External unique resource id defined by provisioning client
                     def external_id
                         @properties['external_id']
                     end
-                    
+
                     ##
                     # @return [String] Unique username, MUST be same as primary email address
                     def user_name
                         @properties['user_name']
                     end
-                    
+
                     ##
                     # @return [String] User friendly display name
                     def display_name
@@ -409,31 +399,30 @@ module Twilio
                     def name
                         @properties['name']
                     end
-                    
-                    ##
+
                     # @return [Array<UserList.ScimEmailAddress>] Email address list of the user. Primary email must be defined if there are more than 1 email. Primary email must match the username.
                     def emails
                         @properties['emails']
                     end
-                    
+
                     ##
                     # @return [Boolean] Indicates whether the user is active
                     def active
                         @properties['active']
                     end
-                    
+
                     ##
                     # @return [String] User's locale
                     def locale
                         @properties['locale']
                     end
-                    
+
                     ##
                     # @return [String] User's time zone
                     def timezone
                         @properties['timezone']
                     end
-                    
+
                     ##
                     # @return [Array<String>] An array of URIs that indicate the schemas supported for this user resource
                     def schemas
@@ -451,31 +440,30 @@ module Twilio
                     def detail
                         @properties['detail']
                     end
-                    
+
                     ##
                     # @return [String] A scimType error code as defined in RFC7644
                     def scim_type
                         @properties['scim_type']
                     end
-                    
                     ##
                     # @return [String] Http status code
                     def status
                         @properties['status']
                     end
-                    
+
                     ##
                     # @return [String] Twilio-specific error code
                     def code
                         @properties['code']
                     end
-                    
+
                     ##
                     # @return [String] Link to Error Code References
                     def more_info
                         @properties['more_info']
                     end
-                    
+
                     ##
                     # Delete the UserInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
@@ -503,6 +491,7 @@ module Twilio
 
                         context.update(
                             if_match: if_match, 
+
                         )
                     end
 

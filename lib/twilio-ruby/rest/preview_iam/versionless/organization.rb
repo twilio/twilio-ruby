@@ -65,7 +65,7 @@ module Twilio
                     def fetch
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-                        
+                       
                         
                         
                         headers['Accept'] = 'application/scim+json'
