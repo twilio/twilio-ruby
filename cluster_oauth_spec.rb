@@ -2,7 +2,6 @@ require 'rspec/matchers'
 require 'twilio-ruby'
 require './lib/twilio-ruby/credential/client_credential_provider'
 
-# rubocop:disable Metrics/BlockLength
 describe 'Cluster Test' do
   before(:each) do
     @account_sid = ENV['TWILIO_ACCOUNT_OAUTH_SID']
@@ -63,4 +62,3 @@ describe 'Cluster Test' do
     expect(response.emails[0]['type']).to_not be_nil
   end
 end
-
