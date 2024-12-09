@@ -1,14 +1,8 @@
 module Twilio
   module REST
     class PreviewIam < PreviewIamBase
-      def account
-        self.organizations.accounts
-      end
-      def role_assignment
-        self.organizations.role_assignments
-      end
-      def user
-        self.organizations.users
+      def organizations( organization_sid = nil)
+        @organizations ||= PreviewIam::Versionless.new(self).organization(organization_sid)
       end
     end
   end
