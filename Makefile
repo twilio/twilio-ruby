@@ -36,5 +36,8 @@ docker-push:
 cluster-test:
 	bundle exec rspec ./cluster_spec.rb
 
+cluster-oauth-test:
+	bundle exec rpec ./cluster_oauth_spec.rb
+
 prettier:
 	bundle exec rubocop -A -d --cache true --parallel
