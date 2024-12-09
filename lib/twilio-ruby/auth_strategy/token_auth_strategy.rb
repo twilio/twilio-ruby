@@ -1,5 +1,6 @@
 require_relative 'auth_strategy'
 require_relative './../credential/auth_type'
+require 'jwt'
 module Twilio
   module REST
     class TokenAuthStrategy < AuthStrategy
@@ -25,7 +26,7 @@ module Twilio
       end
 
       def token_expired?
-        decoded_token = JWT.decode(@token, nil, false)
+        decoded_token = ::JWT.decode(@token, nil, false)
         exp = decoded_token[0]['exp']
         Time.at(exp) < Time.now
       end
