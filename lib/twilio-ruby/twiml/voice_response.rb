@@ -50,9 +50,10 @@ module Twilio
       # sequential:: Used to determine if child TwiML nouns should be dialed in order, one after the other (sequential) or dial all at once (parallel). Default is false, parallel
       # refer_url:: Webhook that will receive future SIP REFER requests
       # refer_method:: The HTTP method to use for the refer Webhook
+      # events:: Subscription to events
       # keyword_args:: additional attributes
-      def dial(number: nil, action: nil, method: nil, timeout: nil, hangup_on_star: nil, time_limit: nil, caller_id: nil, record: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, answer_on_bridge: nil, ring_tone: nil, recording_track: nil, sequential: nil, refer_url: nil, refer_method: nil, **keyword_args)
-        dial = Dial.new(number: number, action: action, method: method, timeout: timeout, hangup_on_star: hangup_on_star, time_limit: time_limit, caller_id: caller_id, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, answer_on_bridge: answer_on_bridge, ring_tone: ring_tone, recording_track: recording_track, sequential: sequential, refer_url: refer_url, refer_method: refer_method, **keyword_args)
+      def dial(number: nil, action: nil, method: nil, timeout: nil, hangup_on_star: nil, time_limit: nil, caller_id: nil, record: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, answer_on_bridge: nil, ring_tone: nil, recording_track: nil, sequential: nil, refer_url: nil, refer_method: nil, events: nil, **keyword_args)
+        dial = Dial.new(number: number, action: action, method: method, timeout: timeout, hangup_on_star: hangup_on_star, time_limit: time_limit, caller_id: caller_id, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, answer_on_bridge: answer_on_bridge, ring_tone: ring_tone, recording_track: recording_track, sequential: sequential, refer_url: refer_url, refer_method: refer_method, events: events, **keyword_args)
 
         yield(dial) if block_given?
         append(dial)
@@ -387,9 +388,10 @@ module Twilio
       # speech_model:: Speech Model used by the transcription engine
       # hints:: Hints to be provided to the transcription engine
       # enable_automatic_punctuation:: Enable Automatic Punctuation
+      # intelligence_service:: The SID or the unique name of the Intelligence Service to be used
       # keyword_args:: additional attributes
-      def transcription(name: nil, track: nil, status_callback_url: nil, status_callback_method: nil, inbound_track_label: nil, outbound_track_label: nil, partial_results: nil, language_code: nil, transcription_engine: nil, profanity_filter: nil, speech_model: nil, hints: nil, enable_automatic_punctuation: nil, **keyword_args)
-        transcription = Transcription.new(name: name, track: track, status_callback_url: status_callback_url, status_callback_method: status_callback_method, inbound_track_label: inbound_track_label, outbound_track_label: outbound_track_label, partial_results: partial_results, language_code: language_code, transcription_engine: transcription_engine, profanity_filter: profanity_filter, speech_model: speech_model, hints: hints, enable_automatic_punctuation: enable_automatic_punctuation, **keyword_args)
+      def transcription(name: nil, track: nil, status_callback_url: nil, status_callback_method: nil, inbound_track_label: nil, outbound_track_label: nil, partial_results: nil, language_code: nil, transcription_engine: nil, profanity_filter: nil, speech_model: nil, hints: nil, enable_automatic_punctuation: nil, intelligence_service: nil, **keyword_args)
+        transcription = Transcription.new(name: name, track: track, status_callback_url: status_callback_url, status_callback_method: status_callback_method, inbound_track_label: inbound_track_label, outbound_track_label: outbound_track_label, partial_results: partial_results, language_code: language_code, transcription_engine: transcription_engine, profanity_filter: profanity_filter, speech_model: speech_model, hints: hints, enable_automatic_punctuation: enable_automatic_punctuation, intelligence_service: intelligence_service, **keyword_args)
 
         yield(transcription) if block_given?
         append(transcription)
@@ -543,9 +545,10 @@ module Twilio
       # speech_model:: Speech Model used by the transcription engine
       # hints:: Hints to be provided to the transcription engine
       # enable_automatic_punctuation:: Enable Automatic Punctuation
+      # intelligence_service:: The SID or the unique name of the Intelligence Service to be used
       # keyword_args:: additional attributes
-      def transcription(name: nil, track: nil, status_callback_url: nil, status_callback_method: nil, inbound_track_label: nil, outbound_track_label: nil, partial_results: nil, language_code: nil, transcription_engine: nil, profanity_filter: nil, speech_model: nil, hints: nil, enable_automatic_punctuation: nil, **keyword_args)
-        transcription = Transcription.new(name: name, track: track, status_callback_url: status_callback_url, status_callback_method: status_callback_method, inbound_track_label: inbound_track_label, outbound_track_label: outbound_track_label, partial_results: partial_results, language_code: language_code, transcription_engine: transcription_engine, profanity_filter: profanity_filter, speech_model: speech_model, hints: hints, enable_automatic_punctuation: enable_automatic_punctuation, **keyword_args)
+      def transcription(name: nil, track: nil, status_callback_url: nil, status_callback_method: nil, inbound_track_label: nil, outbound_track_label: nil, partial_results: nil, language_code: nil, transcription_engine: nil, profanity_filter: nil, speech_model: nil, hints: nil, enable_automatic_punctuation: nil, intelligence_service: nil, **keyword_args)
+        transcription = Transcription.new(name: name, track: track, status_callback_url: status_callback_url, status_callback_method: status_callback_method, inbound_track_label: inbound_track_label, outbound_track_label: outbound_track_label, partial_results: partial_results, language_code: language_code, transcription_engine: transcription_engine, profanity_filter: profanity_filter, speech_model: speech_model, hints: hints, enable_automatic_punctuation: enable_automatic_punctuation, intelligence_service: intelligence_service, **keyword_args)
 
         yield(transcription) if block_given?
         append(transcription)
@@ -1959,6 +1962,133 @@ module Twilio
       # keyword_args:: additional attributes
       def conversation(service_instance_sid: nil, inbound_autocreation: nil, routing_assignment_timeout: nil, inbound_timeout: nil, url: nil, method: nil, record: nil, trim: nil, recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, status_callback: nil, status_callback_method: nil, status_callback_event: nil, **keyword_args)
         append(Conversation.new(service_instance_sid: service_instance_sid, inbound_autocreation: inbound_autocreation, routing_assignment_timeout: routing_assignment_timeout, inbound_timeout: inbound_timeout, url: url, method: method, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, status_callback_event: status_callback_event, **keyword_args))
+      end
+
+      ##
+      # Create a new <ConversationRelay> element
+      # url:: URL of the remote service where the session is connected to
+      # language:: Language to be used for both text-to-speech and transcription
+      # tts_language:: Language to be used for text-to-speech
+      # transcription_language:: Language to be used for transcription
+      # tts_provider:: Provider to be used for text-to-speech
+      # voice:: Voice to be used for text-to-speech
+      # transcription_provider:: Provider to be used for transcription
+      # speech_model:: Speech model to be used for transcription
+      # profanity_filter:: Whether profanities should be filtered out of the speech transcription
+      # dtmf_detection:: Whether DTMF tones should be detected and reported in speech transcription
+      # welcome_greeting:: The sentence to be played automatically when the session is connected
+      # partial_prompts:: Whether partial prompts should be reported to WebSocket server before the caller finishes speaking
+      # interruptible:: Whether caller's speaking can interrupt the play of text-to-speech
+      # interrupt_by_dtmf:: Whether DTMF tone can interrupt the play of text-to-speech
+      # welcome_greeting_interruptible:: Whether caller's speaking can interrupt the welcome greeting
+      # debug:: Whether debugging on the session is enabled
+      # keyword_args:: additional attributes
+      def conversation_relay(url: nil, language: nil, tts_language: nil, transcription_language: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, profanity_filter: nil, dtmf_detection: nil, welcome_greeting: nil, partial_prompts: nil, interruptible: nil, interrupt_by_dtmf: nil, welcome_greeting_interruptible: nil, debug: nil, **keyword_args)
+        conversation_relay = ConversationRelay.new(url: url, language: language, tts_language: tts_language, transcription_language: transcription_language, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, profanity_filter: profanity_filter, dtmf_detection: dtmf_detection, welcome_greeting: welcome_greeting, partial_prompts: partial_prompts, interruptible: interruptible, interrupt_by_dtmf: interrupt_by_dtmf, welcome_greeting_interruptible: welcome_greeting_interruptible, debug: debug, **keyword_args)
+
+        yield(conversation_relay) if block_given?
+        append(conversation_relay)
+      end
+
+      ##
+      # Create a new <Assistant> element
+      # id:: The assistant ID of the AI Assistant
+      # language:: Language to be used for both text-to-speech and transcription
+      # tts_language:: Language to be used for text-to-speech
+      # transcription_language:: Language to be used for transcription
+      # tts_provider:: Provider to be used for text-to-speech
+      # voice:: Voice to be used for text-to-speech
+      # transcription_provider:: Provider to be used for transcription
+      # speech_model:: Speech model to be used for transcription
+      # profanity_filter:: Whether profanities should be filtered out of the speech transcription
+      # dtmf_detection:: Whether DTMF tones should be detected and reported in speech transcription
+      # welcome_greeting:: The sentence to be played automatically when the session is connected
+      # partial_prompts:: Whether partial prompts should be reported to WebSocket server before the caller finishes speaking
+      # interruptible:: Whether caller's speaking can interrupt the play of text-to-speech
+      # interrupt_by_dtmf:: Whether DTMF tone can interrupt the play of text-to-speech
+      # welcome_greeting_interruptible:: Whether caller's speaking can interrupt the welcome greeting
+      # debug:: Whether debugging on the session is enabled
+      # keyword_args:: additional attributes
+      def assistant(id: nil, language: nil, tts_language: nil, transcription_language: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, profanity_filter: nil, dtmf_detection: nil, welcome_greeting: nil, partial_prompts: nil, interruptible: nil, interrupt_by_dtmf: nil, welcome_greeting_interruptible: nil, debug: nil, **keyword_args)
+        assistant = Assistant.new(id: id, language: language, tts_language: tts_language, transcription_language: transcription_language, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, profanity_filter: profanity_filter, dtmf_detection: dtmf_detection, welcome_greeting: welcome_greeting, partial_prompts: partial_prompts, interruptible: interruptible, interrupt_by_dtmf: interrupt_by_dtmf, welcome_greeting_interruptible: welcome_greeting_interruptible, debug: debug, **keyword_args)
+
+        yield(assistant) if block_given?
+        append(assistant)
+      end
+    end
+
+    ##
+    # <Assistant> TwiML Noun
+    class Assistant < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Assistant'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Language> element
+      # code:: Language code of this language setting is for
+      # tts_provider:: Provider to be used for text-to-speech of this language
+      # voice:: Voice to be used for text-to-speech of this language
+      # transcription_provider:: Provider to be used for transcription of this language
+      # speech_model:: Speech model to be used for transcription of this language
+      # keyword_args:: additional attributes
+      def language(code: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, **keyword_args)
+        append(Language.new(code: code, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, **keyword_args))
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
+    end
+
+    ##
+    # <Language> TwiML Noun
+    class Language < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Language'
+
+        yield(self) if block_given?
+      end
+    end
+
+    ##
+    # <ConversationRelay> TwiML Noun
+    class ConversationRelay < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'ConversationRelay'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Language> element
+      # code:: Language code of this language setting is for
+      # tts_provider:: Provider to be used for text-to-speech of this language
+      # voice:: Voice to be used for text-to-speech of this language
+      # transcription_provider:: Provider to be used for transcription of this language
+      # speech_model:: Speech model to be used for transcription of this language
+      # keyword_args:: additional attributes
+      def language(code: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, **keyword_args)
+        append(Language.new(code: code, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, **keyword_args))
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
       end
     end
 

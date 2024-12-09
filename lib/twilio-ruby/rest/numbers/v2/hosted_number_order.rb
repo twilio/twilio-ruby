@@ -224,7 +224,7 @@ module Twilio
                     ##
                     # Initialize the HostedNumberOrderContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] sid A 34 character string that uniquely identifies this HostedNumberOrder.
+                    # @param [String] sid The SID of the HostedNumberOrder resource to update.
                     # @return [HostedNumberOrderContext] HostedNumberOrderContext
                     def initialize(version, sid)
                         super(version)
@@ -253,6 +253,34 @@ module Twilio
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
+                        HostedNumberOrderInstance.new(
+                            @version,
+                            payload,
+                            sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the HostedNumberOrderInstance
+                    # @param [Status] status 
+                    # @param [String] verification_call_delay The number of seconds to wait before initiating the ownership verification call. Can be a value between 0 and 60, inclusive.
+                    # @param [String] verification_call_extension The numerical extension to dial when making the ownership verification call.
+                    # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
+                    def update(
+                        status: nil, 
+                        verification_call_delay: :unset, 
+                        verification_call_extension: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Status' => status,
+                            'VerificationCallDelay' => verification_call_delay,
+                            'VerificationCallExtension' => verification_call_extension,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         HostedNumberOrderInstance.new(
                             @version,
                             payload,
@@ -338,6 +366,12 @@ module Twilio
                             'contact_phone_number' => payload['contact_phone_number'],
                             'bulk_hosting_request_sid' => payload['bulk_hosting_request_sid'],
                             'next_step' => payload['next_step'],
+                            'verification_attempts' => payload['verification_attempts'] == nil ? payload['verification_attempts'] : payload['verification_attempts'].to_i,
+                            'verification_call_sids' => payload['verification_call_sids'],
+                            'verification_call_delay' => payload['verification_call_delay'] == nil ? payload['verification_call_delay'] : payload['verification_call_delay'].to_i,
+                            'verification_call_extension' => payload['verification_call_extension'],
+                            'verification_code' => payload['verification_code'],
+                            'verification_type' => payload['verification_type'],
                         }
 
                         # Context
@@ -471,6 +505,42 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] The number of attempts made to verify ownership via a call for the hosted phone number.
+                    def verification_attempts
+                        @properties['verification_attempts']
+                    end
+                    
+                    ##
+                    # @return [Array<String>] The Call SIDs that identify the calls placed to verify ownership.
+                    def verification_call_sids
+                        @properties['verification_call_sids']
+                    end
+                    
+                    ##
+                    # @return [String] The number of seconds to wait before initiating the ownership verification call. Can be a value between 0 and 60, inclusive.
+                    def verification_call_delay
+                        @properties['verification_call_delay']
+                    end
+                    
+                    ##
+                    # @return [String] The numerical extension to dial when making the ownership verification call.
+                    def verification_call_extension
+                        @properties['verification_call_extension']
+                    end
+                    
+                    ##
+                    # @return [String] The digits the user must pass in the ownership verification call.
+                    def verification_code
+                        @properties['verification_code']
+                    end
+                    
+                    ##
+                    # @return [VerificationType] 
+                    def verification_type
+                        @properties['verification_type']
+                    end
+                    
+                    ##
                     # Delete the HostedNumberOrderInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
@@ -484,6 +554,25 @@ module Twilio
                     def fetch
 
                         context.fetch
+                    end
+
+                    ##
+                    # Update the HostedNumberOrderInstance
+                    # @param [Status] status 
+                    # @param [String] verification_call_delay The number of seconds to wait before initiating the ownership verification call. Can be a value between 0 and 60, inclusive.
+                    # @param [String] verification_call_extension The numerical extension to dial when making the ownership verification call.
+                    # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
+                    def update(
+                        status: nil, 
+                        verification_call_delay: :unset, 
+                        verification_call_extension: :unset
+                    )
+
+                        context.update(
+                            status: status, 
+                            verification_call_delay: verification_call_delay, 
+                            verification_call_extension: verification_call_extension, 
+                        )
                     end
 
                     ##
