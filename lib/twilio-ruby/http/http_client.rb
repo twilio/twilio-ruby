@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'faraday'
+require 'faraday/middleware'
 
 module Twilio
   module HTTP
@@ -79,8 +80,16 @@ module Twilio
       end
 
       def request(host, port, method, url, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
+        headers['Authorization'] = auth if jwt_token?(auth)
         request = Twilio::Request.new(host, port, method, url, params, data, headers, auth, timeout)
         _request(request)
+      end
+
+      def jwt_token?(auth)
+        return false unless auth.is_a?(String)
+
+        parts = auth.split('.')
+        parts.length == 3
       end
     end
   end
