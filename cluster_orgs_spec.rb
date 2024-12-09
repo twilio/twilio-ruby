@@ -8,6 +8,7 @@ describe 'Cluster Test' do
     @client_id = ENV['TWILIO_ORGS_CLIENT_ID']
     @org_sid = ENV['TWILIO_ORG_SID']
     @user_sid = ENV['TWILIO_USER_SID']
+    @account_sid = ENV['TWILIO_ORGS_ACCOUNT_SID']
     @credential = Twilio::REST::ClientCredentialProvider.new(@client_id, @client_secret)
     @client = Twilio::REST::Client.new.credential_provider(@credential)
   end
