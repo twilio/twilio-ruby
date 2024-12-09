@@ -10,7 +10,7 @@ describe 'Cluster Test' do
     @user_sid = ENV['TWILIO_USER_SID']
     @account_sid = ENV['TWILIO_ORGS_ACCOUNT_SID']
     @credential = Twilio::REST::ClientCredentialProvider.new(@client_id, @client_secret)
-    @client = Twilio::REST::Client.new(@account_sid).credential_provider(@credential)
+    @client = Twilio::REST::Client.new.credential_provider(@credential)
   end
 
   it 'can send a text' do
