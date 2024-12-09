@@ -18,7 +18,6 @@ Layout/LineLength:
 Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'
-    - 'cluster_oauth_spec.rb'
 
 Lint/AmbiguousBlockAssociation:
   Exclude:
@@ -28,6 +27,7 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
     - twilio-ruby.gemspec
+    - 'cluster_oauth_spec.rb'
 
 Layout/HeredocIndentation:
   Enabled: false
