@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'rack/mock'
+require 'rack/twilio_webhook_authentication'
 
 describe Rack::TwilioWebhookAuthentication do
   before do
