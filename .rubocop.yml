@@ -27,8 +27,6 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
     - twilio-ruby.gemspec
-    - 'cluster_orgs_spec.rb'
-    - 'cluster_oauth_spec.rb'
 
 Layout/HeredocIndentation:
   Enabled: false
