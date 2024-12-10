@@ -1,7 +1,6 @@
 require 'rspec/matchers'
 require 'twilio-ruby'
 
-# rubocop:disable Metrics/BlockLength
 describe 'Cluster Test' do
   before(:each) do
     @account_sid = ENV['TWILIO_ACCOUNT_SID']
