@@ -34,9 +34,9 @@ docker-push:
 	docker push twilio/twilio-ruby:${CURRENT_TAG}
 
 cluster-test:
-	bundle exec rspec ./cluster_spec.rb
-	bundle exec rspec ./cluster_oauth_spec.rb
-	bundle exec rspec ./cluster_orgs_spec.rb
+	bundle exec rspec ./spec/cluster/cluster_spec.rb
+	bundle exec rspec ./spec/cluster/cluster_oauth_spec.rb
+	bundle exec rspec ./spec/cluster/cluster_orgs_spec.rb
 
 prettier:
 	bundle exec rubocop -A -d --cache true --parallel
