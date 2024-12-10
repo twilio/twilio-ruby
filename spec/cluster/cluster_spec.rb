@@ -73,4 +73,3 @@ describe 'Cluster Test' do
     expect(@client.events.v1.sinks(sink.sid).delete).to eq(true)
   end
 end
-# rubocop:enable Metrics/BlockLength
