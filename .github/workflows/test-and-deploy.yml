@@ -58,8 +58,8 @@ jobs:
          TWILIO_ORGS_CLIENT_ID: ${{ secrets.TWILIO_ORGS_CLIENT_ID }}
          TWILIO_ORG_SID: ${{ secrets.TWILIO_ORG_SID }}
          TWILIO_USER_SID: ${{ secrets.TWILIO_USER_SID }}
-         TWILIO_OAUTH_CLIENT_SECRET: ${{ secrets.TWILIO_OAUTH_CLIENT_SECRET }}
-         TWILIO_OAUTH_CLIENT_ID: ${{ secrets.TWILIO_OAUTH_CLIENT_ID }}
+         TWILIO_CLIENT_SECRET: ${{ secrets.TWILIO_CLIENT_SECRET }}
+         TWILIO_CLIENT_ID: ${{ secrets.TWILIO_CLIENT_ID }}
          TWILIO_MESSAGE_SID: ${{ secrets.TWILIO_MESSAGE_SID }}
         run: make cluster-test
 
