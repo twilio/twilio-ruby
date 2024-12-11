@@ -6,7 +6,7 @@ module Twilio
       # rubocop:enable Style/ClassVars
 
       attr_accessor :http_client, :username, :password, :account_sid, :auth_token, :region, :edge, :logger,
-                    :user_agent_extensions
+                    :user_agent_extensions, :credentials
 
       # rubocop:disable Metrics/ParameterLists
       def initialize(username = nil, password = nil, account_sid = nil, region = nil, http_client = nil, logger = nil,
@@ -21,6 +21,11 @@ module Twilio
         @http_client = http_client || Twilio.http_client || Twilio::HTTP::Client.new
         @logger = logger || Twilio.logger
         @user_agent_extensions = user_agent_extensions || []
+      end
+
+      def credential_provider(credential_provider = nil)
+        @credentials = credential_provider
+        self
       end
       # rubocop:enable Metrics/ParameterLists
 
@@ -46,6 +51,8 @@ module Twilio
           @logger.debug("Query:#{url.query}")
           @logger.debug("Request Params:#{params}")
         end
+
+        auth = @credentials.to_auth_strategy.auth_string unless @credentials.nil?
 
         response = @http_client.request(
           host,
