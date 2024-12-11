@@ -38,6 +38,7 @@ module Twilio
       end
 
       def load_page(payload)
+        return payload['Resources'] if payload['Resources']
         if payload['meta'] && payload['meta']['key']
           return payload[payload['meta']['key']]
         else

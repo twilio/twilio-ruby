@@ -26,6 +26,7 @@ Lint/AmbiguousBlockAssociation:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - 'cluster/*'
     - twilio-ruby.gemspec
 
 Layout/HeredocIndentation:

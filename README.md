@@ -298,6 +298,11 @@ capability.add_scope(incoming_scope)
 
 There is a slightly more detailed document in the [Capability][capability] section of the wiki.
 
+## OAuth Feature for Twilio APIs
+We are introducing Client Credentials Flow-based OAuth 2.0 authentication. This feature is currently in beta and its implementation is subject to change.
+
+API examples [here](https://github.com/twilio/twilio-ruby/blob/main/examples/public_oauth.rb)
+
 ### Generate TwiML
 
 To control phone calls, your application needs to output [TwiML][twiml].
