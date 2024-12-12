@@ -31,11 +31,12 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                name: @name,
-                                category: @category,
+                                "name": @name,
+                                "category": @category,
                         }.to_json(options)
                         end
                     end
+
 
                     ##
                     # Initialize the ApprovalCreateList
@@ -57,6 +58,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, headers: headers, data: content_approval_request.to_json)
                         ApprovalCreateInstance.new(
                             @version,

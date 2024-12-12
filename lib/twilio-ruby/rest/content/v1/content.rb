@@ -29,8 +29,8 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                type: @type,
-                                copy_code_text: @copy_code_text,
+                                "type": @type,
+                                "copy_code_text": @copy_code_text,
                         }.to_json(options)
                         end
                     end
@@ -51,11 +51,11 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                type: @type,
-                                title: @title,
-                                url: @url,
-                                phone: @phone,
-                                code: @code,
+                                "type": @type,
+                                "title": @title,
+                                "url": @url,
+                                "phone": @phone,
+                                "code": @code,
                         }.to_json(options)
                         end
                     end
@@ -78,12 +78,12 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                type: @type,
-                                title: @title,
-                                url: @url,
-                                phone: @phone,
-                                id: @id,
-                                code: @code,
+                                "type": @type,
+                                "title": @title,
+                                "url": @url,
+                                "phone": @phone,
+                                "id": @id,
+                                "code": @code,
                         }.to_json(options)
                         end
                     end
@@ -104,11 +104,11 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                type: @type,
-                                title: @title,
-                                url: @url,
-                                phone: @phone,
-                                id: @id,
+                                "type": @type,
+                                "title": @title,
+                                "url": @url,
+                                "phone": @phone,
+                                "id": @id,
                         }.to_json(options)
                         end
                     end
@@ -127,10 +127,10 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                title: @title,
-                                body: @body,
-                                media: @media,
-                                actions: @actions,
+                                "title": @title,
+                                "body": @body,
+                                "media": @media,
+                                "actions": @actions,
                         }.to_json(options)
                         end
                     end
@@ -153,12 +153,12 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                id: @id,
-                                section_title: @section_title,
-                                name: @name,
-                                media_url: @media_url,
-                                price: @price,
-                                description: @description,
+                                "id": @id,
+                                "section_title": @section_title,
+                                "name": @name,
+                                "media_url": @media_url,
+                                "price": @price,
+                                "description": @description,
                         }.to_json(options)
                         end
                     end
@@ -177,10 +177,10 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                friendly_name: @friendly_name,
-                                variables: @variables,
-                                language: @language,
-                                types: @types,
+                                "friendly_name": @friendly_name,
+                                "variables": @variables,
+                                "language": @language,
+                                "types": @types,
                         }.to_json(options)
                         end
                     end
@@ -201,11 +201,11 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                id: @id,
-                                next_page_id: @next_page_id,
-                                title: @title,
-                                subtitle: @subtitle,
-                                layout: @layout,
+                                "id": @id,
+                                "next_page_id": @next_page_id,
+                                "title": @title,
+                                "subtitle": @subtitle,
+                                "layout": @layout,
                         }.to_json(options)
                         end
                     end
@@ -224,10 +224,10 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                label: @label,
-                                type: @type,
-                                text: @text,
-                                options: @options,
+                                "label": @label,
+                                "type": @type,
+                                "text": @text,
+                                "options": @options,
                         }.to_json(options)
                         end
                     end
@@ -242,8 +242,8 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                id: @id,
-                                title: @title,
+                                "id": @id,
+                                "title": @title,
                         }.to_json(options)
                         end
                     end
@@ -260,9 +260,9 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                id: @id,
-                                item: @item,
-                                description: @description,
+                                "id": @id,
+                                "item": @item,
+                                "description": @description,
                         }.to_json(options)
                         end
                     end
@@ -279,9 +279,9 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                type: @type,
-                                title: @title,
-                                id: @id,
+                                "type": @type,
+                                "title": @title,
+                                "id": @id,
                         }.to_json(options)
                         end
                     end
@@ -296,8 +296,8 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                body: @body,
-                                actions: @actions,
+                                "body": @body,
+                                "actions": @actions,
                         }.to_json(options)
                         end
                     end
@@ -316,10 +316,10 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                title: @title,
-                                subtitle: @subtitle,
-                                media: @media,
-                                actions: @actions,
+                                "title": @title,
+                                "subtitle": @subtitle,
+                                "media": @media,
+                                "actions": @actions,
                         }.to_json(options)
                         end
                     end
@@ -334,8 +334,8 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                body: @body,
-                                cards: @cards,
+                                "body": @body,
+                                "cards": @cards,
                         }.to_json(options)
                         end
                     end
@@ -358,12 +358,12 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                title: @title,
-                                body: @body,
-                                subtitle: @subtitle,
-                                id: @id,
-                                items: @items,
-                                dynamic_items: @dynamic_items,
+                                "title": @title,
+                                "body": @body,
+                                "subtitle": @subtitle,
+                                "id": @id,
+                                "items": @items,
+                                "dynamic_items": @dynamic_items,
                         }.to_json(options)
                         end
                     end
@@ -386,12 +386,12 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                body: @body,
-                                button_text: @button_text,
-                                subtitle: @subtitle,
-                                media_url: @media_url,
-                                pages: @pages,
-                                type: @type,
+                                "body": @body,
+                                "button_text": @button_text,
+                                "subtitle": @subtitle,
+                                "media_url": @media_url,
+                                "pages": @pages,
+                                "type": @type,
                         }.to_json(options)
                         end
                     end
@@ -408,9 +408,9 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                body: @body,
-                                button: @button,
-                                items: @items,
+                                "body": @body,
+                                "button": @button,
+                                "items": @items,
                         }.to_json(options)
                         end
                     end
@@ -427,9 +427,9 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                latitude: @latitude,
-                                longitude: @longitude,
-                                label: @label,
+                                "latitude": @latitude,
+                                "longitude": @longitude,
+                                "label": @label,
                         }.to_json(options)
                         end
                     end
@@ -444,8 +444,8 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                body: @body,
-                                media: @media,
+                                "body": @body,
+                                "media": @media,
                         }.to_json(options)
                         end
                     end
@@ -460,8 +460,8 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                body: @body,
-                                actions: @actions,
+                                "body": @body,
+                                "actions": @actions,
                         }.to_json(options)
                         end
                     end
@@ -474,7 +474,7 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                body: @body,
+                                "body": @body,
                         }.to_json(options)
                         end
                     end
@@ -509,18 +509,18 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                twilio_text: @twilio_text,
-                                twilio_media: @twilio_media,
-                                twilio_location: @twilio_location,
-                                twilio_list_picker: @twilio_list_picker,
-                                twilio_call_to_action: @twilio_call_to_action,
-                                twilio_quick_reply: @twilio_quick_reply,
-                                twilio_card: @twilio_card,
-                                twilio_catalog: @twilio_catalog,
-                                twilio_carousel: @twilio_carousel,
-                                twilio_flows: @twilio_flows,
-                                whatsapp_card: @whatsapp_card,
-                                whatsapp_authentication: @whatsapp_authentication,
+                                "twilio/text": @twilio_text,
+                                "twilio/media": @twilio_media,
+                                "twilio/location": @twilio_location,
+                                "twilio/list-picker": @twilio_list_picker,
+                                "twilio/call-to-action": @twilio_call_to_action,
+                                "twilio/quick-reply": @twilio_quick_reply,
+                                "twilio/card": @twilio_card,
+                                "twilio/catalog": @twilio_catalog,
+                                "twilio/carousel": @twilio_carousel,
+                                "twilio/flows": @twilio_flows,
+                                "whatsapp/card": @whatsapp_card,
+                                "whatsapp/authentication": @whatsapp_authentication,
                         }.to_json(options)
                         end
                     end
@@ -537,9 +537,9 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                add_security_recommendation: @add_security_recommendation,
-                                code_expiration_minutes: @code_expiration_minutes,
-                                actions: @actions,
+                                "add_security_recommendation": @add_security_recommendation,
+                                "code_expiration_minutes": @code_expiration_minutes,
+                                "actions": @actions,
                         }.to_json(options)
                         end
                     end
@@ -560,14 +560,15 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                body: @body,
-                                footer: @footer,
-                                media: @media,
-                                header_text: @header_text,
-                                actions: @actions,
+                                "body": @body,
+                                "footer": @footer,
+                                "media": @media,
+                                "header_text": @header_text,
+                                "actions": @actions,
                         }.to_json(options)
                         end
                     end
+
 
                     ##
                     # Initialize the ContentList
@@ -589,6 +590,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, headers: headers, data: content_create_request.to_json)
                         ContentInstance.new(
                             @version,
@@ -662,8 +667,11 @@ module Twilio
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
+                        headers = Twilio::Values.of({})
+                        
+                        
 
-                        response = @version.page('GET', @uri, params: params)
+                        response = @version.page('GET', @uri, params: params, headers: headers)
 
                         ContentPage.new(@version, response, @solution)
                     end
@@ -714,6 +722,8 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -723,6 +733,10 @@ module Twilio
                     def fetch
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
                         ContentInstance.new(

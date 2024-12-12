@@ -55,6 +55,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         UserInstance.new(
                             @version,
@@ -128,8 +132,11 @@ module Twilio
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
+                        headers = Twilio::Values.of({})
+                        
+                        
 
-                        response = @version.page('GET', @uri, params: params)
+                        response = @version.page('GET', @uri, params: params, headers: headers)
 
                         UserPage.new(@version, response, @solution)
                     end
@@ -182,6 +189,8 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
                         
+                        
+                        
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -191,6 +200,10 @@ module Twilio
                     def fetch
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
                         UserInstance.new(
@@ -221,6 +234,10 @@ module Twilio
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+                        
+                        
+                        
+                        
                         
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         UserInstance.new(

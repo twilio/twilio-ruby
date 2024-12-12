@@ -46,6 +46,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
                         
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         PluginReleaseInstance.new(
                             @version,
@@ -125,8 +129,11 @@ module Twilio
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
+                        headers = Twilio::Values.of({})
+                        
+                        
 
-                        response = @version.page('GET', @uri, params: params)
+                        response = @version.page('GET', @uri, params: params, headers: headers)
 
                         PluginReleasePage.new(@version, response, @solution)
                     end
@@ -177,6 +184,10 @@ module Twilio
                     )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
                         PluginReleaseInstance.new(

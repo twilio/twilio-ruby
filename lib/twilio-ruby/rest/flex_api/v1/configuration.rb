@@ -67,6 +67,10 @@ module Twilio
                         })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
+                        
+                        
                         payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         ConfigurationInstance.new(
                             @version,
@@ -83,6 +87,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.update('POST', @uri, headers: headers, data: body.to_json)
                         ConfigurationInstance.new(
                             @version,

@@ -50,6 +50,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         InteractionInstance.new(
                             @version,
@@ -89,6 +93,10 @@ module Twilio
                     def fetch
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
                         InteractionInstance.new(

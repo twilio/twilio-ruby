@@ -17,12 +17,12 @@ module Twilio
     module REST
         class Iam < IamBase
             class V1 < Version
-                class KeyList < ListResource
+                class NewApiKeyList < ListResource
                 
                     ##
-                    # Initialize the KeyList
+                    # Initialize the NewApiKeyList
                     # @param [Version] version Version that contains the resource
-                    # @return [KeyList] KeyList
+                    # @return [NewApiKeyList] NewApiKeyList
                     def initialize(version)
                         super(version)
                         # Path Solution
@@ -31,12 +31,12 @@ module Twilio
                         
                     end
                     ##
-                    # Create the KeyInstance
+                    # Create the NewApiKeyInstance
                     # @param [String] account_sid The SID of the [Account](https://www.twilio.com/docs/iam/api/account) that created the Payments resource.
                     # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
                     # @param [Keytype] key_type 
                     # @param [Object] policy The \\\\`Policy\\\\` object is a collection that specifies the allowed Twilio permissions for the restricted key. For more information on the permissions available with restricted API keys, refer to the [Twilio documentation](https://www.twilio.com/docs/iam/api-keys/restricted-api-keys#permissions-available-with-restricted-api-keys).
-                    # @return [KeyInstance] Created KeyInstance
+                    # @return [NewApiKeyInstance] Created NewApiKeyInstance
                     def create(
                         account_sid: nil, 
                         friendly_name: :unset, 
@@ -53,8 +53,12 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, data: data, headers: headers)
-                        KeyInstance.new(
+                        NewApiKeyInstance.new(
                             @version,
                             payload,
                         )
@@ -65,17 +69,17 @@ module Twilio
 
                     # Provide a user friendly representation
                     def to_s
-                        '#<Twilio.Iam.V1.KeyList>'
+                        '#<Twilio.Iam.V1.NewApiKeyList>'
                     end
                 end
 
-                class KeyPage < Page
+                class NewApiKeyPage < Page
                     ##
-                    # Initialize the KeyPage
+                    # Initialize the NewApiKeyPage
                     # @param [Version] version Version that contains the resource
                     # @param [Response] response Response from the API
                     # @param [Hash] solution Path solution for the resource
-                    # @return [KeyPage] KeyPage
+                    # @return [NewApiKeyPage] NewApiKeyPage
                     def initialize(version, response, solution)
                         super(version, response)
 
@@ -84,29 +88,29 @@ module Twilio
                     end
 
                     ##
-                    # Build an instance of KeyInstance
+                    # Build an instance of NewApiKeyInstance
                     # @param [Hash] payload Payload response from the API
-                    # @return [KeyInstance] KeyInstance
+                    # @return [NewApiKeyInstance] NewApiKeyInstance
                     def get_instance(payload)
-                        KeyInstance.new(@version, payload)
+                        NewApiKeyInstance.new(@version, payload)
                     end
 
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        '<Twilio.Iam.V1.KeyPage>'
+                        '<Twilio.Iam.V1.NewApiKeyPage>'
                     end
                 end
-                class KeyInstance < InstanceResource
+                class NewApiKeyInstance < InstanceResource
                     ##
-                    # Initialize the KeyInstance
+                    # Initialize the NewApiKeyInstance
                     # @param [Version] version Version that contains the resource
                     # @param [Hash] payload payload that contains response from Twilio
                     # @param [String] account_sid The SID of the
-                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Key
+                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this NewApiKey
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
-                    # @return [KeyInstance] KeyInstance
+                    # @return [NewApiKeyInstance] NewApiKeyInstance
                     def initialize(version, payload )
                         super(version)
                         
@@ -161,13 +165,13 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        "<Twilio.Iam.V1.KeyInstance>"
+                        "<Twilio.Iam.V1.NewApiKeyInstance>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        "<Twilio.Iam.V1.KeyInstance>"
+                        "<Twilio.Iam.V1.NewApiKeyInstance>"
                     end
                 end
 

@@ -31,11 +31,12 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                total_submitted: @total_submitted,
-                                billable_items: @billable_items,
+                                "total_submitted": @total_submitted,
+                                "billable_items": @billable_items,
                         }.to_json(options)
                         end
                     end
+
 
                     ##
                     # Initialize the InstalledAddOnUsageList
@@ -57,6 +58,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, headers: headers, data: marketplace_v1_installed_add_on_installed_add_on_usage.to_json)
                         InstalledAddOnUsageInstance.new(
                             @version,

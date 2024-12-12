@@ -73,6 +73,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
                         
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         AssessmentsInstance.new(
                             @version,
@@ -158,8 +162,11 @@ module Twilio
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
+                        headers = Twilio::Values.of({})
+                        
+                        
 
-                        response = @version.page('GET', @uri, params: params)
+                        response = @version.page('GET', @uri, params: params, headers: headers)
 
                         AssessmentsPage.new(@version, response, @solution)
                     end
@@ -222,6 +229,10 @@ module Twilio
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                        
                         
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         AssessmentsInstance.new(

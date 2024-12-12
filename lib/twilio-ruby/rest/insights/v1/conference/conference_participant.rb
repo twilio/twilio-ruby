@@ -116,8 +116,11 @@ module Twilio
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
+                        headers = Twilio::Values.of({})
+                        
+                        
 
-                        response = @version.page('GET', @uri, params: params)
+                        response = @version.page('GET', @uri, params: params, headers: headers)
 
                         ConferenceParticipantPage.new(@version, response, @solution)
                     end
@@ -175,6 +178,10 @@ module Twilio
                             'Metrics' => metrics,
                         })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         ConferenceParticipantInstance.new(

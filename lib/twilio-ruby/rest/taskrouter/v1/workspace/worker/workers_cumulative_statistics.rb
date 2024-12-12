@@ -80,6 +80,10 @@ module Twilio
                         })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
+                        
+                        
                         payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         WorkersCumulativeStatisticsInstance.new(
                             @version,

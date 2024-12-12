@@ -62,6 +62,8 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -71,6 +73,10 @@ module Twilio
                     def fetch
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
                         ApiKeyInstance.new(
@@ -96,6 +102,10 @@ module Twilio
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         ApiKeyInstance.new(

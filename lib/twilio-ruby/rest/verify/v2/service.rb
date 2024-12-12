@@ -101,6 +101,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, data: data, headers: headers)
                         ServiceInstance.new(
                             @version,
@@ -174,8 +178,11 @@ module Twilio
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
+                        headers = Twilio::Values.of({})
+                        
+                        
 
-                        response = @version.page('GET', @uri, params: params)
+                        response = @version.page('GET', @uri, params: params, headers: headers)
 
                         ServicePage.new(@version, response, @solution)
                     end
@@ -231,6 +238,8 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -240,6 +249,10 @@ module Twilio
                     def fetch
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
                         ServiceInstance.new(
@@ -319,6 +332,10 @@ module Twilio
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         ServiceInstance.new(

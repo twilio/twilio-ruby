@@ -39,6 +39,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, headers: headers, data: body.to_json)
                         BulkEligibilityInstance.new(
                             @version,
@@ -77,6 +81,10 @@ module Twilio
                     def fetch
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
                         BulkEligibilityInstance.new(

@@ -62,6 +62,8 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 

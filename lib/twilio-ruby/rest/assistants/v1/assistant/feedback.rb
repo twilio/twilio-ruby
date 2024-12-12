@@ -35,13 +35,14 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                message_id: @message_id,
-                                score: @score,
-                                session_id: @session_id,
-                                text: @text,
+                                "message_id": @message_id,
+                                "score": @score,
+                                "session_id": @session_id,
+                                "text": @text,
                         }.to_json(options)
                         end
                     end
+
 
                     ##
                     # Initialize the FeedbackList
@@ -63,6 +64,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, headers: headers, data: assistants_v1_service_create_feedback_request.to_json)
                         FeedbackInstance.new(
                             @version,
@@ -137,8 +142,11 @@ module Twilio
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
+                        headers = Twilio::Values.of({})
+                        
+                        
 
-                        response = @version.page('GET', @uri, params: params)
+                        response = @version.page('GET', @uri, params: params, headers: headers)
 
                         FeedbackPage.new(@version, response, @solution)
                     end

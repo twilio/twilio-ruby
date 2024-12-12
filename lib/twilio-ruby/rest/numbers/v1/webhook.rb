@@ -17,12 +17,12 @@ module Twilio
     module REST
         class Numbers < NumbersBase
             class V1 < Version
-                class PortingWebhookConfigurationFetchList < ListResource
+                class WebhookList < ListResource
                 
                     ##
-                    # Initialize the PortingWebhookConfigurationFetchList
+                    # Initialize the WebhookList
                     # @param [Version] version Version that contains the resource
-                    # @return [PortingWebhookConfigurationFetchList] PortingWebhookConfigurationFetchList
+                    # @return [WebhookList] WebhookList
                     def initialize(version)
                         super(version)
                         # Path Solution
@@ -31,14 +31,18 @@ module Twilio
                         
                     end
                     ##
-                    # Fetch the PortingWebhookConfigurationFetchInstance
-                    # @return [PortingWebhookConfigurationFetchInstance] Fetched PortingWebhookConfigurationFetchInstance
+                    # Fetch the WebhookInstance
+                    # @return [WebhookInstance] Fetched WebhookInstance
                     def fetch
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
+                        
+                        
                         payload = @version.fetch('GET', @uri, headers: headers)
-                        PortingWebhookConfigurationFetchInstance.new(
+                        WebhookInstance.new(
                             @version,
                             payload,
                         )
@@ -49,17 +53,17 @@ module Twilio
 
                     # Provide a user friendly representation
                     def to_s
-                        '#<Twilio.Numbers.V1.PortingWebhookConfigurationFetchList>'
+                        '#<Twilio.Numbers.V1.WebhookList>'
                     end
                 end
 
-                class PortingWebhookConfigurationFetchPage < Page
+                class WebhookPage < Page
                     ##
-                    # Initialize the PortingWebhookConfigurationFetchPage
+                    # Initialize the WebhookPage
                     # @param [Version] version Version that contains the resource
                     # @param [Response] response Response from the API
                     # @param [Hash] solution Path solution for the resource
-                    # @return [PortingWebhookConfigurationFetchPage] PortingWebhookConfigurationFetchPage
+                    # @return [WebhookPage] WebhookPage
                     def initialize(version, response, solution)
                         super(version, response)
 
@@ -68,29 +72,29 @@ module Twilio
                     end
 
                     ##
-                    # Build an instance of PortingWebhookConfigurationFetchInstance
+                    # Build an instance of WebhookInstance
                     # @param [Hash] payload Payload response from the API
-                    # @return [PortingWebhookConfigurationFetchInstance] PortingWebhookConfigurationFetchInstance
+                    # @return [WebhookInstance] WebhookInstance
                     def get_instance(payload)
-                        PortingWebhookConfigurationFetchInstance.new(@version, payload)
+                        WebhookInstance.new(@version, payload)
                     end
 
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        '<Twilio.Numbers.V1.PortingWebhookConfigurationFetchPage>'
+                        '<Twilio.Numbers.V1.WebhookPage>'
                     end
                 end
-                class PortingWebhookConfigurationFetchInstance < InstanceResource
+                class WebhookInstance < InstanceResource
                     ##
-                    # Initialize the PortingWebhookConfigurationFetchInstance
+                    # Initialize the WebhookInstance
                     # @param [Version] version Version that contains the resource
                     # @param [Hash] payload payload that contains response from Twilio
                     # @param [String] account_sid The SID of the
-                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this PortingWebhookConfigurationFetch
+                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Webhook
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
-                    # @return [PortingWebhookConfigurationFetchInstance] PortingWebhookConfigurationFetchInstance
+                    # @return [WebhookInstance] WebhookInstance
                     def initialize(version, payload )
                         super(version)
                         
@@ -145,13 +149,13 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        "<Twilio.Numbers.V1.PortingWebhookConfigurationFetchInstance>"
+                        "<Twilio.Numbers.V1.WebhookInstance>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        "<Twilio.Numbers.V1.PortingWebhookConfigurationFetchInstance>"
+                        "<Twilio.Numbers.V1.WebhookInstance>"
                     end
                 end
 

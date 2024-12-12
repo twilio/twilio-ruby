@@ -35,11 +35,11 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                customer_ai: @customer_ai,
-                                name: @name,
-                                owner: @owner,
-                                personality_prompt: @personality_prompt,
-                                segment_credential: @segment_credential,
+                                "customer_ai": @customer_ai,
+                                "name": @name,
+                                "owner": @owner,
+                                "personality_prompt": @personality_prompt,
+                                "segment_credential": @segment_credential,
                         }.to_json(options)
                         end
                     end
@@ -54,8 +54,8 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                perception_engine_enabled: @perception_engine_enabled,
-                                personalization_engine_enabled: @personalization_engine_enabled,
+                                "perception_engine_enabled": @perception_engine_enabled,
+                                "personalization_engine_enabled": @personalization_engine_enabled,
                         }.to_json(options)
                         end
                     end
@@ -72,9 +72,9 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                profile_api_key: @profile_api_key,
-                                space_id: @space_id,
-                                write_key: @write_key,
+                                "profile_api_key": @profile_api_key,
+                                "space_id": @space_id,
+                                "write_key": @write_key,
                         }.to_json(options)
                         end
                     end
@@ -95,14 +95,15 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                customer_ai: @customer_ai,
-                                name: @name,
-                                owner: @owner,
-                                personality_prompt: @personality_prompt,
-                                segment_credential: @segment_credential,
+                                "customer_ai": @customer_ai,
+                                "name": @name,
+                                "owner": @owner,
+                                "personality_prompt": @personality_prompt,
+                                "segment_credential": @segment_credential,
                         }.to_json(options)
                         end
                     end
+
 
                     class AssistantsV1ServiceCreateAssistantRequest
                             # @param [customer_ai]: [AssistantList.AssistantsV1ServiceCustomerAi] 
@@ -120,11 +121,11 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                customer_ai: @customer_ai,
-                                name: @name,
-                                owner: @owner,
-                                personality_prompt: @personality_prompt,
-                                segment_credential: @segment_credential,
+                                "customer_ai": @customer_ai,
+                                "name": @name,
+                                "owner": @owner,
+                                "personality_prompt": @personality_prompt,
+                                "segment_credential": @segment_credential,
                         }.to_json(options)
                         end
                     end
@@ -139,8 +140,8 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                perception_engine_enabled: @perception_engine_enabled,
-                                personalization_engine_enabled: @personalization_engine_enabled,
+                                "perception_engine_enabled": @perception_engine_enabled,
+                                "personalization_engine_enabled": @personalization_engine_enabled,
                         }.to_json(options)
                         end
                     end
@@ -157,9 +158,9 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                profile_api_key: @profile_api_key,
-                                space_id: @space_id,
-                                write_key: @write_key,
+                                "profile_api_key": @profile_api_key,
+                                "space_id": @space_id,
+                                "write_key": @write_key,
                         }.to_json(options)
                         end
                     end
@@ -180,14 +181,15 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                customer_ai: @customer_ai,
-                                name: @name,
-                                owner: @owner,
-                                personality_prompt: @personality_prompt,
-                                segment_credential: @segment_credential,
+                                "customer_ai": @customer_ai,
+                                "name": @name,
+                                "owner": @owner,
+                                "personality_prompt": @personality_prompt,
+                                "segment_credential": @segment_credential,
                         }.to_json(options)
                         end
                     end
+
 
                     ##
                     # Initialize the AssistantList
@@ -209,6 +211,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, headers: headers, data: assistants_v1_service_create_assistant_request.to_json)
                         AssistantInstance.new(
                             @version,
@@ -282,8 +288,11 @@ module Twilio
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
+                        headers = Twilio::Values.of({})
+                        
+                        
 
-                        response = @version.page('GET', @uri, params: params)
+                        response = @version.page('GET', @uri, params: params, headers: headers)
 
                         AssistantPage.new(@version, response, @solution)
                     end
@@ -336,6 +345,8 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -345,6 +356,10 @@ module Twilio
                     def fetch
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
                         AssistantInstance.new(
@@ -363,6 +378,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.update('PUT', @uri, headers: headers, data: assistants_v1_service_update_assistant_request.to_json)
                         AssistantInstance.new(
                             @version,

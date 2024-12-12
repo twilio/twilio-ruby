@@ -98,8 +98,11 @@ module Twilio
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
+                        headers = Twilio::Values.of({})
+                        
+                        
 
-                        response = @version.page('GET', @uri, params: params)
+                        response = @version.page('GET', @uri, params: params, headers: headers)
 
                         InstalledAddOnExtensionPage.new(@version, response, @solution)
                     end
@@ -149,6 +152,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
+                        
+                        
                         payload = @version.fetch('GET', @uri, headers: headers)
                         InstalledAddOnExtensionInstance.new(
                             @version,
@@ -171,6 +178,10 @@ module Twilio
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.update('POST', @uri, data: data, headers: headers)
                         InstalledAddOnExtensionInstance.new(

@@ -39,6 +39,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, headers: headers, data: body.to_json)
                         BulkHostedNumberOrderInstance.new(
                             @version,
@@ -83,6 +87,10 @@ module Twilio
                             'OrderStatus' => order_status,
                         })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         BulkHostedNumberOrderInstance.new(

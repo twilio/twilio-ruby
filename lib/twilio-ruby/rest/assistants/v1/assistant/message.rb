@@ -37,14 +37,15 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                identity: @identity,
-                                session_id: @session_id,
-                                body: @body,
-                                webhook: @webhook,
-                                mode: @mode,
+                                "identity": @identity,
+                                "session_id": @session_id,
+                                "body": @body,
+                                "webhook": @webhook,
+                                "mode": @mode,
                         }.to_json(options)
                         end
                     end
+
 
                     ##
                     # Initialize the MessageList
@@ -66,6 +67,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, headers: headers, data: assistants_v1_service_assistant_send_message_request.to_json)
                         MessageInstance.new(
                             @version,

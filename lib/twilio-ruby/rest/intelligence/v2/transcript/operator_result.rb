@@ -104,8 +104,11 @@ module Twilio
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
+                        headers = Twilio::Values.of({})
+                        
+                        
 
-                        response = @version.page('GET', @uri, params: params)
+                        response = @version.page('GET', @uri, params: params, headers: headers)
 
                         OperatorResultPage.new(@version, response, @solution)
                     end
@@ -160,6 +163,10 @@ module Twilio
                             'Redacted' => redacted,
                         })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         OperatorResultInstance.new(

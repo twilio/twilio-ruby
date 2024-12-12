@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+[2024-12-12] Version 7.4.0
+--------------------------
+**Library - Feature**
+- [PR #735](https://github.com/twilio/twilio-ruby/pull/735): public oauth. Thanks to [@manisha1997](https://github.com/manisha1997)!
+
+
 [2024-12-05] Version 7.3.7
 --------------------------
 **Api**

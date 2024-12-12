@@ -67,6 +67,11 @@ module Twilio
                 @frontline_api ||= FrontlineApi.new self
             end
             ##
+            # Access the PreviewIam Twilio Domain
+            def preview_iam
+                @preview_iam ||= PreviewIam.new self
+            end
+            ##
             # Access the Iam Twilio Domain
             def iam
                 @iam ||= Iam.new self
@@ -132,10 +137,6 @@ module Twilio
                 @preview ||= Preview.new self
             end
             ##
-            # Access the Preview Iam Twilio Domain
-            def preview_iam
-                @preview_iam ||=PreviewIam.new self
-            end
             # Access the Pricing Twilio Domain
             def pricing
                 @pricing ||= Pricing.new self
@@ -238,7 +239,7 @@ module Twilio
             def available_phone_numbers(countryCode=:unset)
                 self.api.v2010.account.available_phone_numbers(countryCode)
             end
-
+            
             ##
             # @param [string] sid The SID of the Call resource to fetch.
 
@@ -287,8 +288,8 @@ module Twilio
             def messages(sid=:unset)
                 self.api.v2010.account.messages(sid)
             end
-
-
+            
+            
             ##
             # @param [string] sid The Twilio-provided string that uniquely identifies the Notification resource to fetch.
 
@@ -336,8 +337,8 @@ module Twilio
             def signing_keys(sid=:unset)
                 self.api.v2010.account.signing_keys(sid)
             end
-
-
+            
+            
             ##
             # @param [string] sid The Twilio-provided string that uniquely identifies the Transcription resource to fetch.
 
@@ -346,8 +347,8 @@ module Twilio
             def transcriptions(sid=:unset)
                 self.api.v2010.account.transcriptions(sid)
             end
-
-
+            
+            
 
             ##
             # Provide a user friendly representation

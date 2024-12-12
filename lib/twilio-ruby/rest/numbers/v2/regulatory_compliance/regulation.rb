@@ -122,8 +122,11 @@ module Twilio
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
+                        headers = Twilio::Values.of({})
+                        
+                        
 
-                        response = @version.page('GET', @uri, params: params)
+                        response = @version.page('GET', @uri, params: params, headers: headers)
 
                         RegulationPage.new(@version, response, @solution)
                     end
@@ -177,6 +180,10 @@ module Twilio
                             'IncludeConstraints' => include_constraints,
                         })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, params: params, headers: headers)
                         RegulationInstance.new(

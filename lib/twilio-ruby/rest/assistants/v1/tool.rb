@@ -35,11 +35,11 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                description: @description,
-                                id: @id,
-                                name: @name,
-                                policy_details: @policy_details,
-                                type: @type,
+                                "description": @description,
+                                "id": @id,
+                                "name": @name,
+                                "policy_details": @policy_details,
+                                "type": @type,
                         }.to_json(options)
                         end
                     end
@@ -64,13 +64,13 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                assistant_id: @assistant_id,
-                                description: @description,
-                                enabled: @enabled,
-                                meta: @meta,
-                                name: @name,
-                                policy: @policy,
-                                type: @type,
+                                "assistant_id": @assistant_id,
+                                "description": @description,
+                                "enabled": @enabled,
+                                "meta": @meta,
+                                "name": @name,
+                                "policy": @policy,
+                                "type": @type,
                         }.to_json(options)
                         end
                     end
@@ -95,16 +95,17 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                assistant_id: @assistant_id,
-                                description: @description,
-                                enabled: @enabled,
-                                meta: @meta,
-                                name: @name,
-                                policy: @policy,
-                                type: @type,
+                                "assistant_id": @assistant_id,
+                                "description": @description,
+                                "enabled": @enabled,
+                                "meta": @meta,
+                                "name": @name,
+                                "policy": @policy,
+                                "type": @type,
                         }.to_json(options)
                         end
                     end
+
 
                     class AssistantsV1ServiceCreatePolicyRequest
                             # @param [description]: [String] The description of the policy.
@@ -122,11 +123,11 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                description: @description,
-                                id: @id,
-                                name: @name,
-                                policy_details: @policy_details,
-                                type: @type,
+                                "description": @description,
+                                "id": @id,
+                                "name": @name,
+                                "policy_details": @policy_details,
+                                "type": @type,
                         }.to_json(options)
                         end
                     end
@@ -151,13 +152,13 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                assistant_id: @assistant_id,
-                                description: @description,
-                                enabled: @enabled,
-                                meta: @meta,
-                                name: @name,
-                                policy: @policy,
-                                type: @type,
+                                "assistant_id": @assistant_id,
+                                "description": @description,
+                                "enabled": @enabled,
+                                "meta": @meta,
+                                "name": @name,
+                                "policy": @policy,
+                                "type": @type,
                         }.to_json(options)
                         end
                     end
@@ -182,16 +183,17 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                assistant_id: @assistant_id,
-                                description: @description,
-                                enabled: @enabled,
-                                meta: @meta,
-                                name: @name,
-                                policy: @policy,
-                                type: @type,
+                                "assistant_id": @assistant_id,
+                                "description": @description,
+                                "enabled": @enabled,
+                                "meta": @meta,
+                                "name": @name,
+                                "policy": @policy,
+                                "type": @type,
                         }.to_json(options)
                         end
                     end
+
 
                     ##
                     # Initialize the ToolList
@@ -213,6 +215,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, headers: headers, data: assistants_v1_service_create_tool_request.to_json)
                         ToolInstance.new(
                             @version,
@@ -292,8 +298,11 @@ module Twilio
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
+                        headers = Twilio::Values.of({})
+                        
+                        
 
-                        response = @version.page('GET', @uri, params: params)
+                        response = @version.page('GET', @uri, params: params, headers: headers)
 
                         ToolPage.new(@version, response, @solution)
                     end
@@ -342,6 +351,8 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
+                        
+                        
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
@@ -351,6 +362,10 @@ module Twilio
                     def fetch
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
                         ToolInstance.new(
@@ -369,6 +384,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.update('PUT', @uri, headers: headers, data: assistants_v1_service_update_tool_request.to_json)
                         ToolInstance.new(
                             @version,

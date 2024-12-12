@@ -27,10 +27,11 @@ module Twilio
                         end
                         def to_json(options = {})
                         {
-                                referral_account_sid: @referral_account_sid,
+                                "referral_account_sid": @referral_account_sid,
                         }.to_json(options)
                         end
                     end
+
 
                     ##
                     # Initialize the ReferralConversionList
@@ -52,6 +53,10 @@ module Twilio
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
                         payload = @version.create('POST', @uri, headers: headers, data: create_referral_conversion_request.to_json)
                         ReferralConversionInstance.new(
                             @version,
