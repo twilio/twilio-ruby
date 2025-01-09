@@ -244,6 +244,7 @@ module Twilio
                             'status' => payload['status'],
                             'type' => payload['type'],
                             'url' => payload['url'],
+                            'embedding_model' => payload['embedding_model'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                         }
@@ -310,6 +311,12 @@ module Twilio
                     # @return [String] The url of the knowledge resource.
                     def url
                         @properties['url']
+                    end
+                    
+                    ##
+                    # @return [String] The embedding model to be used for the knowledge source.
+                    def embedding_model
+                        @properties['embedding_model']
                     end
                     
                     ##

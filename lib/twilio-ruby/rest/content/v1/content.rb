@@ -213,37 +213,15 @@ module Twilio
                     class FlowsPageComponent
                             # @param [label]: [String] 
                             # @param [type]: [String] 
-                            # @param [text]: [String] 
-                            # @param [options]: [Array<ContentList.FlowsPageComponentSelectItem>] 
-                        attr_accessor :label, :type, :text, :options
+                        attr_accessor :label, :type
                         def initialize(payload)
                                 @label = payload["label"]
                                 @type = payload["type"]
-                                @text = payload["text"]
-                                @options = payload["options"]
                         end
                         def to_json(options = {})
                         {
                                 "label": @label,
                                 "type": @type,
-                                "text": @text,
-                                "options": @options,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class FlowsPageComponentSelectItem
-                            # @param [id]: [String] 
-                            # @param [title]: [String] 
-                        attr_accessor :id, :title
-                        def initialize(payload)
-                                @id = payload["id"]
-                                @title = payload["title"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "id": @id,
-                                "title": @title,
                         }.to_json(options)
                         end
                     end

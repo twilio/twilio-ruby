@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2025-01-09] Version 7.4.1
+--------------------------
+**Library - Chore**
+- [PR #736](https://github.com/twilio/twilio-ruby/pull/736): removing jruby-9.2. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+
+**Numbers**
+- Change beta feature flag to use v2/BulkHostedNumberOrders
+
+
 [2024-12-12] Version 7.4.0
 --------------------------
 **Library - Feature**

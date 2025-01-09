@@ -26,7 +26,8 @@ module Twilio
                             # @param [name]: [String] The name of the tool.
                             # @param [policy]: [KnowledgeList.AssistantsV1ServiceCreatePolicyRequest] 
                             # @param [type]: [String] The type of the knowledge source.
-                        attr_accessor :assistant_id, :description, :knowledge_source_details, :name, :policy, :type
+                            # @param [embedding_model]: [String] The embedding model to be used for the knowledge source. It's required for 'Database' type but disallowed for other types.
+                        attr_accessor :assistant_id, :description, :knowledge_source_details, :name, :policy, :type, :embedding_model
                         def initialize(payload)
                                 @assistant_id = payload["assistant_id"]
                                 @description = payload["description"]
@@ -34,6 +35,7 @@ module Twilio
                                 @name = payload["name"]
                                 @policy = payload["policy"]
                                 @type = payload["type"]
+                                @embedding_model = payload["embedding_model"]
                         end
                         def to_json(options = {})
                         {
@@ -43,6 +45,7 @@ module Twilio
                                 "name": @name,
                                 "policy": @policy,
                                 "type": @type,
+                                "embedding_model": @embedding_model,
                         }.to_json(options)
                         end
                     end
@@ -78,13 +81,15 @@ module Twilio
                             # @param [name]: [String] The name of the knowledge source.
                             # @param [policy]: [KnowledgeList.AssistantsV1ServiceCreatePolicyRequest] 
                             # @param [type]: [String] The description of the knowledge source.
-                        attr_accessor :description, :knowledge_source_details, :name, :policy, :type
+                            # @param [embedding_model]: [String] The embedding model to be used for the knowledge source. It's only applicable to 'Database' type.
+                        attr_accessor :description, :knowledge_source_details, :name, :policy, :type, :embedding_model
                         def initialize(payload)
                                 @description = payload["description"]
                                 @knowledge_source_details = payload["knowledge_source_details"]
                                 @name = payload["name"]
                                 @policy = payload["policy"]
                                 @type = payload["type"]
+                                @embedding_model = payload["embedding_model"]
                         end
                         def to_json(options = {})
                         {
@@ -93,6 +98,7 @@ module Twilio
                                 "name": @name,
                                 "policy": @policy,
                                 "type": @type,
+                                "embedding_model": @embedding_model,
                         }.to_json(options)
                         end
                     end
@@ -105,7 +111,8 @@ module Twilio
                             # @param [name]: [String] The name of the tool.
                             # @param [policy]: [KnowledgeList.AssistantsV1ServiceCreatePolicyRequest] 
                             # @param [type]: [String] The type of the knowledge source.
-                        attr_accessor :assistant_id, :description, :knowledge_source_details, :name, :policy, :type
+                            # @param [embedding_model]: [String] The embedding model to be used for the knowledge source. It's required for 'Database' type but disallowed for other types.
+                        attr_accessor :assistant_id, :description, :knowledge_source_details, :name, :policy, :type, :embedding_model
                         def initialize(payload)
                                 @assistant_id = payload["assistant_id"]
                                 @description = payload["description"]
@@ -113,6 +120,7 @@ module Twilio
                                 @name = payload["name"]
                                 @policy = payload["policy"]
                                 @type = payload["type"]
+                                @embedding_model = payload["embedding_model"]
                         end
                         def to_json(options = {})
                         {
@@ -122,6 +130,7 @@ module Twilio
                                 "name": @name,
                                 "policy": @policy,
                                 "type": @type,
+                                "embedding_model": @embedding_model,
                         }.to_json(options)
                         end
                     end
@@ -157,13 +166,15 @@ module Twilio
                             # @param [name]: [String] The name of the knowledge source.
                             # @param [policy]: [KnowledgeList.AssistantsV1ServiceCreatePolicyRequest] 
                             # @param [type]: [String] The description of the knowledge source.
-                        attr_accessor :description, :knowledge_source_details, :name, :policy, :type
+                            # @param [embedding_model]: [String] The embedding model to be used for the knowledge source. It's only applicable to 'Database' type.
+                        attr_accessor :description, :knowledge_source_details, :name, :policy, :type, :embedding_model
                         def initialize(payload)
                                 @description = payload["description"]
                                 @knowledge_source_details = payload["knowledge_source_details"]
                                 @name = payload["name"]
                                 @policy = payload["policy"]
                                 @type = payload["type"]
+                                @embedding_model = payload["embedding_model"]
                         end
                         def to_json(options = {})
                         {
@@ -172,6 +183,7 @@ module Twilio
                                 "name": @name,
                                 "policy": @policy,
                                 "type": @type,
+                                "embedding_model": @embedding_model,
                         }.to_json(options)
                         end
                     end
@@ -468,6 +480,7 @@ module Twilio
                             'status' => payload['status'],
                             'type' => payload['type'],
                             'url' => payload['url'],
+                            'embedding_model' => payload['embedding_model'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                         }
@@ -534,6 +547,12 @@ module Twilio
                     # @return [String] The url of the knowledge resource.
                     def url
                         @properties['url']
+                    end
+                    
+                    ##
+                    # @return [String] The embedding model to be used for the knowledge source.
+                    def embedding_model
+                        @properties['embedding_model']
                     end
                     
                     ##
