@@ -44,7 +44,7 @@ module Twilio
                     # @param [ScanMessageContent] scan_message_content 
                     # @param [Boolean] fallback_to_long_code [OBSOLETE] Former feature used to fallback to long code sender after certain short code message failures.
                     # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
-                    # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
+                    # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`. Default value is `14,400`.
                     # @param [Boolean] synchronous_validation Reserved.
                     # @param [String] usecase A string that describes the scenario in which the Messaging Service will be used. Possible values are `notifications`, `marketing`, `verification`, `discussion`, `poll`, `undeclared`.
                     # @param [Boolean] use_inbound_webhook_on_number A boolean value that indicates either the webhook url configured on the phone number will be used or `inbound_request_url`/`fallback_url` url will be called when a message is received from the phone number. If this field is enabled then the webhook url defined on the phone number will override the `inbound_request_url`/`fallback_url` defined for the Messaging Service.
@@ -263,7 +263,7 @@ module Twilio
                     # @param [ScanMessageContent] scan_message_content 
                     # @param [Boolean] fallback_to_long_code [OBSOLETE] Former feature used to fallback to long code sender after certain short code message failures.
                     # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
-                    # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
+                    # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`. Default value is `14,400`.
                     # @param [Boolean] synchronous_validation Reserved.
                     # @param [String] usecase A string that describes the scenario in which the Messaging Service will be used. Possible values are `notifications`, `marketing`, `verification`, `discussion`, `poll`, `undeclared`.
                     # @param [Boolean] use_inbound_webhook_on_number A boolean value that indicates either the webhook url configured on the phone number will be used or `inbound_request_url`/`fallback_url` url will be called when a message is received from the phone number. If this field is enabled then the webhook url defined on the phone number will override the `inbound_request_url`/`fallback_url` defined for the Messaging Service.
@@ -629,7 +629,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
+                    # @return [String] How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`. Default value is `14,400`.
                     def validity_period
                         @properties['validity_period']
                     end
@@ -694,7 +694,7 @@ module Twilio
                     # @param [ScanMessageContent] scan_message_content 
                     # @param [Boolean] fallback_to_long_code [OBSOLETE] Former feature used to fallback to long code sender after certain short code message failures.
                     # @param [Boolean] area_code_geomatch Whether to enable [Area Code Geomatch](https://www.twilio.com/docs/messaging/services#area-code-geomatch) on the Service Instance.
-                    # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`.
+                    # @param [String] validity_period How long, in seconds, messages sent from the Service are valid. Can be an integer from `1` to `14,400`. Default value is `14,400`.
                     # @param [Boolean] synchronous_validation Reserved.
                     # @param [String] usecase A string that describes the scenario in which the Messaging Service will be used. Possible values are `notifications`, `marketing`, `verification`, `discussion`, `poll`, `undeclared`.
                     # @param [Boolean] use_inbound_webhook_on_number A boolean value that indicates either the webhook url configured on the phone number will be used or `inbound_request_url`/`fallback_url` url will be called when a message is received from the phone number. If this field is enabled then the webhook url defined on the phone number will override the `inbound_request_url`/`fallback_url` defined for the Messaging Service.

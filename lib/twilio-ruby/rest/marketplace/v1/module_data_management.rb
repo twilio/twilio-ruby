@@ -186,6 +186,7 @@ module Twilio
                             'documentation' => payload['documentation'],
                             'configuration' => payload['configuration'],
                             'pricing' => payload['pricing'],
+                            'listings' => payload['listings'],
                         }
 
                         # Context
@@ -256,6 +257,12 @@ module Twilio
                     # @return [Hash] A JSON object for providing Listing specific pricing information.
                     def pricing
                         @properties['pricing']
+                    end
+                    
+                    ##
+                    # @return [Array<Hash>] 
+                    def listings
+                        @properties['listings']
                     end
                     
                     ##

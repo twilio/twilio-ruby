@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+[2025-01-13] Version 7.4.2
+--------------------------
+**Messaging**
+- Adds validity period Default value in service resource documentation
+
+
 [2025-01-09] Version 7.4.1
 --------------------------
 **Library - Chore**

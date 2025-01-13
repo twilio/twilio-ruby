@@ -23,6 +23,7 @@ module Twilio
                     @version = 'v1'
                     @available_add_ons = nil
                     @installed_add_ons = nil
+                    @module_data = nil
                     @module_data_management = nil
                     @referral_conversion = nil
                 end
@@ -54,6 +55,11 @@ module Twilio
                     else
                         InstalledAddOnContext.new(self, sid)
                     end
+                end
+                ##
+                # @return [Twilio::REST::Marketplace::V1::ModuleDataList]
+                def module_data
+                    @module_data ||= ModuleDataList.new self
                 end
                 ##
                 # @param [String] sid The unique identifier of a Listing.
