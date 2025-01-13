@@ -1,6 +1,16 @@
 twilio-ruby changelog
 =====================
 
+[2025-01-13] Version 7.4.2
+--------------------------
+**Library - Chore**
+- [PR #739](https://github.com/twilio/twilio-ruby/pull/739): add ostruct and benchmark in gemfile. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+- [PR #738](https://github.com/twilio/twilio-ruby/pull/738): add ostruct in gemfile. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+
+**Messaging**
+- Adds validity period Default value in service resource documentation
+
+
 [2025-01-09] Version 7.4.1
 --------------------------
 **Library - Chore**
