@@ -4,3 +4,4 @@ gemspec
 
 gem "base64"
 gem "rexml"
+gem 'ostruct'
