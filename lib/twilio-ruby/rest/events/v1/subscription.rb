@@ -35,17 +35,20 @@ module Twilio
                     # @param [String] description A human readable description for the Subscription **This value should not contain PII.**
                     # @param [String] sink_sid The SID of the sink that events selected by this subscription should be sent to. Sink must be active for the subscription to be created.
                     # @param [Array[Hash]] types An array of objects containing the subscribed Event Types
+                    # @param [Boolean] receive_events_from_subaccounts Receive events from all children accounts in the parent account subscription.
                     # @return [SubscriptionInstance] Created SubscriptionInstance
                     def create(
                         description: nil, 
                         sink_sid: nil, 
-                        types: nil
+                        types: nil, 
+                        receive_events_from_subaccounts: :unset
                     )
 
                         data = Twilio::Values.of({
                             'Description' => description,
                             'SinkSid' => sink_sid,
                             'Types' => Twilio.serialize_list(types) { |e| Twilio.serialize_object(e) },
+                            'ReceiveEventsFromSubaccounts' => receive_events_from_subaccounts,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -215,15 +218,18 @@ module Twilio
                     # Update the SubscriptionInstance
                     # @param [String] description A human readable description for the Subscription.
                     # @param [String] sink_sid The SID of the sink that events selected by this subscription should be sent to. Sink must be active for the subscription to be created.
+                    # @param [Boolean] receive_events_from_subaccounts Receive events from all children accounts in the parent account subscription.
                     # @return [SubscriptionInstance] Updated SubscriptionInstance
                     def update(
                         description: :unset, 
-                        sink_sid: :unset
+                        sink_sid: :unset, 
+                        receive_events_from_subaccounts: :unset
                     )
 
                         data = Twilio::Values.of({
                             'Description' => description,
                             'SinkSid' => sink_sid,
+                            'ReceiveEventsFromSubaccounts' => receive_events_from_subaccounts,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -326,6 +332,7 @@ module Twilio
                             'sink_sid' => payload['sink_sid'],
                             'url' => payload['url'],
                             'links' => payload['links'],
+                            'receive_events_from_subaccounts' => payload['receive_events_from_subaccounts'],
                         }
 
                         # Context
@@ -393,6 +400,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [Boolean] Receive events from all children accounts in the parent account subscription.
+                    def receive_events_from_subaccounts
+                        @properties['receive_events_from_subaccounts']
+                    end
+                    
+                    ##
                     # Delete the SubscriptionInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
@@ -412,15 +425,18 @@ module Twilio
                     # Update the SubscriptionInstance
                     # @param [String] description A human readable description for the Subscription.
                     # @param [String] sink_sid The SID of the sink that events selected by this subscription should be sent to. Sink must be active for the subscription to be created.
+                    # @param [Boolean] receive_events_from_subaccounts Receive events from all children accounts in the parent account subscription.
                     # @return [SubscriptionInstance] Updated SubscriptionInstance
                     def update(
                         description: :unset, 
-                        sink_sid: :unset
+                        sink_sid: :unset, 
+                        receive_events_from_subaccounts: :unset
                     )
 
                         context.update(
                             description: description, 
                             sink_sid: sink_sid, 
+                            receive_events_from_subaccounts: receive_events_from_subaccounts, 
                         )
                     end
 

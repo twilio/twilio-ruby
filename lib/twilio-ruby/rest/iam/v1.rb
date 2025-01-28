@@ -23,7 +23,7 @@ module Twilio
                     @version = 'v1'
                     @api_key = nil
                     @get_api_keys = nil
-                    @keys = nil
+                    @new_api_key = nil
                 end
 
                 ##
@@ -46,9 +46,9 @@ module Twilio
                     @get_api_keys ||= GetApiKeysList.new self
                 end
                 ##
-                # @return [Twilio::REST::Iam::V1::KeyList]
-                def keys
-                    @keys ||= KeyList.new self
+                # @return [Twilio::REST::Iam::V1::NewApiKeyList]
+                def new_api_key
+                    @new_api_key ||= NewApiKeyList.new self
                 end
                 ##
                 # Provide a user friendly representation
