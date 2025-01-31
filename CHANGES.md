@@ -1,6 +1,12 @@
 twilio-ruby changelog
 =====================
 
+[2025-01-31] Version 7.5.0
+--------------------------
+**Twiml**
+- Convert Twiml Attribute `speechModel` of type enum to string **(breaking change)**
+
+
 [2025-01-28] Version 7.4.3
 --------------------------
 **Library - Chore**
