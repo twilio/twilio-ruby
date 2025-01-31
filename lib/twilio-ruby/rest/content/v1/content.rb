@@ -444,25 +444,6 @@ module Twilio
                         end
                     end
 
-                    class TwilioSchedule
-                            # @param [id]: [String] 
-                            # @param [title]: [String] 
-                            # @param [time_slots]: [String] 
-                        attr_accessor :id, :title, :time_slots
-                        def initialize(payload)
-                                @id = payload["id"]
-                                @title = payload["title"]
-                                @time_slots = payload["time_slots"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "id": @id,
-                                "title": @title,
-                                "timeSlots": @time_slots,
-                        }.to_json(options)
-                        end
-                    end
-
                     class TwilioText
                             # @param [body]: [String] 
                         attr_accessor :body
@@ -487,10 +468,9 @@ module Twilio
                             # @param [twilio_catalog]: [ContentList.TwilioCatalog] 
                             # @param [twilio_carousel]: [ContentList.TwilioCarousel] 
                             # @param [twilio_flows]: [ContentList.TwilioFlows] 
-                            # @param [twilio_schedule]: [ContentList.TwilioSchedule] 
                             # @param [whatsapp_card]: [ContentList.WhatsappCard] 
                             # @param [whatsapp_authentication]: [ContentList.WhatsappAuthentication] 
-                        attr_accessor :twilio_text, :twilio_media, :twilio_location, :twilio_list_picker, :twilio_call_to_action, :twilio_quick_reply, :twilio_card, :twilio_catalog, :twilio_carousel, :twilio_flows, :twilio_schedule, :whatsapp_card, :whatsapp_authentication
+                        attr_accessor :twilio_text, :twilio_media, :twilio_location, :twilio_list_picker, :twilio_call_to_action, :twilio_quick_reply, :twilio_card, :twilio_catalog, :twilio_carousel, :twilio_flows, :whatsapp_card, :whatsapp_authentication
                         def initialize(payload)
                                 @twilio_text = payload["twilio_text"]
                                 @twilio_media = payload["twilio_media"]
@@ -502,7 +482,6 @@ module Twilio
                                 @twilio_catalog = payload["twilio_catalog"]
                                 @twilio_carousel = payload["twilio_carousel"]
                                 @twilio_flows = payload["twilio_flows"]
-                                @twilio_schedule = payload["twilio_schedule"]
                                 @whatsapp_card = payload["whatsapp_card"]
                                 @whatsapp_authentication = payload["whatsapp_authentication"]
                         end
@@ -518,7 +497,6 @@ module Twilio
                                 "twilio/catalog": @twilio_catalog,
                                 "twilio/carousel": @twilio_carousel,
                                 "twilio/flows": @twilio_flows,
-                                "twilio/schedule": @twilio_schedule,
                                 "whatsapp/card": @whatsapp_card,
                                 "whatsapp/authentication": @whatsapp_authentication,
                         }.to_json(options)

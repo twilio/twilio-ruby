@@ -71,7 +71,6 @@ module Twilio
                     # @param [String] date_of_birth User’s date of birth, in YYYYMMDD format. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] last_verified_date The date you obtained consent to call or text the end-user of the phone number or a date on which you are reasonably certain that the end-user could still be reached at that number. This query parameter is only used (optionally) for reassigned_number package requests.
                     # @param [String] verification_sid The unique identifier associated with a verification process through verify API. This query parameter is only used (optionally) for pre_fill package requests.
-                    # @param [String] partner_sub_id The optional partnerSubId parameter to provide context for your sub-accounts, tenantIDs, sender IDs or other segmentation, enhancing the accuracy of the risk analysis.
                     # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
                     def fetch(
                         fields: :unset, 
@@ -87,8 +86,7 @@ module Twilio
                         national_id: :unset, 
                         date_of_birth: :unset, 
                         last_verified_date: :unset, 
-                        verification_sid: :unset, 
-                        partner_sub_id: :unset
+                        verification_sid: :unset
                     )
 
                         params = Twilio::Values.of({
@@ -106,7 +104,6 @@ module Twilio
                             'DateOfBirth' => date_of_birth,
                             'LastVerifiedDate' => last_verified_date,
                             'VerificationSid' => verification_sid,
-                            'PartnerSubId' => partner_sub_id,
                         })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
@@ -334,7 +331,6 @@ module Twilio
                     # @param [String] date_of_birth User’s date of birth, in YYYYMMDD format. This query parameter is only used (optionally) for identity_match package requests.
                     # @param [String] last_verified_date The date you obtained consent to call or text the end-user of the phone number or a date on which you are reasonably certain that the end-user could still be reached at that number. This query parameter is only used (optionally) for reassigned_number package requests.
                     # @param [String] verification_sid The unique identifier associated with a verification process through verify API. This query parameter is only used (optionally) for pre_fill package requests.
-                    # @param [String] partner_sub_id The optional partnerSubId parameter to provide context for your sub-accounts, tenantIDs, sender IDs or other segmentation, enhancing the accuracy of the risk analysis.
                     # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
                     def fetch(
                         fields: :unset, 
@@ -350,8 +346,7 @@ module Twilio
                         national_id: :unset, 
                         date_of_birth: :unset, 
                         last_verified_date: :unset, 
-                        verification_sid: :unset, 
-                        partner_sub_id: :unset
+                        verification_sid: :unset
                     )
 
                         context.fetch(
@@ -369,7 +364,6 @@ module Twilio
                             date_of_birth: date_of_birth, 
                             last_verified_date: last_verified_date, 
                             verification_sid: verification_sid, 
-                            partner_sub_id: partner_sub_id, 
                         )
                     end
 
