@@ -251,7 +251,7 @@ module Twilio
 
                     ##
                     # Update the AddressInstance
-                    # @param [String] friendly_name A descriptive string that you create to describe the address. It can be up to 64 characters long.
+                    # @param [String] friendly_name A descriptive string that you create to describe the new address. It can be up to 64 characters long for Regulatory Compliance addresses and 32 characters long for Emergency addresses.
                     # @param [String] customer_name The name to associate with the address.
                     # @param [String] street The number and street address of the address.
                     # @param [String] city The city of the address.
@@ -518,7 +518,7 @@ module Twilio
 
                     ##
                     # Update the AddressInstance
-                    # @param [String] friendly_name A descriptive string that you create to describe the address. It can be up to 64 characters long.
+                    # @param [String] friendly_name A descriptive string that you create to describe the new address. It can be up to 64 characters long for Regulatory Compliance addresses and 32 characters long for Emergency addresses.
                     # @param [String] customer_name The name to associate with the address.
                     # @param [String] street The number and street address of the address.
                     # @param [String] city The city of the address.
