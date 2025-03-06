@@ -3,6 +3,18 @@
 _After `5.0.0` all `MINOR` and `MAJOR` version bumps will have upgrade notes
 posted here._
 
+[2025-03-07] 7.x.x to 8.x.x
+-----------------------------
+### Overview
+
+##### Twilio Ruby Helper Library’s major version 8.0.0 is now available. We ensured that you can upgrade to Ruby helper Library 8.0.0 version without any breaking changes of existing apis
+
+Behind the scenes Ruby Helper is now auto-generated via OpenAPI with this release. This enables us to rapidly add new features and enhance consistency across versions and languages. 
+
+Twiml Attribute speechModel is now of type string.
+
+To learn more about the Ruby Helper Library, check out [our docs](https://www.twilio.com/docs/libraries/ruby).
+
 [2024-01-19] 6.x.x to 7.x.x
 -----------------------------
 ### Overview
