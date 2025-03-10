@@ -7,9 +7,7 @@ posted here._
 -----------------------------
 ### Overview
 
-##### Twilio Ruby Helper Library’s major version 8.0.0 is now available. We ensured that you can upgrade to Ruby helper Library 8.0.0 version without any breaking changes of existing apis
-
-Behind the scenes Ruby Helper is now auto-generated via OpenAPI with this release. This enables us to rapidly add new features and enhance consistency across versions and languages. 
+##### Twilio Ruby Helper Library’s major version 8.0.0 is now available. Twiml Voice API now has a breaking change.
 
 Twiml Attribute speechModel is now of type string.
 
