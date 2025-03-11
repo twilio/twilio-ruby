@@ -1,6 +1,27 @@
 twilio-ruby changelog
 =====================
 
+[2025-03-11] Version 7.5.0
+--------------------------
+**Library - Feature**
+- [PR #745](https://github.com/twilio/twilio-ruby/pull/745): MVR ready. Thanks to [@manisha1997](https://github.com/manisha1997)!
+
+**Library - Chore**
+- [PR #744](https://github.com/twilio/twilio-ruby/pull/744): create image with required files. Thanks to [@sbansla](https://github.com/sbansla)!
+
+**Api**
+- Add the missing `emergency_enabled` field for `Address Service` endpoints
+
+**Messaging**
+- Add missing enums for A2P and TF
+
+**Numbers**
+- add missing enum values to hosted_number_order_status
+
+**Twiml**
+- Convert Twiml Attribute `speechModel` of type enum to string **(breaking change)**
+
+
 [2025-02-20] Version 7.4.5
 --------------------------
 **Flex**

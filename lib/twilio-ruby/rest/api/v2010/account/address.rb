@@ -92,6 +92,7 @@ module Twilio
                     # memory before returning.
                     # @param [String] customer_name The `customer_name` of the Address resources to read.
                     # @param [String] friendly_name The string that identifies the Address resources to read.
+                    # @param [Boolean] emergency_enabled Whether the address can be associated to a number for emergency calling.
                     # @param [String] iso_country The ISO country code of the Address resources to read.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -100,10 +101,11 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(customer_name: :unset, friendly_name: :unset, iso_country: :unset, limit: nil, page_size: nil)
+                    def list(customer_name: :unset, friendly_name: :unset, emergency_enabled: :unset, iso_country: :unset, limit: nil, page_size: nil)
                         self.stream(
                             customer_name: customer_name,
                             friendly_name: friendly_name,
+                            emergency_enabled: emergency_enabled,
                             iso_country: iso_country,
                             limit: limit,
                             page_size: page_size
@@ -116,6 +118,7 @@ module Twilio
                     # is reached.
                     # @param [String] customer_name The `customer_name` of the Address resources to read.
                     # @param [String] friendly_name The string that identifies the Address resources to read.
+                    # @param [Boolean] emergency_enabled Whether the address can be associated to a number for emergency calling.
                     # @param [String] iso_country The ISO country code of the Address resources to read.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
@@ -124,12 +127,13 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(customer_name: :unset, friendly_name: :unset, iso_country: :unset, limit: nil, page_size: nil)
+                    def stream(customer_name: :unset, friendly_name: :unset, emergency_enabled: :unset, iso_country: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
                             customer_name: customer_name,
                             friendly_name: friendly_name,
+                            emergency_enabled: emergency_enabled,
                             iso_country: iso_country,
                             page_size: limits[:page_size], )
 
@@ -155,15 +159,17 @@ module Twilio
                     # Request is executed immediately.
                     # @param [String] customer_name The `customer_name` of the Address resources to read.
                     # @param [String] friendly_name The string that identifies the Address resources to read.
+                    # @param [Boolean] emergency_enabled Whether the address can be associated to a number for emergency calling.
                     # @param [String] iso_country The ISO country code of the Address resources to read.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of AddressInstance
-                    def page(customer_name: :unset, friendly_name: :unset, iso_country: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(customer_name: :unset, friendly_name: :unset, emergency_enabled: :unset, iso_country: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'CustomerName' => customer_name,
                             'FriendlyName' => friendly_name,
+                            'EmergencyEnabled' => emergency_enabled,
                             'IsoCountry' => iso_country,
                             'PageToken' => page_token,
                             'Page' => page_number,
