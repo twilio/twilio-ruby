@@ -32,7 +32,7 @@ module Twilio
                     end
                     ##
                     # Create the SafelistInstance
-                    # @param [String] phone_number The phone number to be added in SafeList. Phone numbers must be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+                    # @param [String] phone_number The phone number or phone number 1k prefix to be added in SafeList. Phone numbers must be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
                     # @return [SafelistInstance] Created SafelistInstance
                     def create(
                         phone_number: nil
@@ -57,7 +57,7 @@ module Twilio
 
                     ##
                     # Delete the SafelistInstance
-                    # @param [String] phone_number The phone number to be removed from SafeList. Phone numbers must be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+                    # @param [String] phone_number The phone number or phone number 1k prefix to be removed from SafeList. Phone numbers must be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete(
                         phone_number: :unset
@@ -75,7 +75,7 @@ module Twilio
 
                     ##
                     # Fetch the SafelistInstance
-                    # @param [String] phone_number The phone number to be fetched from SafeList. Phone numbers must be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+                    # @param [String] phone_number The phone number or phone number 1k prefix to be fetched from SafeList. Phone numbers must be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
                     # @return [SafelistInstance] Fetched SafelistInstance
                     def fetch(
                         phone_number: :unset
@@ -162,7 +162,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The phone number in SafeList.
+                    # @return [String] The phone number or phone number 1k prefix in SafeList.
                     def phone_number
                         @properties['phone_number']
                     end

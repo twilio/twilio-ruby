@@ -78,27 +78,18 @@ module Twilio
 
                     ##
                     # Update the FlexUserInstance
-                    # @param [String] first_name First name of the User.
-                    # @param [String] last_name Last name of the User.
                     # @param [String] email Email of the User.
-                    # @param [String] friendly_name Friendly name of the User.
                     # @param [String] user_sid The unique SID identifier of the Twilio Unified User.
                     # @param [String] locale The locale preference of the user.
                     # @return [FlexUserInstance] Updated FlexUserInstance
                     def update(
-                        first_name: :unset, 
-                        last_name: :unset, 
                         email: :unset, 
-                        friendly_name: :unset, 
                         user_sid: :unset, 
                         locale: :unset
                     )
 
                         data = Twilio::Values.of({
-                            'FirstName' => first_name,
-                            'LastName' => last_name,
                             'Email' => email,
-                            'FriendlyName' => friendly_name,
                             'UserSid' => user_sid,
                             'Locale' => locale,
                         })
@@ -184,11 +175,8 @@ module Twilio
                             'worker_sid' => payload['worker_sid'],
                             'workspace_sid' => payload['workspace_sid'],
                             'flex_team_sid' => payload['flex_team_sid'],
-                            'first_name' => payload['first_name'],
-                            'last_name' => payload['last_name'],
                             'username' => payload['username'],
                             'email' => payload['email'],
-                            'friendly_name' => payload['friendly_name'],
                             'locale' => payload['locale'],
                             'roles' => payload['roles'],
                             'created_date' => Twilio.deserialize_iso8601_datetime(payload['created_date']),
@@ -256,18 +244,6 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] First name of the User.
-                    def first_name
-                        @properties['first_name']
-                    end
-                    
-                    ##
-                    # @return [String] Last name of the User.
-                    def last_name
-                        @properties['last_name']
-                    end
-                    
-                    ##
                     # @return [String] Username of the User.
                     def username
                         @properties['username']
@@ -277,12 +253,6 @@ module Twilio
                     # @return [String] Email of the User.
                     def email
                         @properties['email']
-                    end
-                    
-                    ##
-                    # @return [String] Friendly name of the User.
-                    def friendly_name
-                        @properties['friendly_name']
                     end
                     
                     ##
@@ -331,27 +301,18 @@ module Twilio
 
                     ##
                     # Update the FlexUserInstance
-                    # @param [String] first_name First name of the User.
-                    # @param [String] last_name Last name of the User.
                     # @param [String] email Email of the User.
-                    # @param [String] friendly_name Friendly name of the User.
                     # @param [String] user_sid The unique SID identifier of the Twilio Unified User.
                     # @param [String] locale The locale preference of the user.
                     # @return [FlexUserInstance] Updated FlexUserInstance
                     def update(
-                        first_name: :unset, 
-                        last_name: :unset, 
                         email: :unset, 
-                        friendly_name: :unset, 
                         user_sid: :unset, 
                         locale: :unset
                     )
 
                         context.update(
-                            first_name: first_name, 
-                            last_name: last_name, 
                             email: email, 
-                            friendly_name: friendly_name, 
                             user_sid: user_sid, 
                             locale: locale, 
                         )
