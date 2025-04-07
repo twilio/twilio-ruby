@@ -246,6 +246,7 @@ module Twilio
                             'engagement_sid' => payload['engagement_sid'],
                             'name' => payload['name'],
                             'context' => payload['context'],
+                            'parent_step_sid' => payload['parent_step_sid'],
                             'transitioned_from' => payload['transitioned_from'],
                             'transitioned_to' => payload['transitioned_to'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
@@ -304,6 +305,12 @@ module Twilio
                     # @return [Hash] The current state of the Flow's Execution. As a flow executes, we save its state in this context. We save data that your widgets can access as variables in configuration fields or in text areas as variable substitution.
                     def context
                         @properties['context']
+                    end
+                    
+                    ##
+                    # @return [String] The SID of the parent Step.
+                    def parent_step_sid
+                        @properties['parent_step_sid']
                     end
                     
                     ##

@@ -244,6 +244,7 @@ module Twilio
                             'account_sid' => payload['account_sid'],
                             'flow_sid' => payload['flow_sid'],
                             'execution_sid' => payload['execution_sid'],
+                            'parent_step_sid' => payload['parent_step_sid'],
                             'name' => payload['name'],
                             'context' => payload['context'],
                             'transitioned_from' => payload['transitioned_from'],
@@ -292,6 +293,12 @@ module Twilio
                     # @return [String] The SID of the Step's Execution resource.
                     def execution_sid
                         @properties['execution_sid']
+                    end
+                    
+                    ##
+                    # @return [String] The SID of the parent Step.
+                    def parent_step_sid
+                        @properties['parent_step_sid']
                     end
                     
                     ##

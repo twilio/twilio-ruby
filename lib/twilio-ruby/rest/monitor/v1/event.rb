@@ -295,7 +295,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The SID of the actor that caused the event, if available. Can be `null`.
+                    # @return [String] The SID of the actor that caused the event, if available. This can be either a User ID (matching the pattern `^US[0-9a-fA-F]{32}$`) or an Account SID (matching the pattern `^AC[0-9a-fA-F]{32}$`). If the actor's SID isn't available, this field will be `null`.
                     def actor_sid
                         @properties['actor_sid']
                     end
