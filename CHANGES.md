@@ -1,10 +1,10 @@
 twilio-ruby changelog
 =====================
 
-[2025-04-07] Version 7.5.2
+[2025-04-09] Version 6.0.0-rc.4
 --------------------------
-**Studio**
-- Add documentation for parent_step_sid field in Step resource
+**Library**
+- Test Release must not be used
 
 
 [2025-03-20] Version 7.5.1
