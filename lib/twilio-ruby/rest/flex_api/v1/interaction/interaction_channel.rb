@@ -145,6 +145,7 @@ module Twilio
 
                         # Dependents
                         @invites = nil
+                        @transfers = nil
                         @participants = nil
                     end
                     ##
@@ -207,6 +208,25 @@ module Twilio
                                 @version, interaction_sid: @solution[:interaction_sid], channel_sid: @solution[:sid], )
                       end
                       @invites
+                    end
+                    ##
+                    # Access the transfers
+                    # @return [InteractionTransferList]
+                    # @return [InteractionTransferContext] if sid was passed.
+                    def transfers(sid=:unset)
+
+                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+                        if sid != :unset
+                            return InteractionTransferContext.new(@version, @solution[:interaction_sid], @solution[:sid],sid )
+                        end
+
+                        unless @transfers
+                            @transfers = InteractionTransferList.new(
+                                @version, interaction_sid: @solution[:interaction_sid], channel_sid: @solution[:sid], )
+                        end
+
+                     @transfers
                     end
                     ##
                     # Access the participants
@@ -389,6 +409,13 @@ module Twilio
                     # @return [invites] invites
                     def invites
                         context.invites
+                    end
+
+                    ##
+                    # Access the transfers
+                    # @return [transfers] transfers
+                    def transfers
+                        context.transfers
                     end
 
                     ##

@@ -216,6 +216,7 @@ module Twilio
                         @us_app_to_person = nil
                         @phone_numbers = nil
                         @alpha_senders = nil
+                        @destination_alpha_senders = nil
                         @channel_senders = nil
                     end
                     ##
@@ -406,6 +407,25 @@ module Twilio
                         end
 
                      @alpha_senders
+                    end
+                    ##
+                    # Access the destination_alpha_senders
+                    # @return [DestinationAlphaSenderList]
+                    # @return [DestinationAlphaSenderContext] if sid was passed.
+                    def destination_alpha_senders(sid=:unset)
+
+                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
+
+                        if sid != :unset
+                            return DestinationAlphaSenderContext.new(@version, @solution[:sid],sid )
+                        end
+
+                        unless @destination_alpha_senders
+                            @destination_alpha_senders = DestinationAlphaSenderList.new(
+                                @version, service_sid: @solution[:sid], )
+                        end
+
+                     @destination_alpha_senders
                     end
                     ##
                     # Access the channel_senders
@@ -771,6 +791,13 @@ module Twilio
                     # @return [alpha_senders] alpha_senders
                     def alpha_senders
                         context.alpha_senders
+                    end
+
+                    ##
+                    # Access the destination_alpha_senders
+                    # @return [destination_alpha_senders] destination_alpha_senders
+                    def destination_alpha_senders
+                        context.destination_alpha_senders
                     end
 
                     ##

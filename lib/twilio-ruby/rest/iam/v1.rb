@@ -24,6 +24,7 @@ module Twilio
                     @api_key = nil
                     @get_api_keys = nil
                     @new_api_key = nil
+                    @token = nil
                 end
 
                 ##
@@ -49,6 +50,11 @@ module Twilio
                 # @return [Twilio::REST::Iam::V1::NewApiKeyList]
                 def new_api_key
                     @new_api_key ||= NewApiKeyList.new self
+                end
+                ##
+                # @return [Twilio::REST::Iam::V1::TokenList]
+                def token
+                    @token ||= TokenList.new self
                 end
                 ##
                 # Provide a user friendly representation

@@ -46,6 +46,7 @@ module Twilio
                     # @param [AddressRetention] address_retention 
                     # @param [Boolean] smart_encoded Whether to detect Unicode characters that have a similar GSM-7 character and replace them. Can be: `true` or `false`.
                     # @param [Array[String]] persistent_action Rich actions for non-SMS/MMS channels. Used for [sending location in WhatsApp messages](https://www.twilio.com/docs/whatsapp/message-features#location-messages-with-whatsapp).
+                    # @param [TrafficType] traffic_type 
                     # @param [Boolean] shorten_urls For Messaging Services with [Link Shortening configured](https://www.twilio.com/docs/messaging/features/link-shortening) only: A Boolean indicating whether or not Twilio should shorten links in the `body` of the Message. Default value is `false`. If `true`, the `messaging_service_sid` parameter must also be provided.
                     # @param [ScheduleType] schedule_type 
                     # @param [Time] send_at The time that Twilio will send the message. Must be in ISO 8601 format.
@@ -71,6 +72,7 @@ module Twilio
                         address_retention: :unset, 
                         smart_encoded: :unset, 
                         persistent_action: :unset, 
+                        traffic_type: :unset, 
                         shorten_urls: :unset, 
                         schedule_type: :unset, 
                         send_at: :unset, 
@@ -97,6 +99,7 @@ module Twilio
                             'AddressRetention' => address_retention,
                             'SmartEncoded' => smart_encoded,
                             'PersistentAction' => Twilio.serialize_list(persistent_action) { |e| e },
+                            'TrafficType' => traffic_type,
                             'ShortenUrls' => shorten_urls,
                             'ScheduleType' => schedule_type,
                             'SendAt' => Twilio.serialize_iso8601_datetime(send_at),

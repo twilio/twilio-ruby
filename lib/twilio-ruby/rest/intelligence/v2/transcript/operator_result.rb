@@ -249,6 +249,7 @@ module Twilio
                             'label_probabilities' => payload['label_probabilities'],
                             'extract_results' => payload['extract_results'],
                             'text_generation_results' => payload['text_generation_results'],
+                            'json_results' => payload['json_results'],
                             'transcript_sid' => payload['transcript_sid'],
                             'url' => payload['url'],
                         }
@@ -345,6 +346,12 @@ module Twilio
                     # @return [Hash] Output of a text generation operator for example Conversation Sumamary.
                     def text_generation_results
                         @properties['text_generation_results']
+                    end
+                    
+                    ##
+                    # @return [Hash] 
+                    def json_results
+                        @properties['json_results']
                     end
                     
                     ##

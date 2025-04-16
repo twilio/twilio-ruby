@@ -10,38 +10,28 @@
 # frozen_string_literal: true
 module Twilio
   module REST
-    class PreviewBase < Domain
+    class KnowledgeBase < Domain
       ##
-      # Initialize preview domain
+      # Initialize knowledge domain
       #
       # @param twilio - The twilio client
       #
       def initialize(twilio)
         super(twilio)
-        @base_url =  "https://preview.twilio.com"
-        @host = "preview.twilio.com"
+        @base_url =  "https://knowledge.twilio.com"
+        @host = "knowledge.twilio.com"
         @port = 443
-        @hosted_numbers = nil
-        @marketplace = nil
-        @wireless = nil
+        @v1 = nil
       end
 
-      def hosted_numbers
-        @hosted_numbers ||= Preview::HostedNumbers.new self
-      end
-
-      def marketplace
-        @marketplace ||= Preview::Marketplace.new self
-      end
-
-      def wireless
-        @wireless ||= Preview::Wireless.new self
+      def v1
+        @v1 ||= Knowledge::V1.new self
       end
 
       ##
       # Provide a user friendly representation
       def to_s
-        '<Twilio::REST::Preview>';
+        '<Twilio::REST::Knowledge::V1>';
       end
     end
   end

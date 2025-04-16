@@ -43,6 +43,7 @@ module Twilio
                     # @param [Array[String]] international_roaming The list of services that SIMs capable of using GPRS/3G/4G/LTE data connectivity can use outside of the United States. Can contain: `data` and `messaging`.
                     # @param [String] national_roaming_data_limit The total data usage (download and upload combined) in Megabytes that the Network allows during one month on non-home networks in the United States. The metering period begins the day of activation and ends on the same day in the following month. Can be up to 2TB. See [national roaming](https://www.twilio.com/docs/iot/wireless/api/rateplan-resource#national-roaming) for more info.
                     # @param [String] international_roaming_data_limit The total data usage (download and upload combined) in Megabytes that the Network allows during one month when roaming outside the United States. Can be up to 2TB.
+                    # @param [DataLimitStrategy] data_limit_strategy 
                     # @return [RatePlanInstance] Created RatePlanInstance
                     def create(
                         unique_name: :unset, 
@@ -55,7 +56,8 @@ module Twilio
                         national_roaming_enabled: :unset, 
                         international_roaming: :unset, 
                         national_roaming_data_limit: :unset, 
-                        international_roaming_data_limit: :unset
+                        international_roaming_data_limit: :unset, 
+                        data_limit_strategy: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -70,6 +72,7 @@ module Twilio
                             'InternationalRoaming' => Twilio.serialize_list(international_roaming) { |e| e },
                             'NationalRoamingDataLimit' => national_roaming_data_limit,
                             'InternationalRoamingDataLimit' => international_roaming_data_limit,
+                            'DataLimitStrategy' => data_limit_strategy,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
