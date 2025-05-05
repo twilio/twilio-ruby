@@ -39,9 +39,11 @@ module Twilio
                     # @param [String] status_callback_method The HTTP method Twilio should use to call `status_callback`. Can be `POST` or `GET`.
                     # @param [String] max_participants The maximum number of concurrent Participants allowed in the room. The maximum allowed value is 50.
                     # @param [Boolean] record_participants_on_connect Whether to start recording when Participants connect.
+                    # @param [Boolean] transcribe_participants_on_connect Whether to start transcriptions when Participants connect. If TranscriptionsConfiguration is not provided, default settings will be used.
                     # @param [Array[VideoCodec]] video_codecs An array of the video codecs that are supported when publishing a track in the room.  Can be: `VP8` and `H264`.
                     # @param [String] media_region The region for the Room's media server.  Can be one of the [available Media Regions](https://www.twilio.com/docs/video/ip-addresses#group-rooms-media-servers).
                     # @param [Object] recording_rules A collection of Recording Rules that describe how to include or exclude matching tracks for recording
+                    # @param [Object] transcriptions_configuration A collection of properties that describe transcription behaviour. If TranscribeParticipantsOnConnect is set to true and TranscriptionsConfiguration is not provided, default settings will be used.
                     # @param [Boolean] audio_only When set to true, indicates that the participants in the room will only publish audio. No video tracks will be allowed.
                     # @param [String] max_participant_duration The maximum number of seconds a Participant can be connected to the room. The maximum possible value is 86400 seconds (24 hours). The default is 14400 seconds (4 hours).
                     # @param [String] empty_room_timeout Configures how long (in minutes) a room will remain active after last participant leaves. Valid values range from 1 to 60 minutes (no fractions).
@@ -56,9 +58,11 @@ module Twilio
                         status_callback_method: :unset, 
                         max_participants: :unset, 
                         record_participants_on_connect: :unset, 
+                        transcribe_participants_on_connect: :unset, 
                         video_codecs: :unset, 
                         media_region: :unset, 
                         recording_rules: :unset, 
+                        transcriptions_configuration: :unset, 
                         audio_only: :unset, 
                         max_participant_duration: :unset, 
                         empty_room_timeout: :unset, 
@@ -74,9 +78,11 @@ module Twilio
                             'StatusCallbackMethod' => status_callback_method,
                             'MaxParticipants' => max_participants,
                             'RecordParticipantsOnConnect' => record_participants_on_connect,
+                            'TranscribeParticipantsOnConnect' => transcribe_participants_on_connect,
                             'VideoCodecs' => Twilio.serialize_list(video_codecs) { |e| e },
                             'MediaRegion' => media_region,
                             'RecordingRules' => Twilio.serialize_object(recording_rules),
+                            'TranscriptionsConfiguration' => Twilio.serialize_object(transcriptions_configuration),
                             'AudioOnly' => audio_only,
                             'MaxParticipantDuration' => max_participant_duration,
                             'EmptyRoomTimeout' => empty_room_timeout,

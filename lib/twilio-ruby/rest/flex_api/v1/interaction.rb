@@ -35,17 +35,20 @@ module Twilio
                     # @param [Object] channel The Interaction's channel.
                     # @param [Object] routing The Interaction's routing logic.
                     # @param [String] interaction_context_sid The Interaction context sid is used for adding a context lookup sid
+                    # @param [String] webhook_ttid The unique identifier for Interaction level webhook
                     # @return [InteractionInstance] Created InteractionInstance
                     def create(
                         channel: nil, 
                         routing: :unset, 
-                        interaction_context_sid: :unset
+                        interaction_context_sid: :unset, 
+                        webhook_ttid: :unset
                     )
 
                         data = Twilio::Values.of({
                             'Channel' => Twilio.serialize_object(channel),
                             'Routing' => Twilio.serialize_object(routing),
                             'InteractionContextSid' => interaction_context_sid,
+                            'WebhookTtid' => webhook_ttid,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -99,6 +102,32 @@ module Twilio
                         
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
+                        InteractionInstance.new(
+                            @version,
+                            payload,
+                            sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the InteractionInstance
+                    # @param [String] webhook_ttid The unique identifier for Interaction level webhook
+                    # @return [InteractionInstance] Updated InteractionInstance
+                    def update(
+                        webhook_ttid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'WebhookTtid' => webhook_ttid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         InteractionInstance.new(
                             @version,
                             payload,
@@ -190,6 +219,7 @@ module Twilio
                             'url' => payload['url'],
                             'links' => payload['links'],
                             'interaction_context_sid' => payload['interaction_context_sid'],
+                            'webhook_ttid' => payload['webhook_ttid'],
                         }
 
                         # Context
@@ -245,11 +275,30 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] 
+                    def webhook_ttid
+                        @properties['webhook_ttid']
+                    end
+                    
+                    ##
                     # Fetch the InteractionInstance
                     # @return [InteractionInstance] Fetched InteractionInstance
                     def fetch
 
                         context.fetch
+                    end
+
+                    ##
+                    # Update the InteractionInstance
+                    # @param [String] webhook_ttid The unique identifier for Interaction level webhook
+                    # @return [InteractionInstance] Updated InteractionInstance
+                    def update(
+                        webhook_ttid: :unset
+                    )
+
+                        context.update(
+                            webhook_ttid: webhook_ttid, 
+                        )
                     end
 
                     ##
