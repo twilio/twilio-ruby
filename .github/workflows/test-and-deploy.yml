@@ -32,7 +32,7 @@ jobs:
 
       # Excludes incompatible versions of ruby
       - name: Set up linter
-        run: bundle add rubocop --version "~> 1.24.1" --group "development" --skip-install
+        run: bundle add rubocop --group "development" --skip-install
         if: ${{ matrix.ruby != '2.4' }}
 
       - run: bundle install --with development
