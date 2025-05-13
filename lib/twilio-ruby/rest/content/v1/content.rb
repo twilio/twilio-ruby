@@ -41,13 +41,15 @@ module Twilio
                             # @param [url]: [String] 
                             # @param [phone]: [String] 
                             # @param [code]: [String] 
-                        attr_accessor :type, :title, :url, :phone, :code
+                            # @param [id]: [String] 
+                        attr_accessor :type, :title, :url, :phone, :code, :id
                         def initialize(payload)
                                 @type = payload["type"]
                                 @title = payload["title"]
                                 @url = payload["url"]
                                 @phone = payload["phone"]
                                 @code = payload["code"]
+                                @id = payload["id"]
                         end
                         def to_json(options = {})
                         {
@@ -56,6 +58,7 @@ module Twilio
                                 "url": @url,
                                 "phone": @phone,
                                 "code": @code,
+                                "id": @id,
                         }.to_json(options)
                         end
                     end
@@ -397,17 +400,23 @@ module Twilio
                             # @param [latitude]: [Float] 
                             # @param [longitude]: [Float] 
                             # @param [label]: [String] 
-                        attr_accessor :latitude, :longitude, :label
+                            # @param [id]: [String] 
+                            # @param [address]: [String] 
+                        attr_accessor :latitude, :longitude, :label, :id, :address
                         def initialize(payload)
                                 @latitude = payload["latitude"]
                                 @longitude = payload["longitude"]
                                 @label = payload["label"]
+                                @id = payload["id"]
+                                @address = payload["address"]
                         end
                         def to_json(options = {})
                         {
                                 "latitude": @latitude,
                                 "longitude": @longitude,
                                 "label": @label,
+                                "id": @id,
+                                "address": @address,
                         }.to_json(options)
                         end
                     end

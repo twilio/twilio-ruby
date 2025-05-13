@@ -194,7 +194,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Float] Percentage of the confirmed messages over the total, defined by (total_converted/total_attempts)*100. 
+                    # @return [String] Percentage of the confirmed messages over the total, defined by (total_converted/total_attempts)*100. 
                     def conversion_rate_percentage
                         @properties['conversion_rate_percentage']
                     end

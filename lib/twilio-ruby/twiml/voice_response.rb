@@ -1978,13 +1978,18 @@ module Twilio
       # dtmf_detection:: Whether DTMF tones should be detected and reported in speech transcription
       # welcome_greeting:: The sentence to be played automatically when the session is connected
       # partial_prompts:: Whether partial prompts should be reported to WebSocket server before the caller finishes speaking
-      # interruptible:: Whether caller's speaking can interrupt the play of text-to-speech
-      # interrupt_by_dtmf:: Whether DTMF tone can interrupt the play of text-to-speech
-      # welcome_greeting_interruptible:: Whether caller's speaking can interrupt the welcome greeting
-      # debug:: Whether debugging on the session is enabled
+      # welcome_greeting_interruptible:: "Whether and how the input from a caller, such as speaking or DTMF can interrupt the welcome greeting
+      # interruptible:: Whether and how the input from a caller, such as speaking or DTMF can interrupt the play of text-to-speech
+      # preemptible:: Whether subsequent text-to-speech or play media can interrupt the on-going play of text-to-speech or media
+      # hints:: Phrases to help better accuracy in speech recognition of these pharases
+      # intelligence_service:: The Conversational Intelligence Service id or unique name to be used for the session
+      # report_input_during_agent_speech:: Whether prompts should be reported to WebSocket server when text-to-speech playing and interrupt is disabled
+      # elevenlabs_text_normalization:: When using ElevenLabs as TTS provider, this parameter allows you to enable or disable its text normalization feature
+      # interrupt_sensitivity:: Set the sensitivity of the interrupt feature for speech. The value can be low, medium, or high
+      # debug:: Multiple debug options to be used for troubleshooting
       # keyword_args:: additional attributes
-      def conversation_relay(url: nil, language: nil, tts_language: nil, transcription_language: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, profanity_filter: nil, dtmf_detection: nil, welcome_greeting: nil, partial_prompts: nil, interruptible: nil, interrupt_by_dtmf: nil, welcome_greeting_interruptible: nil, debug: nil, **keyword_args)
-        conversation_relay = ConversationRelay.new(url: url, language: language, tts_language: tts_language, transcription_language: transcription_language, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, profanity_filter: profanity_filter, dtmf_detection: dtmf_detection, welcome_greeting: welcome_greeting, partial_prompts: partial_prompts, interruptible: interruptible, interrupt_by_dtmf: interrupt_by_dtmf, welcome_greeting_interruptible: welcome_greeting_interruptible, debug: debug, **keyword_args)
+      def conversation_relay(url: nil, language: nil, tts_language: nil, transcription_language: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, profanity_filter: nil, dtmf_detection: nil, welcome_greeting: nil, partial_prompts: nil, welcome_greeting_interruptible: nil, interruptible: nil, preemptible: nil, hints: nil, intelligence_service: nil, report_input_during_agent_speech: nil, elevenlabs_text_normalization: nil, interrupt_sensitivity: nil, debug: nil, **keyword_args)
+        conversation_relay = ConversationRelay.new(url: url, language: language, tts_language: tts_language, transcription_language: transcription_language, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, profanity_filter: profanity_filter, dtmf_detection: dtmf_detection, welcome_greeting: welcome_greeting, partial_prompts: partial_prompts, welcome_greeting_interruptible: welcome_greeting_interruptible, interruptible: interruptible, preemptible: preemptible, hints: hints, intelligence_service: intelligence_service, report_input_during_agent_speech: report_input_during_agent_speech, elevenlabs_text_normalization: elevenlabs_text_normalization, interrupt_sensitivity: interrupt_sensitivity, debug: debug, **keyword_args)
 
         yield(conversation_relay) if block_given?
         append(conversation_relay)
@@ -2004,13 +2009,18 @@ module Twilio
       # dtmf_detection:: Whether DTMF tones should be detected and reported in speech transcription
       # welcome_greeting:: The sentence to be played automatically when the session is connected
       # partial_prompts:: Whether partial prompts should be reported to WebSocket server before the caller finishes speaking
-      # interruptible:: Whether caller's speaking can interrupt the play of text-to-speech
-      # interrupt_by_dtmf:: Whether DTMF tone can interrupt the play of text-to-speech
-      # welcome_greeting_interruptible:: Whether caller's speaking can interrupt the welcome greeting
-      # debug:: Whether debugging on the session is enabled
+      # welcome_greeting_interruptible:: "Whether and how the input from a caller, such as speaking or DTMF can interrupt the welcome greeting
+      # interruptible:: Whether and how the input from a caller, such as speaking or DTMF can interrupt the play of text-to-speech
+      # preemptible:: Whether subsequent text-to-speech or play media can interrupt the on-going play of text-to-speech or media
+      # hints:: Phrases to help better accuracy in speech recognition of these pharases
+      # intelligence_service:: The Conversational Intelligence Service id or unique name to be used for the session
+      # report_input_during_agent_speech:: Whether prompts should be reported to WebSocket server when text-to-speech playing and interrupt is disabled
+      # elevenlabs_text_normalization:: When using ElevenLabs as TTS provider, this parameter allows you to enable or disable its text normalization feature
+      # interrupt_sensitivity:: Set the sensitivity of the interrupt feature for speech. The value can be low, medium, or high
+      # debug:: Multiple debug options to be used for troubleshooting
       # keyword_args:: additional attributes
-      def assistant(id: nil, language: nil, tts_language: nil, transcription_language: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, profanity_filter: nil, dtmf_detection: nil, welcome_greeting: nil, partial_prompts: nil, interruptible: nil, interrupt_by_dtmf: nil, welcome_greeting_interruptible: nil, debug: nil, **keyword_args)
-        assistant = Assistant.new(id: id, language: language, tts_language: tts_language, transcription_language: transcription_language, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, profanity_filter: profanity_filter, dtmf_detection: dtmf_detection, welcome_greeting: welcome_greeting, partial_prompts: partial_prompts, interruptible: interruptible, interrupt_by_dtmf: interrupt_by_dtmf, welcome_greeting_interruptible: welcome_greeting_interruptible, debug: debug, **keyword_args)
+      def assistant(id: nil, language: nil, tts_language: nil, transcription_language: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, profanity_filter: nil, dtmf_detection: nil, welcome_greeting: nil, partial_prompts: nil, welcome_greeting_interruptible: nil, interruptible: nil, preemptible: nil, hints: nil, intelligence_service: nil, report_input_during_agent_speech: nil, elevenlabs_text_normalization: nil, interrupt_sensitivity: nil, debug: nil, **keyword_args)
+        assistant = Assistant.new(id: id, language: language, tts_language: tts_language, transcription_language: transcription_language, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, profanity_filter: profanity_filter, dtmf_detection: dtmf_detection, welcome_greeting: welcome_greeting, partial_prompts: partial_prompts, welcome_greeting_interruptible: welcome_greeting_interruptible, interruptible: interruptible, preemptible: preemptible, hints: hints, intelligence_service: intelligence_service, report_input_during_agent_speech: report_input_during_agent_speech, elevenlabs_text_normalization: elevenlabs_text_normalization, interrupt_sensitivity: interrupt_sensitivity, debug: debug, **keyword_args)
 
         yield(assistant) if block_given?
         append(assistant)

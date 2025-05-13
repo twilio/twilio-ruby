@@ -1,6 +1,18 @@
 twilio-ruby changelog
 =====================
 
+[2025-05-13] Version 7.6.1
+--------------------------
+**Accounts**
+- Changes to add date_of_consent param in Bulk Consent API
+
+**Api**
+- Change `friendly_name`, `date_created` and `date_updated` properties to type `string`.
+
+**Twiml**
+- Update twiml definition for `<ConversationRelay>` and `<Assistant>`
+
+
 [2025-05-05] Version 7.6.0
 --------------------------
 **Library - Chore**
