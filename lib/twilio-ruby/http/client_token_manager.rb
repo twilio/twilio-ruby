@@ -19,8 +19,8 @@ module Twilio
 
       def fetch_access_token
         client = Twilio::REST::Client.new
-        token_instance = client.preview_iam.v1.token.create(grant_type: @grant_type,
-                                                            client_id: @client_id, client_secret: @client_secret)
+        token_instance = client.iam.v1.token.create(grant_type: @grant_type,
+                                                    client_id: @client_id, client_secret: @client_secret)
         token_instance.access_token
       end
     end
