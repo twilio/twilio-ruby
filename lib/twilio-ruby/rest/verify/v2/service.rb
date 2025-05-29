@@ -580,7 +580,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The name that appears in the body of your verification messages. It can be up to 30 characters long and can include letters, numbers, spaces, dashes, underscores. Phone numbers, special characters or links are NOT allowed. **This value should not contain PII.**
+                    # @return [String] The name that appears in the body of your verification messages. It can be up to 30 characters long and can include letters, numbers, spaces, dashes, underscores. Phone numbers, special characters or links are NOT allowed. It cannot contain more than 4 (consecutive or non-consecutive) digits. **This value should not contain PII.**
                     def friendly_name
                         @properties['friendly_name']
                     end

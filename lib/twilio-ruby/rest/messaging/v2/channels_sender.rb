@@ -19,38 +19,6 @@ module Twilio
             class V2 < Version
                 class ChannelsSenderList < ListResource
                 
-                    class MessagingV2ChannelsSenderProfileEmails
-                            # @param [email]: [String] The email of the sender.
-                            # @param [label]: [String] The label of the sender.
-                        attr_accessor :email, :label
-                        def initialize(payload)
-                                @email = payload["email"]
-                                @label = payload["label"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "email": @email,
-                                "label": @label,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class MessagingV2ChannelsSenderProfileWebsites
-                            # @param [label]: [String] The label of the sender.
-                            # @param [website]: [String] The website of the sender.
-                        attr_accessor :label, :website
-                        def initialize(payload)
-                                @label = payload["label"]
-                                @website = payload["website"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "label": @label,
-                                "website": @website,
-                        }.to_json(options)
-                        end
-                    end
-
                     class MessagingV2ChannelsSenderRequestsCreate
                             # @param [sender_id]: [String] The ID of this Sender prefixed with the channel, e.g., `whatsapp:E.164`
                             # @param [configuration]: [ChannelsSenderList.MessagingV2ChannelsSenderConfiguration] 
@@ -92,38 +60,6 @@ module Twilio
                         end
                     end
 
-
-                    class MessagingV2ChannelsSenderProfileEmails
-                            # @param [email]: [String] The email of the sender.
-                            # @param [label]: [String] The label of the sender.
-                        attr_accessor :email, :label
-                        def initialize(payload)
-                                @email = payload["email"]
-                                @label = payload["label"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "email": @email,
-                                "label": @label,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class MessagingV2ChannelsSenderProfileWebsites
-                            # @param [label]: [String] The label of the sender.
-                            # @param [website]: [String] The website of the sender.
-                        attr_accessor :label, :website
-                        def initialize(payload)
-                                @label = payload["label"]
-                                @website = payload["website"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "label": @label,
-                                "website": @website,
-                        }.to_json(options)
-                        end
-                    end
 
                     class MessagingV2ChannelsSenderRequestsCreate
                             # @param [sender_id]: [String] The ID of this Sender prefixed with the channel, e.g., `whatsapp:E.164`

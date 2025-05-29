@@ -1,6 +1,22 @@
 twilio-ruby changelog
 =====================
 
+[2025-05-29] Version 7.6.2
+--------------------------
+**Library - Chore**
+- [PR #749](https://github.com/twilio/twilio-ruby/pull/749): move from preview_iam to iam token endpoint. Thanks to [@manisha1997](https://github.com/manisha1997)!
+- [PR #748](https://github.com/twilio/twilio-ruby/pull/748): removing ruby-head from CI. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+
+**Api**
+- Added several usage category enums to `usage_record` API
+
+**Numbers**
+- Update the porting documentation
+
+**Verify**
+- Update `ienum` type for Channels in Verify Attempts API
+
+
 [2025-05-13] Version 7.6.1
 --------------------------
 **Accounts**
