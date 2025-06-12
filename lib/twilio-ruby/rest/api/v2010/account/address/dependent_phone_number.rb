@@ -181,8 +181,8 @@ module Twilio
                             'voice_fallback_method' => payload['voice_fallback_method'],
                             'voice_fallback_url' => payload['voice_fallback_url'],
                             'voice_caller_id_lookup' => payload['voice_caller_id_lookup'],
-                            'date_created' => payload['date_created'],
-                            'date_updated' => payload['date_updated'],
+                            'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
+                            'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
                             'sms_fallback_method' => payload['sms_fallback_method'],
                             'sms_fallback_url' => payload['sms_fallback_url'],
                             'sms_method' => payload['sms_method'],
@@ -257,13 +257,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The date and time in GMT that the resource was created specified in [RFC 2822](https://www.ietf.org/rfc/rfc2822.txt) format.
+                    # @return [Time] The date and time in GMT that the resource was created specified in [RFC 2822](https://www.ietf.org/rfc/rfc2822.txt) format.
                     def date_created
                         @properties['date_created']
                     end
                     
                     ##
-                    # @return [String] The date and time in GMT that the resource was last updated specified in [RFC 2822](https://www.ietf.org/rfc/rfc2822.txt) format.
+                    # @return [Time] The date and time in GMT that the resource was last updated specified in [RFC 2822](https://www.ietf.org/rfc/rfc2822.txt) format.
                     def date_updated
                         @properties['date_updated']
                     end
@@ -299,7 +299,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [ApiV2010AccountAddressDependentPhoneNumberCapabilities] 
+                    # @return [Hash] The set of Boolean properties that indicates whether a phone number can receive calls or messages.  Capabilities are  `Voice`, `SMS`, and `MMS` and each capability can be: `true` or `false`.
                     def capabilities
                         @properties['capabilities']
                     end

@@ -428,7 +428,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The number of channels in the final recording file. Can be: `1` or `2`.
+                    # @return [String] The number of channels in the final recording file. Can be: `1` or `2`. Default: `1`.
                     def channels
                         @properties['channels']
                     end
