@@ -107,11 +107,6 @@ module Twilio
                 @messaging ||= Messaging.new self
             end
             ##
-            # Access the Microvisor Twilio Domain
-            def microvisor
-                @microvisor ||= Microvisor.new self
-            end
-            ##
             # Access the Monitor Twilio Domain
             def monitor
                 @monitor ||= Monitor.new self
