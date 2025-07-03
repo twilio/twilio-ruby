@@ -60,7 +60,7 @@ module Twilio
                     # @param [Time] date_created_after Datetime filter used to consider only Verification Attempts created after this datetime on the summary aggregation. Given as GMT in ISO 8601 formatted datetime string: yyyy-MM-dd'T'HH:mm:ss'Z.
                     # @param [Time] date_created_before Datetime filter used to consider only Verification Attempts created before this datetime on the summary aggregation. Given as GMT in ISO 8601 formatted datetime string: yyyy-MM-dd'T'HH:mm:ss'Z.
                     # @param [String] country Filter used to consider only Verification Attempts sent to the specified destination country on the summary aggregation.
-                    # @param [Channels] channel Filter Verification Attempts considered on the summary aggregation by communication channel. Valid values are `SMS`, `CALL` and `WHATSAPP`
+                    # @param [Channels] channel Filter Verification Attempts considered on the summary aggregation by communication channel.
                     # @param [String] destination_prefix Filter the Verification Attempts considered on the summary aggregation by Destination prefix. It is the prefix of a phone number in E.164 format.
                     # @return [VerificationAttemptsSummaryInstance] Fetched VerificationAttemptsSummaryInstance
                     def fetch(
@@ -211,7 +211,7 @@ module Twilio
                     # @param [Time] date_created_after Datetime filter used to consider only Verification Attempts created after this datetime on the summary aggregation. Given as GMT in ISO 8601 formatted datetime string: yyyy-MM-dd'T'HH:mm:ss'Z.
                     # @param [Time] date_created_before Datetime filter used to consider only Verification Attempts created before this datetime on the summary aggregation. Given as GMT in ISO 8601 formatted datetime string: yyyy-MM-dd'T'HH:mm:ss'Z.
                     # @param [String] country Filter used to consider only Verification Attempts sent to the specified destination country on the summary aggregation.
-                    # @param [Channels] channel Filter Verification Attempts considered on the summary aggregation by communication channel. Valid values are `SMS`, `CALL` and `WHATSAPP`
+                    # @param [Channels] channel Filter Verification Attempts considered on the summary aggregation by communication channel.
                     # @param [String] destination_prefix Filter the Verification Attempts considered on the summary aggregation by Destination prefix. It is the prefix of a phone number in E.164 format.
                     # @return [VerificationAttemptsSummaryInstance] Fetched VerificationAttemptsSummaryInstance
                     def fetch(

@@ -240,6 +240,7 @@ module Twilio
                         # Dependents
                         @recording_rules = nil
                         @participants = nil
+                        @transcriptions = nil
                         @recordings = nil
                     end
                     ##
@@ -316,6 +317,25 @@ module Twilio
                         end
 
                      @participants
+                    end
+                    ##
+                    # Access the transcriptions
+                    # @return [TranscriptionsList]
+                    # @return [TranscriptionsContext] if sid was passed.
+                    def transcriptions(ttid=:unset)
+
+                        raise ArgumentError, 'ttid cannot be nil' if ttid.nil?
+
+                        if ttid != :unset
+                            return TranscriptionsContext.new(@version, @solution[:sid],ttid )
+                        end
+
+                        unless @transcriptions
+                            @transcriptions = TranscriptionsList.new(
+                                @version, room_sid: @solution[:sid], )
+                        end
+
+                     @transcriptions
                     end
                     ##
                     # Access the recordings
@@ -614,6 +634,13 @@ module Twilio
                     # @return [participants] participants
                     def participants
                         context.participants
+                    end
+
+                    ##
+                    # Access the transcriptions
+                    # @return [transcriptions] transcriptions
+                    def transcriptions
+                        context.transcriptions
                     end
 
                     ##

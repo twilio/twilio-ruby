@@ -39,7 +39,7 @@ module Twilio
                     # @param [Time] date_created_before Datetime filter used to consider only Verification Attempts created before this datetime on the summary aggregation. Given as GMT in ISO 8601 formatted datetime string: yyyy-MM-dd'T'HH:mm:ss'Z.
                     # @param [String] channel_data_to Destination of a verification. It is phone number in E.164 format.
                     # @param [String] country Filter used to query Verification Attempts sent to the specified destination country.
-                    # @param [Channels] channel Filter used to query Verification Attempts by communication channel. Valid values are `SMS` and `CALL`
+                    # @param [Channels] channel Filter used to query Verification Attempts by communication channel.
                     # @param [String] verify_service_sid Filter used to query Verification Attempts by verify service. Only attempts of the provided SID will be returned.
                     # @param [String] verification_sid Filter used to return all the Verification Attempts of a single verification. Only attempts of the provided verification SID will be returned.
                     # @param [ConversionStatus] status Filter used to query Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for attempts that were not converted, and `CONVERTED`, for attempts that were confirmed.
@@ -73,7 +73,7 @@ module Twilio
                     # @param [Time] date_created_before Datetime filter used to consider only Verification Attempts created before this datetime on the summary aggregation. Given as GMT in ISO 8601 formatted datetime string: yyyy-MM-dd'T'HH:mm:ss'Z.
                     # @param [String] channel_data_to Destination of a verification. It is phone number in E.164 format.
                     # @param [String] country Filter used to query Verification Attempts sent to the specified destination country.
-                    # @param [Channels] channel Filter used to query Verification Attempts by communication channel. Valid values are `SMS` and `CALL`
+                    # @param [Channels] channel Filter used to query Verification Attempts by communication channel.
                     # @param [String] verify_service_sid Filter used to query Verification Attempts by verify service. Only attempts of the provided SID will be returned.
                     # @param [String] verification_sid Filter used to return all the Verification Attempts of a single verification. Only attempts of the provided verification SID will be returned.
                     # @param [ConversionStatus] status Filter used to query Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for attempts that were not converted, and `CONVERTED`, for attempts that were confirmed.
@@ -122,7 +122,7 @@ module Twilio
                     # @param [Time] date_created_before Datetime filter used to consider only Verification Attempts created before this datetime on the summary aggregation. Given as GMT in ISO 8601 formatted datetime string: yyyy-MM-dd'T'HH:mm:ss'Z.
                     # @param [String] channel_data_to Destination of a verification. It is phone number in E.164 format.
                     # @param [String] country Filter used to query Verification Attempts sent to the specified destination country.
-                    # @param [Channels] channel Filter used to query Verification Attempts by communication channel. Valid values are `SMS` and `CALL`
+                    # @param [Channels] channel Filter used to query Verification Attempts by communication channel.
                     # @param [String] verify_service_sid Filter used to query Verification Attempts by verify service. Only attempts of the provided SID will be returned.
                     # @param [String] verification_sid Filter used to return all the Verification Attempts of a single verification. Only attempts of the provided verification SID will be returned.
                     # @param [ConversionStatus] status Filter used to query Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for attempts that were not converted, and `CONVERTED`, for attempts that were confirmed.

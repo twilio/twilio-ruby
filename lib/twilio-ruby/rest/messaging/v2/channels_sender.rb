@@ -19,6 +19,72 @@ module Twilio
             class V2 < Version
                 class ChannelsSenderList < ListResource
                 
+                    class MessagingV2ChannelsSenderProfile
+                            # @param [name]: [String] The name of the sender.
+                            # @param [about]: [String] The about text of the sender.
+                            # @param [address]: [String] The address of the sender.
+                            # @param [description]: [String] The description of the sender.
+                            # @param [emails]: [Hash] The emails of the sender.
+                            # @param [logo_url]: [String] The logo URL of the sender.
+                            # @param [vertical]: [String] The vertical of the sender. Allowed values are: - \"Automotive\" - \"Beauty, Spa and Salon\" - \"Clothing and Apparel\" - \"Education\" - \"Entertainment\" - \"Event Planning and Service\" - \"Finance and Banking\" - \"Food and Grocery\" - \"Public Service\" - \"Hotel and Lodging\" - \"Medical and Health\" - \"Non-profit\" - \"Professional Services\" - \"Shopping and Retail\" - \"Travel and Transportation\" - \"Restaurant\" - \"Other\" 
+                            # @param [websites]: [Hash] The websites of the sender.
+                        attr_accessor :name, :about, :address, :description, :emails, :logo_url, :vertical, :websites
+                        def initialize(payload)
+                                @name = payload["name"]
+                                @about = payload["about"]
+                                @address = payload["address"]
+                                @description = payload["description"]
+                                @emails = payload["emails"]
+                                @logo_url = payload["logo_url"]
+                                @vertical = payload["vertical"]
+                                @websites = payload["websites"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "name": @name,
+                                "about": @about,
+                                "address": @address,
+                                "description": @description,
+                                "emails": @emails,
+                                "logo_url": @logo_url,
+                                "vertical": @vertical,
+                                "websites": @websites,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2ChannelsSenderProfileResponseEmails
+                            # @param [email]: [String] 
+                            # @param [label]: [String] 
+                        attr_accessor :email, :label
+                        def initialize(payload)
+                                @email = payload["email"]
+                                @label = payload["label"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "email": @email,
+                                "label": @label,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2ChannelsSenderProfileResponseWebsites
+                            # @param [website]: [String] 
+                            # @param [label]: [String] 
+                        attr_accessor :website, :label
+                        def initialize(payload)
+                                @website = payload["website"]
+                                @label = payload["label"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "website": @website,
+                                "label": @label,
+                        }.to_json(options)
+                        end
+                    end
+
                     class MessagingV2ChannelsSenderRequestsCreate
                             # @param [sender_id]: [String] The ID of this Sender prefixed with the channel, e.g., `whatsapp:E.164`
                             # @param [configuration]: [ChannelsSenderList.MessagingV2ChannelsSenderConfiguration] 
@@ -60,6 +126,72 @@ module Twilio
                         end
                     end
 
+
+                    class MessagingV2ChannelsSenderProfile
+                            # @param [name]: [String] The name of the sender.
+                            # @param [about]: [String] The about text of the sender.
+                            # @param [address]: [String] The address of the sender.
+                            # @param [description]: [String] The description of the sender.
+                            # @param [emails]: [Hash] The emails of the sender.
+                            # @param [logo_url]: [String] The logo URL of the sender.
+                            # @param [vertical]: [String] The vertical of the sender. Allowed values are: - \"Automotive\" - \"Beauty, Spa and Salon\" - \"Clothing and Apparel\" - \"Education\" - \"Entertainment\" - \"Event Planning and Service\" - \"Finance and Banking\" - \"Food and Grocery\" - \"Public Service\" - \"Hotel and Lodging\" - \"Medical and Health\" - \"Non-profit\" - \"Professional Services\" - \"Shopping and Retail\" - \"Travel and Transportation\" - \"Restaurant\" - \"Other\" 
+                            # @param [websites]: [Hash] The websites of the sender.
+                        attr_accessor :name, :about, :address, :description, :emails, :logo_url, :vertical, :websites
+                        def initialize(payload)
+                                @name = payload["name"]
+                                @about = payload["about"]
+                                @address = payload["address"]
+                                @description = payload["description"]
+                                @emails = payload["emails"]
+                                @logo_url = payload["logo_url"]
+                                @vertical = payload["vertical"]
+                                @websites = payload["websites"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "name": @name,
+                                "about": @about,
+                                "address": @address,
+                                "description": @description,
+                                "emails": @emails,
+                                "logo_url": @logo_url,
+                                "vertical": @vertical,
+                                "websites": @websites,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2ChannelsSenderProfileResponseEmails
+                            # @param [email]: [String] 
+                            # @param [label]: [String] 
+                        attr_accessor :email, :label
+                        def initialize(payload)
+                                @email = payload["email"]
+                                @label = payload["label"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "email": @email,
+                                "label": @label,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2ChannelsSenderProfileResponseWebsites
+                            # @param [website]: [String] 
+                            # @param [label]: [String] 
+                        attr_accessor :website, :label
+                        def initialize(payload)
+                                @website = payload["website"]
+                                @label = payload["label"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "website": @website,
+                                "label": @label,
+                        }.to_json(options)
+                        end
+                    end
 
                     class MessagingV2ChannelsSenderRequestsCreate
                             # @param [sender_id]: [String] The ID of this Sender prefixed with the channel, e.g., `whatsapp:E.164`
@@ -421,7 +553,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [MessagingV2ChannelsSenderProfile] 
+                    # @return [MessagingV2ChannelsSenderProfileResponse] 
                     def profile
                         @properties['profile']
                     end

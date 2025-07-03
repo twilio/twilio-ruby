@@ -427,6 +427,7 @@ module Twilio
                             'transfer_caller_id' => payload['transfer_caller_id'],
                             'cnam_lookup_enabled' => payload['cnam_lookup_enabled'],
                             'auth_type' => payload['auth_type'],
+                            'symmetric_rtp_enabled' => payload['symmetric_rtp_enabled'],
                             'auth_type_set' => payload['auth_type_set'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
@@ -515,6 +516,12 @@ module Twilio
                     # @return [String] The types of authentication mapped to the domain. Can be: `IP_ACL` and `CREDENTIAL_LIST`. If both are mapped, the values are returned in a comma delimited list. If empty, the domain will not receive any traffic.
                     def auth_type
                         @properties['auth_type']
+                    end
+                    
+                    ##
+                    # @return [Boolean] Whether Symmetric RTP is enabled for the trunk. When Symmetric RTP is disabled, Twilio will send RTP to the destination negotiated in the SDP. Disabling Symmetric RTP is considered to be more secure and therefore recommended. See [Symmetric RTP](https://www.twilio.com/docs/sip-trunking#symmetric-rtp) for more information.
+                    def symmetric_rtp_enabled
+                        @properties['symmetric_rtp_enabled']
                     end
                     
                     ##
