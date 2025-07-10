@@ -20,8 +20,8 @@ module Twilio
                 class LookupOverrideList < ListResource
                 
                     class OverridesRequest
-                            # @param [line_type]: [String] 
-                            # @param [reason]: [String] 
+                            # @param [line_type]: [String] The new line type to override the original line type
+                            # @param [reason]: [String] The reason for the override
                         attr_accessor :line_type, :reason
                         def initialize(payload)
                                 @line_type = payload["line_type"]
@@ -242,19 +242,19 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The phone number for which the override was created
                     def phone_number
                         @properties['phone_number']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The original line type
                     def original_line_type
                         @properties['original_line_type']
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] The new line type after the override
                     def overridden_line_type
                         @properties['overridden_line_type']
                     end
@@ -272,7 +272,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The user who overrode the line type
+                    # @return [String] The Account SID for the user who made the override
                     def overridden_by_account_sid
                         @properties['overridden_by_account_sid']
                     end

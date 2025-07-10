@@ -281,13 +281,13 @@ module Twilio
                             'account_sid' => payload['account_sid'],
                             'room_sid' => payload['room_sid'],
                             'status' => payload['status'],
-                            'identity' => payload['identity'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'start_time' => Twilio.deserialize_iso8601_datetime(payload['start_time']),
                             'end_time' => Twilio.deserialize_iso8601_datetime(payload['end_time']),
                             'duration' => payload['duration'] == nil ? payload['duration'] : payload['duration'].to_i,
                             'url' => payload['url'],
+                            'configuration' => payload['configuration'],
                         }
 
                         # Context
@@ -331,12 +331,6 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The application-defined string that uniquely identifies the resource's User within a Room. If a client joins with an existing Identity, the existing client is disconnected. See [access tokens](https://www.twilio.com/docs/video/tutorials/user-identity-access-tokens) and [limits](https://www.twilio.com/docs/video/programmable-video-limits) for more info. 
-                    def identity
-                        @properties['identity']
-                    end
-                    
-                    ##
                     # @return [Time] The date and time in GMT when the resource was created specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
                     def date_created
                         @properties['date_created']
@@ -370,6 +364,12 @@ module Twilio
                     # @return [String] The absolute URL of the resource.
                     def url
                         @properties['url']
+                    end
+                    
+                    ##
+                    # @return [Hash] An JSON object that describes the video layout of the composition in terms of regions. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+                    def configuration
+                        @properties['configuration']
                     end
                     
                     ##
