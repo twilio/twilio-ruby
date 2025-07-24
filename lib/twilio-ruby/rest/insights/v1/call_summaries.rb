@@ -61,6 +61,10 @@ module Twilio
                     # @param [Boolean] branded_enabled A boolean flag indicating whether or not the calls were branded using Twilio Branded Calls. One of 'true' or 'false'
                     # @param [Boolean] voice_integrity_enabled A boolean flag indicating whether or not the phone number had voice integrity enabled.One of 'true' or 'false'
                     # @param [String] branded_bundle_sid A unique SID identifier of the Branded Call.
+                    # @param [Boolean] branded_logo Indicates whether the branded logo was displayed during the in_brand branded call. Possible values are true (logo was present) or false (logo was not present).
+                    # @param [String] branded_type Indicates whether the Branded Call is in_band vs out_of_band.
+                    # @param [String] branded_use_case Specifies the user-defined purpose for the call, as provided during the setup of in_band branded calling.
+                    # @param [String] branded_call_reason Specifies the user-defined reason for the call, which will be displayed to the end user on their mobile device during an in_band branded call.
                     # @param [String] voice_integrity_bundle_sid A unique SID identifier of the Voice Integrity Profile.
                     # @param [String] voice_integrity_use_case A Voice Integrity Use Case . Is of type enum. One of 'abandoned_cart', 'appointment_reminders', 'appointment_scheduling', 'asset_management', 'automated_support', 'call_tracking', 'click_to_call', 'contact_tracing', 'contactless_delivery', 'customer_support', 'dating/social', 'delivery_notifications', 'distance_learning', 'emergency_notifications', 'employee_notifications', 'exam_proctoring', 'field_notifications', 'first_responder', 'fraud_alerts', 'group_messaging', 'identify_&_verification', 'intelligent_routing', 'lead_alerts', 'lead_distribution', 'lead_generation', 'lead_management', 'lead_nurturing', 'marketing_events', 'mass_alerts', 'meetings/collaboration', 'order_notifications', 'outbound_dialer', 'pharmacy', 'phone_system', 'purchase_confirmation', 'remote_appointments', 'rewards_program', 'self-service', 'service_alerts', 'shift_management', 'survey/research', 'telehealth', 'telemarketing', 'therapy_(individual+group)'.
                     # @param [String] business_profile_identity A Business Identity of the calls. Is of type enum. One of 'direct_customer', 'isv_reseller_or_partner'. 
@@ -74,7 +78,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, answered_by_annotation: :unset, connectivity_issue_annotation: :unset, quality_issue_annotation: :unset, spam_annotation: :unset, call_score_annotation: :unset, branded_enabled: :unset, voice_integrity_enabled: :unset, branded_bundle_sid: :unset, voice_integrity_bundle_sid: :unset, voice_integrity_use_case: :unset, business_profile_identity: :unset, business_profile_industry: :unset, business_profile_bundle_sid: :unset, business_profile_type: :unset, limit: nil, page_size: nil)
+                    def list(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, answered_by_annotation: :unset, connectivity_issue_annotation: :unset, quality_issue_annotation: :unset, spam_annotation: :unset, call_score_annotation: :unset, branded_enabled: :unset, voice_integrity_enabled: :unset, branded_bundle_sid: :unset, branded_logo: :unset, branded_type: :unset, branded_use_case: :unset, branded_call_reason: :unset, voice_integrity_bundle_sid: :unset, voice_integrity_use_case: :unset, business_profile_identity: :unset, business_profile_industry: :unset, business_profile_bundle_sid: :unset, business_profile_type: :unset, limit: nil, page_size: nil)
                         self.stream(
                             from: from,
                             to: to,
@@ -102,6 +106,10 @@ module Twilio
                             branded_enabled: branded_enabled,
                             voice_integrity_enabled: voice_integrity_enabled,
                             branded_bundle_sid: branded_bundle_sid,
+                            branded_logo: branded_logo,
+                            branded_type: branded_type,
+                            branded_use_case: branded_use_case,
+                            branded_call_reason: branded_call_reason,
                             voice_integrity_bundle_sid: voice_integrity_bundle_sid,
                             voice_integrity_use_case: voice_integrity_use_case,
                             business_profile_identity: business_profile_identity,
@@ -143,6 +151,10 @@ module Twilio
                     # @param [Boolean] branded_enabled A boolean flag indicating whether or not the calls were branded using Twilio Branded Calls. One of 'true' or 'false'
                     # @param [Boolean] voice_integrity_enabled A boolean flag indicating whether or not the phone number had voice integrity enabled.One of 'true' or 'false'
                     # @param [String] branded_bundle_sid A unique SID identifier of the Branded Call.
+                    # @param [Boolean] branded_logo Indicates whether the branded logo was displayed during the in_brand branded call. Possible values are true (logo was present) or false (logo was not present).
+                    # @param [String] branded_type Indicates whether the Branded Call is in_band vs out_of_band.
+                    # @param [String] branded_use_case Specifies the user-defined purpose for the call, as provided during the setup of in_band branded calling.
+                    # @param [String] branded_call_reason Specifies the user-defined reason for the call, which will be displayed to the end user on their mobile device during an in_band branded call.
                     # @param [String] voice_integrity_bundle_sid A unique SID identifier of the Voice Integrity Profile.
                     # @param [String] voice_integrity_use_case A Voice Integrity Use Case . Is of type enum. One of 'abandoned_cart', 'appointment_reminders', 'appointment_scheduling', 'asset_management', 'automated_support', 'call_tracking', 'click_to_call', 'contact_tracing', 'contactless_delivery', 'customer_support', 'dating/social', 'delivery_notifications', 'distance_learning', 'emergency_notifications', 'employee_notifications', 'exam_proctoring', 'field_notifications', 'first_responder', 'fraud_alerts', 'group_messaging', 'identify_&_verification', 'intelligent_routing', 'lead_alerts', 'lead_distribution', 'lead_generation', 'lead_management', 'lead_nurturing', 'marketing_events', 'mass_alerts', 'meetings/collaboration', 'order_notifications', 'outbound_dialer', 'pharmacy', 'phone_system', 'purchase_confirmation', 'remote_appointments', 'rewards_program', 'self-service', 'service_alerts', 'shift_management', 'survey/research', 'telehealth', 'telemarketing', 'therapy_(individual+group)'.
                     # @param [String] business_profile_identity A Business Identity of the calls. Is of type enum. One of 'direct_customer', 'isv_reseller_or_partner'. 
@@ -156,7 +168,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, answered_by_annotation: :unset, connectivity_issue_annotation: :unset, quality_issue_annotation: :unset, spam_annotation: :unset, call_score_annotation: :unset, branded_enabled: :unset, voice_integrity_enabled: :unset, branded_bundle_sid: :unset, voice_integrity_bundle_sid: :unset, voice_integrity_use_case: :unset, business_profile_identity: :unset, business_profile_industry: :unset, business_profile_bundle_sid: :unset, business_profile_type: :unset, limit: nil, page_size: nil)
+                    def stream(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, answered_by_annotation: :unset, connectivity_issue_annotation: :unset, quality_issue_annotation: :unset, spam_annotation: :unset, call_score_annotation: :unset, branded_enabled: :unset, voice_integrity_enabled: :unset, branded_bundle_sid: :unset, branded_logo: :unset, branded_type: :unset, branded_use_case: :unset, branded_call_reason: :unset, voice_integrity_bundle_sid: :unset, voice_integrity_use_case: :unset, business_profile_identity: :unset, business_profile_industry: :unset, business_profile_bundle_sid: :unset, business_profile_type: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
@@ -186,6 +198,10 @@ module Twilio
                             branded_enabled: branded_enabled,
                             voice_integrity_enabled: voice_integrity_enabled,
                             branded_bundle_sid: branded_bundle_sid,
+                            branded_logo: branded_logo,
+                            branded_type: branded_type,
+                            branded_use_case: branded_use_case,
+                            branded_call_reason: branded_call_reason,
                             voice_integrity_bundle_sid: voice_integrity_bundle_sid,
                             voice_integrity_use_case: voice_integrity_use_case,
                             business_profile_identity: business_profile_identity,
@@ -240,6 +256,10 @@ module Twilio
                     # @param [Boolean] branded_enabled A boolean flag indicating whether or not the calls were branded using Twilio Branded Calls. One of 'true' or 'false'
                     # @param [Boolean] voice_integrity_enabled A boolean flag indicating whether or not the phone number had voice integrity enabled.One of 'true' or 'false'
                     # @param [String] branded_bundle_sid A unique SID identifier of the Branded Call.
+                    # @param [Boolean] branded_logo Indicates whether the branded logo was displayed during the in_brand branded call. Possible values are true (logo was present) or false (logo was not present).
+                    # @param [String] branded_type Indicates whether the Branded Call is in_band vs out_of_band.
+                    # @param [String] branded_use_case Specifies the user-defined purpose for the call, as provided during the setup of in_band branded calling.
+                    # @param [String] branded_call_reason Specifies the user-defined reason for the call, which will be displayed to the end user on their mobile device during an in_band branded call.
                     # @param [String] voice_integrity_bundle_sid A unique SID identifier of the Voice Integrity Profile.
                     # @param [String] voice_integrity_use_case A Voice Integrity Use Case . Is of type enum. One of 'abandoned_cart', 'appointment_reminders', 'appointment_scheduling', 'asset_management', 'automated_support', 'call_tracking', 'click_to_call', 'contact_tracing', 'contactless_delivery', 'customer_support', 'dating/social', 'delivery_notifications', 'distance_learning', 'emergency_notifications', 'employee_notifications', 'exam_proctoring', 'field_notifications', 'first_responder', 'fraud_alerts', 'group_messaging', 'identify_&_verification', 'intelligent_routing', 'lead_alerts', 'lead_distribution', 'lead_generation', 'lead_management', 'lead_nurturing', 'marketing_events', 'mass_alerts', 'meetings/collaboration', 'order_notifications', 'outbound_dialer', 'pharmacy', 'phone_system', 'purchase_confirmation', 'remote_appointments', 'rewards_program', 'self-service', 'service_alerts', 'shift_management', 'survey/research', 'telehealth', 'telemarketing', 'therapy_(individual+group)'.
                     # @param [String] business_profile_identity A Business Identity of the calls. Is of type enum. One of 'direct_customer', 'isv_reseller_or_partner'. 
@@ -250,7 +270,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of CallSummariesInstance
-                    def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, answered_by_annotation: :unset, connectivity_issue_annotation: :unset, quality_issue_annotation: :unset, spam_annotation: :unset, call_score_annotation: :unset, branded_enabled: :unset, voice_integrity_enabled: :unset, branded_bundle_sid: :unset, voice_integrity_bundle_sid: :unset, voice_integrity_use_case: :unset, business_profile_identity: :unset, business_profile_industry: :unset, business_profile_bundle_sid: :unset, business_profile_type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, answered_by_annotation: :unset, connectivity_issue_annotation: :unset, quality_issue_annotation: :unset, spam_annotation: :unset, call_score_annotation: :unset, branded_enabled: :unset, voice_integrity_enabled: :unset, branded_bundle_sid: :unset, branded_logo: :unset, branded_type: :unset, branded_use_case: :unset, branded_call_reason: :unset, voice_integrity_bundle_sid: :unset, voice_integrity_use_case: :unset, business_profile_identity: :unset, business_profile_industry: :unset, business_profile_bundle_sid: :unset, business_profile_type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'From' => from,
                             'To' => to,
@@ -278,6 +298,10 @@ module Twilio
                             'BrandedEnabled' => branded_enabled,
                             'VoiceIntegrityEnabled' => voice_integrity_enabled,
                             'BrandedBundleSid' => branded_bundle_sid,
+                            'BrandedLogo' => branded_logo,
+                            'BrandedType' => branded_type,
+                            'BrandedUseCase' => branded_use_case,
+                            'BrandedCallReason' => branded_call_reason,
                             'VoiceIntegrityBundleSid' => voice_integrity_bundle_sid,
                             'VoiceIntegrityUseCase' => voice_integrity_use_case,
                             'BusinessProfileIdentity' => business_profile_identity,
