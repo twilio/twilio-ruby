@@ -21,17 +21,12 @@ module Twilio
         @base_url =  "https://voice.twilio.com"
         @host = "voice.twilio.com"
         @port = 443
-        @v1 = nil
-      end
-
-      def v1
-        @v1 ||= Voice::V1.new self
       end
 
       ##
       # Provide a user friendly representation
       def to_s
-        '<Twilio::REST::Voice::V1>';
+        '<Twilio::REST::Voice>';
       end
     end
   end

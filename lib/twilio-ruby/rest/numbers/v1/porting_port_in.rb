@@ -175,6 +175,9 @@ module Twilio
                             'port_in_request_status' => payload['port_in_request_status'],
                             'losing_carrier_information' => payload['losing_carrier_information'],
                             'phone_numbers' => payload['phone_numbers'],
+                            'bundle_sid' => payload['bundle_sid'],
+                            'portability_advance_carrier' => payload['portability_advance_carrier'],
+                            'auto_cancel_approval_numbers' => payload['auto_cancel_approval_numbers'],
                             'documents' => payload['documents'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                         }
@@ -253,6 +256,24 @@ module Twilio
                     # @return [Array<Hash>] 
                     def phone_numbers
                         @properties['phone_numbers']
+                    end
+                    
+                    ##
+                    # @return [String] The bundle sid is an optional identifier to reference a group of regulatory documents for a port request.
+                    def bundle_sid
+                        @properties['bundle_sid']
+                    end
+                    
+                    ##
+                    # @return [String] A field only required for Japan port in requests. It is a unique identifier for the donor carrier service the line is being ported from.
+                    def portability_advance_carrier
+                        @properties['portability_advance_carrier']
+                    end
+                    
+                    ##
+                    # @return [String] Japan specific field, indicates the number of phone numbers to automatically approve for cancellation.
+                    def auto_cancel_approval_numbers
+                        @properties['auto_cancel_approval_numbers']
                     end
                     
                     ##
