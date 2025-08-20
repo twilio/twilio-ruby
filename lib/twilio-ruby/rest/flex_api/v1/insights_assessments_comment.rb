@@ -264,7 +264,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Float] The offset
+                    # @return [String] The offset
                     def offset
                         @properties['offset']
                     end
@@ -276,7 +276,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Float] The weightage given to this comment
+                    # @return [String] The weightage given to this comment
                     def weight
                         @properties['weight']
                     end
@@ -306,7 +306,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Float] The timestamp when the record is inserted
+                    # @return [String] The timestamp when the record is inserted
                     def timestamp
                         @properties['timestamp']
                     end

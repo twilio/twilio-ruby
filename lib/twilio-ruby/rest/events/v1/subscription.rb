@@ -214,16 +214,13 @@ module Twilio
                     ##
                     # Update the SubscriptionInstance
                     # @param [String] description A human readable description for the Subscription.
-                    # @param [String] sink_sid The SID of the sink that events selected by this subscription should be sent to. Sink must be active for the subscription to be created.
                     # @return [SubscriptionInstance] Updated SubscriptionInstance
                     def update(
-                        description: :unset, 
-                        sink_sid: :unset
+                        description: :unset
                     )
 
                         data = Twilio::Values.of({
                             'Description' => description,
-                            'SinkSid' => sink_sid,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -411,16 +408,13 @@ module Twilio
                     ##
                     # Update the SubscriptionInstance
                     # @param [String] description A human readable description for the Subscription.
-                    # @param [String] sink_sid The SID of the sink that events selected by this subscription should be sent to. Sink must be active for the subscription to be created.
                     # @return [SubscriptionInstance] Updated SubscriptionInstance
                     def update(
-                        description: :unset, 
-                        sink_sid: :unset
+                        description: :unset
                     )
 
                         context.update(
                             description: description, 
-                            sink_sid: sink_sid, 
                         )
                     end
 

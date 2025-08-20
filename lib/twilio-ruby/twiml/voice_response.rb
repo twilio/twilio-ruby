@@ -1761,6 +1761,30 @@ module Twilio
         yield(application) if block_given?
         append(application)
       end
+
+      ##
+      # Create a new <WhatsApp> element
+      # phone_number:: WhatsApp Phone Number to dial
+      # url:: TwiML URL
+      # method:: TwiML URL Method
+      # status_callback_event:: Events to trigger status callback
+      # status_callback:: Status Callback URL
+      # status_callback_method:: Status Callback URL Method
+      # keyword_args:: additional attributes
+      def whats_app(phone_number, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, **keyword_args)
+        append(WhatsApp.new(phone_number, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, **keyword_args))
+      end
+    end
+
+    ##
+    # <WhatsApp> TwiML Noun
+    class WhatsApp < TwiML
+      def initialize(phone_number, **keyword_args)
+        super(**keyword_args)
+        @name = 'WhatsApp'
+        @value = phone_number
+        yield(self) if block_given?
+      end
     end
 
     ##

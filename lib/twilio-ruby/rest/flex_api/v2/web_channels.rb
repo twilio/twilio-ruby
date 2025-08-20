@@ -36,6 +36,7 @@ module Twilio
                     # @param [String] chat_friendly_name The Conversation's friendly name. See the [Conversation resource](https://www.twilio.com/docs/conversations/api/conversation-resource) for an example.
                     # @param [String] customer_friendly_name The Conversation participant's friendly name. See the [Conversation Participant Resource](https://www.twilio.com/docs/conversations/api/conversation-participant-resource) for an example.
                     # @param [String] pre_engagement_data The pre-engagement data.
+                    # @param [String] identity The Identity of the guest user. See the [Conversation User Resource](https://www.twilio.com/docs/conversations/api/user-resource) for an example.
                     # @param [String] ui_version The Ui-Version HTTP request header
                     # @return [WebChannelsInstance] Created WebChannelsInstance
                     def create(
@@ -43,6 +44,7 @@ module Twilio
                         chat_friendly_name: :unset, 
                         customer_friendly_name: :unset, 
                         pre_engagement_data: :unset, 
+                        identity: :unset, 
                         ui_version: :unset
                     )
 
@@ -51,6 +53,7 @@ module Twilio
                             'ChatFriendlyName' => chat_friendly_name,
                             'CustomerFriendlyName' => customer_friendly_name,
                             'PreEngagementData' => pre_engagement_data,
+                            'Identity' => identity,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Ui-Version' => ui_version, })

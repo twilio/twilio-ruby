@@ -179,6 +179,7 @@ module Twilio
                             'friendly_name' => payload['friendly_name'],
                             'date_created' => Twilio.deserialize_rfc2822(payload['date_created']),
                             'date_updated' => Twilio.deserialize_rfc2822(payload['date_updated']),
+                            'flags' => payload['flags'],
                         }
                     end
 
@@ -205,6 +206,12 @@ module Twilio
                     # @return [Time] The date and time in GMT that the resource was last updated specified in [RFC 2822](https://www.ietf.org/rfc/rfc2822.txt) format.
                     def date_updated
                         @properties['date_updated']
+                    end
+                    
+                    ##
+                    # @return [Array<String>] 
+                    def flags
+                        @properties['flags']
                     end
                     
                     ##

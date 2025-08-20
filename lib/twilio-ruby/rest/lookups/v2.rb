@@ -21,9 +21,85 @@ module Twilio
                 def initialize(domain)
                     super
                     @version = 'v2'
+                    @bucket = nil
+                    @lookup_overrides = nil
                     @phone_numbers = nil
+                    @query = nil
+                    @rate_limits = nil
                 end
 
+                ##
+                # @param [String] field bucket name
+                # @param [String] bucket bucket name
+                # @return [Twilio::REST::Lookups::V2::BucketContext] if field was passed.
+                # @return [Twilio::REST::Lookups::V2::BucketList]
+                def bucket(field=:unset, bucket=:unset)
+                    if field.nil?
+                        raise ArgumentError, 'field cannot be nil'
+                    end
+                    if bucket.nil?
+                        raise ArgumentError, 'bucket cannot be nil'
+                    end
+                    if field == :unset && bucket == :unset
+                        @bucket ||= BucketList.new self
+                    else
+                        BucketContext.new(self, field, bucket)
+                    end
+                end
+                ##
+                # @param [String] field bucket name
+                # @param [String] bucket bucket name
+                # @return [Twilio::REST::Lookups::V2::BucketContext] if bucket was passed.
+                # @return [Twilio::REST::Lookups::V2::BucketList]
+                def bucket(field=:unset, bucket=:unset)
+                    if field.nil?
+                        raise ArgumentError, 'field cannot be nil'
+                    end
+                    if bucket.nil?
+                        raise ArgumentError, 'bucket cannot be nil'
+                    end
+                    if field == :unset && bucket == :unset
+                        @bucket ||= BucketList.new self
+                    else
+                        BucketContext.new(self, field, bucket)
+                    end
+                end
+                ##
+                # @param [String] field 
+                # @param [String] phone_number 
+                # @return [Twilio::REST::Lookups::V2::LookupOverrideContext] if field was passed.
+                # @return [Twilio::REST::Lookups::V2::LookupOverrideList]
+                def lookup_overrides(field=:unset, phone_number=:unset)
+                    if field.nil?
+                        raise ArgumentError, 'field cannot be nil'
+                    end
+                    if phone_number.nil?
+                        raise ArgumentError, 'phone_number cannot be nil'
+                    end
+                    if field == :unset && phone_number == :unset
+                        @lookup_overrides ||= LookupOverrideList.new self
+                    else
+                        LookupOverrideContext.new(self, field, phone_number)
+                    end
+                end
+                ##
+                # @param [String] field 
+                # @param [String] phone_number 
+                # @return [Twilio::REST::Lookups::V2::LookupOverrideContext] if phoneNumber was passed.
+                # @return [Twilio::REST::Lookups::V2::LookupOverrideList]
+                def lookup_overrides(field=:unset, phone_number=:unset)
+                    if field.nil?
+                        raise ArgumentError, 'field cannot be nil'
+                    end
+                    if phone_number.nil?
+                        raise ArgumentError, 'phone_number cannot be nil'
+                    end
+                    if field == :unset && phone_number == :unset
+                        @lookup_overrides ||= LookupOverrideList.new self
+                    else
+                        LookupOverrideContext.new(self, field, phone_number)
+                    end
+                end
                 ##
                 # @param [String] phone_number The phone number to lookup in E.164 or national format. Default country code is +1 (North America).
                 # @return [Twilio::REST::Lookups::V2::PhoneNumberContext] if phoneNumber was passed.
@@ -37,6 +113,16 @@ module Twilio
                     else
                         PhoneNumberContext.new(self, phone_number)
                     end
+                end
+                ##
+                # @return [Twilio::REST::Lookups::V2::QueryList]
+                def query
+                    @query ||= QueryList.new self
+                end
+                ##
+                # @return [Twilio::REST::Lookups::V2::RateLimitList]
+                def rate_limits
+                    @rate_limits ||= RateLimitList.new self
                 end
                 ##
                 # Provide a user friendly representation

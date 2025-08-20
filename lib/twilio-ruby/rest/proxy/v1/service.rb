@@ -188,7 +188,6 @@ module Twilio
 
                         # Dependents
                         @sessions = nil
-                        @short_codes = nil
                         @phone_numbers = nil
                     end
                     ##
@@ -287,25 +286,6 @@ module Twilio
                         end
 
                      @sessions
-                    end
-                    ##
-                    # Access the short_codes
-                    # @return [ShortCodeList]
-                    # @return [ShortCodeContext] if sid was passed.
-                    def short_codes(sid=:unset)
-
-                        raise ArgumentError, 'sid cannot be nil' if sid.nil?
-
-                        if sid != :unset
-                            return ShortCodeContext.new(@version, @solution[:sid],sid )
-                        end
-
-                        unless @short_codes
-                            @short_codes = ShortCodeList.new(
-                                @version, service_sid: @solution[:sid], )
-                        end
-
-                     @short_codes
                     end
                     ##
                     # Access the phone_numbers
@@ -556,13 +536,6 @@ module Twilio
                     # @return [sessions] sessions
                     def sessions
                         context.sessions
-                    end
-
-                    ##
-                    # Access the short_codes
-                    # @return [short_codes] short_codes
-                    def short_codes
-                        context.short_codes
                     end
 
                     ##

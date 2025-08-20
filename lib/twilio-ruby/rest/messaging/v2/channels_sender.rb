@@ -19,6 +19,103 @@ module Twilio
             class V2 < Version
                 class ChannelsSenderList < ListResource
                 
+                    class MessagingV2ChannelsSenderProfile
+                            # @param [name]: [String] The name of the sender.
+                            # @param [about]: [String] The about text of the sender.
+                            # @param [address]: [String] The address of the sender.
+                            # @param [description]: [String] The description of the sender.
+                            # @param [logo_url]: [String] The logo URL of the sender.
+                            # @param [banner_url]: [String] The banner URL of the sender.
+                            # @param [privacy_url]: [String] The privacy URL of the sender. Publicly accessible URI associated with the Sender, must use the HTTP or HTTPS protocol 
+                            # @param [terms_of_service_url]: [String] The terms of service URL of the sender.
+                            # @param [accent_color]: [String] string - Color theme of the Sender (required, in hex format, need to be a minimum 4.5:1 contrast ratio relative to white) 
+                            # @param [vertical]: [String] The vertical of the sender. Allowed values are: - \"Automotive\" - \"Beauty, Spa and Salon\" - \"Clothing and Apparel\" - \"Education\" - \"Entertainment\" - \"Event Planning and Service\" - \"Finance and Banking\" - \"Food and Grocery\" - \"Public Service\" - \"Hotel and Lodging\" - \"Medical and Health\" - \"Non-profit\" - \"Professional Services\" - \"Shopping and Retail\" - \"Travel and Transportation\" - \"Restaurant\" - \"Other\" 
+                            # @param [websites]: [Hash] The websites of the sender
+                            # @param [emails]: [Hash] The emails of the sender
+                            # @param [phone_numbers]: [Hash] The phone numbers of the sender
+                        attr_accessor :name, :about, :address, :description, :logo_url, :banner_url, :privacy_url, :terms_of_service_url, :accent_color, :vertical, :websites, :emails, :phone_numbers
+                        def initialize(payload)
+                                @name = payload["name"]
+                                @about = payload["about"]
+                                @address = payload["address"]
+                                @description = payload["description"]
+                                @logo_url = payload["logo_url"]
+                                @banner_url = payload["banner_url"]
+                                @privacy_url = payload["privacy_url"]
+                                @terms_of_service_url = payload["terms_of_service_url"]
+                                @accent_color = payload["accent_color"]
+                                @vertical = payload["vertical"]
+                                @websites = payload["websites"]
+                                @emails = payload["emails"]
+                                @phone_numbers = payload["phone_numbers"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "name": @name,
+                                "about": @about,
+                                "address": @address,
+                                "description": @description,
+                                "logo_url": @logo_url,
+                                "banner_url": @banner_url,
+                                "privacy_url": @privacy_url,
+                                "terms_of_service_url": @terms_of_service_url,
+                                "accent_color": @accent_color,
+                                "vertical": @vertical,
+                                "websites": @websites,
+                                "emails": @emails,
+                                "phone_numbers": @phone_numbers,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2ChannelsSenderProfileGenericResponseEmails
+                            # @param [email]: [String] 
+                            # @param [label]: [String] 
+                        attr_accessor :email, :label
+                        def initialize(payload)
+                                @email = payload["email"]
+                                @label = payload["label"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "email": @email,
+                                "label": @label,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2ChannelsSenderProfileGenericResponsePhoneNumbers
+                            # @param [phone_number]: [String] 
+                            # @param [label]: [String] 
+                        attr_accessor :phone_number, :label
+                        def initialize(payload)
+                                @phone_number = payload["phone_number"]
+                                @label = payload["label"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "phone_number": @phone_number,
+                                "label": @label,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2ChannelsSenderProfileGenericResponseWebsites
+                            # @param [website]: [String] 
+                            # @param [label]: [String] 
+                        attr_accessor :website, :label
+                        def initialize(payload)
+                                @website = payload["website"]
+                                @label = payload["label"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "website": @website,
+                                "label": @label,
+                        }.to_json(options)
+                        end
+                    end
+
                     class MessagingV2ChannelsSenderRequestsCreate
                             # @param [sender_id]: [String] The ID of this Sender prefixed with the channel, e.g., `whatsapp:E.164`
                             # @param [configuration]: [ChannelsSenderList.MessagingV2ChannelsSenderConfiguration] 
@@ -60,6 +157,141 @@ module Twilio
                         end
                     end
 
+                    class MessagingV2RcsCarrier
+                            # @param [name]: [String] carrier in a country e.g. For US-Verizon, AT&T 
+                            # @param [status]: [MessagingV2RcsCarrierStatus] 
+                        attr_accessor :name, :status
+                        def initialize(payload)
+                                @name = payload["name"]
+                                @status = payload["status"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "name": @name,
+                                "status": @status,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2RcsComplianceCountryResponse
+                            # @param [country]: [String] ISO 3166-1 alpha-2 country code (e.g., 'US', 'UK').
+                            # @param [registration_sid]: [String] The default compliance registration SID (e.g., from CR-Google) that applies to all countries  unless overridden within the `countries` array. 
+                            # @param [status]: [MessagingV2RcsCountryStatus] 
+                            # @param [carriers]: [Array<MessagingV2RcsCarrier>] 
+                        attr_accessor :country, :registration_sid, :status, :carriers
+                        def initialize(payload)
+                                @country = payload["country"]
+                                @registration_sid = payload["registration_sid"]
+                                @status = payload["status"]
+                                @carriers = payload["carriers"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "country": @country,
+                                "registration_sid": @registration_sid,
+                                "status": @status,
+                                "carriers": @carriers,
+                        }.to_json(options)
+                        end
+                    end
+
+
+                    class MessagingV2ChannelsSenderProfile
+                            # @param [name]: [String] The name of the sender.
+                            # @param [about]: [String] The about text of the sender.
+                            # @param [address]: [String] The address of the sender.
+                            # @param [description]: [String] The description of the sender.
+                            # @param [logo_url]: [String] The logo URL of the sender.
+                            # @param [banner_url]: [String] The banner URL of the sender.
+                            # @param [privacy_url]: [String] The privacy URL of the sender. Publicly accessible URI associated with the Sender, must use the HTTP or HTTPS protocol 
+                            # @param [terms_of_service_url]: [String] The terms of service URL of the sender.
+                            # @param [accent_color]: [String] string - Color theme of the Sender (required, in hex format, need to be a minimum 4.5:1 contrast ratio relative to white) 
+                            # @param [vertical]: [String] The vertical of the sender. Allowed values are: - \"Automotive\" - \"Beauty, Spa and Salon\" - \"Clothing and Apparel\" - \"Education\" - \"Entertainment\" - \"Event Planning and Service\" - \"Finance and Banking\" - \"Food and Grocery\" - \"Public Service\" - \"Hotel and Lodging\" - \"Medical and Health\" - \"Non-profit\" - \"Professional Services\" - \"Shopping and Retail\" - \"Travel and Transportation\" - \"Restaurant\" - \"Other\" 
+                            # @param [websites]: [Hash] The websites of the sender
+                            # @param [emails]: [Hash] The emails of the sender
+                            # @param [phone_numbers]: [Hash] The phone numbers of the sender
+                        attr_accessor :name, :about, :address, :description, :logo_url, :banner_url, :privacy_url, :terms_of_service_url, :accent_color, :vertical, :websites, :emails, :phone_numbers
+                        def initialize(payload)
+                                @name = payload["name"]
+                                @about = payload["about"]
+                                @address = payload["address"]
+                                @description = payload["description"]
+                                @logo_url = payload["logo_url"]
+                                @banner_url = payload["banner_url"]
+                                @privacy_url = payload["privacy_url"]
+                                @terms_of_service_url = payload["terms_of_service_url"]
+                                @accent_color = payload["accent_color"]
+                                @vertical = payload["vertical"]
+                                @websites = payload["websites"]
+                                @emails = payload["emails"]
+                                @phone_numbers = payload["phone_numbers"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "name": @name,
+                                "about": @about,
+                                "address": @address,
+                                "description": @description,
+                                "logo_url": @logo_url,
+                                "banner_url": @banner_url,
+                                "privacy_url": @privacy_url,
+                                "terms_of_service_url": @terms_of_service_url,
+                                "accent_color": @accent_color,
+                                "vertical": @vertical,
+                                "websites": @websites,
+                                "emails": @emails,
+                                "phone_numbers": @phone_numbers,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2ChannelsSenderProfileGenericResponseEmails
+                            # @param [email]: [String] 
+                            # @param [label]: [String] 
+                        attr_accessor :email, :label
+                        def initialize(payload)
+                                @email = payload["email"]
+                                @label = payload["label"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "email": @email,
+                                "label": @label,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2ChannelsSenderProfileGenericResponsePhoneNumbers
+                            # @param [phone_number]: [String] 
+                            # @param [label]: [String] 
+                        attr_accessor :phone_number, :label
+                        def initialize(payload)
+                                @phone_number = payload["phone_number"]
+                                @label = payload["label"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "phone_number": @phone_number,
+                                "label": @label,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2ChannelsSenderProfileGenericResponseWebsites
+                            # @param [website]: [String] 
+                            # @param [label]: [String] 
+                        attr_accessor :website, :label
+                        def initialize(payload)
+                                @website = payload["website"]
+                                @label = payload["label"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "website": @website,
+                                "label": @label,
+                        }.to_json(options)
+                        end
+                    end
 
                     class MessagingV2ChannelsSenderRequestsCreate
                             # @param [sender_id]: [String] The ID of this Sender prefixed with the channel, e.g., `whatsapp:E.164`
@@ -98,6 +330,44 @@ module Twilio
                                 "configuration": @configuration,
                                 "webhook": @webhook,
                                 "profile": @profile,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2RcsCarrier
+                            # @param [name]: [String] carrier in a country e.g. For US-Verizon, AT&T 
+                            # @param [status]: [MessagingV2RcsCarrierStatus] 
+                        attr_accessor :name, :status
+                        def initialize(payload)
+                                @name = payload["name"]
+                                @status = payload["status"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "name": @name,
+                                "status": @status,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class MessagingV2RcsComplianceCountryResponse
+                            # @param [country]: [String] ISO 3166-1 alpha-2 country code (e.g., 'US', 'UK').
+                            # @param [registration_sid]: [String] The default compliance registration SID (e.g., from CR-Google) that applies to all countries  unless overridden within the `countries` array. 
+                            # @param [status]: [MessagingV2RcsCountryStatus] 
+                            # @param [carriers]: [Array<MessagingV2RcsCarrier>] 
+                        attr_accessor :country, :registration_sid, :status, :carriers
+                        def initialize(payload)
+                                @country = payload["country"]
+                                @registration_sid = payload["registration_sid"]
+                                @status = payload["status"]
+                                @carriers = payload["carriers"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "country": @country,
+                                "registration_sid": @registration_sid,
+                                "status": @status,
+                                "carriers": @carriers,
                         }.to_json(options)
                         end
                     end
@@ -371,6 +641,7 @@ module Twilio
                             'profile' => payload['profile'],
                             'properties' => payload['properties'],
                             'offline_reasons' => payload['offline_reasons'],
+                            'compliance' => payload['compliance'],
                             'url' => payload['url'],
                         }
 
@@ -421,7 +692,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [MessagingV2ChannelsSenderProfile] 
+                    # @return [MessagingV2ChannelsSenderProfileGenericResponse] 
                     def profile
                         @properties['profile']
                     end
@@ -436,6 +707,12 @@ module Twilio
                     # @return [Array<MessagingV2ChannelsSenderOfflineReasonsItems>] Reasons why the sender is offline., e.g., [{\"code\": \"21211400\", \"message\": \"Whatsapp business account is banned by provider {provider_name} | Credit line is assigned to another BSP\", \"more_info\": \"https://www.twilio.com/docs/errors/21211400\"}]
                     def offline_reasons
                         @properties['offline_reasons']
+                    end
+                    
+                    ##
+                    # @return [MessagingV2RcsComplianceResponse] 
+                    def compliance
+                        @properties['compliance']
                     end
                     
                     ##

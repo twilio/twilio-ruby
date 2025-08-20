@@ -324,7 +324,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Level] 
+                    # @return [String] The log level.
                     def level
                         @properties['level']
                     end

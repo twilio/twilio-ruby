@@ -157,6 +157,7 @@ module Twilio
                             'entity_sid' => payload['entity_sid'],
                             'identity' => payload['identity'],
                             'binding' => payload['binding'],
+                            'options' => payload['options'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'friendly_name' => payload['friendly_name'],
@@ -203,6 +204,12 @@ module Twilio
                     # @return [Hash] Contains the `factor_type` specific secret and metadata. For push, this is `binding.public_key` and `binding.alg`. For totp, this is `binding.secret` and `binding.uri`. The `binding.uri` property is generated following the [google authenticator key URI format](https://github.com/google/google-authenticator/wiki/Key-Uri-Format), and `Factor.friendly_name` is used for the “accountname” value and `Service.friendly_name` or `Service.totp.issuer` is used for the `issuer` value.   The Binding property is ONLY returned upon Factor creation.
                     def binding
                         @properties['binding']
+                    end
+                    
+                    ##
+                    # @return [Hash] 
+                    def options
+                        @properties['options']
                     end
                     
                     ##

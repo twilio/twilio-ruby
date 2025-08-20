@@ -1,6 +1,76 @@
 twilio-ruby changelog
 =====================
 
+[2025-08-18] Version 7.7.1
+--------------------------
+**Accounts**
+- Update beta feature flag for consent and contact bulk upsert APIs
+
+**Api**
+- Add multiple missing usage categories to usage records and usage triggers api
+- Add `channels-whatsapp-template-marketing` and `channels-whatsapp-template-utility` to usage categories
+
+**Conversations**
+- Fix `state` spelling for `initializing` enum value
+- Update `state` to include `intializing` for ServiceConversationWithParticipants and ConversationWithParticipants
+
+**Flex**
+- Adding new optional parameter `identity` to `web_channels` API in version `v2`
+
+**Trusthub**
+- Add required Permissions to the ComplianceInquiries API
+
+**Verify**
+- Add passkeys support to Verify API creating and updating services.
+- Update `ienum` type for Factor creation
+- Add passkeys as challenge and factor type
+
+
+[2025-07-24] Version 7.7.0
+--------------------------
+**Events**
+- Remove `SinkSid` parameter when updating subscriptions. **(breaking change)**
+
+**Twiml**
+- Remove Duplicates.
+- Add Polly Generative voices.
+- Add Latest Google (Chirp3-HD) voices.
+
+
+[2025-07-10] Version 7.6.5
+--------------------------
+**Flex**
+- update team name for web_channel, webchat_init_token, webchat_refresh_token
+
+
+[2025-07-03] Version 7.6.4
+--------------------------
+**Library - Chore**
+- [PR #750](https://github.com/twilio/twilio-ruby/pull/750): Remove references to microvisor. Thanks to [@akhani18](https://github.com/akhani18)!
+- [PR #752](https://github.com/twilio/twilio-ruby/pull/752): remove knowledge domain. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+
+**Bulkexports**
+- Changed the type of 'details' field to be a list of objects instead of a single object
+
+**Conversations**
+- Updates to `method` casing for ConfgurationAddress, ConversationScopedWebhook, and ServiceConversationScopedWebhook for RestProxy compatibility
+
+**Proxy**
+- remove shortcodes resource as its no longer used
+
+**Serverless**
+- Change log field level from type `ienum` to `string` in Logs api
+
+**Taskrouter**
+- Remove `URL-encoded` from attributes param definition in tasks
+
+**Trunking**
+- Added `symmetric_rtp_enabled` property on Trunks.
+
+**Twiml**
+- Add support for `<WhatsApp>` noun under `<Dial>` verb
+
+
 [2025-06-12] Version 7.6.3
 --------------------------
 **Library - Chore**
