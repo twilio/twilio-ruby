@@ -1,6 +1,10 @@
 module Twilio
   module REST
     class Messaging < MessagingBase
+      # Autoload version classes  
+      autoload :V1, File.join(__dir__, 'messaging', 'v1.rb')
+      autoload :V2, File.join(__dir__, 'messaging', 'v2.rb')
+
       ##
       # @param [String] sid The unique string to identify Brand Registration.
       # @return [Twilio::REST::Messaging::V1::BrandRegistrationInstance] if sid was passed.
