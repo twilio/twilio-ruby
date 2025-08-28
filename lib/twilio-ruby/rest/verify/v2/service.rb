@@ -304,6 +304,9 @@ module Twilio
                     # @param [String] passkeys_relying_party_id The Relying Party ID for Passkeys. This is the domain of your application, e.g. `example.com`. It is used to identify your application when creating Passkeys.
                     # @param [String] passkeys_relying_party_name The Relying Party Name for Passkeys. This is the name of your application, e.g. `Example App`. It is used to identify your application when creating Passkeys.
                     # @param [String] passkeys_relying_party_origins The Relying Party Origins for Passkeys. This is the origin of your application, e.g. `login.example.com,www.example.com`. It is used to identify your application when creating Passkeys, it can have multiple origins split by `,`.
+                    # @param [String] passkeys_authenticator_attachment The Authenticator Attachment for Passkeys. This is the type of authenticator that will be used to create Passkeys. It can be empty or it can have the values `platform`, `cross-platform` or `any`.
+                    # @param [String] passkeys_discoverable_credentials Indicates whether credentials must be discoverable by the authenticator. It can be empty or it can have the values `required`, `preferred` or `discouraged`.
+                    # @param [String] passkeys_user_verification The User Verification for Passkeys. This is the type of user verification that will be used to create Passkeys. It can be empty or it can have the values `required`, `preferred` or `discouraged`.
                     # @param [Boolean] verify_event_subscription_enabled Whether to allow verifications from the service to reach the stream-events sinks if configured
                     # @return [ServiceInstance] Updated ServiceInstance
                     def update(
@@ -329,6 +332,9 @@ module Twilio
                         passkeys_relying_party_id: :unset, 
                         passkeys_relying_party_name: :unset, 
                         passkeys_relying_party_origins: :unset, 
+                        passkeys_authenticator_attachment: :unset, 
+                        passkeys_discoverable_credentials: :unset, 
+                        passkeys_user_verification: :unset, 
                         verify_event_subscription_enabled: :unset
                     )
 
@@ -355,6 +361,9 @@ module Twilio
                             'Passkeys.RelyingParty.Id' => passkeys_relying_party_id,
                             'Passkeys.RelyingParty.Name' => passkeys_relying_party_name,
                             'Passkeys.RelyingParty.Origins' => passkeys_relying_party_origins,
+                            'Passkeys.AuthenticatorAttachment' => passkeys_authenticator_attachment,
+                            'Passkeys.DiscoverableCredentials' => passkeys_discoverable_credentials,
+                            'Passkeys.UserVerification' => passkeys_user_verification,
                             'VerifyEventSubscriptionEnabled' => verify_event_subscription_enabled,
                         })
 
@@ -761,6 +770,9 @@ module Twilio
                     # @param [String] passkeys_relying_party_id The Relying Party ID for Passkeys. This is the domain of your application, e.g. `example.com`. It is used to identify your application when creating Passkeys.
                     # @param [String] passkeys_relying_party_name The Relying Party Name for Passkeys. This is the name of your application, e.g. `Example App`. It is used to identify your application when creating Passkeys.
                     # @param [String] passkeys_relying_party_origins The Relying Party Origins for Passkeys. This is the origin of your application, e.g. `login.example.com,www.example.com`. It is used to identify your application when creating Passkeys, it can have multiple origins split by `,`.
+                    # @param [String] passkeys_authenticator_attachment The Authenticator Attachment for Passkeys. This is the type of authenticator that will be used to create Passkeys. It can be empty or it can have the values `platform`, `cross-platform` or `any`.
+                    # @param [String] passkeys_discoverable_credentials Indicates whether credentials must be discoverable by the authenticator. It can be empty or it can have the values `required`, `preferred` or `discouraged`.
+                    # @param [String] passkeys_user_verification The User Verification for Passkeys. This is the type of user verification that will be used to create Passkeys. It can be empty or it can have the values `required`, `preferred` or `discouraged`.
                     # @param [Boolean] verify_event_subscription_enabled Whether to allow verifications from the service to reach the stream-events sinks if configured
                     # @return [ServiceInstance] Updated ServiceInstance
                     def update(
@@ -786,6 +798,9 @@ module Twilio
                         passkeys_relying_party_id: :unset, 
                         passkeys_relying_party_name: :unset, 
                         passkeys_relying_party_origins: :unset, 
+                        passkeys_authenticator_attachment: :unset, 
+                        passkeys_discoverable_credentials: :unset, 
+                        passkeys_user_verification: :unset, 
                         verify_event_subscription_enabled: :unset
                     )
 
@@ -812,6 +827,9 @@ module Twilio
                             passkeys_relying_party_id: passkeys_relying_party_id, 
                             passkeys_relying_party_name: passkeys_relying_party_name, 
                             passkeys_relying_party_origins: passkeys_relying_party_origins, 
+                            passkeys_authenticator_attachment: passkeys_authenticator_attachment, 
+                            passkeys_discoverable_credentials: passkeys_discoverable_credentials, 
+                            passkeys_user_verification: passkeys_user_verification, 
                             verify_event_subscription_enabled: verify_event_subscription_enabled, 
                         )
                     end

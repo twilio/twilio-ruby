@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2025-08-28] Version 7.7.2
+--------------------------
+**Studio**
+- Add `type` to Step resource APIs
+
+**Verify**
+- Allow to update all passkeys parameters in the service update
+
+
 [2025-08-18] Version 7.7.1
 --------------------------
 **Accounts**
