@@ -70,7 +70,8 @@ module Twilio
                             # @param [phone]: [String] 
                             # @param [id]: [String] 
                             # @param [code]: [String] 
-                        attr_accessor :type, :title, :url, :phone, :id, :code
+                            # @param [webview_size]: [WebviewSizeType] 
+                        attr_accessor :type, :title, :url, :phone, :id, :code, :webview_size
                         def initialize(payload)
                                 @type = payload["type"]
                                 @title = payload["title"]
@@ -78,6 +79,7 @@ module Twilio
                                 @phone = payload["phone"]
                                 @id = payload["id"]
                                 @code = payload["code"]
+                                @webview_size = payload["webview_size"]
                         end
                         def to_json(options = {})
                         {
@@ -87,6 +89,7 @@ module Twilio
                                 "phone": @phone,
                                 "id": @id,
                                 "code": @code,
+                                "webview_size": @webview_size,
                         }.to_json(options)
                         end
                     end

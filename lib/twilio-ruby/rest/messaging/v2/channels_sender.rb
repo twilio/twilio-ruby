@@ -20,19 +20,19 @@ module Twilio
                 class ChannelsSenderList < ListResource
                 
                     class MessagingV2ChannelsSenderProfile
-                            # @param [name]: [String] The name of the sender.
-                            # @param [about]: [String] The about text of the sender.
+                            # @param [name]: [String] The name of the sender. Required for WhatsApp senders and must follow [Meta's display name guidelines](https://www.facebook.com/business/help/757569725593362).
+                            # @param [about]: [String] The profile about text for the sender.
                             # @param [address]: [String] The address of the sender.
                             # @param [description]: [String] The description of the sender.
                             # @param [logo_url]: [String] The logo URL of the sender.
                             # @param [banner_url]: [String] The banner URL of the sender.
-                            # @param [privacy_url]: [String] The privacy URL of the sender. Publicly accessible URI associated with the Sender, must use the HTTP or HTTPS protocol 
+                            # @param [privacy_url]: [String] The privacy URL of the sender. Must be a publicly accessible HTTP or HTTPS URI associated with the sender. 
                             # @param [terms_of_service_url]: [String] The terms of service URL of the sender.
-                            # @param [accent_color]: [String] string - Color theme of the Sender (required, in hex format, need to be a minimum 4.5:1 contrast ratio relative to white) 
-                            # @param [vertical]: [String] The vertical of the sender. Allowed values are: - \"Automotive\" - \"Beauty, Spa and Salon\" - \"Clothing and Apparel\" - \"Education\" - \"Entertainment\" - \"Event Planning and Service\" - \"Finance and Banking\" - \"Food and Grocery\" - \"Public Service\" - \"Hotel and Lodging\" - \"Medical and Health\" - \"Non-profit\" - \"Professional Services\" - \"Shopping and Retail\" - \"Travel and Transportation\" - \"Restaurant\" - \"Other\" 
-                            # @param [websites]: [Hash] The websites of the sender
-                            # @param [emails]: [Hash] The emails of the sender
-                            # @param [phone_numbers]: [Hash] The phone numbers of the sender
+                            # @param [accent_color]: [String] The color theme of the sender. Must be in hex format and have at least a 4:5:1 contrast ratio against white.
+                            # @param [vertical]: [String] The vertical of the sender. Allowed values are: - `Automotive` - `Beauty, Spa and Salon` - `Clothing and Apparel` - `Education` - `Entertainment` - `Event Planning and Service` - `Finance and Banking` - `Food and Grocery` - `Public Service` - `Hotel and Lodging` - `Medical and Health` - `Non-profit` - `Professional Services` - `Shopping and Retail` - `Travel and Transportation` - `Restaurant` - `Other` 
+                            # @param [websites]: [Hash] The websites of the sender.
+                            # @param [emails]: [Hash] The emails of the sender.
+                            # @param [phone_numbers]: [Hash] The phone numbers of the sender.
                         attr_accessor :name, :about, :address, :description, :logo_url, :banner_url, :privacy_url, :terms_of_service_url, :accent_color, :vertical, :websites, :emails, :phone_numbers
                         def initialize(payload)
                                 @name = payload["name"]
@@ -117,7 +117,7 @@ module Twilio
                     end
 
                     class MessagingV2ChannelsSenderRequestsCreate
-                            # @param [sender_id]: [String] The ID of this Sender prefixed with the channel, e.g., `whatsapp:E.164`
+                            # @param [sender_id]: [String] The ID of the sender in `whatsapp:<E.164_PHONE_NUMBER>` format.
                             # @param [configuration]: [ChannelsSenderList.MessagingV2ChannelsSenderConfiguration] 
                             # @param [webhook]: [ChannelsSenderList.MessagingV2ChannelsSenderWebhook] 
                             # @param [profile]: [ChannelsSenderList.MessagingV2ChannelsSenderProfile] 
@@ -158,7 +158,7 @@ module Twilio
                     end
 
                     class MessagingV2RcsCarrier
-                            # @param [name]: [String] carrier in a country e.g. For US-Verizon, AT&T 
+                            # @param [name]: [String] The name of the carrier. For example, `Verizon` or `AT&T` for US.
                             # @param [status]: [MessagingV2RcsCarrierStatus] 
                         attr_accessor :name, :status
                         def initialize(payload)
@@ -174,8 +174,8 @@ module Twilio
                     end
 
                     class MessagingV2RcsComplianceCountryResponse
-                            # @param [country]: [String] ISO 3166-1 alpha-2 country code (e.g., 'US', 'UK').
-                            # @param [registration_sid]: [String] The default compliance registration SID (e.g., from CR-Google) that applies to all countries  unless overridden within the `countries` array. 
+                            # @param [country]: [String] The ISO 3166-1 alpha-2 country code.
+                            # @param [registration_sid]: [String] The default compliance registration SID (e.g., from CR-Google) that applies to all countries unless overridden in the `countries` array. 
                             # @param [status]: [MessagingV2RcsCountryStatus] 
                             # @param [carriers]: [Array<MessagingV2RcsCarrier>] 
                         attr_accessor :country, :registration_sid, :status, :carriers
@@ -197,19 +197,19 @@ module Twilio
 
 
                     class MessagingV2ChannelsSenderProfile
-                            # @param [name]: [String] The name of the sender.
-                            # @param [about]: [String] The about text of the sender.
+                            # @param [name]: [String] The name of the sender. Required for WhatsApp senders and must follow [Meta's display name guidelines](https://www.facebook.com/business/help/757569725593362).
+                            # @param [about]: [String] The profile about text for the sender.
                             # @param [address]: [String] The address of the sender.
                             # @param [description]: [String] The description of the sender.
                             # @param [logo_url]: [String] The logo URL of the sender.
                             # @param [banner_url]: [String] The banner URL of the sender.
-                            # @param [privacy_url]: [String] The privacy URL of the sender. Publicly accessible URI associated with the Sender, must use the HTTP or HTTPS protocol 
+                            # @param [privacy_url]: [String] The privacy URL of the sender. Must be a publicly accessible HTTP or HTTPS URI associated with the sender. 
                             # @param [terms_of_service_url]: [String] The terms of service URL of the sender.
-                            # @param [accent_color]: [String] string - Color theme of the Sender (required, in hex format, need to be a minimum 4.5:1 contrast ratio relative to white) 
-                            # @param [vertical]: [String] The vertical of the sender. Allowed values are: - \"Automotive\" - \"Beauty, Spa and Salon\" - \"Clothing and Apparel\" - \"Education\" - \"Entertainment\" - \"Event Planning and Service\" - \"Finance and Banking\" - \"Food and Grocery\" - \"Public Service\" - \"Hotel and Lodging\" - \"Medical and Health\" - \"Non-profit\" - \"Professional Services\" - \"Shopping and Retail\" - \"Travel and Transportation\" - \"Restaurant\" - \"Other\" 
-                            # @param [websites]: [Hash] The websites of the sender
-                            # @param [emails]: [Hash] The emails of the sender
-                            # @param [phone_numbers]: [Hash] The phone numbers of the sender
+                            # @param [accent_color]: [String] The color theme of the sender. Must be in hex format and have at least a 4:5:1 contrast ratio against white.
+                            # @param [vertical]: [String] The vertical of the sender. Allowed values are: - `Automotive` - `Beauty, Spa and Salon` - `Clothing and Apparel` - `Education` - `Entertainment` - `Event Planning and Service` - `Finance and Banking` - `Food and Grocery` - `Public Service` - `Hotel and Lodging` - `Medical and Health` - `Non-profit` - `Professional Services` - `Shopping and Retail` - `Travel and Transportation` - `Restaurant` - `Other` 
+                            # @param [websites]: [Hash] The websites of the sender.
+                            # @param [emails]: [Hash] The emails of the sender.
+                            # @param [phone_numbers]: [Hash] The phone numbers of the sender.
                         attr_accessor :name, :about, :address, :description, :logo_url, :banner_url, :privacy_url, :terms_of_service_url, :accent_color, :vertical, :websites, :emails, :phone_numbers
                         def initialize(payload)
                                 @name = payload["name"]
@@ -294,7 +294,7 @@ module Twilio
                     end
 
                     class MessagingV2ChannelsSenderRequestsCreate
-                            # @param [sender_id]: [String] The ID of this Sender prefixed with the channel, e.g., `whatsapp:E.164`
+                            # @param [sender_id]: [String] The ID of the sender in `whatsapp:<E.164_PHONE_NUMBER>` format.
                             # @param [configuration]: [ChannelsSenderList.MessagingV2ChannelsSenderConfiguration] 
                             # @param [webhook]: [ChannelsSenderList.MessagingV2ChannelsSenderWebhook] 
                             # @param [profile]: [ChannelsSenderList.MessagingV2ChannelsSenderProfile] 
@@ -335,7 +335,7 @@ module Twilio
                     end
 
                     class MessagingV2RcsCarrier
-                            # @param [name]: [String] carrier in a country e.g. For US-Verizon, AT&T 
+                            # @param [name]: [String] The name of the carrier. For example, `Verizon` or `AT&T` for US.
                             # @param [status]: [MessagingV2RcsCarrierStatus] 
                         attr_accessor :name, :status
                         def initialize(payload)
@@ -351,8 +351,8 @@ module Twilio
                     end
 
                     class MessagingV2RcsComplianceCountryResponse
-                            # @param [country]: [String] ISO 3166-1 alpha-2 country code (e.g., 'US', 'UK').
-                            # @param [registration_sid]: [String] The default compliance registration SID (e.g., from CR-Google) that applies to all countries  unless overridden within the `countries` array. 
+                            # @param [country]: [String] The ISO 3166-1 alpha-2 country code.
+                            # @param [registration_sid]: [String] The default compliance registration SID (e.g., from CR-Google) that applies to all countries unless overridden in the `countries` array. 
                             # @param [status]: [MessagingV2RcsCountryStatus] 
                             # @param [carriers]: [Array<MessagingV2RcsCarrier>] 
                         attr_accessor :country, :registration_sid, :status, :carriers
@@ -511,7 +511,7 @@ module Twilio
                     ##
                     # Initialize the ChannelsSenderContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] sid A 34 character string that uniquely identifies this Sender.
+                    # @param [String] sid The SID of the sender.
                     # @return [ChannelsSenderContext] ChannelsSenderContext
                     def initialize(version, sid)
                         super(version)
@@ -662,7 +662,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] A 34 character string that uniquely identifies this Sender.
+                    # @return [String] The SID of the sender.
                     def sid
                         @properties['sid']
                     end
@@ -674,7 +674,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The ID of this Sender prefixed with the channel, e.g., `whatsapp:E.164`
+                    # @return [String] The ID of the sender in `whatsapp:<E.164_PHONE_NUMBER>` format.
                     def sender_id
                         @properties['sender_id']
                     end
@@ -704,7 +704,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Array<MessagingV2ChannelsSenderOfflineReasonsItems>] Reasons why the sender is offline., e.g., [{\"code\": \"21211400\", \"message\": \"Whatsapp business account is banned by provider {provider_name} | Credit line is assigned to another BSP\", \"more_info\": \"https://www.twilio.com/docs/errors/21211400\"}]
+                    # @return [Array<MessagingV2ChannelsSenderOfflineReasonsItems>] The reasons why the sender is offline.
                     def offline_reasons
                         @properties['offline_reasons']
                     end
@@ -716,7 +716,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The URL of this resource, relative to `https://messaging.twilio.com`.
+                    # @return [String] The URL of the resource.
                     def url
                         @properties['url']
                     end
