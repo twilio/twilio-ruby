@@ -249,6 +249,7 @@ module Twilio
                             'parent_step_sid' => payload['parent_step_sid'],
                             'transitioned_from' => payload['transitioned_from'],
                             'transitioned_to' => payload['transitioned_to'],
+                            'type' => payload['type'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'url' => payload['url'],
@@ -323,6 +324,12 @@ module Twilio
                     # @return [String] The Widget that will follow the Widget for the Step.
                     def transitioned_to
                         @properties['transitioned_to']
+                    end
+                    
+                    ##
+                    # @return [String] The type of the widget that was executed.
+                    def type
+                        @properties['type']
                     end
                     
                     ##

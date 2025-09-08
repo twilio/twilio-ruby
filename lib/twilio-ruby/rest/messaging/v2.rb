@@ -25,7 +25,7 @@ module Twilio
                 end
 
                 ##
-                # @param [String] sid A 34 character string that uniquely identifies this Sender.
+                # @param [String] sid The SID of the sender.
                 # @return [Twilio::REST::Messaging::V2::ChannelsSenderContext] if sid was passed.
                 # @return [Twilio::REST::Messaging::V2::ChannelsSenderList]
                 def channels_senders(sid=:unset)
