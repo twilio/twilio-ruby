@@ -119,7 +119,7 @@ describe Twilio::HTTP::Client do
     expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
     allow_any_instance_of(Faraday::Connection).to receive(:send).and_raise(Faraday::ConnectionFailed.new('BOOM'))
 
-    expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Twilio::REST::TwilioError)
+    expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Twilio::REST::NetworkError)
     expect(@client.last_response).to be_nil
     expect(@client.last_request).to_not be_nil
     expect(@client.last_request.host).to eq('host')
@@ -146,7 +146,7 @@ describe Twilio::HTTP::Client do
   it 'previous last_response should be cleared' do
     expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
     allow_any_instance_of(Faraday::Connection).to receive(:send).and_raise(Faraday::ConnectionFailed.new('BOOM'))
-    expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Twilio::REST::TwilioError)
+    expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Twilio::REST::NetworkError)
     expect(@client.last_response).to be_nil
   end
 
@@ -164,6 +164,43 @@ describe Twilio::HTTP::Client do
         expect(twilio_response.body).to eq({ 'message' => "Server error (#{status_code})", 'code' => status_code })
         expect(twilio_response.status_code).to eq status_code
       end
+    end
+  end
+
+  it 'should raise NetworkError for different types of Faraday errors' do
+    # Test TimeoutError
+    expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_raise(Faraday::TimeoutError.new('Timeout'))
+    expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Twilio::REST::NetworkError)
+  end
+
+  it 'should raise NetworkError for connection failures' do
+    # Test ConnectionFailed
+    expect(Faraday).to receive(:new).and_return(Faraday::Connection.new)
+    allow_any_instance_of(Faraday::Connection).to receive(:send).and_raise(Faraday::ConnectionFailed.new('DNS error'))
+    expect { @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b']) }.to raise_exception(Twilio::REST::NetworkError)
+  end
+
+  it 'should allow consumers to distinguish between network and API errors' do
+    begin
+      # This would normally make a real network call that fails
+      # but since we're mocking, we'll just test the error hierarchy
+      raise Twilio::REST::NetworkError, "Network failure"
+    rescue Twilio::REST::NetworkError => e
+      # This should be caught as a retryable network error
+      expect(e).to be_a(Twilio::REST::NetworkError)
+      expect(e).to be_a(Twilio::REST::TwilioError)
+    end
+
+    begin
+      # This represents an API error response
+      response = double('response', status_code: 400, body: {'code' => 20003, 'message' => 'Invalid parameter'})
+      raise Twilio::REST::RestError.new("Authentication failed", response)
+    rescue Twilio::REST::RestError => e
+      # This should be caught as a non-retryable API error
+      expect(e).to be_a(Twilio::REST::RestError)
+      expect(e).to be_a(Twilio::REST::TwilioError)
+      expect(e).not_to be_a(Twilio::REST::NetworkError)
     end
   end
 end
