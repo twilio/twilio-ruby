@@ -185,7 +185,7 @@ describe Twilio::HTTP::Client do
     begin
       # This would normally make a real network call that fails
       # but since we're mocking, we'll just test the error hierarchy
-      raise Twilio::REST::NetworkError, "Network failure"
+      raise Twilio::REST::NetworkError, 'Network failure'
     rescue Twilio::REST::NetworkError => e
       # This should be caught as a retryable network error
       expect(e).to be_a(Twilio::REST::NetworkError)
@@ -194,8 +194,8 @@ describe Twilio::HTTP::Client do
 
     begin
       # This represents an API error response
-      response = double('response', status_code: 400, body: {'code' => 20003, 'message' => 'Invalid parameter'})
-      raise Twilio::REST::RestError.new("Authentication failed", response)
+      response = double('response', status_code: 400, body: { 'code' => 20_003, 'message' => 'Invalid parameter' })
+      raise Twilio::REST::RestError.new('Authentication failed', response)
     rescue Twilio::REST::RestError => e
       # This should be caught as a non-retryable API error
       expect(e).to be_a(Twilio::REST::RestError)
