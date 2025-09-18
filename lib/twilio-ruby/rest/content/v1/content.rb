@@ -502,7 +502,8 @@ module Twilio
                             # @param [twilio_schedule]: [ContentList.TwilioSchedule] 
                             # @param [whatsapp_card]: [ContentList.WhatsappCard] 
                             # @param [whatsapp_authentication]: [ContentList.WhatsappAuthentication] 
-                        attr_accessor :twilio_text, :twilio_media, :twilio_location, :twilio_list_picker, :twilio_call_to_action, :twilio_quick_reply, :twilio_card, :twilio_catalog, :twilio_carousel, :twilio_flows, :twilio_schedule, :whatsapp_card, :whatsapp_authentication
+                            # @param [whatsapp_flows]: [ContentList.WhatsappFlows] 
+                        attr_accessor :twilio_text, :twilio_media, :twilio_location, :twilio_list_picker, :twilio_call_to_action, :twilio_quick_reply, :twilio_card, :twilio_catalog, :twilio_carousel, :twilio_flows, :twilio_schedule, :whatsapp_card, :whatsapp_authentication, :whatsapp_flows
                         def initialize(payload)
                                 @twilio_text = payload["twilio_text"]
                                 @twilio_media = payload["twilio_media"]
@@ -517,6 +518,7 @@ module Twilio
                                 @twilio_schedule = payload["twilio_schedule"]
                                 @whatsapp_card = payload["whatsapp_card"]
                                 @whatsapp_authentication = payload["whatsapp_authentication"]
+                                @whatsapp_flows = payload["whatsapp_flows"]
                         end
                         def to_json(options = {})
                         {
@@ -533,6 +535,7 @@ module Twilio
                                 "twilio/schedule": @twilio_schedule,
                                 "whatsapp/card": @whatsapp_card,
                                 "whatsapp/authentication": @whatsapp_authentication,
+                                "whatsapp/flows": @whatsapp_flows,
                         }.to_json(options)
                         end
                     end
@@ -577,6 +580,40 @@ module Twilio
                                 "media": @media,
                                 "header_text": @header_text,
                                 "actions": @actions,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class WhatsappFlows
+                            # @param [body]: [String] 
+                            # @param [button_text]: [String] 
+                            # @param [subtitle]: [String] 
+                            # @param [media_url]: [String] 
+                            # @param [flow_id]: [String] 
+                            # @param [flow_token]: [String] 
+                            # @param [flow_first_page_id]: [String] 
+                            # @param [is_flow_first_page_endpoint]: [Boolean] 
+                        attr_accessor :body, :button_text, :subtitle, :media_url, :flow_id, :flow_token, :flow_first_page_id, :is_flow_first_page_endpoint
+                        def initialize(payload)
+                                @body = payload["body"]
+                                @button_text = payload["button_text"]
+                                @subtitle = payload["subtitle"]
+                                @media_url = payload["media_url"]
+                                @flow_id = payload["flow_id"]
+                                @flow_token = payload["flow_token"]
+                                @flow_first_page_id = payload["flow_first_page_id"]
+                                @is_flow_first_page_endpoint = payload["is_flow_first_page_endpoint"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "body": @body,
+                                "button_text": @button_text,
+                                "subtitle": @subtitle,
+                                "media_url": @media_url,
+                                "flow_id": @flow_id,
+                                "flow_token": @flow_token,
+                                "flow_first_page_id": @flow_first_page_id,
+                                "is_flow_first_page_endpoint": @is_flow_first_page_endpoint,
                         }.to_json(options)
                         end
                     end

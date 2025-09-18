@@ -224,7 +224,9 @@ module Twilio
 
                         # Dependents
                         @sentences = nil
+                        @encrypted_sentences = nil
                         @media = nil
+                        @encrypted_operator_results = nil
                         @operator_results = nil
                     end
                     ##
@@ -270,11 +272,31 @@ module Twilio
                       @sentences
                     end
                     ##
+                    # Access the encrypted_sentences
+                    # @return [EncryptedSentencesList]
+                    # @return [EncryptedSentencesContext]
+                    def encrypted_sentences
+                        EncryptedSentencesContext.new(
+                                @version,
+                                @solution[:sid]
+                                )
+                    end
+                    ##
                     # Access the media
                     # @return [MediaList]
                     # @return [MediaContext]
                     def media
                         MediaContext.new(
+                                @version,
+                                @solution[:sid]
+                                )
+                    end
+                    ##
+                    # Access the encrypted_operator_results
+                    # @return [EncryptedOperatorResultsList]
+                    # @return [EncryptedOperatorResultsContext]
+                    def encrypted_operator_results
+                        EncryptedOperatorResultsContext.new(
                                 @version,
                                 @solution[:sid]
                                 )
@@ -371,6 +393,7 @@ module Twilio
                             'duration' => payload['duration'] == nil ? payload['duration'] : payload['duration'].to_i,
                             'url' => payload['url'],
                             'redaction' => payload['redaction'],
+                            'encryption_credential_sid' => payload['encryption_credential_sid'],
                             'links' => payload['links'],
                         }
 
@@ -475,6 +498,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] The unique SID identifier of the Public Key resource used to encrypt the sentences and operator results.
+                    def encryption_credential_sid
+                        @properties['encryption_credential_sid']
+                    end
+                    
+                    ##
                     # @return [Hash] 
                     def links
                         @properties['links']
@@ -504,10 +533,24 @@ module Twilio
                     end
 
                     ##
+                    # Access the encrypted_sentences
+                    # @return [encrypted_sentences] encrypted_sentences
+                    def encrypted_sentences
+                        context.encrypted_sentences
+                    end
+
+                    ##
                     # Access the media
                     # @return [media] media
                     def media
                         context.media
+                    end
+
+                    ##
+                    # Access the encrypted_operator_results
+                    # @return [encrypted_operator_results] encrypted_operator_results
+                    def encrypted_operator_results
+                        context.encrypted_operator_results
                     end
 
                     ##

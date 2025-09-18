@@ -22,6 +22,7 @@ module Twilio
                     super
                     @version = 'v2'
                     @forms = nil
+                    @new_challenge = nil
                     @safelist = nil
                     @services = nil
                     @templates = nil
@@ -41,6 +42,20 @@ module Twilio
                         @forms ||= FormList.new self
                     else
                         FormContext.new(self, form_type)
+                    end
+                end
+                ##
+                # @param [String] service_sid The unique SID identifier of the Service.
+                # @return [Twilio::REST::Verify::V2::NewChallengeContext] if serviceSid was passed.
+                # @return [Twilio::REST::Verify::V2::NewChallengeList]
+                def new_challenge(service_sid=:unset)
+                    if service_sid.nil?
+                        raise ArgumentError, 'service_sid cannot be nil'
+                    end
+                    if service_sid == :unset
+                        @new_challenge ||= NewChallengeList.new self
+                    else
+                        NewChallengeContext.new(self, service_sid)
                     end
                 end
                 ##

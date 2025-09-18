@@ -41,6 +41,7 @@ module Twilio
                     # @param [Boolean] media_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts media made on this service. The auto_redaction flag must be enabled, results in error otherwise.
                     # @param [String] webhook_url The URL Twilio will request when executing the Webhook.
                     # @param [HttpMethod] webhook_http_method 
+                    # @param [String] encryption_credential_sid The unique SID identifier of the Public Key resource used to encrypt the sentences and operator results.
                     # @return [ServiceInstance] Created ServiceInstance
                     def create(
                         unique_name: nil, 
@@ -51,7 +52,8 @@ module Twilio
                         auto_redaction: :unset, 
                         media_redaction: :unset, 
                         webhook_url: :unset, 
-                        webhook_http_method: :unset
+                        webhook_http_method: :unset, 
+                        encryption_credential_sid: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -64,6 +66,7 @@ module Twilio
                             'MediaRedaction' => media_redaction,
                             'WebhookUrl' => webhook_url,
                             'WebhookHttpMethod' => webhook_http_method,
+                            'EncryptionCredentialSid' => encryption_credential_sid,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -232,6 +235,7 @@ module Twilio
                     # @param [Boolean] media_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts media made on this service. The auto_redaction flag must be enabled, results in error otherwise.
                     # @param [String] webhook_url The URL Twilio will request when executing the Webhook.
                     # @param [HttpMethod] webhook_http_method 
+                    # @param [String] encryption_credential_sid The unique SID identifier of the Public Key resource used to encrypt the sentences and operator results.
                     # @param [String] if_match The If-Match HTTP request header
                     # @return [ServiceInstance] Updated ServiceInstance
                     def update(
@@ -243,6 +247,7 @@ module Twilio
                         media_redaction: :unset, 
                         webhook_url: :unset, 
                         webhook_http_method: :unset, 
+                        encryption_credential_sid: :unset, 
                         if_match: :unset
                     )
 
@@ -255,6 +260,7 @@ module Twilio
                             'MediaRedaction' => media_redaction,
                             'WebhookUrl' => webhook_url,
                             'WebhookHttpMethod' => webhook_http_method,
+                            'EncryptionCredentialSid' => encryption_credential_sid,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
@@ -346,6 +352,7 @@ module Twilio
                             'webhook_http_method' => payload['webhook_http_method'],
                             'read_only_attached_operator_sids' => payload['read_only_attached_operator_sids'],
                             'version' => payload['version'] == nil ? payload['version'] : payload['version'].to_i,
+                            'encryption_credential_sid' => payload['encryption_credential_sid'],
                         }
 
                         # Context
@@ -461,6 +468,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] The unique SID identifier of the Public Key resource used to encrypt the sentences and operator results.
+                    def encryption_credential_sid
+                        @properties['encryption_credential_sid']
+                    end
+                    
+                    ##
                     # Delete the ServiceInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
@@ -486,6 +499,7 @@ module Twilio
                     # @param [Boolean] media_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts media made on this service. The auto_redaction flag must be enabled, results in error otherwise.
                     # @param [String] webhook_url The URL Twilio will request when executing the Webhook.
                     # @param [HttpMethod] webhook_http_method 
+                    # @param [String] encryption_credential_sid The unique SID identifier of the Public Key resource used to encrypt the sentences and operator results.
                     # @param [String] if_match The If-Match HTTP request header
                     # @return [ServiceInstance] Updated ServiceInstance
                     def update(
@@ -497,6 +511,7 @@ module Twilio
                         media_redaction: :unset, 
                         webhook_url: :unset, 
                         webhook_http_method: :unset, 
+                        encryption_credential_sid: :unset, 
                         if_match: :unset
                     )
 
@@ -509,6 +524,7 @@ module Twilio
                             media_redaction: media_redaction, 
                             webhook_url: webhook_url, 
                             webhook_http_method: webhook_http_method, 
+                            encryption_credential_sid: encryption_credential_sid, 
                             if_match: if_match, 
                         )
                     end

@@ -242,6 +242,8 @@ module Twilio
 
                         # Dependents
                         @verification_checks = nil
+                        @new_factors = nil
+                        @verify_factor = nil
                         @verifications = nil
                         @access_tokens = nil
                         @webhooks = nil
@@ -391,6 +393,28 @@ module Twilio
                                 @version, service_sid: @solution[:sid], )
                       end
                       @verification_checks
+                    end
+                    ##
+                    # Access the new_factors
+                    # @return [NewFactorList]
+                    # @return [NewFactorContext]
+                    def new_factors
+                      unless @new_factors
+                        @new_factors = NewFactorList.new(
+                                @version, )
+                      end
+                      @new_factors
+                    end
+                    ##
+                    # Access the verify_factor
+                    # @return [VerifyFactorList]
+                    # @return [VerifyFactorContext]
+                    def verify_factor
+                      unless @verify_factor
+                        @verify_factor = VerifyFactorList.new(
+                                @version, )
+                      end
+                      @verify_factor
                     end
                     ##
                     # Access the verifications
@@ -839,6 +863,20 @@ module Twilio
                     # @return [verification_checks] verification_checks
                     def verification_checks
                         context.verification_checks
+                    end
+
+                    ##
+                    # Access the new_factors
+                    # @return [new_factors] new_factors
+                    def new_factors
+                        context.new_factors
+                    end
+
+                    ##
+                    # Access the verify_factor
+                    # @return [verify_factor] verify_factor
+                    def verify_factor
+                        context.verify_factor
                     end
 
                     ##

@@ -2049,6 +2049,26 @@ module Twilio
         yield(assistant) if block_given?
         append(assistant)
       end
+
+      ##
+      # Create a new <AiSession> element
+      # ai_connector:: The unique name or installed add-on sid that identifies the installed addon resource for the AI Connector
+      # ai_session_configuration:: The unique name or id of the AiSession Configuration resource.
+      # keyword_args:: additional attributes
+      def ai_session(ai_connector: nil, ai_session_configuration: nil, **keyword_args)
+        append(AiSession.new(ai_connector: ai_connector, ai_session_configuration: ai_session_configuration, **keyword_args))
+      end
+    end
+
+    ##
+    # <AiSession> TwiML Noun
+    class AiSession < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'AiSession'
+
+        yield(self) if block_given?
+      end
     end
 
     ##
