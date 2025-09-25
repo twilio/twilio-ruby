@@ -1,6 +1,13 @@
 twilio-ruby changelog
 =====================
 
+[2025-09-25] Version 7.8.2
+--------------------------
+**Api**
+- Added optional parameter `CallerDisplayName` for conference participant outbound
+- Updated description for property `to` in the participant create request
+
+
 [2025-09-18] Version 7.8.1
 --------------------------
 **Library - Chore**

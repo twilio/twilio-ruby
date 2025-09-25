@@ -243,11 +243,13 @@ module Twilio
                         # Dependents
                         @verification_checks = nil
                         @new_factors = nil
-                        @verify_factor = nil
+                        @new_factors = nil
+                        @approve_challenge = nil
                         @verifications = nil
                         @access_tokens = nil
                         @webhooks = nil
                         @messaging_configurations = nil
+                        @new_challenge = nil
                         @entities = nil
                         @rate_limits = nil
                     end
@@ -406,15 +408,26 @@ module Twilio
                       @new_factors
                     end
                     ##
-                    # Access the verify_factor
-                    # @return [VerifyFactorList]
-                    # @return [VerifyFactorContext]
-                    def verify_factor
-                      unless @verify_factor
-                        @verify_factor = VerifyFactorList.new(
+                    # Access the new_factors
+                    # @return [NewFactorList]
+                    # @return [NewFactorContext]
+                    def new_factors
+                      unless @new_factors
+                        @new_factors = NewFactorList.new(
                                 @version, )
                       end
-                      @verify_factor
+                      @new_factors
+                    end
+                    ##
+                    # Access the approve_challenge
+                    # @return [ApproveChallengeList]
+                    # @return [ApproveChallengeContext]
+                    def approve_challenge
+                      unless @approve_challenge
+                        @approve_challenge = ApproveChallengeList.new(
+                                @version, )
+                      end
+                      @approve_challenge
                     end
                     ##
                     # Access the verifications
@@ -491,6 +504,16 @@ module Twilio
                         end
 
                      @messaging_configurations
+                    end
+                    ##
+                    # Access the new_challenge
+                    # @return [NewChallengeList]
+                    # @return [NewChallengeContext]
+                    def new_challenge
+                        NewChallengeContext.new(
+                                @version,
+                                @solution[:sid]
+                                )
                     end
                     ##
                     # Access the entities
@@ -873,10 +896,17 @@ module Twilio
                     end
 
                     ##
-                    # Access the verify_factor
-                    # @return [verify_factor] verify_factor
-                    def verify_factor
-                        context.verify_factor
+                    # Access the new_factors
+                    # @return [new_factors] new_factors
+                    def new_factors
+                        context.new_factors
+                    end
+
+                    ##
+                    # Access the approve_challenge
+                    # @return [approve_challenge] approve_challenge
+                    def approve_challenge
+                        context.approve_challenge
                     end
 
                     ##
@@ -905,6 +935,13 @@ module Twilio
                     # @return [messaging_configurations] messaging_configurations
                     def messaging_configurations
                         context.messaging_configurations
+                    end
+
+                    ##
+                    # Access the new_challenge
+                    # @return [new_challenge] new_challenge
+                    def new_challenge
+                        context.new_challenge
                     end
 
                     ##

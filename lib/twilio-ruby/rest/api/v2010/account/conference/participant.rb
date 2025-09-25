@@ -36,7 +36,7 @@ module Twilio
                     ##
                     # Create the ParticipantInstance
                     # @param [String] from The phone number, Client identifier, or username portion of SIP address that made this call. Phone numbers are in [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g., +16175551212). Client identifiers are formatted `client:name`. If using a phone number, it must be a Twilio number or a Verified [outgoing caller id](https://www.twilio.com/docs/voice/api/outgoing-caller-ids) for your account. If the `to` parameter is a phone number, `from` must also be a phone number. If `to` is sip address, this value of `from` should be a username portion to be used to populate the P-Asserted-Identity header that is passed to the SIP endpoint.
-                    # @param [String] to The phone number, SIP address, or Client identifier that received this call. Phone numbers are in [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g., +16175551212). SIP addresses are formatted as `sip:name@company.com`. Client identifiers are formatted `client:name`. [Custom parameters](https://www.twilio.com/docs/voice/api/conference-participant-resource#custom-parameters) may also be specified.
+                    # @param [String] to The phone number, SIP address, Client, TwiML App identifier that received this call. Phone numbers are in [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g., +16175551212). SIP addresses are formatted as `sip:name@company.com`. Client identifiers are formatted `client:name`. TwiML App identifiers are formatted `app:<APP_SID>`. [Custom parameters](https://www.twilio.com/docs/voice/api/conference-participant-resource#custom-parameters) may also be specified.
                     # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application.
                     # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `GET` and `POST` and defaults to `POST`.
                     # @param [Array[String]] status_callback_event The conference state changes that should generate a call to `status_callback`. Can be: `initiated`, `ringing`, `answered`, and `completed`. Separate multiple values with a space. The default value is `completed`.
@@ -83,6 +83,7 @@ module Twilio
                     # @param [String] amd_status_callback_method The HTTP method we should use when calling the `amd_status_callback` URL. Can be: `GET` or `POST` and the default is `POST`.
                     # @param [String] trim Whether to trim any leading and trailing silence from the participant recording. Can be: `trim-silence` or `do-not-trim` and the default is `trim-silence`.
                     # @param [String] call_token A token string needed to invoke a forwarded call. A call_token is generated when an incoming call is received on a Twilio number. Pass an incoming call's call_token value to a forwarded call via the call_token parameter when creating a new call. A forwarded call should bear the same CallerID of the original incoming call.
+                    # @param [String] caller_display_name The name that appears to the called party for this call. Must be between 2 and 255 characters.
                     # @return [ParticipantInstance] Created ParticipantInstance
                     def create(
                         from: nil, 
@@ -132,7 +133,8 @@ module Twilio
                         amd_status_callback: :unset, 
                         amd_status_callback_method: :unset, 
                         trim: :unset, 
-                        call_token: :unset
+                        call_token: :unset, 
+                        caller_display_name: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -184,6 +186,7 @@ module Twilio
                             'AmdStatusCallbackMethod' => amd_status_callback_method,
                             'Trim' => trim,
                             'CallToken' => call_token,
+                            'CallerDisplayName' => caller_display_name,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })

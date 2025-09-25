@@ -17,66 +17,74 @@ module Twilio
     module REST
         class Verify < VerifyBase
             class V2 < Version
-                class NewChallengeList < ListResource
+                class ServiceContext < InstanceContext
+
+                     class ApproveChallengeList < ListResource
                 
-                    class CreatePasskeysChallengeRequest
-                            # @param [identity]: [String] 
-                            # @param [factor_sid]: [String] 
-                        attr_accessor :identity, :factor_sid
+                    class ApprovePasskeysChallengeRequest
+                            # @param [id]: [String] A [base64url](https://base64.guru/standards/base64url) encoded representation of `rawId`.
+                            # @param [raw_id]: [String] The globally unique identifier for this `PublicKeyCredential`.
+                            # @param [authenticator_attachment]: [String] A string that indicates the mechanism by which the WebAuthn implementation is attached to the authenticator at the time the associated `navigator.credentials.create()` or `navigator.credentials.get()` call completes.
+                            # @param [type]: [String] The valid credential types supported by the API. The values of this enumeration are used for versioning the `AuthenticatorAssertion` and `AuthenticatorAttestation` structures according to the type of the authenticator.
+                            # @param [response]: [ApproveChallengeList.ApprovePasskeysChallengeRequestResponse] 
+                        attr_accessor :id, :raw_id, :authenticator_attachment, :type, :response
                         def initialize(payload)
-                                @identity = payload["identity"]
-                                @factor_sid = payload["factor_sid"]
+                                @id = payload["id"]
+                                @raw_id = payload["raw_id"]
+                                @authenticator_attachment = payload["authenticator_attachment"]
+                                @type = payload["type"]
+                                @response = payload["response"]
                         end
                         def to_json(options = {})
                         {
-                                "identity": @identity,
-                                "factor_sid": @factor_sid,
+                                "id": @id,
+                                "rawId": @raw_id,
+                                "authenticatorAttachment": @authenticator_attachment,
+                                "type": @type,
+                                "response": @response,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class ApprovePasskeysChallengeRequestResponse
+                            # @param [authenticator_data]: [String] The [authenticator data](https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API/Authenticator_data) structure contains information from the authenticator about the processing of a credential creation or authentication request.
+                            # @param [client_data_json]: [String] This property contains the JSON-compatible serialization of the data passed from the browser to the authenticator in order to generate this credential.
+                            # @param [signature]: [String] An assertion signature over `authenticatorData` and `clientDataJSON`. The assertion signature is created with the private key of the key pair that was created during the originating `navigator.credentials.create()` call and verified using the public key of that same key pair.
+                            # @param [user_handle]: [String] The user handle stored in the authenticator, specified as `user.id` in the options passed to the originating `navigator.credentials.create()` call. This property should contain a base64url-encoded entity SID.
+                        attr_accessor :authenticator_data, :client_data_json, :signature, :user_handle
+                        def initialize(payload)
+                                @authenticator_data = payload["authenticator_data"]
+                                @client_data_json = payload["client_data_json"]
+                                @signature = payload["signature"]
+                                @user_handle = payload["user_handle"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "authenticatorData": @authenticator_data,
+                                "clientDataJSON": @client_data_json,
+                                "signature": @signature,
+                                "userHandle": @user_handle,
                         }.to_json(options)
                         end
                     end
 
 
                     ##
-                    # Initialize the NewChallengeList
+                    # Initialize the ApproveChallengeList
                     # @param [Version] version Version that contains the resource
-                    # @return [NewChallengeList] NewChallengeList
-                    def initialize(version)
+                    # @return [ApproveChallengeList] ApproveChallengeList
+                    def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
-                        @solution = {  }
-                        
-                        
-                    end
-                
-
-
-                    # Provide a user friendly representation
-                    def to_s
-                        '#<Twilio.Verify.V2.NewChallengeList>'
-                    end
-                end
-
-
-                class NewChallengeContext < InstanceContext
-                    ##
-                    # Initialize the NewChallengeContext
-                    # @param [Version] version Version that contains the resource
-                    # @param [String] service_sid The unique SID identifier of the Service.
-                    # @return [NewChallengeContext] NewChallengeContext
-                    def initialize(version, service_sid)
-                        super(version)
-
-                        # Path Solution
-                        @solution = { service_sid: service_sid,  }
-                        @uri = "/Services/#{@solution[:service_sid]}/Passkeys/Challenges"
-
+                        @solution = { service_sid: service_sid }
+                        @uri = "/Services/#{@solution[:service_sid]}/Passkeys/ApproveChallenge"
                         
                     end
                     ##
-                    # Create the NewChallengeInstance
-                    # @param [CreatePasskeysChallengeRequest] create_passkeys_challenge_request 
-                    # @return [NewChallengeInstance] Created NewChallengeInstance
-                    def create(create_passkeys_challenge_request: nil
+                    # Update the ApproveChallengeInstance
+                    # @param [ApprovePasskeysChallengeRequest] approve_passkeys_challenge_request 
+                    # @return [ApproveChallengeInstance] Updated ApproveChallengeInstance
+                    def update(approve_passkeys_challenge_request: nil
                     )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -85,37 +93,30 @@ module Twilio
                         
                         
                         
-                        payload = @version.create('POST', @uri, headers: headers, data: create_passkeys_challenge_request.to_json)
-                        NewChallengeInstance.new(
+                        payload = @version.update('POST', @uri, headers: headers, data: approve_passkeys_challenge_request.to_json)
+                        ApproveChallengeInstance.new(
                             @version,
                             payload,
                             service_sid: @solution[:service_sid],
                         )
                     end
 
+                
 
-                    ##
+
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Verify.V2.NewChallengeContext #{context}>"
-                    end
-
-                    ##
-                    # Provide a detailed, user friendly representation
-                    def inspect
-                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Verify.V2.NewChallengeContext #{context}>"
+                        '#<Twilio.Verify.V2.ApproveChallengeList>'
                     end
                 end
 
-                class NewChallengePage < Page
+                class ApproveChallengePage < Page
                     ##
-                    # Initialize the NewChallengePage
+                    # Initialize the ApproveChallengePage
                     # @param [Version] version Version that contains the resource
                     # @param [Response] response Response from the API
                     # @param [Hash] solution Path solution for the resource
-                    # @return [NewChallengePage] NewChallengePage
+                    # @return [ApproveChallengePage] ApproveChallengePage
                     def initialize(version, response, solution)
                         super(version, response)
 
@@ -124,29 +125,29 @@ module Twilio
                     end
 
                     ##
-                    # Build an instance of NewChallengeInstance
+                    # Build an instance of ApproveChallengeInstance
                     # @param [Hash] payload Payload response from the API
-                    # @return [NewChallengeInstance] NewChallengeInstance
+                    # @return [ApproveChallengeInstance] ApproveChallengeInstance
                     def get_instance(payload)
-                        NewChallengeInstance.new(@version, payload)
+                        ApproveChallengeInstance.new(@version, payload, service_sid: @solution[:service_sid])
                     end
 
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        '<Twilio.Verify.V2.NewChallengePage>'
+                        '<Twilio.Verify.V2.ApproveChallengePage>'
                     end
                 end
-                class NewChallengeInstance < InstanceResource
+                class ApproveChallengeInstance < InstanceResource
                     ##
-                    # Initialize the NewChallengeInstance
+                    # Initialize the ApproveChallengeInstance
                     # @param [Version] version Version that contains the resource
                     # @param [Hash] payload payload that contains response from Twilio
                     # @param [String] account_sid The SID of the
-                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this NewChallenge
+                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this ApproveChallenge
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
-                    # @return [NewChallengeInstance] NewChallengeInstance
+                    # @return [ApproveChallengeInstance] ApproveChallengeInstance
                     def initialize(version, payload , service_sid: nil)
                         super(version)
                         
@@ -172,22 +173,8 @@ module Twilio
                             'url' => payload['url'],
                             'links' => payload['links'],
                         }
-
-                        # Context
-                        @instance_context = nil
-                        @params = { 'service_sid' => service_sid  || @properties['service_sid']  , }
                     end
 
-                    ##
-                    # Generate an instance context for the instance, the context is capable of
-                    # performing various actions.  All instance actions are proxied to the context
-                    # @return [NewChallengeContext] CallContext for this CallInstance
-                    def context
-                        unless @instance_context
-                            @instance_context = NewChallengeContext.new(@version , @params['service_sid'])
-                        end
-                        @instance_context
-                    end
                     
                     ##
                     # @return [Hash] An object that contains challenge options. Currently only used for `passkeys`.
@@ -304,32 +291,22 @@ module Twilio
                     end
                     
                     ##
-                    # Create the NewChallengeInstance
-                    # @param [CreatePasskeysChallengeRequest] create_passkeys_challenge_request 
-                    # @return [NewChallengeInstance] Created NewChallengeInstance
-                    def create(create_passkeys_challenge_request: nil
-                    )
-
-                        context.create(
-                        )
-                    end
-
-                    ##
                     # Provide a user friendly representation
                     def to_s
-                        values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Verify.V2.NewChallengeInstance #{values}>"
+                        "<Twilio.Verify.V2.ApproveChallengeInstance>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Verify.V2.NewChallengeInstance #{values}>"
+                        "<Twilio.Verify.V2.ApproveChallengeInstance>"
                     end
                 end
 
+             end
             end
         end
     end
 end
+
+

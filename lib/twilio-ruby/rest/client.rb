@@ -92,6 +92,11 @@ module Twilio
                 @ip_messaging ||= IpMessaging.new self
             end
             ##
+            # Access the Knowledge Twilio Domain
+            def knowledge
+                @knowledge ||= Knowledge.new self
+            end
+            ##
             # Access the Lookups Twilio Domain
             def lookups
                 @lookups ||= Lookups.new self

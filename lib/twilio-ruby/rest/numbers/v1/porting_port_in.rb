@@ -19,6 +19,94 @@ module Twilio
             class V1 < Version
                 class PortingPortInList < ListResource
                 
+                    class NumbersV1PortingAddress
+                            # @param [street]: [String] The street address, ex: 101 Spear St
+                            # @param [street_2]: [String] The building information, ex : 5th floor.
+                            # @param [city]: [String] The city name, ex: San Francisco.
+                            # @param [state]: [String] The state name, ex: CA or California. Note this should match the losing carrier’s information exactly. So if they spell out the entire state’s name instead of abbreviating it, please do so.
+                            # @param [zip]: [String] The zip code, ex: 94105.
+                            # @param [country]: [String] The country, ex: USA.
+                        attr_accessor :street, :street_2, :city, :state, :zip, :country
+                        def initialize(payload)
+                                @street = payload["street"]
+                                @street_2 = payload["street_2"]
+                                @city = payload["city"]
+                                @state = payload["state"]
+                                @zip = payload["zip"]
+                                @country = payload["country"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "street": @street,
+                                "street_2": @street_2,
+                                "city": @city,
+                                "state": @state,
+                                "zip": @zip,
+                                "country": @country,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class NumbersV1PortingPortInCreate
+                            # @param [account_sid]: [String] Account Sid or subaccount where the phone number(s) will be Ported
+                            # @param [documents]: [Array<String>] List of document SIDs for all phone numbers included in the port in request. At least one document SID referring to a document of the type Utility Bill is required.
+                            # @param [phone_numbers]: [Array<PortingPortInList.NumbersV1PortingPortInCreatePhoneNumbers>] List of phone numbers to be ported. Maximum of 1,000 phone numbers per request.
+                            # @param [losing_carrier_information]: [PortingPortInList.NumbersV1PortingLosingCarrierInformation] 
+                            # @param [notification_emails]: [Array<String>] Additional emails to send a copy of the signed LOA to.
+                            # @param [target_port_in_date]: [Date] Target date to port the number. We cannot guarantee that this date will be honored by the other carriers, please work with Ops to get a confirmation of the firm order commitment (FOC) date. Expected format is ISO Local Date, example: ‘2011-12-03`. This date must be at least 7 days in the future for US ports and 10 days in the future for Japanese ports. We can't guarantee the exact date and time, as this depends on the losing carrier
+                            # @param [target_port_in_time_range_start]: [String] The earliest time that the port should occur on the target port in date. Expected format is ISO Offset Time, example: ‘10:15:00-08:00'. We can't guarantee the exact date and time, as this depends on the losing carrier
+                            # @param [target_port_in_time_range_end]: [String] The latest time that the port should occur on the target port in date. Expected format is ISO Offset Time, example: ‘10:15:00-08:00'. We can't guarantee the exact date and time, as this depends on the losing carrier
+                            # @param [bundle_sid]: [String] The bundle sid is an optional identifier to reference a group of regulatory documents for a port request.
+                            # @param [portability_advance_carrier]: [String] A field only required for Japan port in requests. It is a unique identifier for the donor carrier service the line is being ported from.
+                            # @param [auto_cancel_approval_numbers]: [String] Japan specific field, indicates the number of phone numbers to automatically approve for cancellation.
+                        attr_accessor :account_sid, :documents, :phone_numbers, :losing_carrier_information, :notification_emails, :target_port_in_date, :target_port_in_time_range_start, :target_port_in_time_range_end, :bundle_sid, :portability_advance_carrier, :auto_cancel_approval_numbers
+                        def initialize(payload)
+                                @account_sid = payload["account_sid"]
+                                @documents = payload["documents"]
+                                @phone_numbers = payload["phone_numbers"]
+                                @losing_carrier_information = payload["losing_carrier_information"]
+                                @notification_emails = payload["notification_emails"]
+                                @target_port_in_date = payload["target_port_in_date"]
+                                @target_port_in_time_range_start = payload["target_port_in_time_range_start"]
+                                @target_port_in_time_range_end = payload["target_port_in_time_range_end"]
+                                @bundle_sid = payload["bundle_sid"]
+                                @portability_advance_carrier = payload["portability_advance_carrier"]
+                                @auto_cancel_approval_numbers = payload["auto_cancel_approval_numbers"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "account_sid": @account_sid,
+                                "documents": @documents,
+                                "phone_numbers": @phone_numbers,
+                                "losing_carrier_information": @losing_carrier_information,
+                                "notification_emails": @notification_emails,
+                                "target_port_in_date": @target_port_in_date,
+                                "target_port_in_time_range_start": @target_port_in_time_range_start,
+                                "target_port_in_time_range_end": @target_port_in_time_range_end,
+                                "bundle_sid": @bundle_sid,
+                                "portability_advance_carrier": @portability_advance_carrier,
+                                "auto_cancel_approval_numbers": @auto_cancel_approval_numbers,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class NumbersV1PortingPortInCreatePhoneNumbers
+                            # @param [phone_number]: [String] Phone number to be ported. This must be in the E164 Format.
+                            # @param [pin]: [String] Some losing carriers require a PIN to authorize the port of a phone number. If the phone number is a US mobile phone number, the PIN is mandatory to process a porting request. Other carriers and number types may also require a PIN, you'll need to contact the losing carrier to determine what your phone number's PIN is.
+                        attr_accessor :phone_number, :pin
+                        def initialize(payload)
+                                @phone_number = payload["phone_number"]
+                                @pin = payload["pin"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "phone_number": @phone_number,
+                                "pin": @pin,
+                        }.to_json(options)
+                        end
+                    end
+
+
                     ##
                     # Initialize the PortingPortInList
                     # @param [Version] version Version that contains the resource
@@ -32,9 +120,9 @@ module Twilio
                     end
                     ##
                     # Create the PortingPortInInstance
-                    # @param [Object] body 
+                    # @param [NumbersV1PortingPortInCreate] numbers_v1_porting_port_in_create 
                     # @return [PortingPortInInstance] Created PortingPortInInstance
-                    def create(body: :unset
+                    def create(numbers_v1_porting_port_in_create: nil
                     )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -43,7 +131,7 @@ module Twilio
                         
                         
                         
-                        payload = @version.create('POST', @uri, headers: headers, data: body.to_json)
+                        payload = @version.create('POST', @uri, headers: headers, data: numbers_v1_porting_port_in_create.to_json)
                         PortingPortInInstance.new(
                             @version,
                             payload,
@@ -247,13 +335,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] Details regarding the customer’s information with the losing carrier. These values will be used to generate the letter of authorization and should match the losing carrier’s data as closely as possible to ensure the port is accepted.
+                    # @return [NumbersV1PortingLosingCarrierInformation] 
                     def losing_carrier_information
                         @properties['losing_carrier_information']
                     end
                     
                     ##
-                    # @return [Array<Hash>] 
+                    # @return [Array<NumbersV1PortingPortInPhoneNumberResult>] 
                     def phone_numbers
                         @properties['phone_numbers']
                     end

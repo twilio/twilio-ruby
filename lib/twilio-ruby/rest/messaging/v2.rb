@@ -22,6 +22,7 @@ module Twilio
                     super
                     @version = 'v2'
                     @channels_senders = nil
+                    @typing_indicator = nil
                 end
 
                 ##
@@ -37,6 +38,11 @@ module Twilio
                     else
                         ChannelsSenderContext.new(self, sid)
                     end
+                end
+                ##
+                # @return [Twilio::REST::Messaging::V2::TypingIndicatorList]
+                def typing_indicator
+                    @typing_indicator ||= TypingIndicatorList.new self
                 end
                 ##
                 # Provide a user friendly representation

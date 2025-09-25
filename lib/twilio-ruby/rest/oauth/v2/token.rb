@@ -42,8 +42,8 @@ module Twilio
                     # @param [String] scope The scope of token
                     # @return [TokenInstance] Created TokenInstance
                     def create(
-                        grant_type: nil, 
-                        client_id: nil, 
+                        grant_type: :unset, 
+                        client_id: :unset, 
                         client_secret: :unset, 
                         code: :unset, 
                         redirect_uri: :unset, 
