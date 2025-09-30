@@ -242,7 +242,7 @@ module Twilio
 
                         # Dependents
                         @verification_checks = nil
-                        @new_factors = nil
+                        @new_verify_factors = nil
                         @new_factors = nil
                         @approve_challenge = nil
                         @verifications = nil
@@ -397,15 +397,15 @@ module Twilio
                       @verification_checks
                     end
                     ##
-                    # Access the new_factors
-                    # @return [NewFactorList]
-                    # @return [NewFactorContext]
-                    def new_factors
-                      unless @new_factors
-                        @new_factors = NewFactorList.new(
+                    # Access the new_verify_factors
+                    # @return [NewVerifyFactorList]
+                    # @return [NewVerifyFactorContext]
+                    def new_verify_factors
+                      unless @new_verify_factors
+                        @new_verify_factors = NewVerifyFactorList.new(
                                 @version, )
                       end
-                      @new_factors
+                      @new_verify_factors
                     end
                     ##
                     # Access the new_factors
@@ -889,10 +889,10 @@ module Twilio
                     end
 
                     ##
-                    # Access the new_factors
-                    # @return [new_factors] new_factors
-                    def new_factors
-                        context.new_factors
+                    # Access the new_verify_factors
+                    # @return [new_verify_factors] new_verify_factors
+                    def new_verify_factors
+                        context.new_verify_factors
                     end
 
                     ##

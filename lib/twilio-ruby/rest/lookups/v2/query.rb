@@ -19,87 +19,6 @@ module Twilio
             class V2 < Version
                 class QueryList < ListResource
                 
-                    class CallForwarding
-                            # @param [call_forwarding_enabled]: [Boolean] 
-                            # @param [error_code]: [Integer] 
-                        attr_accessor :call_forwarding_enabled, :error_code
-                        def initialize(payload)
-                                @call_forwarding_enabled = payload["call_forwarding_enabled"]
-                                @error_code = payload["error_code"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "call_forwarding_enabled": @call_forwarding_enabled,
-                                "error_code": @error_code,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class CallerName
-                            # @param [caller_name]: [String] 
-                            # @param [caller_type]: [String] 
-                            # @param [error_code]: [Integer] 
-                        attr_accessor :caller_name, :caller_type, :error_code
-                        def initialize(payload)
-                                @caller_name = payload["caller_name"]
-                                @caller_type = payload["caller_type"]
-                                @error_code = payload["error_code"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "caller_name": @caller_name,
-                                "caller_type": @caller_type,
-                                "error_code": @error_code,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class IdentityMatch
-                            # @param [first_name_match]: [String] 
-                            # @param [last_name_match]: [String] 
-                            # @param [address_line_match]: [String] 
-                            # @param [city_match]: [String] 
-                            # @param [state_match]: [String] 
-                            # @param [postal_code_match]: [String] 
-                            # @param [country_code_match]: [String] 
-                            # @param [national_id_match]: [String] 
-                            # @param [date_of_birth_match]: [String] 
-                            # @param [summary_score]: [Integer] 
-                            # @param [error_code]: [Integer] 
-                            # @param [error_message]: [String] 
-                        attr_accessor :first_name_match, :last_name_match, :address_line_match, :city_match, :state_match, :postal_code_match, :country_code_match, :national_id_match, :date_of_birth_match, :summary_score, :error_code, :error_message
-                        def initialize(payload)
-                                @first_name_match = payload["first_name_match"]
-                                @last_name_match = payload["last_name_match"]
-                                @address_line_match = payload["address_line_match"]
-                                @city_match = payload["city_match"]
-                                @state_match = payload["state_match"]
-                                @postal_code_match = payload["postal_code_match"]
-                                @country_code_match = payload["country_code_match"]
-                                @national_id_match = payload["national_id_match"]
-                                @date_of_birth_match = payload["date_of_birth_match"]
-                                @summary_score = payload["summary_score"]
-                                @error_code = payload["error_code"]
-                                @error_message = payload["error_message"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "first_name_match": @first_name_match,
-                                "last_name_match": @last_name_match,
-                                "address_line_match": @address_line_match,
-                                "city_match": @city_match,
-                                "state_match": @state_match,
-                                "postal_code_match": @postal_code_match,
-                                "country_code_match": @country_code_match,
-                                "national_id_match": @national_id_match,
-                                "date_of_birth_match": @date_of_birth_match,
-                                "summary_score": @summary_score,
-                                "error_code": @error_code,
-                                "error_message": @error_message,
-                        }.to_json(options)
-                        end
-                    end
-
                     class IdentityMatchParameters
                             # @param [first_name]: [String] 
                             # @param [last_name]: [String] 
@@ -159,68 +78,14 @@ module Twilio
                         end
                     end
 
-                    class LineStatus
-                            # @param [status]: [String] 
-                            # @param [error_code]: [Integer] 
-                        attr_accessor :status, :error_code
-                        def initialize(payload)
-                                @status = payload["status"]
-                                @error_code = payload["error_code"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "status": @status,
-                                "error_code": @error_code,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class LineTypeIntelligence
-                            # @param [type]: [String] 
-                            # @param [carrier_name]: [String] 
-                            # @param [mobile_country_code]: [String] 
-                            # @param [mobile_network_code]: [String] 
-                            # @param [error_code]: [Integer] 
-                        attr_accessor :type, :carrier_name, :mobile_country_code, :mobile_network_code, :error_code
-                        def initialize(payload)
-                                @type = payload["type"]
-                                @carrier_name = payload["carrier_name"]
-                                @mobile_country_code = payload["mobile_country_code"]
-                                @mobile_network_code = payload["mobile_network_code"]
-                                @error_code = payload["error_code"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "type": @type,
-                                "carrier_name": @carrier_name,
-                                "mobile_country_code": @mobile_country_code,
-                                "mobile_network_code": @mobile_network_code,
-                                "error_code": @error_code,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class LookupRequest1
-                            # @param [phone_numbers]: [Array<QueryList.LookupRequestWithCorId>] 
-                        attr_accessor :phone_numbers
-                        def initialize(payload)
-                                @phone_numbers = payload["phone_numbers"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "phone_numbers": @phone_numbers,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class LookupRequestWithCorId
+                    class LookupBatchRequest
                             # @param [correlation_id]: [String] Unique identifier used to match request with response
                             # @param [phone_number]: [String] 
                             # @param [fields]: [Array<String>] 
                             # @param [country_code]: [String] 
                             # @param [identity_match]: [QueryList.IdentityMatchParameters] 
-                            # @param [reassigned_number]: [QueryList.ReassignedNumberRequest] 
-                            # @param [sms_pumping_risk]: [QueryList.SmsPumpingRiskParameters] 
+                            # @param [reassigned_number]: [QueryList.ReassignedNumberParameters] 
+                            # @param [sms_pumping_risk]: [QueryList.RiskParameters] 
                         attr_accessor :correlation_id, :phone_number, :fields, :country_code, :identity_match, :reassigned_number, :sms_pumping_risk
                         def initialize(payload)
                                 @correlation_id = payload["correlation_id"]
@@ -244,7 +109,20 @@ module Twilio
                         end
                     end
 
-                    class ReassignedNumberRequest
+                    class LookupRequest
+                            # @param [phone_numbers]: [Array<QueryList.LookupBatchRequest>] 
+                        attr_accessor :phone_numbers
+                        def initialize(payload)
+                                @phone_numbers = payload["phone_numbers"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "phone_numbers": @phone_numbers,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class ReassignedNumberParameters
                             # @param [last_verified_date]: [String] 
                         attr_accessor :last_verified_date
                         def initialize(payload)
@@ -257,79 +135,7 @@ module Twilio
                         end
                     end
 
-                    class ReassignedNumberResponse
-                            # @param [last_verified_date]: [String] 
-                            # @param [is_number_reassigned]: [String] 
-                            # @param [error_code]: [String] 
-                        attr_accessor :last_verified_date, :is_number_reassigned, :error_code
-                        def initialize(payload)
-                                @last_verified_date = payload["last_verified_date"]
-                                @is_number_reassigned = payload["is_number_reassigned"]
-                                @error_code = payload["error_code"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "last_verified_date": @last_verified_date,
-                                "is_number_reassigned": @is_number_reassigned,
-                                "error_code": @error_code,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class SimSwap
-                            # @param [last_sim_swap]: [LastSimSwap] 
-                            # @param [carrier_name]: [String] 
-                            # @param [mobile_country_code]: [String] 
-                            # @param [mobile_network_code]: [String] 
-                            # @param [error_code]: [Integer] 
-                        attr_accessor :last_sim_swap, :carrier_name, :mobile_country_code, :mobile_network_code, :error_code
-                        def initialize(payload)
-                                @last_sim_swap = payload["last_sim_swap"]
-                                @carrier_name = payload["carrier_name"]
-                                @mobile_country_code = payload["mobile_country_code"]
-                                @mobile_network_code = payload["mobile_network_code"]
-                                @error_code = payload["error_code"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "last_sim_swap": @last_sim_swap,
-                                "carrier_name": @carrier_name,
-                                "mobile_country_code": @mobile_country_code,
-                                "mobile_network_code": @mobile_network_code,
-                                "error_code": @error_code,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class SmsPumpingRisk
-                            # @param [carrier_risk_category]: [String] 
-                            # @param [number_blocked]: [Boolean] 
-                            # @param [number_blocked_date]: [Time] 
-                            # @param [number_blocked_last_3_months]: [Boolean] 
-                            # @param [sms_pumping_risk_score]: [Integer] 
-                            # @param [error_code]: [Integer] 
-                        attr_accessor :carrier_risk_category, :number_blocked, :number_blocked_date, :number_blocked_last_3_months, :sms_pumping_risk_score, :error_code
-                        def initialize(payload)
-                                @carrier_risk_category = payload["carrier_risk_category"]
-                                @number_blocked = payload["number_blocked"]
-                                @number_blocked_date = payload["number_blocked_date"]
-                                @number_blocked_last_3_months = payload["number_blocked_last_3_months"]
-                                @sms_pumping_risk_score = payload["sms_pumping_risk_score"]
-                                @error_code = payload["error_code"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "carrier_risk_category": @carrier_risk_category,
-                                "number_blocked": @number_blocked,
-                                "number_blocked_date": @number_blocked_date,
-                                "number_blocked_last_3_months": @number_blocked_last_3_months,
-                                "sms_pumping_risk_score": @sms_pumping_risk_score,
-                                "error_code": @error_code,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class SmsPumpingRiskParameters
+                    class RiskParameters
                             # @param [partner_sub_id]: [String] 
                         attr_accessor :partner_sub_id
                         def initialize(payload)
@@ -356,9 +162,9 @@ module Twilio
                     end
                     ##
                     # Create the QueryInstance
-                    # @param [LookupRequest1] lookup_request1 
+                    # @param [LookupRequest] lookup_request 
                     # @return [QueryInstance] Created QueryInstance
-                    def create(lookup_request1: :unset
+                    def create(lookup_request: :unset
                     )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -367,7 +173,7 @@ module Twilio
                         
                         
                         
-                        payload = @version.create('POST', @uri, headers: headers, data: lookup_request1.to_json)
+                        payload = @version.create('POST', @uri, headers: headers, data: lookup_request.to_json)
                         QueryInstance.new(
                             @version,
                             payload,
@@ -432,7 +238,7 @@ module Twilio
 
                     
                     ##
-                    # @return [Array<LookupResponseWithCorId>] 
+                    # @return [Array<LookupBatchResponse>] 
                     def phone_numbers
                         @properties['phone_numbers']
                     end

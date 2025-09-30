@@ -19,85 +19,69 @@ module Twilio
             class V2 < Version
                 class ServiceContext < InstanceContext
 
-                     class NewFactorList < ListResource
+                     class NewVerifyFactorList < ListResource
                 
-                    class CreateNewPasskeysFactorRequest
-                            # @param [friendly_name]: [String] 
-                            # @param [identity]: [String] 
-                            # @param [config]: [NewFactorList.CreateNewPasskeysFactorRequestConfig] 
-                        attr_accessor :friendly_name, :identity, :config
-                        def initialize(payload)
-                                @friendly_name = payload["friendly_name"]
-                                @identity = payload["identity"]
-                                @config = payload["config"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "friendly_name": @friendly_name,
-                                "identity": @identity,
-                                "config": @config,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class CreateNewPasskeysFactorRequestConfig
-                            # @param [relying_party]: [NewFactorList.CreateNewPasskeysFactorRequestConfigRelyingParty] 
-                            # @param [authenticator_attachment]: [String] 
-                            # @param [discoverable_credentials]: [String] 
-                            # @param [user_verification]: [String] 
-                        attr_accessor :relying_party, :authenticator_attachment, :discoverable_credentials, :user_verification
-                        def initialize(payload)
-                                @relying_party = payload["relying_party"]
-                                @authenticator_attachment = payload["authenticator_attachment"]
-                                @discoverable_credentials = payload["discoverable_credentials"]
-                                @user_verification = payload["user_verification"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "relying_party": @relying_party,
-                                "authenticator_attachment": @authenticator_attachment,
-                                "discoverable_credentials": @discoverable_credentials,
-                                "user_verification": @user_verification,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class CreateNewPasskeysFactorRequestConfigRelyingParty
-                            # @param [id]: [String] 
-                            # @param [name]: [String] 
-                            # @param [origins]: [Array<String>] 
-                        attr_accessor :id, :name, :origins
+                    class VerifyPasskeysFactorRequest
+                            # @param [id]: [String] A [base64url](https://base64.guru/standards/base64url) encoded representation of `rawId`.
+                            # @param [raw_id]: [String] The globally unique identifier for this `PublicKeyCredential`.
+                            # @param [authenticator_attachment]: [String] A string that indicates the mechanism by which the WebAuthn implementation is attached to the authenticator at the time the associated  `navigator.credentials.create()` or `navigator.credentials.get()` call completes.
+                            # @param [type]: [String] The valid credential types supported by the API. The values of this enumeration are used for versioning the `AuthenticatorAssertion` and `AuthenticatorAttestation` structures according to the type of the authenticator.
+                            # @param [response]: [NewVerifyFactorList.VerifyPasskeysFactorRequestResponse] 
+                        attr_accessor :id, :raw_id, :authenticator_attachment, :type, :response
                         def initialize(payload)
                                 @id = payload["id"]
-                                @name = payload["name"]
-                                @origins = payload["origins"]
+                                @raw_id = payload["raw_id"]
+                                @authenticator_attachment = payload["authenticator_attachment"]
+                                @type = payload["type"]
+                                @response = payload["response"]
                         end
                         def to_json(options = {})
                         {
                                 "id": @id,
-                                "name": @name,
-                                "origins": @origins,
+                                "rawId": @raw_id,
+                                "authenticatorAttachment": @authenticator_attachment,
+                                "type": @type,
+                                "response": @response,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class VerifyPasskeysFactorRequestResponse
+                            # @param [attestation_object]: [String] The authenticator data and an attestation statement for a new key pair generated by the authenticator.
+                            # @param [client_data_json]: [String] This property contains the JSON-compatible serialization of the data passed from the browser to the authenticator in order to generate this credential.
+                            # @param [transports]: [Array<String>] An array of strings providing hints as to the methods the client could use to communicate with the relevant authenticator of the public key credential to retrieve.
+                        attr_accessor :attestation_object, :client_data_json, :transports
+                        def initialize(payload)
+                                @attestation_object = payload["attestation_object"]
+                                @client_data_json = payload["client_data_json"]
+                                @transports = payload["transports"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "attestationObject": @attestation_object,
+                                "clientDataJSON": @client_data_json,
+                                "transports": @transports,
                         }.to_json(options)
                         end
                     end
 
 
                     ##
-                    # Initialize the NewFactorList
+                    # Initialize the NewVerifyFactorList
                     # @param [Version] version Version that contains the resource
-                    # @return [NewFactorList] NewFactorList
+                    # @return [NewVerifyFactorList] NewVerifyFactorList
                     def initialize(version, service_sid: nil)
                         super(version)
                         # Path Solution
                         @solution = { service_sid: service_sid }
-                        @uri = "/Services/#{@solution[:service_sid]}/Passkeys/Factors"
+                        @uri = "/Services/#{@solution[:service_sid]}/Passkeys/VerifyFactor"
                         
                     end
                     ##
-                    # Create the NewFactorInstance
-                    # @param [CreateNewPasskeysFactorRequest] create_new_passkeys_factor_request 
-                    # @return [NewFactorInstance] Created NewFactorInstance
-                    def create(create_new_passkeys_factor_request: nil
+                    # Update the NewVerifyFactorInstance
+                    # @param [VerifyPasskeysFactorRequest] verify_passkeys_factor_request 
+                    # @return [NewVerifyFactorInstance] Updated NewVerifyFactorInstance
+                    def update(verify_passkeys_factor_request: nil
                     )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -106,8 +90,8 @@ module Twilio
                         
                         
                         
-                        payload = @version.create('POST', @uri, headers: headers, data: create_new_passkeys_factor_request.to_json)
-                        NewFactorInstance.new(
+                        payload = @version.update('POST', @uri, headers: headers, data: verify_passkeys_factor_request.to_json)
+                        NewVerifyFactorInstance.new(
                             @version,
                             payload,
                             service_sid: @solution[:service_sid],
@@ -119,17 +103,17 @@ module Twilio
 
                     # Provide a user friendly representation
                     def to_s
-                        '#<Twilio.Verify.V2.NewFactorList>'
+                        '#<Twilio.Verify.V2.NewVerifyFactorList>'
                     end
                 end
 
-                class NewFactorPage < Page
+                class NewVerifyFactorPage < Page
                     ##
-                    # Initialize the NewFactorPage
+                    # Initialize the NewVerifyFactorPage
                     # @param [Version] version Version that contains the resource
                     # @param [Response] response Response from the API
                     # @param [Hash] solution Path solution for the resource
-                    # @return [NewFactorPage] NewFactorPage
+                    # @return [NewVerifyFactorPage] NewVerifyFactorPage
                     def initialize(version, response, solution)
                         super(version, response)
 
@@ -138,29 +122,29 @@ module Twilio
                     end
 
                     ##
-                    # Build an instance of NewFactorInstance
+                    # Build an instance of NewVerifyFactorInstance
                     # @param [Hash] payload Payload response from the API
-                    # @return [NewFactorInstance] NewFactorInstance
+                    # @return [NewVerifyFactorInstance] NewVerifyFactorInstance
                     def get_instance(payload)
-                        NewFactorInstance.new(@version, payload, service_sid: @solution[:service_sid])
+                        NewVerifyFactorInstance.new(@version, payload, service_sid: @solution[:service_sid])
                     end
 
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        '<Twilio.Verify.V2.NewFactorPage>'
+                        '<Twilio.Verify.V2.NewVerifyFactorPage>'
                     end
                 end
-                class NewFactorInstance < InstanceResource
+                class NewVerifyFactorInstance < InstanceResource
                     ##
-                    # Initialize the NewFactorInstance
+                    # Initialize the NewVerifyFactorInstance
                     # @param [Version] version Version that contains the resource
                     # @param [Hash] payload payload that contains response from Twilio
                     # @param [String] account_sid The SID of the
-                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this NewFactor
+                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this NewVerifyFactor
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
-                    # @return [NewFactorInstance] NewFactorInstance
+                    # @return [NewVerifyFactorInstance] NewVerifyFactorInstance
                     def initialize(version, payload , service_sid: nil)
                         super(version)
                         
@@ -171,8 +155,6 @@ module Twilio
                             'service_sid' => payload['service_sid'],
                             'entity_sid' => payload['entity_sid'],
                             'identity' => payload['identity'],
-                            'binding' => payload['binding'],
-                            'options' => payload['options'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'date_updated' => Twilio.deserialize_iso8601_datetime(payload['date_updated']),
                             'friendly_name' => payload['friendly_name'],
@@ -216,18 +198,6 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] Contains the `factor_type` specific secret and metadata. The Binding property is ONLY returned upon Factor creation.
-                    def binding
-                        @properties['binding']
-                    end
-                    
-                    ##
-                    # @return [Hash] 
-                    def options
-                        @properties['options']
-                    end
-                    
-                    ##
                     # @return [Time] The date that this Factor was created, given in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
                     def date_created
                         @properties['date_created']
@@ -240,7 +210,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The friendly name of this Factor. This can be any string up to 64 characters, meant for humans to distinguish between Factors.
+                    # @return [String] A human readable description of this resource, up to 64 characters.
                     def friendly_name
                         @properties['friendly_name']
                     end
@@ -278,13 +248,13 @@ module Twilio
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        "<Twilio.Verify.V2.NewFactorInstance>"
+                        "<Twilio.Verify.V2.NewVerifyFactorInstance>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        "<Twilio.Verify.V2.NewFactorInstance>"
+                        "<Twilio.Verify.V2.NewVerifyFactorInstance>"
                     end
                 end
 

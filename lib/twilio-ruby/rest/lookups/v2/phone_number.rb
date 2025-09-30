@@ -190,8 +190,8 @@ module Twilio
                             'caller_name' => payload['caller_name'],
                             'sim_swap' => payload['sim_swap'],
                             'call_forwarding' => payload['call_forwarding'],
-                            'line_status' => payload['line_status'],
                             'line_type_intelligence' => payload['line_type_intelligence'],
+                            'line_status' => payload['line_status'],
                             'identity_match' => payload['identity_match'],
                             'reassigned_number' => payload['reassigned_number'],
                             'sms_pumping_risk' => payload['sms_pumping_risk'],
@@ -253,49 +253,49 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] An object that contains caller name information based on [CNAM](https://support.twilio.com/hc/en-us/articles/360051670533-Getting-Started-with-CNAM-Caller-ID).
+                    # @return [CallerName] 
                     def caller_name
                         @properties['caller_name']
                     end
                     
                     ##
-                    # @return [Hash] An object that contains information on the last date the subscriber identity module (SIM) was changed for a mobile phone number.
+                    # @return [SimSwap] 
                     def sim_swap
                         @properties['sim_swap']
                     end
                     
                     ##
-                    # @return [Hash] An object that contains information on the unconditional call forwarding status of mobile phone number.
+                    # @return [CallForwarding] 
                     def call_forwarding
                         @properties['call_forwarding']
                     end
                     
                     ##
-                    # @return [Hash] An object that contains line status information for a mobile phone number.
-                    def line_status
-                        @properties['line_status']
-                    end
-                    
-                    ##
-                    # @return [Hash] An object that contains line type information including the carrier name, mobile country code, and mobile network code.
+                    # @return [LineTypeIntelligence] 
                     def line_type_intelligence
                         @properties['line_type_intelligence']
                     end
                     
                     ##
-                    # @return [Hash] An object that contains identity match information. The result of comparing user-provided information including name, address, date of birth, national ID, against authoritative phone-based data sources
+                    # @return [LineStatus] 
+                    def line_status
+                        @properties['line_status']
+                    end
+                    
+                    ##
+                    # @return [IdentityMatch] 
                     def identity_match
                         @properties['identity_match']
                     end
                     
                     ##
-                    # @return [Hash] An object that contains reassigned number information. Reassigned Numbers will return a phone number's reassignment status given a phone number and date
+                    # @return [ReassignedNumber] 
                     def reassigned_number
                         @properties['reassigned_number']
                     end
                     
                     ##
-                    # @return [Hash] An object that contains information on if a phone number has been currently or previously blocked by Verify Fraud Guard for receiving malicious SMS pumping traffic as well as other signals associated with risky carriers and low conversion rates.
+                    # @return [SmsPumpingRisk] 
                     def sms_pumping_risk
                         @properties['sms_pumping_risk']
                     end

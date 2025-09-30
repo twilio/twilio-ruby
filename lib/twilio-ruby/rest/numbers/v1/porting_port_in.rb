@@ -261,6 +261,7 @@ module Twilio
                             'target_port_in_time_range_start' => payload['target_port_in_time_range_start'],
                             'target_port_in_time_range_end' => payload['target_port_in_time_range_end'],
                             'port_in_request_status' => payload['port_in_request_status'],
+                            'order_cancellation_reason' => payload['order_cancellation_reason'],
                             'losing_carrier_information' => payload['losing_carrier_information'],
                             'phone_numbers' => payload['phone_numbers'],
                             'bundle_sid' => payload['bundle_sid'],
@@ -332,6 +333,12 @@ module Twilio
                     # @return [String] The status of the port in request. The possible values are: In progress, Completed, Expired, In review, Waiting for Signature, Action Required, and Canceled.
                     def port_in_request_status
                         @properties['port_in_request_status']
+                    end
+                    
+                    ##
+                    # @return [String] If the order is cancelled this field will provide further context on the cause of the cancellation.
+                    def order_cancellation_reason
+                        @properties['order_cancellation_reason']
                     end
                     
                     ##

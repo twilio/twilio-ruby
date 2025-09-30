@@ -1,6 +1,15 @@
 twilio-ruby changelog
 =====================
 
+[2025-09-30] Version 7.8.3
+--------------------------
+**Library - Chore**
+- [PR #762](https://github.com/twilio/twilio-ruby/pull/762): change oauth token endpoint. Thanks to [@tiwarishubham635](https://github.com/tiwarishubham635)!
+
+**Insights**
+- Replace `field` with `key` in Request Filters and Response Metadata Filters and  for Reports API
+
+
 [2025-09-25] Version 7.8.2
 --------------------------
 **Api**

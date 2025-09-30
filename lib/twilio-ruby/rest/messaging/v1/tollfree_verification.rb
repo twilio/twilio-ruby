@@ -461,12 +461,25 @@ module Twilio
                             'message_volume' => payload['message_volume'],
                             'additional_information' => payload['additional_information'],
                             'tollfree_phone_number_sid' => payload['tollfree_phone_number_sid'],
+                            'tollfree_phone_number' => payload['tollfree_phone_number'],
                             'status' => payload['status'],
                             'url' => payload['url'],
                             'rejection_reason' => payload['rejection_reason'],
                             'error_code' => payload['error_code'] == nil ? payload['error_code'] : payload['error_code'].to_i,
                             'edit_expiration' => Twilio.deserialize_iso8601_datetime(payload['edit_expiration']),
                             'edit_allowed' => payload['edit_allowed'],
+                            'business_registration_number' => payload['business_registration_number'],
+                            'business_registration_authority' => payload['business_registration_authority'],
+                            'business_registration_country' => payload['business_registration_country'],
+                            'business_type' => payload['business_type'],
+                            'business_registration_phone_number' => payload['business_registration_phone_number'],
+                            'doing_business_as' => payload['doing_business_as'],
+                            'opt_in_confirmation_message' => payload['opt_in_confirmation_message'],
+                            'help_message_sample' => payload['help_message_sample'],
+                            'privacy_policy_url' => payload['privacy_policy_url'],
+                            'terms_and_conditions_url' => payload['terms_and_conditions_url'],
+                            'age_gated_content' => payload['age_gated_content'],
+                            'opt_in_keywords' => payload['opt_in_keywords'],
                             'rejection_reasons' => payload['rejection_reasons'],
                             'resource_links' => payload['resource_links'],
                             'external_reference_id' => payload['external_reference_id'],
@@ -657,6 +670,12 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] The E.164 formatted toll-free phone number associated with the verification.
+                    def tollfree_phone_number
+                        @properties['tollfree_phone_number']
+                    end
+                    
+                    ##
                     # @return [Status] 
                     def status
                         @properties['status']
@@ -690,6 +709,78 @@ module Twilio
                     # @return [Boolean] If a rejected verification is allowed to be edited/resubmitted. Some rejection reasons allow editing and some do not.
                     def edit_allowed
                         @properties['edit_allowed']
+                    end
+                    
+                    ##
+                    # @return [String] A legally recognized business registration number
+                    def business_registration_number
+                        @properties['business_registration_number']
+                    end
+                    
+                    ##
+                    # @return [String] The organizational authority for business registrations
+                    def business_registration_authority
+                        @properties['business_registration_authority']
+                    end
+                    
+                    ##
+                    # @return [String] Country business is registered in
+                    def business_registration_country
+                        @properties['business_registration_country']
+                    end
+                    
+                    ##
+                    # @return [String] The type of business, valid values are PRIVATE_PROFIT, PUBLIC_PROFIT, NON_PROFIT, SOLE_PROPRIETOR, GOVERNMENT
+                    def business_type
+                        @properties['business_type']
+                    end
+                    
+                    ##
+                    # @return [String] The E.164 formatted number associated with the business.
+                    def business_registration_phone_number
+                        @properties['business_registration_phone_number']
+                    end
+                    
+                    ##
+                    # @return [String] Trade name, sub entity, or downstream business name of business being submitted for verification
+                    def doing_business_as
+                        @properties['doing_business_as']
+                    end
+                    
+                    ##
+                    # @return [String] The confirmation message sent to users when they opt in to receive messages.
+                    def opt_in_confirmation_message
+                        @properties['opt_in_confirmation_message']
+                    end
+                    
+                    ##
+                    # @return [String] A sample help message provided to users.
+                    def help_message_sample
+                        @properties['help_message_sample']
+                    end
+                    
+                    ##
+                    # @return [String] The URL to the privacy policy for the business or organization.
+                    def privacy_policy_url
+                        @properties['privacy_policy_url']
+                    end
+                    
+                    ##
+                    # @return [String] The URL to the terms and conditions for the business or organization.
+                    def terms_and_conditions_url
+                        @properties['terms_and_conditions_url']
+                    end
+                    
+                    ##
+                    # @return [Boolean] Indicates if the content is age gated.
+                    def age_gated_content
+                        @properties['age_gated_content']
+                    end
+                    
+                    ##
+                    # @return [Array<String>] List of keywords that users can text in to opt in to receive messages.
+                    def opt_in_keywords
+                        @properties['opt_in_keywords']
                     end
                     
                     ##
