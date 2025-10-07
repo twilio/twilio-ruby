@@ -111,13 +111,13 @@ describe Twilio::Security::RequestValidator do
 
     it 'should validate urls with credentials' do
       url_with_creds = 'https://user:pass@mycompany.com/myapp.php?foo=1&bar=2'
-      signature = 'CukzLTc1tT5dXEDIHm/tKBanW10=' # expected hash of the url
+      signature = 'ZQFR1PTIZXF2MXB8ZnKCvnnA+rI=' # expected hash of the url
       expect(validator.validate(url_with_creds, params, signature)).to eq(true)
     end
 
     it 'should validate urls with just username' do
       url_with_creds = 'https://user@mycompany.com/myapp.php?foo=1&bar=2'
-      signature = '2YRLlVAflCqxaNicjMpJcSTgzSs=' # expected hash of the url
+      signature = 'aZfj4hyX1MLZhSS6QIL18Vn2/RA=' # expected hash of the url
       expect(validator.validate(url_with_creds, params, signature)).to eq(true)
     end
 
