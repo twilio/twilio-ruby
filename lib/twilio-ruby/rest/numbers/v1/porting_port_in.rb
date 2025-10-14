@@ -269,6 +269,7 @@ module Twilio
                             'auto_cancel_approval_numbers' => payload['auto_cancel_approval_numbers'],
                             'documents' => payload['documents'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
+                            'support_ticket_id' => payload['support_ticket_id'] == nil ? payload['support_ticket_id'] : payload['support_ticket_id'].to_i,
                         }
 
                         # Context
@@ -381,6 +382,12 @@ module Twilio
                     # @return [Time] 
                     def date_created
                         @properties['date_created']
+                    end
+                    
+                    ##
+                    # @return [String] Unique ID of the request's support ticket
+                    def support_ticket_id
+                        @properties['support_ticket_id']
                     end
                     
                     ##

@@ -25,6 +25,7 @@ module Twilio
                     @bulk_consents = nil
                     @bulk_contacts = nil
                     @credentials = nil
+                    @messaging_geopermissions = nil
                     @safelist = nil
                     @secondary_auth_token = nil
                 end
@@ -48,6 +49,11 @@ module Twilio
                 # @return [Twilio::REST::Accounts::V1::CredentialList]
                 def credentials
                     @credentials ||= CredentialList.new self
+                end
+                ##
+                # @return [Twilio::REST::Accounts::V1::MessagingGeopermissionsList]
+                def messaging_geopermissions
+                    @messaging_geopermissions ||= MessagingGeopermissionsList.new self
                 end
                 ##
                 # @return [Twilio::REST::Accounts::V1::SafelistList]

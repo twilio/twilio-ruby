@@ -1,6 +1,19 @@
 twilio-ruby changelog
 =====================
 
+[2025-10-14] Version 7.8.4
+--------------------------
+**Library - Chore**
+- [PR #763](https://github.com/twilio/twilio-ruby/pull/763): fix test failures. Thanks to [@manisha1997](https://github.com/manisha1997)!
+
+**Api**
+- Updated description for property `CallerDisplayName` for participant create request
+- Updated description for property `CallerDisplayName` for participant create request
+
+**Accounts**
+- FILE_IS_AUTO_GENERATED: false
+
+
 [2025-09-30] Version 7.8.3
 --------------------------
 **Library - Chore**

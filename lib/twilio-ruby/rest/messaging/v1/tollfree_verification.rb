@@ -55,6 +55,18 @@ module Twilio
                     # @param [String] business_contact_email The email address of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_phone The E.164 formatted phone number of the contact for the business or organization using the Tollfree number.
                     # @param [String] external_reference_id An optional external reference ID supplied by customer and echoed back on status retrieval.
+                    # @param [String] business_registration_number A legally recognized business registration number
+                    # @param [String] business_registration_authority The organizational authority for business registrations
+                    # @param [String] business_registration_country Country business is registered in
+                    # @param [String] business_type The type of business, valid values are PRIVATE_PROFIT, PUBLIC_PROFIT, NON_PROFIT, SOLE_PROPRIETOR, GOVERNMENT
+                    # @param [String] business_registration_phone_number The E.164 formatted number associated with the business.
+                    # @param [String] doing_business_as Trade name, sub entity, or downstream business name of business being submitted for verification
+                    # @param [String] opt_in_confirmation_message The confirmation message sent to users when they opt in to receive messages.
+                    # @param [String] help_message_sample A sample help message provided to users.
+                    # @param [String] privacy_policy_url The URL to the privacy policy for the business or organization.
+                    # @param [String] terms_and_conditions_url The URL to the terms and conditions for the business or organization.
+                    # @param [Boolean] age_gated_content Indicates if the content is age gated.
+                    # @param [Array[String]] opt_in_keywords List of keywords that users can text in to opt in to receive messages.
                     # @return [TollfreeVerificationInstance] Created TollfreeVerificationInstance
                     def create(
                         business_name: nil, 
@@ -79,7 +91,19 @@ module Twilio
                         business_contact_last_name: :unset, 
                         business_contact_email: :unset, 
                         business_contact_phone: :unset, 
-                        external_reference_id: :unset
+                        external_reference_id: :unset, 
+                        business_registration_number: :unset, 
+                        business_registration_authority: :unset, 
+                        business_registration_country: :unset, 
+                        business_type: :unset, 
+                        business_registration_phone_number: :unset, 
+                        doing_business_as: :unset, 
+                        opt_in_confirmation_message: :unset, 
+                        help_message_sample: :unset, 
+                        privacy_policy_url: :unset, 
+                        terms_and_conditions_url: :unset, 
+                        age_gated_content: :unset, 
+                        opt_in_keywords: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -106,6 +130,18 @@ module Twilio
                             'BusinessContactEmail' => business_contact_email,
                             'BusinessContactPhone' => business_contact_phone,
                             'ExternalReferenceId' => external_reference_id,
+                            'BusinessRegistrationNumber' => business_registration_number,
+                            'BusinessRegistrationAuthority' => business_registration_authority,
+                            'BusinessRegistrationCountry' => business_registration_country,
+                            'BusinessType' => business_type,
+                            'BusinessRegistrationPhoneNumber' => business_registration_phone_number,
+                            'DoingBusinessAs' => doing_business_as,
+                            'OptInConfirmationMessage' => opt_in_confirmation_message,
+                            'HelpMessageSample' => help_message_sample,
+                            'PrivacyPolicyUrl' => privacy_policy_url,
+                            'TermsAndConditionsUrl' => terms_and_conditions_url,
+                            'AgeGatedContent' => age_gated_content,
+                            'OptInKeywords' => Twilio.serialize_list(opt_in_keywords) { |e| e },
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -311,6 +347,18 @@ module Twilio
                     # @param [String] business_contact_email The email address of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_phone The E.164 formatted phone number of the contact for the business or organization using the Tollfree number.
                     # @param [String] edit_reason Describe why the verification is being edited. If the verification was rejected because of a technical issue, such as the website being down, and the issue has been resolved this parameter should be set to something similar to 'Website fixed'.
+                    # @param [String] business_registration_number A legaly recognized business registration number
+                    # @param [String] business_registration_authority The organizational authority for business registrations
+                    # @param [String] business_registration_country Country business is registered in
+                    # @param [String] business_type The type of business, valid values are PRIVATE_PROFIT, PUBLIC_PROFIT, NON_PROFIT, SOLE_PROPRIETOR, GOVERNMENT
+                    # @param [String] business_registration_phone_number The E.164 formatted number associated with the business.
+                    # @param [String] doing_business_as Trade name, sub entity, or downstream business name of business being submitted for verification
+                    # @param [String] opt_in_confirmation_message The confirmation message sent to users when they opt in to receive messages.
+                    # @param [String] help_message_sample A sample help message provided to users.
+                    # @param [String] privacy_policy_url The URL to the privacy policy for the business or organization.
+                    # @param [String] terms_and_conditions_url The URL to the terms and conditions for the business or organization.
+                    # @param [Boolean] age_gated_content Indicates if the content is age gated.
+                    # @param [Array[String]] opt_in_keywords List of keywords that users can text in to opt in to receive messages.
                     # @return [TollfreeVerificationInstance] Updated TollfreeVerificationInstance
                     def update(
                         business_name: :unset, 
@@ -333,7 +381,19 @@ module Twilio
                         business_contact_last_name: :unset, 
                         business_contact_email: :unset, 
                         business_contact_phone: :unset, 
-                        edit_reason: :unset
+                        edit_reason: :unset, 
+                        business_registration_number: :unset, 
+                        business_registration_authority: :unset, 
+                        business_registration_country: :unset, 
+                        business_type: :unset, 
+                        business_registration_phone_number: :unset, 
+                        doing_business_as: :unset, 
+                        opt_in_confirmation_message: :unset, 
+                        help_message_sample: :unset, 
+                        privacy_policy_url: :unset, 
+                        terms_and_conditions_url: :unset, 
+                        age_gated_content: :unset, 
+                        opt_in_keywords: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -358,6 +418,18 @@ module Twilio
                             'BusinessContactEmail' => business_contact_email,
                             'BusinessContactPhone' => business_contact_phone,
                             'EditReason' => edit_reason,
+                            'BusinessRegistrationNumber' => business_registration_number,
+                            'BusinessRegistrationAuthority' => business_registration_authority,
+                            'BusinessRegistrationCountry' => business_registration_country,
+                            'BusinessType' => business_type,
+                            'BusinessRegistrationPhoneNumber' => business_registration_phone_number,
+                            'DoingBusinessAs' => doing_business_as,
+                            'OptInConfirmationMessage' => opt_in_confirmation_message,
+                            'HelpMessageSample' => help_message_sample,
+                            'PrivacyPolicyUrl' => privacy_policy_url,
+                            'TermsAndConditionsUrl' => terms_and_conditions_url,
+                            'AgeGatedContent' => age_gated_content,
+                            'OptInKeywords' => Twilio.serialize_list(opt_in_keywords) { |e| e },
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -766,7 +838,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The URL to the terms and conditions for the business or organization.
+                    # @return [String] The URL of the terms and conditions for the business or organization.
                     def terms_and_conditions_url
                         @properties['terms_and_conditions_url']
                     end
@@ -778,7 +850,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Array<String>] List of keywords that users can text in to opt in to receive messages.
+                    # @return [Array<String>] List of keywords that users can send to opt in or out of messages.
                     def opt_in_keywords
                         @properties['opt_in_keywords']
                     end
@@ -840,6 +912,18 @@ module Twilio
                     # @param [String] business_contact_email The email address of the contact for the business or organization using the Tollfree number.
                     # @param [String] business_contact_phone The E.164 formatted phone number of the contact for the business or organization using the Tollfree number.
                     # @param [String] edit_reason Describe why the verification is being edited. If the verification was rejected because of a technical issue, such as the website being down, and the issue has been resolved this parameter should be set to something similar to 'Website fixed'.
+                    # @param [String] business_registration_number A legaly recognized business registration number
+                    # @param [String] business_registration_authority The organizational authority for business registrations
+                    # @param [String] business_registration_country Country business is registered in
+                    # @param [String] business_type The type of business, valid values are PRIVATE_PROFIT, PUBLIC_PROFIT, NON_PROFIT, SOLE_PROPRIETOR, GOVERNMENT
+                    # @param [String] business_registration_phone_number The E.164 formatted number associated with the business.
+                    # @param [String] doing_business_as Trade name, sub entity, or downstream business name of business being submitted for verification
+                    # @param [String] opt_in_confirmation_message The confirmation message sent to users when they opt in to receive messages.
+                    # @param [String] help_message_sample A sample help message provided to users.
+                    # @param [String] privacy_policy_url The URL to the privacy policy for the business or organization.
+                    # @param [String] terms_and_conditions_url The URL to the terms and conditions for the business or organization.
+                    # @param [Boolean] age_gated_content Indicates if the content is age gated.
+                    # @param [Array[String]] opt_in_keywords List of keywords that users can text in to opt in to receive messages.
                     # @return [TollfreeVerificationInstance] Updated TollfreeVerificationInstance
                     def update(
                         business_name: :unset, 
@@ -862,7 +946,19 @@ module Twilio
                         business_contact_last_name: :unset, 
                         business_contact_email: :unset, 
                         business_contact_phone: :unset, 
-                        edit_reason: :unset
+                        edit_reason: :unset, 
+                        business_registration_number: :unset, 
+                        business_registration_authority: :unset, 
+                        business_registration_country: :unset, 
+                        business_type: :unset, 
+                        business_registration_phone_number: :unset, 
+                        doing_business_as: :unset, 
+                        opt_in_confirmation_message: :unset, 
+                        help_message_sample: :unset, 
+                        privacy_policy_url: :unset, 
+                        terms_and_conditions_url: :unset, 
+                        age_gated_content: :unset, 
+                        opt_in_keywords: :unset
                     )
 
                         context.update(
@@ -887,6 +983,18 @@ module Twilio
                             business_contact_email: business_contact_email, 
                             business_contact_phone: business_contact_phone, 
                             edit_reason: edit_reason, 
+                            business_registration_number: business_registration_number, 
+                            business_registration_authority: business_registration_authority, 
+                            business_registration_country: business_registration_country, 
+                            business_type: business_type, 
+                            business_registration_phone_number: business_registration_phone_number, 
+                            doing_business_as: doing_business_as, 
+                            opt_in_confirmation_message: opt_in_confirmation_message, 
+                            help_message_sample: help_message_sample, 
+                            privacy_policy_url: privacy_policy_url, 
+                            terms_and_conditions_url: terms_and_conditions_url, 
+                            age_gated_content: age_gated_content, 
+                            opt_in_keywords: opt_in_keywords, 
                         )
                     end
 
