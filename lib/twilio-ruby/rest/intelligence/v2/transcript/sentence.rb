@@ -208,13 +208,13 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Float] Offset from the beginning of the transcript when this sentence starts.
+                    # @return [String] Offset from the beginning of the transcript when this sentence starts.
                     def start_time
                         @properties['start_time']
                     end
                     
                     ##
-                    # @return [Float] Offset from the beginning of the transcript when this sentence ends.
+                    # @return [String] Offset from the beginning of the transcript when this sentence ends.
                     def end_time
                         @properties['end_time']
                     end
@@ -232,7 +232,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Float] 
+                    # @return [String] 
                     def confidence
                         @properties['confidence']
                     end
