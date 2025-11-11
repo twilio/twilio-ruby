@@ -553,6 +553,30 @@ module Twilio
         yield(transcription) if block_given?
         append(transcription)
       end
+
+      ##
+      # Create a new <Recording> element
+      # recording_status_callback:: Recording Status Callback URL
+      # recording_status_callback_method:: Recording Status Callback URL method
+      # recording_status_callback_event:: Recording Status Callback Events
+      # trim:: Trim the recording
+      # track:: To indicate which audio track should be recorded
+      # channels:: The recording channels for the final recording
+      # keyword_args:: additional attributes
+      def recording(recording_status_callback: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, trim: nil, track: nil, channels: nil, **keyword_args)
+        append(Recording.new(recording_status_callback: recording_status_callback, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, trim: trim, track: track, channels: channels, **keyword_args))
+      end
+    end
+
+    ##
+    # <Recording> TwiML Noun
+    class Recording < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Recording'
+
+        yield(self) if block_given?
+      end
     end
 
     ##
@@ -2057,6 +2081,26 @@ module Twilio
       # keyword_args:: additional attributes
       def ai_session(ai_connector: nil, ai_session_configuration: nil, **keyword_args)
         append(AiSession.new(ai_connector: ai_connector, ai_session_configuration: ai_session_configuration, **keyword_args))
+      end
+
+      ##
+      # Create a new <ConversationRelaySession> element
+      # connector:: The unique name or installed add-on sid that identifies the installed addon resource for the ConversationRelaySession Connector
+      # session_configuration:: The unique name or id of the ConversationRelaySession  Configuration resource.
+      # keyword_args:: additional attributes
+      def conversation_relay_session(connector: nil, session_configuration: nil, **keyword_args)
+        append(ConversationRelaySession.new(connector: connector, session_configuration: session_configuration, **keyword_args))
+      end
+    end
+
+    ##
+    # <ConversationRelaySession> TwiML Noun
+    class ConversationRelaySession < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'ConversationRelaySession'
+
+        yield(self) if block_given?
       end
     end
 

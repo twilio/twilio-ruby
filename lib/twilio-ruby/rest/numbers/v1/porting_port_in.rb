@@ -270,6 +270,7 @@ module Twilio
                             'documents' => payload['documents'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'support_ticket_id' => payload['support_ticket_id'] == nil ? payload['support_ticket_id'] : payload['support_ticket_id'].to_i,
+                            'signature_request_url' => payload['signature_request_url'],
                         }
 
                         # Context
@@ -388,6 +389,12 @@ module Twilio
                     # @return [String] Unique ID of the request's support ticket
                     def support_ticket_id
                         @properties['support_ticket_id']
+                    end
+                    
+                    ##
+                    # @return [String] 
+                    def signature_request_url
+                        @properties['signature_request_url']
                     end
                     
                     ##

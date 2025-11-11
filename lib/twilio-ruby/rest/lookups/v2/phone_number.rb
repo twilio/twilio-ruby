@@ -253,49 +253,49 @@ module Twilio
                     end
                     
                     ##
-                    # @return [CallerName] 
+                    # @return [CallerNameInfo] 
                     def caller_name
                         @properties['caller_name']
                     end
                     
                     ##
-                    # @return [SimSwap] 
+                    # @return [SimSwapInfo] 
                     def sim_swap
                         @properties['sim_swap']
                     end
                     
                     ##
-                    # @return [CallForwarding] 
+                    # @return [CallForwardingInfo] 
                     def call_forwarding
                         @properties['call_forwarding']
                     end
                     
                     ##
-                    # @return [LineTypeIntelligence] 
+                    # @return [LineTypeIntelligenceInfo] 
                     def line_type_intelligence
                         @properties['line_type_intelligence']
                     end
                     
                     ##
-                    # @return [LineStatus] 
+                    # @return [LineStatusInfo] 
                     def line_status
                         @properties['line_status']
                     end
                     
                     ##
-                    # @return [IdentityMatch] 
+                    # @return [IdentityMatchInfo] 
                     def identity_match
                         @properties['identity_match']
                     end
                     
                     ##
-                    # @return [ReassignedNumber] 
+                    # @return [ReassignedNumberInfo] 
                     def reassigned_number
                         @properties['reassigned_number']
                     end
                     
                     ##
-                    # @return [SmsPumpingRisk] 
+                    # @return [SmsPumpingRiskInfo] 
                     def sms_pumping_risk
                         @properties['sms_pumping_risk']
                     end

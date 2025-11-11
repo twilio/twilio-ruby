@@ -166,6 +166,7 @@ module Twilio
                     # @param [Status] status The compliance status of the Tollfree Verification record.
                     # @param [String] external_reference_id Customer supplied reference id for the Tollfree Verification record.
                     # @param [Boolean] include_sub_accounts Whether to include Tollfree Verifications from sub accounts in list response.
+                    # @param [Array[String]] trust_product_sid The trust product sids / tollfree bundle sids of tollfree verifications
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -173,12 +174,13 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(tollfree_phone_number_sid: :unset, status: :unset, external_reference_id: :unset, include_sub_accounts: :unset, limit: nil, page_size: nil)
+                    def list(tollfree_phone_number_sid: :unset, status: :unset, external_reference_id: :unset, include_sub_accounts: :unset, trust_product_sid: :unset, limit: nil, page_size: nil)
                         self.stream(
                             tollfree_phone_number_sid: tollfree_phone_number_sid,
                             status: status,
                             external_reference_id: external_reference_id,
                             include_sub_accounts: include_sub_accounts,
+                            trust_product_sid: trust_product_sid,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -192,6 +194,7 @@ module Twilio
                     # @param [Status] status The compliance status of the Tollfree Verification record.
                     # @param [String] external_reference_id Customer supplied reference id for the Tollfree Verification record.
                     # @param [Boolean] include_sub_accounts Whether to include Tollfree Verifications from sub accounts in list response.
+                    # @param [Array[String]] trust_product_sid The trust product sids / tollfree bundle sids of tollfree verifications
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -199,7 +202,7 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(tollfree_phone_number_sid: :unset, status: :unset, external_reference_id: :unset, include_sub_accounts: :unset, limit: nil, page_size: nil)
+                    def stream(tollfree_phone_number_sid: :unset, status: :unset, external_reference_id: :unset, include_sub_accounts: :unset, trust_product_sid: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
@@ -207,6 +210,7 @@ module Twilio
                             status: status,
                             external_reference_id: external_reference_id,
                             include_sub_accounts: include_sub_accounts,
+                            trust_product_sid: trust_product_sid,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -233,16 +237,19 @@ module Twilio
                     # @param [Status] status The compliance status of the Tollfree Verification record.
                     # @param [String] external_reference_id Customer supplied reference id for the Tollfree Verification record.
                     # @param [Boolean] include_sub_accounts Whether to include Tollfree Verifications from sub accounts in list response.
+                    # @param [Array[String]] trust_product_sid The trust product sids / tollfree bundle sids of tollfree verifications
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of TollfreeVerificationInstance
-                    def page(tollfree_phone_number_sid: :unset, status: :unset, external_reference_id: :unset, include_sub_accounts: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(tollfree_phone_number_sid: :unset, status: :unset, external_reference_id: :unset, include_sub_accounts: :unset, trust_product_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'TollfreePhoneNumberSid' => tollfree_phone_number_sid,
                             'Status' => status,
                             'ExternalReferenceId' => external_reference_id,
                             'IncludeSubAccounts' => include_sub_accounts,
+                            
+                            'TrustProductSid' =>  Twilio.serialize_list(trust_product_sid) { |e| e },
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

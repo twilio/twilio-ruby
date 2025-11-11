@@ -59,7 +59,7 @@ module Twilio
                         end
                     end
 
-                    class LastSimSwap
+                    class LastSimSwapInfo
                             # @param [last_sim_swap_date]: [Time] 
                             # @param [swapped_period]: [String] 
                             # @param [swapped_in_period]: [Boolean] 

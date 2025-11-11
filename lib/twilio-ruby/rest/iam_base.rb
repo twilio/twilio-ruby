@@ -21,17 +21,12 @@ module Twilio
         @base_url =  "https://iam.twilio.com"
         @host = "iam.twilio.com"
         @port = 443
-        @v1 = nil
-      end
-
-      def v1
-        @v1 ||= Iam::V1.new self
       end
 
       ##
       # Provide a user friendly representation
       def to_s
-        '<Twilio::REST::Iam::V1>';
+        '<Twilio::REST::Iam>';
       end
     end
   end
