@@ -21,6 +21,7 @@ module Twilio
                 def initialize(domain)
                     super
                     @version = 'v2'
+                    @applications = nil
                     @authorization_documents = nil
                     @bulk_hosted_number_orders = nil
                     @bundle_clone = nil
@@ -28,6 +29,20 @@ module Twilio
                     @regulatory_compliance = nil
                 end
 
+                ##
+                # @param [String] sid The unique string that identifies the Short Code Application resource.
+                # @return [Twilio::REST::Numbers::V2::ApplicationContext] if sid was passed.
+                # @return [Twilio::REST::Numbers::V2::ApplicationList]
+                def applications(sid=:unset)
+                    if sid.nil?
+                        raise ArgumentError, 'sid cannot be nil'
+                    end
+                    if sid == :unset
+                        @applications ||= ApplicationList.new self
+                    else
+                        ApplicationContext.new(self, sid)
+                    end
+                end
                 ##
                 # @param [String] sid A 34 character string that uniquely identifies this AuthorizationDocument.
                 # @return [Twilio::REST::Numbers::V2::AuthorizationDocumentContext] if sid was passed.
