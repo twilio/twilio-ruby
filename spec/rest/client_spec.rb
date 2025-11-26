@@ -55,14 +55,9 @@ describe Twilio::REST::Client do
       $stderr = StringIO.new
       begin
         @client = Twilio::REST::Client.new
-        # Simulate a condition that would trigger a warning when setting edge
-        allow(@client).to receive(:edge=).and_wrap_original do |m, *args|
-          warn 'Edge is deprecated'
-          m.call(*args)
-        end
         @client.edge = 'deprecatedEdge'
         warnings = $stderr.string
-        expect(warnings).to include('Edge is deprecated')
+        expect(warnings).to include('[DEPRECATION] `edge` is deprecated and will be removed in a future version. Use `region` instead.')
       ensure
         $stderr = original_stderr
       end
