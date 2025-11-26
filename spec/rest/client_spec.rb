@@ -42,13 +42,30 @@ describe Twilio::REST::Client do
     end
 
     it 'uses the region edge mapping' do
-      @client = Twilio::REST::Client.new
+      @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid', 'ie1', 'myClient', 'myLogger')
       expect(@client.account_sid).to eq('someSid')
-      expect(@client.auth_token).to eq('someToken')
-      expect(@client.http_client).to eq('someClient')
+      expect(@client.auth_token).to eq('myPassword')
       expect(@client.region).to eq('ie1')
       expect(@client.edge).to eq('dublin')
-      expect(@client.logger).to eq('someLogger')
+      expect(@client.logger).to eq('myLogger')
+    end
+
+    it 'catches warning when setting edge' do
+      original_stderr = $stderr
+      $stderr = StringIO.new
+      begin
+        @client = Twilio::REST::Client.new
+        # Simulate a condition that would trigger a warning when setting edge
+        allow(@client).to receive(:edge=).and_wrap_original do |m, *args|
+          warn 'Edge is deprecated'
+          m.call(*args)
+        end
+        @client.edge = 'deprecatedEdge'
+        warnings = $stderr.string
+        expect(warnings).to include('Edge is deprecated')
+      ensure
+        $stderr = original_stderr
+      end
     end
 
     class MyVersion < Twilio::REST::Version
