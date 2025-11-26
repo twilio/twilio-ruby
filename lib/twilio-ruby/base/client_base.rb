@@ -1,6 +1,7 @@
 module Twilio
   module REST
     class ClientBase
+      # rubocop:disable Style/ClassVars
       @@default_region = 'us1'
       @@region_mappings = {
         'au1' => 'sydney',
@@ -13,6 +14,8 @@ module Twilio
         'us1' => 'ashburn',
         'us2' => 'umatilla'
       }
+      # rubocop:enable Style/ClassVars
+
       attr_accessor :http_client, :username, :password, :account_sid, :auth_token, :region, :logger,
                     :user_agent_extensions, :credentials
 
