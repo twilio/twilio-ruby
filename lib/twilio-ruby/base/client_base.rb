@@ -5,15 +5,15 @@ module Twilio
       @@default_region = 'us1'
       # rubocop:disable Style/ClassVars
       @@region_mappings = {
-        "au1" => "sydney",
-        "br1" => "sao-paulo",
-        "de1" => "frankfurt",
-        "ie1" => "dublin",
-        "jp1" => "tokyo",
-        "jp2" => "osaka",
-        "sg1" => "singapore",
-        "us1" => "ashburn",
-        "us2" => "umatilla"
+        'au1' => 'sydney',
+        'br1' => 'sao-paulo',
+        'de1' => 'frankfurt',
+        'ie1' => 'dublin',
+        'jp1' => 'tokyo',
+        'jp2' => 'osaka',
+        'sg1' => 'singapore',
+        'us1' => 'ashburn',
+        'us2' => 'umatilla'
       }
       attr_accessor :http_client, :username, :password, :account_sid, :auth_token, :region , :logger,
                     :user_agent_extensions, :credentials
