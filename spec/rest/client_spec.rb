@@ -41,6 +41,16 @@ describe Twilio::REST::Client do
       expect(@client.logger).to eq('myLogger')
     end
 
+    it 'uses the region edge mapping' do
+      @client = Twilio::REST::Client.new
+      expect(@client.account_sid).to eq('someSid')
+      expect(@client.auth_token).to eq('someToken')
+      expect(@client.http_client).to eq('someClient')
+      expect(@client.region).to eq('ie1')
+      expect(@client.edge).to eq('dublin')
+      expect(@client.logger).to eq('someLogger')
+    end
+
     class MyVersion < Twilio::REST::Version
       def initialize(domain)
         super
