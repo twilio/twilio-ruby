@@ -3,7 +3,7 @@ module Twilio
     class ClientBase
       # rubocop:disable Style/ClassVars
       @@default_region = 'us1'
-      # rubocop:enable Style/ClassVars
+      # rubocop:disable Style/ClassVars
       @@region_mappings = {
         "au1" => "sydney",
         "br1" => "sao-paulo",
