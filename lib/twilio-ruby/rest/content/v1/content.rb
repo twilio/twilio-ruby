@@ -191,6 +191,650 @@ module Twilio
                         end
                     end
 
+                    class ContentUpdateRequest
+                            # @param [friendly_name]: [String] User defined name of the content
+                            # @param [variables]: [Hash<String, String>] Key value pairs of variable name to value
+                            # @param [language]: [String] Language code for the content
+                            # @param [types]: [ContentList.Types] 
+                        attr_accessor :friendly_name, :variables, :language, :types
+                        def initialize(payload)
+                                @friendly_name = payload["friendly_name"]
+                                @variables = payload["variables"]
+                                @language = payload["language"]
+                                @types = payload["types"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "friendly_name": @friendly_name,
+                                "variables": @variables,
+                                "language": @language,
+                                "types": @types,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class FlowsPage
+                            # @param [id]: [String] 
+                            # @param [next_page_id]: [String] 
+                            # @param [title]: [String] 
+                            # @param [subtitle]: [String] 
+                            # @param [layout]: [Array<ContentList.FlowsPageComponent>] 
+                        attr_accessor :id, :next_page_id, :title, :subtitle, :layout
+                        def initialize(payload)
+                                @id = payload["id"]
+                                @next_page_id = payload["next_page_id"]
+                                @title = payload["title"]
+                                @subtitle = payload["subtitle"]
+                                @layout = payload["layout"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "id": @id,
+                                "next_page_id": @next_page_id,
+                                "title": @title,
+                                "subtitle": @subtitle,
+                                "layout": @layout,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class FlowsPageComponent
+                            # @param [label]: [String] 
+                            # @param [type]: [String] 
+                        attr_accessor :label, :type
+                        def initialize(payload)
+                                @label = payload["label"]
+                                @type = payload["type"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "label": @label,
+                                "type": @type,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class ListItem
+                            # @param [id]: [String] 
+                            # @param [item]: [String] 
+                            # @param [description]: [String] 
+                        attr_accessor :id, :item, :description
+                        def initialize(payload)
+                                @id = payload["id"]
+                                @item = payload["item"]
+                                @description = payload["description"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "id": @id,
+                                "item": @item,
+                                "description": @description,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class QuickReplyAction
+                            # @param [type]: [QuickReplyActionType] 
+                            # @param [title]: [String] 
+                            # @param [id]: [String] 
+                        attr_accessor :type, :title, :id
+                        def initialize(payload)
+                                @type = payload["type"]
+                                @title = payload["title"]
+                                @id = payload["id"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "type": @type,
+                                "title": @title,
+                                "id": @id,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class TwilioCallToAction
+                            # @param [body]: [String] 
+                            # @param [actions]: [Array<ContentList.CallToActionAction>] 
+                        attr_accessor :body, :actions
+                        def initialize(payload)
+                                @body = payload["body"]
+                                @actions = payload["actions"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "body": @body,
+                                "actions": @actions,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class TwilioCard
+                            # @param [title]: [String] 
+                            # @param [subtitle]: [String] 
+                            # @param [media]: [Array<String>] 
+                            # @param [actions]: [Array<ContentList.CardAction>] 
+                        attr_accessor :title, :subtitle, :media, :actions
+                        def initialize(payload)
+                                @title = payload["title"]
+                                @subtitle = payload["subtitle"]
+                                @media = payload["media"]
+                                @actions = payload["actions"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "title": @title,
+                                "subtitle": @subtitle,
+                                "media": @media,
+                                "actions": @actions,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class TwilioCarousel
+                            # @param [body]: [String] 
+                            # @param [cards]: [Array<ContentList.CarouselCard>] 
+                        attr_accessor :body, :cards
+                        def initialize(payload)
+                                @body = payload["body"]
+                                @cards = payload["cards"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "body": @body,
+                                "cards": @cards,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class TwilioCatalog
+                            # @param [title]: [String] 
+                            # @param [body]: [String] 
+                            # @param [subtitle]: [String] 
+                            # @param [id]: [String] 
+                            # @param [items]: [Array<ContentList.CatalogItem>] 
+                            # @param [dynamic_items]: [String] 
+                        attr_accessor :title, :body, :subtitle, :id, :items, :dynamic_items
+                        def initialize(payload)
+                                @title = payload["title"]
+                                @body = payload["body"]
+                                @subtitle = payload["subtitle"]
+                                @id = payload["id"]
+                                @items = payload["items"]
+                                @dynamic_items = payload["dynamic_items"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "title": @title,
+                                "body": @body,
+                                "subtitle": @subtitle,
+                                "id": @id,
+                                "items": @items,
+                                "dynamic_items": @dynamic_items,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class TwilioFlows
+                            # @param [body]: [String] 
+                            # @param [button_text]: [String] 
+                            # @param [subtitle]: [String] 
+                            # @param [media_url]: [String] 
+                            # @param [pages]: [Array<ContentList.FlowsPage>] 
+                            # @param [type]: [String] 
+                        attr_accessor :body, :button_text, :subtitle, :media_url, :pages, :type
+                        def initialize(payload)
+                                @body = payload["body"]
+                                @button_text = payload["button_text"]
+                                @subtitle = payload["subtitle"]
+                                @media_url = payload["media_url"]
+                                @pages = payload["pages"]
+                                @type = payload["type"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "body": @body,
+                                "button_text": @button_text,
+                                "subtitle": @subtitle,
+                                "media_url": @media_url,
+                                "pages": @pages,
+                                "type": @type,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class TwilioListPicker
+                            # @param [body]: [String] 
+                            # @param [button]: [String] 
+                            # @param [items]: [Array<ContentList.ListItem>] 
+                        attr_accessor :body, :button, :items
+                        def initialize(payload)
+                                @body = payload["body"]
+                                @button = payload["button"]
+                                @items = payload["items"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "body": @body,
+                                "button": @button,
+                                "items": @items,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class TwilioLocation
+                            # @param [latitude]: [Float] 
+                            # @param [longitude]: [Float] 
+                            # @param [label]: [String] 
+                            # @param [id]: [String] 
+                            # @param [address]: [String] 
+                        attr_accessor :latitude, :longitude, :label, :id, :address
+                        def initialize(payload)
+                                @latitude = payload["latitude"]
+                                @longitude = payload["longitude"]
+                                @label = payload["label"]
+                                @id = payload["id"]
+                                @address = payload["address"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "latitude": @latitude,
+                                "longitude": @longitude,
+                                "label": @label,
+                                "id": @id,
+                                "address": @address,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class TwilioMedia
+                            # @param [body]: [String] 
+                            # @param [media]: [Array<String>] 
+                        attr_accessor :body, :media
+                        def initialize(payload)
+                                @body = payload["body"]
+                                @media = payload["media"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "body": @body,
+                                "media": @media,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class TwilioQuickReply
+                            # @param [body]: [String] 
+                            # @param [actions]: [Array<ContentList.QuickReplyAction>] 
+                        attr_accessor :body, :actions
+                        def initialize(payload)
+                                @body = payload["body"]
+                                @actions = payload["actions"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "body": @body,
+                                "actions": @actions,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class TwilioSchedule
+                            # @param [id]: [String] 
+                            # @param [title]: [String] 
+                            # @param [time_slots]: [String] 
+                        attr_accessor :id, :title, :time_slots
+                        def initialize(payload)
+                                @id = payload["id"]
+                                @title = payload["title"]
+                                @time_slots = payload["time_slots"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "id": @id,
+                                "title": @title,
+                                "timeSlots": @time_slots,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class TwilioText
+                            # @param [body]: [String] 
+                        attr_accessor :body
+                        def initialize(payload)
+                                @body = payload["body"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "body": @body,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class Types
+                            # @param [twilio_text]: [ContentList.TwilioText] 
+                            # @param [twilio_media]: [ContentList.TwilioMedia] 
+                            # @param [twilio_location]: [ContentList.TwilioLocation] 
+                            # @param [twilio_list_picker]: [ContentList.TwilioListPicker] 
+                            # @param [twilio_call_to_action]: [ContentList.TwilioCallToAction] 
+                            # @param [twilio_quick_reply]: [ContentList.TwilioQuickReply] 
+                            # @param [twilio_card]: [ContentList.TwilioCard] 
+                            # @param [twilio_catalog]: [ContentList.TwilioCatalog] 
+                            # @param [twilio_carousel]: [ContentList.TwilioCarousel] 
+                            # @param [twilio_flows]: [ContentList.TwilioFlows] 
+                            # @param [twilio_schedule]: [ContentList.TwilioSchedule] 
+                            # @param [whatsapp_card]: [ContentList.WhatsappCard] 
+                            # @param [whatsapp_authentication]: [ContentList.WhatsappAuthentication] 
+                            # @param [whatsapp_flows]: [ContentList.WhatsappFlows] 
+                        attr_accessor :twilio_text, :twilio_media, :twilio_location, :twilio_list_picker, :twilio_call_to_action, :twilio_quick_reply, :twilio_card, :twilio_catalog, :twilio_carousel, :twilio_flows, :twilio_schedule, :whatsapp_card, :whatsapp_authentication, :whatsapp_flows
+                        def initialize(payload)
+                                @twilio_text = payload["twilio_text"]
+                                @twilio_media = payload["twilio_media"]
+                                @twilio_location = payload["twilio_location"]
+                                @twilio_list_picker = payload["twilio_list_picker"]
+                                @twilio_call_to_action = payload["twilio_call_to_action"]
+                                @twilio_quick_reply = payload["twilio_quick_reply"]
+                                @twilio_card = payload["twilio_card"]
+                                @twilio_catalog = payload["twilio_catalog"]
+                                @twilio_carousel = payload["twilio_carousel"]
+                                @twilio_flows = payload["twilio_flows"]
+                                @twilio_schedule = payload["twilio_schedule"]
+                                @whatsapp_card = payload["whatsapp_card"]
+                                @whatsapp_authentication = payload["whatsapp_authentication"]
+                                @whatsapp_flows = payload["whatsapp_flows"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "twilio/text": @twilio_text,
+                                "twilio/media": @twilio_media,
+                                "twilio/location": @twilio_location,
+                                "twilio/list-picker": @twilio_list_picker,
+                                "twilio/call-to-action": @twilio_call_to_action,
+                                "twilio/quick-reply": @twilio_quick_reply,
+                                "twilio/card": @twilio_card,
+                                "twilio/catalog": @twilio_catalog,
+                                "twilio/carousel": @twilio_carousel,
+                                "twilio/flows": @twilio_flows,
+                                "twilio/schedule": @twilio_schedule,
+                                "whatsapp/card": @whatsapp_card,
+                                "whatsapp/authentication": @whatsapp_authentication,
+                                "whatsapp/flows": @whatsapp_flows,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class WhatsappAuthentication
+                            # @param [add_security_recommendation]: [Boolean] 
+                            # @param [code_expiration_minutes]: [Float] 
+                            # @param [actions]: [Array<ContentList.AuthenticationAction>] 
+                        attr_accessor :add_security_recommendation, :code_expiration_minutes, :actions
+                        def initialize(payload)
+                                @add_security_recommendation = payload["add_security_recommendation"]
+                                @code_expiration_minutes = payload["code_expiration_minutes"]
+                                @actions = payload["actions"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "add_security_recommendation": @add_security_recommendation,
+                                "code_expiration_minutes": @code_expiration_minutes,
+                                "actions": @actions,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class WhatsappCard
+                            # @param [body]: [String] 
+                            # @param [footer]: [String] 
+                            # @param [media]: [Array<String>] 
+                            # @param [header_text]: [String] 
+                            # @param [actions]: [Array<ContentList.CardAction>] 
+                        attr_accessor :body, :footer, :media, :header_text, :actions
+                        def initialize(payload)
+                                @body = payload["body"]
+                                @footer = payload["footer"]
+                                @media = payload["media"]
+                                @header_text = payload["header_text"]
+                                @actions = payload["actions"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "body": @body,
+                                "footer": @footer,
+                                "media": @media,
+                                "header_text": @header_text,
+                                "actions": @actions,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class WhatsappFlows
+                            # @param [body]: [String] 
+                            # @param [button_text]: [String] 
+                            # @param [subtitle]: [String] 
+                            # @param [media_url]: [String] 
+                            # @param [flow_id]: [String] 
+                            # @param [flow_token]: [String] 
+                            # @param [flow_first_page_id]: [String] 
+                            # @param [is_flow_first_page_endpoint]: [Boolean] 
+                        attr_accessor :body, :button_text, :subtitle, :media_url, :flow_id, :flow_token, :flow_first_page_id, :is_flow_first_page_endpoint
+                        def initialize(payload)
+                                @body = payload["body"]
+                                @button_text = payload["button_text"]
+                                @subtitle = payload["subtitle"]
+                                @media_url = payload["media_url"]
+                                @flow_id = payload["flow_id"]
+                                @flow_token = payload["flow_token"]
+                                @flow_first_page_id = payload["flow_first_page_id"]
+                                @is_flow_first_page_endpoint = payload["is_flow_first_page_endpoint"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "body": @body,
+                                "button_text": @button_text,
+                                "subtitle": @subtitle,
+                                "media_url": @media_url,
+                                "flow_id": @flow_id,
+                                "flow_token": @flow_token,
+                                "flow_first_page_id": @flow_first_page_id,
+                                "is_flow_first_page_endpoint": @is_flow_first_page_endpoint,
+                        }.to_json(options)
+                        end
+                    end
+
+
+                    class AuthenticationAction
+                            # @param [type]: [AuthenticationActionType] 
+                            # @param [copy_code_text]: [String] 
+                        attr_accessor :type, :copy_code_text
+                        def initialize(payload)
+                                @type = payload["type"]
+                                @copy_code_text = payload["copy_code_text"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "type": @type,
+                                "copy_code_text": @copy_code_text,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CallToActionAction
+                            # @param [type]: [CallToActionActionType] 
+                            # @param [title]: [String] 
+                            # @param [url]: [String] 
+                            # @param [phone]: [String] 
+                            # @param [code]: [String] 
+                            # @param [id]: [String] 
+                        attr_accessor :type, :title, :url, :phone, :code, :id
+                        def initialize(payload)
+                                @type = payload["type"]
+                                @title = payload["title"]
+                                @url = payload["url"]
+                                @phone = payload["phone"]
+                                @code = payload["code"]
+                                @id = payload["id"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "type": @type,
+                                "title": @title,
+                                "url": @url,
+                                "phone": @phone,
+                                "code": @code,
+                                "id": @id,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CardAction
+                            # @param [type]: [CardActionType] 
+                            # @param [title]: [String] 
+                            # @param [url]: [String] 
+                            # @param [phone]: [String] 
+                            # @param [id]: [String] 
+                            # @param [code]: [String] 
+                            # @param [webview_size]: [WebviewSizeType] 
+                        attr_accessor :type, :title, :url, :phone, :id, :code, :webview_size
+                        def initialize(payload)
+                                @type = payload["type"]
+                                @title = payload["title"]
+                                @url = payload["url"]
+                                @phone = payload["phone"]
+                                @id = payload["id"]
+                                @code = payload["code"]
+                                @webview_size = payload["webview_size"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "type": @type,
+                                "title": @title,
+                                "url": @url,
+                                "phone": @phone,
+                                "id": @id,
+                                "code": @code,
+                                "webview_size": @webview_size,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CarouselAction
+                            # @param [type]: [CarouselActionType] 
+                            # @param [title]: [String] 
+                            # @param [url]: [String] 
+                            # @param [phone]: [String] 
+                            # @param [id]: [String] 
+                        attr_accessor :type, :title, :url, :phone, :id
+                        def initialize(payload)
+                                @type = payload["type"]
+                                @title = payload["title"]
+                                @url = payload["url"]
+                                @phone = payload["phone"]
+                                @id = payload["id"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "type": @type,
+                                "title": @title,
+                                "url": @url,
+                                "phone": @phone,
+                                "id": @id,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CarouselCard
+                            # @param [title]: [String] 
+                            # @param [body]: [String] 
+                            # @param [media]: [String] 
+                            # @param [actions]: [Array<ContentList.CarouselAction>] 
+                        attr_accessor :title, :body, :media, :actions
+                        def initialize(payload)
+                                @title = payload["title"]
+                                @body = payload["body"]
+                                @media = payload["media"]
+                                @actions = payload["actions"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "title": @title,
+                                "body": @body,
+                                "media": @media,
+                                "actions": @actions,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CatalogItem
+                            # @param [id]: [String] 
+                            # @param [section_title]: [String] 
+                            # @param [name]: [String] 
+                            # @param [media_url]: [String] 
+                            # @param [price]: [Float] 
+                            # @param [description]: [String] 
+                        attr_accessor :id, :section_title, :name, :media_url, :price, :description
+                        def initialize(payload)
+                                @id = payload["id"]
+                                @section_title = payload["section_title"]
+                                @name = payload["name"]
+                                @media_url = payload["media_url"]
+                                @price = payload["price"]
+                                @description = payload["description"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "id": @id,
+                                "section_title": @section_title,
+                                "name": @name,
+                                "media_url": @media_url,
+                                "price": @price,
+                                "description": @description,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class ContentCreateRequest
+                            # @param [friendly_name]: [String] User defined name of the content
+                            # @param [variables]: [Hash<String, String>] Key value pairs of variable name to value
+                            # @param [language]: [String] Language code for the content
+                            # @param [types]: [ContentList.Types] 
+                        attr_accessor :friendly_name, :variables, :language, :types
+                        def initialize(payload)
+                                @friendly_name = payload["friendly_name"]
+                                @variables = payload["variables"]
+                                @language = payload["language"]
+                                @types = payload["types"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "friendly_name": @friendly_name,
+                                "variables": @variables,
+                                "language": @language,
+                                "types": @types,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class ContentUpdateRequest
+                            # @param [friendly_name]: [String] User defined name of the content
+                            # @param [variables]: [Hash<String, String>] Key value pairs of variable name to value
+                            # @param [language]: [String] Language code for the content
+                            # @param [types]: [ContentList.Types] 
+                        attr_accessor :friendly_name, :variables, :language, :types
+                        def initialize(payload)
+                                @friendly_name = payload["friendly_name"]
+                                @variables = payload["variables"]
+                                @language = payload["language"]
+                                @types = payload["types"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "friendly_name": @friendly_name,
+                                "variables": @variables,
+                                "language": @language,
+                                "types": @types,
+                        }.to_json(options)
+                        end
+                    end
+
                     class FlowsPage
                             # @param [id]: [String] 
                             # @param [next_page_id]: [String] 
@@ -751,7 +1395,7 @@ module Twilio
                     ##
                     # Initialize the ContentContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] sid The Twilio-provided string that uniquely identifies the Content resource to fetch.
+                    # @param [String] sid The Twilio-provided string that uniquely identifies the Content resource to update.
                     # @return [ContentContext] ContentContext
                     def initialize(version, sid)
                         super(version)
@@ -788,6 +1432,27 @@ module Twilio
                         
                         
                         payload = @version.fetch('GET', @uri, headers: headers)
+                        ContentInstance.new(
+                            @version,
+                            payload,
+                            sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the ContentInstance
+                    # @param [ContentUpdateRequest] content_update_request 
+                    # @return [ContentInstance] Updated ContentInstance
+                    def update(content_update_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        payload = @version.update('PUT', @uri, headers: headers, data: content_update_request.to_json)
                         ContentInstance.new(
                             @version,
                             payload,
@@ -977,6 +1642,17 @@ module Twilio
                     def fetch
 
                         context.fetch
+                    end
+
+                    ##
+                    # Update the ContentInstance
+                    # @param [ContentUpdateRequest] content_update_request 
+                    # @return [ContentInstance] Updated ContentInstance
+                    def update(content_update_request: nil
+                    )
+
+                        context.update(
+                        )
                     end
 
                     ##
