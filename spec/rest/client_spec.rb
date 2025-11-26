@@ -37,7 +37,7 @@ describe Twilio::REST::Client do
       expect(@client.auth_token).to eq('myPassword')
       expect(@client.http_client).to eq('myClient')
       expect(@client.region).to eq('myRegion')
-      expect(@client.edge).to eq("myEdge")
+      expect(@client.edge).to eq('myEdge')
       expect(@client.logger).to eq('myLogger')
     end
 
