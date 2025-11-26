@@ -1,7 +1,6 @@
 module Twilio
   module REST
     class ClientBase
-      # rubocop:disable Style/ClassVars
       @@default_region = 'us1'
       @@region_mappings = {
         'au1' => 'sydney',
