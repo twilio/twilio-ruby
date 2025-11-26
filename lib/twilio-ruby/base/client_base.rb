@@ -34,12 +34,12 @@ module Twilio
       end
 
       def edge=(value)
-        warn "[DEPRECATION] `edge` is deprecated and will be removed in a future version. Use `region` instead."
+        warn '[DEPRECATION] `edge` is deprecated and will be removed in a future version. Use `region` instead.'
         @edge = value
       end
 
       def edge
-        warn "[DEPRECATION] `edge` is deprecated and will be removed in a future version. Use `region` instead."
+        warn '[DEPRECATION] `edge` is deprecated and will be removed in a future version. Use `region` instead.'
         @edge
       end
 
