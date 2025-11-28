@@ -19,6 +19,18 @@ describe Twilio::REST::Client do
       expect(@client.logger).to eq('myLogger')
     end
 
+    it 'uses the edge value from region map using setter' do
+      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil)
+      @client.region = 'us1'
+      @client.http_client = Twilio::HTTP::Client.new
+      @connection = Faraday::Connection.new
+      expect(Faraday).to receive(:new).and_yield(@connection).and_return(@connection)
+      allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: {}))
+      @client.request('host', 'port', 'GET', 'https://api.twilio.com')
+      expect(@client.region).to eq('us1')
+      expect(@client.edge).to eq('ashburn')
+    end
+
     it 'catches warning when setting region' do
       original_stderr = $stderr
       $stderr = StringIO.new
