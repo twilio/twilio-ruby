@@ -26,7 +26,7 @@ describe Twilio::REST::Client do
       expect(@client.auth_token).to eq('someToken')
       expect(@client.http_client).to eq('someClient')
       expect(@client.region).to eq('someRegion')
-      expect(@client.edge).to eq(nil)
+      expect(@client.edge).to eq('someEdge')
       expect(@client.logger).to eq('someLogger')
     end
 
@@ -42,7 +42,9 @@ describe Twilio::REST::Client do
     end
 
     it 'uses the region edge mapping' do
+      config.edge = nil
       @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid', 'ie1', 'myClient', 'myLogger')
+      config.edge = 'someEdge'
       expect(@client.account_sid).to eq('someSid')
       expect(@client.auth_token).to eq('myPassword')
       expect(@client.region).to eq('ie1')
