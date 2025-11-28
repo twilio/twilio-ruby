@@ -33,7 +33,7 @@ module Twilio
         end
         if Twilio.edge
           @edge = Twilio.edge
-        else
+        elsif @region && @@region_mappings[region]
           warn '[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.'
           # rubocop:enable Layout/LineLength
           @edge = !region.nil? ? @@region_mappings[region] : nil
@@ -101,6 +101,10 @@ module Twilio
       ##
       # Build the final request uri
       def build_uri(uri)
+        if @edge.nil? && @region && @@region_mappings[@region]
+          warn '[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.'
+          @edge = @@region_mappings[@region]
+        end
         return uri if @region.nil? && @edge.nil?
 
         parsed_url = URI(uri)
