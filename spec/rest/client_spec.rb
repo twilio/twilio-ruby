@@ -8,9 +8,7 @@ describe Twilio::REST::ObsoleteClient do
 end
 
 describe Twilio::REST::Client do
-
   context 'configuration of edge' do
-
     it 'uses the edge value from region map' do
       @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'us1', 'myClient', 'myLogger')
       expect(@client.account_sid).to eq('myUser')
