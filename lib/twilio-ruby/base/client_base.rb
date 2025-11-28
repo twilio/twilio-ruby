@@ -18,7 +18,7 @@ module Twilio
       }
       # rubocop:enable Style/ClassVars
 
-      attr_accessor :http_client, :username, :password, :account_sid, :auth_token, :region, :logger,
+      attr_accessor :http_client, :username, :password, :account_sid, :auth_token, :region, :edge, :logger,
                     :user_agent_extensions, :credentials
 
       # rubocop:disable Metrics/ParameterLists
@@ -27,13 +27,15 @@ module Twilio
         @username = username || Twilio.account_sid
         @password = password || Twilio.auth_token
         @region = region || Twilio.region
-        if ( @region.nil? and !Twilio.edge.nil? ) or ( !@region.nil? and Twilio.edge.nil? )
-          warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.'
+        if (@region.nil? && !Twilio.edge.nil?) || (!@region.nil? && Twilio.edge.nil?)
+          warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com;
+                  otherwise use product.twilio.com.'
         end
         if Twilio.edge
           @edge = Twilio.edge
         else
-          warn '[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing, DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.'
+          warn '[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,
+                  DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.'
           @edge = !region.nil? ? @@region_mappings[region] : nil
         end
         @account_sid = account_sid || @username
