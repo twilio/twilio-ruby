@@ -27,15 +27,15 @@ module Twilio
         @username = username || Twilio.account_sid
         @password = password || Twilio.auth_token
         @region = region || Twilio.region
-        if (@region.nil? && !Twilio.edge.nil?) || (!@region.nil? && Twilio.edge.nil?)
+        if (region.nil? && !Twilio.edge.nil?) || (!region.nil? && Twilio.edge.nil?)
           # rubocop:disable Layout/LineLength
           warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com;otherwise use product.twilio.com.'
         end
         if Twilio.edge
           @edge = Twilio.edge
         else
-          # rubocop:disable Layout/LineLength
           warn '[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.'
+          # rubocop:enable Layout/LineLength
           @edge = !region.nil? ? @@region_mappings[region] : nil
         end
         @account_sid = account_sid || @username
