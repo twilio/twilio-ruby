@@ -10,7 +10,18 @@ end
 describe Twilio::REST::Client do
 
   context 'configuration of edge' do
-    it 'catches warning when setting region', :skip_before do
+
+    it 'uses the edge value from region map' do
+      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'us1', 'myClient', 'myLogger')
+      expect(@client.account_sid).to eq('myUser')
+      expect(@client.auth_token).to eq('myPassword')
+      expect(@client.http_client).to eq('myClient')
+      expect(@client.region).to eq('us1')
+      expect(@client.edge).to eq('ashburn')
+      expect(@client.logger).to eq('myLogger')
+    end
+
+    it 'catches warning when setting region' do
       original_stderr = $stderr
       $stderr = StringIO.new
       begin
@@ -25,15 +36,24 @@ describe Twilio::REST::Client do
       end
     end
 
-    it 'uses the arguments over global configuration' do
-      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'myRegion', 'myClient', 'myLogger')
-      @client.edge = 'myEdge'
-      expect(@client.account_sid).to eq('myUser')
-      expect(@client.auth_token).to eq('myPassword')
-      expect(@client.http_client).to eq('myClient')
-      expect(@client.region).to eq('myRegion')
-      expect(@client.edge).to eq('myEdge')
-      expect(@client.logger).to eq('myLogger')
+    it 'catches warning when setting edge' do
+      Twilio.configure do |config|
+        config.account_sid = 'someSid'
+        config.auth_token = 'someToken'
+        config.http_client = 'someClient'
+        config.edge = 'someEdge'
+        config.logger = 'someLogger'
+      end
+      original_stderr = $stderr
+      $stderr = StringIO.new
+      begin
+        @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid')
+        warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.';
+        warnings = $stderr.string
+        expect(warnings).to include('[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.');
+      ensure
+        $stderr = original_stderr
+      end
     end
   end
 
