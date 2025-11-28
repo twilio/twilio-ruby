@@ -8,6 +8,35 @@ describe Twilio::REST::ObsoleteClient do
 end
 
 describe Twilio::REST::Client do
+
+  context 'configuration of edge' do
+    it 'catches warning when setting region', :skip_before do
+      original_stderr = $stderr
+      $stderr = StringIO.new
+      begin
+        @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid', 'ie1', 'myClient', 'myLogger')
+        warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.';
+        warn '[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.'
+        warnings = $stderr.string
+        expect(warnings).to include('[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.');
+        expect(warnings).to include('[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.');
+      ensure
+        $stderr = original_stderr
+      end
+    end
+
+    it 'uses the arguments over global configuration' do
+      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'myRegion', 'myClient', 'myLogger')
+      @client.edge = 'myEdge'
+      expect(@client.account_sid).to eq('myUser')
+      expect(@client.auth_token).to eq('myPassword')
+      expect(@client.http_client).to eq('myClient')
+      expect(@client.region).to eq('myRegion')
+      expect(@client.edge).to eq('myEdge')
+      expect(@client.logger).to eq('myLogger')
+    end
+  end
+
   context 'configuration' do
     before do
       Twilio.configure do |config|
@@ -39,27 +68,6 @@ describe Twilio::REST::Client do
       expect(@client.region).to eq('myRegion')
       expect(@client.edge).to eq('myEdge')
       expect(@client.logger).to eq('myLogger')
-    end
-
-    it 'uses the region edge mapping', :skip_before do
-      @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid', 'ie1', 'myClient', 'myLogger')
-      expect(@client.account_sid).to eq('someSid')
-      expect(@client.auth_token).to eq('myPassword')
-      expect(@client.region).to eq('ie1')
-      expect(@client.edge).to eq('dublin')
-      expect(@client.logger).to eq('myLogger')
-    end
-
-    it 'catches warning when setting region', :skip_before do
-      original_stderr = $stderr
-      $stderr = StringIO.new
-      begin
-        @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid', 'ie1', 'myClient', 'myLogger')
-        warnings = $stderr.string
-        expect(warnings).to include('[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.')
-      ensure
-        $stderr = original_stderr
-      end
     end
 
     class MyVersion < Twilio::REST::Version
