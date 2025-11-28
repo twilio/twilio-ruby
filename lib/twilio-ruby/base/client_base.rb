@@ -34,9 +34,9 @@ module Twilio
         if Twilio.edge
           @edge = Twilio.edge
         elsif @region && @@region_mappings[region]
-          warn '[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.'
+          warn '[DEPRECATION] Setting default `Edge` for the provided `region`.'
           # rubocop:enable Layout/LineLength
-          @edge = !region.nil? ? @@region_mappings[region] : nil
+          @edge = @@region_mappings[region]
         end
         @account_sid = account_sid || @username
         @auth_token = @password
@@ -103,7 +103,7 @@ module Twilio
       def build_uri(uri)
         if @edge.nil? && @region && @@region_mappings[@region]
           # rubocop:disable Layout/LineLength
-          warn '[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.'
+          warn '[DEPRECATION] Setting default `Edge` for the provided `region`.'
           # rubocop:enable Layout/LineLength
           @edge = @@region_mappings[@region]
         end

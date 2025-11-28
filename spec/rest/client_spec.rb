@@ -37,10 +37,10 @@ describe Twilio::REST::Client do
       begin
         @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid', 'ie1', 'myClient', 'myLogger')
         warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.'
-        warn '[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.'
+        warn '[DEPRECATION] Setting default `Edge` for the provided `region`.'
         warnings = $stderr.string
         expect(warnings).to include('[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.')
-        expect(warnings).to include('[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.')
+        expect(warnings).to include('[DEPRECATION] Setting default `Edge` for the provided `region`.')
       ensure
         $stderr = original_stderr
       end
