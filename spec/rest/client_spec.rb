@@ -8,6 +8,65 @@ describe Twilio::REST::ObsoleteClient do
 end
 
 describe Twilio::REST::Client do
+  context 'configuration of edge' do
+    it 'uses the edge value from region map' do
+      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil, 'us1', 'myClient', 'myLogger')
+      expect(@client.account_sid).to eq('myUser')
+      expect(@client.auth_token).to eq('myPassword')
+      expect(@client.http_client).to eq('myClient')
+      expect(@client.region).to eq('us1')
+      expect(@client.edge).to eq('ashburn')
+      expect(@client.logger).to eq('myLogger')
+    end
+
+    it 'uses the edge value from region map using setter' do
+      @client = Twilio::REST::Client.new('myUser', 'myPassword', nil)
+      @client.region = 'us1'
+      @client.http_client = Twilio::HTTP::Client.new
+      @connection = Faraday::Connection.new
+      expect(Faraday).to receive(:new).and_yield(@connection).and_return(@connection)
+      allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: {}))
+      @client.request('host', 'port', 'GET', 'https://api.twilio.com')
+      expect(@client.region).to eq('us1')
+      expect(@client.edge).to eq('ashburn')
+    end
+
+    it 'catches warning when setting region' do
+      original_stderr = $stderr
+      $stderr = StringIO.new
+      begin
+        @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid', 'ie1', 'myClient', 'myLogger')
+        warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.'
+        warn '[DEPRECATION] Setting default `Edge` for the provided `region`.'
+        warnings = $stderr.string
+        expect(warnings).to include('[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.')
+        expect(warnings).to include('[DEPRECATION] Setting default `Edge` for the provided `region`.')
+      ensure
+        $stderr = original_stderr
+      end
+    end
+
+    it 'catches warning when setting edge' do
+      Twilio.configure do |config|
+        config.account_sid = 'someSid'
+        config.auth_token = 'someToken'
+        config.http_client = 'someClient'
+        config.edge = 'someEdge'
+        config.logger = 'someLogger'
+      end
+      original_stderr = $stderr
+      $stderr = StringIO.new
+      begin
+        @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid')
+        warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.'
+        warnings = $stderr.string
+        expect(warnings).to include('[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.')
+      ensure
+        $stderr = original_stderr
+      end
+    end
+  end
+
   context 'configuration' do
     before do
       Twilio.configure do |config|

@@ -3,6 +3,19 @@ module Twilio
     class ClientBase
       # rubocop:disable Style/ClassVars
       @@default_region = 'us1'
+      # Maps region codes to their corresponding edge location names
+      # Used to automatically set edge based on region for backward compatibility
+      @@region_mappings = {
+        'au1' => 'sydney',
+        'br1' => 'sao-paulo',
+        'de1' => 'frankfurt',
+        'ie1' => 'dublin',
+        'jp1' => 'tokyo',
+        'jp2' => 'osaka',
+        'sg1' => 'singapore',
+        'us1' => 'ashburn',
+        'us2' => 'umatilla'
+      }
       # rubocop:enable Style/ClassVars
 
       attr_accessor :http_client, :username, :password, :account_sid, :auth_token, :region, :edge, :logger,
@@ -14,7 +27,17 @@ module Twilio
         @username = username || Twilio.account_sid
         @password = password || Twilio.auth_token
         @region = region || Twilio.region
-        @edge = Twilio.edge
+        if (region.nil? && !Twilio.edge.nil?) || (!region.nil? && Twilio.edge.nil?)
+          # rubocop:disable Layout/LineLength
+          warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com;otherwise use product.twilio.com.'
+        end
+        if Twilio.edge
+          @edge = Twilio.edge
+        elsif @region && @@region_mappings[region]
+          warn '[DEPRECATION] Setting default `Edge` for the provided `region`.'
+          # rubocop:enable Layout/LineLength
+          @edge = @@region_mappings[region]
+        end
         @account_sid = account_sid || @username
         @auth_token = @password
         @auth = [@username, @password]
@@ -78,6 +101,10 @@ module Twilio
       ##
       # Build the final request uri
       def build_uri(uri)
+        if @edge.nil? && @region && @@region_mappings[@region]
+          warn '[DEPRECATION] Setting default `Edge` for the provided `region`.'
+          @edge = @@region_mappings[@region]
+        end
         return uri if @region.nil? && @edge.nil?
 
         parsed_url = URI(uri)
