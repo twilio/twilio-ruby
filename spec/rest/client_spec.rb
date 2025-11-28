@@ -26,15 +26,11 @@ describe Twilio::REST::Client do
       $stderr = StringIO.new
       begin
         @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid', 'ie1', 'myClient', 'myLogger')
-        # rubocop:disable Layout/LineLength
         warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.'
         warn '[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.'
-        # rubocop:enable Layout/LineLength
         warnings = $stderr.string
-        # rubocop:disable Layout/LineLength
         expect(warnings).to include('[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.')
         expect(warnings).to include('[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.')
-        # rubocop:enable Layout/LineLength
       ensure
         $stderr = original_stderr
       end
@@ -52,11 +48,9 @@ describe Twilio::REST::Client do
       $stderr = StringIO.new
       begin
         @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid')
-        # rubocop:disable Layout/LineLength
         warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.';
         warnings = $stderr.string
         expect(warnings).to include('[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.');
-        # rubocop:enable Layout/LineLength
       ensure
         $stderr = original_stderr
       end
