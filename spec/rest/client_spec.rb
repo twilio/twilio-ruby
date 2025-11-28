@@ -50,14 +50,13 @@ describe Twilio::REST::Client do
       expect(@client.logger).to eq('myLogger')
     end
 
-    it 'catches warning when setting edge' do
+    it 'catches warning when setting region' do
       original_stderr = $stderr
       $stderr = StringIO.new
       begin
-        @client = Twilio::REST::Client.new
-        @client.edge = 'deprecatedEdge'
+        @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid', 'ie1', 'myClient', 'myLogger')
         warnings = $stderr.string
-        expect(warnings).to include('[DEPRECATION] `edge` is deprecated and will be removed in a future version. Use `region` instead.')
+        expect(warnings).to include('[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.')
       ensure
         $stderr = original_stderr
       end

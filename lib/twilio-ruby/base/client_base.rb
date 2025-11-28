@@ -3,6 +3,8 @@ module Twilio
     class ClientBase
       # rubocop:disable Style/ClassVars
       @@default_region = 'us1'
+      # Maps region codes to their corresponding edge location names
+      # Used to automatically set edge based on region for backward compatibility
       @@region_mappings = {
         'au1' => 'sydney',
         'br1' => 'sao-paulo',
@@ -25,23 +27,21 @@ module Twilio
         @username = username || Twilio.account_sid
         @password = password || Twilio.auth_token
         @region = region || Twilio.region
-        @edge = !region.nil? ? @@region_mappings[region] : nil
+        if ( @region.nil? and !Twilio.edge.nil? ) or ( !@region.nil? and Twilio.edge.nil? )
+          warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.'
+        end
+        if Twilio.edge
+          @edge = Twilio.edge
+        else
+          warn '[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing, DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.'
+          @edge = !region.nil? ? @@region_mappings[region] : nil
+        end
         @account_sid = account_sid || @username
         @auth_token = @password
         @auth = [@username, @password]
         @http_client = http_client || Twilio.http_client || Twilio::HTTP::Client.new
         @logger = logger || Twilio.logger
         @user_agent_extensions = user_agent_extensions || []
-      end
-
-      def edge=(value)
-        warn '[DEPRECATION] `edge` is deprecated and will be removed in a future version. Use `region` instead.'
-        @edge = value
-      end
-
-      def edge
-        warn '[DEPRECATION] `edge` is deprecated and will be removed in a future version. Use `region` instead.'
-        @edge
       end
 
       def credential_provider(credential_provider = nil)
