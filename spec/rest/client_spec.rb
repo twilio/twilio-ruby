@@ -26,6 +26,7 @@ describe Twilio::REST::Client do
       $stderr = StringIO.new
       begin
         @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid', 'ie1', 'myClient', 'myLogger')
+        # rubocop:disable Layout/LineLength
         warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.';
         warn '[DEPRECATION] Setting default `Edge` for the provided `region`. For regional processing,DNS is of format product.<city>.<region>.twilio.com; otherwise use product.twilio.com.'
         warnings = $stderr.string
@@ -51,6 +52,7 @@ describe Twilio::REST::Client do
         warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.';
         warnings = $stderr.string
         expect(warnings).to include('[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.+[DEPRECATION] Setting default `Edge` for the provided `region`.');
+        # rubocop:enable Layout/LineLength
       ensure
         $stderr = original_stderr
       end
