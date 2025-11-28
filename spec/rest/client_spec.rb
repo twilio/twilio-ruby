@@ -41,10 +41,8 @@ describe Twilio::REST::Client do
       expect(@client.logger).to eq('myLogger')
     end
 
-    it 'uses the region edge mapping' do
-      config.edge = nil
+    it 'uses the region edge mapping', :skip_before do
       @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid', 'ie1', 'myClient', 'myLogger')
-      config.edge = 'someEdge'
       expect(@client.account_sid).to eq('someSid')
       expect(@client.auth_token).to eq('myPassword')
       expect(@client.region).to eq('ie1')
@@ -52,7 +50,7 @@ describe Twilio::REST::Client do
       expect(@client.logger).to eq('myLogger')
     end
 
-    it 'catches warning when setting region' do
+    it 'catches warning when setting region', :skip_before do
       original_stderr = $stderr
       $stderr = StringIO.new
       begin
