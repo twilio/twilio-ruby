@@ -102,9 +102,7 @@ module Twilio
       # Build the final request uri
       def build_uri(uri)
         if @edge.nil? && @region && @@region_mappings[@region]
-          # rubocop:disable Layout/LineLength
           warn '[DEPRECATION] Setting default `Edge` for the provided `region`.'
-          # rubocop:enable Layout/LineLength
           @edge = @@region_mappings[@region]
         end
         return uri if @region.nil? && @edge.nil?
