@@ -57,6 +57,10 @@ module Twilio
         Twilio::REST::RestError.new(header, response)
       end
 
+      def exception_v10(response)
+        Twilio::REST::RestErrorV10.new(response)
+      end
+
       def fetch(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(
           method,
@@ -68,12 +72,12 @@ module Twilio
           timeout
         )
 
-        # Note that 3XX response codes are allowed for fetches.
-        if response.status_code < 200 || response.status_code >= 400
-          raise exception(response, 'Unable to fetch record')
-        end
+        # # Note that 3XX response codes are allowed for fetches.
+        # if response.status_code < 200 || response.status_code >= 400
+        #   raise exception(response, 'Unable to fetch record')
+        # end
 
-        response.body
+        response
       end
 
       def update(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
@@ -87,11 +91,11 @@ module Twilio
           timeout
         )
 
-        if response.status_code < 200 || response.status_code >= 300
-          raise exception(response, 'Unable to update record')
-        end
+        # if response.status_code < 200 || response.status_code >= 300
+        #   raise exception(response, 'Unable to update record')
+        # end
 
-        response.body
+        response
       end
 
       def delete(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
@@ -105,11 +109,11 @@ module Twilio
           timeout
         )
 
-        if response.status_code < 200 || response.status_code >= 300
-          raise exception(response, 'Unable to delete record')
-        end
+        # if response.status_code < 200 || response.status_code >= 300
+        #   raise exception(response, 'Unable to delete record')
+        # end
 
-        response.status_code == 204
+        response
       end
 
       def read_limits(limit = nil, page_size = nil)
@@ -142,11 +146,11 @@ module Twilio
       def create(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(method, uri, params, data, headers, auth, timeout)
 
-        if response.status_code < 200 || response.status_code >= 300
-          raise exception(response, 'Unable to create record')
-        end
+        # if response.status_code < 200 || response.status_code >= 300
+        #   raise exception(response, 'Unable to create record')
+        # end
 
-        response.body
+        response
       end
     end
   end
