@@ -216,4 +216,44 @@ describe 'Version Action Methods' do
 
     expect(actual).to_not eq(nil)
   end
+
+  describe 'delete' do
+    it 'succeeds with status code 204' do
+      @holodeck.mock(Twilio::Response.new(204, ''))
+      actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').messages('MMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete
+      expect(actual).to eq(true)
+    end
+
+    it 'succeeds with status code 200' do
+      @holodeck.mock(Twilio::Response.new(200, ''))
+      actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').messages('MMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete
+      expect(actual).to eq(true)
+    end
+
+    it 'succeeds with status code 202' do
+      @holodeck.mock(Twilio::Response.new(202, ''))
+      actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').messages('MMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete
+      expect(actual).to eq(true)
+    end
+
+    it 'succeeds with 3xx redirect code (307)' do
+      @holodeck.mock(Twilio::Response.new(307, ''))
+      actual = @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').messages('MMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete
+      expect(actual).to eq(true)
+    end
+
+    it 'fails with 4xx error code (404)' do
+      @holodeck.mock(Twilio::Response.new(404, '{"message": "Not found"}'))
+      expect {
+        @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').messages('MMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete
+      }.to raise_error(Twilio::REST::RestError)
+    end
+
+    it 'fails with 5xx error code (500)' do
+      @holodeck.mock(Twilio::Response.new(500, '{"message": "Internal server error"}'))
+      expect {
+        @client.api.v2010.accounts('ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').messages('MMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').delete
+      }.to raise_error(Twilio::REST::RestError)
+    end
+  end
 end
