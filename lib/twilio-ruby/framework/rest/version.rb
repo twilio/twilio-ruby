@@ -105,11 +105,11 @@ module Twilio
           timeout
         )
 
-        if response.status_code < 200 || response.status_code >= 300
+        if response.status_code < 200 || response.status_code >= 400
           raise exception(response, 'Unable to delete record')
         end
 
-        response.status_code == 204
+        response.status_code >= 200 && response.status_code < 400
       end
 
       def read_limits(limit = nil, page_size = nil)
