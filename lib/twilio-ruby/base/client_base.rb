@@ -100,6 +100,7 @@ module Twilio
         if (@region.nil? && !@edge.nil?) || (!@region.nil? && @edge.nil?)
           # rubocop:disable Layout/LineLength
           warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com;otherwise use product.twilio.com.'
+          # rubocop:enable Layout/LineLength
         end
         if @edge.nil? && @region && @@region_mappings[@region]
           warn '[DEPRECATION] Setting default `Edge` for the provided `region`.'
