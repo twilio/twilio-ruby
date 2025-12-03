@@ -31,7 +31,6 @@ module Twilio
           @edge = Twilio.edge
         elsif @region && @@region_mappings[region]
           warn '[DEPRECATION] Setting default `Edge` for the provided `region`.'
-          # rubocop:enable Layout/LineLength
           @edge = @@region_mappings[region]
         end
         @account_sid = account_sid || @username
