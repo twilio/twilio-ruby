@@ -101,6 +101,10 @@ module Twilio
       ##
       # Build the final request uri
       def build_uri(uri)
+        if (@region.nil? && @edge.nil?) || (!@region.nil? && @edge.nil?)
+          # rubocop:disable Layout/LineLength
+          warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com;otherwise use product.twilio.com.'
+        end
         if @edge.nil? && @region && @@region_mappings[@region]
           warn '[DEPRECATION] Setting default `Edge` for the provided `region`.'
           @edge = @@region_mappings[@region]
