@@ -48,7 +48,7 @@ module Twilio
 
       def request(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
         url = relative_uri(uri)
-        params = params.delete_if { |_k, v| v.nil? }
+        params.delete_if { |_k, v| v.nil? }
         data = data
         @domain.request(method, url, params, data, headers, auth, timeout)
       end
@@ -57,8 +57,12 @@ module Twilio
         Twilio::REST::RestError.new(header, response)
       end
 
+      def exception_v10(response)
+        Twilio::REST::RestErrorV10.new(response)
+      end
+
       def fetch(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = request(
+        request(
           method,
           uri,
           params,
@@ -68,16 +72,14 @@ module Twilio
           timeout
         )
 
-        # Note that 3XX response codes are allowed for fetches.
-        if response.status_code < 200 || response.status_code >= 400
-          raise exception(response, 'Unable to fetch record')
-        end
-
-        response.body
+        # # Note that 3XX response codes are allowed for fetches.
+        # if response.status_code < 200 || response.status_code >= 400
+        #   raise exception(response, 'Unable to fetch record')
+        # end
       end
 
       def update(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = request(
+        request(
           method,
           uri,
           params,
@@ -87,15 +89,13 @@ module Twilio
           timeout
         )
 
-        if response.status_code < 200 || response.status_code >= 300
-          raise exception(response, 'Unable to update record')
-        end
-
-        response.body
+        # if response.status_code < 200 || response.status_code >= 300
+        #   raise exception(response, 'Unable to update record')
+        # end
       end
 
       def delete(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = request(
+        request(
           method,
           uri,
           params,
@@ -105,11 +105,9 @@ module Twilio
           timeout
         )
 
-        if response.status_code < 200 || response.status_code >= 300
-          raise exception(response, 'Unable to delete record')
-        end
-
-        response.status_code == 204
+        # if response.status_code < 200 || response.status_code >= 300
+        #   raise exception(response, 'Unable to delete record')
+        # end
       end
 
       def read_limits(limit = nil, page_size = nil)
@@ -140,13 +138,15 @@ module Twilio
       end
 
       def create(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = request(method, uri, params, data, headers, auth, timeout)
+        request(method, uri, params, data, headers, auth, timeout)
 
-        if response.status_code < 200 || response.status_code >= 300
-          raise exception(response, 'Unable to create record')
-        end
+        # if response.status_code < 200 || response.status_code >= 300
+        #   raise exception(response, 'Unable to create record')
+        # end
+      end
 
-        response.body
+      def delete_status_code(response)
+        response.status_code >= 200 && response.status_code < 400
       end
     end
   end
