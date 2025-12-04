@@ -26,6 +26,7 @@ module Twilio
                     @domain_certs = nil
                     @domain_config = nil
                     @domain_config_messaging_service = nil
+                    @domain_validate_dns = nil
                     @external_campaign = nil
                     @linkshortening_messaging_service = nil
                     @linkshortening_messaging_service_domain_association = nil
@@ -94,6 +95,20 @@ module Twilio
                         @domain_config_messaging_service ||= DomainConfigMessagingServiceList.new self
                     else
                         DomainConfigMessagingServiceContext.new(self, messaging_service_sid)
+                    end
+                end
+                ##
+                # @param [String] domain_sid Unique string used to identify the domain.
+                # @return [Twilio::REST::Messaging::V1::DomainValidateDnContext] if domainSid was passed.
+                # @return [Twilio::REST::Messaging::V1::DomainValidateDnList]
+                def domain_validate_dns(domain_sid=:unset)
+                    if domain_sid.nil?
+                        raise ArgumentError, 'domain_sid cannot be nil'
+                    end
+                    if domain_sid == :unset
+                        @domain_validate_dns ||= DomainValidateDnList.new self
+                    else
+                        DomainValidateDnContext.new(self, domain_sid)
                     end
                 end
                 ##
