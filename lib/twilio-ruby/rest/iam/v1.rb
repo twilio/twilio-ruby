@@ -24,6 +24,7 @@ module Twilio
                     @api_key = nil
                     @get_api_keys = nil
                     @new_api_key = nil
+                    @o_auth_apps = nil
                     @token = nil
                 end
 
@@ -50,6 +51,20 @@ module Twilio
                 # @return [Twilio::REST::Iam::V1::NewApiKeyList]
                 def new_api_key
                     @new_api_key ||= NewApiKeyList.new self
+                end
+                ##
+                # @param [String] sid Unique ID (sid) of the OAuth app
+                # @return [Twilio::REST::Iam::V1::OAuthAppContext] if sid was passed.
+                # @return [Twilio::REST::Iam::V1::OAuthAppList]
+                def o_auth_apps(sid=:unset)
+                    if sid.nil?
+                        raise ArgumentError, 'sid cannot be nil'
+                    end
+                    if sid == :unset
+                        @o_auth_apps ||= OAuthAppList.new self
+                    else
+                        OAuthAppContext.new(self, sid)
+                    end
                 end
                 ##
                 # @return [Twilio::REST::Iam::V1::TokenList]
