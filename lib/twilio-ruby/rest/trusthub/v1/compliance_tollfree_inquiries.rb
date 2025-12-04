@@ -34,6 +34,7 @@ module Twilio
                     # Create the ComplianceTollfreeInquiriesInstance
                     # @param [String] tollfree_phone_number The Tollfree phone number to be verified
                     # @param [String] notification_email The email address to receive the notification about the verification result.
+                    # @param [String] customer_profile_sid The Customer Profile Sid associated with the Account.
                     # @param [String] business_name The name of the business or organization using the Tollfree number.
                     # @param [String] business_website The website of the business or organization using the Tollfree number.
                     # @param [Array[String]] use_case_categories The category of the use case for the Tollfree Number. List as many are applicable..
@@ -59,6 +60,7 @@ module Twilio
                     def create(
                         tollfree_phone_number: nil, 
                         notification_email: nil, 
+                        customer_profile_sid: :unset, 
                         business_name: :unset, 
                         business_website: :unset, 
                         use_case_categories: :unset, 
@@ -85,6 +87,7 @@ module Twilio
                         data = Twilio::Values.of({
                             'TollfreePhoneNumber' => tollfree_phone_number,
                             'NotificationEmail' => notification_email,
+                            'CustomerProfileSid' => customer_profile_sid,
                             'BusinessName' => business_name,
                             'BusinessWebsite' => business_website,
                             'UseCaseCategories' => Twilio.serialize_list(use_case_categories) { |e| e },
