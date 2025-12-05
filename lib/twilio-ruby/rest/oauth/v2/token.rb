@@ -32,6 +32,7 @@ module Twilio
                     end
                     ##
                     # Create the TokenInstance
+                    # @param [String] account_sid Optional Account SID to perform on behalf of requests.
                     # @param [String] grant_type Grant type is a credential representing resource owner's authorization which can be used by client to obtain access token.
                     # @param [String] client_id A 34 character string that uniquely identifies this OAuth App.
                     # @param [String] client_secret The credential for confidential OAuth App.
@@ -42,6 +43,7 @@ module Twilio
                     # @param [String] scope The scope of token
                     # @return [TokenInstance] Created TokenInstance
                     def create(
+                        account_sid: :unset, 
                         grant_type: :unset, 
                         client_id: :unset, 
                         client_secret: :unset, 
@@ -52,6 +54,9 @@ module Twilio
                         scope: :unset
                     )
 
+                        params = Twilio::Values.of({
+                            'account_sid' => account_sid,
+                        })
                         data = Twilio::Values.of({
                             'grant_type' => grant_type,
                             'client_id' => client_id,
@@ -69,7 +74,7 @@ module Twilio
                         
                         
                         
-                        payload = @version.create('POST', @uri, data: data, headers: headers)
+                        payload = @version.create('POST', @uri, params: params, data: data, headers: headers)
                         TokenInstance.new(
                             @version,
                             payload,
