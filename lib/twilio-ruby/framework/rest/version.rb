@@ -94,6 +94,24 @@ module Twilio
         response.body
       end
 
+      def patch(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        response = request(
+          method,
+          uri,
+          params,
+          data,
+          headers,
+          auth,
+          timeout
+        )
+
+        if response.status_code < 200 || response.status_code >= 300
+          raise exception(response, 'Unable to patch record')
+        end
+
+        response.body
+      end
+
       def delete(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(
           method,
