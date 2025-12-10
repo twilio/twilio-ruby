@@ -23,9 +23,7 @@ module Twilio
       end
 
       def previous_token
-        if @payload['meta'] && @payload['meta']['previousToken']
-          @payload['meta']['previousToken']
-        end
+        @payload['meta']['previousToken'] if @payload['meta'] && @payload['meta']['previousToken']
         nil
       end
 
@@ -38,10 +36,9 @@ module Twilio
       end
 
       def next_token
-        if @payload['meta'] && @payload['meta']['nextToken']
-          @payload['meta']['nextToken']
-          nil
-        end
+        @payload['meta']['nextToken'] if @payload['meta'] && @payload['meta']['nextToken']
+        nil
+      end
 
         def previous_page_url
           if previous_token.nil?
