@@ -25,6 +25,7 @@ module Twilio
       def previous_token
         if @payload['meta'] && @payload['meta']['previousToken']
           @payload['meta']['previousToken']
+          end
         nil
       end
 
@@ -73,8 +74,8 @@ module Twilio
         if @key && @payload[@key]
           return @payload[@key]
         end
-
         raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
+      end
       end
     end
   end
