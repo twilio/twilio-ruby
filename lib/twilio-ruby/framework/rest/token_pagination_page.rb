@@ -63,10 +63,8 @@ module Twilio
       end
 
       def load_page(payload)
-        @key = payload['meta'] && payload['meta']['key'] if !@key
-        if @key && @payload[@key]
-          return @payload[@key]
-        end
+        @key = payload['meta'] && payload['meta']['key'] unless @key
+        @payload[@key] if @key && @payload[@key]
 
         raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
       end
