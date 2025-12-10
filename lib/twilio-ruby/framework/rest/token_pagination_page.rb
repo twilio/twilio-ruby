@@ -17,15 +17,14 @@ module Twilio
           @url += "?#{uri.query}" if uri.query
           @params = @client.last_request.params
         end
-        @key = @payload['meta'] && @payload['meta']['key'] ? @payload['meta']['key'] : nil
-        @page_size = @payload['meta'] && @payload['meta']['page_size']
-        @next_token = @payload['meta'] && @payload['meta']['next_token']
-        @previous_token = @payload['previous_token']
+        @page_size = @payload['meta'] && @payload['meta']['pageSize']
+        @next_token = @payload['meta'] && @payload['meta']['nextToken']
+        @previous_token = @payload['previousToken']
       end
 
       def previous_token
-        if @payload['meta'] && @payload['meta']['previous_page_token']
-          @payload['meta']['previous_page_token']
+        if @payload['meta'] && @payload['meta']['previousToken']
+          @payload['meta']['previousToken']
         else
           nil
         end
@@ -40,8 +39,8 @@ module Twilio
       end
 
       def next_token
-        if @payload['meta'] && @payload['meta']['next_token']
-          @payload['meta']['next_token']
+        if @payload['meta'] && @payload['meta']['nextToken']
+          @payload['meta']['nextToken']
         else
           nil
         end
@@ -53,7 +52,10 @@ module Twilio
       end
 
       def next_page_url
-        @params['PageToken'] = next_token
+        if next_token.nil?
+          return nil
+        end
+        @params['pageToken'] = next_token
         @version.domain.absolute_url(@url)
       end
 
@@ -66,7 +68,10 @@ module Twilio
       end
 
       def load_page(payload)
-        if @payload[@key]
+        if !@key
+          @key = payload['meta'] && payload['meta']['key']
+        end
+        if @key && @payload[@key]
           return @payload[@key]
         end
 
