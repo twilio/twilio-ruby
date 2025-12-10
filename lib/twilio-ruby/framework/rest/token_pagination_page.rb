@@ -40,42 +40,42 @@ module Twilio
         nil
       end
 
-        def previous_page_url
-          if previous_token.nil?
-            return nil
-          end
-
-          @params['pageToken'] = previous_token
-          @version.domain.absolute_url(@url)
+      def previous_page_url
+        if previous_token.nil?
+          return nil
         end
 
-        def next_page_url
-          if next_token.nil?
-            return nil
-          end
+        @params['pageToken'] = previous_token
+        @version.domain.absolute_url(@url)
+      end
 
-          @params['pageToken'] = next_token
-          @version.domain.absolute_url(@url)
+      def next_page_url
+        if next_token.nil?
+          return nil
         end
 
-        def next_page
-          return nil unless next_page_url
+        @params['pageToken'] = next_token
+        @version.domain.absolute_url(@url)
+      end
 
-          response = @version.domain.request('GET', next_page_url, @params)
+      def next_page
+        return nil unless next_page_url
 
-          self.class.new(@version, response, @solution)
+        response = @version.domain.request('GET', next_page_url, @params)
+
+        self.class.new(@version, response, @solution)
+      end
+
+      def load_page(payload)
+        if !@key
+          @key = payload['meta'] && payload['meta']['key']
+        end
+        if @key && @payload[@key]
+          return @payload[@key]
         end
 
-        def load_page(payload)
-          if !@key
-            @key = payload['meta'] && payload['meta']['key']
-          end
-          if @key && @payload[@key]
-            return @payload[@key]
-          end
-
-          raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
-        end
+        raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
       end
     end
   end
+end
