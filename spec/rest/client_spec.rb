@@ -31,11 +31,27 @@ describe Twilio::REST::Client do
       expect(@client.edge).to eq('ashburn')
     end
 
-    it 'catches warning when setting region' do
+    it 'catches warning when setting region in constructor' do
       original_stderr = $stderr
       $stderr = StringIO.new
       begin
         @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid', 'ie1', 'myClient', 'myLogger')
+        warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.'
+        warn '[DEPRECATION] Setting default `Edge` for the provided `region`.'
+        warnings = $stderr.string
+        expect(warnings).to include('[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.')
+        expect(warnings).to include('[DEPRECATION] Setting default `Edge` for the provided `region`.')
+      ensure
+        $stderr = original_stderr
+      end
+    end
+
+    it 'catches warning when setting region' do
+      original_stderr = $stderr
+      $stderr = StringIO.new
+      begin
+        @client = Twilio::REST::Client.new('myUser', 'myPassword', 'someSid')
+        @client.region = 'myRegion'
         warn '[DEPRECATION] For regional processing, DNS is of format product.<edge>.<region>.twilio.com; otherwise use product.twilio.com.'
         warn '[DEPRECATION] Setting default `Edge` for the provided `region`.'
         warnings = $stderr.string

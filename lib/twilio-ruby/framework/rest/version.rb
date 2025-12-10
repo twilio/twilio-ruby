@@ -94,7 +94,7 @@ module Twilio
         response.body
       end
 
-      def delete(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+      def patch(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(
           method,
           uri,
@@ -106,10 +106,28 @@ module Twilio
         )
 
         if response.status_code < 200 || response.status_code >= 300
+          raise exception(response, 'Unable to patch record')
+        end
+
+        response.body
+      end
+
+      def delete(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        response = request(
+          method,
+          uri,
+          params,
+          data,
+          headers,
+          auth,
+          timeout
+        )
+
+        if response.status_code < 200 || response.status_code >= 400
           raise exception(response, 'Unable to delete record')
         end
 
-        response.status_code == 204
+        response.status_code >= 200 && response.status_code < 400
       end
 
       def read_limits(limit = nil, page_size = nil)
