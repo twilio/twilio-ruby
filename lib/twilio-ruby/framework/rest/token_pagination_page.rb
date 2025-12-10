@@ -47,6 +47,9 @@ module Twilio
       end
 
       def previous_page_url
+        if previous_token.nil?
+          return nil
+        end
         @params['PageToken'] = previous_token
         @version.domain.absolute_url(@url)
       end
