@@ -25,7 +25,7 @@ module Twilio
       def previous_token
         if @payload['meta'] && @payload['meta']['previousToken']
           @payload['meta']['previousToken']
-          end
+        end
         nil
       end
 
@@ -40,42 +40,45 @@ module Twilio
       def next_token
         if @payload['meta'] && @payload['meta']['nextToken']
           @payload['meta']['nextToken']
-        nil
-      end
-
-      def previous_page_url
-        if previous_token.nil?
-          return nil
+          nil
         end
-        @params['pageToken'] = previous_token
-        @version.domain.absolute_url(@url)
-      end
 
-      def next_page_url
-        if next_token.nil?
-          return nil
+        def previous_page_url
+          if previous_token.nil?
+            return nil
+          end
+
+          @params['pageToken'] = previous_token
+          @version.domain.absolute_url(@url)
         end
-        @params['pageToken'] = next_token
-        @version.domain.absolute_url(@url)
-      end
 
-      def next_page
-        return nil unless next_page_url
+        def next_page_url
+          if next_token.nil?
+            return nil
+          end
 
-        response = @version.domain.request('GET', next_page_url, @params)
-
-        self.class.new(@version, response, @solution)
-      end
-
-      def load_page(payload)
-        if !@key
-          @key = payload['meta'] && payload['meta']['key']
+          @params['pageToken'] = next_token
+          @version.domain.absolute_url(@url)
         end
-        if @key && @payload[@key]
-          return @payload[@key]
+
+        def next_page
+          return nil unless next_page_url
+
+          response = @version.domain.request('GET', next_page_url, @params)
+
+          self.class.new(@version, response, @solution)
         end
-        raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
-      end
+
+        def load_page(payload)
+          if !@key
+            @key = payload['meta'] && payload['meta']['key']
+          end
+          if @key && @payload[@key]
+            return @payload[@key]
+          end
+
+          raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
+        end
       end
     end
   end
