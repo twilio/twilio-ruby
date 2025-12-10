@@ -2,7 +2,7 @@
 
 module Twilio
   module REST
-    class TokenPaginationPage < Page
+    class TokenPage < Page
       attr_accessor :key, :page_size, :url
 
       def initialize(version, response)
