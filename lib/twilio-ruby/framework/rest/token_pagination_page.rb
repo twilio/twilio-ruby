@@ -3,7 +3,7 @@
 module Twilio
   module REST
     class TokenPaginationPage < Page
-      attr_accessor :key, :page_size, :next_token, :previous_token, :url, :next_page_url, :previous_page_url
+      attr_accessor :key, :page_size, :url
 
       def initialize(version, response)
         super(version, response)
@@ -25,9 +25,7 @@ module Twilio
       def previous_token
         if @payload['meta'] && @payload['meta']['previousToken']
           @payload['meta']['previousToken']
-        else
-          nil
-        end
+        nil
       end
 
       def previous_page
@@ -41,9 +39,7 @@ module Twilio
       def next_token
         if @payload['meta'] && @payload['meta']['nextToken']
           @payload['meta']['nextToken']
-        else
-          nil
-        end
+        nil
       end
 
       def previous_page_url
