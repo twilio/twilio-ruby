@@ -63,9 +63,7 @@ module Twilio
       end
 
       def load_page(payload)
-        if !@key
-          @key = payload['meta'] && payload['meta']['key']
-        end
+        @key = payload['meta'] && payload['meta']['key'] if !@key
         if @key && @payload[@key]
           return @payload[@key]
         end
