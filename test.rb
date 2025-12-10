@@ -6,6 +6,6 @@ account_sid = ENV['TWILIO_ACCOUNT_SID']
 auth_token = ENV['TWILIO_AUTH_TOKEN']
 
 @client = Twilio::REST::Client.new account_sid, auth_token
-message = @client.api.v2010.messages.list(to: '+919831560103', limit: 20, page_size: 5)
+message = @client.api.v2010.messages.list(to: '+', limit: 20, page_size: 5)
 
 puts message
