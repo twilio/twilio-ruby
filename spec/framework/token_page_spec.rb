@@ -24,14 +24,14 @@ describe Twilio::REST::TokenPage do
     context 'when initialized with complete meta payload' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records',
-            'pageSize' => 50,
-            'nextToken' => 'NEXT123',
-            'previousToken' => 'PREV123'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records',
+                                        'pageSize' => 50,
+                                        'nextToken' => 'NEXT123',
+                                        'previousToken' => 'PREV123'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         # Mock the last request
         allow(@http_client).to receive(:last_request).and_return(@request)
@@ -66,12 +66,12 @@ describe Twilio::REST::TokenPage do
     context 'when initialized with partial meta payload' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records',
-            'nextToken' => 'NEXT123'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records',
+                                        'nextToken' => 'NEXT123'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         # Mock last request not being available
         allow(@http_client).to receive(:last_request).and_return(nil)
@@ -100,8 +100,8 @@ describe Twilio::REST::TokenPage do
     context 'when initialized with no meta payload' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         # Mock last request not being available
         allow(@http_client).to receive(:last_request).and_return(nil)
@@ -128,12 +128,12 @@ describe Twilio::REST::TokenPage do
     context 'when meta contains nextToken' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records',
-            'nextToken' => 'NEXT123'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records',
+                                        'nextToken' => 'NEXT123'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
       end
@@ -146,11 +146,11 @@ describe Twilio::REST::TokenPage do
     context 'when meta does not contain nextToken' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
       end
@@ -163,8 +163,8 @@ describe Twilio::REST::TokenPage do
     context 'when meta is not present' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
       end
@@ -179,12 +179,12 @@ describe Twilio::REST::TokenPage do
     context 'when meta contains previousToken' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records',
-            'previousToken' => 'PREV123'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records',
+                                        'previousToken' => 'PREV123'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
       end
@@ -197,11 +197,11 @@ describe Twilio::REST::TokenPage do
     context 'when meta does not contain previousToken' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
       end
@@ -214,8 +214,8 @@ describe Twilio::REST::TokenPage do
     context 'when meta is not present' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
       end
@@ -230,12 +230,12 @@ describe Twilio::REST::TokenPage do
     context 'when next_token is present' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records',
-            'nextToken' => 'NEXT123'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records',
+                                        'nextToken' => 'NEXT123'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         # Mock the last request
         allow(@http_client).to receive(:last_request).and_return(@request)
@@ -261,11 +261,11 @@ describe Twilio::REST::TokenPage do
     context 'when next_token is nil' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
 
@@ -283,12 +283,12 @@ describe Twilio::REST::TokenPage do
     context 'when previous_token is present' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records',
-            'previousToken' => 'PREV123'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records',
+                                        'previousToken' => 'PREV123'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         # Mock the last request
         allow(@http_client).to receive(:last_request).and_return(@request)
@@ -314,11 +314,11 @@ describe Twilio::REST::TokenPage do
     context 'when previous_token is nil' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
 
@@ -336,20 +336,20 @@ describe Twilio::REST::TokenPage do
     context 'when next_page_url is available' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records',
-            'nextToken' => 'NEXT123'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records',
+                                        'nextToken' => 'NEXT123'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         @next_response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records',
-            'nextToken' => 'NEXT456'
-          },
-          'records' => [{ 'id' => 3 }, { 'id' => 4 }]
-        })
+                                           'meta' => {
+                                             'key' => 'records',
+                                             'nextToken' => 'NEXT456'
+                                           },
+                                           'records' => [{ 'id' => 3 }, { 'id' => 4 }]
+                                         })
 
         # Mock the last request
         allow(@http_client).to receive(:last_request).and_return(@request)
@@ -381,11 +381,11 @@ describe Twilio::REST::TokenPage do
     context 'when next_page_url is not available' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
@@ -404,20 +404,20 @@ describe Twilio::REST::TokenPage do
     context 'when previous_page_url is available' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records',
-            'previousToken' => 'PREV123'
-          },
-          'records' => [{ 'id' => 3 }, { 'id' => 4 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records',
+                                        'previousToken' => 'PREV123'
+                                      },
+                                      'records' => [{ 'id' => 3 }, { 'id' => 4 }]
+                                    })
 
         @prev_response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records',
-            'previousToken' => 'PREV456'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                           'meta' => {
+                                             'key' => 'records',
+                                             'previousToken' => 'PREV456'
+                                           },
+                                           'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                         })
 
         # Mock the last request
         allow(@http_client).to receive(:last_request).and_return(@request)
@@ -449,11 +449,11 @@ describe Twilio::REST::TokenPage do
     context 'when previous_page_url is not available' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
@@ -472,11 +472,11 @@ describe Twilio::REST::TokenPage do
     context 'when key is present in meta' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
@@ -491,9 +491,9 @@ describe Twilio::REST::TokenPage do
     context 'when key is not present in meta but set previously' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {},
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {},
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
@@ -509,9 +509,9 @@ describe Twilio::REST::TokenPage do
     context 'when neither key is present nor records can be found' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {},
-          'unknown_key' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {},
+                                      'unknown_key' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         allow(@http_client).to receive(:last_request).and_return(nil)
         @token_page = Twilio::REST::TokenPage.new(@version, @response)
@@ -525,11 +525,11 @@ describe Twilio::REST::TokenPage do
     context 'when key in meta is updated from a subsequent response' do
       before do
         @initial_response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                              'meta' => {
+                                                'key' => 'records'
+                                              },
+                                              'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                            })
 
         @subsequent_response = {
           'meta' => {
@@ -566,11 +566,11 @@ describe Twilio::REST::TokenPage do
     context 'when URL contains sensitive information' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         # Mock the last request with sensitive information
         @sensitive_url = 'https://api.twilio.com/v1/Resource?AuthToken=abc123&PageToken=TOKEN123'
@@ -607,12 +607,12 @@ describe Twilio::REST::TokenPage do
     context 'when handling Unicode characters in tokens' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records',
-            'nextToken' => 'NEXT123=世界'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records',
+                                        'nextToken' => 'NEXT123=世界'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         # Mock the last request
         allow(@http_client).to receive(:last_request).and_return(@request)
@@ -639,12 +639,12 @@ describe Twilio::REST::TokenPage do
     context 'when params are not present in last request' do
       before do
         @response = instance_double('Twilio::Response', body: {
-          'meta' => {
-            'key' => 'records',
-            'nextToken' => 'NEXT123'
-          },
-          'records' => [{ 'id' => 1 }, { 'id' => 2 }]
-        })
+                                      'meta' => {
+                                        'key' => 'records',
+                                        'nextToken' => 'NEXT123'
+                                      },
+                                      'records' => [{ 'id' => 1 }, { 'id' => 2 }]
+                                    })
 
         # Mock the last request without params
         allow(@http_client).to receive(:last_request).and_return(@request)
