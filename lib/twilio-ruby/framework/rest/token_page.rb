@@ -23,8 +23,7 @@ module Twilio
       end
 
       def previous_token
-        @payload['meta']['previousToken'] if @payload['meta'] && @payload['meta']['previousToken']
-        nil
+        @payload['meta'] && @payload['meta']['previousToken']
       end
 
       def previous_page
@@ -32,23 +31,22 @@ module Twilio
 
         response = @version.domain.request('GET', previous_page_url, @params)
 
-        self.class.new(@version, response, @solution)
+        self.class.new(@version, response)
       end
 
       def next_token
-        @payload['meta']['nextToken'] if @payload['meta'] && @payload['meta']['nextToken']
-        nil
+        @payload['meta'] && @payload['meta']['nextToken']
       end
 
       def previous_page_url
-        nil if previous_token.nil?
+        return nil if previous_token.nil?
 
         @params['pageToken'] = previous_token
         @version.domain.absolute_url(@url)
       end
 
       def next_page_url
-        nil if next_token.nil?
+        return nil if next_token.nil?
 
         @params['pageToken'] = next_token
         @version.domain.absolute_url(@url)
@@ -59,12 +57,12 @@ module Twilio
 
         response = @version.domain.request('GET', next_page_url, @params)
 
-        self.class.new(@version, response, @solution)
+        self.class.new(@version, response)
       end
 
       def load_page(payload)
         @key ||= payload['meta'] && payload['meta']['key']
-        @payload[@key] if @key && @payload[@key]
+        return @payload[@key] if @key && @payload[@key]
 
         raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
       end
