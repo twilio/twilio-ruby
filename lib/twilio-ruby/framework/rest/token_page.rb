@@ -31,7 +31,7 @@ module Twilio
 
         response = @version.domain.request('GET', previous_page_url, @params)
 
-        self.class.new(@version, response)
+        self.class.new(@version, response, @solution)
       end
 
       def next_token
@@ -46,9 +46,10 @@ module Twilio
       end
 
       def next_page_url
-        return nil if next_token.nil?
+        token = next_token
+        return nil if token.nil? || token.to_s.empty?
 
-        @params['pageToken'] = next_token
+        @params['pageToken'] = token
         @version.domain.absolute_url(@url)
       end
 
@@ -57,7 +58,7 @@ module Twilio
 
         response = @version.domain.request('GET', next_page_url, @params)
 
-        self.class.new(@version, response)
+        self.class.new(@version, response, @solution)
       end
 
       def load_page(payload)
