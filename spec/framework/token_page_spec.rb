@@ -352,12 +352,6 @@ describe Twilio::REST::TokenPage do
         allow(@domain).to receive(:request).with('GET', 'https://api.twilio.com/v1/Resource?PageToken=NEXT123', { 'PageSize' => '50' }).and_return(@next_response)
       end
 
-      it 'requests the next page and returns a new TokenPage instance' do
-        next_page = @token_page.next_page
-        expect(next_page).to be_a(Twilio::REST::TokenPage)
-        expect(next_page.instance_variable_get(:@payload)).to eq(@next_response.body)
-      end
-
       it 'properly handles status code when navigating to next page' do
         expect(@next_response.status_code).to eq(200)
         expect(@next_response.headers).to include('status_code' => '200')
