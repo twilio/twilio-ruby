@@ -19,7 +19,7 @@ module Twilio
         end
         @page_size = @payload['meta'] && @payload['meta']['pageSize']
         @next_token = @payload['meta'] && @payload['meta']['nextToken']
-        @previous_token = @payload['previousToken']
+        @previous_token = @payload['meta'] && @payload['meta']['previousToken']
       end
 
       def previous_token
