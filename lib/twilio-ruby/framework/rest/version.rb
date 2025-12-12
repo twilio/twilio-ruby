@@ -166,6 +166,53 @@ module Twilio
 
         response.body
       end
+
+      def create_with_metdata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        response = request(method, uri, params, data, headers, auth, timeout)
+
+        if response.status_code < 200 || response.status_code >= 300
+          raise exception(response, 'Unable to create record')
+        end
+
+        response
+      end
+
+      def fetch_with_metadata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        response = request(
+          method,
+          uri,
+          params,
+          data,
+          headers,
+          auth,
+          timeout
+        )
+
+        # Note that 3XX response codes are allowed for fetches.
+        if response.status_code < 200 || response.status_code >= 400
+          raise exception(response, 'Unable to fetch record')
+        end
+
+        response
+      end
+
+      def update_with_metadata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        response = request(
+          method,
+          uri,
+          params,
+          data,
+          headers,
+          auth,
+          timeout
+        )
+
+        if response.status_code < 200 || response.status_code >= 300
+          raise exception(response, 'Unable to update record')
+        end
+
+        response
+      end
     end
   end
 end
