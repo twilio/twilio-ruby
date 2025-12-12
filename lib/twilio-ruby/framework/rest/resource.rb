@@ -19,5 +19,20 @@ module Twilio
         @version = version
       end
     end
+
+    class InstanceResourceMetadata
+      def initialize(version, headers, status_code)
+        @version = version
+        @headers = headers
+        @status_code = status_code
+      end
+
+      def headers
+        @headers
+      end
+      def status_code
+        @status_code
+      end
+    end
   end
 end
