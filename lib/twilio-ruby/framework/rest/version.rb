@@ -58,61 +58,74 @@ module Twilio
       end
 
       def fetch(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = handle_exception(
+        response = request(
           method,
           uri,
-          params: params,
-          data: data,
-          headers: headers,
-          auth: auth,
-          timeout: timeout,
-          operation: 'fetch'
+          params,
+          data,
+          headers,
+          auth,
+          timeout
         )
+
+        # Note that 3XX response codes are allowed for fetches.
+        if response.status_code < 200 || response.status_code >= 400
+          raise exception(response, "Unable to fetch record")
+        end
 
         response.body
       end
 
       def update(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = handle_exception(
+        response = request(
           method,
           uri,
-          params: params,
-          data: data,
-          headers: headers,
-          auth: auth,
-          timeout: timeout,
-          operation: 'update'
+          params,
+          data,
+          headers,
+          auth,
+          timeout
         )
+
+        if response.status_code < 200 || response.status_code >= 300
+          raise exception(response, "Unable to update record")
+        end
 
         response.body
       end
 
       def patch(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = handle_exception(
+        response = request(
           method,
           uri,
-          params: params,
-          data: data,
-          headers: headers,
-          auth: auth,
-          timeout: timeout,
-          operation: 'patch'
+          params,
+          data,
+          headers,
+          auth,
+          timeout
         )
+
+        if response.status_code < 200 || response.status_code >= 300
+          raise exception(response, 'Unable to patch record')
+        end
 
         response.body
       end
 
       def delete(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = handle_exception(
+        response = request(
           method,
           uri,
-          params: params,
-          data: data,
-          headers: headers,
-          auth: auth,
-          timeout: timeout,
-          operation: 'delete'
+          params,
+          data,
+          headers,
+          auth,
+          timeout
         )
+
+        if response.status_code < 200 || response.status_code >= 400
+          raise exception(response, 'Unable to delete record')
+        end
 
         response.status_code >= 200 && response.status_code < 400
       end
@@ -129,15 +142,14 @@ module Twilio
       end
 
       def page(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        handle_exception(
+        request(
           method,
           uri,
-          params: params,
-          data: data,
-          headers: headers,
-          auth: auth,
-          timeout: timeout,
-          operation: 'page'
+          params,
+          data,
+          headers,
+          auth,
+          timeout,
         )
       end
 
@@ -146,28 +158,13 @@ module Twilio
       end
 
       def create(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = handle_exception(
-          method,
-          uri,
-          params: params,
-          data: data,
-          headers: headers,
-          auth: auth,
-          timeout: timeout,
-          operation: 'create'
-        )
-
-        response.body
-      end
-
-      def handle_exception(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil, operation: nil)
         response = request(method, uri, params, data, headers, auth, timeout)
 
         if response.status_code < 200 || response.status_code >= 400
-          raise exception(response, "Unable to #{operation} record")
+          raise exception(response, "Unable to create record")
         end
 
-        response
+        response.body
       end
     end
   end
