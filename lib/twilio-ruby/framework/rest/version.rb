@@ -66,7 +66,7 @@ module Twilio
           headers: headers,
           auth: auth,
           timeout: timeout,
-          operation: "fetch"
+          operation: 'fetch'
         )
 
         response.body
@@ -81,7 +81,7 @@ module Twilio
           headers: headers,
           auth: auth,
           timeout: timeout,
-          operation: "update"
+          operation: 'update'
         )
 
         response.body
@@ -96,7 +96,7 @@ module Twilio
           headers: headers,
           auth: auth,
           timeout: timeout,
-          operation: "patch"
+          operation: 'patch'
         )
 
         response.body
@@ -111,7 +111,7 @@ module Twilio
           headers: headers,
           auth: auth,
           timeout: timeout,
-          operation: "delete"
+          operation: 'delete'
         )
 
         response.status_code >= 200 && response.status_code < 400
@@ -137,7 +137,7 @@ module Twilio
           headers: headers,
           auth: auth,
           timeout: timeout,
-          operation: "page"
+          operation: 'page'
         )
       end
 

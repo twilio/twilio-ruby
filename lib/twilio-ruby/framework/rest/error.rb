@@ -37,14 +37,14 @@ module Twilio
     end
 
     class RestErrorV10 < TwilioError
-      attr_accessor :code, :message, :httpStatusCode, :params, :userError
+      attr_accessor :code, :message, :http_status_code, :params, :user_error
 
       def initialize(response)
         @code = response['code']
         @message = response['message']
-        @httpStatusCode = response['httpsStatusCode']
+        @http_status_code = response['httpsStatusCode']
         @params = response['params']
-        @userError = response['userError']
+        @user_error = response['userError']
       end
 
       def to_s
@@ -56,9 +56,9 @@ module Twilio
       def format_message(initial_message)
         message_response = "[HTTP #{status_code}] #{code} : #{initial_message}"
         message_response += "\n#{message}" if message
-        message_response += "\n#{httpStatusCode}" if httpStatusCode
+        message_response += "\n#{http_status_code}" if http_status_code
         message_response += "\n#{params}" if params
-        message_response += "\n#{userError}" if userError
+        message_response += "\n#{user_error}" if user_error
         message_response + "\n\n"
       end
     end
