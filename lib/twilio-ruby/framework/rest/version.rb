@@ -159,7 +159,7 @@ module Twilio
         response = request(method, uri, params, data, headers, auth, timeout)
 
         if response.status_code < 200 || response.status_code >= 300
-          raise exception(response, 'Unable to ' + operation + 'record')
+          raise exception(response, 'Unable to ' + operation + ' record')
         end
 
         response
