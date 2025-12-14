@@ -14,7 +14,6 @@ module Twilio
           full_url = @client.last_request.url
           uri = URI.parse(full_url)
           @url = uri.path
-          @url += "?#{uri.query}" if uri.query
           @params = @client.last_request.params
         end
         @page_size = @payload['meta'] && @payload['meta']['pageSize']
