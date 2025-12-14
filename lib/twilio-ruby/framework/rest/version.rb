@@ -166,6 +166,16 @@ module Twilio
 
         response.body
       end
+
+      def handle_exception(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil, operation: nil)
+        response = request(method, uri, params, data, headers, auth, timeout)
+
+        if response.status_code < 200 || response.status_code >= 300
+          raise exception(response, 'Unable to ' + operation + 'record')
+        end
+
+        response
+      end
     end
   end
 end
