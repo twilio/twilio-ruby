@@ -157,6 +157,10 @@ module Twilio
         RecordStream.new(page, limit: limit, page_limit: page_limit)
       end
 
+      def stream_with_metadata(page, limit: nil, page_limit: nil)
+        RecordStream.new(page, limit: limit, page_limit: page_limit)
+      end
+
       def create(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(method, uri, params, data, headers, auth, timeout)
 
@@ -167,7 +171,7 @@ module Twilio
         response.body
       end
 
-      def create_with_metdata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+      def create_with_metadata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(method, uri, params, data, headers, auth, timeout)
 
         if response.status_code < 200 || response.status_code >= 300
@@ -212,6 +216,18 @@ module Twilio
         end
 
         response
+      end
+
+      def page_with_metadata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        request(
+          method,
+          uri,
+          params,
+          data,
+          headers,
+          auth,
+          timeout
+        )
       end
     end
   end
