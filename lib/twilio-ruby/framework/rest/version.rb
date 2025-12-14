@@ -3,7 +3,7 @@
 module Twilio
   module REST
     class Version
-      attr_accessor :domain
+      attr_accessor :domain, :version
 
       class RecordStream
         include Enumerable
@@ -58,74 +58,61 @@ module Twilio
       end
 
       def fetch(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = request(
+        response = handle_exception(
           method,
           uri,
-          params,
-          data,
-          headers,
-          auth,
-          timeout
+          params: params,
+          data: data,
+          headers: headers,
+          auth: auth,
+          timeout: timeout,
+          operation: "fetch"
         )
-
-        # Note that 3XX response codes are allowed for fetches.
-        if response.status_code < 200 || response.status_code >= 400
-          raise exception(response, 'Unable to fetch record')
-        end
 
         response.body
       end
 
       def update(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = request(
+        response = handle_exception(
           method,
           uri,
-          params,
-          data,
-          headers,
-          auth,
-          timeout
+          params: params,
+          data: data,
+          headers: headers,
+          auth: auth,
+          timeout: timeout,
+          operation: "update"
         )
-
-        if response.status_code < 200 || response.status_code >= 300
-          raise exception(response, 'Unable to update record')
-        end
 
         response.body
       end
 
       def patch(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = request(
+        response = handle_exception(
           method,
           uri,
-          params,
-          data,
-          headers,
-          auth,
-          timeout
+          params: params,
+          data: data,
+          headers: headers,
+          auth: auth,
+          timeout: timeout,
+          operation: "patch"
         )
-
-        if response.status_code < 200 || response.status_code >= 300
-          raise exception(response, 'Unable to patch record')
-        end
 
         response.body
       end
 
       def delete(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = request(
+        response = handle_exception(
           method,
           uri,
-          params,
-          data,
-          headers,
-          auth,
-          timeout
+          params: params,
+          data: data,
+          headers: headers,
+          auth: auth,
+          timeout: timeout,
+          operation: "delete"
         )
-
-        if response.status_code < 200 || response.status_code >= 400
-          raise exception(response, 'Unable to delete record')
-        end
 
         response.status_code >= 200 && response.status_code < 400
       end
@@ -142,14 +129,15 @@ module Twilio
       end
 
       def page(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        request(
+        handle_exception(
           method,
           uri,
-          params,
-          data,
-          headers,
-          auth,
-          timeout
+          params: params,
+          data: data,
+          headers: headers,
+          auth: auth,
+          timeout: timeout,
+          operation: "page"
         )
       end
 

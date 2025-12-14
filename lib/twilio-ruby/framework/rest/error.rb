@@ -40,11 +40,11 @@ module Twilio
       attr_accessor :code, :message, :httpStatusCode, :params, :userError
 
       def initialize(response)
-        @code = response.code
-        @message = response.message
-        @httpStatusCode = response.httpStatusCode
-        @params = response.params
-        @userError = response.userError
+        @code = response['code']
+        @message = response['message']
+        @httpStatusCode = response['httpsStatusCode']
+        @params = response['params']
+        @userError = response['userError']
       end
 
       def to_s
