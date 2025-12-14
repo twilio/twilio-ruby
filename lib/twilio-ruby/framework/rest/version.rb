@@ -146,20 +146,25 @@ module Twilio
       end
 
       def create(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        response = request(method, uri, params, data, headers, auth, timeout)
+        response = handle_exception(
+          method,
+          uri,
+          params: params,
+          data: data,
+          headers: headers,
+          auth: auth,
+          timeout: timeout,
+          operation: 'create'
+        )
 
-        if response.status_code < 200 || response.status_code >= 300
-          raise exception(response, 'Unable to create record')
-        end
-
-        response.body
+        response
       end
 
       def handle_exception(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil, operation: nil)
         response = request(method, uri, params, data, headers, auth, timeout)
 
         if response.status_code < 200 || response.status_code >= 300
-          raise exception(response, 'Unable to ' + operation + ' record')
+          raise exception(response, "Unable to #{operation} record")
         end
 
         response

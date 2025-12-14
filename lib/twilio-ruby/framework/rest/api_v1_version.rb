@@ -14,8 +14,7 @@ module Twilio
         @api_version = 'v1'
       end
 
-      def exception(response, _
-      )
+      def exception(response, _)
         RestErrorV10.new(response.body)
       end
     end
