@@ -88,7 +88,7 @@ module Twilio
         )
 
         if response.status_code < 200 || response.status_code >= 300
-          raise exception(response, "Unable to update record")
+          raise exception(response, 'Unable to update record')
         end
 
         response.body
@@ -149,7 +149,7 @@ module Twilio
           data,
           headers,
           auth,
-          timeout,
+          timeout
         )
       end
 
@@ -161,7 +161,7 @@ module Twilio
         response = request(method, uri, params, data, headers, auth, timeout)
 
         if response.status_code < 200 || response.status_code >= 400
-          raise exception(response, "Unable to create record")
+          raise exception(response, 'Unable to create record')
         end
 
         response.body
