@@ -70,7 +70,7 @@ module Twilio
 
         # Note that 3XX response codes are allowed for fetches.
         if response.status_code < 200 || response.status_code >= 400
-          raise exception(response, "Unable to fetch record")
+          raise exception(response, 'Unable to fetch record')
         end
 
         response.body
@@ -160,7 +160,7 @@ module Twilio
       def create(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(method, uri, params, data, headers, auth, timeout)
 
-        if response.status_code < 200 || response.status_code >= 400
+        if response.status_code < 200 || response.status_code >= 300
           raise exception(response, 'Unable to create record')
         end
 
