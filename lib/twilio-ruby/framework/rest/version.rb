@@ -157,7 +157,7 @@ module Twilio
           operation: 'create'
         )
 
-        response
+        response.body
       end
 
       def handle_exception(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil, operation: nil)
