@@ -631,29 +631,50 @@ module Twilio
                     end
                 end
 
-                     class MessagePageMetadata < PageMetadata
+                class MessagePageMetadata < PageMetadata
+                  attr_reader :messages, :headers, :status_code
 
-                       def initialize(version, response, solution)
-                         super(version, response)
+                  def initialize(version, response, solution)
+                    super(version, response)
 
-                         # Path Solution
-                         @solution = solution
-                       end
+                    # Path Solution
+                    @solution = solution
+                    @messages = []
 
-                       ##
-                       # Build an instance of MessageInstance
-                       # @param [Hash] payload Payload response from the API
-                       # @return [MessageInstance] MessageInstance
-                       def get_instance(payload)
-                         MessageListResponse.new(@version, payload, account_sid: @solution[:account_sid])
-                       end
+                    # Process each record into a MessageInstance
+                    @records.each do |record|
+                      @messages << MessageInstance.new(
+                        @version,
+                        record,
+                        account_sid: @solution[:account_sid]
+                      )
+                    end
+                  end
 
-                       ##
-                       # Provide a user friendly representation
-                       def to_s
-                         '<Twilio.Api.V2010.MessagePageMetadata>'
-                       end
-                     end
+                  def get_instance(payload)
+                    # Create a new MessageListResponse containing the message instances,
+                    # headers, and status code
+                    MessageListResponse.new(
+                      @messages,
+                      @headers,
+                      @status_code
+                    )
+                  end
+
+                  def each
+                    @messages.each do |message|
+                      yield message
+                    end
+                  end
+
+                  def entries
+                    get_instance(@records)
+                  end
+
+                  def to_s
+                    '<Twilio.Api.V2010.MessagePageMetadata>'
+                  end
+                end
                 class MessageInstance < InstanceResource
                     ##
                     # Initialize the MessageInstance
@@ -923,9 +944,10 @@ module Twilio
                 class MessageInstanceMetadata <  InstanceResourceMetadata
                     ##
                     # Initializes a new MessageInstanceMetadata.
-                    # @param [Hash] Header object with response headers.
+                    # @param [Version] version Version that contains the resource
                     # @param [MessageInstance] message_instance The instance associated with the metadata.
-                    # @param [Integer] status_code The SID of the resource to fetch.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
                     # @return [MessageInstanceMetadata] The initialized instance with metadata.
                     def initialize(version, message_instance, headers, status_code)
                         super(version, headers, status_code)
@@ -935,9 +957,22 @@ module Twilio
                     def instance
                         @message_instance
                     end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                        "<Twilio.Api.V2010.MessageInstanceMetadata status=#{@status_code}>"
+                    end
                 end
 
                 class MessageListResponse
+                  include Enumerable
                   attr_reader :messages, :headers, :status_code
 
                    # @param [Array<MessageInstance>] messages
@@ -947,6 +982,28 @@ module Twilio
                        @messages = messages
                        @headers = headers
                        @status_code = status_code
+                   end
+
+                   # Make the MessageListResponse enumerable
+                   def each
+                     @messages.each do |message|
+                       yield message
+                     end
+                   end
+
+                   # Allow accessing messages by index
+                   def [](index)
+                     @messages[index]
+                   end
+
+                   # Return the number of messages
+                   def size
+                     @messages.size
+                   end
+                   alias length size
+
+                   def to_s
+                     "<Twilio.Api.V2010.MessageListResponse messages=#{@messages.size}>"
                    end
                 end
 
