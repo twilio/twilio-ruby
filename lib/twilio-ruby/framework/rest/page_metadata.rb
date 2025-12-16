@@ -26,9 +26,7 @@ module Twilio
         @version = version
         @payload = payload
         @solution = {}
-        @records = load_page(payload)
-        @headers = response.headers
-        @status_code = response.status_code
+        @records = payload
       end
 
       def process_response(response)
@@ -39,34 +37,35 @@ module Twilio
         response
       end
 
-      def load_page(payload)
-        return payload.body['Resources'] if payload.body['Resources']
-        if payload.body['meta'] && payload.body['meta']['key']
-          return payload.body[payload.body['meta']['key']]
-        else
-          keys = payload.body.keys
-          key = keys - META_KEYS
-          return payload.body[key.first] if key.size == 1
-        end
-
-        raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
-      end
+      # def load_page(payload)
+      #   payload
+      #   # return payload.body['Resources'] if payload.body['Resources']
+      #   # if payload.body['meta'] && payload.body['meta']['key']
+      #   #   return payload.body[payload.body['meta']['key']]
+      #   # else
+      #   #   keys = payload.body.keys
+      #   #   key = keys - META_KEYS
+      #   #   return payload.body[key.first] if key.size == 1
+      #   # end
+      #
+      #   # raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
+      # end
 
       def previous_page_url
-        if @payload.body['meta'] && @payload.body['meta']['previous_page_url']
-          return @version.domain.absolute_url(URI.parse(@payload.body['meta']['previous_page_url']).request_uri)
-        elsif @payload.body['previous_page_uri']
-          return @version.domain.absolute_url(@payload.body['previous_page_uri'])
+        if @payload['meta'] && @payload['meta']['previous_page_url']
+          return @version.domain.absolute_url(URI.parse(@payload['meta']['previous_page_url']).request_uri)
+        elsif @payload['previous_page_uri']
+          return @version.domain.absolute_url(@payload['previous_page_uri'])
         end
 
         nil
       end
 
       def next_page_url
-        if @payload.body['meta'] && @payload.body['meta']['next_page_url']
-          return @version.domain.absolute_url(URI.parse(@payload.body['meta']['next_page_url']).request_uri)
-        elsif @payload.body['next_page_uri']
-          return @version.domain.absolute_url(@payload.body['next_page_uri'])
+        if @payload['meta'] && @payload['meta']['next_page_url']
+          return @version.domain.absolute_url(URI.parse(@payload['meta']['next_page_url']).request_uri)
+        elsif @payload['next_page_uri']
+          return @version.domain.absolute_url(@payload['next_page_uri'])
         end
 
         nil
@@ -93,8 +92,20 @@ module Twilio
       end
 
       def each
-        @records.each do |record|
-          yield get_instance(record)
+        current_record = 0
+        current_page = 1
+
+        while @page
+          @page.each do |record|
+            yield record
+            current_record += 1
+            return nil if @limit && @limit <= current_record
+          end
+
+          return nil if @page_limit && @page_limit <= current_page
+
+          @page = @page.next_page
+          current_page += 1
         end
       end
 

@@ -266,7 +266,7 @@ module Twilio
                         date_sent_after: date_sent_after,
                         limit: limit,
                         page_size: page_size
-                      ).entries
+                      )
                     end
 
                     ##
@@ -302,7 +302,7 @@ module Twilio
                     def stream_with_metadata(to: :unset, from: :unset, date_sent: :unset, date_sent_before: :unset, date_sent_after: :unset, limit: nil, page_size: nil)
                       limits = @version.read_limits(limit, page_size)
 
-                      page = self.page_with_metadata(
+                      self.page_with_metadata(
                         to: to,
                         from: from,
                         date_sent: date_sent,
@@ -311,7 +311,7 @@ module Twilio
                         page_size: limits[:page_size], )
 
                       # page
-                      @version.stream_with_metadata(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                      # @version.stream_with_metadata(page, limit: limits[:limit], page_limit: limits[:page_limit])
                     end
 
                     ##
@@ -632,43 +632,15 @@ module Twilio
                 end
 
                 class MessagePageMetadata < PageMetadata
-                  attr_reader :messages, :headers, :status_code
 
                   def initialize(version, response, solution)
                     super(version, response)
-
                     # Path Solution
                     @solution = solution
-                    @messages = []
-
-                    # Process each record into a MessageInstance
-                    @records.each do |record|
-                      @messages << MessageInstance.new(
-                        @version,
-                        record,
-                        account_sid: @solution[:account_sid]
-                      )
-                    end
                   end
 
                   def get_instance(payload)
-                    # Create a new MessageListResponse containing the message instances,
-                    # headers, and status code
-                    MessageListResponse.new(
-                      @messages,
-                      @headers,
-                      @status_code
-                    )
-                  end
-
-                  def each
-                    @messages.each do |message|
-                      yield message
-                    end
-                  end
-
-                  def entries
-                    get_instance(@records)
+                    MessageListResponse.new(payload)
                   end
 
                   def to_s
@@ -973,15 +945,15 @@ module Twilio
 
                 class MessageListResponse
                   include Enumerable
-                  attr_reader :messages, :headers, :status_code
+                  attr_reader :messages #, :headers, :status_code
 
                    # @param [Array<MessageInstance>] messages
                    # @param [Hash{String => Object}] headers
                    # @param [Integer] status_code
-                   def initialize(messages, headers, status_code)
+                   def initialize(messages)
                        @messages = messages
-                       @headers = headers
-                       @status_code = status_code
+                       # @headers = headers
+                       # @status_code = status_code
                    end
 
                    # Make the MessageListResponse enumerable
