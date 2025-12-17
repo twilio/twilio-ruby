@@ -22,6 +22,7 @@ module Twilio
                     super
                     @version = 'v2'
                     @channels_senders = nil
+                    @domain_certs = nil
                     @typing_indicator = nil
                 end
 
@@ -37,6 +38,20 @@ module Twilio
                         @channels_senders ||= ChannelsSenderList.new self
                     else
                         ChannelsSenderContext.new(self, sid)
+                    end
+                end
+                ##
+                # @param [String] domain_sid Unique string used to identify the domain that this certificate should be associated with.
+                # @return [Twilio::REST::Messaging::V2::DomainCertsContext] if domainSid was passed.
+                # @return [Twilio::REST::Messaging::V2::DomainCertsList]
+                def domain_certs(domain_sid=:unset)
+                    if domain_sid.nil?
+                        raise ArgumentError, 'domain_sid cannot be nil'
+                    end
+                    if domain_sid == :unset
+                        @domain_certs ||= DomainCertsList.new self
+                    else
+                        DomainCertsContext.new(self, domain_sid)
                     end
                 end
                 ##

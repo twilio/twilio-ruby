@@ -1,6 +1,26 @@
 twilio-ruby changelog
 =====================
 
+[2025-12-17] Version 7.9.0
+--------------------------
+**Library - Chore**
+- [PR #771](https://github.com/twilio/twilio-ruby/pull/771): Patch support method. Thanks to [@manisha1997](https://github.com/manisha1997)!
+- [PR #766](https://github.com/twilio/twilio-ruby/pull/766): Support all status codes for delete. Thanks to [@manisha1997](https://github.com/manisha1997)!
+- [PR #769](https://github.com/twilio/twilio-ruby/pull/769): URL query percent encoded. Thanks to [@manisha1997](https://github.com/manisha1997)!
+
+**Library - Fix**
+- [PR #770](https://github.com/twilio/twilio-ruby/pull/770): bug fix. Thanks to [@manisha1997](https://github.com/manisha1997)!
+
+**Trunking**
+- Corrected the type used for phone number capabilities when accessed through a Trunk. **(breaking change)**
+- Corrected the type used for phone number capabilities when accessed through a Trunk. **(breaking change)**
+
+**Trusthub**
+- Added new parameters in in toll-free initialize api payload.
+- Remove the invalid status transition to Draft from the examples
+- Change the value of email to a valid one in the examples.
+
+
 [2025-12-03] Version 7.8.8
 --------------------------
 **Library - Fix**
