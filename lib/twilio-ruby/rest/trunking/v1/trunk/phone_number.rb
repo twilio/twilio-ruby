@@ -331,7 +331,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash] The set of Boolean properties that indicate whether a phone number can receive calls or messages.  Capabilities are  `Voice`, `SMS`, and `MMS` and each capability can be: `true` or `false`.
+                    # @return [TrunkingV1TrunkPhoneNumberCapabilities] 
                     def capabilities
                         @properties['capabilities']
                     end
