@@ -54,7 +54,7 @@ describe Twilio::REST::TokenPage do
       end
 
       it 'sets the URL from the last request' do
-        expect(@token_page.url).to eq('/v1/Resource?PageToken=TOKEN123')
+        expect(@token_page.url).to eq('/v1/Resource')
       end
 
       it 'extracts next_token from meta' do
