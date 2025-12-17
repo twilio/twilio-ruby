@@ -4,7 +4,6 @@ module Twilio
   module REST
     # Page Base Class
     class PageMetadata
-      include Enumerable
 
       META_KEYS = [
         'end',
@@ -62,10 +61,10 @@ module Twilio
       end
 
       def next_page_url
-        if @payload['meta'] && @payload['meta']['next_page_url']
-          return @version.domain.absolute_url(URI.parse(@payload['meta']['next_page_url']).request_uri)
-        elsif @payload['next_page_uri']
-          return @version.domain.absolute_url(@payload['next_page_uri'])
+        if @payload.body['meta'] && @payload.body['meta']['next_page_url']
+          return @version.domain.absolute_url(URI.parse(@payload.body['meta']['next_page_url']).request_uri)
+        elsif @payload.body['next_page_uri']
+          return @version.domain.absolute_url(@payload.body['next_page_uri'])
         end
 
         nil
@@ -78,17 +77,13 @@ module Twilio
       def previous_page
         return nil unless previous_page_url
 
-        response = @version.domain.request('GET', previous_page_url)
-
-        self.class.new(@version, response, @solution)
+        @version.domain.request('GET', previous_page_url)
       end
 
       def next_page
         return nil unless next_page_url
 
-        response = @version.domain.request('GET', next_page_url)
-
-        self.class.new(@version, response, @solution)
+        @version.domain.request('GET', next_page_url)
       end
 
       def each

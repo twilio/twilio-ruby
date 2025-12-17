@@ -308,7 +308,7 @@ module Twilio
                         date_sent: date_sent,
                         date_sent_before: date_sent_before,
                         date_sent_after: date_sent_after,
-                        page_size: limits[:page_size], )
+                        page_size: limits[:page_size], limit: limits[:limit])
 
                       # page
                       # @version.stream_with_metadata(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -360,7 +360,7 @@ module Twilio
                         MessagePage.new(@version, response, @solution)
                     end
 
-                    def page_with_metadata(to: :unset, from: :unset, date_sent: :unset, date_sent_before: :unset, date_sent_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page_with_metadata(to: :unset, from: :unset, date_sent: :unset, date_sent_before: :unset, date_sent_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset, limit: :unset)
                       params = Twilio::Values.of({
                                                    'To' => to,
                                                    'From' => from,
@@ -377,7 +377,7 @@ module Twilio
 
                       response = @version.page_with_metadata('GET', @uri, params: params, headers: headers)
 
-                      MessagePageMetadata.new(@version, response, @solution)
+                      MessagePageMetadata.new(@version, response, @solution, limit)
                     end
 
                     ##
@@ -633,8 +633,15 @@ module Twilio
 
                 class MessagePageMetadata < PageMetadata
 
-                  def initialize(version, response, solution)
+                  def initialize(version, response, solution, limit)
                     super(version, response)
+                    @limit = limit
+                    number_of_records = @payload.body["page_size"]
+                    while( limit != :unset && number_of_records <= limit )
+                      next_page = self.next_page
+                      break unless next_page
+                      number_of_records += next_page.body["page_size"]
+                    end
                     # Path Solution
                     @solution = solution
                   end
