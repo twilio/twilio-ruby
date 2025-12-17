@@ -39,8 +39,8 @@ module Twilio
                     # @param [String] size Number of items per page
                     # @param [String] port_in_request_sid Filter by Port in request SID, supports multiple values separated by comma
                     # @param [String] port_in_request_status Filter by Port In request status
-                    # @param [Time] created_before Find all created before a certain date
-                    # @param [Time] created_after Find all created after a certain date
+                    # @param [String] created_before Find all created before a certain date
+                    # @param [String] created_after Find all created after a certain date
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -69,8 +69,8 @@ module Twilio
                     # @param [String] size Number of items per page
                     # @param [String] port_in_request_sid Filter by Port in request SID, supports multiple values separated by comma
                     # @param [String] port_in_request_status Filter by Port In request status
-                    # @param [Time] created_before Find all created before a certain date
-                    # @param [Time] created_after Find all created after a certain date
+                    # @param [String] created_before Find all created before a certain date
+                    # @param [String] created_after Find all created after a certain date
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -114,8 +114,8 @@ module Twilio
                     # @param [String] size Number of items per page
                     # @param [String] port_in_request_sid Filter by Port in request SID, supports multiple values separated by comma
                     # @param [String] port_in_request_status Filter by Port In request status
-                    # @param [Time] created_before Find all created before a certain date
-                    # @param [Time] created_after Find all created after a certain date
+                    # @param [String] created_before Find all created before a certain date
+                    # @param [String] created_after Find all created after a certain date
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
@@ -126,8 +126,8 @@ module Twilio
                             'Size' => size,
                             'PortInRequestSid' => port_in_request_sid,
                             'PortInRequestStatus' => port_in_request_status,
-                            'CreatedBefore' =>  Twilio.serialize_iso8601_datetime(created_before),
-                            'CreatedAfter' =>  Twilio.serialize_iso8601_datetime(created_after),
+                            'CreatedBefore' => created_before,
+                            'CreatedAfter' => created_after,
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

@@ -56,6 +56,18 @@ module Twilio
                     # @param [String] business_contact_phone The phone number of the contact for the business or organization using the Tollfree number.
                     # @param [String] theme_set_id Theme id for styling the inquiry form.
                     # @param [Boolean] skip_messaging_use_case Skip the messaging use case screen of the inquiry form.
+                    # @param [String] business_registration_number The Business Registration Number of the business or organization.
+                    # @param [String] business_registration_authority The Business Registration Authority of the business or organization.
+                    # @param [String] business_registration_country The Business Registration Country of the business or organization.
+                    # @param [BusinessType] business_type 
+                    # @param [String] doing_business_as Trade name, sub entity, or downstream business name of business being submitted for verification.
+                    # @param [String] opt_in_confirmation_message The confirmation message sent to users when they opt in to receive messages.
+                    # @param [String] help_message_sample A sample help message provided to users.
+                    # @param [String] privacy_policy_url The URL to the privacy policy for the business or organization.
+                    # @param [String] terms_and_conditions_url The URL to the terms and conditions for the business or organization.
+                    # @param [Boolean] age_gated_content Indicates if the content is age gated.
+                    # @param [String] external_reference_id A legally recognized business registration number.
+                    # @param [Array[String]] opt_in_keywords List of keywords that users can text in to opt in to receive messages.
                     # @return [ComplianceTollfreeInquiriesInstance] Created ComplianceTollfreeInquiriesInstance
                     def create(
                         tollfree_phone_number: nil, 
@@ -81,7 +93,19 @@ module Twilio
                         business_contact_email: :unset, 
                         business_contact_phone: :unset, 
                         theme_set_id: :unset, 
-                        skip_messaging_use_case: :unset
+                        skip_messaging_use_case: :unset, 
+                        business_registration_number: :unset, 
+                        business_registration_authority: :unset, 
+                        business_registration_country: :unset, 
+                        business_type: :unset, 
+                        doing_business_as: :unset, 
+                        opt_in_confirmation_message: :unset, 
+                        help_message_sample: :unset, 
+                        privacy_policy_url: :unset, 
+                        terms_and_conditions_url: :unset, 
+                        age_gated_content: :unset, 
+                        external_reference_id: :unset, 
+                        opt_in_keywords: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -109,6 +133,18 @@ module Twilio
                             'BusinessContactPhone' => business_contact_phone,
                             'ThemeSetId' => theme_set_id,
                             'SkipMessagingUseCase' => skip_messaging_use_case,
+                            'BusinessRegistrationNumber' => business_registration_number,
+                            'BusinessRegistrationAuthority' => business_registration_authority,
+                            'BusinessRegistrationCountry' => business_registration_country,
+                            'BusinessType' => business_type,
+                            'DoingBusinessAs' => doing_business_as,
+                            'OptInConfirmationMessage' => opt_in_confirmation_message,
+                            'HelpMessageSample' => help_message_sample,
+                            'PrivacyPolicyUrl' => privacy_policy_url,
+                            'TermsAndConditionsUrl' => terms_and_conditions_url,
+                            'AgeGatedContent' => age_gated_content,
+                            'ExternalReferenceId' => external_reference_id,
+                            'OptInKeywords' => Twilio.serialize_list(opt_in_keywords) { |e| e },
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
