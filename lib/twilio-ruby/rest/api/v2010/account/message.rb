@@ -632,13 +632,16 @@ module Twilio
                 end
 
                 class MessagePageMetadata < PageMetadata
+                  attr_reader :message_page
 
                   def initialize(version, response, solution, limit)
                     super(version, response)
+                    @message_page = []
                     @limit = limit
                     number_of_records = @payload.body["page_size"]
                     while( limit != :unset && number_of_records <= limit )
                       next_page = self.next_page
+                      @message_page << MessageListResponse.new(version, next_page)
                       break unless next_page
                       number_of_records += next_page.body["page_size"]
                     end
@@ -646,8 +649,10 @@ module Twilio
                     @solution = solution
                   end
 
-                  def get_instance(payload)
-                    MessageListResponse.new(payload)
+                  def each
+                    @message_page.each do |record|
+                      yield record
+                    end
                   end
 
                   def to_s
@@ -951,38 +956,17 @@ module Twilio
                 end
 
                 class MessageListResponse
-                  include Enumerable
-                  attr_reader :messages #, :headers, :status_code
+                  attr_reader :messages , :headers, :status_code
 
                    # @param [Array<MessageInstance>] messages
                    # @param [Hash{String => Object}] headers
                    # @param [Integer] status_code
-                   def initialize(messages)
-                       @messages = messages
-                       # @headers = headers
-                       # @status_code = status_code
-                   end
-
-                   # Make the MessageListResponse enumerable
-                   def each
-                     @messages.each do |message|
-                       yield message
-                     end
-                   end
-
-                   # Allow accessing messages by index
-                   def [](index)
-                     @messages[index]
-                   end
-
-                   # Return the number of messages
-                   def size
-                     @messages.size
-                   end
-                   alias length size
-
-                   def to_s
-                     "<Twilio.Api.V2010.MessageListResponse messages=#{@messages.size}>"
+                   def initialize(version, payload)
+                       @messages = payload.body['messages'].map do |message_data|
+                         MessageInstance.new(version, message_data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
                    end
                 end
 

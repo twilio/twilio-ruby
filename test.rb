@@ -8,6 +8,5 @@ auth_token = ENV["TWILIO_AUTH_TOKEN"]
 
 @client = Twilio::REST::Client.new account_sid, auth_token
 # message = @client.messages.list( limit: 20, page_size: 5)
-message = @client.messages.list_with_metadata( limit: 20, page_size: 5)
-message.map { |item| item * 2 } # Internally calls collection.each
-puts message
+message_page_with_metadata = @client.messages.list_with_metadata( limit: 20, page_size: 5)
+message_page_with_metadata.each { |item| puts item.messages } # Internally calls collection.each
