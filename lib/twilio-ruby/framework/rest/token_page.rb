@@ -26,9 +26,10 @@ module Twilio
       end
 
       def previous_page
-        return nil unless previous_page_url
+        cached_url = previous_page_url
+        return nil unless cached_url
 
-        response = @version.domain.request('GET', previous_page_url, @params)
+        response = @version.domain.request('GET', cached_url, @params)
 
         self.class.new(@version, response, @solution)
       end
@@ -53,9 +54,10 @@ module Twilio
       end
 
       def next_page
-        return nil unless next_page_url
+        cached_url = next_page_url
+        return nil unless cached_url
 
-        response = @version.domain.request('GET', next_page_url, @params)
+        response = @version.domain.request('GET', cached_url, @params)
 
         self.class.new(@version, response, @solution)
       end
