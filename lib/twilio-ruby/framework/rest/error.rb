@@ -35,5 +35,32 @@ module Twilio
 
     class ObsoleteError < StandardError
     end
+
+    class RestErrorV10 < TwilioError
+      attr_accessor :code, :message, :http_status_code, :params, :user_error
+
+      def initialize(response)
+        @code = response['code']
+        @message = response['message']
+        @http_status_code = response['httpsStatusCode']
+        @params = response['params']
+        @user_error = response['userError']
+      end
+
+      def to_s
+        message
+      end
+
+      private
+
+      def format_message(initial_message)
+        message_response = "[HTTP #{status_code}] #{code} : #{initial_message}"
+        message_response += "\n#{message}" if message
+        message_response += "\n#{http_status_code}" if http_status_code
+        message_response += "\n#{params}" if params
+        message_response += "\n#{user_error}" if user_error
+        message_response + "\n\n"
+      end
+    end
   end
 end
