@@ -29,12 +29,15 @@ module Twilio
 
       def process_response(response)
         return response if response.status_code == 200
+
         raise Twilio::REST::RestError.new('Unable to fetch page', response)
       end
 
       def get_key(payload)
         return 'Resources' if payload['Resources']
+
         return payload['meta']['key'] if payload['meta'] && payload['meta']['key']
+
         keys = payload.keys
         key = keys - META_KEYS
         return key.first if key.size == 1
@@ -43,21 +46,17 @@ module Twilio
       end
 
       def previous_page_url
-        if @payload['meta'] && @payload['meta']['previous_page_url']
-          return @version.domain.absolute_url(URI.parse(@payload['meta']['previous_page_url']).request_uri)
-        elsif @payload['previous_page_uri']
-          return @version.domain.absolute_url(@payload['previous_page_uri'])
-        end
+        return @version.domain.absolute_url(URI.parse(@payload['meta']['previous_page_url']).request_uri) if @payload['meta'] && @payload['meta']['previous_page_url']
+
+        return @version.domain.absolute_url(@payload['previous_page_uri']) if @payload['previous_page_uri']
 
         nil
       end
 
       def next_page_url
-        if @payload.body['meta'] && @payload.body['meta']['next_page_url']
-          return @version.domain.absolute_url(URI.parse(@payload.body['meta']['next_page_url']).request_uri)
-        elsif @payload.body['next_page_uri']
-          return @version.domain.absolute_url(@payload.body['next_page_uri'])
-        end
+        return @version.domain.absolute_url(URI.parse(@payload.body['meta']['next_page_url']).request_uri) if @payload.body['meta'] && @payload.body['meta']['next_page_url']
+
+        return @version.domain.absolute_url(@payload.body['next_page_uri']) if @payload.body['next_page_uri']
 
         nil
       end

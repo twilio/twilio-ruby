@@ -26,14 +26,6 @@ module Twilio
         @headers = headers
         @status_code = status_code
       end
-
-      def headers
-        @headers
-      end
-
-      def status_code
-        @status_code
-      end
     end
 
     class InstanceListResource
@@ -41,14 +33,6 @@ module Twilio
         @version = version
         @headers = headers
         @status_code = status_code
-      end
-
-      def headers
-        @headers
-      end
-
-      def status_code
-        @status_code
       end
     end
   end
