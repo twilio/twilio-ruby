@@ -3,7 +3,7 @@
 module Twilio
   module REST
     class Version
-      attr_accessor :domain
+      attr_accessor :domain, :version
 
       class RecordStream
         include Enumerable

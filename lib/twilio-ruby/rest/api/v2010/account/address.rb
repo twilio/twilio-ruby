@@ -40,7 +40,7 @@ module Twilio
                     # @param [String] region The state or region of the new address.
                     # @param [String] postal_code The postal code of the new address.
                     # @param [String] iso_country The ISO country code of the new address.
-                    # @param [String] friendly_name A descriptive string that you create to describe the new address. It can be up to 64 characters long.
+                    # @param [String] friendly_name A descriptive string that you create to describe the new address. It can be up to 64 characters long for Regulatory Compliance addresses and 32 characters long for Emergency addresses.
                     # @param [Boolean] emergency_enabled Whether to enable emergency calling on the new address. Can be: `true` or `false`.
                     # @param [Boolean] auto_correct_address Whether we should automatically correct the address. Can be: `true` or `false` and the default is `true`. If empty or `true`, we will correct the address you provide if necessary. If `false`, we won't alter the address you provide.
                     # @param [String] street_secondary The additional number and street address of the address.
