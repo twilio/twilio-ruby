@@ -217,18 +217,6 @@ module Twilio
 
         response
       end
-
-      def page_with_metadata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
-        request(
-          method,
-          uri,
-          params,
-          data,
-          headers,
-          auth,
-          timeout
-        )
-      end
     end
   end
 end

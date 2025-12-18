@@ -258,15 +258,20 @@ module Twilio
                     end
 
                     def list_with_metadata(to: :unset, from: :unset, date_sent: :unset, date_sent_before: :unset, date_sent_after: :unset, limit: nil, page_size: nil)
-                      self.stream_with_metadata(
-                        to: to,
-                        from: from,
-                        date_sent: date_sent,
-                        date_sent_before: date_sent_before,
-                        date_sent_after: date_sent_after,
-                        limit: limit,
-                        page_size: page_size
-                      )
+                      limits = @version.read_limits(limit, page_size)
+                      params = Twilio::Values.of({
+                                                   'To' => to,
+                                                   'From' => from,
+                                                   'DateSent' =>  Twilio.serialize_iso8601_datetime(date_sent),
+                                                   'DateSent<' =>  Twilio.serialize_iso8601_datetime(date_sent_before),
+                                                   'DateSent>' =>  Twilio.serialize_iso8601_datetime(date_sent_after),
+                                                   'PageSize' => page_size,
+                                                 })
+                      headers = Twilio::Values.of({})
+
+                      response = @version.page('GET', @uri, params: params, headers: headers)
+
+                      MessagePageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -297,21 +302,6 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
-                    end
-
-                    def stream_with_metadata(to: :unset, from: :unset, date_sent: :unset, date_sent_before: :unset, date_sent_after: :unset, limit: nil, page_size: nil)
-                      limits = @version.read_limits(limit, page_size)
-
-                      self.page_with_metadata(
-                        to: to,
-                        from: from,
-                        date_sent: date_sent,
-                        date_sent_before: date_sent_before,
-                        date_sent_after: date_sent_after,
-                        page_size: limits[:page_size], limit: limits[:limit])
-
-                      # page
-                      # @version.stream_with_metadata(page, limit: limits[:limit], page_limit: limits[:page_limit])
                     end
 
                     ##
@@ -353,33 +343,10 @@ module Twilio
                         })
                         headers = Twilio::Values.of({})
 
-
-
                         response = @version.page('GET', @uri, params: params, headers: headers)
 
                         MessagePage.new(@version, response, @solution)
                     end
-
-                    def page_with_metadata(to: :unset, from: :unset, date_sent: :unset, date_sent_before: :unset, date_sent_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset, limit: :unset)
-                      params = Twilio::Values.of({
-                                                   'To' => to,
-                                                   'From' => from,
-                                                   'DateSent' =>  Twilio.serialize_iso8601_datetime(date_sent),
-                                                   'DateSent<' =>  Twilio.serialize_iso8601_datetime(date_sent_before),
-                                                   'DateSent>' =>  Twilio.serialize_iso8601_datetime(date_sent_after),
-                                                   'PageToken' => page_token,
-                                                   'Page' => page_number,
-                                                   'PageSize' => page_size,
-                                                 })
-                      headers = Twilio::Values.of({})
-
-
-
-                      response = @version.page_with_metadata('GET', @uri, params: params, headers: headers)
-
-                      MessagePageMetadata.new(@version, response, @solution, limit)
-                    end
-
                     ##
                     # Retrieve a single page of MessageInstance records from the API.
                     # Request is executed immediately.
@@ -639,9 +606,10 @@ module Twilio
                     @message_page = []
                     @limit = limit
                     number_of_records = @payload.body["page_size"]
+                    key = get_key(@payload.body)
                     while( limit != :unset && number_of_records <= limit )
                       next_page = self.next_page
-                      @message_page << MessageListResponse.new(version, next_page)
+                      @message_page << MessageListResponse.new(version, next_page, key)
                       break unless next_page
                       number_of_records += next_page.body["page_size"]
                     end
@@ -956,17 +924,27 @@ module Twilio
                 end
 
                 class MessageListResponse
-                  attr_reader :messages , :headers, :status_code
-
-                   # @param [Array<MessageInstance>] messages
+                   # @param [Array<MessageInstance>] instance
                    # @param [Hash{String => Object}] headers
                    # @param [Integer] status_code
-                   def initialize(version, payload)
-                       @messages = payload.body['messages'].map do |message_data|
+                   def initialize(version, payload, key)
+                       @instance = payload.body[key].map do |message_data|
                          MessageInstance.new(version, message_data)
                        end
                        @headers = payload.headers
                        @status_code = payload.status_code
+                   end
+
+                    def instance
+                        @instance
+                    end
+
+                   def headers
+                     @headers
+                   end
+
+                   def status_code
+                      @status_code
                    end
                 end
 
