@@ -75,6 +75,53 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TaskQueueInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the TaskQueue. For example `Support-Tier 1`, `Sales`, or `Escalation`.
+                    # @param [String] target_workers A string that describes the Worker selection criteria for any Tasks that enter the TaskQueue. For example, `'\\\"language\\\" == \\\"spanish\\\"'`. The default value is `1==1`. If this value is empty, Tasks will wait in the TaskQueue until they are deleted or moved to another TaskQueue. For more information about Worker selection, see [Describing Worker selection criteria](https://www.twilio.com/docs/taskrouter/api/taskqueues#target-workers).
+                    # @param [String] max_reserved_workers The maximum number of Workers to reserve for the assignment of a Task in the queue. Can be an integer between 1 and 50, inclusive and defaults to 1.
+                    # @param [TaskOrder] task_order 
+                    # @param [String] reservation_activity_sid The SID of the Activity to assign Workers when a task is reserved for them.
+                    # @param [String] assignment_activity_sid The SID of the Activity to assign Workers when a task is assigned to them.
+                    # @return [TaskQueueInstance] Created TaskQueueInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      target_workers: :unset, 
+                      max_reserved_workers: :unset, 
+                      task_order: :unset, 
+                      reservation_activity_sid: :unset, 
+                      assignment_activity_sid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'TargetWorkers' => target_workers,
+                            'MaxReservedWorkers' => max_reserved_workers,
+                            'TaskOrder' => task_order,
+                            'ReservationActivitySid' => reservation_activity_sid,
+                            'AssignmentActivitySid' => assignment_activity_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        taskQueue_instance = TaskQueueInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                        )
+                        TaskQueueInstanceMetadata.new(
+                            @version,
+                            taskQueue_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists TaskQueueInstance records from the API as a list.
@@ -128,6 +175,36 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists TaskQueuePageMetadata records from the API as a list.
+                      # @param [String] friendly_name The `friendly_name` of the TaskQueue resources to read.
+                      # @param [String] evaluate_worker_attributes The attributes of the Workers to read. Returns the TaskQueues with Workers that match the attributes specified in this parameter.
+                      # @param [String] worker_sid The SID of the Worker with the TaskQueue resources to read.
+                      # @param [String] ordering Sorting parameter for TaskQueues
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(friendly_name: :unset, evaluate_worker_attributes: :unset, worker_sid: :unset, ordering: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'EvaluateWorkerAttributes' => evaluate_worker_attributes,
+                            'WorkerSid' => worker_sid,
+                            'Ordering' => ordering,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TaskQueuePageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -238,7 +315,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the TaskQueueInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          taskQueue_instance = TaskQueueInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          TaskQueueInstanceMetadata.new(@version, taskQueue_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -258,6 +354,32 @@ module Twilio
                             payload,
                             workspace_sid: @solution[:workspace_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the TaskQueueInstanceMetadata
+                    # @return [TaskQueueInstance] Fetched TaskQueueInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        taskQueue_instance = TaskQueueInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        TaskQueueInstanceMetadata.new(
+                            @version,
+                            taskQueue_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -300,6 +422,54 @@ module Twilio
                             payload,
                             workspace_sid: @solution[:workspace_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the TaskQueueInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the TaskQueue. For example `Support-Tier 1`, `Sales`, or `Escalation`.
+                    # @param [String] target_workers A string describing the Worker selection criteria for any Tasks that enter the TaskQueue. For example '\\\"language\\\" == \\\"spanish\\\"' If no TargetWorkers parameter is provided, Tasks will wait in the queue until they are either deleted or moved to another queue. Additional examples on how to describing Worker selection criteria below.
+                    # @param [String] reservation_activity_sid The SID of the Activity to assign Workers when a task is reserved for them.
+                    # @param [String] assignment_activity_sid The SID of the Activity to assign Workers when a task is assigned for them.
+                    # @param [String] max_reserved_workers The maximum number of Workers to create reservations for the assignment of a task while in the queue. Maximum of 50.
+                    # @param [TaskOrder] task_order 
+                    # @return [TaskQueueInstance] Updated TaskQueueInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      target_workers: :unset, 
+                      reservation_activity_sid: :unset, 
+                      assignment_activity_sid: :unset, 
+                      max_reserved_workers: :unset, 
+                      task_order: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'TargetWorkers' => target_workers,
+                            'ReservationActivitySid' => reservation_activity_sid,
+                            'AssignmentActivitySid' => assignment_activity_sid,
+                            'MaxReservedWorkers' => max_reserved_workers,
+                            'TaskOrder' => task_order,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        taskQueue_instance = TaskQueueInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        TaskQueueInstanceMetadata.new(
+                            @version,
+                            taskQueue_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -352,6 +522,45 @@ module Twilio
                     end
                 end
 
+                class TaskQueueInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new TaskQueueInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}TaskQueueInstance] task_queue_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [TaskQueueInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, task_queue_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @task_queue_instance = task_queue_instance
+                    end
+
+                    def task_queue
+                        @task_queue_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.TaskQueueInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class TaskQueueListResponse < InstanceListResource
+                    # @param [Array<TaskQueueInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @task_queue_instance = payload.body[key].map do |data|
+                        TaskQueueInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def task_queue_instance
+                          @instance
+                      end
+                  end
+
                 class TaskQueuePage < Page
                     ##
                     # Initialize the TaskQueuePage
@@ -380,6 +589,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.TaskQueuePage>'
                     end
                 end
+
+                class TaskQueuePageMetadata < PageMetadata
+                    attr_reader :task_queue_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @task_queue_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @task_queue_page << TaskQueueListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @task_queue_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class TaskQueueListResponse < InstanceListResource
+
+                    # @param [Array<TaskQueueInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @task_queue = payload.body[key].map do |data|
+                      TaskQueueInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def task_queue
+                        @task_queue
+                    end
+                end
+
                 class TaskQueueInstance < InstanceResource
                     ##
                     # Initialize the TaskQueueInstance

@@ -61,6 +61,43 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ComplianceInquiriesInstanceMetadata
+                    # @param [String] notification_email The email address that approval status updates will be sent to. If not specified, the email address associated with your primary customer profile will be used.
+                    # @param [String] theme_set_id Theme id for styling the inquiry form.
+                    # @param [String] primary_profile_sid The unique SID identifier of the Primary Customer Profile that should be used as a parent. Only necessary when creating a secondary Customer Profile.
+                    # @return [ComplianceInquiriesInstance] Created ComplianceInquiriesInstance
+                    def create_with_metadata(
+                      notification_email: :unset, 
+                      theme_set_id: :unset, 
+                      primary_profile_sid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'NotificationEmail' => notification_email,
+                            'ThemeSetId' => theme_set_id,
+                            'PrimaryProfileSid' => primary_profile_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        complianceInquiries_instance = ComplianceInquiriesInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ComplianceInquiriesInstanceMetadata.new(
+                            @version,
+                            complianceInquiries_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -115,6 +152,41 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ComplianceInquiriesInstanceMetadata
+                    # @param [String] primary_profile_sid The unique SID identifier of the Primary Customer Profile that should be used as a parent. Only necessary when creating a secondary Customer Profile.
+                    # @param [String] theme_set_id Theme id for styling the inquiry form.
+                    # @return [ComplianceInquiriesInstance] Updated ComplianceInquiriesInstance
+                    def update_with_metadata(
+                      primary_profile_sid: nil, 
+                      theme_set_id: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'PrimaryProfileSid' => primary_profile_sid,
+                            'ThemeSetId' => theme_set_id,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        complianceInquiries_instance = ComplianceInquiriesInstance.new(
+                            @version,
+                            response.body,
+                            customer_id: @solution[:customer_id],
+                        )
+                        ComplianceInquiriesInstanceMetadata.new(
+                            @version,
+                            complianceInquiries_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -130,6 +202,45 @@ module Twilio
                         "#<Twilio.Trusthub.V1.ComplianceInquiriesContext #{context}>"
                     end
                 end
+
+                class ComplianceInquiriesInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ComplianceInquiriesInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ComplianceInquiriesInstance] compliance_inquiries_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ComplianceInquiriesInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, compliance_inquiries_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @compliance_inquiries_instance = compliance_inquiries_instance
+                    end
+
+                    def compliance_inquiries
+                        @compliance_inquiries_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ComplianceInquiriesInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ComplianceInquiriesListResponse < InstanceListResource
+                    # @param [Array<ComplianceInquiriesInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @compliance_inquiries_instance = payload.body[key].map do |data|
+                        ComplianceInquiriesInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def compliance_inquiries_instance
+                          @instance
+                      end
+                  end
 
                 class ComplianceInquiriesPage < Page
                     ##
@@ -159,6 +270,54 @@ module Twilio
                         '<Twilio.Trusthub.V1.ComplianceInquiriesPage>'
                     end
                 end
+
+                class ComplianceInquiriesPageMetadata < PageMetadata
+                    attr_reader :compliance_inquiries_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @compliance_inquiries_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @compliance_inquiries_page << ComplianceInquiriesListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @compliance_inquiries_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Trusthub::V1PageMetadata>';
+                    end
+                end
+                class ComplianceInquiriesListResponse < InstanceListResource
+
+                    # @param [Array<ComplianceInquiriesInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @compliance_inquiries = payload.body[key].map do |data|
+                      ComplianceInquiriesInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def compliance_inquiries
+                        @compliance_inquiries
+                    end
+                end
+
                 class ComplianceInquiriesInstance < InstanceResource
                     ##
                     # Initialize the ComplianceInquiriesInstance

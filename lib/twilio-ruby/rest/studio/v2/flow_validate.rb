@@ -64,6 +64,46 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the FlowValidateInstanceMetadata
+                    # @param [String] friendly_name The string that you assigned to describe the Flow.
+                    # @param [Status] status 
+                    # @param [Object] definition JSON representation of flow definition.
+                    # @param [String] commit_message Description of change made in the revision.
+                    # @return [FlowValidateInstance] Updated FlowValidateInstance
+                    def update_with_metadata(
+                      friendly_name: nil, 
+                      status: nil, 
+                      definition: nil, 
+                      commit_message: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Status' => status,
+                            'Definition' => Twilio.serialize_object(definition),
+                            'CommitMessage' => commit_message,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        flowValidate_instance = FlowValidateInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        FlowValidateInstanceMetadata.new(
+                            @version,
+                            flowValidate_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -101,6 +141,54 @@ module Twilio
                         '<Twilio.Studio.V2.FlowValidatePage>'
                     end
                 end
+
+                class FlowValidatePageMetadata < PageMetadata
+                    attr_reader :flow_validate_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @flow_validate_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @flow_validate_page << FlowValidateListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @flow_validate_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Studio::V2PageMetadata>';
+                    end
+                end
+                class FlowValidateListResponse < InstanceListResource
+
+                    # @param [Array<FlowValidateInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @flow_validate = payload.body[key].map do |data|
+                      FlowValidateInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def flow_validate
+                        @flow_validate
+                    end
+                end
+
                 class FlowValidateInstance < InstanceResource
                     ##
                     # Initialize the FlowValidateInstance

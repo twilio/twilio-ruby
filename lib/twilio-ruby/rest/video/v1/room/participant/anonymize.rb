@@ -79,6 +79,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the AnonymizeInstanceMetadata
+                    # @return [AnonymizeInstance] Updated AnonymizeInstance
+                    def update_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, headers: headers)
+                        anonymize_instance = AnonymizeInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                            sid: @solution[:sid],
+                        )
+                        AnonymizeInstanceMetadata.new(
+                            @version,
+                            anonymize_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -94,6 +120,45 @@ module Twilio
                         "#<Twilio.Video.V1.AnonymizeContext #{context}>"
                     end
                 end
+
+                class AnonymizeInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AnonymizeInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AnonymizeInstance] anonymize_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AnonymizeInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, anonymize_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @anonymize_instance = anonymize_instance
+                    end
+
+                    def anonymize
+                        @anonymize_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AnonymizeInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AnonymizeListResponse < InstanceListResource
+                    # @param [Array<AnonymizeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @anonymize_instance = payload.body[key].map do |data|
+                        AnonymizeInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def anonymize_instance
+                          @instance
+                      end
+                  end
 
                 class AnonymizePage < Page
                     ##
@@ -123,6 +188,54 @@ module Twilio
                         '<Twilio.Video.V1.AnonymizePage>'
                     end
                 end
+
+                class AnonymizePageMetadata < PageMetadata
+                    attr_reader :anonymize_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @anonymize_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @anonymize_page << AnonymizeListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @anonymize_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Video::V1PageMetadata>';
+                    end
+                end
+                class AnonymizeListResponse < InstanceListResource
+
+                    # @param [Array<AnonymizeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @anonymize = payload.body[key].map do |data|
+                      AnonymizeInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def anonymize
+                        @anonymize
+                    end
+                end
+
                 class AnonymizeInstance < InstanceResource
                     ##
                     # Initialize the AnonymizeInstance

@@ -77,6 +77,32 @@ module Twilio
                     end
 
                     ##
+                    # Create the LinkshorteningMessagingServiceInstanceMetadata
+                    # @return [LinkshorteningMessagingServiceInstance] Created LinkshorteningMessagingServiceInstance
+                    def create_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers)
+                        linkshorteningMessagingService_instance = LinkshorteningMessagingServiceInstance.new(
+                            @version,
+                            response.body,
+                            domain_sid: @solution[:domain_sid],
+                            messaging_service_sid: @solution[:messaging_service_sid],
+                        )
+                        LinkshorteningMessagingServiceInstanceMetadata.new(
+                            @version,
+                            linkshorteningMessagingService_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Delete the LinkshorteningMessagingServiceInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
@@ -85,7 +111,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the LinkshorteningMessagingServiceInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          linkshorteningMessagingService_instance = LinkshorteningMessagingServiceInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          LinkshorteningMessagingServiceInstanceMetadata.new(@version, linkshorteningMessagingService_instance, response.headers, response.status_code)
                     end
 
 
@@ -103,6 +148,45 @@ module Twilio
                         "#<Twilio.Messaging.V1.LinkshorteningMessagingServiceContext #{context}>"
                     end
                 end
+
+                class LinkshorteningMessagingServiceInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new LinkshorteningMessagingServiceInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}LinkshorteningMessagingServiceInstance] linkshortening_messaging_service_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [LinkshorteningMessagingServiceInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, linkshortening_messaging_service_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @linkshortening_messaging_service_instance = linkshortening_messaging_service_instance
+                    end
+
+                    def linkshortening_messaging_service
+                        @linkshortening_messaging_service_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.LinkshorteningMessagingServiceInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class LinkshorteningMessagingServiceListResponse < InstanceListResource
+                    # @param [Array<LinkshorteningMessagingServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @linkshortening_messaging_service_instance = payload.body[key].map do |data|
+                        LinkshorteningMessagingServiceInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def linkshortening_messaging_service_instance
+                          @instance
+                      end
+                  end
 
                 class LinkshorteningMessagingServicePage < Page
                     ##
@@ -132,6 +216,54 @@ module Twilio
                         '<Twilio.Messaging.V1.LinkshorteningMessagingServicePage>'
                     end
                 end
+
+                class LinkshorteningMessagingServicePageMetadata < PageMetadata
+                    attr_reader :linkshortening_messaging_service_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @linkshortening_messaging_service_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @linkshortening_messaging_service_page << LinkshorteningMessagingServiceListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @linkshortening_messaging_service_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class LinkshorteningMessagingServiceListResponse < InstanceListResource
+
+                    # @param [Array<LinkshorteningMessagingServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @linkshortening_messaging_service = payload.body[key].map do |data|
+                      LinkshorteningMessagingServiceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def linkshortening_messaging_service
+                        @linkshortening_messaging_service
+                    end
+                end
+
                 class LinkshorteningMessagingServiceInstance < InstanceResource
                     ##
                     # Initialize the LinkshorteningMessagingServiceInstance

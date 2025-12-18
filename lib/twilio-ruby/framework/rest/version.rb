@@ -157,10 +157,6 @@ module Twilio
         RecordStream.new(page, limit: limit, page_limit: page_limit)
       end
 
-      def stream_with_metadata(page, limit: nil, page_limit: nil)
-        RecordStream.new(page, limit: limit, page_limit: page_limit)
-      end
-
       def create(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(method, uri, params, data, headers, auth, timeout)
 

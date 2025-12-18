@@ -105,6 +105,84 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the PaymentInstanceMetadata
+                    # @param [String] idempotency_key A unique token that will be used to ensure that multiple API calls with the same information do not result in multiple transactions. This should be a unique string value per API call and can be a randomly generated.
+                    # @param [String] status_callback Provide an absolute or relative URL to receive status updates regarding your Pay session. Read more about the [expected StatusCallback values](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback)
+                    # @param [BankAccountType] bank_account_type 
+                    # @param [Float] charge_amount A positive decimal value less than 1,000,000 to charge against the credit card or bank account. Default currency can be overwritten with `currency` field. Leave blank or set to 0 to tokenize.
+                    # @param [String] currency The currency of the `charge_amount`, formatted as [ISO 4127](http://www.iso.org/iso/home/standards/currency_codes.htm) format. The default value is `USD` and all values allowed from the Pay Connector are accepted.
+                    # @param [String] description The description can be used to provide more details regarding the transaction. This information is submitted along with the payment details to the Payment Connector which are then posted on the transactions.
+                    # @param [String] input A list of inputs that should be accepted. Currently only `dtmf` is supported. All digits captured during a pay session are redacted from the logs.
+                    # @param [String] min_postal_code_length A positive integer that is used to validate the length of the `PostalCode` inputted by the user. User must enter this many digits.
+                    # @param [Object] parameter A single-level JSON object used to pass custom parameters to payment processors. (Required for ACH payments). The information that has to be included here depends on the <Pay> Connector. [Read more](https://www.twilio.com/console/voice/pay-connectors).
+                    # @param [String] payment_connector This is the unique name corresponding to the Pay Connector installed in the Twilio Add-ons. Learn more about [<Pay> Connectors](https://www.twilio.com/console/voice/pay-connectors). The default value is `Default`.
+                    # @param [PaymentMethod] payment_method 
+                    # @param [Boolean] postal_code Indicates whether the credit card postal code (zip code) is a required piece of payment information that must be provided by the caller. The default is `true`.
+                    # @param [Boolean] security_code Indicates whether the credit card security code is a required piece of payment information that must be provided by the caller. The default is `true`.
+                    # @param [String] timeout The number of seconds that <Pay> should wait for the caller to press a digit between each subsequent digit, after the first one, before moving on to validate the digits captured. The default is `5`, maximum is `600`.
+                    # @param [TokenType] token_type 
+                    # @param [String] valid_card_types Credit card types separated by space that Pay should accept. The default value is `visa mastercard amex`
+                    # @return [PaymentInstance] Created PaymentInstance
+                    def create_with_metadata(
+                      idempotency_key: nil, 
+                      status_callback: nil, 
+                      bank_account_type: :unset, 
+                      charge_amount: :unset, 
+                      currency: :unset, 
+                      description: :unset, 
+                      input: :unset, 
+                      min_postal_code_length: :unset, 
+                      parameter: :unset, 
+                      payment_connector: :unset, 
+                      payment_method: :unset, 
+                      postal_code: :unset, 
+                      security_code: :unset, 
+                      timeout: :unset, 
+                      token_type: :unset, 
+                      valid_card_types: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'IdempotencyKey' => idempotency_key,
+                            'StatusCallback' => status_callback,
+                            'BankAccountType' => bank_account_type,
+                            'ChargeAmount' => charge_amount,
+                            'Currency' => currency,
+                            'Description' => description,
+                            'Input' => input,
+                            'MinPostalCodeLength' => min_postal_code_length,
+                            'Parameter' => Twilio.serialize_object(parameter),
+                            'PaymentConnector' => payment_connector,
+                            'PaymentMethod' => payment_method,
+                            'PostalCode' => postal_code,
+                            'SecurityCode' => security_code,
+                            'Timeout' => timeout,
+                            'TokenType' => token_type,
+                            'ValidCardTypes' => valid_card_types,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        payment_instance = PaymentInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            call_sid: @solution[:call_sid],
+                        )
+                        PaymentInstanceMetadata.new(
+                            @version,
+                            payment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -169,6 +247,49 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the PaymentInstanceMetadata
+                    # @param [String] idempotency_key A unique token that will be used to ensure that multiple API calls with the same information do not result in multiple transactions. This should be a unique string value per API call and can be a randomly generated.
+                    # @param [String] status_callback Provide an absolute or relative URL to receive status updates regarding your Pay session. Read more about the [Update](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-update) and [Complete/Cancel](https://www.twilio.com/docs/voice/api/payment-resource#statuscallback-cancelcomplete) POST requests.
+                    # @param [Capture] capture 
+                    # @param [Status] status 
+                    # @return [PaymentInstance] Updated PaymentInstance
+                    def update_with_metadata(
+                      idempotency_key: nil, 
+                      status_callback: nil, 
+                      capture: :unset, 
+                      status: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'IdempotencyKey' => idempotency_key,
+                            'StatusCallback' => status_callback,
+                            'Capture' => capture,
+                            'Status' => status,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        payment_instance = PaymentInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            call_sid: @solution[:call_sid],
+                            sid: @solution[:sid],
+                        )
+                        PaymentInstanceMetadata.new(
+                            @version,
+                            payment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -184,6 +305,45 @@ module Twilio
                         "#<Twilio.Api.V2010.PaymentContext #{context}>"
                     end
                 end
+
+                class PaymentInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new PaymentInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}PaymentInstance] payment_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [PaymentInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, payment_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @payment_instance = payment_instance
+                    end
+
+                    def payment
+                        @payment_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.PaymentInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class PaymentListResponse < InstanceListResource
+                    # @param [Array<PaymentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @payment_instance = payload.body[key].map do |data|
+                        PaymentInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def payment_instance
+                          @instance
+                      end
+                  end
 
                 class PaymentPage < Page
                     ##
@@ -213,6 +373,54 @@ module Twilio
                         '<Twilio.Api.V2010.PaymentPage>'
                     end
                 end
+
+                class PaymentPageMetadata < PageMetadata
+                    attr_reader :payment_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @payment_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @payment_page << PaymentListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @payment_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class PaymentListResponse < InstanceListResource
+
+                    # @param [Array<PaymentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @payment = payload.body[key].map do |data|
+                      PaymentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def payment
+                        @payment
+                    end
+                end
+
                 class PaymentInstance < InstanceResource
                     ##
                     # Initialize the PaymentInstance

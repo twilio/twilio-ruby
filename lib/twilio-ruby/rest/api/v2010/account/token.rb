@@ -58,6 +58,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TokenInstanceMetadata
+                    # @param [String] ttl The duration in seconds for which the generated credentials are valid. The default value is 86400 (24 hours).
+                    # @return [TokenInstance] Created TokenInstance
+                    def create_with_metadata(
+                      ttl: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Ttl' => ttl,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        token_instance = TokenInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                        )
+                        TokenInstanceMetadata.new(
+                            @version,
+                            token_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -95,6 +127,54 @@ module Twilio
                         '<Twilio.Api.V2010.TokenPage>'
                     end
                 end
+
+                class TokenPageMetadata < PageMetadata
+                    attr_reader :token_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @token_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @token_page << TokenListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @token_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class TokenListResponse < InstanceListResource
+
+                    # @param [Array<TokenInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @token = payload.body[key].map do |data|
+                      TokenInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def token
+                        @token
+                    end
+                end
+
                 class TokenInstance < InstanceResource
                     ##
                     # Initialize the TokenInstance

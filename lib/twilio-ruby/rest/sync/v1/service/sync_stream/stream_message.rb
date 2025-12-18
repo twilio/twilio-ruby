@@ -60,6 +60,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the StreamMessageInstanceMetadata
+                    # @param [Object] data A JSON string that represents an arbitrary, schema-less object that makes up the Stream Message body. Can be up to 4 KiB in length.
+                    # @return [StreamMessageInstance] Created StreamMessageInstance
+                    def create_with_metadata(
+                      data: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Data' => Twilio.serialize_object(data),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        streamMessage_instance = StreamMessageInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            stream_sid: @solution[:stream_sid],
+                        )
+                        StreamMessageInstanceMetadata.new(
+                            @version,
+                            streamMessage_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -97,6 +130,54 @@ module Twilio
                         '<Twilio.Sync.V1.StreamMessagePage>'
                     end
                 end
+
+                class StreamMessagePageMetadata < PageMetadata
+                    attr_reader :stream_message_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @stream_message_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @stream_message_page << StreamMessageListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @stream_message_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Sync::V1PageMetadata>';
+                    end
+                end
+                class StreamMessageListResponse < InstanceListResource
+
+                    # @param [Array<StreamMessageInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @stream_message = payload.body[key].map do |data|
+                      StreamMessageInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def stream_message
+                        @stream_message
+                    end
+                end
+
                 class StreamMessageInstance < InstanceResource
                     ##
                     # Initialize the StreamMessageInstance

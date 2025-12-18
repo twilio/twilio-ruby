@@ -87,6 +87,54 @@ module Twilio
                         '<Twilio.Api.V2010.AuthTypesPage>'
                     end
                 end
+
+                class AuthTypesPageMetadata < PageMetadata
+                    attr_reader :auth_types_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @auth_types_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @auth_types_page << AuthTypesListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @auth_types_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class AuthTypesListResponse < InstanceListResource
+
+                    # @param [Array<AuthTypesInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @auth_types = payload.body[key].map do |data|
+                      AuthTypesInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def auth_types
+                        @auth_types
+                    end
+                end
+
                 class AuthTypesInstance < InstanceResource
                     ##
                     # Initialize the AuthTypesInstance

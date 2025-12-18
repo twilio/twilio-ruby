@@ -73,6 +73,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists SyncMapPermissionPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SyncMapPermissionPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields SyncMapPermissionInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -156,7 +178,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the SyncMapPermissionInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          syncMapPermission_instance = SyncMapPermissionInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          SyncMapPermissionInstanceMetadata.new(@version, syncMapPermission_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -177,6 +218,33 @@ module Twilio
                             service_sid: @solution[:service_sid],
                             map_sid: @solution[:map_sid],
                             identity: @solution[:identity],
+                        )
+                    end
+
+                    ##
+                    # Fetch the SyncMapPermissionInstanceMetadata
+                    # @return [SyncMapPermissionInstance] Fetched SyncMapPermissionInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        syncMapPermission_instance = SyncMapPermissionInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            map_sid: @solution[:map_sid],
+                            identity: @solution[:identity],
+                        )
+                        SyncMapPermissionInstanceMetadata.new(
+                            @version,
+                            syncMapPermission_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -214,6 +282,46 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the SyncMapPermissionInstanceMetadata
+                    # @param [Boolean] read Whether the identity can read the Sync Map and its Items. Default value is `false`.
+                    # @param [Boolean] write Whether the identity can create, update, and delete Items in the Sync Map. Default value is `false`.
+                    # @param [Boolean] manage Whether the identity can delete the Sync Map. Default value is `false`.
+                    # @return [SyncMapPermissionInstance] Updated SyncMapPermissionInstance
+                    def update_with_metadata(
+                      read: nil, 
+                      write: nil, 
+                      manage: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Read' => read,
+                            'Write' => write,
+                            'Manage' => manage,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        syncMapPermission_instance = SyncMapPermissionInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            map_sid: @solution[:map_sid],
+                            identity: @solution[:identity],
+                        )
+                        SyncMapPermissionInstanceMetadata.new(
+                            @version,
+                            syncMapPermission_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -229,6 +337,45 @@ module Twilio
                         "#<Twilio.Sync.V1.SyncMapPermissionContext #{context}>"
                     end
                 end
+
+                class SyncMapPermissionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SyncMapPermissionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SyncMapPermissionInstance] sync_map_permission_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SyncMapPermissionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, sync_map_permission_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @sync_map_permission_instance = sync_map_permission_instance
+                    end
+
+                    def sync_map_permission
+                        @sync_map_permission_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SyncMapPermissionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SyncMapPermissionListResponse < InstanceListResource
+                    # @param [Array<SyncMapPermissionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @sync_map_permission_instance = payload.body[key].map do |data|
+                        SyncMapPermissionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def sync_map_permission_instance
+                          @instance
+                      end
+                  end
 
                 class SyncMapPermissionPage < Page
                     ##
@@ -258,6 +405,54 @@ module Twilio
                         '<Twilio.Sync.V1.SyncMapPermissionPage>'
                     end
                 end
+
+                class SyncMapPermissionPageMetadata < PageMetadata
+                    attr_reader :sync_map_permission_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @sync_map_permission_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @sync_map_permission_page << SyncMapPermissionListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @sync_map_permission_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Sync::V1PageMetadata>';
+                    end
+                end
+                class SyncMapPermissionListResponse < InstanceListResource
+
+                    # @param [Array<SyncMapPermissionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @sync_map_permission = payload.body[key].map do |data|
+                      SyncMapPermissionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def sync_map_permission
+                        @sync_map_permission
+                    end
+                end
+
                 class SyncMapPermissionInstance < InstanceResource
                     ##
                     # Initialize the SyncMapPermissionInstance

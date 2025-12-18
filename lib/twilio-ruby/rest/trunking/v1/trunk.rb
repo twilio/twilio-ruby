@@ -76,6 +76,58 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TrunkInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [String] domain_name The unique address you reserve on Twilio to which you route your SIP traffic. Domain names can contain letters, digits, and `-` and must end with `pstn.twilio.com`. See [Termination Settings](https://www.twilio.com/docs/sip-trunking#termination) for more information.
+                    # @param [String] disaster_recovery_url The URL we should call using the `disaster_recovery_method` if an error occurs while sending SIP traffic towards the configured Origination URL. We retrieve TwiML from the URL and execute the instructions like any other normal TwiML call. See [Disaster Recovery](https://www.twilio.com/docs/sip-trunking#disaster-recovery) for more information.
+                    # @param [String] disaster_recovery_method The HTTP method we should use to call the `disaster_recovery_url`. Can be: `GET` or `POST`.
+                    # @param [TransferSetting] transfer_mode 
+                    # @param [Boolean] secure Whether Secure Trunking is enabled for the trunk. If enabled, all calls going through the trunk will be secure using SRTP for media and TLS for signaling. If disabled, then RTP will be used for media. See [Secure Trunking](https://www.twilio.com/docs/sip-trunking#securetrunking) for more information.
+                    # @param [Boolean] cnam_lookup_enabled Whether Caller ID Name (CNAM) lookup should be enabled for the trunk. If enabled, all inbound calls to the SIP Trunk from the United States and Canada automatically perform a CNAM Lookup and display Caller ID data on your phone. See [CNAM Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
+                    # @param [TransferCallerId] transfer_caller_id 
+                    # @return [TrunkInstance] Created TrunkInstance
+                    def create_with_metadata(
+                      friendly_name: :unset, 
+                      domain_name: :unset, 
+                      disaster_recovery_url: :unset, 
+                      disaster_recovery_method: :unset, 
+                      transfer_mode: :unset, 
+                      secure: :unset, 
+                      cnam_lookup_enabled: :unset, 
+                      transfer_caller_id: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'DomainName' => domain_name,
+                            'DisasterRecoveryUrl' => disaster_recovery_url,
+                            'DisasterRecoveryMethod' => disaster_recovery_method,
+                            'TransferMode' => transfer_mode,
+                            'Secure' => secure,
+                            'CnamLookupEnabled' => cnam_lookup_enabled,
+                            'TransferCallerId' => transfer_caller_id,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        trunk_instance = TrunkInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        TrunkInstanceMetadata.new(
+                            @version,
+                            trunk_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists TrunkInstance records from the API as a list.
@@ -113,6 +165,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists TrunkPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TrunkPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -202,7 +276,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the TrunkInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          trunk_instance = TrunkInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          TrunkInstanceMetadata.new(@version, trunk_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -221,6 +314,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the TrunkInstanceMetadata
+                    # @return [TrunkInstance] Fetched TrunkInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        trunk_instance = TrunkInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        TrunkInstanceMetadata.new(
+                            @version,
+                            trunk_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -268,6 +386,59 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the TrunkInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [String] domain_name The unique address you reserve on Twilio to which you route your SIP traffic. Domain names can contain letters, digits, and `-` and must end with `pstn.twilio.com`. See [Termination Settings](https://www.twilio.com/docs/sip-trunking#termination) for more information.
+                    # @param [String] disaster_recovery_url The URL we should call using the `disaster_recovery_method` if an error occurs while sending SIP traffic towards the configured Origination URL. We retrieve TwiML from the URL and execute the instructions like any other normal TwiML call. See [Disaster Recovery](https://www.twilio.com/docs/sip-trunking#disaster-recovery) for more information.
+                    # @param [String] disaster_recovery_method The HTTP method we should use to call the `disaster_recovery_url`. Can be: `GET` or `POST`.
+                    # @param [TransferSetting] transfer_mode 
+                    # @param [Boolean] secure Whether Secure Trunking is enabled for the trunk. If enabled, all calls going through the trunk will be secure using SRTP for media and TLS for signaling. If disabled, then RTP will be used for media. See [Secure Trunking](https://www.twilio.com/docs/sip-trunking#securetrunking) for more information.
+                    # @param [Boolean] cnam_lookup_enabled Whether Caller ID Name (CNAM) lookup should be enabled for the trunk. If enabled, all inbound calls to the SIP Trunk from the United States and Canada automatically perform a CNAM Lookup and display Caller ID data on your phone. See [CNAM Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
+                    # @param [TransferCallerId] transfer_caller_id 
+                    # @return [TrunkInstance] Updated TrunkInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      domain_name: :unset, 
+                      disaster_recovery_url: :unset, 
+                      disaster_recovery_method: :unset, 
+                      transfer_mode: :unset, 
+                      secure: :unset, 
+                      cnam_lookup_enabled: :unset, 
+                      transfer_caller_id: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'DomainName' => domain_name,
+                            'DisasterRecoveryUrl' => disaster_recovery_url,
+                            'DisasterRecoveryMethod' => disaster_recovery_method,
+                            'TransferMode' => transfer_mode,
+                            'Secure' => secure,
+                            'CnamLookupEnabled' => cnam_lookup_enabled,
+                            'TransferCallerId' => transfer_caller_id,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        trunk_instance = TrunkInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        TrunkInstanceMetadata.new(
+                            @version,
+                            trunk_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -373,6 +544,45 @@ module Twilio
                     end
                 end
 
+                class TrunkInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new TrunkInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}TrunkInstance] trunk_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [TrunkInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, trunk_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @trunk_instance = trunk_instance
+                    end
+
+                    def trunk
+                        @trunk_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.TrunkInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class TrunkListResponse < InstanceListResource
+                    # @param [Array<TrunkInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @trunk_instance = payload.body[key].map do |data|
+                        TrunkInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def trunk_instance
+                          @instance
+                      end
+                  end
+
                 class TrunkPage < Page
                     ##
                     # Initialize the TrunkPage
@@ -401,6 +611,54 @@ module Twilio
                         '<Twilio.Trunking.V1.TrunkPage>'
                     end
                 end
+
+                class TrunkPageMetadata < PageMetadata
+                    attr_reader :trunk_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @trunk_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @trunk_page << TrunkListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @trunk_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Trunking::V1PageMetadata>';
+                    end
+                end
+                class TrunkListResponse < InstanceListResource
+
+                    # @param [Array<TrunkInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @trunk = payload.body[key].map do |data|
+                      TrunkInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def trunk
+                        @trunk
+                    end
+                end
+
                 class TrunkInstance < InstanceResource
                     ##
                     # Initialize the TrunkInstance

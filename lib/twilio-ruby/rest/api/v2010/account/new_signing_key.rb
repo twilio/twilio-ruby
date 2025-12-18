@@ -58,6 +58,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the NewSigningKeyInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @return [NewSigningKeyInstance] Created NewSigningKeyInstance
+                    def create_with_metadata(
+                      friendly_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        newSigningKey_instance = NewSigningKeyInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                        )
+                        NewSigningKeyInstanceMetadata.new(
+                            @version,
+                            newSigningKey_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -95,6 +127,54 @@ module Twilio
                         '<Twilio.Api.V2010.NewSigningKeyPage>'
                     end
                 end
+
+                class NewSigningKeyPageMetadata < PageMetadata
+                    attr_reader :new_signing_key_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @new_signing_key_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @new_signing_key_page << NewSigningKeyListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @new_signing_key_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class NewSigningKeyListResponse < InstanceListResource
+
+                    # @param [Array<NewSigningKeyInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @new_signing_key = payload.body[key].map do |data|
+                      NewSigningKeyInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def new_signing_key
+                        @new_signing_key
+                    end
+                end
+
                 class NewSigningKeyInstance < InstanceResource
                     ##
                     # Initialize the NewSigningKeyInstance

@@ -160,6 +160,142 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ComplianceTollfreeInquiriesInstanceMetadata
+                    # @param [String] tollfree_phone_number The Tollfree phone number to be verified
+                    # @param [String] notification_email The email address to receive the notification about the verification result.
+                    # @param [String] customer_profile_sid The Customer Profile Sid associated with the Account.
+                    # @param [String] business_name The name of the business or organization using the Tollfree number.
+                    # @param [String] business_website The website of the business or organization using the Tollfree number.
+                    # @param [Array[String]] use_case_categories The category of the use case for the Tollfree Number. List as many are applicable..
+                    # @param [String] use_case_summary Use this to further explain how messaging is used by the business or organization.
+                    # @param [String] production_message_sample An example of message content, i.e. a sample message.
+                    # @param [Array[String]] opt_in_image_urls Link to an image that shows the opt-in workflow. Multiple images allowed and must be a publicly hosted URL.
+                    # @param [OptInType] opt_in_type 
+                    # @param [String] message_volume Estimate monthly volume of messages from the Tollfree Number.
+                    # @param [String] business_street_address The address of the business or organization using the Tollfree number.
+                    # @param [String] business_street_address2 The address of the business or organization using the Tollfree number.
+                    # @param [String] business_city The city of the business or organization using the Tollfree number.
+                    # @param [String] business_state_province_region The state/province/region of the business or organization using the Tollfree number.
+                    # @param [String] business_postal_code The postal code of the business or organization using the Tollfree number.
+                    # @param [String] business_country The country of the business or organization using the Tollfree number.
+                    # @param [String] additional_information Additional information to be provided for verification.
+                    # @param [String] business_contact_first_name The first name of the contact for the business or organization using the Tollfree number.
+                    # @param [String] business_contact_last_name The last name of the contact for the business or organization using the Tollfree number.
+                    # @param [String] business_contact_email The email address of the contact for the business or organization using the Tollfree number.
+                    # @param [String] business_contact_phone The phone number of the contact for the business or organization using the Tollfree number.
+                    # @param [String] theme_set_id Theme id for styling the inquiry form.
+                    # @param [Boolean] skip_messaging_use_case Skip the messaging use case screen of the inquiry form.
+                    # @param [String] business_registration_number The Business Registration Number of the business or organization.
+                    # @param [String] business_registration_authority The Business Registration Authority of the business or organization.
+                    # @param [String] business_registration_country The Business Registration Country of the business or organization.
+                    # @param [BusinessType] business_type 
+                    # @param [String] doing_business_as Trade name, sub entity, or downstream business name of business being submitted for verification.
+                    # @param [String] opt_in_confirmation_message The confirmation message sent to users when they opt in to receive messages.
+                    # @param [String] help_message_sample A sample help message provided to users.
+                    # @param [String] privacy_policy_url The URL to the privacy policy for the business or organization.
+                    # @param [String] terms_and_conditions_url The URL to the terms and conditions for the business or organization.
+                    # @param [Boolean] age_gated_content Indicates if the content is age gated.
+                    # @param [String] external_reference_id A legally recognized business registration number.
+                    # @param [Array[String]] opt_in_keywords List of keywords that users can text in to opt in to receive messages.
+                    # @return [ComplianceTollfreeInquiriesInstance] Created ComplianceTollfreeInquiriesInstance
+                    def create_with_metadata(
+                      tollfree_phone_number: nil, 
+                      notification_email: nil, 
+                      customer_profile_sid: :unset, 
+                      business_name: :unset, 
+                      business_website: :unset, 
+                      use_case_categories: :unset, 
+                      use_case_summary: :unset, 
+                      production_message_sample: :unset, 
+                      opt_in_image_urls: :unset, 
+                      opt_in_type: :unset, 
+                      message_volume: :unset, 
+                      business_street_address: :unset, 
+                      business_street_address2: :unset, 
+                      business_city: :unset, 
+                      business_state_province_region: :unset, 
+                      business_postal_code: :unset, 
+                      business_country: :unset, 
+                      additional_information: :unset, 
+                      business_contact_first_name: :unset, 
+                      business_contact_last_name: :unset, 
+                      business_contact_email: :unset, 
+                      business_contact_phone: :unset, 
+                      theme_set_id: :unset, 
+                      skip_messaging_use_case: :unset, 
+                      business_registration_number: :unset, 
+                      business_registration_authority: :unset, 
+                      business_registration_country: :unset, 
+                      business_type: :unset, 
+                      doing_business_as: :unset, 
+                      opt_in_confirmation_message: :unset, 
+                      help_message_sample: :unset, 
+                      privacy_policy_url: :unset, 
+                      terms_and_conditions_url: :unset, 
+                      age_gated_content: :unset, 
+                      external_reference_id: :unset, 
+                      opt_in_keywords: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'TollfreePhoneNumber' => tollfree_phone_number,
+                            'NotificationEmail' => notification_email,
+                            'CustomerProfileSid' => customer_profile_sid,
+                            'BusinessName' => business_name,
+                            'BusinessWebsite' => business_website,
+                            'UseCaseCategories' => Twilio.serialize_list(use_case_categories) { |e| e },
+                            'UseCaseSummary' => use_case_summary,
+                            'ProductionMessageSample' => production_message_sample,
+                            'OptInImageUrls' => Twilio.serialize_list(opt_in_image_urls) { |e| e },
+                            'OptInType' => opt_in_type,
+                            'MessageVolume' => message_volume,
+                            'BusinessStreetAddress' => business_street_address,
+                            'BusinessStreetAddress2' => business_street_address2,
+                            'BusinessCity' => business_city,
+                            'BusinessStateProvinceRegion' => business_state_province_region,
+                            'BusinessPostalCode' => business_postal_code,
+                            'BusinessCountry' => business_country,
+                            'AdditionalInformation' => additional_information,
+                            'BusinessContactFirstName' => business_contact_first_name,
+                            'BusinessContactLastName' => business_contact_last_name,
+                            'BusinessContactEmail' => business_contact_email,
+                            'BusinessContactPhone' => business_contact_phone,
+                            'ThemeSetId' => theme_set_id,
+                            'SkipMessagingUseCase' => skip_messaging_use_case,
+                            'BusinessRegistrationNumber' => business_registration_number,
+                            'BusinessRegistrationAuthority' => business_registration_authority,
+                            'BusinessRegistrationCountry' => business_registration_country,
+                            'BusinessType' => business_type,
+                            'DoingBusinessAs' => doing_business_as,
+                            'OptInConfirmationMessage' => opt_in_confirmation_message,
+                            'HelpMessageSample' => help_message_sample,
+                            'PrivacyPolicyUrl' => privacy_policy_url,
+                            'TermsAndConditionsUrl' => terms_and_conditions_url,
+                            'AgeGatedContent' => age_gated_content,
+                            'ExternalReferenceId' => external_reference_id,
+                            'OptInKeywords' => Twilio.serialize_list(opt_in_keywords) { |e| e },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        complianceTollfreeInquiries_instance = ComplianceTollfreeInquiriesInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ComplianceTollfreeInquiriesInstanceMetadata.new(
+                            @version,
+                            complianceTollfreeInquiries_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -197,6 +333,54 @@ module Twilio
                         '<Twilio.Trusthub.V1.ComplianceTollfreeInquiriesPage>'
                     end
                 end
+
+                class ComplianceTollfreeInquiriesPageMetadata < PageMetadata
+                    attr_reader :compliance_tollfree_inquiries_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @compliance_tollfree_inquiries_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @compliance_tollfree_inquiries_page << ComplianceTollfreeInquiriesListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @compliance_tollfree_inquiries_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Trusthub::V1PageMetadata>';
+                    end
+                end
+                class ComplianceTollfreeInquiriesListResponse < InstanceListResource
+
+                    # @param [Array<ComplianceTollfreeInquiriesInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @compliance_tollfree_inquiries = payload.body[key].map do |data|
+                      ComplianceTollfreeInquiriesInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def compliance_tollfree_inquiries
+                        @compliance_tollfree_inquiries
+                    end
+                end
+
                 class ComplianceTollfreeInquiriesInstance < InstanceResource
                     ##
                     # Initialize the ComplianceTollfreeInquiriesInstance

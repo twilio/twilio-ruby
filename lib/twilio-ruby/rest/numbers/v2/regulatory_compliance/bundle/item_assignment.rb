@@ -59,6 +59,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ItemAssignmentInstanceMetadata
+                    # @param [String] object_sid The SID of an object bag that holds information of the different items.
+                    # @return [ItemAssignmentInstance] Created ItemAssignmentInstance
+                    def create_with_metadata(
+                      object_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'ObjectSid' => object_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        itemAssignment_instance = ItemAssignmentInstance.new(
+                            @version,
+                            response.body,
+                            bundle_sid: @solution[:bundle_sid],
+                        )
+                        ItemAssignmentInstanceMetadata.new(
+                            @version,
+                            itemAssignment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ItemAssignmentInstance records from the API as a list.
@@ -96,6 +128,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists ItemAssignmentPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ItemAssignmentPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -181,7 +235,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ItemAssignmentInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          itemAssignment_instance = ItemAssignmentInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ItemAssignmentInstanceMetadata.new(@version, itemAssignment_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -204,6 +277,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the ItemAssignmentInstanceMetadata
+                    # @return [ItemAssignmentInstance] Fetched ItemAssignmentInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        itemAssignment_instance = ItemAssignmentInstance.new(
+                            @version,
+                            response.body,
+                            bundle_sid: @solution[:bundle_sid],
+                            sid: @solution[:sid],
+                        )
+                        ItemAssignmentInstanceMetadata.new(
+                            @version,
+                            itemAssignment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -219,6 +318,45 @@ module Twilio
                         "#<Twilio.Numbers.V2.ItemAssignmentContext #{context}>"
                     end
                 end
+
+                class ItemAssignmentInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ItemAssignmentInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ItemAssignmentInstance] item_assignment_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ItemAssignmentInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, item_assignment_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @item_assignment_instance = item_assignment_instance
+                    end
+
+                    def item_assignment
+                        @item_assignment_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ItemAssignmentInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ItemAssignmentListResponse < InstanceListResource
+                    # @param [Array<ItemAssignmentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @item_assignment_instance = payload.body[key].map do |data|
+                        ItemAssignmentInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def item_assignment_instance
+                          @instance
+                      end
+                  end
 
                 class ItemAssignmentPage < Page
                     ##
@@ -248,6 +386,54 @@ module Twilio
                         '<Twilio.Numbers.V2.ItemAssignmentPage>'
                     end
                 end
+
+                class ItemAssignmentPageMetadata < PageMetadata
+                    attr_reader :item_assignment_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @item_assignment_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @item_assignment_page << ItemAssignmentListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @item_assignment_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V2PageMetadata>';
+                    end
+                end
+                class ItemAssignmentListResponse < InstanceListResource
+
+                    # @param [Array<ItemAssignmentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @item_assignment = payload.body[key].map do |data|
+                      ItemAssignmentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def item_assignment
+                        @item_assignment
+                    end
+                end
+
                 class ItemAssignmentInstance < InstanceResource
                     ##
                     # Initialize the ItemAssignmentInstance

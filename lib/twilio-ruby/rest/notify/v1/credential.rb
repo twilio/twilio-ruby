@@ -73,6 +73,55 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the CredentialInstanceMetadata
+                    # @param [PushService] type 
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [String] certificate [APN only] The URL-encoded representation of the certificate. Strip everything outside of the headers, e.g. `-----BEGIN CERTIFICATE-----MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV.....A==-----END CERTIFICATE-----`
+                    # @param [String] private_key [APN only] The URL-encoded representation of the private key. Strip everything outside of the headers, e.g. `-----BEGIN RSA PRIVATE KEY-----MIIEpQIBAAKCAQEAuyf/lNrH9ck8DmNyo3fGgvCI1l9s+cmBY3WIz+cUDqmxiieR\\\\n.-----END RSA PRIVATE KEY-----`
+                    # @param [Boolean] sandbox [APN only] Whether to send the credential to sandbox APNs. Can be `true` to send to sandbox APNs or `false` to send to production.
+                    # @param [String] api_key [GCM only] The `Server key` of your project from Firebase console under Settings / Cloud messaging.
+                    # @param [String] secret [FCM only] The `Server key` of your project from Firebase console under Settings / Cloud messaging.
+                    # @return [CredentialInstance] Created CredentialInstance
+                    def create_with_metadata(
+                      type: nil, 
+                      friendly_name: :unset, 
+                      certificate: :unset, 
+                      private_key: :unset, 
+                      sandbox: :unset, 
+                      api_key: :unset, 
+                      secret: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Type' => type,
+                            'FriendlyName' => friendly_name,
+                            'Certificate' => certificate,
+                            'PrivateKey' => private_key,
+                            'Sandbox' => sandbox,
+                            'ApiKey' => api_key,
+                            'Secret' => secret,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        credential_instance = CredentialInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        CredentialInstanceMetadata.new(
+                            @version,
+                            credential_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists CredentialInstance records from the API as a list.
@@ -110,6 +159,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists CredentialPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CredentialPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -194,7 +265,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the CredentialInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          credential_instance = CredentialInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          CredentialInstanceMetadata.new(@version, credential_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -213,6 +303,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the CredentialInstanceMetadata
+                    # @return [CredentialInstance] Fetched CredentialInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        credential_instance = CredentialInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        CredentialInstanceMetadata.new(
+                            @version,
+                            credential_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -257,6 +372,53 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the CredentialInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [String] certificate [APN only] The URL-encoded representation of the certificate. Strip everything outside of the headers, e.g. `-----BEGIN CERTIFICATE-----MIIFnTCCBIWgAwIBAgIIAjy9H849+E8wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV.....A==-----END CERTIFICATE-----`
+                    # @param [String] private_key [APN only] The URL-encoded representation of the private key. Strip everything outside of the headers, e.g. `-----BEGIN RSA PRIVATE KEY-----MIIEpQIBAAKCAQEAuyf/lNrH9ck8DmNyo3fGgvCI1l9s+cmBY3WIz+cUDqmxiieR\\\\n.-----END RSA PRIVATE KEY-----`
+                    # @param [Boolean] sandbox [APN only] Whether to send the credential to sandbox APNs. Can be `true` to send to sandbox APNs or `false` to send to production.
+                    # @param [String] api_key [GCM only] The `Server key` of your project from Firebase console under Settings / Cloud messaging.
+                    # @param [String] secret [FCM only] The `Server key` of your project from Firebase console under Settings / Cloud messaging.
+                    # @return [CredentialInstance] Updated CredentialInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      certificate: :unset, 
+                      private_key: :unset, 
+                      sandbox: :unset, 
+                      api_key: :unset, 
+                      secret: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Certificate' => certificate,
+                            'PrivateKey' => private_key,
+                            'Sandbox' => sandbox,
+                            'ApiKey' => api_key,
+                            'Secret' => secret,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        credential_instance = CredentialInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        CredentialInstanceMetadata.new(
+                            @version,
+                            credential_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -272,6 +434,45 @@ module Twilio
                         "#<Twilio.Notify.V1.CredentialContext #{context}>"
                     end
                 end
+
+                class CredentialInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CredentialInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CredentialInstance] credential_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CredentialInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, credential_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @credential_instance = credential_instance
+                    end
+
+                    def credential
+                        @credential_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CredentialInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CredentialListResponse < InstanceListResource
+                    # @param [Array<CredentialInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @credential_instance = payload.body[key].map do |data|
+                        CredentialInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def credential_instance
+                          @instance
+                      end
+                  end
 
                 class CredentialPage < Page
                     ##
@@ -301,6 +502,54 @@ module Twilio
                         '<Twilio.Notify.V1.CredentialPage>'
                     end
                 end
+
+                class CredentialPageMetadata < PageMetadata
+                    attr_reader :credential_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @credential_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @credential_page << CredentialListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @credential_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Notify::V1PageMetadata>';
+                    end
+                end
+                class CredentialListResponse < InstanceListResource
+
+                    # @param [Array<CredentialInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @credential = payload.body[key].map do |data|
+                      CredentialInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def credential
+                        @credential
+                    end
+                end
+
                 class CredentialInstance < InstanceResource
                     ##
                     # Initialize the CredentialInstance

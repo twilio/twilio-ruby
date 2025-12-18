@@ -75,6 +75,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the SipDomainInstanceMetadata
+                    # @return [SipDomainInstance] Fetched SipDomainInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        sipDomain_instance = SipDomainInstance.new(
+                            @version,
+                            response.body,
+                            sip_domain: @solution[:sip_domain],
+                        )
+                        SipDomainInstanceMetadata.new(
+                            @version,
+                            sipDomain_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the SipDomainInstance
                     # @param [String] voice_region 
                     # @param [String] friendly_name 
@@ -103,6 +128,41 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the SipDomainInstanceMetadata
+                    # @param [String] voice_region 
+                    # @param [String] friendly_name 
+                    # @return [SipDomainInstance] Updated SipDomainInstance
+                    def update_with_metadata(
+                      voice_region: :unset, 
+                      friendly_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'VoiceRegion' => voice_region,
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        sipDomain_instance = SipDomainInstance.new(
+                            @version,
+                            response.body,
+                            sip_domain: @solution[:sip_domain],
+                        )
+                        SipDomainInstanceMetadata.new(
+                            @version,
+                            sipDomain_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -118,6 +178,45 @@ module Twilio
                         "#<Twilio.Routes.V2.SipDomainContext #{context}>"
                     end
                 end
+
+                class SipDomainInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SipDomainInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SipDomainInstance] sip_domain_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SipDomainInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, sip_domain_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @sip_domain_instance = sip_domain_instance
+                    end
+
+                    def sip_domain
+                        @sip_domain_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SipDomainInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SipDomainListResponse < InstanceListResource
+                    # @param [Array<SipDomainInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @sip_domain_instance = payload.body[key].map do |data|
+                        SipDomainInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def sip_domain_instance
+                          @instance
+                      end
+                  end
 
                 class SipDomainPage < Page
                     ##
@@ -147,6 +246,54 @@ module Twilio
                         '<Twilio.Routes.V2.SipDomainPage>'
                     end
                 end
+
+                class SipDomainPageMetadata < PageMetadata
+                    attr_reader :sip_domain_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @sip_domain_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @sip_domain_page << SipDomainListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @sip_domain_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Routes::V2PageMetadata>';
+                    end
+                end
+                class SipDomainListResponse < InstanceListResource
+
+                    # @param [Array<SipDomainInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @sip_domain = payload.body[key].map do |data|
+                      SipDomainInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def sip_domain
+                        @sip_domain
+                    end
+                end
+
                 class SipDomainInstance < InstanceResource
                     ##
                     # Initialize the SipDomainInstance

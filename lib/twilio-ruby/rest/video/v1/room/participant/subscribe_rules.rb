@@ -54,6 +54,32 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the SubscribeRulesInstanceMetadata
+                    # @return [SubscribeRulesInstance] Fetched SubscribeRulesInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        subscribeRules_instance = SubscribeRulesInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                            participant_sid: @solution[:participant_sid],
+                        )
+                        SubscribeRulesInstanceMetadata.new(
+                            @version,
+                            subscribeRules_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the SubscribeRulesInstance
                     # @param [Object] rules A JSON-encoded array of subscribe rules. See the [Specifying Subscribe Rules](https://www.twilio.com/docs/video/api/track-subscriptions#specifying-sr) section for further information.
                     # @return [SubscribeRulesInstance] Updated SubscribeRulesInstance
@@ -77,6 +103,39 @@ module Twilio
                             payload,
                             room_sid: @solution[:room_sid],
                             participant_sid: @solution[:participant_sid],
+                        )
+                    end
+
+                    ##
+                    # Update the SubscribeRulesInstanceMetadata
+                    # @param [Object] rules A JSON-encoded array of subscribe rules. See the [Specifying Subscribe Rules](https://www.twilio.com/docs/video/api/track-subscriptions#specifying-sr) section for further information.
+                    # @return [SubscribeRulesInstance] Updated SubscribeRulesInstance
+                    def update_with_metadata(
+                      rules: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Rules' => Twilio.serialize_object(rules),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        subscribeRules_instance = SubscribeRulesInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                            participant_sid: @solution[:participant_sid],
+                        )
+                        SubscribeRulesInstanceMetadata.new(
+                            @version,
+                            subscribeRules_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -117,6 +176,54 @@ module Twilio
                         '<Twilio.Video.V1.SubscribeRulesPage>'
                     end
                 end
+
+                class SubscribeRulesPageMetadata < PageMetadata
+                    attr_reader :subscribe_rules_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @subscribe_rules_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @subscribe_rules_page << SubscribeRulesListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @subscribe_rules_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Video::V1PageMetadata>';
+                    end
+                end
+                class SubscribeRulesListResponse < InstanceListResource
+
+                    # @param [Array<SubscribeRulesInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @subscribe_rules = payload.body[key].map do |data|
+                      SubscribeRulesInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def subscribe_rules
+                        @subscribe_rules
+                    end
+                end
+
                 class SubscribeRulesInstance < InstanceResource
                     ##
                     # Initialize the SubscribeRulesInstance

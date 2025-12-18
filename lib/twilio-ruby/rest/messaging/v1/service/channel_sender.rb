@@ -58,6 +58,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ChannelSenderInstanceMetadata
+                    # @param [String] sid The SID of the Channel Sender being added to the Service.
+                    # @return [ChannelSenderInstance] Created ChannelSenderInstance
+                    def create_with_metadata(
+                      sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Sid' => sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        channelSender_instance = ChannelSenderInstance.new(
+                            @version,
+                            response.body,
+                            messaging_service_sid: @solution[:messaging_service_sid],
+                        )
+                        ChannelSenderInstanceMetadata.new(
+                            @version,
+                            channelSender_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ChannelSenderInstance records from the API as a list.
@@ -95,6 +127,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists ChannelSenderPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ChannelSenderPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -180,7 +234,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ChannelSenderInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          channelSender_instance = ChannelSenderInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ChannelSenderInstanceMetadata.new(@version, channelSender_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -203,6 +276,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the ChannelSenderInstanceMetadata
+                    # @return [ChannelSenderInstance] Fetched ChannelSenderInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        channelSender_instance = ChannelSenderInstance.new(
+                            @version,
+                            response.body,
+                            messaging_service_sid: @solution[:messaging_service_sid],
+                            sid: @solution[:sid],
+                        )
+                        ChannelSenderInstanceMetadata.new(
+                            @version,
+                            channelSender_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -218,6 +317,45 @@ module Twilio
                         "#<Twilio.Messaging.V1.ChannelSenderContext #{context}>"
                     end
                 end
+
+                class ChannelSenderInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ChannelSenderInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ChannelSenderInstance] channel_sender_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ChannelSenderInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, channel_sender_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @channel_sender_instance = channel_sender_instance
+                    end
+
+                    def channel_sender
+                        @channel_sender_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ChannelSenderInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ChannelSenderListResponse < InstanceListResource
+                    # @param [Array<ChannelSenderInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @channel_sender_instance = payload.body[key].map do |data|
+                        ChannelSenderInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def channel_sender_instance
+                          @instance
+                      end
+                  end
 
                 class ChannelSenderPage < Page
                     ##
@@ -247,6 +385,54 @@ module Twilio
                         '<Twilio.Messaging.V1.ChannelSenderPage>'
                     end
                 end
+
+                class ChannelSenderPageMetadata < PageMetadata
+                    attr_reader :channel_sender_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @channel_sender_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @channel_sender_page << ChannelSenderListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @channel_sender_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class ChannelSenderListResponse < InstanceListResource
+
+                    # @param [Array<ChannelSenderInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @channel_sender = payload.body[key].map do |data|
+                      ChannelSenderInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def channel_sender
+                        @channel_sender
+                    end
+                end
+
                 class ChannelSenderInstance < InstanceResource
                     ##
                     # Initialize the ChannelSenderInstance

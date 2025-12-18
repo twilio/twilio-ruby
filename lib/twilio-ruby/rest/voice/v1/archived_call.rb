@@ -65,7 +65,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ArchivedCallInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          archivedCall_instance = ArchivedCallInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ArchivedCallInstanceMetadata.new(@version, archivedCall_instance, response.headers, response.status_code)
                     end
 
 
@@ -83,6 +102,45 @@ module Twilio
                         "#<Twilio.Voice.V1.ArchivedCallContext #{context}>"
                     end
                 end
+
+                class ArchivedCallInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ArchivedCallInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ArchivedCallInstance] archived_call_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ArchivedCallInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, archived_call_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @archived_call_instance = archived_call_instance
+                    end
+
+                    def archived_call
+                        @archived_call_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ArchivedCallInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ArchivedCallListResponse < InstanceListResource
+                    # @param [Array<ArchivedCallInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @archived_call_instance = payload.body[key].map do |data|
+                        ArchivedCallInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def archived_call_instance
+                          @instance
+                      end
+                  end
 
                 class ArchivedCallPage < Page
                     ##
@@ -112,6 +170,54 @@ module Twilio
                         '<Twilio.Voice.V1.ArchivedCallPage>'
                     end
                 end
+
+                class ArchivedCallPageMetadata < PageMetadata
+                    attr_reader :archived_call_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @archived_call_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @archived_call_page << ArchivedCallListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @archived_call_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Voice::V1PageMetadata>';
+                    end
+                end
+                class ArchivedCallListResponse < InstanceListResource
+
+                    # @param [Array<ArchivedCallInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @archived_call = payload.body[key].map do |data|
+                      ArchivedCallInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def archived_call
+                        @archived_call
+                    end
+                end
+
                 class ArchivedCallInstance < InstanceResource
                     ##
                     # Initialize the ArchivedCallInstance

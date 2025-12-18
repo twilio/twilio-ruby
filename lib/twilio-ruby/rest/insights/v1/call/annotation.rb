@@ -77,6 +77,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the AnnotationInstanceMetadata
+                    # @return [AnnotationInstance] Fetched AnnotationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        annotation_instance = AnnotationInstance.new(
+                            @version,
+                            response.body,
+                            call_sid: @solution[:call_sid],
+                        )
+                        AnnotationInstanceMetadata.new(
+                            @version,
+                            annotation_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the AnnotationInstance
                     # @param [AnsweredBy] answered_by 
                     # @param [ConnectivityIssue] connectivity_issue 
@@ -120,6 +145,56 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the AnnotationInstanceMetadata
+                    # @param [AnsweredBy] answered_by 
+                    # @param [ConnectivityIssue] connectivity_issue 
+                    # @param [String] quality_issues Specify if the call had any subjective quality issues. Possible values, one or more of `no_quality_issue`, `low_volume`, `choppy_robotic`, `echo`, `dtmf`, `latency`, `owa`, `static_noise`. Use comma separated values to indicate multiple quality issues for the same call.
+                    # @param [Boolean] spam A boolean flag to indicate if the call was a spam call. Use this to provide feedback on whether calls placed from your account were marked as spam, or if inbound calls received by your account were unwanted spam. Use `true` if the call was a spam call.
+                    # @param [String] call_score Specify the call score. This is of type integer. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for rating the call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
+                    # @param [String] comment Specify any comments pertaining to the call. `comment` has a maximum character limit of 100. Twilio does not treat this field as PII, so no PII should be included in the `comment`.
+                    # @param [String] incident Associate this call with an incident or support ticket. The `incident` parameter is of type string with a maximum character limit of 100. Twilio does not treat this field as PII, so no PII should be included in `incident`.
+                    # @return [AnnotationInstance] Updated AnnotationInstance
+                    def update_with_metadata(
+                      answered_by: :unset, 
+                      connectivity_issue: :unset, 
+                      quality_issues: :unset, 
+                      spam: :unset, 
+                      call_score: :unset, 
+                      comment: :unset, 
+                      incident: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'AnsweredBy' => answered_by,
+                            'ConnectivityIssue' => connectivity_issue,
+                            'QualityIssues' => quality_issues,
+                            'Spam' => spam,
+                            'CallScore' => call_score,
+                            'Comment' => comment,
+                            'Incident' => incident,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        annotation_instance = AnnotationInstance.new(
+                            @version,
+                            response.body,
+                            call_sid: @solution[:call_sid],
+                        )
+                        AnnotationInstanceMetadata.new(
+                            @version,
+                            annotation_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -135,6 +210,45 @@ module Twilio
                         "#<Twilio.Insights.V1.AnnotationContext #{context}>"
                     end
                 end
+
+                class AnnotationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AnnotationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AnnotationInstance] annotation_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AnnotationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, annotation_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @annotation_instance = annotation_instance
+                    end
+
+                    def annotation
+                        @annotation_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AnnotationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AnnotationListResponse < InstanceListResource
+                    # @param [Array<AnnotationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @annotation_instance = payload.body[key].map do |data|
+                        AnnotationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def annotation_instance
+                          @instance
+                      end
+                  end
 
                 class AnnotationPage < Page
                     ##
@@ -164,6 +278,54 @@ module Twilio
                         '<Twilio.Insights.V1.AnnotationPage>'
                     end
                 end
+
+                class AnnotationPageMetadata < PageMetadata
+                    attr_reader :annotation_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @annotation_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @annotation_page << AnnotationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @annotation_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Insights::V1PageMetadata>';
+                    end
+                end
+                class AnnotationListResponse < InstanceListResource
+
+                    # @param [Array<AnnotationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @annotation = payload.body[key].map do |data|
+                      AnnotationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def annotation
+                        @annotation
+                    end
+                end
+
                 class AnnotationInstance < InstanceResource
                     ##
                     # Initialize the AnnotationInstance

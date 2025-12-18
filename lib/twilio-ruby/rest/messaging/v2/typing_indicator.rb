@@ -58,6 +58,40 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TypingIndicatorInstanceMetadata
+                    # @param [String] channel Shared channel identifier
+                    # @param [String] message_id Message SID that identifies the conversation thread for the typing indicator. Must be a valid Twilio Message SID (SM*) or Media SID (MM*) from an existing WhatsApp conversation. 
+                    # @return [TypingIndicatorInstance] Created TypingIndicatorInstance
+                    def create_with_metadata(
+                      channel: nil, 
+                      message_id: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'channel' => channel,
+                            'messageId' => message_id,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        typingIndicator_instance = TypingIndicatorInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        TypingIndicatorInstanceMetadata.new(
+                            @version,
+                            typingIndicator_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -95,6 +129,54 @@ module Twilio
                         '<Twilio.Messaging.V2.TypingIndicatorPage>'
                     end
                 end
+
+                class TypingIndicatorPageMetadata < PageMetadata
+                    attr_reader :typing_indicator_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @typing_indicator_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @typing_indicator_page << TypingIndicatorListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @typing_indicator_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V2PageMetadata>';
+                    end
+                end
+                class TypingIndicatorListResponse < InstanceListResource
+
+                    # @param [Array<TypingIndicatorInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @typing_indicator = payload.body[key].map do |data|
+                      TypingIndicatorInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def typing_indicator
+                        @typing_indicator
+                    end
+                end
+
                 class TypingIndicatorInstance < InstanceResource
                     ##
                     # Initialize the TypingIndicatorInstance

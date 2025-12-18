@@ -86,6 +86,54 @@ module Twilio
                         '<Twilio.Api.V2010.AuthTypeRegistrationsPage>'
                     end
                 end
+
+                class AuthTypeRegistrationsPageMetadata < PageMetadata
+                    attr_reader :auth_type_registrations_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @auth_type_registrations_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @auth_type_registrations_page << AuthTypeRegistrationsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @auth_type_registrations_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class AuthTypeRegistrationsListResponse < InstanceListResource
+
+                    # @param [Array<AuthTypeRegistrationsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @auth_type_registrations = payload.body[key].map do |data|
+                      AuthTypeRegistrationsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def auth_type_registrations
+                        @auth_type_registrations
+                    end
+                end
+
                 class AuthTypeRegistrationsInstance < InstanceResource
                     ##
                     # Initialize the AuthTypeRegistrationsInstance

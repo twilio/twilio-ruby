@@ -61,6 +61,41 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the QueueInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you created to describe this resource. It can be up to 64 characters long.
+                    # @param [String] max_size The maximum number of calls allowed to be in the queue. The default is 1000. The maximum is 5000.
+                    # @return [QueueInstance] Created QueueInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      max_size: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'MaxSize' => max_size,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        queue_instance = QueueInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                        )
+                        QueueInstanceMetadata.new(
+                            @version,
+                            queue_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists QueueInstance records from the API as a list.
@@ -98,6 +133,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists QueuePageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        QueuePageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -184,7 +241,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the QueueInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          queue_instance = QueueInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          QueueInstanceMetadata.new(@version, queue_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -204,6 +280,32 @@ module Twilio
                             payload,
                             account_sid: @solution[:account_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the QueueInstanceMetadata
+                    # @return [QueueInstance] Fetched QueueInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        queue_instance = QueueInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        QueueInstanceMetadata.new(
+                            @version,
+                            queue_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -234,6 +336,42 @@ module Twilio
                             payload,
                             account_sid: @solution[:account_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the QueueInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you created to describe this resource. It can be up to 64 characters long.
+                    # @param [String] max_size The maximum number of calls allowed to be in the queue. The default is 1000. The maximum is 5000.
+                    # @return [QueueInstance] Updated QueueInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      max_size: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'MaxSize' => max_size,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        queue_instance = QueueInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        QueueInstanceMetadata.new(
+                            @version,
+                            queue_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -272,6 +410,45 @@ module Twilio
                     end
                 end
 
+                class QueueInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new QueueInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}QueueInstance] queue_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [QueueInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, queue_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @queue_instance = queue_instance
+                    end
+
+                    def queue
+                        @queue_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.QueueInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class QueueListResponse < InstanceListResource
+                    # @param [Array<QueueInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @queue_instance = payload.body[key].map do |data|
+                        QueueInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def queue_instance
+                          @instance
+                      end
+                  end
+
                 class QueuePage < Page
                     ##
                     # Initialize the QueuePage
@@ -300,6 +477,54 @@ module Twilio
                         '<Twilio.Api.V2010.QueuePage>'
                     end
                 end
+
+                class QueuePageMetadata < PageMetadata
+                    attr_reader :queue_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @queue_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @queue_page << QueueListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @queue_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class QueueListResponse < InstanceListResource
+
+                    # @param [Array<QueueInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @queue = payload.body[key].map do |data|
+                      QueueInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def queue
+                        @queue
+                    end
+                end
+
                 class QueueInstance < InstanceResource
                     ##
                     # Initialize the QueueInstance

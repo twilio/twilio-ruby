@@ -79,6 +79,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the EngagementContextInstanceMetadata
+                    # @return [EngagementContextInstance] Fetched EngagementContextInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        engagementContext_instance = EngagementContextInstance.new(
+                            @version,
+                            response.body,
+                            flow_sid: @solution[:flow_sid],
+                            engagement_sid: @solution[:engagement_sid],
+                        )
+                        EngagementContextInstanceMetadata.new(
+                            @version,
+                            engagementContext_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -94,6 +120,45 @@ module Twilio
                         "#<Twilio.Studio.V1.EngagementContextContext #{context}>"
                     end
                 end
+
+                class EngagementContextInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new EngagementContextInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}EngagementContextInstance] engagement_context_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [EngagementContextInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, engagement_context_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @engagement_context_instance = engagement_context_instance
+                    end
+
+                    def engagement_context
+                        @engagement_context_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.EngagementContextInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class EngagementContextListResponse < InstanceListResource
+                    # @param [Array<EngagementContextInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @engagement_context_instance = payload.body[key].map do |data|
+                        EngagementContextInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def engagement_context_instance
+                          @instance
+                      end
+                  end
 
                 class EngagementContextPage < Page
                     ##
@@ -123,6 +188,54 @@ module Twilio
                         '<Twilio.Studio.V1.EngagementContextPage>'
                     end
                 end
+
+                class EngagementContextPageMetadata < PageMetadata
+                    attr_reader :engagement_context_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @engagement_context_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @engagement_context_page << EngagementContextListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @engagement_context_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Studio::V1PageMetadata>';
+                    end
+                end
+                class EngagementContextListResponse < InstanceListResource
+
+                    # @param [Array<EngagementContextInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @engagement_context = payload.body[key].map do |data|
+                      EngagementContextInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def engagement_context
+                        @engagement_context
+                    end
+                end
+
                 class EngagementContextInstance < InstanceResource
                     ##
                     # Initialize the EngagementContextInstance

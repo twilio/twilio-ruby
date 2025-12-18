@@ -58,6 +58,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the SinkValidateInstanceMetadata
+                    # @param [String] test_id A 34 character string that uniquely identifies the test event for a Sink being validated.
+                    # @return [SinkValidateInstance] Created SinkValidateInstance
+                    def create_with_metadata(
+                      test_id: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'TestId' => test_id,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        sinkValidate_instance = SinkValidateInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        SinkValidateInstanceMetadata.new(
+                            @version,
+                            sinkValidate_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -95,6 +127,54 @@ module Twilio
                         '<Twilio.Events.V1.SinkValidatePage>'
                     end
                 end
+
+                class SinkValidatePageMetadata < PageMetadata
+                    attr_reader :sink_validate_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @sink_validate_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @sink_validate_page << SinkValidateListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @sink_validate_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Events::V1PageMetadata>';
+                    end
+                end
+                class SinkValidateListResponse < InstanceListResource
+
+                    # @param [Array<SinkValidateInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @sink_validate = payload.body[key].map do |data|
+                      SinkValidateInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def sink_validate
+                        @sink_validate
+                    end
+                end
+
                 class SinkValidateInstance < InstanceResource
                     ##
                     # Initialize the SinkValidateInstance

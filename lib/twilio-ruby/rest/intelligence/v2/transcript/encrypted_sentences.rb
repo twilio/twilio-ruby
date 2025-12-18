@@ -82,6 +82,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the EncryptedSentencesInstanceMetadata
+                    # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Sentences. If redaction is enabled, the default is `true` to access redacted sentences.
+                    # @return [EncryptedSentencesInstance] Fetched EncryptedSentencesInstance
+                    def fetch_with_metadata(
+                      redacted: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'Redacted' => redacted,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        encryptedSentences_instance = EncryptedSentencesInstance.new(
+                            @version,
+                            response.body,
+                            transcript_sid: @solution[:transcript_sid],
+                        )
+                        EncryptedSentencesInstanceMetadata.new(
+                            @version,
+                            encryptedSentences_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -97,6 +128,45 @@ module Twilio
                         "#<Twilio.Intelligence.V2.EncryptedSentencesContext #{context}>"
                     end
                 end
+
+                class EncryptedSentencesInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new EncryptedSentencesInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}EncryptedSentencesInstance] encrypted_sentences_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [EncryptedSentencesInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, encrypted_sentences_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @encrypted_sentences_instance = encrypted_sentences_instance
+                    end
+
+                    def encrypted_sentences
+                        @encrypted_sentences_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.EncryptedSentencesInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class EncryptedSentencesListResponse < InstanceListResource
+                    # @param [Array<EncryptedSentencesInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @encrypted_sentences_instance = payload.body[key].map do |data|
+                        EncryptedSentencesInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def encrypted_sentences_instance
+                          @instance
+                      end
+                  end
 
                 class EncryptedSentencesPage < Page
                     ##
@@ -126,6 +196,54 @@ module Twilio
                         '<Twilio.Intelligence.V2.EncryptedSentencesPage>'
                     end
                 end
+
+                class EncryptedSentencesPageMetadata < PageMetadata
+                    attr_reader :encrypted_sentences_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @encrypted_sentences_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @encrypted_sentences_page << EncryptedSentencesListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @encrypted_sentences_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Intelligence::V2PageMetadata>';
+                    end
+                end
+                class EncryptedSentencesListResponse < InstanceListResource
+
+                    # @param [Array<EncryptedSentencesInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @encrypted_sentences = payload.body[key].map do |data|
+                      EncryptedSentencesInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def encrypted_sentences
+                        @encrypted_sentences
+                    end
+                end
+
                 class EncryptedSentencesInstance < InstanceResource
                     ##
                     # Initialize the EncryptedSentencesInstance

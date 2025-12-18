@@ -81,6 +81,54 @@ module Twilio
                         '<Twilio.Pricing.V1.MessagingPage>'
                     end
                 end
+
+                class MessagingPageMetadata < PageMetadata
+                    attr_reader :messaging_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @messaging_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @messaging_page << MessagingListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @messaging_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Pricing::V1PageMetadata>';
+                    end
+                end
+                class MessagingListResponse < InstanceListResource
+
+                    # @param [Array<MessagingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @messaging = payload.body[key].map do |data|
+                      MessagingInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def messaging
+                        @messaging
+                    end
+                end
+
                 class MessagingInstance < InstanceResource
                     ##
                     # Initialize the MessagingInstance

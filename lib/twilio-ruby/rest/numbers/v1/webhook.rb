@@ -48,6 +48,30 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the WebhookInstanceMetadata
+                    # @return [WebhookInstance] Fetched WebhookInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        webhook_instance = WebhookInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        WebhookInstanceMetadata.new(
+                            @version,
+                            webhook_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -85,6 +109,54 @@ module Twilio
                         '<Twilio.Numbers.V1.WebhookPage>'
                     end
                 end
+
+                class WebhookPageMetadata < PageMetadata
+                    attr_reader :webhook_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @webhook_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @webhook_page << WebhookListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @webhook_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V1PageMetadata>';
+                    end
+                end
+                class WebhookListResponse < InstanceListResource
+
+                    # @param [Array<WebhookInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @webhook = payload.body[key].map do |data|
+                      WebhookInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def webhook
+                        @webhook
+                    end
+                end
+
                 class WebhookInstance < InstanceResource
                     ##
                     # Initialize the WebhookInstance

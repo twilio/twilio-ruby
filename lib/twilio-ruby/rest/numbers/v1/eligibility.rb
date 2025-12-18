@@ -50,6 +50,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the EligibilityInstanceMetadata
+                    # @param [Object] body 
+                    # @return [EligibilityInstance] Created EligibilityInstance
+                    def create_with_metadata(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: body.to_json)
+                        eligibility_instance = EligibilityInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        EligibilityInstanceMetadata.new(
+                            @version,
+                            eligibility_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -87,6 +113,54 @@ module Twilio
                         '<Twilio.Numbers.V1.EligibilityPage>'
                     end
                 end
+
+                class EligibilityPageMetadata < PageMetadata
+                    attr_reader :eligibility_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @eligibility_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @eligibility_page << EligibilityListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @eligibility_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V1PageMetadata>';
+                    end
+                end
+                class EligibilityListResponse < InstanceListResource
+
+                    # @param [Array<EligibilityInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @eligibility = payload.body[key].map do |data|
+                      EligibilityInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def eligibility
+                        @eligibility
+                    end
+                end
+
                 class EligibilityInstance < InstanceResource
                     ##
                     # Initialize the EligibilityInstance

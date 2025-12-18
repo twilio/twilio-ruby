@@ -76,6 +76,56 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the BindingInstanceMetadata
+                    # @param [String] identity The `identity` value that uniquely identifies the new resource's [User](https://www.twilio.com/docs/chat/rest/user-resource) within the [Service](https://www.twilio.com/docs/notify/api/service-resource). Up to 20 Bindings can be created for the same Identity in a given Service.
+                    # @param [BindingType] binding_type 
+                    # @param [String] address The channel-specific address. For APNS, the device token. For FCM and GCM, the registration token. For SMS, a phone number in E.164 format. For Facebook Messenger, the Messenger ID of the user or a phone number in E.164 format.
+                    # @param [Array[String]] tag A tag that can be used to select the Bindings to notify. Repeat this parameter to specify more than one tag, up to a total of 20 tags.
+                    # @param [String] notification_protocol_version The protocol version to use to send the notification. This defaults to the value of `default_xxxx_notification_protocol_version` for the protocol in the [Service](https://www.twilio.com/docs/notify/api/service-resource). The current version is `\\\"3\\\"` for `apn`, `fcm`, and `gcm` type Bindings. The parameter is not applicable to `sms` and `facebook-messenger` type Bindings as the data format is fixed.
+                    # @param [String] credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) resource to be used to send notifications to this Binding. If present, this overrides the Credential specified in the Service resource. Applies to only `apn`, `fcm`, and `gcm` type Bindings.
+                    # @param [String] endpoint Deprecated.
+                    # @return [BindingInstance] Created BindingInstance
+                    def create_with_metadata(
+                      identity: nil, 
+                      binding_type: nil, 
+                      address: nil, 
+                      tag: :unset, 
+                      notification_protocol_version: :unset, 
+                      credential_sid: :unset, 
+                      endpoint: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Identity' => identity,
+                            'BindingType' => binding_type,
+                            'Address' => address,
+                            'Tag' => Twilio.serialize_list(tag) { |e| e },
+                            'NotificationProtocolVersion' => notification_protocol_version,
+                            'CredentialSid' => credential_sid,
+                            'Endpoint' => endpoint,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        binding_instance = BindingInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                        )
+                        BindingInstanceMetadata.new(
+                            @version,
+                            binding_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists BindingInstance records from the API as a list.
@@ -129,6 +179,38 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists BindingPageMetadata records from the API as a list.
+                      # @param [Date] start_date Only include usage that has occurred on or after this date. Specify the date in GMT and format as `YYYY-MM-DD`.
+                      # @param [Date] end_date Only include usage that occurred on or before this date. Specify the date in GMT and format as `YYYY-MM-DD`.
+                      # @param [Array[String]] identity The [User](https://www.twilio.com/docs/chat/rest/user-resource)'s `identity` value of the resources to read.
+                      # @param [Array[String]] tag Only list Bindings that have all of the specified Tags. The following implicit tags are available: `all`, `apn`, `fcm`, `gcm`, `sms`, `facebook-messenger`. Up to 5 tags are allowed.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(start_date: :unset, end_date: :unset, identity: :unset, tag: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'StartDate' =>  Twilio.serialize_iso8601_date(start_date),
+                            'EndDate' =>  Twilio.serialize_iso8601_date(end_date),
+                            
+                            'Identity' =>  Twilio.serialize_list(identity) { |e| e },
+                            
+                            'Tag' =>  Twilio.serialize_list(tag) { |e| e },
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        BindingPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -224,7 +306,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the BindingInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          binding_instance = BindingInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          BindingInstanceMetadata.new(@version, binding_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -247,6 +348,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the BindingInstanceMetadata
+                    # @return [BindingInstance] Fetched BindingInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        binding_instance = BindingInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            sid: @solution[:sid],
+                        )
+                        BindingInstanceMetadata.new(
+                            @version,
+                            binding_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -262,6 +389,45 @@ module Twilio
                         "#<Twilio.Notify.V1.BindingContext #{context}>"
                     end
                 end
+
+                class BindingInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new BindingInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}BindingInstance] binding_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [BindingInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, binding_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @binding_instance = binding_instance
+                    end
+
+                    def binding
+                        @binding_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.BindingInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class BindingListResponse < InstanceListResource
+                    # @param [Array<BindingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @binding_instance = payload.body[key].map do |data|
+                        BindingInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def binding_instance
+                          @instance
+                      end
+                  end
 
                 class BindingPage < Page
                     ##
@@ -291,6 +457,54 @@ module Twilio
                         '<Twilio.Notify.V1.BindingPage>'
                     end
                 end
+
+                class BindingPageMetadata < PageMetadata
+                    attr_reader :binding_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @binding_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @binding_page << BindingListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @binding_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Notify::V1PageMetadata>';
+                    end
+                end
+                class BindingListResponse < InstanceListResource
+
+                    # @param [Array<BindingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @binding = payload.body[key].map do |data|
+                      BindingInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def binding
+                        @binding
+                    end
+                end
+
                 class BindingInstance < InstanceResource
                     ##
                     # Initialize the BindingInstance

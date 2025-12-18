@@ -55,6 +55,34 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the InteractionTransferInstanceMetadata
+                    # @param [Object] body 
+                    # @return [InteractionTransferInstance] Created InteractionTransferInstance
+                    def create_with_metadata(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: body.to_json)
+                        interactionTransfer_instance = InteractionTransferInstance.new(
+                            @version,
+                            response.body,
+                            interaction_sid: @solution[:interaction_sid],
+                            channel_sid: @solution[:channel_sid],
+                        )
+                        InteractionTransferInstanceMetadata.new(
+                            @version,
+                            interactionTransfer_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -104,6 +132,33 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the InteractionTransferInstanceMetadata
+                    # @return [InteractionTransferInstance] Fetched InteractionTransferInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        interactionTransfer_instance = InteractionTransferInstance.new(
+                            @version,
+                            response.body,
+                            interaction_sid: @solution[:interaction_sid],
+                            channel_sid: @solution[:channel_sid],
+                            sid: @solution[:sid],
+                        )
+                        InteractionTransferInstanceMetadata.new(
+                            @version,
+                            interactionTransfer_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the InteractionTransferInstance
                     # @param [Object] body 
                     # @return [InteractionTransferInstance] Updated InteractionTransferInstance
@@ -126,6 +181,35 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the InteractionTransferInstanceMetadata
+                    # @param [Object] body 
+                    # @return [InteractionTransferInstance] Updated InteractionTransferInstance
+                    def update_with_metadata(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, headers: headers, data: body.to_json)
+                        interactionTransfer_instance = InteractionTransferInstance.new(
+                            @version,
+                            response.body,
+                            interaction_sid: @solution[:interaction_sid],
+                            channel_sid: @solution[:channel_sid],
+                            sid: @solution[:sid],
+                        )
+                        InteractionTransferInstanceMetadata.new(
+                            @version,
+                            interactionTransfer_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -141,6 +225,45 @@ module Twilio
                         "#<Twilio.FlexApi.V1.InteractionTransferContext #{context}>"
                     end
                 end
+
+                class InteractionTransferInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new InteractionTransferInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}InteractionTransferInstance] interaction_transfer_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [InteractionTransferInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, interaction_transfer_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @interaction_transfer_instance = interaction_transfer_instance
+                    end
+
+                    def interaction_transfer
+                        @interaction_transfer_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.InteractionTransferInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class InteractionTransferListResponse < InstanceListResource
+                    # @param [Array<InteractionTransferInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @interaction_transfer_instance = payload.body[key].map do |data|
+                        InteractionTransferInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def interaction_transfer_instance
+                          @instance
+                      end
+                  end
 
                 class InteractionTransferPage < Page
                     ##
@@ -170,6 +293,54 @@ module Twilio
                         '<Twilio.FlexApi.V1.InteractionTransferPage>'
                     end
                 end
+
+                class InteractionTransferPageMetadata < PageMetadata
+                    attr_reader :interaction_transfer_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @interaction_transfer_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @interaction_transfer_page << InteractionTransferListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @interaction_transfer_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InteractionTransferListResponse < InstanceListResource
+
+                    # @param [Array<InteractionTransferInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @interaction_transfer = payload.body[key].map do |data|
+                      InteractionTransferInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def interaction_transfer
+                        @interaction_transfer
+                    end
+                end
+
                 class InteractionTransferInstance < InstanceResource
                     ##
                     # Initialize the InteractionTransferInstance

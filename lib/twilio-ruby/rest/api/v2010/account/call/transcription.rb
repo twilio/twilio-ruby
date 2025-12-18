@@ -99,6 +99,78 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TranscriptionInstanceMetadata
+                    # @param [String] name The user-specified name of this Transcription, if one was given when the Transcription was created. This may be used to stop the Transcription.
+                    # @param [Track] track 
+                    # @param [String] status_callback_url Absolute URL of the status callback.
+                    # @param [String] status_callback_method The http method for the status_callback (one of GET, POST).
+                    # @param [String] inbound_track_label Friendly name given to the Inbound Track
+                    # @param [String] outbound_track_label Friendly name given to the Outbound Track
+                    # @param [Boolean] partial_results Indicates if partial results are going to be sent to the customer
+                    # @param [String] language_code Language code used by the transcription engine, specified in [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) format
+                    # @param [String] transcription_engine Definition of the transcription engine to be used, among those supported by Twilio
+                    # @param [Boolean] profanity_filter indicates if the server will attempt to filter out profanities, replacing all but the initial character in each filtered word with asterisks
+                    # @param [String] speech_model Recognition model used by the transcription engine, among those supported by the provider
+                    # @param [String] hints A Phrase contains words and phrase \\\"hints\\\" so that the speech recognition engine is more likely to recognize them.
+                    # @param [Boolean] enable_automatic_punctuation The provider will add punctuation to recognition result
+                    # @param [String] intelligence_service The SID or unique name of the [Intelligence Service](https://www.twilio.com/docs/conversational-intelligence/api/service-resource) for persisting transcripts and running post-call Language Operators .
+                    # @return [TranscriptionInstance] Created TranscriptionInstance
+                    def create_with_metadata(
+                      name: :unset, 
+                      track: :unset, 
+                      status_callback_url: :unset, 
+                      status_callback_method: :unset, 
+                      inbound_track_label: :unset, 
+                      outbound_track_label: :unset, 
+                      partial_results: :unset, 
+                      language_code: :unset, 
+                      transcription_engine: :unset, 
+                      profanity_filter: :unset, 
+                      speech_model: :unset, 
+                      hints: :unset, 
+                      enable_automatic_punctuation: :unset, 
+                      intelligence_service: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Name' => name,
+                            'Track' => track,
+                            'StatusCallbackUrl' => status_callback_url,
+                            'StatusCallbackMethod' => status_callback_method,
+                            'InboundTrackLabel' => inbound_track_label,
+                            'OutboundTrackLabel' => outbound_track_label,
+                            'PartialResults' => partial_results,
+                            'LanguageCode' => language_code,
+                            'TranscriptionEngine' => transcription_engine,
+                            'ProfanityFilter' => profanity_filter,
+                            'SpeechModel' => speech_model,
+                            'Hints' => hints,
+                            'EnableAutomaticPunctuation' => enable_automatic_punctuation,
+                            'IntelligenceService' => intelligence_service,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        transcription_instance = TranscriptionInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            call_sid: @solution[:call_sid],
+                        )
+                        TranscriptionInstanceMetadata.new(
+                            @version,
+                            transcription_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -154,6 +226,40 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the TranscriptionInstanceMetadata
+                    # @param [UpdateStatus] status 
+                    # @return [TranscriptionInstance] Updated TranscriptionInstance
+                    def update_with_metadata(
+                      status: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Status' => status,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        transcription_instance = TranscriptionInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            call_sid: @solution[:call_sid],
+                            sid: @solution[:sid],
+                        )
+                        TranscriptionInstanceMetadata.new(
+                            @version,
+                            transcription_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -169,6 +275,45 @@ module Twilio
                         "#<Twilio.Api.V2010.TranscriptionContext #{context}>"
                     end
                 end
+
+                class TranscriptionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new TranscriptionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}TranscriptionInstance] transcription_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [TranscriptionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, transcription_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @transcription_instance = transcription_instance
+                    end
+
+                    def transcription
+                        @transcription_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.TranscriptionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class TranscriptionListResponse < InstanceListResource
+                    # @param [Array<TranscriptionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @transcription_instance = payload.body[key].map do |data|
+                        TranscriptionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def transcription_instance
+                          @instance
+                      end
+                  end
 
                 class TranscriptionPage < Page
                     ##
@@ -198,6 +343,54 @@ module Twilio
                         '<Twilio.Api.V2010.TranscriptionPage>'
                     end
                 end
+
+                class TranscriptionPageMetadata < PageMetadata
+                    attr_reader :transcription_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @transcription_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @transcription_page << TranscriptionListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @transcription_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class TranscriptionListResponse < InstanceListResource
+
+                    # @param [Array<TranscriptionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @transcription = payload.body[key].map do |data|
+                      TranscriptionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def transcription
+                        @transcription
+                    end
+                end
+
                 class TranscriptionInstance < InstanceResource
                     ##
                     # Initialize the TranscriptionInstance

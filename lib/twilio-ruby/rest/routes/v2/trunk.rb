@@ -75,6 +75,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the TrunkInstanceMetadata
+                    # @return [TrunkInstance] Fetched TrunkInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        trunk_instance = TrunkInstance.new(
+                            @version,
+                            response.body,
+                            sip_trunk_domain: @solution[:sip_trunk_domain],
+                        )
+                        TrunkInstanceMetadata.new(
+                            @version,
+                            trunk_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the TrunkInstance
                     # @param [String] voice_region The Inbound Processing Region used for this SIP Trunk for voice
                     # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
@@ -103,6 +128,41 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the TrunkInstanceMetadata
+                    # @param [String] voice_region The Inbound Processing Region used for this SIP Trunk for voice
+                    # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
+                    # @return [TrunkInstance] Updated TrunkInstance
+                    def update_with_metadata(
+                      voice_region: :unset, 
+                      friendly_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'VoiceRegion' => voice_region,
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        trunk_instance = TrunkInstance.new(
+                            @version,
+                            response.body,
+                            sip_trunk_domain: @solution[:sip_trunk_domain],
+                        )
+                        TrunkInstanceMetadata.new(
+                            @version,
+                            trunk_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -118,6 +178,45 @@ module Twilio
                         "#<Twilio.Routes.V2.TrunkContext #{context}>"
                     end
                 end
+
+                class TrunkInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new TrunkInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}TrunkInstance] trunk_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [TrunkInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, trunk_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @trunk_instance = trunk_instance
+                    end
+
+                    def trunk
+                        @trunk_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.TrunkInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class TrunkListResponse < InstanceListResource
+                    # @param [Array<TrunkInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @trunk_instance = payload.body[key].map do |data|
+                        TrunkInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def trunk_instance
+                          @instance
+                      end
+                  end
 
                 class TrunkPage < Page
                     ##
@@ -147,6 +246,54 @@ module Twilio
                         '<Twilio.Routes.V2.TrunkPage>'
                     end
                 end
+
+                class TrunkPageMetadata < PageMetadata
+                    attr_reader :trunk_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @trunk_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @trunk_page << TrunkListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @trunk_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Routes::V2PageMetadata>';
+                    end
+                end
+                class TrunkListResponse < InstanceListResource
+
+                    # @param [Array<TrunkInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @trunk = payload.body[key].map do |data|
+                      TrunkInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def trunk
+                        @trunk
+                    end
+                end
+
                 class TrunkInstance < InstanceResource
                     ##
                     # Initialize the TrunkInstance

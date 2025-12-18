@@ -104,6 +104,44 @@ module Twilio
                     end
 
                     ##
+                    # Lists ConferencePageMetadata records from the API as a list.
+                      # @param [Date] date_created Only include conferences that were created on this date. Specify a date as `YYYY-MM-DD` in UTC, for example: `2009-07-06`, to read only conferences that were created on this date. You can also specify an inequality, such as `DateCreated<=YYYY-MM-DD`, to read conferences that were created on or before midnight of this date, and `DateCreated>=YYYY-MM-DD` to read conferences that were created on or after midnight of this date.
+                      # @param [Date] date_created_before Only include conferences that were created on this date. Specify a date as `YYYY-MM-DD` in UTC, for example: `2009-07-06`, to read only conferences that were created on this date. You can also specify an inequality, such as `DateCreated<=YYYY-MM-DD`, to read conferences that were created on or before midnight of this date, and `DateCreated>=YYYY-MM-DD` to read conferences that were created on or after midnight of this date.
+                      # @param [Date] date_created_after Only include conferences that were created on this date. Specify a date as `YYYY-MM-DD` in UTC, for example: `2009-07-06`, to read only conferences that were created on this date. You can also specify an inequality, such as `DateCreated<=YYYY-MM-DD`, to read conferences that were created on or before midnight of this date, and `DateCreated>=YYYY-MM-DD` to read conferences that were created on or after midnight of this date.
+                      # @param [Date] date_updated Only include conferences that were last updated on this date. Specify a date as `YYYY-MM-DD` in UTC, for example: `2009-07-06`, to read only conferences that were last updated on this date. You can also specify an inequality, such as `DateUpdated<=YYYY-MM-DD`, to read conferences that were last updated on or before midnight of this date, and `DateUpdated>=YYYY-MM-DD` to read conferences that were last updated on or after midnight of this date.
+                      # @param [Date] date_updated_before Only include conferences that were last updated on this date. Specify a date as `YYYY-MM-DD` in UTC, for example: `2009-07-06`, to read only conferences that were last updated on this date. You can also specify an inequality, such as `DateUpdated<=YYYY-MM-DD`, to read conferences that were last updated on or before midnight of this date, and `DateUpdated>=YYYY-MM-DD` to read conferences that were last updated on or after midnight of this date.
+                      # @param [Date] date_updated_after Only include conferences that were last updated on this date. Specify a date as `YYYY-MM-DD` in UTC, for example: `2009-07-06`, to read only conferences that were last updated on this date. You can also specify an inequality, such as `DateUpdated<=YYYY-MM-DD`, to read conferences that were last updated on or before midnight of this date, and `DateUpdated>=YYYY-MM-DD` to read conferences that were last updated on or after midnight of this date.
+                      # @param [String] friendly_name The string that identifies the Conference resources to read.
+                      # @param [Status] status The status of the resources to read. Can be: `init`, `in-progress`, or `completed`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(date_created: :unset, date_created_before: :unset, date_created_after: :unset, date_updated: :unset, date_updated_before: :unset, date_updated_after: :unset, friendly_name: :unset, status: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'DateCreated' =>  Twilio.serialize_iso8601_date(date_created),
+                            'DateCreated<' =>  Twilio.serialize_iso8601_date(date_created_before),
+                            'DateCreated>' =>  Twilio.serialize_iso8601_date(date_created_after),
+                            'DateUpdated' =>  Twilio.serialize_iso8601_date(date_updated),
+                            'DateUpdated<' =>  Twilio.serialize_iso8601_date(date_updated_before),
+                            'DateUpdated>' =>  Twilio.serialize_iso8601_date(date_updated_after),
+                            'FriendlyName' => friendly_name,
+                            'Status' => status,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ConferencePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ConferenceInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -216,6 +254,32 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the ConferenceInstanceMetadata
+                    # @return [ConferenceInstance] Fetched ConferenceInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        conference_instance = ConferenceInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        ConferenceInstanceMetadata.new(
+                            @version,
+                            conference_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the ConferenceInstance
                     # @param [UpdateStatus] status 
                     # @param [String] announce_url The URL we should call to announce something into the conference. The URL may return an MP3 file, a WAV file, or a TwiML document that contains `<Play>`, `<Say>`, `<Pause>`, or `<Redirect>` verbs.
@@ -245,6 +309,45 @@ module Twilio
                             payload,
                             account_sid: @solution[:account_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the ConferenceInstanceMetadata
+                    # @param [UpdateStatus] status 
+                    # @param [String] announce_url The URL we should call to announce something into the conference. The URL may return an MP3 file, a WAV file, or a TwiML document that contains `<Play>`, `<Say>`, `<Pause>`, or `<Redirect>` verbs.
+                    # @param [String] announce_method The HTTP method used to call `announce_url`. Can be: `GET` or `POST` and the default is `POST`
+                    # @return [ConferenceInstance] Updated ConferenceInstance
+                    def update_with_metadata(
+                      status: :unset, 
+                      announce_url: :unset, 
+                      announce_method: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Status' => status,
+                            'AnnounceUrl' => announce_url,
+                            'AnnounceMethod' => announce_method,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        conference_instance = ConferenceInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        ConferenceInstanceMetadata.new(
+                            @version,
+                            conference_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -302,6 +405,45 @@ module Twilio
                     end
                 end
 
+                class ConferenceInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ConferenceInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ConferenceInstance] conference_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ConferenceInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, conference_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @conference_instance = conference_instance
+                    end
+
+                    def conference
+                        @conference_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ConferenceInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ConferenceListResponse < InstanceListResource
+                    # @param [Array<ConferenceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @conference_instance = payload.body[key].map do |data|
+                        ConferenceInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def conference_instance
+                          @instance
+                      end
+                  end
+
                 class ConferencePage < Page
                     ##
                     # Initialize the ConferencePage
@@ -330,6 +472,54 @@ module Twilio
                         '<Twilio.Api.V2010.ConferencePage>'
                     end
                 end
+
+                class ConferencePageMetadata < PageMetadata
+                    attr_reader :conference_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @conference_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @conference_page << ConferenceListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @conference_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class ConferenceListResponse < InstanceListResource
+
+                    # @param [Array<ConferenceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @conference = payload.body[key].map do |data|
+                      ConferenceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def conference
+                        @conference
+                    end
+                end
+
                 class ConferenceInstance < InstanceResource
                     ##
                     # Initialize the ConferenceInstance

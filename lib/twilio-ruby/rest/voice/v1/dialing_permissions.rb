@@ -96,6 +96,54 @@ module Twilio
                         '<Twilio.Voice.V1.DialingPermissionsPage>'
                     end
                 end
+
+                class DialingPermissionsPageMetadata < PageMetadata
+                    attr_reader :dialing_permissions_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @dialing_permissions_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @dialing_permissions_page << DialingPermissionsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @dialing_permissions_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Voice::V1PageMetadata>';
+                    end
+                end
+                class DialingPermissionsListResponse < InstanceListResource
+
+                    # @param [Array<DialingPermissionsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @dialing_permissions = payload.body[key].map do |data|
+                      DialingPermissionsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def dialing_permissions
+                        @dialing_permissions
+                    end
+                end
+
                 class DialingPermissionsInstance < InstanceResource
                     ##
                     # Initialize the DialingPermissionsInstance

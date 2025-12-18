@@ -70,6 +70,50 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the OriginationUrlInstanceMetadata
+                    # @param [String] weight The value that determines the relative share of the load the URI should receive compared to other URIs with the same priority. Can be an integer from 1 to 65535, inclusive, and the default is 10. URLs with higher values receive more load than those with lower ones with the same priority.
+                    # @param [String] priority The relative importance of the URI. Can be an integer from 0 to 65535, inclusive, and the default is 10. The lowest number represents the most important URI.
+                    # @param [Boolean] enabled Whether the URL is enabled. The default is `true`.
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [String] sip_url The SIP address you want Twilio to route your Origination calls to. This must be a `sip:` schema.
+                    # @return [OriginationUrlInstance] Created OriginationUrlInstance
+                    def create_with_metadata(
+                      weight: nil, 
+                      priority: nil, 
+                      enabled: nil, 
+                      friendly_name: nil, 
+                      sip_url: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Weight' => weight,
+                            'Priority' => priority,
+                            'Enabled' => enabled,
+                            'FriendlyName' => friendly_name,
+                            'SipUrl' => sip_url,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        originationUrl_instance = OriginationUrlInstance.new(
+                            @version,
+                            response.body,
+                            trunk_sid: @solution[:trunk_sid],
+                        )
+                        OriginationUrlInstanceMetadata.new(
+                            @version,
+                            originationUrl_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists OriginationUrlInstance records from the API as a list.
@@ -107,6 +151,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists OriginationUrlPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        OriginationUrlPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -192,7 +258,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the OriginationUrlInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          originationUrl_instance = OriginationUrlInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          OriginationUrlInstanceMetadata.new(@version, originationUrl_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -212,6 +297,32 @@ module Twilio
                             payload,
                             trunk_sid: @solution[:trunk_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the OriginationUrlInstanceMetadata
+                    # @return [OriginationUrlInstance] Fetched OriginationUrlInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        originationUrl_instance = OriginationUrlInstance.new(
+                            @version,
+                            response.body,
+                            trunk_sid: @solution[:trunk_sid],
+                            sid: @solution[:sid],
+                        )
+                        OriginationUrlInstanceMetadata.new(
+                            @version,
+                            originationUrl_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -254,6 +365,51 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the OriginationUrlInstanceMetadata
+                    # @param [String] weight The value that determines the relative share of the load the URI should receive compared to other URIs with the same priority. Can be an integer from 1 to 65535, inclusive, and the default is 10. URLs with higher values receive more load than those with lower ones with the same priority.
+                    # @param [String] priority The relative importance of the URI. Can be an integer from 0 to 65535, inclusive, and the default is 10. The lowest number represents the most important URI.
+                    # @param [Boolean] enabled Whether the URL is enabled. The default is `true`.
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [String] sip_url The SIP address you want Twilio to route your Origination calls to. This must be a `sip:` schema. `sips` is NOT supported.
+                    # @return [OriginationUrlInstance] Updated OriginationUrlInstance
+                    def update_with_metadata(
+                      weight: :unset, 
+                      priority: :unset, 
+                      enabled: :unset, 
+                      friendly_name: :unset, 
+                      sip_url: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Weight' => weight,
+                            'Priority' => priority,
+                            'Enabled' => enabled,
+                            'FriendlyName' => friendly_name,
+                            'SipUrl' => sip_url,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        originationUrl_instance = OriginationUrlInstance.new(
+                            @version,
+                            response.body,
+                            trunk_sid: @solution[:trunk_sid],
+                            sid: @solution[:sid],
+                        )
+                        OriginationUrlInstanceMetadata.new(
+                            @version,
+                            originationUrl_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -269,6 +425,45 @@ module Twilio
                         "#<Twilio.Trunking.V1.OriginationUrlContext #{context}>"
                     end
                 end
+
+                class OriginationUrlInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new OriginationUrlInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}OriginationUrlInstance] origination_url_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [OriginationUrlInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, origination_url_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @origination_url_instance = origination_url_instance
+                    end
+
+                    def origination_url
+                        @origination_url_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.OriginationUrlInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class OriginationUrlListResponse < InstanceListResource
+                    # @param [Array<OriginationUrlInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @origination_url_instance = payload.body[key].map do |data|
+                        OriginationUrlInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def origination_url_instance
+                          @instance
+                      end
+                  end
 
                 class OriginationUrlPage < Page
                     ##
@@ -298,6 +493,54 @@ module Twilio
                         '<Twilio.Trunking.V1.OriginationUrlPage>'
                     end
                 end
+
+                class OriginationUrlPageMetadata < PageMetadata
+                    attr_reader :origination_url_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @origination_url_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @origination_url_page << OriginationUrlListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @origination_url_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Trunking::V1PageMetadata>';
+                    end
+                end
+                class OriginationUrlListResponse < InstanceListResource
+
+                    # @param [Array<OriginationUrlInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @origination_url = payload.body[key].map do |data|
+                      OriginationUrlInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def origination_url
+                        @origination_url
+                    end
+                end
+
                 class OriginationUrlInstance < InstanceResource
                     ##
                     # Initialize the OriginationUrlInstance

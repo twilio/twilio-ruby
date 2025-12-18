@@ -55,6 +55,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the BulkContactsInstanceMetadata
+                    # @param [Array[Hash]] items A list of objects where each object represents a contact's details. Each object includes the following fields: `contact_id`, which must be a string representing phone number in [E.164 format](https://www.twilio.com/docs/glossary/what-e164); `correlation_id`, a unique 32-character UUID that maps the response to the original request; `country_iso_code`, a string representing the country using the ISO format (e.g., US for the United States); and `zip_code`, a string representing the postal code.
+                    # @return [BulkContactsInstance] Created BulkContactsInstance
+                    def create_with_metadata(
+                      items: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Items' => Twilio.serialize_list(items) { |e| Twilio.serialize_object(e) },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        bulkContacts_instance = BulkContactsInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        BulkContactsInstanceMetadata.new(
+                            @version,
+                            bulkContacts_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -92,6 +123,54 @@ module Twilio
                         '<Twilio.Accounts.V1.BulkContactsPage>'
                     end
                 end
+
+                class BulkContactsPageMetadata < PageMetadata
+                    attr_reader :bulk_contacts_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @bulk_contacts_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @bulk_contacts_page << BulkContactsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @bulk_contacts_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Accounts::V1PageMetadata>';
+                    end
+                end
+                class BulkContactsListResponse < InstanceListResource
+
+                    # @param [Array<BulkContactsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @bulk_contacts = payload.body[key].map do |data|
+                      BulkContactsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def bulk_contacts
+                        @bulk_contacts
+                    end
+                end
+
                 class BulkContactsInstance < InstanceResource
                     ##
                     # Initialize the BulkContactsInstance

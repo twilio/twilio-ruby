@@ -52,6 +52,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the RecordingRulesInstanceMetadata
+                    # @return [RecordingRulesInstance] Fetched RecordingRulesInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        recordingRules_instance = RecordingRulesInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                        )
+                        RecordingRulesInstanceMetadata.new(
+                            @version,
+                            recordingRules_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the RecordingRulesInstance
                     # @param [Object] rules A JSON-encoded array of recording rules.
                     # @return [RecordingRulesInstance] Updated RecordingRulesInstance
@@ -74,6 +99,38 @@ module Twilio
                             @version,
                             payload,
                             room_sid: @solution[:room_sid],
+                        )
+                    end
+
+                    ##
+                    # Update the RecordingRulesInstanceMetadata
+                    # @param [Object] rules A JSON-encoded array of recording rules.
+                    # @return [RecordingRulesInstance] Updated RecordingRulesInstance
+                    def update_with_metadata(
+                      rules: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Rules' => Twilio.serialize_object(rules),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        recordingRules_instance = RecordingRulesInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                        )
+                        RecordingRulesInstanceMetadata.new(
+                            @version,
+                            recordingRules_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -114,6 +171,54 @@ module Twilio
                         '<Twilio.Video.V1.RecordingRulesPage>'
                     end
                 end
+
+                class RecordingRulesPageMetadata < PageMetadata
+                    attr_reader :recording_rules_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @recording_rules_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @recording_rules_page << RecordingRulesListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @recording_rules_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Video::V1PageMetadata>';
+                    end
+                end
+                class RecordingRulesListResponse < InstanceListResource
+
+                    # @param [Array<RecordingRulesInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @recording_rules = payload.body[key].map do |data|
+                      RecordingRulesInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def recording_rules
+                        @recording_rules
+                    end
+                end
+
                 class RecordingRulesInstance < InstanceResource
                     ##
                     # Initialize the RecordingRulesInstance

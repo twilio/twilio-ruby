@@ -151,6 +151,54 @@ module Twilio
                         '<Twilio.Numbers.V2.RegulatoryCompliancePage>'
                     end
                 end
+
+                class RegulatoryCompliancePageMetadata < PageMetadata
+                    attr_reader :regulatory_compliance_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @regulatory_compliance_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @regulatory_compliance_page << RegulatoryComplianceListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @regulatory_compliance_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V2PageMetadata>';
+                    end
+                end
+                class RegulatoryComplianceListResponse < InstanceListResource
+
+                    # @param [Array<RegulatoryComplianceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @regulatory_compliance = payload.body[key].map do |data|
+                      RegulatoryComplianceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def regulatory_compliance
+                        @regulatory_compliance
+                    end
+                end
+
                 class RegulatoryComplianceInstance < InstanceResource
                     ##
                     # Initialize the RegulatoryComplianceInstance

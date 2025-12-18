@@ -50,6 +50,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the SigningRequestConfigurationInstanceMetadata
+                    # @param [Object] body 
+                    # @return [SigningRequestConfigurationInstance] Created SigningRequestConfigurationInstance
+                    def create_with_metadata(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: body.to_json)
+                        signingRequestConfiguration_instance = SigningRequestConfigurationInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        SigningRequestConfigurationInstanceMetadata.new(
+                            @version,
+                            signingRequestConfiguration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists SigningRequestConfigurationInstance records from the API as a list.
@@ -95,6 +121,32 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists SigningRequestConfigurationPageMetadata records from the API as a list.
+                      # @param [String] country The country ISO code to apply this configuration, this is an optional field, Example: US, MX
+                      # @param [String] product The product or service for which is requesting the signature, this is an optional field, Example: Porting, Hosting
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(country: :unset, product: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Country' => country,
+                            'Product' => product,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SigningRequestConfigurationPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -186,6 +238,54 @@ module Twilio
                         '<Twilio.Numbers.V1.SigningRequestConfigurationPage>'
                     end
                 end
+
+                class SigningRequestConfigurationPageMetadata < PageMetadata
+                    attr_reader :signing_request_configuration_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @signing_request_configuration_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @signing_request_configuration_page << SigningRequestConfigurationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @signing_request_configuration_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V1PageMetadata>';
+                    end
+                end
+                class SigningRequestConfigurationListResponse < InstanceListResource
+
+                    # @param [Array<SigningRequestConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @signing_request_configuration = payload.body[key].map do |data|
+                      SigningRequestConfigurationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def signing_request_configuration
+                        @signing_request_configuration
+                    end
+                end
+
                 class SigningRequestConfigurationInstance < InstanceResource
                     ##
                     # Initialize the SigningRequestConfigurationInstance

@@ -81,6 +81,61 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ParticipantInstanceMetadata
+                    # @param [String] identity A unique string identifier for the conversation participant as [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource). This parameter is non-null if (and only if) the participant is using the Conversations SDK to communicate. Limited to 256 characters.
+                    # @param [String] messaging_binding_address The address of the participant's device, e.g. a phone or WhatsApp number. Together with the Proxy address, this determines a participant uniquely. This field (with proxy_address) is only null when the participant is interacting from an SDK endpoint (see the 'identity' field).
+                    # @param [String] messaging_binding_proxy_address The address of the Twilio phone number (or WhatsApp number) that the participant is in contact with. This field, together with participant address, is only null when the participant is interacting from an SDK endpoint (see the 'identity' field).
+                    # @param [Time] date_created The date that this resource was created.
+                    # @param [Time] date_updated The date that this resource was last updated.
+                    # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
+                    # @param [String] messaging_binding_projected_address The address of the Twilio phone number that is used in Group MMS. Communication mask for the Conversation participant with Identity.
+                    # @param [String] role_sid The SID of a conversation-level [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to the participant.
+                    # @param [ConversationParticipantEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @return [ParticipantInstance] Created ParticipantInstance
+                    def create_with_metadata(
+                      identity: :unset, 
+                      messaging_binding_address: :unset, 
+                      messaging_binding_proxy_address: :unset, 
+                      date_created: :unset, 
+                      date_updated: :unset, 
+                      attributes: :unset, 
+                      messaging_binding_projected_address: :unset, 
+                      role_sid: :unset, 
+                      x_twilio_webhook_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Identity' => identity,
+                            'MessagingBinding.Address' => messaging_binding_address,
+                            'MessagingBinding.ProxyAddress' => messaging_binding_proxy_address,
+                            'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
+                            'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                            'Attributes' => attributes,
+                            'MessagingBinding.ProjectedAddress' => messaging_binding_projected_address,
+                            'RoleSid' => role_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        participant_instance = ParticipantInstance.new(
+                            @version,
+                            response.body,
+                            conversation_sid: @solution[:conversation_sid],
+                        )
+                        ParticipantInstanceMetadata.new(
+                            @version,
+                            participant_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ParticipantInstance records from the API as a list.
@@ -118,6 +173,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists ParticipantPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ParticipantPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -206,7 +283,29 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ParticipantInstanceMetadata
+                    # @param [ConversationParticipantEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata(
+                      x_twilio_webhook_enabled: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          participant_instance = ParticipantInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ParticipantInstanceMetadata.new(@version, participant_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -226,6 +325,32 @@ module Twilio
                             payload,
                             conversation_sid: @solution[:conversation_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ParticipantInstanceMetadata
+                    # @return [ParticipantInstance] Fetched ParticipantInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        participant_instance = ParticipantInstance.new(
+                            @version,
+                            response.body,
+                            conversation_sid: @solution[:conversation_sid],
+                            sid: @solution[:sid],
+                        )
+                        ParticipantInstanceMetadata.new(
+                            @version,
+                            participant_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -282,6 +407,65 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ParticipantInstanceMetadata
+                    # @param [Time] date_created The date that this resource was created.
+                    # @param [Time] date_updated The date that this resource was last updated.
+                    # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
+                    # @param [String] role_sid The SID of a conversation-level [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to the participant.
+                    # @param [String] messaging_binding_proxy_address The address of the Twilio phone number that the participant is in contact with. 'null' value will remove it.
+                    # @param [String] messaging_binding_projected_address The address of the Twilio phone number that is used in Group MMS. 'null' value will remove it.
+                    # @param [String] identity A unique string identifier for the conversation participant as [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource). This parameter is non-null if (and only if) the participant is using the Conversations SDK to communicate. Limited to 256 characters.
+                    # @param [String] last_read_message_index Index of last “read” message in the [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for the Participant.
+                    # @param [String] last_read_timestamp Timestamp of last “read” message in the [Conversation](https://www.twilio.com/docs/conversations/api/conversation-resource) for the Participant.
+                    # @param [ConversationParticipantEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @return [ParticipantInstance] Updated ParticipantInstance
+                    def update_with_metadata(
+                      date_created: :unset, 
+                      date_updated: :unset, 
+                      attributes: :unset, 
+                      role_sid: :unset, 
+                      messaging_binding_proxy_address: :unset, 
+                      messaging_binding_projected_address: :unset, 
+                      identity: :unset, 
+                      last_read_message_index: :unset, 
+                      last_read_timestamp: :unset, 
+                      x_twilio_webhook_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
+                            'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                            'Attributes' => attributes,
+                            'RoleSid' => role_sid,
+                            'MessagingBinding.ProxyAddress' => messaging_binding_proxy_address,
+                            'MessagingBinding.ProjectedAddress' => messaging_binding_projected_address,
+                            'Identity' => identity,
+                            'LastReadMessageIndex' => last_read_message_index,
+                            'LastReadTimestamp' => last_read_timestamp,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        participant_instance = ParticipantInstance.new(
+                            @version,
+                            response.body,
+                            conversation_sid: @solution[:conversation_sid],
+                            sid: @solution[:sid],
+                        )
+                        ParticipantInstanceMetadata.new(
+                            @version,
+                            participant_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -297,6 +481,45 @@ module Twilio
                         "#<Twilio.Conversations.V1.ParticipantContext #{context}>"
                     end
                 end
+
+                class ParticipantInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ParticipantInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ParticipantInstance] participant_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ParticipantInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, participant_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @participant_instance = participant_instance
+                    end
+
+                    def participant
+                        @participant_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ParticipantInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ParticipantListResponse < InstanceListResource
+                    # @param [Array<ParticipantInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @participant_instance = payload.body[key].map do |data|
+                        ParticipantInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def participant_instance
+                          @instance
+                      end
+                  end
 
                 class ParticipantPage < Page
                     ##
@@ -326,6 +549,54 @@ module Twilio
                         '<Twilio.Conversations.V1.ParticipantPage>'
                     end
                 end
+
+                class ParticipantPageMetadata < PageMetadata
+                    attr_reader :participant_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @participant_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @participant_page << ParticipantListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @participant_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Conversations::V1PageMetadata>';
+                    end
+                end
+                class ParticipantListResponse < InstanceListResource
+
+                    # @param [Array<ParticipantInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @participant = payload.body[key].map do |data|
+                      ParticipantInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def participant
+                        @participant
+                    end
+                end
+
                 class ParticipantInstance < InstanceResource
                     ##
                     # Initialize the ParticipantInstance

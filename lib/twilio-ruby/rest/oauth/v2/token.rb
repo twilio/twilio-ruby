@@ -81,6 +81,63 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TokenInstanceMetadata
+                    # @param [String] account_sid Optional Account SID to perform on behalf of requests.
+                    # @param [String] grant_type Grant type is a credential representing resource owner's authorization which can be used by client to obtain access token.
+                    # @param [String] client_id A 34 character string that uniquely identifies this OAuth App.
+                    # @param [String] client_secret The credential for confidential OAuth App.
+                    # @param [String] code JWT token related to the authorization code grant type.
+                    # @param [String] redirect_uri The redirect uri
+                    # @param [String] audience The targeted audience uri
+                    # @param [String] refresh_token JWT token related to refresh access token.
+                    # @param [String] scope The scope of token
+                    # @return [TokenInstance] Created TokenInstance
+                    def create_with_metadata(
+                      account_sid: :unset, 
+                      grant_type: :unset, 
+                      client_id: :unset, 
+                      client_secret: :unset, 
+                      code: :unset, 
+                      redirect_uri: :unset, 
+                      audience: :unset, 
+                      refresh_token: :unset, 
+                      scope: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'account_sid' => account_sid,
+                        })
+                        data = Twilio::Values.of({
+                            'grant_type' => grant_type,
+                            'client_id' => client_id,
+                            'client_secret' => client_secret,
+                            'code' => code,
+                            'redirect_uri' => redirect_uri,
+                            'audience' => audience,
+                            'refresh_token' => refresh_token,
+                            'scope' => scope,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, params: params, data: data, headers: headers)
+                        token_instance = TokenInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        TokenInstanceMetadata.new(
+                            @version,
+                            token_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -118,6 +175,54 @@ module Twilio
                         '<Twilio.Oauth.V2.TokenPage>'
                     end
                 end
+
+                class TokenPageMetadata < PageMetadata
+                    attr_reader :token_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @token_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @token_page << TokenListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @token_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Oauth::V2PageMetadata>';
+                    end
+                end
+                class TokenListResponse < InstanceListResource
+
+                    # @param [Array<TokenInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @token = payload.body[key].map do |data|
+                      TokenInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def token
+                        @token
+                    end
+                end
+
                 class TokenInstance < InstanceResource
                     ##
                     # Initialize the TokenInstance

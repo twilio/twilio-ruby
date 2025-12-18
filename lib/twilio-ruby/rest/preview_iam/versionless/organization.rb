@@ -79,6 +79,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the OrganizationInstanceMetadata
+                    # @return [OrganizationInstance] Fetched OrganizationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        headers['Accept'] = 'application/scim+json'
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        organization_instance = OrganizationInstance.new(
+                            @version,
+                            response.body,
+                            organization_sid: @solution[:organization_sid],
+                        )
+                        OrganizationInstanceMetadata.new(
+                            @version,
+                            organization_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the resource_types
                     # @return [ResourceTypeList]
                     # @return [ResourceTypeContext]
@@ -162,6 +187,45 @@ module Twilio
                     end
                 end
 
+                class OrganizationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new OrganizationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}OrganizationInstance] organization_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [OrganizationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, organization_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @organization_instance = organization_instance
+                    end
+
+                    def organization
+                        @organization_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.OrganizationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class OrganizationListResponse < InstanceListResource
+                    # @param [Array<OrganizationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @organization_instance = payload.body[key].map do |data|
+                        OrganizationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def organization_instance
+                          @instance
+                      end
+                  end
+
                 class OrganizationPage < Page
                     ##
                     # Initialize the OrganizationPage
@@ -190,6 +254,54 @@ module Twilio
                         '<Twilio.PreviewIam.Versionless.OrganizationPage>'
                     end
                 end
+
+                class OrganizationPageMetadata < PageMetadata
+                    attr_reader :organization_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @organization_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @organization_page << OrganizationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @organization_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::PreviewIam::VersionlessPageMetadata>';
+                    end
+                end
+                class OrganizationListResponse < InstanceListResource
+
+                    # @param [Array<OrganizationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @organization = payload.body[key].map do |data|
+                      OrganizationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def organization
+                        @organization
+                    end
+                end
+
                 class OrganizationInstance < InstanceResource
                     ##
                     # Initialize the OrganizationInstance

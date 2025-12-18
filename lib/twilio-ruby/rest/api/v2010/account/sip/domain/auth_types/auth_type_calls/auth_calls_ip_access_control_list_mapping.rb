@@ -63,6 +63,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the AuthCallsIpAccessControlListMappingInstanceMetadata
+                    # @param [String] ip_access_control_list_sid The SID of the IpAccessControlList resource to map to the SIP domain.
+                    # @return [AuthCallsIpAccessControlListMappingInstance] Created AuthCallsIpAccessControlListMappingInstance
+                    def create_with_metadata(
+                      ip_access_control_list_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'IpAccessControlListSid' => ip_access_control_list_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        authCallsIpAccessControlListMapping_instance = AuthCallsIpAccessControlListMappingInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            domain_sid: @solution[:domain_sid],
+                        )
+                        AuthCallsIpAccessControlListMappingInstanceMetadata.new(
+                            @version,
+                            authCallsIpAccessControlListMapping_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists AuthCallsIpAccessControlListMappingInstance records from the API as a list.
@@ -100,6 +133,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists AuthCallsIpAccessControlListMappingPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        AuthCallsIpAccessControlListMappingPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -186,7 +241,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the AuthCallsIpAccessControlListMappingInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          authCallsIpAccessControlListMapping_instance = AuthCallsIpAccessControlListMappingInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          AuthCallsIpAccessControlListMappingInstanceMetadata.new(@version, authCallsIpAccessControlListMapping_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -210,6 +284,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the AuthCallsIpAccessControlListMappingInstanceMetadata
+                    # @return [AuthCallsIpAccessControlListMappingInstance] Fetched AuthCallsIpAccessControlListMappingInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        authCallsIpAccessControlListMapping_instance = AuthCallsIpAccessControlListMappingInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            domain_sid: @solution[:domain_sid],
+                            sid: @solution[:sid],
+                        )
+                        AuthCallsIpAccessControlListMappingInstanceMetadata.new(
+                            @version,
+                            authCallsIpAccessControlListMapping_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -225,6 +326,45 @@ module Twilio
                         "#<Twilio.Api.V2010.AuthCallsIpAccessControlListMappingContext #{context}>"
                     end
                 end
+
+                class AuthCallsIpAccessControlListMappingInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AuthCallsIpAccessControlListMappingInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AuthCallsIpAccessControlListMappingInstance] auth_calls_ip_access_control_list_mapping_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AuthCallsIpAccessControlListMappingInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, auth_calls_ip_access_control_list_mapping_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @auth_calls_ip_access_control_list_mapping_instance = auth_calls_ip_access_control_list_mapping_instance
+                    end
+
+                    def auth_calls_ip_access_control_list_mapping
+                        @auth_calls_ip_access_control_list_mapping_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AuthCallsIpAccessControlListMappingInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AuthCallsIpAccessControlListMappingListResponse < InstanceListResource
+                    # @param [Array<AuthCallsIpAccessControlListMappingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @auth_calls_ip_access_control_list_mapping_instance = payload.body[key].map do |data|
+                        AuthCallsIpAccessControlListMappingInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def auth_calls_ip_access_control_list_mapping_instance
+                          @instance
+                      end
+                  end
 
                 class AuthCallsIpAccessControlListMappingPage < Page
                     ##
@@ -254,6 +394,54 @@ module Twilio
                         '<Twilio.Api.V2010.AuthCallsIpAccessControlListMappingPage>'
                     end
                 end
+
+                class AuthCallsIpAccessControlListMappingPageMetadata < PageMetadata
+                    attr_reader :auth_calls_ip_access_control_list_mapping_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @auth_calls_ip_access_control_list_mapping_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @auth_calls_ip_access_control_list_mapping_page << AuthCallsIpAccessControlListMappingListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @auth_calls_ip_access_control_list_mapping_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class AuthCallsIpAccessControlListMappingListResponse < InstanceListResource
+
+                    # @param [Array<AuthCallsIpAccessControlListMappingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @auth_calls_ip_access_control_list_mapping = payload.body[key].map do |data|
+                      AuthCallsIpAccessControlListMappingInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def auth_calls_ip_access_control_list_mapping
+                        @auth_calls_ip_access_control_list_mapping
+                    end
+                end
+
                 class AuthCallsIpAccessControlListMappingInstance < InstanceResource
                     ##
                     # Initialize the AuthCallsIpAccessControlListMappingInstance

@@ -94,6 +94,40 @@ module Twilio
                     end
 
                     ##
+                    # Lists PortingAllPortInPageMetadata records from the API as a list.
+                      # @param [String] token Page start token, if null then it will start from the beginning
+                      # @param [String] size Number of items per page
+                      # @param [String] port_in_request_sid Filter by Port in request SID, supports multiple values separated by comma
+                      # @param [String] port_in_request_status Filter by Port In request status
+                      # @param [String] created_before Find all created before a certain date
+                      # @param [String] created_after Find all created after a certain date
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(token: :unset, size: :unset, port_in_request_sid: :unset, port_in_request_status: :unset, created_before: :unset, created_after: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Token' => token,
+                            'Size' => size,
+                            'PortInRequestSid' => port_in_request_sid,
+                            'PortInRequestStatus' => port_in_request_status,
+                            'CreatedBefore' => created_before,
+                            'CreatedAfter' => created_after,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        PortingAllPortInPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields PortingAllPortInInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -190,6 +224,54 @@ module Twilio
                         '<Twilio.Numbers.V1.PortingAllPortInPage>'
                     end
                 end
+
+                class PortingAllPortInPageMetadata < PageMetadata
+                    attr_reader :porting_all_port_in_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @porting_all_port_in_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @porting_all_port_in_page << PortingAllPortInListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @porting_all_port_in_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V1PageMetadata>';
+                    end
+                end
+                class PortingAllPortInListResponse < InstanceListResource
+
+                    # @param [Array<PortingAllPortInInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @porting_all_port_in = payload.body[key].map do |data|
+                      PortingAllPortInInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def porting_all_port_in
+                        @porting_all_port_in
+                    end
+                end
+
                 class PortingAllPortInInstance < InstanceResource
                     ##
                     # Initialize the PortingAllPortInInstance

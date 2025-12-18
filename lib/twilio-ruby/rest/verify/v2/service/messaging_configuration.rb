@@ -61,6 +61,41 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the MessagingConfigurationInstanceMetadata
+                    # @param [String] country The [ISO-3166-1](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code of the country this configuration will be applied to. If this is a global configuration, Country will take the value `all`.
+                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) to be used to send SMS to the country of this configuration.
+                    # @return [MessagingConfigurationInstance] Created MessagingConfigurationInstance
+                    def create_with_metadata(
+                      country: nil, 
+                      messaging_service_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Country' => country,
+                            'MessagingServiceSid' => messaging_service_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        messagingConfiguration_instance = MessagingConfigurationInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                        )
+                        MessagingConfigurationInstanceMetadata.new(
+                            @version,
+                            messagingConfiguration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists MessagingConfigurationInstance records from the API as a list.
@@ -98,6 +133,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists MessagingConfigurationPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        MessagingConfigurationPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -183,7 +240,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the MessagingConfigurationInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          messagingConfiguration_instance = MessagingConfigurationInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          MessagingConfigurationInstanceMetadata.new(@version, messagingConfiguration_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -203,6 +279,32 @@ module Twilio
                             payload,
                             service_sid: @solution[:service_sid],
                             country: @solution[:country],
+                        )
+                    end
+
+                    ##
+                    # Fetch the MessagingConfigurationInstanceMetadata
+                    # @return [MessagingConfigurationInstance] Fetched MessagingConfigurationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        messagingConfiguration_instance = MessagingConfigurationInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            country: @solution[:country],
+                        )
+                        MessagingConfigurationInstanceMetadata.new(
+                            @version,
+                            messagingConfiguration_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -233,6 +335,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the MessagingConfigurationInstanceMetadata
+                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) to be used to send SMS to the country of this configuration.
+                    # @return [MessagingConfigurationInstance] Updated MessagingConfigurationInstance
+                    def update_with_metadata(
+                      messaging_service_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'MessagingServiceSid' => messaging_service_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        messagingConfiguration_instance = MessagingConfigurationInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            country: @solution[:country],
+                        )
+                        MessagingConfigurationInstanceMetadata.new(
+                            @version,
+                            messagingConfiguration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -248,6 +383,45 @@ module Twilio
                         "#<Twilio.Verify.V2.MessagingConfigurationContext #{context}>"
                     end
                 end
+
+                class MessagingConfigurationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new MessagingConfigurationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}MessagingConfigurationInstance] messaging_configuration_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [MessagingConfigurationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, messaging_configuration_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @messaging_configuration_instance = messaging_configuration_instance
+                    end
+
+                    def messaging_configuration
+                        @messaging_configuration_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.MessagingConfigurationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class MessagingConfigurationListResponse < InstanceListResource
+                    # @param [Array<MessagingConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @messaging_configuration_instance = payload.body[key].map do |data|
+                        MessagingConfigurationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def messaging_configuration_instance
+                          @instance
+                      end
+                  end
 
                 class MessagingConfigurationPage < Page
                     ##
@@ -277,6 +451,54 @@ module Twilio
                         '<Twilio.Verify.V2.MessagingConfigurationPage>'
                     end
                 end
+
+                class MessagingConfigurationPageMetadata < PageMetadata
+                    attr_reader :messaging_configuration_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @messaging_configuration_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @messaging_configuration_page << MessagingConfigurationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @messaging_configuration_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class MessagingConfigurationListResponse < InstanceListResource
+
+                    # @param [Array<MessagingConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @messaging_configuration = payload.body[key].map do |data|
+                      MessagingConfigurationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def messaging_configuration
+                        @messaging_configuration
+                    end
+                end
+
                 class MessagingConfigurationInstance < InstanceResource
                     ##
                     # Initialize the MessagingConfigurationInstance

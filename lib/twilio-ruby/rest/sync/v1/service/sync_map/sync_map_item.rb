@@ -72,6 +72,51 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the SyncMapItemInstanceMetadata
+                    # @param [String] key The unique, user-defined key for the Map Item. Can be up to 320 characters long.
+                    # @param [Object] data A JSON string that represents an arbitrary, schema-less object that the Map Item stores. Can be up to 16 KiB in length.
+                    # @param [String] ttl An alias for `item_ttl`. If both parameters are provided, this value is ignored.
+                    # @param [String] item_ttl How long, [in seconds](https://www.twilio.com/docs/sync/limits#sync-payload-limits), before the Map Item expires (time-to-live) and is deleted.
+                    # @param [String] collection_ttl How long, [in seconds](https://www.twilio.com/docs/sync/limits#sync-payload-limits), before the Map Item's parent Sync Map expires (time-to-live) and is deleted.
+                    # @return [SyncMapItemInstance] Created SyncMapItemInstance
+                    def create_with_metadata(
+                      key: nil, 
+                      data: nil, 
+                      ttl: :unset, 
+                      item_ttl: :unset, 
+                      collection_ttl: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Key' => key,
+                            'Data' => Twilio.serialize_object(data),
+                            'Ttl' => ttl,
+                            'ItemTtl' => item_ttl,
+                            'CollectionTtl' => collection_ttl,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        syncMapItem_instance = SyncMapItemInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            map_sid: @solution[:map_sid],
+                        )
+                        SyncMapItemInstanceMetadata.new(
+                            @version,
+                            syncMapItem_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists SyncMapItemInstance records from the API as a list.
@@ -121,6 +166,34 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists SyncMapItemPageMetadata records from the API as a list.
+                      # @param [QueryResultOrder] order How to order the Map Items returned by their `key` value. Can be: `asc` (ascending) or `desc` (descending) and the default is ascending. Map Items are [ordered lexicographically](https://en.wikipedia.org/wiki/Lexicographical_order) by Item key.
+                      # @param [String] from The `key` of the first Sync Map Item resource to read. See also `bounds`.
+                      # @param [QueryFromBoundType] bounds Whether to include the Map Item referenced by the `from` parameter. Can be: `inclusive` to include the Map Item referenced by the `from` parameter or `exclusive` to start with the next Map Item. The default value is `inclusive`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(order: :unset, from: :unset, bounds: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Order' => order,
+                            'From' => from,
+                            'Bounds' => bounds,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SyncMapItemPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -216,7 +289,29 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the SyncMapItemInstanceMetadata
+                    # @param [String] if_match If provided, applies this mutation if (and only if) the “revision” field of this [map item] matches the provided value. This matches the semantics of (and is implemented with) the HTTP [If-Match header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match).
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata(
+                      if_match: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          syncMapItem_instance = SyncMapItemInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          SyncMapItemInstanceMetadata.new(@version, syncMapItem_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -237,6 +332,33 @@ module Twilio
                             service_sid: @solution[:service_sid],
                             map_sid: @solution[:map_sid],
                             key: @solution[:key],
+                        )
+                    end
+
+                    ##
+                    # Fetch the SyncMapItemInstanceMetadata
+                    # @return [SyncMapItemInstance] Fetched SyncMapItemInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        syncMapItem_instance = SyncMapItemInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            map_sid: @solution[:map_sid],
+                            key: @solution[:key],
+                        )
+                        SyncMapItemInstanceMetadata.new(
+                            @version,
+                            syncMapItem_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -279,6 +401,51 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the SyncMapItemInstanceMetadata
+                    # @param [Object] data A JSON string that represents an arbitrary, schema-less object that the Map Item stores. Can be up to 16 KiB in length.
+                    # @param [String] ttl An alias for `item_ttl`. If both parameters are provided, this value is ignored.
+                    # @param [String] item_ttl How long, [in seconds](https://www.twilio.com/docs/sync/limits#sync-payload-limits), before the Map Item expires (time-to-live) and is deleted.
+                    # @param [String] collection_ttl How long, [in seconds](https://www.twilio.com/docs/sync/limits#sync-payload-limits), before the Map Item's parent Sync Map expires (time-to-live) and is deleted. This parameter can only be used when the Map Item's `data` or `ttl` is updated in the same request.
+                    # @param [String] if_match If provided, applies this mutation if (and only if) the “revision” field of this [map item] matches the provided value. This matches the semantics of (and is implemented with) the HTTP [If-Match header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match).
+                    # @return [SyncMapItemInstance] Updated SyncMapItemInstance
+                    def update_with_metadata(
+                      data: :unset, 
+                      ttl: :unset, 
+                      item_ttl: :unset, 
+                      collection_ttl: :unset, 
+                      if_match: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Data' => Twilio.serialize_object(data),
+                            'Ttl' => ttl,
+                            'ItemTtl' => item_ttl,
+                            'CollectionTtl' => collection_ttl,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        syncMapItem_instance = SyncMapItemInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            map_sid: @solution[:map_sid],
+                            key: @solution[:key],
+                        )
+                        SyncMapItemInstanceMetadata.new(
+                            @version,
+                            syncMapItem_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -294,6 +461,45 @@ module Twilio
                         "#<Twilio.Sync.V1.SyncMapItemContext #{context}>"
                     end
                 end
+
+                class SyncMapItemInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SyncMapItemInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SyncMapItemInstance] sync_map_item_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SyncMapItemInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, sync_map_item_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @sync_map_item_instance = sync_map_item_instance
+                    end
+
+                    def sync_map_item
+                        @sync_map_item_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SyncMapItemInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SyncMapItemListResponse < InstanceListResource
+                    # @param [Array<SyncMapItemInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @sync_map_item_instance = payload.body[key].map do |data|
+                        SyncMapItemInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def sync_map_item_instance
+                          @instance
+                      end
+                  end
 
                 class SyncMapItemPage < Page
                     ##
@@ -323,6 +529,54 @@ module Twilio
                         '<Twilio.Sync.V1.SyncMapItemPage>'
                     end
                 end
+
+                class SyncMapItemPageMetadata < PageMetadata
+                    attr_reader :sync_map_item_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @sync_map_item_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @sync_map_item_page << SyncMapItemListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @sync_map_item_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Sync::V1PageMetadata>';
+                    end
+                end
+                class SyncMapItemListResponse < InstanceListResource
+
+                    # @param [Array<SyncMapItemInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @sync_map_item = payload.body[key].map do |data|
+                      SyncMapItemInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def sync_map_item
+                        @sync_map_item
+                    end
+                end
+
                 class SyncMapItemInstance < InstanceResource
                     ##
                     # Initialize the SyncMapItemInstance

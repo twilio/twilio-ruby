@@ -90,6 +90,70 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ConversationInstanceMetadata
+                    # @param [String] friendly_name The human-readable name of this conversation, limited to 256 characters. Optional.
+                    # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used to address the resource in place of the resource's `sid` in the URL.
+                    # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
+                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) this conversation belongs to.
+                    # @param [Time] date_created The date that this resource was created.
+                    # @param [Time] date_updated The date that this resource was last updated.
+                    # @param [State] state 
+                    # @param [String] timers_inactive ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
+                    # @param [String] timers_closed ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
+                    # @param [String] bindings_email_address The default email address that will be used when sending outbound emails in this conversation.
+                    # @param [String] bindings_email_name The default name that will be used when sending outbound emails in this conversation.
+                    # @param [ServiceConversationEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @return [ConversationInstance] Created ConversationInstance
+                    def create_with_metadata(
+                      friendly_name: :unset, 
+                      unique_name: :unset, 
+                      attributes: :unset, 
+                      messaging_service_sid: :unset, 
+                      date_created: :unset, 
+                      date_updated: :unset, 
+                      state: :unset, 
+                      timers_inactive: :unset, 
+                      timers_closed: :unset, 
+                      bindings_email_address: :unset, 
+                      bindings_email_name: :unset, 
+                      x_twilio_webhook_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'UniqueName' => unique_name,
+                            'Attributes' => attributes,
+                            'MessagingServiceSid' => messaging_service_sid,
+                            'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
+                            'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                            'State' => state,
+                            'Timers.Inactive' => timers_inactive,
+                            'Timers.Closed' => timers_closed,
+                            'Bindings.Email.Address' => bindings_email_address,
+                            'Bindings.Email.Name' => bindings_email_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        conversation_instance = ConversationInstance.new(
+                            @version,
+                            response.body,
+                            chat_service_sid: @solution[:chat_service_sid],
+                        )
+                        ConversationInstanceMetadata.new(
+                            @version,
+                            conversation_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ConversationInstance records from the API as a list.
@@ -139,6 +203,34 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists ConversationPageMetadata records from the API as a list.
+                      # @param [String] start_date Specifies the beginning of the date range for filtering Conversations based on their creation date. Conversations that were created on or after this date will be included in the results. The date must be in ISO8601 format, specifically starting at the beginning of the specified date (YYYY-MM-DDT00:00:00Z), for precise filtering. This parameter can be combined with other filters. If this filter is used, the returned list is sorted by latest conversation creation date in descending order.
+                      # @param [String] end_date Defines the end of the date range for filtering conversations by their creation date. Only conversations that were created on or before this date will appear in the results.  The date must be in ISO8601 format, specifically capturing up to the end of the specified date (YYYY-MM-DDT23:59:59Z), to ensure that conversations from the entire end day are included. This parameter can be combined with other filters. If this filter is used, the returned list is sorted by latest conversation creation date in descending order.
+                      # @param [State] state State for sorting and filtering list of Conversations. Can be `active`, `inactive` or `closed`
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(start_date: :unset, end_date: :unset, state: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'StartDate' => start_date,
+                            'EndDate' => end_date,
+                            'State' => state,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ConversationPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -236,7 +328,29 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ConversationInstanceMetadata
+                    # @param [ServiceConversationEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata(
+                      x_twilio_webhook_enabled: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          conversation_instance = ConversationInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ConversationInstanceMetadata.new(@version, conversation_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -256,6 +370,32 @@ module Twilio
                             payload,
                             chat_service_sid: @solution[:chat_service_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ConversationInstanceMetadata
+                    # @return [ConversationInstance] Fetched ConversationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        conversation_instance = ConversationInstance.new(
+                            @version,
+                            response.body,
+                            chat_service_sid: @solution[:chat_service_sid],
+                            sid: @solution[:sid],
+                        )
+                        ConversationInstanceMetadata.new(
+                            @version,
+                            conversation_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -315,6 +455,71 @@ module Twilio
                             payload,
                             chat_service_sid: @solution[:chat_service_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the ConversationInstanceMetadata
+                    # @param [String] friendly_name The human-readable name of this conversation, limited to 256 characters. Optional.
+                    # @param [Time] date_created The date that this resource was created.
+                    # @param [Time] date_updated The date that this resource was last updated.
+                    # @param [String] attributes An optional string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
+                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) this conversation belongs to.
+                    # @param [State] state 
+                    # @param [String] timers_inactive ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
+                    # @param [String] timers_closed ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
+                    # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used to address the resource in place of the resource's `sid` in the URL.
+                    # @param [String] bindings_email_address The default email address that will be used when sending outbound emails in this conversation.
+                    # @param [String] bindings_email_name The default name that will be used when sending outbound emails in this conversation.
+                    # @param [ServiceConversationEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @return [ConversationInstance] Updated ConversationInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      date_created: :unset, 
+                      date_updated: :unset, 
+                      attributes: :unset, 
+                      messaging_service_sid: :unset, 
+                      state: :unset, 
+                      timers_inactive: :unset, 
+                      timers_closed: :unset, 
+                      unique_name: :unset, 
+                      bindings_email_address: :unset, 
+                      bindings_email_name: :unset, 
+                      x_twilio_webhook_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'DateCreated' => Twilio.serialize_iso8601_datetime(date_created),
+                            'DateUpdated' => Twilio.serialize_iso8601_datetime(date_updated),
+                            'Attributes' => attributes,
+                            'MessagingServiceSid' => messaging_service_sid,
+                            'State' => state,
+                            'Timers.Inactive' => timers_inactive,
+                            'Timers.Closed' => timers_closed,
+                            'UniqueName' => unique_name,
+                            'Bindings.Email.Address' => bindings_email_address,
+                            'Bindings.Email.Name' => bindings_email_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        conversation_instance = ConversationInstance.new(
+                            @version,
+                            response.body,
+                            chat_service_sid: @solution[:chat_service_sid],
+                            sid: @solution[:sid],
+                        )
+                        ConversationInstanceMetadata.new(
+                            @version,
+                            conversation_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -391,6 +596,45 @@ module Twilio
                     end
                 end
 
+                class ConversationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ConversationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ConversationInstance] conversation_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ConversationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, conversation_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @conversation_instance = conversation_instance
+                    end
+
+                    def conversation
+                        @conversation_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ConversationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ConversationListResponse < InstanceListResource
+                    # @param [Array<ConversationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @conversation_instance = payload.body[key].map do |data|
+                        ConversationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def conversation_instance
+                          @instance
+                      end
+                  end
+
                 class ConversationPage < Page
                     ##
                     # Initialize the ConversationPage
@@ -419,6 +663,54 @@ module Twilio
                         '<Twilio.Conversations.V1.ConversationPage>'
                     end
                 end
+
+                class ConversationPageMetadata < PageMetadata
+                    attr_reader :conversation_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @conversation_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @conversation_page << ConversationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @conversation_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Conversations::V1PageMetadata>';
+                    end
+                end
+                class ConversationListResponse < InstanceListResource
+
+                    # @param [Array<ConversationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @conversation = payload.body[key].map do |data|
+                      ConversationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def conversation
+                        @conversation
+                    end
+                end
+
                 class ConversationInstance < InstanceResource
                     ##
                     # Initialize the ConversationInstance

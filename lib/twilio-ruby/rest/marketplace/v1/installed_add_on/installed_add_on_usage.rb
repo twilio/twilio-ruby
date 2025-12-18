@@ -70,6 +70,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the InstalledAddOnUsageInstanceMetadata
+                    # @param [MarketplaceV1InstalledAddOnInstalledAddOnUsage] marketplace_v1_installed_add_on_installed_add_on_usage 
+                    # @return [InstalledAddOnUsageInstance] Created InstalledAddOnUsageInstance
+                    def create_with_metadata(marketplace_v1_installed_add_on_installed_add_on_usage: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: marketplace_v1_installed_add_on_installed_add_on_usage.to_json)
+                        installedAddOnUsage_instance = InstalledAddOnUsageInstance.new(
+                            @version,
+                            response.body,
+                            installed_add_on_sid: @solution[:installed_add_on_sid],
+                        )
+                        InstalledAddOnUsageInstanceMetadata.new(
+                            @version,
+                            installedAddOnUsage_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -107,6 +134,54 @@ module Twilio
                         '<Twilio.Marketplace.V1.InstalledAddOnUsagePage>'
                     end
                 end
+
+                class InstalledAddOnUsagePageMetadata < PageMetadata
+                    attr_reader :installed_add_on_usage_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @installed_add_on_usage_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @installed_add_on_usage_page << InstalledAddOnUsageListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @installed_add_on_usage_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Marketplace::V1PageMetadata>';
+                    end
+                end
+                class InstalledAddOnUsageListResponse < InstanceListResource
+
+                    # @param [Array<InstalledAddOnUsageInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @installed_add_on_usage = payload.body[key].map do |data|
+                      InstalledAddOnUsageInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def installed_add_on_usage
+                        @installed_add_on_usage
+                    end
+                end
+
                 class InstalledAddOnUsageInstance < InstanceResource
                     ##
                     # Initialize the InstalledAddOnUsageInstance

@@ -95,6 +95,54 @@ module Twilio
                         '<Twilio.Pricing.V1.VoicePage>'
                     end
                 end
+
+                class VoicePageMetadata < PageMetadata
+                    attr_reader :voice_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @voice_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @voice_page << VoiceListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @voice_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Pricing::V1PageMetadata>';
+                    end
+                end
+                class VoiceListResponse < InstanceListResource
+
+                    # @param [Array<VoiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @voice = payload.body[key].map do |data|
+                      VoiceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def voice
+                        @voice
+                    end
+                end
+
                 class VoiceInstance < InstanceResource
                     ##
                     # Initialize the VoiceInstance

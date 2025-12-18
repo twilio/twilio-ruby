@@ -61,6 +61,41 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the EnvironmentInstanceMetadata
+                    # @param [String] unique_name A user-defined string that uniquely identifies the Environment resource. It can be a maximum of 100 characters.
+                    # @param [String] domain_suffix A URL-friendly name that represents the environment and forms part of the domain name. It can be a maximum of 16 characters.
+                    # @return [EnvironmentInstance] Created EnvironmentInstance
+                    def create_with_metadata(
+                      unique_name: nil, 
+                      domain_suffix: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'UniqueName' => unique_name,
+                            'DomainSuffix' => domain_suffix,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        environment_instance = EnvironmentInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                        )
+                        EnvironmentInstanceMetadata.new(
+                            @version,
+                            environment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists EnvironmentInstance records from the API as a list.
@@ -98,6 +133,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists EnvironmentPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        EnvironmentPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -186,7 +243,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the EnvironmentInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          environment_instance = EnvironmentInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          EnvironmentInstanceMetadata.new(@version, environment_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -206,6 +282,32 @@ module Twilio
                             payload,
                             service_sid: @solution[:service_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the EnvironmentInstanceMetadata
+                    # @return [EnvironmentInstance] Fetched EnvironmentInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        environment_instance = EnvironmentInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            sid: @solution[:sid],
+                        )
+                        EnvironmentInstanceMetadata.new(
+                            @version,
+                            environment_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -282,6 +384,45 @@ module Twilio
                     end
                 end
 
+                class EnvironmentInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new EnvironmentInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}EnvironmentInstance] environment_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [EnvironmentInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, environment_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @environment_instance = environment_instance
+                    end
+
+                    def environment
+                        @environment_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.EnvironmentInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class EnvironmentListResponse < InstanceListResource
+                    # @param [Array<EnvironmentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @environment_instance = payload.body[key].map do |data|
+                        EnvironmentInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def environment_instance
+                          @instance
+                      end
+                  end
+
                 class EnvironmentPage < Page
                     ##
                     # Initialize the EnvironmentPage
@@ -310,6 +451,54 @@ module Twilio
                         '<Twilio.Serverless.V1.EnvironmentPage>'
                     end
                 end
+
+                class EnvironmentPageMetadata < PageMetadata
+                    attr_reader :environment_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @environment_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @environment_page << EnvironmentListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @environment_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Serverless::V1PageMetadata>';
+                    end
+                end
+                class EnvironmentListResponse < InstanceListResource
+
+                    # @param [Array<EnvironmentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @environment = payload.body[key].map do |data|
+                      EnvironmentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def environment
+                        @environment
+                    end
+                end
+
                 class EnvironmentInstance < InstanceResource
                     ##
                     # Initialize the EnvironmentInstance

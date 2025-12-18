@@ -73,6 +73,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists FactorPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        FactorPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields FactorInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -156,7 +178,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the FactorInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          factor_instance = FactorInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          FactorInstanceMetadata.new(@version, factor_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -177,6 +218,33 @@ module Twilio
                             service_sid: @solution[:service_sid],
                             identity: @solution[:identity],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the FactorInstanceMetadata
+                    # @return [FactorInstance] Fetched FactorInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        factor_instance = FactorInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            identity: @solution[:identity],
+                            sid: @solution[:sid],
+                        )
+                        FactorInstanceMetadata.new(
+                            @version,
+                            factor_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -232,6 +300,64 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the FactorInstanceMetadata
+                    # @param [String] auth_payload The optional payload needed to verify the Factor for the first time. E.g. for a TOTP, the numeric code.
+                    # @param [String] friendly_name The new friendly name of this Factor. It can be up to 64 characters.
+                    # @param [String] config_notification_token For APN, the device token. For FCM, the registration token. It is used to send the push notifications. Required when `factor_type` is `push`. If specified, this value must be between 32 and 255 characters long.
+                    # @param [String] config_sdk_version The Verify Push SDK version used to configure the factor
+                    # @param [String] config_time_step Defines how often, in seconds, are TOTP codes generated. i.e, a new TOTP code is generated every time_step seconds. Must be between 20 and 60 seconds, inclusive
+                    # @param [String] config_skew The number of time-steps, past and future, that are valid for validation of TOTP codes. Must be between 0 and 2, inclusive
+                    # @param [String] config_code_length Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive
+                    # @param [TotpAlgorithms] config_alg 
+                    # @param [String] config_notification_platform The transport technology used to generate the Notification Token. Can be `apn`, `fcm` or `none`.  Required when `factor_type` is `push`.
+                    # @return [FactorInstance] Updated FactorInstance
+                    def update_with_metadata(
+                      auth_payload: :unset, 
+                      friendly_name: :unset, 
+                      config_notification_token: :unset, 
+                      config_sdk_version: :unset, 
+                      config_time_step: :unset, 
+                      config_skew: :unset, 
+                      config_code_length: :unset, 
+                      config_alg: :unset, 
+                      config_notification_platform: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'AuthPayload' => auth_payload,
+                            'FriendlyName' => friendly_name,
+                            'Config.NotificationToken' => config_notification_token,
+                            'Config.SdkVersion' => config_sdk_version,
+                            'Config.TimeStep' => config_time_step,
+                            'Config.Skew' => config_skew,
+                            'Config.CodeLength' => config_code_length,
+                            'Config.Alg' => config_alg,
+                            'Config.NotificationPlatform' => config_notification_platform,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        factor_instance = FactorInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            identity: @solution[:identity],
+                            sid: @solution[:sid],
+                        )
+                        FactorInstanceMetadata.new(
+                            @version,
+                            factor_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -247,6 +373,45 @@ module Twilio
                         "#<Twilio.Verify.V2.FactorContext #{context}>"
                     end
                 end
+
+                class FactorInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new FactorInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}FactorInstance] factor_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [FactorInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, factor_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @factor_instance = factor_instance
+                    end
+
+                    def factor
+                        @factor_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.FactorInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class FactorListResponse < InstanceListResource
+                    # @param [Array<FactorInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @factor_instance = payload.body[key].map do |data|
+                        FactorInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def factor_instance
+                          @instance
+                      end
+                  end
 
                 class FactorPage < Page
                     ##
@@ -276,6 +441,54 @@ module Twilio
                         '<Twilio.Verify.V2.FactorPage>'
                     end
                 end
+
+                class FactorPageMetadata < PageMetadata
+                    attr_reader :factor_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @factor_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @factor_page << FactorListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @factor_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class FactorListResponse < InstanceListResource
+
+                    # @param [Array<FactorInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @factor = payload.body[key].map do |data|
+                      FactorInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def factor
+                        @factor
+                    end
+                end
+
                 class FactorInstance < InstanceResource
                     ##
                     # Initialize the FactorInstance

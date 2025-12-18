@@ -80,6 +80,32 @@ module Twilio
                     end
 
                     ##
+                    # Lists MetricPageMetadata records from the API as a list.
+                      # @param [TwilioEdge] edge The Edge of this Metric. One of `unknown_edge`, `carrier_edge`, `sip_edge`, `sdk_edge` or `client_edge`.
+                      # @param [StreamDirection] direction The Direction of this Metric. One of `unknown`, `inbound`, `outbound` or `both`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(edge: :unset, direction: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Edge' => edge,
+                            'Direction' => direction,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        MetricPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields MetricInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -168,6 +194,54 @@ module Twilio
                         '<Twilio.Insights.V1.MetricPage>'
                     end
                 end
+
+                class MetricPageMetadata < PageMetadata
+                    attr_reader :metric_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @metric_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @metric_page << MetricListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @metric_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Insights::V1PageMetadata>';
+                    end
+                end
+                class MetricListResponse < InstanceListResource
+
+                    # @param [Array<MetricInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @metric = payload.body[key].map do |data|
+                      MetricInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def metric
+                        @metric
+                    end
+                end
+
                 class MetricInstance < InstanceResource
                     ##
                     # Initialize the MetricInstance

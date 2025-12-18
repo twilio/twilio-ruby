@@ -75,6 +75,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the UserInstanceMetadata
+                    # @return [UserInstance] Fetched UserInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        user_instance = UserInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        UserInstanceMetadata.new(
+                            @version,
+                            user_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the UserInstance
                     # @param [String] friendly_name The string that you assigned to describe the User.
                     # @param [String] avatar The avatar URL which will be shown in Frontline application.
@@ -109,6 +134,47 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the UserInstanceMetadata
+                    # @param [String] friendly_name The string that you assigned to describe the User.
+                    # @param [String] avatar The avatar URL which will be shown in Frontline application.
+                    # @param [StateType] state 
+                    # @param [Boolean] is_available Whether the User is available for new conversations. Set to `false` to prevent User from receiving new inbound conversations if you are using [Pool Routing](https://www.twilio.com/docs/frontline/handle-incoming-conversations#3-pool-routing).
+                    # @return [UserInstance] Updated UserInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      avatar: :unset, 
+                      state: :unset, 
+                      is_available: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Avatar' => avatar,
+                            'State' => state,
+                            'IsAvailable' => is_available,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        user_instance = UserInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        UserInstanceMetadata.new(
+                            @version,
+                            user_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -124,6 +190,45 @@ module Twilio
                         "#<Twilio.FrontlineApi.V1.UserContext #{context}>"
                     end
                 end
+
+                class UserInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new UserInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}UserInstance] user_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [UserInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, user_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @user_instance = user_instance
+                    end
+
+                    def user
+                        @user_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.UserInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class UserListResponse < InstanceListResource
+                    # @param [Array<UserInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @user_instance = payload.body[key].map do |data|
+                        UserInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def user_instance
+                          @instance
+                      end
+                  end
 
                 class UserPage < Page
                     ##
@@ -153,6 +258,54 @@ module Twilio
                         '<Twilio.FrontlineApi.V1.UserPage>'
                     end
                 end
+
+                class UserPageMetadata < PageMetadata
+                    attr_reader :user_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @user_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @user_page << UserListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @user_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FrontlineApi::V1PageMetadata>';
+                    end
+                end
+                class UserListResponse < InstanceListResource
+
+                    # @param [Array<UserInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @user = payload.body[key].map do |data|
+                      UserInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def user
+                        @user
+                    end
+                end
+
                 class UserInstance < InstanceResource
                     ##
                     # Initialize the UserInstance

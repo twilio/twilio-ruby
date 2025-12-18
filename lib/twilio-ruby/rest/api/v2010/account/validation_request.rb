@@ -73,6 +73,53 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ValidationRequestInstanceMetadata
+                    # @param [String] phone_number The phone number to verify in [E.164](https://www.twilio.com/docs/glossary/what-e164) format, which consists of a + followed by the country code and subscriber number.
+                    # @param [String] friendly_name A descriptive string that you create to describe the new caller ID resource. It can be up to 64 characters long. The default value is a formatted version of the phone number.
+                    # @param [String] call_delay The number of seconds to delay before initiating the verification call. Can be an integer between `0` and `60`, inclusive. The default is `0`.
+                    # @param [String] extension The digits to dial after connecting the verification call.
+                    # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information about the verification process to your application.
+                    # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `GET` or `POST`, and the default is `POST`.
+                    # @return [ValidationRequestInstance] Created ValidationRequestInstance
+                    def create_with_metadata(
+                      phone_number: nil, 
+                      friendly_name: :unset, 
+                      call_delay: :unset, 
+                      extension: :unset, 
+                      status_callback: :unset, 
+                      status_callback_method: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'PhoneNumber' => phone_number,
+                            'FriendlyName' => friendly_name,
+                            'CallDelay' => call_delay,
+                            'Extension' => extension,
+                            'StatusCallback' => status_callback,
+                            'StatusCallbackMethod' => status_callback_method,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        validationRequest_instance = ValidationRequestInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                        )
+                        ValidationRequestInstanceMetadata.new(
+                            @version,
+                            validationRequest_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -110,6 +157,54 @@ module Twilio
                         '<Twilio.Api.V2010.ValidationRequestPage>'
                     end
                 end
+
+                class ValidationRequestPageMetadata < PageMetadata
+                    attr_reader :validation_request_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @validation_request_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @validation_request_page << ValidationRequestListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @validation_request_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class ValidationRequestListResponse < InstanceListResource
+
+                    # @param [Array<ValidationRequestInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @validation_request = payload.body[key].map do |data|
+                      ValidationRequestInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def validation_request
+                        @validation_request
+                    end
+                end
+
                 class ValidationRequestInstance < InstanceResource
                     ##
                     # Initialize the ValidationRequestInstance

@@ -145,6 +145,64 @@ module Twilio
                     end
 
                     ##
+                    # Lists SharedCostPageMetadata records from the API as a list.
+                      # @param [String] area_code The area code of the phone numbers to read. Applies to only phone numbers in the US and Canada.
+                      # @param [String] contains Matching pattern to identify phone numbers. This pattern can be between 2 and 16 characters long and allows all digits (0-9) and all non-diacritic latin alphabet letters (a-z, A-Z). It accepts four meta-characters: `*`, `%`, `+`, `$`. The `*` and `%` meta-characters can appear multiple times in the pattern. To match wildcards at the beginning or end of the pattern, use `*` to match any single character or `%` to match a sequence of characters. If you use the wildcard patterns, it must include at least two non-meta-characters, and wildcards cannot be used between non-meta-characters. To match the beginning of a pattern, start the pattern with `+`. To match the end of the pattern, append the pattern with `$`. These meta-characters can't be adjacent to each other.
+                      # @param [Boolean] sms_enabled Whether the phone numbers can receive text messages. Can be: `true` or `false`.
+                      # @param [Boolean] mms_enabled Whether the phone numbers can receive MMS messages. Can be: `true` or `false`.
+                      # @param [Boolean] voice_enabled Whether the phone numbers can receive calls. Can be: `true` or `false`.
+                      # @param [Boolean] exclude_all_address_required Whether to exclude phone numbers that require an [Address](https://www.twilio.com/docs/usage/api/address). Can be: `true` or `false` and the default is `false`.
+                      # @param [Boolean] exclude_local_address_required Whether to exclude phone numbers that require a local [Address](https://www.twilio.com/docs/usage/api/address). Can be: `true` or `false` and the default is `false`.
+                      # @param [Boolean] exclude_foreign_address_required Whether to exclude phone numbers that require a foreign [Address](https://www.twilio.com/docs/usage/api/address). Can be: `true` or `false` and the default is `false`.
+                      # @param [Boolean] beta Whether to read phone numbers that are new to the Twilio platform. Can be: `true` or `false` and the default is `true`.
+                      # @param [String] near_number Given a phone number, find a geographically close number within `distance` miles. Distance defaults to 25 miles. Applies to only phone numbers in the US and Canada.
+                      # @param [String] near_lat_long Given a latitude/longitude pair `lat,long` find geographically close numbers within `distance` miles. Applies to only phone numbers in the US and Canada.
+                      # @param [String] distance The search radius, in miles, for a `near_` query.  Can be up to `500` and the default is `25`. Applies to only phone numbers in the US and Canada.
+                      # @param [String] in_postal_code Limit results to a particular postal code. Given a phone number, search within the same postal code as that number. Applies to only phone numbers in the US and Canada.
+                      # @param [String] in_region Limit results to a particular region, state, or province. Given a phone number, search within the same region as that number. Applies to only phone numbers in the US and Canada.
+                      # @param [String] in_rate_center Limit results to a specific rate center, or given a phone number search within the same rate center as that number. Requires `in_lata` to be set as well. Applies to only phone numbers in the US and Canada.
+                      # @param [String] in_lata Limit results to a specific local access and transport area ([LATA](https://en.wikipedia.org/wiki/Local_access_and_transport_area)). Given a phone number, search within the same [LATA](https://en.wikipedia.org/wiki/Local_access_and_transport_area) as that number. Applies to only phone numbers in the US and Canada.
+                      # @param [String] in_locality Limit results to a particular locality or city. Given a phone number, search within the same Locality as that number.
+                      # @param [Boolean] fax_enabled Whether the phone numbers can receive faxes. Can be: `true` or `false`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(area_code: :unset, contains: :unset, sms_enabled: :unset, mms_enabled: :unset, voice_enabled: :unset, exclude_all_address_required: :unset, exclude_local_address_required: :unset, exclude_foreign_address_required: :unset, beta: :unset, near_number: :unset, near_lat_long: :unset, distance: :unset, in_postal_code: :unset, in_region: :unset, in_rate_center: :unset, in_lata: :unset, in_locality: :unset, fax_enabled: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'AreaCode' => area_code,
+                            'Contains' => contains,
+                            'SmsEnabled' => sms_enabled,
+                            'MmsEnabled' => mms_enabled,
+                            'VoiceEnabled' => voice_enabled,
+                            'ExcludeAllAddressRequired' => exclude_all_address_required,
+                            'ExcludeLocalAddressRequired' => exclude_local_address_required,
+                            'ExcludeForeignAddressRequired' => exclude_foreign_address_required,
+                            'Beta' => beta,
+                            'NearNumber' => near_number,
+                            'NearLatLong' => near_lat_long,
+                            'Distance' => distance,
+                            'InPostalCode' => in_postal_code,
+                            'InRegion' => in_region,
+                            'InRateCenter' => in_rate_center,
+                            'InLata' => in_lata,
+                            'InLocality' => in_locality,
+                            'FaxEnabled' => fax_enabled,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SharedCostPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields SharedCostInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -265,6 +323,54 @@ module Twilio
                         '<Twilio.Api.V2010.SharedCostPage>'
                     end
                 end
+
+                class SharedCostPageMetadata < PageMetadata
+                    attr_reader :shared_cost_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @shared_cost_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @shared_cost_page << SharedCostListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @shared_cost_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class SharedCostListResponse < InstanceListResource
+
+                    # @param [Array<SharedCostInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @shared_cost = payload.body[key].map do |data|
+                      SharedCostInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def shared_cost
+                        @shared_cost
+                    end
+                end
+
                 class SharedCostInstance < InstanceResource
                     ##
                     # Initialize the SharedCostInstance

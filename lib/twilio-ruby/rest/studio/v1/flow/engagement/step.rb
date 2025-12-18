@@ -73,6 +73,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists StepPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        StepPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields StepInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -170,6 +192,33 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the StepInstanceMetadata
+                    # @return [StepInstance] Fetched StepInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        step_instance = StepInstance.new(
+                            @version,
+                            response.body,
+                            flow_sid: @solution[:flow_sid],
+                            engagement_sid: @solution[:engagement_sid],
+                            sid: @solution[:sid],
+                        )
+                        StepInstanceMetadata.new(
+                            @version,
+                            step_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the step_context
                     # @return [StepContextList]
                     # @return [StepContextContext]
@@ -196,6 +245,45 @@ module Twilio
                         "#<Twilio.Studio.V1.StepContext #{context}>"
                     end
                 end
+
+                class StepInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new StepInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}StepInstance] step_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [StepInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, step_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @step_instance = step_instance
+                    end
+
+                    def step
+                        @step_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.StepInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class StepListResponse < InstanceListResource
+                    # @param [Array<StepInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @step_instance = payload.body[key].map do |data|
+                        StepInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def step_instance
+                          @instance
+                      end
+                  end
 
                 class StepPage < Page
                     ##
@@ -225,6 +313,54 @@ module Twilio
                         '<Twilio.Studio.V1.StepPage>'
                     end
                 end
+
+                class StepPageMetadata < PageMetadata
+                    attr_reader :step_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @step_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @step_page << StepListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @step_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Studio::V1PageMetadata>';
+                    end
+                end
+                class StepListResponse < InstanceListResource
+
+                    # @param [Array<StepInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @step = payload.body[key].map do |data|
+                      StepInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def step
+                        @step
+                    end
+                end
+
                 class StepInstance < InstanceResource
                     ##
                     # Initialize the StepInstance

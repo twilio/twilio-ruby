@@ -66,6 +66,45 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the UserDefinedMessageSubscriptionInstanceMetadata
+                    # @param [String] callback The URL we should call using the `method` to send user defined events to your application. URLs must contain a valid hostname (underscores are not permitted).
+                    # @param [String] idempotency_key A unique string value to identify API call. This should be a unique string value per API call and can be a randomly generated.
+                    # @param [String] method The HTTP method Twilio will use when requesting the above `Url`. Either `GET` or `POST`. Default is `POST`.
+                    # @return [UserDefinedMessageSubscriptionInstance] Created UserDefinedMessageSubscriptionInstance
+                    def create_with_metadata(
+                      callback: nil, 
+                      idempotency_key: :unset, 
+                      method: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Callback' => callback,
+                            'IdempotencyKey' => idempotency_key,
+                            'Method' => method,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        userDefinedMessageSubscription_instance = UserDefinedMessageSubscriptionInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            call_sid: @solution[:call_sid],
+                        )
+                        UserDefinedMessageSubscriptionInstanceMetadata.new(
+                            @version,
+                            userDefinedMessageSubscription_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -102,7 +141,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the UserDefinedMessageSubscriptionInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          userDefinedMessageSubscription_instance = UserDefinedMessageSubscriptionInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          UserDefinedMessageSubscriptionInstanceMetadata.new(@version, userDefinedMessageSubscription_instance, response.headers, response.status_code)
                     end
 
 
@@ -120,6 +178,45 @@ module Twilio
                         "#<Twilio.Api.V2010.UserDefinedMessageSubscriptionContext #{context}>"
                     end
                 end
+
+                class UserDefinedMessageSubscriptionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new UserDefinedMessageSubscriptionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}UserDefinedMessageSubscriptionInstance] user_defined_message_subscription_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [UserDefinedMessageSubscriptionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, user_defined_message_subscription_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @user_defined_message_subscription_instance = user_defined_message_subscription_instance
+                    end
+
+                    def user_defined_message_subscription
+                        @user_defined_message_subscription_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.UserDefinedMessageSubscriptionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class UserDefinedMessageSubscriptionListResponse < InstanceListResource
+                    # @param [Array<UserDefinedMessageSubscriptionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @user_defined_message_subscription_instance = payload.body[key].map do |data|
+                        UserDefinedMessageSubscriptionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def user_defined_message_subscription_instance
+                          @instance
+                      end
+                  end
 
                 class UserDefinedMessageSubscriptionPage < Page
                     ##
@@ -149,6 +246,54 @@ module Twilio
                         '<Twilio.Api.V2010.UserDefinedMessageSubscriptionPage>'
                     end
                 end
+
+                class UserDefinedMessageSubscriptionPageMetadata < PageMetadata
+                    attr_reader :user_defined_message_subscription_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @user_defined_message_subscription_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @user_defined_message_subscription_page << UserDefinedMessageSubscriptionListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @user_defined_message_subscription_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class UserDefinedMessageSubscriptionListResponse < InstanceListResource
+
+                    # @param [Array<UserDefinedMessageSubscriptionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @user_defined_message_subscription = payload.body[key].map do |data|
+                      UserDefinedMessageSubscriptionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def user_defined_message_subscription
+                        @user_defined_message_subscription
+                    end
+                end
+
                 class UserDefinedMessageSubscriptionInstance < InstanceResource
                     ##
                     # Initialize the UserDefinedMessageSubscriptionInstance

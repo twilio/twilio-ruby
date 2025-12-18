@@ -88,6 +88,44 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ChannelInstanceMetadata
+                    # @param [ChannelType] type 
+                    # @param [String] messaging_service_sid The unique ID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) this channel belongs to.
+                    # @param [ChannelEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @return [ChannelInstance] Updated ChannelInstance
+                    def update_with_metadata(
+                      type: :unset, 
+                      messaging_service_sid: :unset, 
+                      x_twilio_webhook_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Type' => type,
+                            'MessagingServiceSid' => messaging_service_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        channel_instance = ChannelInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            sid: @solution[:sid],
+                        )
+                        ChannelInstanceMetadata.new(
+                            @version,
+                            channel_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -103,6 +141,45 @@ module Twilio
                         "#<Twilio.Chat.V3.ChannelContext #{context}>"
                     end
                 end
+
+                class ChannelInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ChannelInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ChannelInstance] channel_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ChannelInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, channel_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @channel_instance = channel_instance
+                    end
+
+                    def channel
+                        @channel_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ChannelInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ChannelListResponse < InstanceListResource
+                    # @param [Array<ChannelInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @channel_instance = payload.body[key].map do |data|
+                        ChannelInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def channel_instance
+                          @instance
+                      end
+                  end
 
                 class ChannelPage < Page
                     ##
@@ -132,6 +209,54 @@ module Twilio
                         '<Twilio.Chat.V3.ChannelPage>'
                     end
                 end
+
+                class ChannelPageMetadata < PageMetadata
+                    attr_reader :channel_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @channel_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @channel_page << ChannelListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @channel_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Chat::V3PageMetadata>';
+                    end
+                end
+                class ChannelListResponse < InstanceListResource
+
+                    # @param [Array<ChannelInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @channel = payload.body[key].map do |data|
+                      ChannelInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def channel
+                        @channel
+                    end
+                end
+
                 class ChannelInstance < InstanceResource
                     ##
                     # Initialize the ChannelInstance

@@ -82,6 +82,62 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TaskInstanceMetadata
+                    # @param [String] timeout The amount of time in seconds the new task can live before being assigned. Can be up to a maximum of 2 weeks (1,209,600 seconds). The default value is 24 hours (86,400 seconds). On timeout, the `task.canceled` event will fire with description `Task TTL Exceeded`.
+                    # @param [String] priority The priority to assign the new task and override the default. When supplied, the new Task will have this priority unless it matches a Workflow Target with a Priority set. When not supplied, the new Task will have the priority of the matching Workflow Target. Value can be 0 to 2^31^ (2,147,483,647).
+                    # @param [String] task_channel When MultiTasking is enabled, specify the TaskChannel by passing either its `unique_name` or `sid`. Default value is `default`.
+                    # @param [String] workflow_sid The SID of the Workflow that you would like to handle routing for the new Task. If there is only one Workflow defined for the Workspace that you are posting the new task to, this parameter is optional.
+                    # @param [String] attributes A JSON string with the attributes of the new task. This value is passed to the Workflow's `assignment_callback_url` when the Task is assigned to a Worker. For example: `{ \\\"task_type\\\": \\\"call\\\", \\\"twilio_call_sid\\\": \\\"CAxxx\\\", \\\"customer_ticket_number\\\": \\\"12345\\\" }`.
+                    # @param [Time] virtual_start_time The virtual start time to assign the new task and override the default. When supplied, the new task will have this virtual start time. When not supplied, the new task will have the virtual start time equal to `date_created`. Value can't be in the future or before the year of 1900.
+                    # @param [String] routing_target A SID of a Worker, Queue, or Workflow to route a Task to
+                    # @param [String] ignore_capacity A boolean that indicates if the Task should respect a Worker's capacity and availability during assignment. This field can only be used when the `RoutingTarget` field is set to a Worker SID. By setting `IgnoreCapacity` to a value of `true`, `1`, or `yes`, the Task will be routed to the Worker without respecting their capacity and availability. Any other value will enforce the Worker's capacity and availability. The default value of `IgnoreCapacity` is `true` when the `RoutingTarget` is set to a Worker SID. 
+                    # @param [String] task_queue_sid The SID of the TaskQueue in which the Task belongs
+                    # @return [TaskInstance] Created TaskInstance
+                    def create_with_metadata(
+                      timeout: :unset, 
+                      priority: :unset, 
+                      task_channel: :unset, 
+                      workflow_sid: :unset, 
+                      attributes: :unset, 
+                      virtual_start_time: :unset, 
+                      routing_target: :unset, 
+                      ignore_capacity: :unset, 
+                      task_queue_sid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Timeout' => timeout,
+                            'Priority' => priority,
+                            'TaskChannel' => task_channel,
+                            'WorkflowSid' => workflow_sid,
+                            'Attributes' => attributes,
+                            'VirtualStartTime' => Twilio.serialize_iso8601_datetime(virtual_start_time),
+                            'RoutingTarget' => routing_target,
+                            'IgnoreCapacity' => ignore_capacity,
+                            'TaskQueueSid' => task_queue_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        task_instance = TaskInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                        )
+                        TaskInstanceMetadata.new(
+                            @version,
+                            task_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists TaskInstance records from the API as a list.
@@ -159,6 +215,49 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists TaskPageMetadata records from the API as a list.
+                      # @param [String] priority The priority value of the Tasks to read. Returns the list of all Tasks in the Workspace with the specified priority.
+                      # @param [Array[String]] assignment_status The `assignment_status` of the Tasks you want to read. Can be: `pending`, `reserved`, `assigned`, `canceled`, `wrapping`, or `completed`. Returns all Tasks in the Workspace with the specified `assignment_status`.
+                      # @param [String] workflow_sid The SID of the Workflow with the Tasks to read. Returns the Tasks controlled by the Workflow identified by this SID.
+                      # @param [String] workflow_name The friendly name of the Workflow with the Tasks to read. Returns the Tasks controlled by the Workflow identified by this friendly name.
+                      # @param [String] task_queue_sid The SID of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this SID.
+                      # @param [String] task_queue_name The `friendly_name` of the TaskQueue with the Tasks to read. Returns the Tasks waiting in the TaskQueue identified by this friendly name.
+                      # @param [String] evaluate_task_attributes The attributes of the Tasks to read. Returns the Tasks that match the attributes specified in this parameter.
+                      # @param [String] routing_target A SID of a Worker, Queue, or Workflow to route a Task to
+                      # @param [String] ordering How to order the returned Task resources. By default, Tasks are sorted by ascending DateCreated. This value is specified as: `Attribute:Order`, where `Attribute` can be either `DateCreated`, `Priority`, or `VirtualStartTime` and `Order` can be either `asc` or `desc`. For example, `Priority:desc` returns Tasks ordered in descending order of their Priority. Pairings of sort orders can be specified in a comma-separated list such as `Priority:desc,DateCreated:asc`, which returns the Tasks in descending Priority order and ascending DateCreated Order. The only ordering pairing not allowed is DateCreated and VirtualStartTime.
+                      # @param [Boolean] has_addons Whether to read Tasks with Add-ons. If `true`, returns only Tasks with Add-ons. If `false`, returns only Tasks without Add-ons.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(priority: :unset, assignment_status: :unset, workflow_sid: :unset, workflow_name: :unset, task_queue_sid: :unset, task_queue_name: :unset, evaluate_task_attributes: :unset, routing_target: :unset, ordering: :unset, has_addons: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Priority' => priority,
+                            
+                            'AssignmentStatus' =>  Twilio.serialize_list(assignment_status) { |e| e },
+                            'WorkflowSid' => workflow_sid,
+                            'WorkflowName' => workflow_name,
+                            'TaskQueueSid' => task_queue_sid,
+                            'TaskQueueName' => task_queue_name,
+                            'EvaluateTaskAttributes' => evaluate_task_attributes,
+                            'RoutingTarget' => routing_target,
+                            'Ordering' => ordering,
+                            'HasAddons' => has_addons,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TaskPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -269,7 +368,29 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the TaskInstanceMetadata
+                    # @param [String] if_match If provided, deletes this Task if (and only if) the [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) header of the Task matches the provided value. This matches the semantics of (and is implemented with) the HTTP [If-Match header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match).
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata(
+                      if_match: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          task_instance = TaskInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          TaskInstanceMetadata.new(@version, task_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -289,6 +410,32 @@ module Twilio
                             payload,
                             workspace_sid: @solution[:workspace_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the TaskInstanceMetadata
+                    # @return [TaskInstance] Fetched TaskInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        task_instance = TaskInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        TaskInstanceMetadata.new(
+                            @version,
+                            task_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -337,6 +484,56 @@ module Twilio
                     end
 
                     ##
+                    # Update the TaskInstanceMetadata
+                    # @param [String] attributes The JSON string that describes the custom attributes of the task.
+                    # @param [Status] assignment_status 
+                    # @param [String] reason The reason that the Task was canceled or completed. This parameter is required only if the Task is canceled or completed. Setting this value queues the task for deletion and logs the reason.
+                    # @param [String] priority The Task's new priority value. When supplied, the Task takes on the specified priority unless it matches a Workflow Target with a Priority set. Value can be 0 to 2^31^ (2,147,483,647).
+                    # @param [String] task_channel When MultiTasking is enabled, specify the TaskChannel with the task to update. Can be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or `default`.
+                    # @param [Time] virtual_start_time The task's new virtual start time value. When supplied, the Task takes on the specified virtual start time. Value can't be in the future or before the year of 1900.
+                    # @param [String] if_match If provided, applies this mutation if (and only if) the [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) header of the Task matches the provided value. This matches the semantics of (and is implemented with) the HTTP [If-Match header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Match).
+                    # @return [TaskInstance] Updated TaskInstance
+                    def update_with_metadata(
+                      attributes: :unset, 
+                      assignment_status: :unset, 
+                      reason: :unset, 
+                      priority: :unset, 
+                      task_channel: :unset, 
+                      virtual_start_time: :unset, 
+                      if_match: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Attributes' => attributes,
+                            'AssignmentStatus' => assignment_status,
+                            'Reason' => reason,
+                            'Priority' => priority,
+                            'TaskChannel' => task_channel,
+                            'VirtualStartTime' => Twilio.serialize_iso8601_datetime(virtual_start_time),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        task_instance = TaskInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        TaskInstanceMetadata.new(
+                            @version,
+                            task_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the reservations
                     # @return [ReservationList]
                     # @return [ReservationContext] if sid was passed.
@@ -371,6 +568,45 @@ module Twilio
                     end
                 end
 
+                class TaskInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new TaskInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}TaskInstance] task_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [TaskInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, task_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @task_instance = task_instance
+                    end
+
+                    def task
+                        @task_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.TaskInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class TaskListResponse < InstanceListResource
+                    # @param [Array<TaskInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @task_instance = payload.body[key].map do |data|
+                        TaskInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def task_instance
+                          @instance
+                      end
+                  end
+
                 class TaskPage < Page
                     ##
                     # Initialize the TaskPage
@@ -399,6 +635,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.TaskPage>'
                     end
                 end
+
+                class TaskPageMetadata < PageMetadata
+                    attr_reader :task_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @task_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @task_page << TaskListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @task_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class TaskListResponse < InstanceListResource
+
+                    # @param [Array<TaskInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @task = payload.body[key].map do |data|
+                      TaskInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def task
+                        @task
+                    end
+                end
+
                 class TaskInstance < InstanceResource
                     ##
                     # Initialize the TaskInstance

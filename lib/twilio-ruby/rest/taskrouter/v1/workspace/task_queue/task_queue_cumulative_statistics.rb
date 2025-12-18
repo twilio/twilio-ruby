@@ -97,6 +97,50 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the TaskQueueCumulativeStatisticsInstanceMetadata
+                    # @param [Time] end_date Only calculate statistics from this date and time and earlier, specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+                    # @param [String] minutes Only calculate statistics since this many minutes in the past. The default is 15 minutes.
+                    # @param [Time] start_date Only calculate statistics from this date and time and later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+                    # @param [String] task_channel Only calculate cumulative statistics on this TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or `default`.
+                    # @param [String] split_by_wait_time A comma separated list of values that describes the thresholds, in seconds, to calculate statistics on. For each threshold specified, the number of Tasks canceled and reservations accepted above and below the specified thresholds in seconds are computed. TaskRouter will calculate statistics on up to 10,000 Tasks/Reservations for any given threshold.
+                    # @return [TaskQueueCumulativeStatisticsInstance] Fetched TaskQueueCumulativeStatisticsInstance
+                    def fetch_with_metadata(
+                      end_date: :unset, 
+                      minutes: :unset, 
+                      start_date: :unset, 
+                      task_channel: :unset, 
+                      split_by_wait_time: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
+                            'Minutes' => minutes,
+                            'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
+                            'TaskChannel' => task_channel,
+                            'SplitByWaitTime' => split_by_wait_time,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        taskQueueCumulativeStatistics_instance = TaskQueueCumulativeStatisticsInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            task_queue_sid: @solution[:task_queue_sid],
+                        )
+                        TaskQueueCumulativeStatisticsInstanceMetadata.new(
+                            @version,
+                            taskQueueCumulativeStatistics_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -112,6 +156,45 @@ module Twilio
                         "#<Twilio.Taskrouter.V1.TaskQueueCumulativeStatisticsContext #{context}>"
                     end
                 end
+
+                class TaskQueueCumulativeStatisticsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new TaskQueueCumulativeStatisticsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}TaskQueueCumulativeStatisticsInstance] task_queue_cumulative_statistics_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [TaskQueueCumulativeStatisticsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, task_queue_cumulative_statistics_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @task_queue_cumulative_statistics_instance = task_queue_cumulative_statistics_instance
+                    end
+
+                    def task_queue_cumulative_statistics
+                        @task_queue_cumulative_statistics_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.TaskQueueCumulativeStatisticsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class TaskQueueCumulativeStatisticsListResponse < InstanceListResource
+                    # @param [Array<TaskQueueCumulativeStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @task_queue_cumulative_statistics_instance = payload.body[key].map do |data|
+                        TaskQueueCumulativeStatisticsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def task_queue_cumulative_statistics_instance
+                          @instance
+                      end
+                  end
 
                 class TaskQueueCumulativeStatisticsPage < Page
                     ##
@@ -141,6 +224,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.TaskQueueCumulativeStatisticsPage>'
                     end
                 end
+
+                class TaskQueueCumulativeStatisticsPageMetadata < PageMetadata
+                    attr_reader :task_queue_cumulative_statistics_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @task_queue_cumulative_statistics_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @task_queue_cumulative_statistics_page << TaskQueueCumulativeStatisticsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @task_queue_cumulative_statistics_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class TaskQueueCumulativeStatisticsListResponse < InstanceListResource
+
+                    # @param [Array<TaskQueueCumulativeStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @task_queue_cumulative_statistics = payload.body[key].map do |data|
+                      TaskQueueCumulativeStatisticsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def task_queue_cumulative_statistics
+                        @task_queue_cumulative_statistics
+                    end
+                end
+
                 class TaskQueueCumulativeStatisticsInstance < InstanceResource
                     ##
                     # Initialize the TaskQueueCumulativeStatisticsInstance

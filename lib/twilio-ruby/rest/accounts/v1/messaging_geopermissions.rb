@@ -55,6 +55,36 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the MessagingGeopermissionsInstanceMetadata
+                    # @param [String] country_code The country code to filter the geo permissions. If provided, only the geo permission for the specified country will be returned.
+                    # @return [MessagingGeopermissionsInstance] Fetched MessagingGeopermissionsInstance
+                    def fetch_with_metadata(
+                      country_code: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'CountryCode' => country_code,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        messagingGeopermissions_instance = MessagingGeopermissionsInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        MessagingGeopermissionsInstanceMetadata.new(
+                            @version,
+                            messagingGeopermissions_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the MessagingGeopermissionsInstance
                     # @param [Array[Hash]] permissions A list of objects where each object represents the Geo Permission to be updated. Each object contains the following fields: `country_code`, unique code for each country of Geo Permission; `type`, permission type of the Geo Permission i.e. country; `enabled`, configure true for enabling the Geo Permission, false for disabling the Geo Permission.
                     # @return [MessagingGeopermissionsInstance] Updated MessagingGeopermissionsInstance
@@ -76,6 +106,37 @@ module Twilio
                         MessagingGeopermissionsInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Update the MessagingGeopermissionsInstanceMetadata
+                    # @param [Array[Hash]] permissions A list of objects where each object represents the Geo Permission to be updated. Each object contains the following fields: `country_code`, unique code for each country of Geo Permission; `type`, permission type of the Geo Permission i.e. country; `enabled`, configure true for enabling the Geo Permission, false for disabling the Geo Permission.
+                    # @return [MessagingGeopermissionsInstance] Updated MessagingGeopermissionsInstance
+                    def update_with_metadata(
+                      permissions: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Permissions' => Twilio.serialize_list(permissions) { |e| Twilio.serialize_object(e) },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('PATCH', @uri, data: data, headers: headers)
+                        messagingGeopermissions_instance = MessagingGeopermissionsInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        MessagingGeopermissionsInstanceMetadata.new(
+                            @version,
+                            messagingGeopermissions_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -116,6 +177,54 @@ module Twilio
                         '<Twilio.Accounts.V1.MessagingGeopermissionsPage>'
                     end
                 end
+
+                class MessagingGeopermissionsPageMetadata < PageMetadata
+                    attr_reader :messaging_geopermissions_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @messaging_geopermissions_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @messaging_geopermissions_page << MessagingGeopermissionsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @messaging_geopermissions_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Accounts::V1PageMetadata>';
+                    end
+                end
+                class MessagingGeopermissionsListResponse < InstanceListResource
+
+                    # @param [Array<MessagingGeopermissionsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @messaging_geopermissions = payload.body[key].map do |data|
+                      MessagingGeopermissionsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def messaging_geopermissions
+                        @messaging_geopermissions
+                    end
+                end
+
                 class MessagingGeopermissionsInstance < InstanceResource
                     ##
                     # Initialize the MessagingGeopermissionsInstance

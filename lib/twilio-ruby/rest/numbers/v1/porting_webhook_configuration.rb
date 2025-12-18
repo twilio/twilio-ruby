@@ -50,6 +50,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the PortingWebhookConfigurationInstanceMetadata
+                    # @param [Object] body 
+                    # @return [PortingWebhookConfigurationInstance] Created PortingWebhookConfigurationInstance
+                    def create_with_metadata(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: body.to_json)
+                        portingWebhookConfiguration_instance = PortingWebhookConfigurationInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        PortingWebhookConfigurationInstanceMetadata.new(
+                            @version,
+                            portingWebhookConfiguration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -87,6 +113,54 @@ module Twilio
                         '<Twilio.Numbers.V1.PortingWebhookConfigurationPage>'
                     end
                 end
+
+                class PortingWebhookConfigurationPageMetadata < PageMetadata
+                    attr_reader :porting_webhook_configuration_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @porting_webhook_configuration_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @porting_webhook_configuration_page << PortingWebhookConfigurationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @porting_webhook_configuration_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V1PageMetadata>';
+                    end
+                end
+                class PortingWebhookConfigurationListResponse < InstanceListResource
+
+                    # @param [Array<PortingWebhookConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @porting_webhook_configuration = payload.body[key].map do |data|
+                      PortingWebhookConfigurationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def porting_webhook_configuration
+                        @porting_webhook_configuration
+                    end
+                end
+
                 class PortingWebhookConfigurationInstance < InstanceResource
                     ##
                     # Initialize the PortingWebhookConfigurationInstance

@@ -74,6 +74,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the DomainConfigMessagingServiceInstanceMetadata
+                    # @return [DomainConfigMessagingServiceInstance] Fetched DomainConfigMessagingServiceInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        domainConfigMessagingService_instance = DomainConfigMessagingServiceInstance.new(
+                            @version,
+                            response.body,
+                            messaging_service_sid: @solution[:messaging_service_sid],
+                        )
+                        DomainConfigMessagingServiceInstanceMetadata.new(
+                            @version,
+                            domainConfigMessagingService_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -89,6 +114,45 @@ module Twilio
                         "#<Twilio.Messaging.V1.DomainConfigMessagingServiceContext #{context}>"
                     end
                 end
+
+                class DomainConfigMessagingServiceInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new DomainConfigMessagingServiceInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}DomainConfigMessagingServiceInstance] domain_config_messaging_service_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [DomainConfigMessagingServiceInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, domain_config_messaging_service_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @domain_config_messaging_service_instance = domain_config_messaging_service_instance
+                    end
+
+                    def domain_config_messaging_service
+                        @domain_config_messaging_service_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.DomainConfigMessagingServiceInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class DomainConfigMessagingServiceListResponse < InstanceListResource
+                    # @param [Array<DomainConfigMessagingServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @domain_config_messaging_service_instance = payload.body[key].map do |data|
+                        DomainConfigMessagingServiceInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def domain_config_messaging_service_instance
+                          @instance
+                      end
+                  end
 
                 class DomainConfigMessagingServicePage < Page
                     ##
@@ -118,6 +182,54 @@ module Twilio
                         '<Twilio.Messaging.V1.DomainConfigMessagingServicePage>'
                     end
                 end
+
+                class DomainConfigMessagingServicePageMetadata < PageMetadata
+                    attr_reader :domain_config_messaging_service_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @domain_config_messaging_service_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @domain_config_messaging_service_page << DomainConfigMessagingServiceListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @domain_config_messaging_service_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class DomainConfigMessagingServiceListResponse < InstanceListResource
+
+                    # @param [Array<DomainConfigMessagingServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @domain_config_messaging_service = payload.body[key].map do |data|
+                      DomainConfigMessagingServiceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def domain_config_messaging_service
+                        @domain_config_messaging_service
+                    end
+                end
+
                 class DomainConfigMessagingServiceInstance < InstanceResource
                     ##
                     # Initialize the DomainConfigMessagingServiceInstance

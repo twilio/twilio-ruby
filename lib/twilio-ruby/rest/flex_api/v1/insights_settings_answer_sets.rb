@@ -51,6 +51,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the InsightsSettingsAnswerSetsInstanceMetadata
+                    # @param [String] authorization The Authorization HTTP request header
+                    # @return [InsightsSettingsAnswerSetsInstance] Fetched InsightsSettingsAnswerSetsInstance
+                    def fetch_with_metadata(
+                      authorization: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        insightsSettingsAnswerSets_instance = InsightsSettingsAnswerSetsInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        InsightsSettingsAnswerSetsInstanceMetadata.new(
+                            @version,
+                            insightsSettingsAnswerSets_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -88,6 +115,54 @@ module Twilio
                         '<Twilio.FlexApi.V1.InsightsSettingsAnswerSetsPage>'
                     end
                 end
+
+                class InsightsSettingsAnswerSetsPageMetadata < PageMetadata
+                    attr_reader :insights_settings_answer_sets_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @insights_settings_answer_sets_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @insights_settings_answer_sets_page << InsightsSettingsAnswerSetsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @insights_settings_answer_sets_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InsightsSettingsAnswerSetsListResponse < InstanceListResource
+
+                    # @param [Array<InsightsSettingsAnswerSetsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @insights_settings_answer_sets = payload.body[key].map do |data|
+                      InsightsSettingsAnswerSetsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def insights_settings_answer_sets
+                        @insights_settings_answer_sets
+                    end
+                end
+
                 class InsightsSettingsAnswerSetsInstance < InstanceResource
                     ##
                     # Initialize the InsightsSettingsAnswerSetsInstance

@@ -82,6 +82,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the CallSummaryInstanceMetadata
+                    # @param [ProcessingState] processing_state The Processing State of this Call Summary. One of `complete`, `partial` or `all`.
+                    # @return [CallSummaryInstance] Fetched CallSummaryInstance
+                    def fetch_with_metadata(
+                      processing_state: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'ProcessingState' => processing_state,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        callSummary_instance = CallSummaryInstance.new(
+                            @version,
+                            response.body,
+                            call_sid: @solution[:call_sid],
+                        )
+                        CallSummaryInstanceMetadata.new(
+                            @version,
+                            callSummary_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -97,6 +128,45 @@ module Twilio
                         "#<Twilio.Insights.V1.CallSummaryContext #{context}>"
                     end
                 end
+
+                class CallSummaryInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CallSummaryInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CallSummaryInstance] call_summary_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CallSummaryInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, call_summary_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @call_summary_instance = call_summary_instance
+                    end
+
+                    def call_summary
+                        @call_summary_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CallSummaryInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CallSummaryListResponse < InstanceListResource
+                    # @param [Array<CallSummaryInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @call_summary_instance = payload.body[key].map do |data|
+                        CallSummaryInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def call_summary_instance
+                          @instance
+                      end
+                  end
 
                 class CallSummaryPage < Page
                     ##
@@ -126,6 +196,54 @@ module Twilio
                         '<Twilio.Insights.V1.CallSummaryPage>'
                     end
                 end
+
+                class CallSummaryPageMetadata < PageMetadata
+                    attr_reader :call_summary_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @call_summary_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @call_summary_page << CallSummaryListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @call_summary_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Insights::V1PageMetadata>';
+                    end
+                end
+                class CallSummaryListResponse < InstanceListResource
+
+                    # @param [Array<CallSummaryInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @call_summary = payload.body[key].map do |data|
+                      CallSummaryInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def call_summary
+                        @call_summary
+                    end
+                end
+
                 class CallSummaryInstance < InstanceResource
                     ##
                     # Initialize the CallSummaryInstance

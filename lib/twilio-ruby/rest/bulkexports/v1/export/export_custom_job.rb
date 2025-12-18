@@ -73,6 +73,53 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ExportCustomJobInstanceMetadata
+                    # @param [String] start_day The start day for the custom export specified as a string in the format of yyyy-mm-dd
+                    # @param [String] end_day The end day for the custom export specified as a string in the format of yyyy-mm-dd. End day is inclusive and must be 2 days earlier than the current UTC day.
+                    # @param [String] friendly_name The friendly name specified when creating the job
+                    # @param [String] webhook_url The optional webhook url called on completion of the job. If this is supplied, `WebhookMethod` must also be supplied. If you set neither webhook nor email, you will have to check your job's status manually.
+                    # @param [String] webhook_method This is the method used to call the webhook on completion of the job. If this is supplied, `WebhookUrl` must also be supplied.
+                    # @param [String] email The optional email to send the completion notification to. You can set both webhook, and email, or one or the other. If you set neither, the job will run but you will have to query to determine your job's status.
+                    # @return [ExportCustomJobInstance] Created ExportCustomJobInstance
+                    def create_with_metadata(
+                      start_day: nil, 
+                      end_day: nil, 
+                      friendly_name: nil, 
+                      webhook_url: :unset, 
+                      webhook_method: :unset, 
+                      email: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'StartDay' => start_day,
+                            'EndDay' => end_day,
+                            'FriendlyName' => friendly_name,
+                            'WebhookUrl' => webhook_url,
+                            'WebhookMethod' => webhook_method,
+                            'Email' => email,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        exportCustomJob_instance = ExportCustomJobInstance.new(
+                            @version,
+                            response.body,
+                            resource_type: @solution[:resource_type],
+                        )
+                        ExportCustomJobInstanceMetadata.new(
+                            @version,
+                            exportCustomJob_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ExportCustomJobInstance records from the API as a list.
@@ -110,6 +157,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists ExportCustomJobPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ExportCustomJobPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -197,6 +266,54 @@ module Twilio
                         '<Twilio.Bulkexports.V1.ExportCustomJobPage>'
                     end
                 end
+
+                class ExportCustomJobPageMetadata < PageMetadata
+                    attr_reader :export_custom_job_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @export_custom_job_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @export_custom_job_page << ExportCustomJobListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @export_custom_job_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Bulkexports::V1PageMetadata>';
+                    end
+                end
+                class ExportCustomJobListResponse < InstanceListResource
+
+                    # @param [Array<ExportCustomJobInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @export_custom_job = payload.body[key].map do |data|
+                      ExportCustomJobInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def export_custom_job
+                        @export_custom_job
+                    end
+                end
+
                 class ExportCustomJobInstance < InstanceResource
                     ##
                     # Initialize the ExportCustomJobInstance

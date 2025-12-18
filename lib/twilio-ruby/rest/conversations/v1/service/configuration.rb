@@ -79,6 +79,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the ConfigurationInstanceMetadata
+                    # @return [ConfigurationInstance] Fetched ConfigurationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        configuration_instance = ConfigurationInstance.new(
+                            @version,
+                            response.body,
+                            chat_service_sid: @solution[:chat_service_sid],
+                        )
+                        ConfigurationInstanceMetadata.new(
+                            @version,
+                            configuration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the ConfigurationInstance
                     # @param [String] default_conversation_creator_role_sid The conversation-level role assigned to a conversation creator when they join a new conversation. See [Conversation Role](https://www.twilio.com/docs/conversations/api/role-resource) for more info about roles.
                     # @param [String] default_conversation_role_sid The conversation-level role assigned to users when they are added to a conversation. See [Conversation Role](https://www.twilio.com/docs/conversations/api/role-resource) for more info about roles.
@@ -110,6 +135,47 @@ module Twilio
                             @version,
                             payload,
                             chat_service_sid: @solution[:chat_service_sid],
+                        )
+                    end
+
+                    ##
+                    # Update the ConfigurationInstanceMetadata
+                    # @param [String] default_conversation_creator_role_sid The conversation-level role assigned to a conversation creator when they join a new conversation. See [Conversation Role](https://www.twilio.com/docs/conversations/api/role-resource) for more info about roles.
+                    # @param [String] default_conversation_role_sid The conversation-level role assigned to users when they are added to a conversation. See [Conversation Role](https://www.twilio.com/docs/conversations/api/role-resource) for more info about roles.
+                    # @param [String] default_chat_service_role_sid The service-level role assigned to users when they are added to the service. See [Conversation Role](https://www.twilio.com/docs/conversations/api/role-resource) for more info about roles.
+                    # @param [Boolean] reachability_enabled Whether the [Reachability Indicator](https://www.twilio.com/docs/conversations/reachability) is enabled for this Conversations Service. The default is `false`.
+                    # @return [ConfigurationInstance] Updated ConfigurationInstance
+                    def update_with_metadata(
+                      default_conversation_creator_role_sid: :unset, 
+                      default_conversation_role_sid: :unset, 
+                      default_chat_service_role_sid: :unset, 
+                      reachability_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'DefaultConversationCreatorRoleSid' => default_conversation_creator_role_sid,
+                            'DefaultConversationRoleSid' => default_conversation_role_sid,
+                            'DefaultChatServiceRoleSid' => default_chat_service_role_sid,
+                            'ReachabilityEnabled' => reachability_enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        configuration_instance = ConfigurationInstance.new(
+                            @version,
+                            response.body,
+                            chat_service_sid: @solution[:chat_service_sid],
+                        )
+                        ConfigurationInstanceMetadata.new(
+                            @version,
+                            configuration_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -149,6 +215,45 @@ module Twilio
                     end
                 end
 
+                class ConfigurationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ConfigurationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ConfigurationInstance] configuration_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ConfigurationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, configuration_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @configuration_instance = configuration_instance
+                    end
+
+                    def configuration
+                        @configuration_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ConfigurationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ConfigurationListResponse < InstanceListResource
+                    # @param [Array<ConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @configuration_instance = payload.body[key].map do |data|
+                        ConfigurationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def configuration_instance
+                          @instance
+                      end
+                  end
+
                 class ConfigurationPage < Page
                     ##
                     # Initialize the ConfigurationPage
@@ -177,6 +282,54 @@ module Twilio
                         '<Twilio.Conversations.V1.ConfigurationPage>'
                     end
                 end
+
+                class ConfigurationPageMetadata < PageMetadata
+                    attr_reader :configuration_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @configuration_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @configuration_page << ConfigurationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @configuration_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Conversations::V1PageMetadata>';
+                    end
+                end
+                class ConfigurationListResponse < InstanceListResource
+
+                    # @param [Array<ConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @configuration = payload.body[key].map do |data|
+                      ConfigurationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def configuration
+                        @configuration
+                    end
+                end
+
                 class ConfigurationInstance < InstanceResource
                     ##
                     # Initialize the ConfigurationInstance

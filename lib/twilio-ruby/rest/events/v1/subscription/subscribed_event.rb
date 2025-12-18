@@ -61,6 +61,41 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the SubscribedEventInstanceMetadata
+                    # @param [String] type Type of event being subscribed to.
+                    # @param [String] schema_version The schema version that the Subscription should use.
+                    # @return [SubscribedEventInstance] Created SubscribedEventInstance
+                    def create_with_metadata(
+                      type: nil, 
+                      schema_version: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Type' => type,
+                            'SchemaVersion' => schema_version,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        subscribedEvent_instance = SubscribedEventInstance.new(
+                            @version,
+                            response.body,
+                            subscription_sid: @solution[:subscription_sid],
+                        )
+                        SubscribedEventInstanceMetadata.new(
+                            @version,
+                            subscribedEvent_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists SubscribedEventInstance records from the API as a list.
@@ -98,6 +133,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists SubscribedEventPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SubscribedEventPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -183,7 +240,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the SubscribedEventInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          subscribedEvent_instance = SubscribedEventInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          SubscribedEventInstanceMetadata.new(@version, subscribedEvent_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -203,6 +279,32 @@ module Twilio
                             payload,
                             subscription_sid: @solution[:subscription_sid],
                             type: @solution[:type],
+                        )
+                    end
+
+                    ##
+                    # Fetch the SubscribedEventInstanceMetadata
+                    # @return [SubscribedEventInstance] Fetched SubscribedEventInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        subscribedEvent_instance = SubscribedEventInstance.new(
+                            @version,
+                            response.body,
+                            subscription_sid: @solution[:subscription_sid],
+                            type: @solution[:type],
+                        )
+                        SubscribedEventInstanceMetadata.new(
+                            @version,
+                            subscribedEvent_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -233,6 +335,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the SubscribedEventInstanceMetadata
+                    # @param [String] schema_version The schema version that the Subscription should use.
+                    # @return [SubscribedEventInstance] Updated SubscribedEventInstance
+                    def update_with_metadata(
+                      schema_version: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'SchemaVersion' => schema_version,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        subscribedEvent_instance = SubscribedEventInstance.new(
+                            @version,
+                            response.body,
+                            subscription_sid: @solution[:subscription_sid],
+                            type: @solution[:type],
+                        )
+                        SubscribedEventInstanceMetadata.new(
+                            @version,
+                            subscribedEvent_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -248,6 +383,45 @@ module Twilio
                         "#<Twilio.Events.V1.SubscribedEventContext #{context}>"
                     end
                 end
+
+                class SubscribedEventInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SubscribedEventInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SubscribedEventInstance] subscribed_event_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SubscribedEventInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, subscribed_event_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @subscribed_event_instance = subscribed_event_instance
+                    end
+
+                    def subscribed_event
+                        @subscribed_event_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SubscribedEventInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SubscribedEventListResponse < InstanceListResource
+                    # @param [Array<SubscribedEventInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @subscribed_event_instance = payload.body[key].map do |data|
+                        SubscribedEventInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def subscribed_event_instance
+                          @instance
+                      end
+                  end
 
                 class SubscribedEventPage < Page
                     ##
@@ -277,6 +451,54 @@ module Twilio
                         '<Twilio.Events.V1.SubscribedEventPage>'
                     end
                 end
+
+                class SubscribedEventPageMetadata < PageMetadata
+                    attr_reader :subscribed_event_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @subscribed_event_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @subscribed_event_page << SubscribedEventListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @subscribed_event_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Events::V1PageMetadata>';
+                    end
+                end
+                class SubscribedEventListResponse < InstanceListResource
+
+                    # @param [Array<SubscribedEventInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @subscribed_event = payload.body[key].map do |data|
+                      SubscribedEventInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def subscribed_event
+                        @subscribed_event
+                    end
+                end
+
                 class SubscribedEventInstance < InstanceResource
                     ##
                     # Initialize the SubscribedEventInstance

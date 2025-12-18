@@ -73,6 +73,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists WorkerChannelPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        WorkerChannelPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields WorkerChannelInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -169,6 +191,33 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the WorkerChannelInstanceMetadata
+                    # @return [WorkerChannelInstance] Fetched WorkerChannelInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        workerChannel_instance = WorkerChannelInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            worker_sid: @solution[:worker_sid],
+                            sid: @solution[:sid],
+                        )
+                        WorkerChannelInstanceMetadata.new(
+                            @version,
+                            workerChannel_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the WorkerChannelInstance
                     # @param [String] capacity The total number of Tasks that the Worker should handle for the TaskChannel type. TaskRouter creates reservations for Tasks of this TaskChannel type up to the specified capacity. If the capacity is 0, no new reservations will be created.
                     # @param [Boolean] available Whether the WorkerChannel is available. Set to `false` to prevent the Worker from receiving any new Tasks of this TaskChannel type.
@@ -199,6 +248,43 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the WorkerChannelInstanceMetadata
+                    # @param [String] capacity The total number of Tasks that the Worker should handle for the TaskChannel type. TaskRouter creates reservations for Tasks of this TaskChannel type up to the specified capacity. If the capacity is 0, no new reservations will be created.
+                    # @param [Boolean] available Whether the WorkerChannel is available. Set to `false` to prevent the Worker from receiving any new Tasks of this TaskChannel type.
+                    # @return [WorkerChannelInstance] Updated WorkerChannelInstance
+                    def update_with_metadata(
+                      capacity: :unset, 
+                      available: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Capacity' => capacity,
+                            'Available' => available,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        workerChannel_instance = WorkerChannelInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            worker_sid: @solution[:worker_sid],
+                            sid: @solution[:sid],
+                        )
+                        WorkerChannelInstanceMetadata.new(
+                            @version,
+                            workerChannel_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -214,6 +300,45 @@ module Twilio
                         "#<Twilio.Taskrouter.V1.WorkerChannelContext #{context}>"
                     end
                 end
+
+                class WorkerChannelInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new WorkerChannelInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}WorkerChannelInstance] worker_channel_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [WorkerChannelInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, worker_channel_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @worker_channel_instance = worker_channel_instance
+                    end
+
+                    def worker_channel
+                        @worker_channel_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.WorkerChannelInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class WorkerChannelListResponse < InstanceListResource
+                    # @param [Array<WorkerChannelInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @worker_channel_instance = payload.body[key].map do |data|
+                        WorkerChannelInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def worker_channel_instance
+                          @instance
+                      end
+                  end
 
                 class WorkerChannelPage < Page
                     ##
@@ -243,6 +368,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.WorkerChannelPage>'
                     end
                 end
+
+                class WorkerChannelPageMetadata < PageMetadata
+                    attr_reader :worker_channel_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @worker_channel_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @worker_channel_page << WorkerChannelListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @worker_channel_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class WorkerChannelListResponse < InstanceListResource
+
+                    # @param [Array<WorkerChannelInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @worker_channel = payload.body[key].map do |data|
+                      WorkerChannelInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def worker_channel
+                        @worker_channel
+                    end
+                end
+
                 class WorkerChannelInstance < InstanceResource
                     ##
                     # Initialize the WorkerChannelInstance

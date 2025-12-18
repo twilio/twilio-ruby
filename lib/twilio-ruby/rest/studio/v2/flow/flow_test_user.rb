@@ -77,6 +77,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the FlowTestUserInstanceMetadata
+                    # @return [FlowTestUserInstance] Fetched FlowTestUserInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        flowTestUser_instance = FlowTestUserInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        FlowTestUserInstanceMetadata.new(
+                            @version,
+                            flowTestUser_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the FlowTestUserInstance
                     # @param [Array[String]] test_users List of test user identities that can test draft versions of the flow.
                     # @return [FlowTestUserInstance] Updated FlowTestUserInstance
@@ -102,6 +127,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the FlowTestUserInstanceMetadata
+                    # @param [Array[String]] test_users List of test user identities that can test draft versions of the flow.
+                    # @return [FlowTestUserInstance] Updated FlowTestUserInstance
+                    def update_with_metadata(
+                      test_users: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'TestUsers' => Twilio.serialize_list(test_users) { |e| e },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        flowTestUser_instance = FlowTestUserInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        FlowTestUserInstanceMetadata.new(
+                            @version,
+                            flowTestUser_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -117,6 +174,45 @@ module Twilio
                         "#<Twilio.Studio.V2.FlowTestUserContext #{context}>"
                     end
                 end
+
+                class FlowTestUserInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new FlowTestUserInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}FlowTestUserInstance] flow_test_user_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [FlowTestUserInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, flow_test_user_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @flow_test_user_instance = flow_test_user_instance
+                    end
+
+                    def flow_test_user
+                        @flow_test_user_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.FlowTestUserInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class FlowTestUserListResponse < InstanceListResource
+                    # @param [Array<FlowTestUserInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @flow_test_user_instance = payload.body[key].map do |data|
+                        FlowTestUserInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def flow_test_user_instance
+                          @instance
+                      end
+                  end
 
                 class FlowTestUserPage < Page
                     ##
@@ -146,6 +242,54 @@ module Twilio
                         '<Twilio.Studio.V2.FlowTestUserPage>'
                     end
                 end
+
+                class FlowTestUserPageMetadata < PageMetadata
+                    attr_reader :flow_test_user_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @flow_test_user_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @flow_test_user_page << FlowTestUserListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @flow_test_user_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Studio::V2PageMetadata>';
+                    end
+                end
+                class FlowTestUserListResponse < InstanceListResource
+
+                    # @param [Array<FlowTestUserInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @flow_test_user = payload.body[key].map do |data|
+                      FlowTestUserInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def flow_test_user
+                        @flow_test_user
+                    end
+                end
+
                 class FlowTestUserInstance < InstanceResource
                     ##
                     # Initialize the FlowTestUserInstance

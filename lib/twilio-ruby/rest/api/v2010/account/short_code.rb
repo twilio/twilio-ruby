@@ -80,6 +80,32 @@ module Twilio
                     end
 
                     ##
+                    # Lists ShortCodePageMetadata records from the API as a list.
+                      # @param [String] friendly_name The string that identifies the ShortCode resources to read.
+                      # @param [String] short_code Only show the ShortCode resources that match this pattern. You can specify partial numbers and use '*' as a wildcard for any digit.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(friendly_name: :unset, short_code: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'ShortCode' => short_code,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ShortCodePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ShortCodeInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -178,6 +204,32 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the ShortCodeInstanceMetadata
+                    # @return [ShortCodeInstance] Fetched ShortCodeInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        shortCode_instance = ShortCodeInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        ShortCodeInstanceMetadata.new(
+                            @version,
+                            shortCode_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the ShortCodeInstance
                     # @param [String] friendly_name A descriptive string that you created to describe this resource. It can be up to 64 characters long. By default, the `FriendlyName` is the short code.
                     # @param [String] api_version The API version to use to start a new TwiML session. Can be: `2010-04-01` or `2008-08-01`.
@@ -219,6 +271,54 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ShortCodeInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you created to describe this resource. It can be up to 64 characters long. By default, the `FriendlyName` is the short code.
+                    # @param [String] api_version The API version to use to start a new TwiML session. Can be: `2010-04-01` or `2008-08-01`.
+                    # @param [String] sms_url The URL we should call when receiving an incoming SMS message to this short code.
+                    # @param [String] sms_method The HTTP method we should use when calling the `sms_url`. Can be: `GET` or `POST`.
+                    # @param [String] sms_fallback_url The URL that we should call if an error occurs while retrieving or executing the TwiML from `sms_url`.
+                    # @param [String] sms_fallback_method The HTTP method that we should use to call the `sms_fallback_url`. Can be: `GET` or `POST`.
+                    # @return [ShortCodeInstance] Updated ShortCodeInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      api_version: :unset, 
+                      sms_url: :unset, 
+                      sms_method: :unset, 
+                      sms_fallback_url: :unset, 
+                      sms_fallback_method: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'ApiVersion' => api_version,
+                            'SmsUrl' => sms_url,
+                            'SmsMethod' => sms_method,
+                            'SmsFallbackUrl' => sms_fallback_url,
+                            'SmsFallbackMethod' => sms_fallback_method,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        shortCode_instance = ShortCodeInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        ShortCodeInstanceMetadata.new(
+                            @version,
+                            shortCode_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -234,6 +334,45 @@ module Twilio
                         "#<Twilio.Api.V2010.ShortCodeContext #{context}>"
                     end
                 end
+
+                class ShortCodeInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ShortCodeInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ShortCodeInstance] short_code_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ShortCodeInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, short_code_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @short_code_instance = short_code_instance
+                    end
+
+                    def short_code
+                        @short_code_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ShortCodeInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ShortCodeListResponse < InstanceListResource
+                    # @param [Array<ShortCodeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @short_code_instance = payload.body[key].map do |data|
+                        ShortCodeInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def short_code_instance
+                          @instance
+                      end
+                  end
 
                 class ShortCodePage < Page
                     ##
@@ -263,6 +402,54 @@ module Twilio
                         '<Twilio.Api.V2010.ShortCodePage>'
                     end
                 end
+
+                class ShortCodePageMetadata < PageMetadata
+                    attr_reader :short_code_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @short_code_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @short_code_page << ShortCodeListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @short_code_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class ShortCodeListResponse < InstanceListResource
+
+                    # @param [Array<ShortCodeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @short_code = payload.body[key].map do |data|
+                      ShortCodeInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def short_code
+                        @short_code
+                    end
+                end
+
                 class ShortCodeInstance < InstanceResource
                     ##
                     # Initialize the ShortCodeInstance

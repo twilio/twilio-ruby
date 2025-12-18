@@ -70,6 +70,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists SessionPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SessionPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields SessionInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -163,6 +185,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the SessionInstanceMetadata
+                    # @return [SessionInstance] Fetched SessionInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        session_instance = SessionInstance.new(
+                            @version,
+                            response.body,
+                            id: @solution[:id],
+                        )
+                        SessionInstanceMetadata.new(
+                            @version,
+                            session_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the messages
                     # @return [MessageList]
                     # @return [MessageContext]
@@ -188,6 +235,45 @@ module Twilio
                         "#<Twilio.Assistants.V1.SessionContext #{context}>"
                     end
                 end
+
+                class SessionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SessionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SessionInstance] session_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SessionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, session_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @session_instance = session_instance
+                    end
+
+                    def session
+                        @session_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SessionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SessionListResponse < InstanceListResource
+                    # @param [Array<SessionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @session_instance = payload.body[key].map do |data|
+                        SessionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def session_instance
+                          @instance
+                      end
+                  end
 
                 class SessionPage < Page
                     ##
@@ -217,6 +303,54 @@ module Twilio
                         '<Twilio.Assistants.V1.SessionPage>'
                     end
                 end
+
+                class SessionPageMetadata < PageMetadata
+                    attr_reader :session_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @session_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @session_page << SessionListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @session_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Assistants::V1PageMetadata>';
+                    end
+                end
+                class SessionListResponse < InstanceListResource
+
+                    # @param [Array<SessionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @session = payload.body[key].map do |data|
+                      SessionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def session
+                        @session
+                    end
+                end
+
                 class SessionInstance < InstanceResource
                     ##
                     # Initialize the SessionInstance

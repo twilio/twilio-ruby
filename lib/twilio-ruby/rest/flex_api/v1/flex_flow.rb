@@ -103,6 +103,85 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the FlexFlowInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the Flex Flow resource.
+                    # @param [String] chat_service_sid The SID of the chat service.
+                    # @param [ChannelType] channel_type 
+                    # @param [String] contact_identity The channel contact's Identity.
+                    # @param [Boolean] enabled Whether the new Flex Flow is enabled.
+                    # @param [IntegrationType] integration_type 
+                    # @param [String] integration_flow_sid The SID of the Studio Flow. Required when `integrationType` is `studio`.
+                    # @param [String] integration_url The URL of the external webhook. Required when `integrationType` is `external`.
+                    # @param [String] integration_workspace_sid The Workspace SID for a new Task. Required when `integrationType` is `task`.
+                    # @param [String] integration_workflow_sid The Workflow SID for a new Task. Required when `integrationType` is `task`.
+                    # @param [String] integration_channel The Task Channel SID (TCXXXX) or unique name (e.g., `sms`) to use for the Task that will be created. Applicable and required when `integrationType` is `task`. The default value is `default`.
+                    # @param [String] integration_timeout The Task timeout in seconds for a new Task. Default is 86,400 seconds (24 hours). Optional when `integrationType` is `task`, not applicable otherwise.
+                    # @param [String] integration_priority The Task priority of a new Task. The default priority is 0. Optional when `integrationType` is `task`, not applicable otherwise.
+                    # @param [Boolean] integration_creation_on_message In the context of outbound messaging, defines whether to create a Task immediately (and therefore reserve the conversation to current agent), or delay Task creation until the customer sends the first response. Set to false to create immediately, true to delay Task creation. This setting is only applicable for outbound messaging.
+                    # @param [Boolean] long_lived When enabled, Flex will keep the chat channel active so that it may be used for subsequent interactions with a contact identity. Defaults to `false`.
+                    # @param [Boolean] janitor_enabled When enabled, the Messaging Channel Janitor will remove active Proxy sessions if the associated Task is deleted outside of the Flex UI. Defaults to `false`.
+                    # @param [String] integration_retry_count The number of times to retry the Studio Flow or webhook in case of failure. Takes integer values from 0 to 3 with the default being 3. Optional when `integrationType` is `studio` or `external`, not applicable otherwise.
+                    # @return [FlexFlowInstance] Created FlexFlowInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      chat_service_sid: nil, 
+                      channel_type: nil, 
+                      contact_identity: :unset, 
+                      enabled: :unset, 
+                      integration_type: :unset, 
+                      integration_flow_sid: :unset, 
+                      integration_url: :unset, 
+                      integration_workspace_sid: :unset, 
+                      integration_workflow_sid: :unset, 
+                      integration_channel: :unset, 
+                      integration_timeout: :unset, 
+                      integration_priority: :unset, 
+                      integration_creation_on_message: :unset, 
+                      long_lived: :unset, 
+                      janitor_enabled: :unset, 
+                      integration_retry_count: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'ChatServiceSid' => chat_service_sid,
+                            'ChannelType' => channel_type,
+                            'ContactIdentity' => contact_identity,
+                            'Enabled' => enabled,
+                            'IntegrationType' => integration_type,
+                            'Integration.FlowSid' => integration_flow_sid,
+                            'Integration.Url' => integration_url,
+                            'Integration.WorkspaceSid' => integration_workspace_sid,
+                            'Integration.WorkflowSid' => integration_workflow_sid,
+                            'Integration.Channel' => integration_channel,
+                            'Integration.Timeout' => integration_timeout,
+                            'Integration.Priority' => integration_priority,
+                            'Integration.CreationOnMessage' => integration_creation_on_message,
+                            'LongLived' => long_lived,
+                            'JanitorEnabled' => janitor_enabled,
+                            'Integration.RetryCount' => integration_retry_count,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        flexFlow_instance = FlexFlowInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        FlexFlowInstanceMetadata.new(
+                            @version,
+                            flexFlow_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists FlexFlowInstance records from the API as a list.
@@ -144,6 +223,30 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists FlexFlowPageMetadata records from the API as a list.
+                      # @param [String] friendly_name The `friendly_name` of the Flex Flow resources to read.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(friendly_name: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        FlexFlowPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -230,7 +333,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the FlexFlowInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          flexFlow_instance = FlexFlowInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          FlexFlowInstanceMetadata.new(@version, flexFlow_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -249,6 +371,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the FlexFlowInstanceMetadata
+                    # @return [FlexFlowInstance] Fetched FlexFlowInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        flexFlow_instance = FlexFlowInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        FlexFlowInstanceMetadata.new(
+                            @version,
+                            flexFlow_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -326,6 +473,86 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the FlexFlowInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the Flex Flow resource.
+                    # @param [String] chat_service_sid The SID of the chat service.
+                    # @param [ChannelType] channel_type 
+                    # @param [String] contact_identity The channel contact's Identity.
+                    # @param [Boolean] enabled Whether the new Flex Flow is enabled.
+                    # @param [IntegrationType] integration_type 
+                    # @param [String] integration_flow_sid The SID of the Studio Flow. Required when `integrationType` is `studio`.
+                    # @param [String] integration_url The URL of the external webhook. Required when `integrationType` is `external`.
+                    # @param [String] integration_workspace_sid The Workspace SID for a new Task. Required when `integrationType` is `task`.
+                    # @param [String] integration_workflow_sid The Workflow SID for a new Task. Required when `integrationType` is `task`.
+                    # @param [String] integration_channel The Task Channel SID (TCXXXX) or unique name (e.g., `sms`) to use for the Task that will be created. Applicable and required when `integrationType` is `task`. The default value is `default`.
+                    # @param [String] integration_timeout The Task timeout in seconds for a new Task. Default is 86,400 seconds (24 hours). Optional when `integrationType` is `task`, not applicable otherwise.
+                    # @param [String] integration_priority The Task priority of a new Task. The default priority is 0. Optional when `integrationType` is `task`, not applicable otherwise.
+                    # @param [Boolean] integration_creation_on_message In the context of outbound messaging, defines whether to create a Task immediately (and therefore reserve the conversation to current agent), or delay Task creation until the customer sends the first response. Set to false to create immediately, true to delay Task creation. This setting is only applicable for outbound messaging.
+                    # @param [Boolean] long_lived When enabled, Flex will keep the chat channel active so that it may be used for subsequent interactions with a contact identity. Defaults to `false`.
+                    # @param [Boolean] janitor_enabled When enabled, the Messaging Channel Janitor will remove active Proxy sessions if the associated Task is deleted outside of the Flex UI. Defaults to `false`.
+                    # @param [String] integration_retry_count The number of times to retry the Studio Flow or webhook in case of failure. Takes integer values from 0 to 3 with the default being 3. Optional when `integrationType` is `studio` or `external`, not applicable otherwise.
+                    # @return [FlexFlowInstance] Updated FlexFlowInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      chat_service_sid: :unset, 
+                      channel_type: :unset, 
+                      contact_identity: :unset, 
+                      enabled: :unset, 
+                      integration_type: :unset, 
+                      integration_flow_sid: :unset, 
+                      integration_url: :unset, 
+                      integration_workspace_sid: :unset, 
+                      integration_workflow_sid: :unset, 
+                      integration_channel: :unset, 
+                      integration_timeout: :unset, 
+                      integration_priority: :unset, 
+                      integration_creation_on_message: :unset, 
+                      long_lived: :unset, 
+                      janitor_enabled: :unset, 
+                      integration_retry_count: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'ChatServiceSid' => chat_service_sid,
+                            'ChannelType' => channel_type,
+                            'ContactIdentity' => contact_identity,
+                            'Enabled' => enabled,
+                            'IntegrationType' => integration_type,
+                            'Integration.FlowSid' => integration_flow_sid,
+                            'Integration.Url' => integration_url,
+                            'Integration.WorkspaceSid' => integration_workspace_sid,
+                            'Integration.WorkflowSid' => integration_workflow_sid,
+                            'Integration.Channel' => integration_channel,
+                            'Integration.Timeout' => integration_timeout,
+                            'Integration.Priority' => integration_priority,
+                            'Integration.CreationOnMessage' => integration_creation_on_message,
+                            'LongLived' => long_lived,
+                            'JanitorEnabled' => janitor_enabled,
+                            'Integration.RetryCount' => integration_retry_count,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        flexFlow_instance = FlexFlowInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        FlexFlowInstanceMetadata.new(
+                            @version,
+                            flexFlow_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -341,6 +568,45 @@ module Twilio
                         "#<Twilio.FlexApi.V1.FlexFlowContext #{context}>"
                     end
                 end
+
+                class FlexFlowInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new FlexFlowInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}FlexFlowInstance] flex_flow_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [FlexFlowInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, flex_flow_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @flex_flow_instance = flex_flow_instance
+                    end
+
+                    def flex_flow
+                        @flex_flow_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.FlexFlowInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class FlexFlowListResponse < InstanceListResource
+                    # @param [Array<FlexFlowInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @flex_flow_instance = payload.body[key].map do |data|
+                        FlexFlowInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def flex_flow_instance
+                          @instance
+                      end
+                  end
 
                 class FlexFlowPage < Page
                     ##
@@ -370,6 +636,54 @@ module Twilio
                         '<Twilio.FlexApi.V1.FlexFlowPage>'
                     end
                 end
+
+                class FlexFlowPageMetadata < PageMetadata
+                    attr_reader :flex_flow_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @flex_flow_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @flex_flow_page << FlexFlowListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @flex_flow_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class FlexFlowListResponse < InstanceListResource
+
+                    # @param [Array<FlexFlowInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @flex_flow = payload.body[key].map do |data|
+                      FlexFlowInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def flex_flow
+                        @flex_flow
+                    end
+                end
+
                 class FlexFlowInstance < InstanceResource
                     ##
                     # Initialize the FlexFlowInstance

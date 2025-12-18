@@ -88,6 +88,36 @@ module Twilio
                     end
 
                     ##
+                    # Lists RegulationPageMetadata records from the API as a list.
+                      # @param [EndUserType] end_user_type The type of End User the regulation requires - can be `individual` or `business`.
+                      # @param [String] iso_country The ISO country code of the phone number's country.
+                      # @param [String] number_type The type of phone number that the regulatory requiremnt is restricting.
+                      # @param [Boolean] include_constraints A boolean parameter indicating whether to include constraints or not for supporting end user, documents and their fields
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(end_user_type: :unset, iso_country: :unset, number_type: :unset, include_constraints: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'EndUserType' => end_user_type,
+                            'IsoCountry' => iso_country,
+                            'NumberType' => number_type,
+                            'IncludeConstraints' => include_constraints,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        RegulationPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields RegulationInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -193,6 +223,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the RegulationInstanceMetadata
+                    # @param [Boolean] include_constraints A boolean parameter indicating whether to include constraints or not for supporting end user, documents and their fields
+                    # @return [RegulationInstance] Fetched RegulationInstance
+                    def fetch_with_metadata(
+                      include_constraints: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'IncludeConstraints' => include_constraints,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        regulation_instance = RegulationInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        RegulationInstanceMetadata.new(
+                            @version,
+                            regulation_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -208,6 +269,45 @@ module Twilio
                         "#<Twilio.Numbers.V2.RegulationContext #{context}>"
                     end
                 end
+
+                class RegulationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new RegulationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}RegulationInstance] regulation_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [RegulationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, regulation_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @regulation_instance = regulation_instance
+                    end
+
+                    def regulation
+                        @regulation_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.RegulationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class RegulationListResponse < InstanceListResource
+                    # @param [Array<RegulationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @regulation_instance = payload.body[key].map do |data|
+                        RegulationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def regulation_instance
+                          @instance
+                      end
+                  end
 
                 class RegulationPage < Page
                     ##
@@ -237,6 +337,54 @@ module Twilio
                         '<Twilio.Numbers.V2.RegulationPage>'
                     end
                 end
+
+                class RegulationPageMetadata < PageMetadata
+                    attr_reader :regulation_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @regulation_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @regulation_page << RegulationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @regulation_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V2PageMetadata>';
+                    end
+                end
+                class RegulationListResponse < InstanceListResource
+
+                    # @param [Array<RegulationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @regulation = payload.body[key].map do |data|
+                      RegulationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def regulation
+                        @regulation
+                    end
+                end
+
                 class RegulationInstance < InstanceResource
                     ##
                     # Initialize the RegulationInstance

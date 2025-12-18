@@ -101,6 +101,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ApproveChallengeInstanceMetadata
+                    # @param [ApprovePasskeysChallengeRequest] approve_passkeys_challenge_request 
+                    # @return [ApproveChallengeInstance] Updated ApproveChallengeInstance
+                    def update_with_metadata(approve_passkeys_challenge_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, headers: headers, data: approve_passkeys_challenge_request.to_json)
+                        approveChallenge_instance = ApproveChallengeInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                        )
+                        ApproveChallengeInstanceMetadata.new(
+                            @version,
+                            approveChallenge_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -138,6 +165,54 @@ module Twilio
                         '<Twilio.Verify.V2.ApproveChallengePage>'
                     end
                 end
+
+                class ApproveChallengePageMetadata < PageMetadata
+                    attr_reader :approve_challenge_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @approve_challenge_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @approve_challenge_page << ApproveChallengeListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @approve_challenge_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class ApproveChallengeListResponse < InstanceListResource
+
+                    # @param [Array<ApproveChallengeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @approve_challenge = payload.body[key].map do |data|
+                      ApproveChallengeInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def approve_challenge
+                        @approve_challenge
+                    end
+                end
+
                 class ApproveChallengeInstance < InstanceResource
                     ##
                     # Initialize the ApproveChallengeInstance

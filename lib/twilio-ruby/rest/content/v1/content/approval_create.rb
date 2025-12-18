@@ -70,6 +70,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ApprovalCreateInstanceMetadata
+                    # @param [ContentApprovalRequest] content_approval_request 
+                    # @return [ApprovalCreateInstance] Created ApprovalCreateInstance
+                    def create_with_metadata(content_approval_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: content_approval_request.to_json)
+                        approvalCreate_instance = ApprovalCreateInstance.new(
+                            @version,
+                            response.body,
+                            content_sid: @solution[:content_sid],
+                        )
+                        ApprovalCreateInstanceMetadata.new(
+                            @version,
+                            approvalCreate_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -107,6 +134,54 @@ module Twilio
                         '<Twilio.Content.V1.ApprovalCreatePage>'
                     end
                 end
+
+                class ApprovalCreatePageMetadata < PageMetadata
+                    attr_reader :approval_create_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @approval_create_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @approval_create_page << ApprovalCreateListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @approval_create_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Content::V1PageMetadata>';
+                    end
+                end
+                class ApprovalCreateListResponse < InstanceListResource
+
+                    # @param [Array<ApprovalCreateInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @approval_create = payload.body[key].map do |data|
+                      ApprovalCreateInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def approval_create
+                        @approval_create
+                    end
+                end
+
                 class ApprovalCreateInstance < InstanceResource
                     ##
                     # Initialize the ApprovalCreateInstance

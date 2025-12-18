@@ -70,6 +70,50 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the WorkflowInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the Workflow resource. For example, `Inbound Call Workflow` or `2014 Outbound Campaign`.
+                    # @param [String] configuration A JSON string that contains the rules to apply to the Workflow. See [Configuring Workflows](https://www.twilio.com/docs/taskrouter/workflow-configuration) for more information.
+                    # @param [String] assignment_callback_url The URL from your application that will process task assignment events. See [Handling Task Assignment Callback](https://www.twilio.com/docs/taskrouter/handle-assignment-callbacks) for more details.
+                    # @param [String] fallback_assignment_callback_url The URL that we should call when a call to the `assignment_callback_url` fails.
+                    # @param [String] task_reservation_timeout How long TaskRouter will wait for a confirmation response from your application after it assigns a Task to a Worker. Can be up to `86,400` (24 hours) and the default is `120`.
+                    # @return [WorkflowInstance] Created WorkflowInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      configuration: nil, 
+                      assignment_callback_url: :unset, 
+                      fallback_assignment_callback_url: :unset, 
+                      task_reservation_timeout: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Configuration' => configuration,
+                            'AssignmentCallbackUrl' => assignment_callback_url,
+                            'FallbackAssignmentCallbackUrl' => fallback_assignment_callback_url,
+                            'TaskReservationTimeout' => task_reservation_timeout,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        workflow_instance = WorkflowInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                        )
+                        WorkflowInstanceMetadata.new(
+                            @version,
+                            workflow_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists WorkflowInstance records from the API as a list.
@@ -111,6 +155,30 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists WorkflowPageMetadata records from the API as a list.
+                      # @param [String] friendly_name The `friendly_name` of the Workflow resources to read.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(friendly_name: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        WorkflowPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -201,7 +269,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the WorkflowInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          workflow_instance = WorkflowInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          WorkflowInstanceMetadata.new(@version, workflow_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -221,6 +308,32 @@ module Twilio
                             payload,
                             workspace_sid: @solution[:workspace_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the WorkflowInstanceMetadata
+                    # @return [WorkflowInstance] Fetched WorkflowInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        workflow_instance = WorkflowInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        WorkflowInstanceMetadata.new(
+                            @version,
+                            workflow_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -263,6 +376,54 @@ module Twilio
                             payload,
                             workspace_sid: @solution[:workspace_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the WorkflowInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the Workflow resource. For example, `Inbound Call Workflow` or `2014 Outbound Campaign`.
+                    # @param [String] assignment_callback_url The URL from your application that will process task assignment events. See [Handling Task Assignment Callback](https://www.twilio.com/docs/taskrouter/handle-assignment-callbacks) for more details.
+                    # @param [String] fallback_assignment_callback_url The URL that we should call when a call to the `assignment_callback_url` fails.
+                    # @param [String] configuration A JSON string that contains the rules to apply to the Workflow. See [Configuring Workflows](https://www.twilio.com/docs/taskrouter/workflow-configuration) for more information.
+                    # @param [String] task_reservation_timeout How long TaskRouter will wait for a confirmation response from your application after it assigns a Task to a Worker. Can be up to `86,400` (24 hours) and the default is `120`.
+                    # @param [String] re_evaluate_tasks Whether or not to re-evaluate Tasks. The default is `false`, which means Tasks in the Workflow will not be processed through the assignment loop again.
+                    # @return [WorkflowInstance] Updated WorkflowInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      assignment_callback_url: :unset, 
+                      fallback_assignment_callback_url: :unset, 
+                      configuration: :unset, 
+                      task_reservation_timeout: :unset, 
+                      re_evaluate_tasks: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'AssignmentCallbackUrl' => assignment_callback_url,
+                            'FallbackAssignmentCallbackUrl' => fallback_assignment_callback_url,
+                            'Configuration' => configuration,
+                            'TaskReservationTimeout' => task_reservation_timeout,
+                            'ReEvaluateTasks' => re_evaluate_tasks,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        workflow_instance = WorkflowInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        WorkflowInstanceMetadata.new(
+                            @version,
+                            workflow_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -315,6 +476,45 @@ module Twilio
                     end
                 end
 
+                class WorkflowInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new WorkflowInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}WorkflowInstance] workflow_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [WorkflowInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, workflow_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @workflow_instance = workflow_instance
+                    end
+
+                    def workflow
+                        @workflow_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.WorkflowInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class WorkflowListResponse < InstanceListResource
+                    # @param [Array<WorkflowInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @workflow_instance = payload.body[key].map do |data|
+                        WorkflowInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def workflow_instance
+                          @instance
+                      end
+                  end
+
                 class WorkflowPage < Page
                     ##
                     # Initialize the WorkflowPage
@@ -343,6 +543,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.WorkflowPage>'
                     end
                 end
+
+                class WorkflowPageMetadata < PageMetadata
+                    attr_reader :workflow_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @workflow_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @workflow_page << WorkflowListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @workflow_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class WorkflowListResponse < InstanceListResource
+
+                    # @param [Array<WorkflowInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @workflow = payload.body[key].map do |data|
+                      WorkflowInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def workflow
+                        @workflow
+                    end
+                end
+
                 class WorkflowInstance < InstanceResource
                     ##
                     # Initialize the WorkflowInstance

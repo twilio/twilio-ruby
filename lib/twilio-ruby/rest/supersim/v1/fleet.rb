@@ -79,6 +79,61 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the FleetInstanceMetadata
+                    # @param [String] network_access_profile The SID or unique name of the Network Access Profile that will control which cellular networks the Fleet's SIMs can connect to.
+                    # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used in place of the resource's `sid` in the URL to address the resource.
+                    # @param [Boolean] data_enabled Defines whether SIMs in the Fleet are capable of using 2G/3G/4G/LTE/CAT-M data connectivity. Defaults to `true`.
+                    # @param [String] data_limit The total data usage (download and upload combined) in Megabytes that each Super SIM assigned to the Fleet can consume during a billing period (normally one month). Value must be between 1MB (1) and 2TB (2,000,000). Defaults to 1GB (1,000).
+                    # @param [String] ip_commands_url The URL that will receive a webhook when a Super SIM in the Fleet is used to send an IP Command from your device to a special IP address. Your server should respond with an HTTP status code in the 200 range; any response body will be ignored.
+                    # @param [String] ip_commands_method A string representing the HTTP method to use when making a request to `ip_commands_url`. Can be one of `POST` or `GET`. Defaults to `POST`.
+                    # @param [Boolean] sms_commands_enabled Defines whether SIMs in the Fleet are capable of sending and receiving machine-to-machine SMS via Commands. Defaults to `true`.
+                    # @param [String] sms_commands_url The URL that will receive a webhook when a Super SIM in the Fleet is used to send an SMS from your device to the SMS Commands number. Your server should respond with an HTTP status code in the 200 range; any response body will be ignored.
+                    # @param [String] sms_commands_method A string representing the HTTP method to use when making a request to `sms_commands_url`. Can be one of `POST` or `GET`. Defaults to `POST`.
+                    # @return [FleetInstance] Created FleetInstance
+                    def create_with_metadata(
+                      network_access_profile: nil, 
+                      unique_name: :unset, 
+                      data_enabled: :unset, 
+                      data_limit: :unset, 
+                      ip_commands_url: :unset, 
+                      ip_commands_method: :unset, 
+                      sms_commands_enabled: :unset, 
+                      sms_commands_url: :unset, 
+                      sms_commands_method: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'NetworkAccessProfile' => network_access_profile,
+                            'UniqueName' => unique_name,
+                            'DataEnabled' => data_enabled,
+                            'DataLimit' => data_limit,
+                            'IpCommandsUrl' => ip_commands_url,
+                            'IpCommandsMethod' => ip_commands_method,
+                            'SmsCommandsEnabled' => sms_commands_enabled,
+                            'SmsCommandsUrl' => sms_commands_url,
+                            'SmsCommandsMethod' => sms_commands_method,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        fleet_instance = FleetInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        FleetInstanceMetadata.new(
+                            @version,
+                            fleet_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists FleetInstance records from the API as a list.
@@ -120,6 +175,30 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists FleetPageMetadata records from the API as a list.
+                      # @param [String] network_access_profile The SID or unique name of the Network Access Profile that controls which cellular networks the Fleet's SIMs can connect to.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(network_access_profile: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'NetworkAccessProfile' => network_access_profile,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        FleetPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -217,6 +296,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the FleetInstanceMetadata
+                    # @return [FleetInstance] Fetched FleetInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        fleet_instance = FleetInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        FleetInstanceMetadata.new(
+                            @version,
+                            fleet_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the FleetInstance
                     # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used in place of the resource's `sid` in the URL to address the resource.
                     # @param [String] network_access_profile The SID or unique name of the Network Access Profile that will control which cellular networks the Fleet's SIMs can connect to.
@@ -260,6 +364,56 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the FleetInstanceMetadata
+                    # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used in place of the resource's `sid` in the URL to address the resource.
+                    # @param [String] network_access_profile The SID or unique name of the Network Access Profile that will control which cellular networks the Fleet's SIMs can connect to.
+                    # @param [String] ip_commands_url The URL that will receive a webhook when a Super SIM in the Fleet is used to send an IP Command from your device to a special IP address. Your server should respond with an HTTP status code in the 200 range; any response body will be ignored.
+                    # @param [String] ip_commands_method A string representing the HTTP method to use when making a request to `ip_commands_url`. Can be one of `POST` or `GET`. Defaults to `POST`.
+                    # @param [String] sms_commands_url The URL that will receive a webhook when a Super SIM in the Fleet is used to send an SMS from your device to the SMS Commands number. Your server should respond with an HTTP status code in the 200 range; any response body will be ignored.
+                    # @param [String] sms_commands_method A string representing the HTTP method to use when making a request to `sms_commands_url`. Can be one of `POST` or `GET`. Defaults to `POST`.
+                    # @param [String] data_limit The total data usage (download and upload combined) in Megabytes that each Super SIM assigned to the Fleet can consume during a billing period (normally one month). Value must be between 1MB (1) and 2TB (2,000,000). Defaults to 1GB (1,000).
+                    # @return [FleetInstance] Updated FleetInstance
+                    def update_with_metadata(
+                      unique_name: :unset, 
+                      network_access_profile: :unset, 
+                      ip_commands_url: :unset, 
+                      ip_commands_method: :unset, 
+                      sms_commands_url: :unset, 
+                      sms_commands_method: :unset, 
+                      data_limit: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'UniqueName' => unique_name,
+                            'NetworkAccessProfile' => network_access_profile,
+                            'IpCommandsUrl' => ip_commands_url,
+                            'IpCommandsMethod' => ip_commands_method,
+                            'SmsCommandsUrl' => sms_commands_url,
+                            'SmsCommandsMethod' => sms_commands_method,
+                            'DataLimit' => data_limit,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        fleet_instance = FleetInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        FleetInstanceMetadata.new(
+                            @version,
+                            fleet_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -275,6 +429,45 @@ module Twilio
                         "#<Twilio.Supersim.V1.FleetContext #{context}>"
                     end
                 end
+
+                class FleetInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new FleetInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}FleetInstance] fleet_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [FleetInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, fleet_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @fleet_instance = fleet_instance
+                    end
+
+                    def fleet
+                        @fleet_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.FleetInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class FleetListResponse < InstanceListResource
+                    # @param [Array<FleetInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @fleet_instance = payload.body[key].map do |data|
+                        FleetInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def fleet_instance
+                          @instance
+                      end
+                  end
 
                 class FleetPage < Page
                     ##
@@ -304,6 +497,54 @@ module Twilio
                         '<Twilio.Supersim.V1.FleetPage>'
                     end
                 end
+
+                class FleetPageMetadata < PageMetadata
+                    attr_reader :fleet_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @fleet_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @fleet_page << FleetListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @fleet_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Supersim::V1PageMetadata>';
+                    end
+                end
+                class FleetListResponse < InstanceListResource
+
+                    # @param [Array<FleetInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @fleet = payload.body[key].map do |data|
+                      FleetInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def fleet
+                        @fleet
+                    end
+                end
+
                 class FleetInstance < InstanceResource
                     ##
                     # Initialize the FleetInstance

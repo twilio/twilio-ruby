@@ -74,6 +74,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the DomainValidateDnInstanceMetadata
+                    # @return [DomainValidateDnInstance] Fetched DomainValidateDnInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        domainValidateDn_instance = DomainValidateDnInstance.new(
+                            @version,
+                            response.body,
+                            domain_sid: @solution[:domain_sid],
+                        )
+                        DomainValidateDnInstanceMetadata.new(
+                            @version,
+                            domainValidateDn_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -89,6 +114,45 @@ module Twilio
                         "#<Twilio.Messaging.V1.DomainValidateDnContext #{context}>"
                     end
                 end
+
+                class DomainValidateDnInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new DomainValidateDnInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}DomainValidateDnInstance] domain_validate_dn_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [DomainValidateDnInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, domain_validate_dn_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @domain_validate_dn_instance = domain_validate_dn_instance
+                    end
+
+                    def domain_validate_dn
+                        @domain_validate_dn_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.DomainValidateDnInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class DomainValidateDnListResponse < InstanceListResource
+                    # @param [Array<DomainValidateDnInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @domain_validate_dn_instance = payload.body[key].map do |data|
+                        DomainValidateDnInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def domain_validate_dn_instance
+                          @instance
+                      end
+                  end
 
                 class DomainValidateDnPage < Page
                     ##
@@ -118,6 +182,54 @@ module Twilio
                         '<Twilio.Messaging.V1.DomainValidateDnPage>'
                     end
                 end
+
+                class DomainValidateDnPageMetadata < PageMetadata
+                    attr_reader :domain_validate_dn_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @domain_validate_dn_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @domain_validate_dn_page << DomainValidateDnListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @domain_validate_dn_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class DomainValidateDnListResponse < InstanceListResource
+
+                    # @param [Array<DomainValidateDnInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @domain_validate_dn = payload.body[key].map do |data|
+                      DomainValidateDnInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def domain_validate_dn
+                        @domain_validate_dn
+                    end
+                end
+
                 class DomainValidateDnInstance < InstanceResource
                     ##
                     # Initialize the DomainValidateDnInstance

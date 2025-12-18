@@ -72,6 +72,30 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the AuthTokenPromotionInstanceMetadata
+                    # @return [AuthTokenPromotionInstance] Updated AuthTokenPromotionInstance
+                    def update_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, headers: headers)
+                        authTokenPromotion_instance = AuthTokenPromotionInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        AuthTokenPromotionInstanceMetadata.new(
+                            @version,
+                            authTokenPromotion_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -87,6 +111,45 @@ module Twilio
                         "#<Twilio.Accounts.V1.AuthTokenPromotionContext #{context}>"
                     end
                 end
+
+                class AuthTokenPromotionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AuthTokenPromotionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AuthTokenPromotionInstance] auth_token_promotion_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AuthTokenPromotionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, auth_token_promotion_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @auth_token_promotion_instance = auth_token_promotion_instance
+                    end
+
+                    def auth_token_promotion
+                        @auth_token_promotion_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AuthTokenPromotionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AuthTokenPromotionListResponse < InstanceListResource
+                    # @param [Array<AuthTokenPromotionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @auth_token_promotion_instance = payload.body[key].map do |data|
+                        AuthTokenPromotionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def auth_token_promotion_instance
+                          @instance
+                      end
+                  end
 
                 class AuthTokenPromotionPage < Page
                     ##
@@ -116,6 +179,54 @@ module Twilio
                         '<Twilio.Accounts.V1.AuthTokenPromotionPage>'
                     end
                 end
+
+                class AuthTokenPromotionPageMetadata < PageMetadata
+                    attr_reader :auth_token_promotion_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @auth_token_promotion_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @auth_token_promotion_page << AuthTokenPromotionListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @auth_token_promotion_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Accounts::V1PageMetadata>';
+                    end
+                end
+                class AuthTokenPromotionListResponse < InstanceListResource
+
+                    # @param [Array<AuthTokenPromotionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @auth_token_promotion = payload.body[key].map do |data|
+                      AuthTokenPromotionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def auth_token_promotion
+                        @auth_token_promotion
+                    end
+                end
+
                 class AuthTokenPromotionInstance < InstanceResource
                     ##
                     # Initialize the AuthTokenPromotionInstance

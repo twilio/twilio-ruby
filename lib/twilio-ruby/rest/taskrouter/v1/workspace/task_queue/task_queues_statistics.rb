@@ -97,6 +97,40 @@ module Twilio
                     end
 
                     ##
+                    # Lists TaskQueuesStatisticsPageMetadata records from the API as a list.
+                      # @param [Time] end_date Only calculate statistics from this date and time and earlier, specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+                      # @param [String] friendly_name The `friendly_name` of the TaskQueue statistics to read.
+                      # @param [String] minutes Only calculate statistics since this many minutes in the past. The default is 15 minutes.
+                      # @param [Time] start_date Only calculate statistics from this date and time and later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+                      # @param [String] task_channel Only calculate statistics on this TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or `default`.
+                      # @param [String] split_by_wait_time A comma separated list of values that describes the thresholds, in seconds, to calculate statistics on. For each threshold specified, the number of Tasks canceled and reservations accepted above and below the specified thresholds in seconds are computed.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(end_date: :unset, friendly_name: :unset, minutes: :unset, start_date: :unset, task_channel: :unset, split_by_wait_time: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
+                            'FriendlyName' => friendly_name,
+                            'Minutes' => minutes,
+                            'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
+                            'TaskChannel' => task_channel,
+                            'SplitByWaitTime' => split_by_wait_time,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TaskQueuesStatisticsPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields TaskQueuesStatisticsInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -193,6 +227,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.TaskQueuesStatisticsPage>'
                     end
                 end
+
+                class TaskQueuesStatisticsPageMetadata < PageMetadata
+                    attr_reader :task_queues_statistics_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @task_queues_statistics_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @task_queues_statistics_page << TaskQueuesStatisticsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @task_queues_statistics_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class TaskQueuesStatisticsListResponse < InstanceListResource
+
+                    # @param [Array<TaskQueuesStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @task_queues_statistics = payload.body[key].map do |data|
+                      TaskQueuesStatisticsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def task_queues_statistics
+                        @task_queues_statistics
+                    end
+                end
+
                 class TaskQueuesStatisticsInstance < InstanceResource
                     ##
                     # Initialize the TaskQueuesStatisticsInstance

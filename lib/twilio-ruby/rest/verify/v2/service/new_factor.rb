@@ -114,6 +114,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the NewFactorInstanceMetadata
+                    # @param [CreateNewPasskeysFactorRequest] create_new_passkeys_factor_request 
+                    # @return [NewFactorInstance] Created NewFactorInstance
+                    def create_with_metadata(create_new_passkeys_factor_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: create_new_passkeys_factor_request.to_json)
+                        newFactor_instance = NewFactorInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                        )
+                        NewFactorInstanceMetadata.new(
+                            @version,
+                            newFactor_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -151,6 +178,54 @@ module Twilio
                         '<Twilio.Verify.V2.NewFactorPage>'
                     end
                 end
+
+                class NewFactorPageMetadata < PageMetadata
+                    attr_reader :new_factor_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @new_factor_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @new_factor_page << NewFactorListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @new_factor_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class NewFactorListResponse < InstanceListResource
+
+                    # @param [Array<NewFactorInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @new_factor = payload.body[key].map do |data|
+                      NewFactorInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def new_factor
+                        @new_factor
+                    end
+                end
+
                 class NewFactorInstance < InstanceResource
                     ##
                     # Initialize the NewFactorInstance

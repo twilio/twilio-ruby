@@ -64,6 +64,46 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the NewApiKeyInstanceMetadata
+                    # @param [String] account_sid The SID of the [Account](https://www.twilio.com/docs/iam/api/account) that created the Payments resource.
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [Keytype] key_type 
+                    # @param [Object] policy The \\\\`Policy\\\\` object is a collection that specifies the allowed Twilio permissions for the restricted key. For more information on the permissions available with restricted API keys, refer to the [Twilio documentation](https://www.twilio.com/docs/iam/api-keys/restricted-api-keys#permissions-available-with-restricted-api-keys).
+                    # @return [NewApiKeyInstance] Created NewApiKeyInstance
+                    def create_with_metadata(
+                      account_sid: nil, 
+                      friendly_name: :unset, 
+                      key_type: :unset, 
+                      policy: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'AccountSid' => account_sid,
+                            'FriendlyName' => friendly_name,
+                            'KeyType' => key_type,
+                            'Policy' => Twilio.serialize_object(policy),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        newApiKey_instance = NewApiKeyInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        NewApiKeyInstanceMetadata.new(
+                            @version,
+                            newApiKey_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -101,6 +141,54 @@ module Twilio
                         '<Twilio.Iam.V1.NewApiKeyPage>'
                     end
                 end
+
+                class NewApiKeyPageMetadata < PageMetadata
+                    attr_reader :new_api_key_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @new_api_key_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @new_api_key_page << NewApiKeyListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @new_api_key_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Iam::V1PageMetadata>';
+                    end
+                end
+                class NewApiKeyListResponse < InstanceListResource
+
+                    # @param [Array<NewApiKeyInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @new_api_key = payload.body[key].map do |data|
+                      NewApiKeyInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def new_api_key
+                        @new_api_key
+                    end
+                end
+
                 class NewApiKeyInstance < InstanceResource
                     ##
                     # Initialize the NewApiKeyInstance
