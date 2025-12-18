@@ -127,108 +127,6 @@ module Twilio
                         )
                     end
 
-                  ##
-                  # Create the MessageInstance
-                  # @param [String] to The recipient's phone number in [E.164](https://www.twilio.com/docs/glossary/what-e164) format (for SMS/MMS) or [channel address](https://www.twilio.com/docs/messaging/channels), e.g. `whatsapp:+15552229999`.
-                  # @param [String] status_callback The URL of the endpoint to which Twilio sends [Message status callback requests](https://www.twilio.com/docs/sms/api/message-resource#twilios-request-to-the-statuscallback-url). URL must contain a valid hostname and underscores are not allowed. If you include this parameter with the `messaging_service_sid`, Twilio uses this URL instead of the Status Callback URL of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource).
-                  # @param [String] application_sid The SID of the associated [TwiML Application](https://www.twilio.com/docs/usage/api/applications). [Message status callback requests](https://www.twilio.com/docs/sms/api/message-resource#twilios-request-to-the-statuscallback-url) are sent to the TwiML App's `message_status_callback` URL. Note that the `status_callback` parameter of a request takes priority over the `application_sid` parameter; if both are included `application_sid` is ignored.
-                  # @param [Float] max_price [OBSOLETE] This parameter will no longer have any effect as of 2024-06-03.
-                  # @param [Boolean] provide_feedback Boolean indicating whether or not you intend to provide delivery confirmation feedback to Twilio (used in conjunction with the [Message Feedback subresource](https://www.twilio.com/docs/sms/api/message-feedback-resource)). Default value is `false`.
-                  # @param [String] attempt Total number of attempts made (including this request) to send the message regardless of the provider used
-                  # @param [String] validity_period The maximum length in seconds that the Message can remain in Twilio's outgoing message queue. If a queued Message exceeds the `validity_period`, the Message is not sent. Accepted values are integers from `1` to `36000`. Default value is `36000`. A `validity_period` greater than `5` is recommended. [Learn more about the validity period](https://www.twilio.com/blog/take-more-control-of-outbound-messages-using-validity-period-html)
-                  # @param [Boolean] force_delivery Reserved
-                  # @param [ContentRetention] content_retention
-                  # @param [AddressRetention] address_retention
-                  # @param [Boolean] smart_encoded Whether to detect Unicode characters that have a similar GSM-7 character and replace them. Can be: `true` or `false`.
-                  # @param [Array[String]] persistent_action Rich actions for non-SMS/MMS channels. Used for [sending location in WhatsApp messages](https://www.twilio.com/docs/whatsapp/message-features#location-messages-with-whatsapp).
-                  # @param [TrafficType] traffic_type
-                  # @param [Boolean] shorten_urls For Messaging Services with [Link Shortening configured](https://www.twilio.com/docs/messaging/features/link-shortening) only: A Boolean indicating whether or not Twilio should shorten links in the `body` of the Message. Default value is `false`. If `true`, the `messaging_service_sid` parameter must also be provided.
-                  # @param [ScheduleType] schedule_type
-                  # @param [Time] send_at The time that Twilio will send the message. Must be in ISO 8601 format.
-                  # @param [Boolean] send_as_mms If set to `true`, Twilio delivers the message as a single MMS message, regardless of the presence of media.
-                  # @param [String] content_variables For [Content Editor/API](https://www.twilio.com/docs/content) only: Key-value pairs of [Template variables](https://www.twilio.com/docs/content/using-variables-with-content-api) and their substitution values. `content_sid` parameter must also be provided. If values are not defined in the `content_variables` parameter, the [Template's default placeholder values](https://www.twilio.com/docs/content/content-api-resources#create-templates) are used.
-                  # @param [RiskCheck] risk_check
-                  # @param [String] from The sender's Twilio phone number (in [E.164](https://en.wikipedia.org/wiki/E.164) format), [alphanumeric sender ID](https://www.twilio.com/docs/sms/quickstart), [Wireless SIM](https://www.twilio.com/docs/iot/wireless/programmable-wireless-send-machine-machine-sms-commands), [short code](https://www.twilio.com/en-us/messaging/channels/sms/short-codes), or [channel address](https://www.twilio.com/docs/messaging/channels) (e.g., `whatsapp:+15554449999`). The value of the `from` parameter must be a sender that is hosted within Twilio and belongs to the Account creating the Message. If you are using `messaging_service_sid`, this parameter can be empty (Twilio assigns a `from` value from the Messaging Service's Sender Pool) or you can provide a specific sender from your Sender Pool.
-                  # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/services) you want to associate with the Message. When this parameter is provided and the `from` parameter is omitted, Twilio selects the optimal sender from the Messaging Service's Sender Pool. You may also provide a `from` parameter if you want to use a specific Sender from the Sender Pool.
-                  # @param [String] body The text content of the outgoing message. Can be up to 1,600 characters in length. SMS only: If the `body` contains more than 160 [GSM-7](https://www.twilio.com/docs/glossary/what-is-gsm-7-character-encoding) characters (or 70 [UCS-2](https://www.twilio.com/docs/glossary/what-is-ucs-2-character-encoding) characters), the message is segmented and charged accordingly. For long `body` text, consider using the [send_as_mms parameter](https://www.twilio.com/blog/mms-for-long-text-messages).
-                  # @param [Array[String]] media_url The URL of media to include in the Message content. `jpeg`, `jpg`, `gif`, and `png` file types are fully supported by Twilio and content is formatted for delivery on destination devices. The media size limit is 5 MB for supported file types (`jpeg`, `jpg`, `png`, `gif`) and 500 KB for [other types](https://www.twilio.com/docs/messaging/guides/accepted-mime-types) of accepted media. To send more than one image in the message, provide multiple `media_url` parameters in the POST request. You can include up to ten `media_url` parameters per message. [International](https://support.twilio.com/hc/en-us/articles/223179808-Sending-and-receiving-MMS-messages) and [carrier](https://support.twilio.com/hc/en-us/articles/223133707-Is-MMS-supported-for-all-carriers-in-US-and-Canada-) limits apply.
-                  # @param [String] content_sid For [Content Editor/API](https://www.twilio.com/docs/content) only: The SID of the Content Template to be used with the Message, e.g., `HXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`. If this parameter is not provided, a Content Template is not used. Find the SID in the Console on the Content Editor page. For Content API users, the SID is found in Twilio's response when [creating the Template](https://www.twilio.com/docs/content/content-api-resources#create-templates) or by [fetching your Templates](https://www.twilio.com/docs/content/content-api-resources#fetch-all-content-resources).
-                  # @return [MessageInstance] Created MessageInstance
-                  def create_with_metadata(
-                    to: nil,
-                    status_callback: :unset,
-                    application_sid: :unset,
-                    max_price: :unset,
-                    provide_feedback: :unset,
-                    attempt: :unset,
-                    validity_period: :unset,
-                    force_delivery: :unset,
-                    content_retention: :unset,
-                    address_retention: :unset,
-                    smart_encoded: :unset,
-                    persistent_action: :unset,
-                    traffic_type: :unset,
-                    shorten_urls: :unset,
-                    schedule_type: :unset,
-                    send_at: :unset,
-                    send_as_mms: :unset,
-                    content_variables: :unset,
-                    risk_check: :unset,
-                    from: :unset,
-                    messaging_service_sid: :unset,
-                    body: :unset,
-                    media_url: :unset,
-                    content_sid: :unset
-                  )
-
-                    data = Twilio::Values.of({
-                            'To' => to,
-                            'StatusCallback' => status_callback,
-                            'ApplicationSid' => application_sid,
-                            'MaxPrice' => max_price,
-                            'ProvideFeedback' => provide_feedback,
-                            'Attempt' => attempt,
-                            'ValidityPeriod' => validity_period,
-                            'ForceDelivery' => force_delivery,
-                            'ContentRetention' => content_retention,
-                            'AddressRetention' => address_retention,
-                            'SmartEncoded' => smart_encoded,
-                              'PersistentAction' => Twilio.serialize_list(persistent_action) { |e| e },
-                            'TrafficType' => traffic_type,
-                            'ShortenUrls' => shorten_urls,
-                            'ScheduleType' => schedule_type,
-                              'SendAt' => Twilio.serialize_iso8601_datetime(send_at),
-                            'SendAsMms' => send_as_mms,
-                            'ContentVariables' => content_variables,
-                            'RiskCheck' => risk_check,
-                            'From' => from,
-                            'MessagingServiceSid' => messaging_service_sid,
-                            'Body' => body,
-                              'MediaUrl' => Twilio.serialize_list(media_url) { |e| e },
-                            'ContentSid' => content_sid,
-                    })
-
-                    headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-
-
-
-
-
-                    response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
-                    message_instance = MessageInstance.new(
-                        @version,
-                        response.body,
-                          account_sid: @solution[:account_sid],
-                        )
-                    MessageInstanceMetadata.new(
-                        @version,
-                        message_instance,
-                        response.headers,
-                        response.status_code
-                    )
-                  end
-
-
                     ##
                     # Lists MessageInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
@@ -255,23 +153,6 @@ module Twilio
                             limit: limit,
                             page_size: page_size
                         ).entries
-                    end
-
-                    def list_with_metadata(to: :unset, from: :unset, date_sent: :unset, date_sent_before: :unset, date_sent_after: :unset, limit: nil, page_size: nil)
-                      limits = @version.read_limits(limit, page_size)
-                      params = Twilio::Values.of({
-                                                   'To' => to,
-                                                   'From' => from,
-                                                   'DateSent' =>  Twilio.serialize_iso8601_datetime(date_sent),
-                                                   'DateSent<' =>  Twilio.serialize_iso8601_datetime(date_sent_before),
-                                                   'DateSent>' =>  Twilio.serialize_iso8601_datetime(date_sent_after),
-                                                   'PageSize' => page_size,
-                                                 })
-                      headers = Twilio::Values.of({})
-
-                      response = @version.page('GET', @uri, params: params, headers: headers)
-
-                      MessagePageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -399,18 +280,6 @@ module Twilio
                         @version.delete('DELETE', @uri, headers: headers)
                     end
 
-                  ##
-                  # Delete the MessageInstance
-                  # @return [Boolean] True if delete succeeds, false otherwise
-                  def delete_with_metadata
-
-                    headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-
-
-
-                    @version.delete('DELETE', @uri, headers: headers)
-                  end
-
                     ##
                     # Fetch the MessageInstance
                     # @return [MessageInstance] Fetched MessageInstance
@@ -430,32 +299,6 @@ module Twilio
                             sid: @solution[:sid],
                         )
                     end
-
-                  ##
-                  # Fetch the MessageInstance
-                  # @return [MessageInstance] Fetched MessageInstance
-                  def fetch_with_metadata
-
-                    headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-
-
-
-
-
-                    response = @version.fetch_with_metadata('GET', @uri, headers: headers)
-                    message_instance = MessageInstance.new(
-                        @version,
-                        response.body,
-                          account_sid: @solution[:account_sid],
-                          sid: @solution[:sid],
-                        )
-                    MessageInstanceMetadata.new(
-                        @version,
-                        message_instance,
-                        response.headers,
-                        response.status_code
-                    )
-                  end
 
                     ##
                     # Update the MessageInstance
@@ -486,42 +329,6 @@ module Twilio
                             sid: @solution[:sid],
                         )
                     end
-
-                  ##
-                  # Update the MessageInstance
-                  # @param [String] body The new `body` of the Message resource. To redact the text content of a Message, this parameter's value must be an empty string
-                  # @param [UpdateStatus] status
-                  # @return [MessageInstance] Updated MessageInstance
-                  def update_with_metadata(
-                    body: :unset,
-                    status: :unset
-                  )
-
-                    data = Twilio::Values.of({
-                            'Body' => body,
-                            'Status' => status,
-                    })
-
-                    headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-
-
-
-
-
-                    response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
-                    message_instance = MessageInstance.new(
-                        @version,
-                        response.body,
-                          account_sid: @solution[:account_sid],
-                          sid: @solution[:sid],
-                        )
-                    MessageInstanceMetadata.new(
-                        @version,
-                        message_instance,
-                        response.headers,
-                        response.status_code
-                    )
-                  end
 
                     ##
                     # Access the feedback
@@ -808,14 +615,6 @@ module Twilio
                         context.delete
                     end
 
-                  ##
-                  # Delete the MessageInstance
-                  # @return [Boolean] True if delete succeeds, false otherwise
-                  def delete_with_metadata
-
-                        context.delete
-                        end
-
                     ##
                     # Fetch the MessageInstance
                     # @return [MessageInstance] Fetched MessageInstance
@@ -823,14 +622,6 @@ module Twilio
 
                         context.fetch
                     end
-
-                  ##
-                  # Fetch the MessageInstance
-                  # @return [MessageInstance] Fetched MessageInstance
-                  def fetch_with_metadata
-
-                        context.fetch
-                        end
 
                     ##
                     # Update the MessageInstance
@@ -847,22 +638,6 @@ module Twilio
                             status: status,
                         )
                     end
-
-                  ##
-                  # Update the MessageInstance
-                  # @param [String] body The new `body` of the Message resource. To redact the text content of a Message, this parameter's value must be an empty string
-                  # @param [UpdateStatus] status
-                  # @return [MessageInstance] Updated MessageInstance
-                  def update_with_metadata(
-                    body: :unset,
-                    status: :unset
-                  )
-
-                        context.update(
-                              body: body,
-                              status: status,
-                        )
-                        end
 
                     ##
                     # Access the feedback
@@ -892,62 +667,6 @@ module Twilio
                         "<Twilio.Api.V2010.MessageInstance #{values}>"
                     end
                 end
-
-                class MessageInstanceMetadata <  InstanceResourceMetadata
-                    ##
-                    # Initializes a new MessageInstanceMetadata.
-                    # @param [Version] version Version that contains the resource
-                    # @param [MessageInstance] message_instance The instance associated with the metadata.
-                    # @param [Hash] headers Header object with response headers.
-                    # @param [Integer] status_code The HTTP status code of the response.
-                    # @return [MessageInstanceMetadata] The initialized instance with metadata.
-                    def initialize(version, message_instance, headers, status_code)
-                        super(version, headers, status_code)
-                        @message_instance = message_instance
-                    end
-
-                    def instance
-                        @message_instance
-                    end
-
-                    def headers
-                        @headers
-                    end
-
-                    def status_code
-                        @status_code
-                    end
-
-                    def to_s
-                        "<Twilio.Api.V2010.MessageInstanceMetadata status=#{@status_code}>"
-                    end
-                end
-
-                class MessageListResponse
-                   # @param [Array<MessageInstance>] instance
-                   # @param [Hash{String => Object}] headers
-                   # @param [Integer] status_code
-                   def initialize(version, payload, key)
-                       @instance = payload.body[key].map do |message_data|
-                         MessageInstance.new(version, message_data)
-                       end
-                       @headers = payload.headers
-                       @status_code = payload.status_code
-                   end
-
-                    def instance
-                        @instance
-                    end
-
-                   def headers
-                     @headers
-                   end
-
-                   def status_code
-                      @status_code
-                   end
-                end
-
              end
             end
         end
