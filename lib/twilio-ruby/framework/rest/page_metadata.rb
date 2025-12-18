@@ -48,18 +48,18 @@ module Twilio
       def previous_page_url
         #rubocop:disable Layout/LineLength
         return @version.domain.absolute_url(URI.parse(@payload['meta']['previous_page_url']).request_uri) if @payload['meta'] && @payload['meta']['previous_page_url']
-
-        return @version.domain.absolute_url(@payload['previous_page_uri']) if @payload['previous_page_uri']
         #rubocop:enable Layout/LineLength
+        return @version.domain.absolute_url(@payload['previous_page_uri']) if @payload['previous_page_uri']
+
         nil
       end
 
       def next_page_url
         #rubocop:disable Layout/LineLength
         return @version.domain.absolute_url(URI.parse(@payload.body['meta']['next_page_url']).request_uri) if @payload.body['meta'] && @payload.body['meta']['next_page_url']
-
-        return @version.domain.absolute_url(@payload.body['next_page_uri']) if @payload.body['next_page_uri']
         #rubocop:enable Layout/LineLength
+        return @version.domain.absolute_url(@payload.body['next_page_uri']) if @payload.body['next_page_uri']
+
         nil
       end
 
