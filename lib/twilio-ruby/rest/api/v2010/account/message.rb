@@ -405,35 +405,6 @@ module Twilio
                     end
                 end
 
-                class MessagePageMetadata < PageMetadata
-                  attr_reader :message_page
-
-                  def initialize(version, response, solution, limit)
-                    super(version, response)
-                    @message_page = []
-                    @limit = limit
-                    number_of_records = @payload.body["page_size"]
-                    key = get_key(@payload.body)
-                    while( limit != :unset && number_of_records <= limit )
-                      next_page = self.next_page
-                      @message_page << MessageListResponse.new(version, next_page, key)
-                      break unless next_page
-                      number_of_records += next_page.body["page_size"]
-                    end
-                    # Path Solution
-                    @solution = solution
-                  end
-
-                  def each
-                    @message_page.each do |record|
-                      yield record
-                    end
-                  end
-
-                  def to_s
-                    '<Twilio.Api.V2010.MessagePageMetadata>'
-                  end
-                end
                 class MessageInstance < InstanceResource
                     ##
                     # Initialize the MessageInstance
