@@ -36,19 +36,18 @@ module Twilio
         response
       end
 
-      # def load_page(payload)
-      #   payload
-      #   # return payload.body['Resources'] if payload.body['Resources']
-      #   # if payload.body['meta'] && payload.body['meta']['key']
-      #   #   return payload.body[payload.body['meta']['key']]
-      #   # else
-      #   #   keys = payload.body.keys
-      #   #   key = keys - META_KEYS
-      #   #   return payload.body[key.first] if key.size == 1
-      #   # end
-      #
-      #   # raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
-      # end
+      def get_key(payload)
+        return 'Resources' if payload['Resources']
+        if payload['meta'] && payload['meta']['key']
+          return payload['meta']['key']
+        else
+          keys = payload.keys
+          key = keys - META_KEYS
+          return key.first if key.size == 1
+        end
+
+        raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
+      end
 
       def previous_page_url
         if @payload['meta'] && @payload['meta']['previous_page_url']
@@ -86,26 +85,8 @@ module Twilio
         @version.domain.request('GET', next_page_url)
       end
 
-      def each
-        current_record = 0
-        current_page = 1
-
-        while @page
-          @page.each do |record|
-            yield record
-            current_record += 1
-            return nil if @limit && @limit <= current_record
-          end
-
-          return nil if @page_limit && @page_limit <= current_page
-
-          @page = @page.next_page
-          current_page += 1
-        end
-      end
-
       def to_s
-        '#<Page>'
+        '#<PageMetadata>'
       end
     end
   end
