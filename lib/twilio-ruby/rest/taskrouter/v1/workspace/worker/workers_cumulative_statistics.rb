@@ -92,6 +92,46 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the WorkersCumulativeStatisticsInstanceMetadata
+                    # @param [Time] end_date Only calculate statistics from this date and time and earlier, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+                    # @param [String] minutes Only calculate statistics since this many minutes in the past. The default 15 minutes. This is helpful for displaying statistics for the last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
+                    # @param [Time] start_date Only calculate statistics from this date and time and later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+                    # @param [String] task_channel Only calculate cumulative statistics on this TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or `default`.
+                    # @return [WorkersCumulativeStatisticsInstance] Fetched WorkersCumulativeStatisticsInstance
+                    def fetch_with_metadata(
+                      end_date: :unset, 
+                      minutes: :unset, 
+                      start_date: :unset, 
+                      task_channel: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
+                            'Minutes' => minutes,
+                            'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
+                            'TaskChannel' => task_channel,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        workersCumulativeStatistics_instance = WorkersCumulativeStatisticsInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                        )
+                        WorkersCumulativeStatisticsInstanceMetadata.new(
+                            @version,
+                            workersCumulativeStatistics_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -107,6 +147,45 @@ module Twilio
                         "#<Twilio.Taskrouter.V1.WorkersCumulativeStatisticsContext #{context}>"
                     end
                 end
+
+                class WorkersCumulativeStatisticsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new WorkersCumulativeStatisticsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}WorkersCumulativeStatisticsInstance] workers_cumulative_statistics_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [WorkersCumulativeStatisticsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, workers_cumulative_statistics_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @workers_cumulative_statistics_instance = workers_cumulative_statistics_instance
+                    end
+
+                    def workers_cumulative_statistics
+                        @workers_cumulative_statistics_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.WorkersCumulativeStatisticsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class WorkersCumulativeStatisticsListResponse < InstanceListResource
+                    # @param [Array<WorkersCumulativeStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @workers_cumulative_statistics_instance = payload.body[key].map do |data|
+                        WorkersCumulativeStatisticsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def workers_cumulative_statistics_instance
+                          @instance
+                      end
+                  end
 
                 class WorkersCumulativeStatisticsPage < Page
                     ##
@@ -136,6 +215,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.WorkersCumulativeStatisticsPage>'
                     end
                 end
+
+                class WorkersCumulativeStatisticsPageMetadata < PageMetadata
+                    attr_reader :workers_cumulative_statistics_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @workers_cumulative_statistics_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @workers_cumulative_statistics_page << WorkersCumulativeStatisticsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @workers_cumulative_statistics_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class WorkersCumulativeStatisticsListResponse < InstanceListResource
+
+                    # @param [Array<WorkersCumulativeStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @workers_cumulative_statistics = payload.body[key].map do |data|
+                      WorkersCumulativeStatisticsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def workers_cumulative_statistics
+                        @workers_cumulative_statistics
+                    end
+                end
+
                 class WorkersCumulativeStatisticsInstance < InstanceResource
                     ##
                     # Initialize the WorkersCumulativeStatisticsInstance

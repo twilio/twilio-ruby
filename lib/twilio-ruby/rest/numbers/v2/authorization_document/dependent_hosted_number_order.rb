@@ -88,6 +88,36 @@ module Twilio
                     end
 
                     ##
+                    # Lists DependentHostedNumberOrderPageMetadata records from the API as a list.
+                      # @param [Status] status Status of an instance resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5. failed. See the section entitled [Status Values](https://www.twilio.com/docs/phone-numbers/hosted-numbers/hosted-numbers-api/authorization-document-resource#status-values) for more information on each of these statuses.
+                      # @param [String] phone_number An E164 formatted phone number hosted by this HostedNumberOrder.
+                      # @param [String] incoming_phone_number_sid A 34 character string that uniquely identifies the IncomingPhoneNumber resource created by this HostedNumberOrder.
+                      # @param [String] friendly_name A human readable description of this resource, up to 128 characters.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(status: :unset, phone_number: :unset, incoming_phone_number_sid: :unset, friendly_name: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Status' => status,
+                            'PhoneNumber' => phone_number,
+                            'IncomingPhoneNumberSid' => incoming_phone_number_sid,
+                            'FriendlyName' => friendly_name,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        DependentHostedNumberOrderPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields DependentHostedNumberOrderInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -180,6 +210,54 @@ module Twilio
                         '<Twilio.Numbers.V2.DependentHostedNumberOrderPage>'
                     end
                 end
+
+                class DependentHostedNumberOrderPageMetadata < PageMetadata
+                    attr_reader :dependent_hosted_number_order_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @dependent_hosted_number_order_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @dependent_hosted_number_order_page << DependentHostedNumberOrderListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @dependent_hosted_number_order_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V2PageMetadata>';
+                    end
+                end
+                class DependentHostedNumberOrderListResponse < InstanceListResource
+
+                    # @param [Array<DependentHostedNumberOrderInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @dependent_hosted_number_order = payload.body[key].map do |data|
+                      DependentHostedNumberOrderInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def dependent_hosted_number_order
+                        @dependent_hosted_number_order
+                    end
+                end
+
                 class DependentHostedNumberOrderInstance < InstanceResource
                     ##
                     # Initialize the DependentHostedNumberOrderInstance

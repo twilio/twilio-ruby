@@ -80,6 +80,32 @@ module Twilio
                     end
 
                     ##
+                    # Lists SentencePageMetadata records from the API as a list.
+                      # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Sentences. If redaction is enabled, the default is `true` to access redacted sentences.
+                      # @param [Boolean] word_timestamps Returns word level timestamps information, if word_timestamps is enabled. The default is `false`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(redacted: :unset, word_timestamps: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Redacted' => redacted,
+                            'WordTimestamps' => word_timestamps,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SentencePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields SentenceInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -168,6 +194,54 @@ module Twilio
                         '<Twilio.Intelligence.V2.SentencePage>'
                     end
                 end
+
+                class SentencePageMetadata < PageMetadata
+                    attr_reader :sentence_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @sentence_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @sentence_page << SentenceListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @sentence_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Intelligence::V2PageMetadata>';
+                    end
+                end
+                class SentenceListResponse < InstanceListResource
+
+                    # @param [Array<SentenceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @sentence = payload.body[key].map do |data|
+                      SentenceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def sentence
+                        @sentence
+                    end
+                end
+
                 class SentenceInstance < InstanceResource
                     ##
                     # Initialize the SentenceInstance

@@ -91,6 +91,54 @@ module Twilio
                         '<Twilio.Api.V2010.UsagePage>'
                     end
                 end
+
+                class UsagePageMetadata < PageMetadata
+                    attr_reader :usage_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @usage_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @usage_page << UsageListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @usage_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class UsageListResponse < InstanceListResource
+
+                    # @param [Array<UsageInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @usage = payload.body[key].map do |data|
+                      UsageInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def usage
+                        @usage
+                    end
+                end
+
                 class UsageInstance < InstanceResource
                     ##
                     # Initialize the UsageInstance

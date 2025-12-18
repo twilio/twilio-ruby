@@ -55,6 +55,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the SafelistInstanceMetadata
+                    # @param [String] phone_number The phone number to be added in SafeList. Phone numbers must be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+                    # @return [SafelistInstance] Created SafelistInstance
+                    def create_with_metadata(
+                      phone_number: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'PhoneNumber' => phone_number,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        safelist_instance = SafelistInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        SafelistInstanceMetadata.new(
+                            @version,
+                            safelist_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -89,7 +120,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the SafelistInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          safelist_instance = SafelistInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          SafelistInstanceMetadata.new(@version, safelist_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -111,6 +161,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the SafelistInstanceMetadata
+                    # @return [SafelistInstance] Fetched SafelistInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        safelist_instance = SafelistInstance.new(
+                            @version,
+                            response.body,
+                            phone_number: @solution[:phone_number],
+                        )
+                        SafelistInstanceMetadata.new(
+                            @version,
+                            safelist_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -126,6 +201,45 @@ module Twilio
                         "#<Twilio.Verify.V2.SafelistContext #{context}>"
                     end
                 end
+
+                class SafelistInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SafelistInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SafelistInstance] safelist_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SafelistInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, safelist_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @safelist_instance = safelist_instance
+                    end
+
+                    def safelist
+                        @safelist_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SafelistInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SafelistListResponse < InstanceListResource
+                    # @param [Array<SafelistInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @safelist_instance = payload.body[key].map do |data|
+                        SafelistInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def safelist_instance
+                          @instance
+                      end
+                  end
 
                 class SafelistPage < Page
                     ##
@@ -155,6 +269,54 @@ module Twilio
                         '<Twilio.Verify.V2.SafelistPage>'
                     end
                 end
+
+                class SafelistPageMetadata < PageMetadata
+                    attr_reader :safelist_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @safelist_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @safelist_page << SafelistListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @safelist_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class SafelistListResponse < InstanceListResource
+
+                    # @param [Array<SafelistInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @safelist = payload.body[key].map do |data|
+                      SafelistInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def safelist
+                        @safelist
+                    end
+                end
+
                 class SafelistInstance < InstanceResource
                     ##
                     # Initialize the SafelistInstance

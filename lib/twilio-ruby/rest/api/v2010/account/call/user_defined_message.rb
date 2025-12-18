@@ -63,6 +63,42 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the UserDefinedMessageInstanceMetadata
+                    # @param [String] content The User Defined Message in the form of URL-encoded JSON string.
+                    # @param [String] idempotency_key A unique string value to identify API call. This should be a unique string value per API call and can be a randomly generated.
+                    # @return [UserDefinedMessageInstance] Created UserDefinedMessageInstance
+                    def create_with_metadata(
+                      content: nil, 
+                      idempotency_key: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Content' => content,
+                            'IdempotencyKey' => idempotency_key,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        userDefinedMessage_instance = UserDefinedMessageInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            call_sid: @solution[:call_sid],
+                        )
+                        UserDefinedMessageInstanceMetadata.new(
+                            @version,
+                            userDefinedMessage_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -100,6 +136,54 @@ module Twilio
                         '<Twilio.Api.V2010.UserDefinedMessagePage>'
                     end
                 end
+
+                class UserDefinedMessagePageMetadata < PageMetadata
+                    attr_reader :user_defined_message_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @user_defined_message_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @user_defined_message_page << UserDefinedMessageListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @user_defined_message_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class UserDefinedMessageListResponse < InstanceListResource
+
+                    # @param [Array<UserDefinedMessageInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @user_defined_message = payload.body[key].map do |data|
+                      UserDefinedMessageInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def user_defined_message
+                        @user_defined_message
+                    end
+                end
+
                 class UserDefinedMessageInstance < InstanceResource
                     ##
                     # Initialize the UserDefinedMessageInstance

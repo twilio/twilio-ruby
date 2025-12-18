@@ -77,6 +77,56 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TriggerInstanceMetadata
+                    # @param [String] callback_url The URL we should call using `callback_method` when the trigger fires.
+                    # @param [String] trigger_value The usage value at which the trigger should fire.  For convenience, you can use an offset value such as `+30` to specify a trigger_value that is 30 units more than the current usage value. Be sure to urlencode a `+` as `%2B`.
+                    # @param [String] usage_category The usage category that the trigger should watch.  Use one of the supported [usage categories](https://www.twilio.com/docs/usage/api/usage-record#usage-categories) for this value.
+                    # @param [String] callback_method The HTTP method we should use to call `callback_url`. Can be: `GET` or `POST` and the default is `POST`.
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [Recurring] recurring 
+                    # @param [TriggerField] trigger_by 
+                    # @return [TriggerInstance] Created TriggerInstance
+                    def create_with_metadata(
+                      callback_url: nil, 
+                      trigger_value: nil, 
+                      usage_category: nil, 
+                      callback_method: :unset, 
+                      friendly_name: :unset, 
+                      recurring: :unset, 
+                      trigger_by: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'CallbackUrl' => callback_url,
+                            'TriggerValue' => trigger_value,
+                            'UsageCategory' => usage_category,
+                            'CallbackMethod' => callback_method,
+                            'FriendlyName' => friendly_name,
+                            'Recurring' => recurring,
+                            'TriggerBy' => trigger_by,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        trigger_instance = TriggerInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                        )
+                        TriggerInstanceMetadata.new(
+                            @version,
+                            trigger_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists TriggerInstance records from the API as a list.
@@ -126,6 +176,34 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists TriggerPageMetadata records from the API as a list.
+                      # @param [Recurring] recurring The frequency of recurring UsageTriggers to read. Can be: `daily`, `monthly`, or `yearly` to read recurring UsageTriggers. An empty value or a value of `alltime` reads non-recurring UsageTriggers.
+                      # @param [TriggerField] trigger_by The trigger field of the UsageTriggers to read.  Can be: `count`, `usage`, or `price` as described in the [UsageRecords documentation](https://www.twilio.com/docs/usage/api/usage-record#usage-count-price).
+                      # @param [String] usage_category The usage category of the UsageTriggers to read. Must be a supported [usage categories](https://www.twilio.com/docs/usage/api/usage-record#usage-categories).
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(recurring: :unset, trigger_by: :unset, usage_category: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Recurring' => recurring,
+                            'TriggerBy' => trigger_by,
+                            'UsageCategory' => usage_category,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TriggerPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -217,7 +295,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the TriggerInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          trigger_instance = TriggerInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          TriggerInstanceMetadata.new(@version, trigger_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -237,6 +334,32 @@ module Twilio
                             payload,
                             account_sid: @solution[:account_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the TriggerInstanceMetadata
+                    # @return [TriggerInstance] Fetched TriggerInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        trigger_instance = TriggerInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        TriggerInstanceMetadata.new(
+                            @version,
+                            trigger_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -273,6 +396,45 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the TriggerInstanceMetadata
+                    # @param [String] callback_method The HTTP method we should use to call `callback_url`. Can be: `GET` or `POST` and the default is `POST`.
+                    # @param [String] callback_url The URL we should call using `callback_method` when the trigger fires.
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @return [TriggerInstance] Updated TriggerInstance
+                    def update_with_metadata(
+                      callback_method: :unset, 
+                      callback_url: :unset, 
+                      friendly_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'CallbackMethod' => callback_method,
+                            'CallbackUrl' => callback_url,
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        trigger_instance = TriggerInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        TriggerInstanceMetadata.new(
+                            @version,
+                            trigger_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -288,6 +450,45 @@ module Twilio
                         "#<Twilio.Api.V2010.TriggerContext #{context}>"
                     end
                 end
+
+                class TriggerInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new TriggerInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}TriggerInstance] trigger_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [TriggerInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, trigger_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @trigger_instance = trigger_instance
+                    end
+
+                    def trigger
+                        @trigger_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.TriggerInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class TriggerListResponse < InstanceListResource
+                    # @param [Array<TriggerInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @trigger_instance = payload.body[key].map do |data|
+                        TriggerInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def trigger_instance
+                          @instance
+                      end
+                  end
 
                 class TriggerPage < Page
                     ##
@@ -317,6 +518,54 @@ module Twilio
                         '<Twilio.Api.V2010.TriggerPage>'
                     end
                 end
+
+                class TriggerPageMetadata < PageMetadata
+                    attr_reader :trigger_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @trigger_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @trigger_page << TriggerListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @trigger_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class TriggerListResponse < InstanceListResource
+
+                    # @param [Array<TriggerInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @trigger = payload.body[key].map do |data|
+                      TriggerInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def trigger
+                        @trigger
+                    end
+                end
+
                 class TriggerInstance < InstanceResource
                     ##
                     # Initialize the TriggerInstance

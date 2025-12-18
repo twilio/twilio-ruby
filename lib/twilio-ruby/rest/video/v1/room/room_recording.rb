@@ -88,6 +88,36 @@ module Twilio
                     end
 
                     ##
+                    # Lists RoomRecordingPageMetadata records from the API as a list.
+                      # @param [Status] status Read only the recordings with this status. Can be: `processing`, `completed`, or `deleted`.
+                      # @param [String] source_sid Read only the recordings that have this `source_sid`.
+                      # @param [Time] date_created_after Read only recordings that started on or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+                      # @param [Time] date_created_before Read only Recordings that started before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(status: :unset, source_sid: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Status' => status,
+                            'SourceSid' => source_sid,
+                            'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
+                            'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        RoomRecordingPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields RoomRecordingInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -178,7 +208,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the RoomRecordingInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          roomRecording_instance = RoomRecordingInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          RoomRecordingInstanceMetadata.new(@version, roomRecording_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -201,6 +250,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the RoomRecordingInstanceMetadata
+                    # @return [RoomRecordingInstance] Fetched RoomRecordingInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        roomRecording_instance = RoomRecordingInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                            sid: @solution[:sid],
+                        )
+                        RoomRecordingInstanceMetadata.new(
+                            @version,
+                            roomRecording_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -216,6 +291,45 @@ module Twilio
                         "#<Twilio.Video.V1.RoomRecordingContext #{context}>"
                     end
                 end
+
+                class RoomRecordingInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new RoomRecordingInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}RoomRecordingInstance] room_recording_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [RoomRecordingInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, room_recording_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @room_recording_instance = room_recording_instance
+                    end
+
+                    def room_recording
+                        @room_recording_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.RoomRecordingInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class RoomRecordingListResponse < InstanceListResource
+                    # @param [Array<RoomRecordingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @room_recording_instance = payload.body[key].map do |data|
+                        RoomRecordingInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def room_recording_instance
+                          @instance
+                      end
+                  end
 
                 class RoomRecordingPage < Page
                     ##
@@ -245,6 +359,54 @@ module Twilio
                         '<Twilio.Video.V1.RoomRecordingPage>'
                     end
                 end
+
+                class RoomRecordingPageMetadata < PageMetadata
+                    attr_reader :room_recording_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @room_recording_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @room_recording_page << RoomRecordingListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @room_recording_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Video::V1PageMetadata>';
+                    end
+                end
+                class RoomRecordingListResponse < InstanceListResource
+
+                    # @param [Array<RoomRecordingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @room_recording = payload.body[key].map do |data|
+                      RoomRecordingInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def room_recording
+                        @room_recording
+                    end
+                end
+
                 class RoomRecordingInstance < InstanceResource
                     ##
                     # Initialize the RoomRecordingInstance

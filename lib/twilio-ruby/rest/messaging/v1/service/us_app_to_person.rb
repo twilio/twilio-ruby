@@ -103,6 +103,83 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the UsAppToPersonInstanceMetadata
+                    # @param [String] brand_registration_sid A2P Brand Registration SID
+                    # @param [String] description A short description of what this SMS campaign does. Min length: 40 characters. Max length: 4096 characters.
+                    # @param [String] message_flow Required for all Campaigns. Details around how a consumer opts-in to their campaign, therefore giving consent to receive their messages. If multiple opt-in methods can be used for the same campaign, they must all be listed. 40 character minimum. 2048 character maximum.
+                    # @param [Array[String]] message_samples An array of sample message strings, min two and max five. Min length for each sample: 20 chars. Max length for each sample: 1024 chars.
+                    # @param [String] us_app_to_person_usecase A2P Campaign Use Case. Examples: [ 2FA, EMERGENCY, MARKETING..]
+                    # @param [Boolean] has_embedded_links Indicates that this SMS campaign will send messages that contain links.
+                    # @param [Boolean] has_embedded_phone Indicates that this SMS campaign will send messages that contain phone numbers.
+                    # @param [String] opt_in_message If end users can text in a keyword to start receiving messages from this campaign, the auto-reply messages sent to the end users must be provided. The opt-in response should include the Brand name, confirmation of opt-in enrollment to a recurring message campaign, how to get help, and clear description of how to opt-out. This field is required if end users can text in a keyword to start receiving messages from this campaign. 20 character minimum. 320 character maximum.
+                    # @param [String] opt_out_message Upon receiving the opt-out keywords from the end users, Twilio customers are expected to send back an auto-generated response, which must provide acknowledgment of the opt-out request and confirmation that no further messages will be sent. It is also recommended that these opt-out messages include the brand name. This field is required if managing opt out keywords yourself (i.e. not using Twilio's Default or Advanced Opt Out features). 20 character minimum. 320 character maximum.
+                    # @param [String] help_message When customers receive the help keywords from their end users, Twilio customers are expected to send back an auto-generated response; this may include the brand name and additional support contact information. This field is required if managing help keywords yourself (i.e. not using Twilio's Default or Advanced Opt Out features). 20 character minimum. 320 character maximum.
+                    # @param [Array[String]] opt_in_keywords If end users can text in a keyword to start receiving messages from this campaign, those keywords must be provided. This field is required if end users can text in a keyword to start receiving messages from this campaign. Values must be alphanumeric. 255 character maximum.
+                    # @param [Array[String]] opt_out_keywords End users should be able to text in a keyword to stop receiving messages from this campaign. Those keywords must be provided. This field is required if managing opt out keywords yourself (i.e. not using Twilio's Default or Advanced Opt Out features). Values must be alphanumeric. 255 character maximum.
+                    # @param [Array[String]] help_keywords End users should be able to text in a keyword to receive help. Those keywords must be provided as part of the campaign registration request. This field is required if managing help keywords yourself (i.e. not using Twilio's Default or Advanced Opt Out features). Values must be alphanumeric. 255 character maximum.
+                    # @param [Boolean] subscriber_opt_in A boolean that specifies whether campaign has Subscriber Optin or not.
+                    # @param [Boolean] age_gated A boolean that specifies whether campaign is age gated or not.
+                    # @param [Boolean] direct_lending A boolean that specifies whether campaign allows direct lending or not.
+                    # @return [UsAppToPersonInstance] Created UsAppToPersonInstance
+                    def create_with_metadata(
+                      brand_registration_sid: nil, 
+                      description: nil, 
+                      message_flow: nil, 
+                      message_samples: nil, 
+                      us_app_to_person_usecase: nil, 
+                      has_embedded_links: nil, 
+                      has_embedded_phone: nil, 
+                      opt_in_message: :unset, 
+                      opt_out_message: :unset, 
+                      help_message: :unset, 
+                      opt_in_keywords: :unset, 
+                      opt_out_keywords: :unset, 
+                      help_keywords: :unset, 
+                      subscriber_opt_in: :unset, 
+                      age_gated: :unset, 
+                      direct_lending: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'BrandRegistrationSid' => brand_registration_sid,
+                            'Description' => description,
+                            'MessageFlow' => message_flow,
+                            'MessageSamples' => Twilio.serialize_list(message_samples) { |e| e },
+                            'UsAppToPersonUsecase' => us_app_to_person_usecase,
+                            'HasEmbeddedLinks' => has_embedded_links,
+                            'HasEmbeddedPhone' => has_embedded_phone,
+                            'OptInMessage' => opt_in_message,
+                            'OptOutMessage' => opt_out_message,
+                            'HelpMessage' => help_message,
+                            'OptInKeywords' => Twilio.serialize_list(opt_in_keywords) { |e| e },
+                            'OptOutKeywords' => Twilio.serialize_list(opt_out_keywords) { |e| e },
+                            'HelpKeywords' => Twilio.serialize_list(help_keywords) { |e| e },
+                            'SubscriberOptIn' => subscriber_opt_in,
+                            'AgeGated' => age_gated,
+                            'DirectLending' => direct_lending,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        usAppToPerson_instance = UsAppToPersonInstance.new(
+                            @version,
+                            response.body,
+                            messaging_service_sid: @solution[:messaging_service_sid],
+                        )
+                        UsAppToPersonInstanceMetadata.new(
+                            @version,
+                            usAppToPerson_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists UsAppToPersonInstance records from the API as a list.
@@ -140,6 +217,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists UsAppToPersonPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        UsAppToPersonPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -225,7 +324,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the UsAppToPersonInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          usAppToPerson_instance = UsAppToPersonInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          UsAppToPersonInstanceMetadata.new(@version, usAppToPerson_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -245,6 +363,32 @@ module Twilio
                             payload,
                             messaging_service_sid: @solution[:messaging_service_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the UsAppToPersonInstanceMetadata
+                    # @return [UsAppToPersonInstance] Fetched UsAppToPersonInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        usAppToPerson_instance = UsAppToPersonInstance.new(
+                            @version,
+                            response.body,
+                            messaging_service_sid: @solution[:messaging_service_sid],
+                            sid: @solution[:sid],
+                        )
+                        UsAppToPersonInstanceMetadata.new(
+                            @version,
+                            usAppToPerson_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -293,6 +437,57 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the UsAppToPersonInstanceMetadata
+                    # @param [Boolean] has_embedded_links Indicates that this SMS campaign will send messages that contain links.
+                    # @param [Boolean] has_embedded_phone Indicates that this SMS campaign will send messages that contain phone numbers.
+                    # @param [Array[String]] message_samples An array of sample message strings, min two and max five. Min length for each sample: 20 chars. Max length for each sample: 1024 chars.
+                    # @param [String] message_flow Required for all Campaigns. Details around how a consumer opts-in to their campaign, therefore giving consent to receive their messages. If multiple opt-in methods can be used for the same campaign, they must all be listed. 40 character minimum. 2048 character maximum.
+                    # @param [String] description A short description of what this SMS campaign does. Min length: 40 characters. Max length: 4096 characters.
+                    # @param [Boolean] age_gated A boolean that specifies whether campaign requires age gate for federally legal content.
+                    # @param [Boolean] direct_lending A boolean that specifies whether campaign allows direct lending or not.
+                    # @return [UsAppToPersonInstance] Updated UsAppToPersonInstance
+                    def update_with_metadata(
+                      has_embedded_links: nil, 
+                      has_embedded_phone: nil, 
+                      message_samples: nil, 
+                      message_flow: nil, 
+                      description: nil, 
+                      age_gated: nil, 
+                      direct_lending: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'HasEmbeddedLinks' => has_embedded_links,
+                            'HasEmbeddedPhone' => has_embedded_phone,
+                            'MessageSamples' => Twilio.serialize_list(message_samples) { |e| e },
+                            'MessageFlow' => message_flow,
+                            'Description' => description,
+                            'AgeGated' => age_gated,
+                            'DirectLending' => direct_lending,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        usAppToPerson_instance = UsAppToPersonInstance.new(
+                            @version,
+                            response.body,
+                            messaging_service_sid: @solution[:messaging_service_sid],
+                            sid: @solution[:sid],
+                        )
+                        UsAppToPersonInstanceMetadata.new(
+                            @version,
+                            usAppToPerson_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -308,6 +503,45 @@ module Twilio
                         "#<Twilio.Messaging.V1.UsAppToPersonContext #{context}>"
                     end
                 end
+
+                class UsAppToPersonInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new UsAppToPersonInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}UsAppToPersonInstance] us_app_to_person_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [UsAppToPersonInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, us_app_to_person_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @us_app_to_person_instance = us_app_to_person_instance
+                    end
+
+                    def us_app_to_person
+                        @us_app_to_person_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.UsAppToPersonInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class UsAppToPersonListResponse < InstanceListResource
+                    # @param [Array<UsAppToPersonInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @us_app_to_person_instance = payload.body[key].map do |data|
+                        UsAppToPersonInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def us_app_to_person_instance
+                          @instance
+                      end
+                  end
 
                 class UsAppToPersonPage < Page
                     ##
@@ -337,6 +571,54 @@ module Twilio
                         '<Twilio.Messaging.V1.UsAppToPersonPage>'
                     end
                 end
+
+                class UsAppToPersonPageMetadata < PageMetadata
+                    attr_reader :us_app_to_person_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @us_app_to_person_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @us_app_to_person_page << UsAppToPersonListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @us_app_to_person_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class UsAppToPersonListResponse < InstanceListResource
+
+                    # @param [Array<UsAppToPersonInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @us_app_to_person = payload.body[key].map do |data|
+                      UsAppToPersonInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def us_app_to_person
+                        @us_app_to_person
+                    end
+                end
+
                 class UsAppToPersonInstance < InstanceResource
                     ##
                     # Initialize the UsAppToPersonInstance

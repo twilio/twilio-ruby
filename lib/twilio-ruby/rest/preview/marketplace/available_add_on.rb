@@ -70,6 +70,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists AvailableAddOnPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        AvailableAddOnPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields AvailableAddOnInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -163,6 +185,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the AvailableAddOnInstanceMetadata
+                    # @return [AvailableAddOnInstance] Fetched AvailableAddOnInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        availableAddOn_instance = AvailableAddOnInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        AvailableAddOnInstanceMetadata.new(
+                            @version,
+                            availableAddOn_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the extensions
                     # @return [AvailableAddOnExtensionList]
                     # @return [AvailableAddOnExtensionContext] if sid was passed.
@@ -197,6 +244,45 @@ module Twilio
                     end
                 end
 
+                class AvailableAddOnInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AvailableAddOnInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AvailableAddOnInstance] available_add_on_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AvailableAddOnInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, available_add_on_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @available_add_on_instance = available_add_on_instance
+                    end
+
+                    def available_add_on
+                        @available_add_on_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AvailableAddOnInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AvailableAddOnListResponse < InstanceListResource
+                    # @param [Array<AvailableAddOnInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @available_add_on_instance = payload.body[key].map do |data|
+                        AvailableAddOnInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def available_add_on_instance
+                          @instance
+                      end
+                  end
+
                 class AvailableAddOnPage < Page
                     ##
                     # Initialize the AvailableAddOnPage
@@ -225,6 +311,54 @@ module Twilio
                         '<Twilio.Preview.Marketplace.AvailableAddOnPage>'
                     end
                 end
+
+                class AvailableAddOnPageMetadata < PageMetadata
+                    attr_reader :available_add_on_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @available_add_on_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @available_add_on_page << AvailableAddOnListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @available_add_on_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Preview::MarketplacePageMetadata>';
+                    end
+                end
+                class AvailableAddOnListResponse < InstanceListResource
+
+                    # @param [Array<AvailableAddOnInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @available_add_on = payload.body[key].map do |data|
+                      AvailableAddOnInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def available_add_on
+                        @available_add_on
+                    end
+                end
+
                 class AvailableAddOnInstance < InstanceResource
                     ##
                     # Initialize the AvailableAddOnInstance

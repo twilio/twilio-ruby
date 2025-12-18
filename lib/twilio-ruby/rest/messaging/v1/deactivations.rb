@@ -78,6 +78,36 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the DeactivationsInstanceMetadata
+                    # @param [Date] date The request will return a list of all United States Phone Numbers that were deactivated on the day specified by this parameter. This date should be specified in YYYY-MM-DD format.
+                    # @return [DeactivationsInstance] Fetched DeactivationsInstance
+                    def fetch_with_metadata(
+                      date: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'Date' => Twilio.serialize_iso8601_date(date),
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        deactivations_instance = DeactivationsInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        DeactivationsInstanceMetadata.new(
+                            @version,
+                            deactivations_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -93,6 +123,45 @@ module Twilio
                         "#<Twilio.Messaging.V1.DeactivationsContext #{context}>"
                     end
                 end
+
+                class DeactivationsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new DeactivationsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}DeactivationsInstance] deactivations_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [DeactivationsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, deactivations_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @deactivations_instance = deactivations_instance
+                    end
+
+                    def deactivations
+                        @deactivations_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.DeactivationsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class DeactivationsListResponse < InstanceListResource
+                    # @param [Array<DeactivationsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @deactivations_instance = payload.body[key].map do |data|
+                        DeactivationsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def deactivations_instance
+                          @instance
+                      end
+                  end
 
                 class DeactivationsPage < Page
                     ##
@@ -122,6 +191,54 @@ module Twilio
                         '<Twilio.Messaging.V1.DeactivationsPage>'
                     end
                 end
+
+                class DeactivationsPageMetadata < PageMetadata
+                    attr_reader :deactivations_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @deactivations_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @deactivations_page << DeactivationsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @deactivations_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class DeactivationsListResponse < InstanceListResource
+
+                    # @param [Array<DeactivationsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @deactivations = payload.body[key].map do |data|
+                      DeactivationsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def deactivations
+                        @deactivations
+                    end
+                end
+
                 class DeactivationsInstance < InstanceResource
                     ##
                     # Initialize the DeactivationsInstance

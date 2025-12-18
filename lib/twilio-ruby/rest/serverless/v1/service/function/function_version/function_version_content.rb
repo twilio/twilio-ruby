@@ -82,6 +82,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the FunctionVersionContentInstanceMetadata
+                    # @return [FunctionVersionContentInstance] Fetched FunctionVersionContentInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        functionVersionContent_instance = FunctionVersionContentInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            function_sid: @solution[:function_sid],
+                            sid: @solution[:sid],
+                        )
+                        FunctionVersionContentInstanceMetadata.new(
+                            @version,
+                            functionVersionContent_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -97,6 +124,45 @@ module Twilio
                         "#<Twilio.Serverless.V1.FunctionVersionContentContext #{context}>"
                     end
                 end
+
+                class FunctionVersionContentInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new FunctionVersionContentInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}FunctionVersionContentInstance] function_version_content_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [FunctionVersionContentInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, function_version_content_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @function_version_content_instance = function_version_content_instance
+                    end
+
+                    def function_version_content
+                        @function_version_content_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.FunctionVersionContentInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class FunctionVersionContentListResponse < InstanceListResource
+                    # @param [Array<FunctionVersionContentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @function_version_content_instance = payload.body[key].map do |data|
+                        FunctionVersionContentInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def function_version_content_instance
+                          @instance
+                      end
+                  end
 
                 class FunctionVersionContentPage < Page
                     ##
@@ -126,6 +192,54 @@ module Twilio
                         '<Twilio.Serverless.V1.FunctionVersionContentPage>'
                     end
                 end
+
+                class FunctionVersionContentPageMetadata < PageMetadata
+                    attr_reader :function_version_content_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @function_version_content_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @function_version_content_page << FunctionVersionContentListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @function_version_content_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Serverless::V1PageMetadata>';
+                    end
+                end
+                class FunctionVersionContentListResponse < InstanceListResource
+
+                    # @param [Array<FunctionVersionContentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @function_version_content = payload.body[key].map do |data|
+                      FunctionVersionContentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def function_version_content
+                        @function_version_content
+                    end
+                end
+
                 class FunctionVersionContentInstance < InstanceResource
                     ##
                     # Initialize the FunctionVersionContentInstance

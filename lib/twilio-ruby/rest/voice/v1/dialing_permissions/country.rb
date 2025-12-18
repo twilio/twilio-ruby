@@ -96,6 +96,40 @@ module Twilio
                     end
 
                     ##
+                    # Lists CountryPageMetadata records from the API as a list.
+                      # @param [String] iso_code Filter to retrieve the country permissions by specifying the [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+                      # @param [String] continent Filter to retrieve the country permissions by specifying the continent
+                      # @param [String] country_code Filter the results by specified [country codes](https://www.itu.int/itudoc/itu-t/ob-lists/icc/e164_763.html)
+                      # @param [Boolean] low_risk_numbers_enabled Filter to retrieve the country permissions with dialing to low-risk numbers enabled. Can be: `true` or `false`.
+                      # @param [Boolean] high_risk_special_numbers_enabled Filter to retrieve the country permissions with dialing to high-risk special service numbers enabled. Can be: `true` or `false`
+                      # @param [Boolean] high_risk_tollfraud_numbers_enabled Filter to retrieve the country permissions with dialing to high-risk [toll fraud](https://www.twilio.com/blog/how-to-protect-your-account-from-toll-fraud-with-voice-dialing-geo-permissions-html) numbers enabled. Can be: `true` or `false`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(iso_code: :unset, continent: :unset, country_code: :unset, low_risk_numbers_enabled: :unset, high_risk_special_numbers_enabled: :unset, high_risk_tollfraud_numbers_enabled: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'IsoCode' => iso_code,
+                            'Continent' => continent,
+                            'CountryCode' => country_code,
+                            'LowRiskNumbersEnabled' => low_risk_numbers_enabled,
+                            'HighRiskSpecialNumbersEnabled' => high_risk_special_numbers_enabled,
+                            'HighRiskTollfraudNumbersEnabled' => high_risk_tollfraud_numbers_enabled,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CountryPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields CountryInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -201,6 +235,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the CountryInstanceMetadata
+                    # @return [CountryInstance] Fetched CountryInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        country_instance = CountryInstance.new(
+                            @version,
+                            response.body,
+                            iso_code: @solution[:iso_code],
+                        )
+                        CountryInstanceMetadata.new(
+                            @version,
+                            country_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the highrisk_special_prefixes
                     # @return [HighriskSpecialPrefixList]
                     # @return [HighriskSpecialPrefixContext]
@@ -226,6 +285,45 @@ module Twilio
                         "#<Twilio.Voice.V1.CountryContext #{context}>"
                     end
                 end
+
+                class CountryInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CountryInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CountryInstance] country_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CountryInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, country_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @country_instance = country_instance
+                    end
+
+                    def country
+                        @country_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CountryInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CountryListResponse < InstanceListResource
+                    # @param [Array<CountryInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @country_instance = payload.body[key].map do |data|
+                        CountryInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def country_instance
+                          @instance
+                      end
+                  end
 
                 class CountryPage < Page
                     ##
@@ -255,6 +353,54 @@ module Twilio
                         '<Twilio.Voice.V1.CountryPage>'
                     end
                 end
+
+                class CountryPageMetadata < PageMetadata
+                    attr_reader :country_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @country_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @country_page << CountryListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @country_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Voice::V1PageMetadata>';
+                    end
+                end
+                class CountryListResponse < InstanceListResource
+
+                    # @param [Array<CountryInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @country = payload.body[key].map do |data|
+                      CountryInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def country
+                        @country
+                    end
+                end
+
                 class CountryInstance < InstanceResource
                     ##
                     # Initialize the CountryInstance

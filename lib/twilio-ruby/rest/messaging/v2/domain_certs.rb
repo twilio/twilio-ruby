@@ -74,6 +74,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the DomainCertsInstanceMetadata
+                    # @return [DomainCertsInstance] Fetched DomainCertsInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        domainCerts_instance = DomainCertsInstance.new(
+                            @version,
+                            response.body,
+                            domain_sid: @solution[:domain_sid],
+                        )
+                        DomainCertsInstanceMetadata.new(
+                            @version,
+                            domainCerts_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -89,6 +114,45 @@ module Twilio
                         "#<Twilio.Messaging.V2.DomainCertsContext #{context}>"
                     end
                 end
+
+                class DomainCertsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new DomainCertsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}DomainCertsInstance] domain_certs_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [DomainCertsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, domain_certs_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @domain_certs_instance = domain_certs_instance
+                    end
+
+                    def domain_certs
+                        @domain_certs_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.DomainCertsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class DomainCertsListResponse < InstanceListResource
+                    # @param [Array<DomainCertsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @domain_certs_instance = payload.body[key].map do |data|
+                        DomainCertsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def domain_certs_instance
+                          @instance
+                      end
+                  end
 
                 class DomainCertsPage < Page
                     ##
@@ -118,6 +182,54 @@ module Twilio
                         '<Twilio.Messaging.V2.DomainCertsPage>'
                     end
                 end
+
+                class DomainCertsPageMetadata < PageMetadata
+                    attr_reader :domain_certs_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @domain_certs_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @domain_certs_page << DomainCertsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @domain_certs_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V2PageMetadata>';
+                    end
+                end
+                class DomainCertsListResponse < InstanceListResource
+
+                    # @param [Array<DomainCertsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @domain_certs = payload.body[key].map do |data|
+                      DomainCertsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def domain_certs
+                        @domain_certs
+                    end
+                end
+
                 class DomainCertsInstance < InstanceResource
                     ##
                     # Initialize the DomainCertsInstance

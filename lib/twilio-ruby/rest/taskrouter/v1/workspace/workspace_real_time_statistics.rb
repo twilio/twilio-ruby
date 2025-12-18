@@ -82,6 +82,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the WorkspaceRealTimeStatisticsInstanceMetadata
+                    # @param [String] task_channel Only calculate real-time statistics on this TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or `default`.
+                    # @return [WorkspaceRealTimeStatisticsInstance] Fetched WorkspaceRealTimeStatisticsInstance
+                    def fetch_with_metadata(
+                      task_channel: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'TaskChannel' => task_channel,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        workspaceRealTimeStatistics_instance = WorkspaceRealTimeStatisticsInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                        )
+                        WorkspaceRealTimeStatisticsInstanceMetadata.new(
+                            @version,
+                            workspaceRealTimeStatistics_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -97,6 +128,45 @@ module Twilio
                         "#<Twilio.Taskrouter.V1.WorkspaceRealTimeStatisticsContext #{context}>"
                     end
                 end
+
+                class WorkspaceRealTimeStatisticsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new WorkspaceRealTimeStatisticsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}WorkspaceRealTimeStatisticsInstance] workspace_real_time_statistics_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [WorkspaceRealTimeStatisticsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, workspace_real_time_statistics_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @workspace_real_time_statistics_instance = workspace_real_time_statistics_instance
+                    end
+
+                    def workspace_real_time_statistics
+                        @workspace_real_time_statistics_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.WorkspaceRealTimeStatisticsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class WorkspaceRealTimeStatisticsListResponse < InstanceListResource
+                    # @param [Array<WorkspaceRealTimeStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @workspace_real_time_statistics_instance = payload.body[key].map do |data|
+                        WorkspaceRealTimeStatisticsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def workspace_real_time_statistics_instance
+                          @instance
+                      end
+                  end
 
                 class WorkspaceRealTimeStatisticsPage < Page
                     ##
@@ -126,6 +196,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.WorkspaceRealTimeStatisticsPage>'
                     end
                 end
+
+                class WorkspaceRealTimeStatisticsPageMetadata < PageMetadata
+                    attr_reader :workspace_real_time_statistics_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @workspace_real_time_statistics_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @workspace_real_time_statistics_page << WorkspaceRealTimeStatisticsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @workspace_real_time_statistics_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class WorkspaceRealTimeStatisticsListResponse < InstanceListResource
+
+                    # @param [Array<WorkspaceRealTimeStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @workspace_real_time_statistics = payload.body[key].map do |data|
+                      WorkspaceRealTimeStatisticsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def workspace_real_time_statistics
+                        @workspace_real_time_statistics
+                    end
+                end
+
                 class WorkspaceRealTimeStatisticsInstance < InstanceResource
                     ##
                     # Initialize the WorkspaceRealTimeStatisticsInstance

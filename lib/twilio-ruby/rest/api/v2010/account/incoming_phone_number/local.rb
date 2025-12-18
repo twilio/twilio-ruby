@@ -125,6 +125,104 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the LocalInstanceMetadata
+                    # @param [String] phone_number The phone number to purchase specified in [E.164](https://www.twilio.com/docs/glossary/what-e164) format.  E.164 phone numbers consist of a + followed by the country code and subscriber number without punctuation characters. For example, +14155551234.
+                    # @param [String] api_version The API version to use for incoming calls made to the new phone number. The default is `2010-04-01`.
+                    # @param [String] friendly_name A descriptive string that you created to describe the new phone number. It can be up to 64 characters long. By default, this is a formatted version of the phone number.
+                    # @param [String] sms_application_sid The SID of the application that should handle SMS messages sent to the new phone number. If an `sms_application_sid` is present, we ignore all of the `sms_*_url` urls and use those set on the application.
+                    # @param [String] sms_fallback_method The HTTP method that we should use to call `sms_fallback_url`. Can be: `GET` or `POST` and defaults to `POST`.
+                    # @param [String] sms_fallback_url The URL that we should call when an error occurs while requesting or executing the TwiML defined by `sms_url`.
+                    # @param [String] sms_method The HTTP method that we should use to call `sms_url`. Can be: `GET` or `POST` and defaults to `POST`.
+                    # @param [String] sms_url The URL we should call when the new phone number receives an incoming SMS message.
+                    # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application.
+                    # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
+                    # @param [String] voice_application_sid The SID of the application we should use to handle calls to the new phone number. If a `voice_application_sid` is present, we ignore all of the voice urls and use only those set on the application. Setting a `voice_application_sid` will automatically delete your `trunk_sid` and vice versa.
+                    # @param [Boolean] voice_caller_id_lookup Whether to lookup the caller's name from the CNAM database and post it to your app. Can be: `true` or `false` and defaults to `false`.
+                    # @param [String] voice_fallback_method The HTTP method that we should use to call `voice_fallback_url`. Can be: `GET` or `POST` and defaults to `POST`.
+                    # @param [String] voice_fallback_url The URL that we should call when an error occurs retrieving or executing the TwiML requested by `url`.
+                    # @param [String] voice_method The HTTP method that we should use to call `voice_url`. Can be: `GET` or `POST` and defaults to `POST`.
+                    # @param [String] voice_url The URL that we should call to answer a call to the new phone number. The `voice_url` will not be called if a `voice_application_sid` or a `trunk_sid` is set.
+                    # @param [String] identity_sid The SID of the Identity resource that we should associate with the new phone number. Some regions require an identity to meet local regulations.
+                    # @param [String] address_sid The SID of the Address resource we should associate with the new phone number. Some regions require addresses to meet local regulations.
+                    # @param [EmergencyStatus] emergency_status 
+                    # @param [String] emergency_address_sid The SID of the emergency address configuration to use for emergency calling from the new phone number.
+                    # @param [String] trunk_sid The SID of the Trunk we should use to handle calls to the new phone number. If a `trunk_sid` is present, we ignore all of the voice urls and voice applications and use only those set on the Trunk. Setting a `trunk_sid` will automatically delete your `voice_application_sid` and vice versa.
+                    # @param [VoiceReceiveMode] voice_receive_mode 
+                    # @param [String] bundle_sid The SID of the Bundle resource that you associate with the phone number. Some regions require a Bundle to meet local Regulations.
+                    # @return [LocalInstance] Created LocalInstance
+                    def create_with_metadata(
+                      phone_number: nil, 
+                      api_version: :unset, 
+                      friendly_name: :unset, 
+                      sms_application_sid: :unset, 
+                      sms_fallback_method: :unset, 
+                      sms_fallback_url: :unset, 
+                      sms_method: :unset, 
+                      sms_url: :unset, 
+                      status_callback: :unset, 
+                      status_callback_method: :unset, 
+                      voice_application_sid: :unset, 
+                      voice_caller_id_lookup: :unset, 
+                      voice_fallback_method: :unset, 
+                      voice_fallback_url: :unset, 
+                      voice_method: :unset, 
+                      voice_url: :unset, 
+                      identity_sid: :unset, 
+                      address_sid: :unset, 
+                      emergency_status: :unset, 
+                      emergency_address_sid: :unset, 
+                      trunk_sid: :unset, 
+                      voice_receive_mode: :unset, 
+                      bundle_sid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'PhoneNumber' => phone_number,
+                            'ApiVersion' => api_version,
+                            'FriendlyName' => friendly_name,
+                            'SmsApplicationSid' => sms_application_sid,
+                            'SmsFallbackMethod' => sms_fallback_method,
+                            'SmsFallbackUrl' => sms_fallback_url,
+                            'SmsMethod' => sms_method,
+                            'SmsUrl' => sms_url,
+                            'StatusCallback' => status_callback,
+                            'StatusCallbackMethod' => status_callback_method,
+                            'VoiceApplicationSid' => voice_application_sid,
+                            'VoiceCallerIdLookup' => voice_caller_id_lookup,
+                            'VoiceFallbackMethod' => voice_fallback_method,
+                            'VoiceFallbackUrl' => voice_fallback_url,
+                            'VoiceMethod' => voice_method,
+                            'VoiceUrl' => voice_url,
+                            'IdentitySid' => identity_sid,
+                            'AddressSid' => address_sid,
+                            'EmergencyStatus' => emergency_status,
+                            'EmergencyAddressSid' => emergency_address_sid,
+                            'TrunkSid' => trunk_sid,
+                            'VoiceReceiveMode' => voice_receive_mode,
+                            'BundleSid' => bundle_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        local_instance = LocalInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                        )
+                        LocalInstanceMetadata.new(
+                            @version,
+                            local_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists LocalInstance records from the API as a list.
@@ -178,6 +276,36 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists LocalPageMetadata records from the API as a list.
+                      # @param [Boolean] beta Whether to include phone numbers new to the Twilio platform. Can be: `true` or `false` and the default is `true`.
+                      # @param [String] friendly_name A string that identifies the resources to read.
+                      # @param [String] phone_number The phone numbers of the IncomingPhoneNumber resources to read. You can specify partial numbers and use '*' as a wildcard for any digit.
+                      # @param [String] origin Whether to include phone numbers based on their origin. Can be: `twilio` or `hosted`. By default, phone numbers of all origin are included.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(beta: :unset, friendly_name: :unset, phone_number: :unset, origin: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Beta' => beta,
+                            'FriendlyName' => friendly_name,
+                            'PhoneNumber' => phone_number,
+                            'Origin' => origin,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        LocalPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -273,6 +401,54 @@ module Twilio
                         '<Twilio.Api.V2010.LocalPage>'
                     end
                 end
+
+                class LocalPageMetadata < PageMetadata
+                    attr_reader :local_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @local_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @local_page << LocalListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @local_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class LocalListResponse < InstanceListResource
+
+                    # @param [Array<LocalInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @local = payload.body[key].map do |data|
+                      LocalInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def local
+                        @local
+                    end
+                end
+
                 class LocalInstance < InstanceResource
                     ##
                     # Initialize the LocalInstance

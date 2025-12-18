@@ -74,6 +74,30 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the ConfigurationInstanceMetadata
+                    # @return [ConfigurationInstance] Fetched ConfigurationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        configuration_instance = ConfigurationInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ConfigurationInstanceMetadata.new(
+                            @version,
+                            configuration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the ConfigurationInstance
                     # @param [String] default_chat_service_sid The SID of the default [Conversation Service](https://www.twilio.com/docs/conversations/api/service-resource) to use when creating a conversation.
                     # @param [String] default_messaging_service_sid The SID of the default [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) to use when creating a conversation.
@@ -108,6 +132,46 @@ module Twilio
                     end
 
                     ##
+                    # Update the ConfigurationInstanceMetadata
+                    # @param [String] default_chat_service_sid The SID of the default [Conversation Service](https://www.twilio.com/docs/conversations/api/service-resource) to use when creating a conversation.
+                    # @param [String] default_messaging_service_sid The SID of the default [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) to use when creating a conversation.
+                    # @param [String] default_inactive_timer Default ISO8601 duration when conversation will be switched to `inactive` state. Minimum value for this timer is 1 minute.
+                    # @param [String] default_closed_timer Default ISO8601 duration when conversation will be switched to `closed` state. Minimum value for this timer is 10 minutes.
+                    # @return [ConfigurationInstance] Updated ConfigurationInstance
+                    def update_with_metadata(
+                      default_chat_service_sid: :unset, 
+                      default_messaging_service_sid: :unset, 
+                      default_inactive_timer: :unset, 
+                      default_closed_timer: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'DefaultChatServiceSid' => default_chat_service_sid,
+                            'DefaultMessagingServiceSid' => default_messaging_service_sid,
+                            'DefaultInactiveTimer' => default_inactive_timer,
+                            'DefaultClosedTimer' => default_closed_timer,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        configuration_instance = ConfigurationInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ConfigurationInstanceMetadata.new(
+                            @version,
+                            configuration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the webhooks
                     # @return [WebhookList]
                     # @return [WebhookContext]
@@ -131,6 +195,45 @@ module Twilio
                         "#<Twilio.Conversations.V1.ConfigurationContext #{context}>"
                     end
                 end
+
+                class ConfigurationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ConfigurationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ConfigurationInstance] configuration_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ConfigurationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, configuration_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @configuration_instance = configuration_instance
+                    end
+
+                    def configuration
+                        @configuration_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ConfigurationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ConfigurationListResponse < InstanceListResource
+                    # @param [Array<ConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @configuration_instance = payload.body[key].map do |data|
+                        ConfigurationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def configuration_instance
+                          @instance
+                      end
+                  end
 
                 class ConfigurationPage < Page
                     ##
@@ -160,6 +263,54 @@ module Twilio
                         '<Twilio.Conversations.V1.ConfigurationPage>'
                     end
                 end
+
+                class ConfigurationPageMetadata < PageMetadata
+                    attr_reader :configuration_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @configuration_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @configuration_page << ConfigurationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @configuration_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Conversations::V1PageMetadata>';
+                    end
+                end
+                class ConfigurationListResponse < InstanceListResource
+
+                    # @param [Array<ConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @configuration = payload.body[key].map do |data|
+                      ConfigurationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def configuration
+                        @configuration
+                    end
+                end
+
                 class ConfigurationInstance < InstanceResource
                     ##
                     # Initialize the ConfigurationInstance

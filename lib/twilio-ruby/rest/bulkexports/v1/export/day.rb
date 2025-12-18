@@ -72,6 +72,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists DayPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        DayPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields DayInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -165,6 +187,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the DayInstanceMetadata
+                    # @return [DayInstance] Fetched DayInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        day_instance = DayInstance.new(
+                            @version,
+                            response.body,
+                            resource_type: @solution[:resource_type],
+                            day: @solution[:day],
+                        )
+                        DayInstanceMetadata.new(
+                            @version,
+                            day_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -180,6 +228,45 @@ module Twilio
                         "#<Twilio.Bulkexports.V1.DayContext #{context}>"
                     end
                 end
+
+                class DayInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new DayInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}DayInstance] day_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [DayInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, day_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @day_instance = day_instance
+                    end
+
+                    def day
+                        @day_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.DayInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class DayListResponse < InstanceListResource
+                    # @param [Array<DayInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @day_instance = payload.body[key].map do |data|
+                        DayInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def day_instance
+                          @instance
+                      end
+                  end
 
                 class DayPage < Page
                     ##
@@ -209,6 +296,54 @@ module Twilio
                         '<Twilio.Bulkexports.V1.DayPage>'
                     end
                 end
+
+                class DayPageMetadata < PageMetadata
+                    attr_reader :day_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @day_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @day_page << DayListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @day_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Bulkexports::V1PageMetadata>';
+                    end
+                end
+                class DayListResponse < InstanceListResource
+
+                    # @param [Array<DayInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @day = payload.body[key].map do |data|
+                      DayInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def day
+                        @day
+                    end
+                end
+
                 class DayInstance < InstanceResource
                     ##
                     # Initialize the DayInstance

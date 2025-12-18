@@ -226,6 +226,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ToolInstanceMetadata
+                    # @param [AssistantsV1ServiceCreateToolRequest] assistants_v1_service_create_tool_request 
+                    # @return [ToolInstance] Created ToolInstance
+                    def create_with_metadata(assistants_v1_service_create_tool_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: assistants_v1_service_create_tool_request.to_json)
+                        tool_instance = ToolInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ToolInstanceMetadata.new(
+                            @version,
+                            tool_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ToolInstance records from the API as a list.
@@ -267,6 +293,30 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists ToolPageMetadata records from the API as a list.
+                      # @param [String] assistant_id 
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(assistant_id: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'AssistantId' => assistant_id,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ToolPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -353,7 +403,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ToolInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          tool_instance = ToolInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ToolInstanceMetadata.new(@version, tool_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -372,6 +441,31 @@ module Twilio
                             @version,
                             payload,
                             id: @solution[:id],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ToolInstanceMetadata
+                    # @return [ToolInstance] Fetched ToolInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        tool_instance = ToolInstance.new(
+                            @version,
+                            response.body,
+                            id: @solution[:id],
+                        )
+                        ToolInstanceMetadata.new(
+                            @version,
+                            tool_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -396,6 +490,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ToolInstanceMetadata
+                    # @param [AssistantsV1ServiceUpdateToolRequest] assistants_v1_service_update_tool_request 
+                    # @return [ToolInstance] Updated ToolInstance
+                    def update_with_metadata(assistants_v1_service_update_tool_request: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('PUT', @uri, headers: headers, data: assistants_v1_service_update_tool_request.to_json)
+                        tool_instance = ToolInstance.new(
+                            @version,
+                            response.body,
+                            id: @solution[:id],
+                        )
+                        ToolInstanceMetadata.new(
+                            @version,
+                            tool_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -411,6 +532,45 @@ module Twilio
                         "#<Twilio.Assistants.V1.ToolContext #{context}>"
                     end
                 end
+
+                class ToolInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ToolInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ToolInstance] tool_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ToolInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, tool_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @tool_instance = tool_instance
+                    end
+
+                    def tool
+                        @tool_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ToolInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ToolListResponse < InstanceListResource
+                    # @param [Array<ToolInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @tool_instance = payload.body[key].map do |data|
+                        ToolInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def tool_instance
+                          @instance
+                      end
+                  end
 
                 class ToolPage < Page
                     ##
@@ -440,6 +600,54 @@ module Twilio
                         '<Twilio.Assistants.V1.ToolPage>'
                     end
                 end
+
+                class ToolPageMetadata < PageMetadata
+                    attr_reader :tool_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @tool_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @tool_page << ToolListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @tool_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Assistants::V1PageMetadata>';
+                    end
+                end
+                class ToolListResponse < InstanceListResource
+
+                    # @param [Array<ToolInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @tool = payload.body[key].map do |data|
+                      ToolInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def tool
+                        @tool
+                    end
+                end
+
                 class ToolInstance < InstanceResource
                     ##
                     # Initialize the ToolInstance

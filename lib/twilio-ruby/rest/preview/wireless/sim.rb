@@ -90,6 +90,38 @@ module Twilio
                     end
 
                     ##
+                    # Lists SimPageMetadata records from the API as a list.
+                      # @param [String] status 
+                      # @param [String] iccid 
+                      # @param [String] rate_plan 
+                      # @param [String] e_id 
+                      # @param [String] sim_registration_code 
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(status: :unset, iccid: :unset, rate_plan: :unset, e_id: :unset, sim_registration_code: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Status' => status,
+                            'Iccid' => iccid,
+                            'RatePlan' => rate_plan,
+                            'EId' => e_id,
+                            'SimRegistrationCode' => sim_registration_code,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SimPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields SimInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -193,6 +225,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the SimInstanceMetadata
+                    # @return [SimInstance] Fetched SimInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        sim_instance = SimInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        SimInstanceMetadata.new(
+                            @version,
+                            sim_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the SimInstance
                     # @param [String] unique_name 
                     # @param [String] callback_method 
@@ -264,6 +321,83 @@ module Twilio
                     end
 
                     ##
+                    # Update the SimInstanceMetadata
+                    # @param [String] unique_name 
+                    # @param [String] callback_method 
+                    # @param [String] callback_url 
+                    # @param [String] friendly_name 
+                    # @param [String] rate_plan 
+                    # @param [String] status 
+                    # @param [String] commands_callback_method 
+                    # @param [String] commands_callback_url 
+                    # @param [String] sms_fallback_method 
+                    # @param [String] sms_fallback_url 
+                    # @param [String] sms_method 
+                    # @param [String] sms_url 
+                    # @param [String] voice_fallback_method 
+                    # @param [String] voice_fallback_url 
+                    # @param [String] voice_method 
+                    # @param [String] voice_url 
+                    # @return [SimInstance] Updated SimInstance
+                    def update_with_metadata(
+                      unique_name: :unset, 
+                      callback_method: :unset, 
+                      callback_url: :unset, 
+                      friendly_name: :unset, 
+                      rate_plan: :unset, 
+                      status: :unset, 
+                      commands_callback_method: :unset, 
+                      commands_callback_url: :unset, 
+                      sms_fallback_method: :unset, 
+                      sms_fallback_url: :unset, 
+                      sms_method: :unset, 
+                      sms_url: :unset, 
+                      voice_fallback_method: :unset, 
+                      voice_fallback_url: :unset, 
+                      voice_method: :unset, 
+                      voice_url: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'UniqueName' => unique_name,
+                            'CallbackMethod' => callback_method,
+                            'CallbackUrl' => callback_url,
+                            'FriendlyName' => friendly_name,
+                            'RatePlan' => rate_plan,
+                            'Status' => status,
+                            'CommandsCallbackMethod' => commands_callback_method,
+                            'CommandsCallbackUrl' => commands_callback_url,
+                            'SmsFallbackMethod' => sms_fallback_method,
+                            'SmsFallbackUrl' => sms_fallback_url,
+                            'SmsMethod' => sms_method,
+                            'SmsUrl' => sms_url,
+                            'VoiceFallbackMethod' => voice_fallback_method,
+                            'VoiceFallbackUrl' => voice_fallback_url,
+                            'VoiceMethod' => voice_method,
+                            'VoiceUrl' => voice_url,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        sim_instance = SimInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        SimInstanceMetadata.new(
+                            @version,
+                            sim_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the usage
                     # @return [UsageList]
                     # @return [UsageContext]
@@ -288,6 +422,45 @@ module Twilio
                         "#<Twilio.Preview.Wireless.SimContext #{context}>"
                     end
                 end
+
+                class SimInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SimInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SimInstance] sim_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SimInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, sim_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @sim_instance = sim_instance
+                    end
+
+                    def sim
+                        @sim_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SimInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SimListResponse < InstanceListResource
+                    # @param [Array<SimInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @sim_instance = payload.body[key].map do |data|
+                        SimInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def sim_instance
+                          @instance
+                      end
+                  end
 
                 class SimPage < Page
                     ##
@@ -317,6 +490,54 @@ module Twilio
                         '<Twilio.Preview.Wireless.SimPage>'
                     end
                 end
+
+                class SimPageMetadata < PageMetadata
+                    attr_reader :sim_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @sim_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @sim_page << SimListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @sim_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Preview::WirelessPageMetadata>';
+                    end
+                end
+                class SimListResponse < InstanceListResource
+
+                    # @param [Array<SimInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @sim = payload.body[key].map do |data|
+                      SimInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def sim
+                        @sim
+                    end
+                end
+
                 class SimInstance < InstanceResource
                     ##
                     # Initialize the SimInstance

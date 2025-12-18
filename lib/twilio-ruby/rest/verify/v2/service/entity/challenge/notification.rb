@@ -62,6 +62,40 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the NotificationInstanceMetadata
+                    # @param [String] ttl How long, in seconds, the notification is valid. Can be an integer between 0 and 300. Default is 300. Delivery is attempted until the TTL elapses, even if the device is offline. 0 means that the notification delivery is attempted immediately, only once, and is not stored for future delivery.
+                    # @return [NotificationInstance] Created NotificationInstance
+                    def create_with_metadata(
+                      ttl: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Ttl' => ttl,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        notification_instance = NotificationInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            identity: @solution[:identity],
+                            challenge_sid: @solution[:challenge_sid],
+                        )
+                        NotificationInstanceMetadata.new(
+                            @version,
+                            notification_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -99,6 +133,54 @@ module Twilio
                         '<Twilio.Verify.V2.NotificationPage>'
                     end
                 end
+
+                class NotificationPageMetadata < PageMetadata
+                    attr_reader :notification_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @notification_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @notification_page << NotificationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @notification_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class NotificationListResponse < InstanceListResource
+
+                    # @param [Array<NotificationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @notification = payload.body[key].map do |data|
+                      NotificationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def notification
+                        @notification
+                    end
+                end
+
                 class NotificationInstance < InstanceResource
                     ##
                     # Initialize the NotificationInstance

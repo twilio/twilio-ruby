@@ -70,6 +70,52 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the WorkspaceInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the Workspace resource. It can be up to 64 characters long. For example: `Customer Support` or `2014 Election Campaign`.
+                    # @param [String] event_callback_url The URL we should call when an event occurs. If provided, the Workspace will publish events to this URL, for example, to collect data for reporting. See [Workspace Events](https://www.twilio.com/docs/taskrouter/api/event) for more information. This parameter supports Twilio's [Webhooks (HTTP callbacks) Connection Overrides](https://www.twilio.com/docs/usage/webhooks/webhooks-connection-overrides).
+                    # @param [String] events_filter The list of Workspace events for which to call event_callback_url. For example, if `EventsFilter=task.created, task.canceled, worker.activity.update`, then TaskRouter will call event_callback_url only when a task is created, canceled, or a Worker activity is updated.
+                    # @param [Boolean] multi_task_enabled Whether to enable multi-tasking. Can be: `true` to enable multi-tasking, or `false` to disable it. However, all workspaces should be created as multi-tasking. The default is `true`. Multi-tasking allows Workers to handle multiple Tasks simultaneously. When enabled (`true`), each Worker can receive parallel reservations up to the per-channel maximums defined in the Workers section. In single-tasking mode (legacy mode), each Worker will only receive a new reservation when the previous task is completed. Learn more at [Multitasking](https://www.twilio.com/docs/taskrouter/multitasking).
+                    # @param [String] template An available template name. Can be: `NONE` or `FIFO` and the default is `NONE`. Pre-configures the Workspace with the Workflow and Activities specified in the template. `NONE` will create a Workspace with only a set of default activities. `FIFO` will configure TaskRouter with a set of default activities and a single TaskQueue for first-in, first-out distribution, which can be useful when you are getting started with TaskRouter.
+                    # @param [QueueOrder] prioritize_queue_order 
+                    # @return [WorkspaceInstance] Created WorkspaceInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      event_callback_url: :unset, 
+                      events_filter: :unset, 
+                      multi_task_enabled: :unset, 
+                      template: :unset, 
+                      prioritize_queue_order: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'EventCallbackUrl' => event_callback_url,
+                            'EventsFilter' => events_filter,
+                            'MultiTaskEnabled' => multi_task_enabled,
+                            'Template' => template,
+                            'PrioritizeQueueOrder' => prioritize_queue_order,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        workspace_instance = WorkspaceInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        WorkspaceInstanceMetadata.new(
+                            @version,
+                            workspace_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists WorkspaceInstance records from the API as a list.
@@ -111,6 +157,30 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists WorkspacePageMetadata records from the API as a list.
+                      # @param [String] friendly_name The `friendly_name` of the Workspace resources to read. For example `Customer Support` or `2014 Election Campaign`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(friendly_name: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        WorkspacePageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -207,7 +277,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the WorkspaceInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          workspace_instance = WorkspaceInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          WorkspaceInstanceMetadata.new(@version, workspace_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -226,6 +315,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the WorkspaceInstanceMetadata
+                    # @return [WorkspaceInstance] Fetched WorkspaceInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        workspace_instance = WorkspaceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        WorkspaceInstanceMetadata.new(
+                            @version,
+                            workspace_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -270,6 +384,56 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the WorkspaceInstanceMetadata
+                    # @param [String] default_activity_sid The SID of the Activity that will be used when new Workers are created in the Workspace.
+                    # @param [String] event_callback_url The URL we should call when an event occurs. See [Workspace Events](https://www.twilio.com/docs/taskrouter/api/event) for more information. This parameter supports Twilio's [Webhooks (HTTP callbacks) Connection Overrides](https://www.twilio.com/docs/usage/webhooks/webhooks-connection-overrides).
+                    # @param [String] events_filter The list of Workspace events for which to call event_callback_url. For example if `EventsFilter=task.created,task.canceled,worker.activity.update`, then TaskRouter will call event_callback_url only when a task is created, canceled, or a Worker activity is updated.
+                    # @param [String] friendly_name A descriptive string that you create to describe the Workspace resource. For example: `Sales Call Center` or `Customer Support Team`.
+                    # @param [Boolean] multi_task_enabled Whether to enable multi-tasking. Can be: `true` to enable multi-tasking, or `false` to disable it. However, all workspaces should be maintained as multi-tasking. There is no default when omitting this parameter. A multi-tasking Workspace can't be updated to single-tasking unless it is not a Flex Project and another (legacy) single-tasking Workspace exists. Multi-tasking allows Workers to handle multiple Tasks simultaneously. In multi-tasking mode, each Worker can receive parallel reservations up to the per-channel maximums defined in the Workers section. In single-tasking mode (legacy mode), each Worker will only receive a new reservation when the previous task is completed. Learn more at [Multitasking](https://www.twilio.com/docs/taskrouter/multitasking).
+                    # @param [String] timeout_activity_sid The SID of the Activity that will be assigned to a Worker when a Task reservation times out without a response.
+                    # @param [QueueOrder] prioritize_queue_order 
+                    # @return [WorkspaceInstance] Updated WorkspaceInstance
+                    def update_with_metadata(
+                      default_activity_sid: :unset, 
+                      event_callback_url: :unset, 
+                      events_filter: :unset, 
+                      friendly_name: :unset, 
+                      multi_task_enabled: :unset, 
+                      timeout_activity_sid: :unset, 
+                      prioritize_queue_order: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'DefaultActivitySid' => default_activity_sid,
+                            'EventCallbackUrl' => event_callback_url,
+                            'EventsFilter' => events_filter,
+                            'FriendlyName' => friendly_name,
+                            'MultiTaskEnabled' => multi_task_enabled,
+                            'TimeoutActivitySid' => timeout_activity_sid,
+                            'PrioritizeQueueOrder' => prioritize_queue_order,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        workspace_instance = WorkspaceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        WorkspaceInstanceMetadata.new(
+                            @version,
+                            workspace_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -452,6 +616,45 @@ module Twilio
                     end
                 end
 
+                class WorkspaceInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new WorkspaceInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}WorkspaceInstance] workspace_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [WorkspaceInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, workspace_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @workspace_instance = workspace_instance
+                    end
+
+                    def workspace
+                        @workspace_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.WorkspaceInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class WorkspaceListResponse < InstanceListResource
+                    # @param [Array<WorkspaceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @workspace_instance = payload.body[key].map do |data|
+                        WorkspaceInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def workspace_instance
+                          @instance
+                      end
+                  end
+
                 class WorkspacePage < Page
                     ##
                     # Initialize the WorkspacePage
@@ -480,6 +683,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.WorkspacePage>'
                     end
                 end
+
+                class WorkspacePageMetadata < PageMetadata
+                    attr_reader :workspace_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @workspace_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @workspace_page << WorkspaceListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @workspace_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class WorkspaceListResponse < InstanceListResource
+
+                    # @param [Array<WorkspaceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @workspace = payload.body[key].map do |data|
+                      WorkspaceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def workspace
+                        @workspace
+                    end
+                end
+
                 class WorkspaceInstance < InstanceResource
                     ##
                     # Initialize the WorkspaceInstance

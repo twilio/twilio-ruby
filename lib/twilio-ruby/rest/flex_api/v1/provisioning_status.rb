@@ -72,6 +72,30 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the ProvisioningStatusInstanceMetadata
+                    # @return [ProvisioningStatusInstance] Fetched ProvisioningStatusInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        provisioningStatus_instance = ProvisioningStatusInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ProvisioningStatusInstanceMetadata.new(
+                            @version,
+                            provisioningStatus_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -87,6 +111,45 @@ module Twilio
                         "#<Twilio.FlexApi.V1.ProvisioningStatusContext #{context}>"
                     end
                 end
+
+                class ProvisioningStatusInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ProvisioningStatusInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ProvisioningStatusInstance] provisioning_status_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ProvisioningStatusInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, provisioning_status_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @provisioning_status_instance = provisioning_status_instance
+                    end
+
+                    def provisioning_status
+                        @provisioning_status_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ProvisioningStatusInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ProvisioningStatusListResponse < InstanceListResource
+                    # @param [Array<ProvisioningStatusInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @provisioning_status_instance = payload.body[key].map do |data|
+                        ProvisioningStatusInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def provisioning_status_instance
+                          @instance
+                      end
+                  end
 
                 class ProvisioningStatusPage < Page
                     ##
@@ -116,6 +179,54 @@ module Twilio
                         '<Twilio.FlexApi.V1.ProvisioningStatusPage>'
                     end
                 end
+
+                class ProvisioningStatusPageMetadata < PageMetadata
+                    attr_reader :provisioning_status_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @provisioning_status_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @provisioning_status_page << ProvisioningStatusListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @provisioning_status_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class ProvisioningStatusListResponse < InstanceListResource
+
+                    # @param [Array<ProvisioningStatusInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @provisioning_status = payload.body[key].map do |data|
+                      ProvisioningStatusInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def provisioning_status
+                        @provisioning_status
+                    end
+                end
+
                 class ProvisioningStatusInstance < InstanceResource
                     ##
                     # Initialize the ProvisioningStatusInstance

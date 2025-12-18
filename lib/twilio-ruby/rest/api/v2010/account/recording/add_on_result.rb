@@ -73,6 +73,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists AddOnResultPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        AddOnResultPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields AddOnResultInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -157,7 +179,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the AddOnResultInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          addOnResult_instance = AddOnResultInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          AddOnResultInstanceMetadata.new(@version, addOnResult_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -178,6 +219,33 @@ module Twilio
                             account_sid: @solution[:account_sid],
                             reference_sid: @solution[:reference_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the AddOnResultInstanceMetadata
+                    # @return [AddOnResultInstance] Fetched AddOnResultInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        addOnResult_instance = AddOnResultInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            reference_sid: @solution[:reference_sid],
+                            sid: @solution[:sid],
+                        )
+                        AddOnResultInstanceMetadata.new(
+                            @version,
+                            addOnResult_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -216,6 +284,45 @@ module Twilio
                     end
                 end
 
+                class AddOnResultInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AddOnResultInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AddOnResultInstance] add_on_result_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AddOnResultInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, add_on_result_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @add_on_result_instance = add_on_result_instance
+                    end
+
+                    def add_on_result
+                        @add_on_result_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AddOnResultInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AddOnResultListResponse < InstanceListResource
+                    # @param [Array<AddOnResultInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @add_on_result_instance = payload.body[key].map do |data|
+                        AddOnResultInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def add_on_result_instance
+                          @instance
+                      end
+                  end
+
                 class AddOnResultPage < Page
                     ##
                     # Initialize the AddOnResultPage
@@ -244,6 +351,54 @@ module Twilio
                         '<Twilio.Api.V2010.AddOnResultPage>'
                     end
                 end
+
+                class AddOnResultPageMetadata < PageMetadata
+                    attr_reader :add_on_result_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @add_on_result_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @add_on_result_page << AddOnResultListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @add_on_result_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class AddOnResultListResponse < InstanceListResource
+
+                    # @param [Array<AddOnResultInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @add_on_result = payload.body[key].map do |data|
+                      AddOnResultInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def add_on_result
+                        @add_on_result
+                    end
+                end
+
                 class AddOnResultInstance < InstanceResource
                     ##
                     # Initialize the AddOnResultInstance

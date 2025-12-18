@@ -58,6 +58,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the FunctionInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the Function resource. It can be a maximum of 255 characters.
+                    # @return [FunctionInstance] Created FunctionInstance
+                    def create_with_metadata(
+                      friendly_name: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        function_instance = FunctionInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                        )
+                        FunctionInstanceMetadata.new(
+                            @version,
+                            function_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists FunctionInstance records from the API as a list.
@@ -95,6 +127,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists FunctionPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        FunctionPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -181,7 +235,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the FunctionInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          function_instance = FunctionInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          FunctionInstanceMetadata.new(@version, function_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -201,6 +274,32 @@ module Twilio
                             payload,
                             service_sid: @solution[:service_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the FunctionInstanceMetadata
+                    # @return [FunctionInstance] Fetched FunctionInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        function_instance = FunctionInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            sid: @solution[:sid],
+                        )
+                        FunctionInstanceMetadata.new(
+                            @version,
+                            function_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -228,6 +327,39 @@ module Twilio
                             payload,
                             service_sid: @solution[:service_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the FunctionInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the Function resource. It can be a maximum of 255 characters.
+                    # @return [FunctionInstance] Updated FunctionInstance
+                    def update_with_metadata(
+                      friendly_name: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        function_instance = FunctionInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            sid: @solution[:sid],
+                        )
+                        FunctionInstanceMetadata.new(
+                            @version,
+                            function_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -266,6 +398,45 @@ module Twilio
                     end
                 end
 
+                class FunctionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new FunctionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}FunctionInstance] function_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [FunctionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, function_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @function_instance = function_instance
+                    end
+
+                    def function
+                        @function_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.FunctionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class FunctionListResponse < InstanceListResource
+                    # @param [Array<FunctionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @function_instance = payload.body[key].map do |data|
+                        FunctionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def function_instance
+                          @instance
+                      end
+                  end
+
                 class FunctionPage < Page
                     ##
                     # Initialize the FunctionPage
@@ -294,6 +465,54 @@ module Twilio
                         '<Twilio.Serverless.V1.FunctionPage>'
                     end
                 end
+
+                class FunctionPageMetadata < PageMetadata
+                    attr_reader :function_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @function_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @function_page << FunctionListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @function_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Serverless::V1PageMetadata>';
+                    end
+                end
+                class FunctionListResponse < InstanceListResource
+
+                    # @param [Array<FunctionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @function = payload.body[key].map do |data|
+                      FunctionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def function
+                        @function
+                    end
+                end
+
                 class FunctionInstance < InstanceResource
                     ##
                     # Initialize the FunctionInstance

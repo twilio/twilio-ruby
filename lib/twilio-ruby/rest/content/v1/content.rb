@@ -1294,6 +1294,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ContentInstanceMetadata
+                    # @param [ContentCreateRequest] content_create_request 
+                    # @return [ContentInstance] Created ContentInstance
+                    def create_with_metadata(content_create_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: content_create_request.to_json)
+                        content_instance = ContentInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ContentInstanceMetadata.new(
+                            @version,
+                            content_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ContentInstance records from the API as a list.
@@ -1331,6 +1357,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists ContentPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ContentPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -1417,7 +1465,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ContentInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          content_instance = ContentInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ContentInstanceMetadata.new(@version, content_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -1440,6 +1507,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the ContentInstanceMetadata
+                    # @return [ContentInstance] Fetched ContentInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        content_instance = ContentInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ContentInstanceMetadata.new(
+                            @version,
+                            content_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the ContentInstance
                     # @param [ContentUpdateRequest] content_update_request 
                     # @return [ContentInstance] Updated ContentInstance
@@ -1457,6 +1549,33 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the ContentInstanceMetadata
+                    # @param [ContentUpdateRequest] content_update_request 
+                    # @return [ContentInstance] Updated ContentInstance
+                    def update_with_metadata(content_update_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('PUT', @uri, headers: headers, data: content_update_request.to_json)
+                        content_instance = ContentInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ContentInstanceMetadata.new(
+                            @version,
+                            content_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -1497,6 +1616,45 @@ module Twilio
                     end
                 end
 
+                class ContentInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ContentInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ContentInstance] content_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ContentInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, content_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @content_instance = content_instance
+                    end
+
+                    def content
+                        @content_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ContentInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ContentListResponse < InstanceListResource
+                    # @param [Array<ContentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @content_instance = payload.body[key].map do |data|
+                        ContentInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def content_instance
+                          @instance
+                      end
+                  end
+
                 class ContentPage < Page
                     ##
                     # Initialize the ContentPage
@@ -1525,6 +1683,54 @@ module Twilio
                         '<Twilio.Content.V1.ContentPage>'
                     end
                 end
+
+                class ContentPageMetadata < PageMetadata
+                    attr_reader :content_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @content_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @content_page << ContentListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @content_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Content::V1PageMetadata>';
+                    end
+                end
+                class ContentListResponse < InstanceListResource
+
+                    # @param [Array<ContentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @content = payload.body[key].map do |data|
+                      ContentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def content
+                        @content
+                    end
+                end
+
                 class ContentInstance < InstanceResource
                     ##
                     # Initialize the ContentInstance

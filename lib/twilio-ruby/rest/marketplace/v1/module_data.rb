@@ -59,6 +59,40 @@ module Twilio
                     end
 
                     ##
+                    # Create the ModuleDataInstanceMetadata
+                    # @param [String] module_info A JSON object containing essential attributes that define a Listing.
+                    # @param [String] configuration A JSON object for providing Listing-specific configuration. Contains button setup, notification URL, and more.
+                    # @return [ModuleDataInstance] Created ModuleDataInstance
+                    def create_with_metadata(
+                      module_info: :unset, 
+                      configuration: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'ModuleInfo' => module_info,
+                            'Configuration' => configuration,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        moduleData_instance = ModuleDataInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ModuleDataInstanceMetadata.new(
+                            @version,
+                            moduleData_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Fetch the ModuleDataInstance
                     # @return [ModuleDataInstance] Fetched ModuleDataInstance
                     def fetch
@@ -73,6 +107,30 @@ module Twilio
                         ModuleDataInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Fetch the ModuleDataInstanceMetadata
+                    # @return [ModuleDataInstance] Fetched ModuleDataInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        moduleData_instance = ModuleDataInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ModuleDataInstanceMetadata.new(
+                            @version,
+                            moduleData_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -113,6 +171,54 @@ module Twilio
                         '<Twilio.Marketplace.V1.ModuleDataPage>'
                     end
                 end
+
+                class ModuleDataPageMetadata < PageMetadata
+                    attr_reader :module_data_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @module_data_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @module_data_page << ModuleDataListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @module_data_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Marketplace::V1PageMetadata>';
+                    end
+                end
+                class ModuleDataListResponse < InstanceListResource
+
+                    # @param [Array<ModuleDataInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @module_data = payload.body[key].map do |data|
+                      ModuleDataInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def module_data
+                        @module_data
+                    end
+                end
+
                 class ModuleDataInstance < InstanceResource
                     ##
                     # Initialize the ModuleDataInstance

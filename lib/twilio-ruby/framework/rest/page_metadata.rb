@@ -4,7 +4,6 @@ module Twilio
   module REST
     # Page Base Class
     class PageMetadata
-
       META_KEYS = [
         'end',
         'first_page_uri',
@@ -74,8 +73,6 @@ module Twilio
       end
 
       def previous_page
-        return nil unless previous_page_url
-
         @version.domain.request('GET', previous_page_url)
       end
 
@@ -83,6 +80,16 @@ module Twilio
         return nil unless next_page_url
 
         @version.domain.request('GET', next_page_url)
+      end
+
+      def page_size
+        if @payload.body['meta'] && @payload.body['meta']['page_size']
+          return @payload.body['meta']['page_size']
+        elsif @payload.body['page_size']
+          return @payload.body['page_size']
+        end
+
+        0
       end
 
       def to_s

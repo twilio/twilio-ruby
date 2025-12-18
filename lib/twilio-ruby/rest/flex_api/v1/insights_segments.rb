@@ -82,6 +82,35 @@ module Twilio
                     end
 
                     ##
+                    # Lists InsightsSegmentsPageMetadata records from the API as a list.
+                      # @param [String] authorization The Authorization HTTP request header
+                      # @param [String] segment_id To unique id of the segment
+                      # @param [Array[String]] reservation_id The list of reservation Ids
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(authorization: :unset, segment_id: :unset, reservation_id: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Authorization' => authorization,
+                            'SegmentId' => segment_id,
+                            
+                            'ReservationId' =>  Twilio.serialize_list(reservation_id) { |e| e },
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        InsightsSegmentsPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields InsightsSegmentsInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -173,6 +202,54 @@ module Twilio
                         '<Twilio.FlexApi.V1.InsightsSegmentsPage>'
                     end
                 end
+
+                class InsightsSegmentsPageMetadata < PageMetadata
+                    attr_reader :insights_segments_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @insights_segments_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @insights_segments_page << InsightsSegmentsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @insights_segments_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InsightsSegmentsListResponse < InstanceListResource
+
+                    # @param [Array<InsightsSegmentsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @insights_segments = payload.body[key].map do |data|
+                      InsightsSegmentsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def insights_segments
+                        @insights_segments
+                    end
+                end
+
                 class InsightsSegmentsInstance < InstanceResource
                     ##
                     # Initialize the InsightsSegmentsInstance

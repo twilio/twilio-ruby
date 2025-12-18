@@ -93,6 +93,51 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the VerificationAttemptsSummaryInstanceMetadata
+                    # @param [String] verify_service_sid Filter used to consider only Verification Attempts of the given verify service on the summary aggregation.
+                    # @param [Time] date_created_after Datetime filter used to consider only Verification Attempts created after this datetime on the summary aggregation. Given as GMT in ISO 8601 formatted datetime string: yyyy-MM-dd'T'HH:mm:ss'Z.
+                    # @param [Time] date_created_before Datetime filter used to consider only Verification Attempts created before this datetime on the summary aggregation. Given as GMT in ISO 8601 formatted datetime string: yyyy-MM-dd'T'HH:mm:ss'Z.
+                    # @param [String] country Filter used to consider only Verification Attempts sent to the specified destination country on the summary aggregation.
+                    # @param [Channels] channel Filter Verification Attempts considered on the summary aggregation by communication channel.
+                    # @param [String] destination_prefix Filter the Verification Attempts considered on the summary aggregation by Destination prefix. It is the prefix of a phone number in E.164 format.
+                    # @return [VerificationAttemptsSummaryInstance] Fetched VerificationAttemptsSummaryInstance
+                    def fetch_with_metadata(
+                      verify_service_sid: :unset, 
+                      date_created_after: :unset, 
+                      date_created_before: :unset, 
+                      country: :unset, 
+                      channel: :unset, 
+                      destination_prefix: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'VerifyServiceSid' => verify_service_sid,
+                            'DateCreatedAfter' => Twilio.serialize_iso8601_datetime(date_created_after),
+                            'DateCreatedBefore' => Twilio.serialize_iso8601_datetime(date_created_before),
+                            'Country' => country,
+                            'Channel' => channel,
+                            'DestinationPrefix' => destination_prefix,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        verificationAttemptsSummary_instance = VerificationAttemptsSummaryInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        VerificationAttemptsSummaryInstanceMetadata.new(
+                            @version,
+                            verificationAttemptsSummary_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -108,6 +153,45 @@ module Twilio
                         "#<Twilio.Verify.V2.VerificationAttemptsSummaryContext #{context}>"
                     end
                 end
+
+                class VerificationAttemptsSummaryInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new VerificationAttemptsSummaryInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}VerificationAttemptsSummaryInstance] verification_attempts_summary_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [VerificationAttemptsSummaryInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, verification_attempts_summary_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @verification_attempts_summary_instance = verification_attempts_summary_instance
+                    end
+
+                    def verification_attempts_summary
+                        @verification_attempts_summary_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.VerificationAttemptsSummaryInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class VerificationAttemptsSummaryListResponse < InstanceListResource
+                    # @param [Array<VerificationAttemptsSummaryInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @verification_attempts_summary_instance = payload.body[key].map do |data|
+                        VerificationAttemptsSummaryInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def verification_attempts_summary_instance
+                          @instance
+                      end
+                  end
 
                 class VerificationAttemptsSummaryPage < Page
                     ##
@@ -137,6 +221,54 @@ module Twilio
                         '<Twilio.Verify.V2.VerificationAttemptsSummaryPage>'
                     end
                 end
+
+                class VerificationAttemptsSummaryPageMetadata < PageMetadata
+                    attr_reader :verification_attempts_summary_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @verification_attempts_summary_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @verification_attempts_summary_page << VerificationAttemptsSummaryListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @verification_attempts_summary_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class VerificationAttemptsSummaryListResponse < InstanceListResource
+
+                    # @param [Array<VerificationAttemptsSummaryInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @verification_attempts_summary = payload.body[key].map do |data|
+                      VerificationAttemptsSummaryInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def verification_attempts_summary
+                        @verification_attempts_summary
+                    end
+                end
+
                 class VerificationAttemptsSummaryInstance < InstanceResource
                     ##
                     # Initialize the VerificationAttemptsSummaryInstance

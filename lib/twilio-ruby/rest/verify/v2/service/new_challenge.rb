@@ -95,6 +95,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the NewChallengeInstanceMetadata
+                    # @param [CreatePasskeysChallengeRequest] create_passkeys_challenge_request 
+                    # @return [NewChallengeInstance] Created NewChallengeInstance
+                    def create_with_metadata(create_passkeys_challenge_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: create_passkeys_challenge_request.to_json)
+                        newChallenge_instance = NewChallengeInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                        )
+                        NewChallengeInstanceMetadata.new(
+                            @version,
+                            newChallenge_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -110,6 +137,45 @@ module Twilio
                         "#<Twilio.Verify.V2.NewChallengeContext #{context}>"
                     end
                 end
+
+                class NewChallengeInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new NewChallengeInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}NewChallengeInstance] new_challenge_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [NewChallengeInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, new_challenge_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @new_challenge_instance = new_challenge_instance
+                    end
+
+                    def new_challenge
+                        @new_challenge_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.NewChallengeInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class NewChallengeListResponse < InstanceListResource
+                    # @param [Array<NewChallengeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @new_challenge_instance = payload.body[key].map do |data|
+                        NewChallengeInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def new_challenge_instance
+                          @instance
+                      end
+                  end
 
                 class NewChallengePage < Page
                     ##
@@ -139,6 +205,54 @@ module Twilio
                         '<Twilio.Verify.V2.NewChallengePage>'
                     end
                 end
+
+                class NewChallengePageMetadata < PageMetadata
+                    attr_reader :new_challenge_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @new_challenge_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @new_challenge_page << NewChallengeListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @new_challenge_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class NewChallengeListResponse < InstanceListResource
+
+                    # @param [Array<NewChallengeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @new_challenge = payload.body[key].map do |data|
+                      NewChallengeInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def new_challenge
+                        @new_challenge
+                    end
+                end
+
                 class NewChallengeInstance < InstanceResource
                     ##
                     # Initialize the NewChallengeInstance

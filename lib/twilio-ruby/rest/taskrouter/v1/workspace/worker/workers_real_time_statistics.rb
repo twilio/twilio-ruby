@@ -83,6 +83,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the WorkersRealTimeStatisticsInstanceMetadata
+                    # @param [String] task_channel Only calculate real-time statistics on this TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or `default`.
+                    # @return [WorkersRealTimeStatisticsInstance] Fetched WorkersRealTimeStatisticsInstance
+                    def fetch_with_metadata(
+                      task_channel: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'TaskChannel' => task_channel,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        workersRealTimeStatistics_instance = WorkersRealTimeStatisticsInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                        )
+                        WorkersRealTimeStatisticsInstanceMetadata.new(
+                            @version,
+                            workersRealTimeStatistics_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -98,6 +129,45 @@ module Twilio
                         "#<Twilio.Taskrouter.V1.WorkersRealTimeStatisticsContext #{context}>"
                     end
                 end
+
+                class WorkersRealTimeStatisticsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new WorkersRealTimeStatisticsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}WorkersRealTimeStatisticsInstance] workers_real_time_statistics_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [WorkersRealTimeStatisticsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, workers_real_time_statistics_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @workers_real_time_statistics_instance = workers_real_time_statistics_instance
+                    end
+
+                    def workers_real_time_statistics
+                        @workers_real_time_statistics_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.WorkersRealTimeStatisticsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class WorkersRealTimeStatisticsListResponse < InstanceListResource
+                    # @param [Array<WorkersRealTimeStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @workers_real_time_statistics_instance = payload.body[key].map do |data|
+                        WorkersRealTimeStatisticsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def workers_real_time_statistics_instance
+                          @instance
+                      end
+                  end
 
                 class WorkersRealTimeStatisticsPage < Page
                     ##
@@ -127,6 +197,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.WorkersRealTimeStatisticsPage>'
                     end
                 end
+
+                class WorkersRealTimeStatisticsPageMetadata < PageMetadata
+                    attr_reader :workers_real_time_statistics_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @workers_real_time_statistics_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @workers_real_time_statistics_page << WorkersRealTimeStatisticsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @workers_real_time_statistics_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class WorkersRealTimeStatisticsListResponse < InstanceListResource
+
+                    # @param [Array<WorkersRealTimeStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @workers_real_time_statistics = payload.body[key].map do |data|
+                      WorkersRealTimeStatisticsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def workers_real_time_statistics
+                        @workers_real_time_statistics
+                    end
+                end
+
                 class WorkersRealTimeStatisticsInstance < InstanceResource
                     ##
                     # Initialize the WorkersRealTimeStatisticsInstance

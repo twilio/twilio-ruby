@@ -65,6 +65,43 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the MessageInteractionInstanceMetadata
+                    # @param [String] body The message to send to the participant
+                    # @param [Array[String]] media_url Reserved. Not currently supported.
+                    # @return [MessageInteractionInstance] Created MessageInteractionInstance
+                    def create_with_metadata(
+                      body: :unset, 
+                      media_url: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Body' => body,
+                            'MediaUrl' => Twilio.serialize_list(media_url) { |e| e },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        messageInteraction_instance = MessageInteractionInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            session_sid: @solution[:session_sid],
+                            participant_sid: @solution[:participant_sid],
+                        )
+                        MessageInteractionInstanceMetadata.new(
+                            @version,
+                            messageInteraction_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists MessageInteractionInstance records from the API as a list.
@@ -102,6 +139,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists MessageInteractionPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        MessageInteractionPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -202,6 +261,34 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the MessageInteractionInstanceMetadata
+                    # @return [MessageInteractionInstance] Fetched MessageInteractionInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        messageInteraction_instance = MessageInteractionInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            session_sid: @solution[:session_sid],
+                            participant_sid: @solution[:participant_sid],
+                            sid: @solution[:sid],
+                        )
+                        MessageInteractionInstanceMetadata.new(
+                            @version,
+                            messageInteraction_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -217,6 +304,45 @@ module Twilio
                         "#<Twilio.Proxy.V1.MessageInteractionContext #{context}>"
                     end
                 end
+
+                class MessageInteractionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new MessageInteractionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}MessageInteractionInstance] message_interaction_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [MessageInteractionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, message_interaction_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @message_interaction_instance = message_interaction_instance
+                    end
+
+                    def message_interaction
+                        @message_interaction_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.MessageInteractionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class MessageInteractionListResponse < InstanceListResource
+                    # @param [Array<MessageInteractionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @message_interaction_instance = payload.body[key].map do |data|
+                        MessageInteractionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def message_interaction_instance
+                          @instance
+                      end
+                  end
 
                 class MessageInteractionPage < Page
                     ##
@@ -246,6 +372,54 @@ module Twilio
                         '<Twilio.Proxy.V1.MessageInteractionPage>'
                     end
                 end
+
+                class MessageInteractionPageMetadata < PageMetadata
+                    attr_reader :message_interaction_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @message_interaction_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @message_interaction_page << MessageInteractionListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @message_interaction_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Proxy::V1PageMetadata>';
+                    end
+                end
+                class MessageInteractionListResponse < InstanceListResource
+
+                    # @param [Array<MessageInteractionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @message_interaction = payload.body[key].map do |data|
+                      MessageInteractionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def message_interaction
+                        @message_interaction
+                    end
+                end
+
                 class MessageInteractionInstance < InstanceResource
                     ##
                     # Initialize the MessageInteractionInstance

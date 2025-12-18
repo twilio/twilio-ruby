@@ -109,6 +109,89 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the VerificationInstanceMetadata
+                    # @param [String] to The phone number or [email](https://www.twilio.com/docs/verify/email) to verify. Phone numbers must be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+                    # @param [String] channel The verification method to use. One of: [`email`](https://www.twilio.com/docs/verify/email), `sms`, `whatsapp`, `call`, `sna` or `auto`.
+                    # @param [String] custom_friendly_name A custom user defined friendly name that overwrites the existing one in the verification message
+                    # @param [String] custom_message The text of a custom message to use for the verification.
+                    # @param [String] send_digits The digits to send after a phone call is answered, for example, to dial an extension. For more information, see the Programmable Voice documentation of [sendDigits](https://www.twilio.com/docs/voice/twiml/number#attributes-sendDigits).
+                    # @param [String] locale Locale will automatically resolve based on phone number country code for SMS, WhatsApp, and call channel verifications. It will fallback to English or the template’s default translation if the selected translation is not available. This parameter will override the automatic locale resolution. [See supported languages and more information here](https://www.twilio.com/docs/verify/supported-languages).
+                    # @param [String] custom_code A pre-generated code to use for verification. The code can be between 4 and 10 characters, inclusive.
+                    # @param [String] amount The amount of the associated PSD2 compliant transaction. Requires the PSD2 Service flag enabled.
+                    # @param [String] payee The payee of the associated PSD2 compliant transaction. Requires the PSD2 Service flag enabled.
+                    # @param [Object] rate_limits The custom key-value pairs of Programmable Rate Limits. Keys correspond to `unique_name` fields defined when [creating your Rate Limit](https://www.twilio.com/docs/verify/api/service-rate-limits). Associated value pairs represent values in the request that you are rate limiting on. You may include multiple Rate Limit values in each request.
+                    # @param [Object] channel_configuration [`email`](https://www.twilio.com/docs/verify/email) channel configuration in json format. The fields 'from' and 'from_name' are optional but if included the 'from' field must have a valid email address.
+                    # @param [String] app_hash Your [App Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string) to be appended at the end of your verification SMS body. Applies only to SMS. Example SMS body: `<#> Your AppName verification code is: 1234 He42w354ol9`.
+                    # @param [String] template_sid The message [template](https://www.twilio.com/docs/verify/api/templates). If provided, will override the default template for the Service. SMS and Voice channels only.
+                    # @param [String] template_custom_substitutions A stringified JSON object in which the keys are the template's special variables and the values are the variables substitutions.
+                    # @param [String] device_ip Strongly encouraged if using the auto channel. The IP address of the client's device. If provided, it has to be a valid IPv4 or IPv6 address.
+                    # @param [Boolean] enable_sna_client_token An optional Boolean value to indicate the requirement of sna client token in the SNA URL invocation response for added security. This token must match in the Verification Check request to confirm phone number verification.
+                    # @param [RiskCheck] risk_check 
+                    # @param [String] tags A string containing a JSON map of key value pairs of tags to be recorded as metadata for the message. The object may contain up to 10 tags. Keys and values can each be up to 128 characters in length.
+                    # @return [VerificationInstance] Created VerificationInstance
+                    def create_with_metadata(
+                      to: nil, 
+                      channel: nil, 
+                      custom_friendly_name: :unset, 
+                      custom_message: :unset, 
+                      send_digits: :unset, 
+                      locale: :unset, 
+                      custom_code: :unset, 
+                      amount: :unset, 
+                      payee: :unset, 
+                      rate_limits: :unset, 
+                      channel_configuration: :unset, 
+                      app_hash: :unset, 
+                      template_sid: :unset, 
+                      template_custom_substitutions: :unset, 
+                      device_ip: :unset, 
+                      enable_sna_client_token: :unset, 
+                      risk_check: :unset, 
+                      tags: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'To' => to,
+                            'Channel' => channel,
+                            'CustomFriendlyName' => custom_friendly_name,
+                            'CustomMessage' => custom_message,
+                            'SendDigits' => send_digits,
+                            'Locale' => locale,
+                            'CustomCode' => custom_code,
+                            'Amount' => amount,
+                            'Payee' => payee,
+                            'RateLimits' => Twilio.serialize_object(rate_limits),
+                            'ChannelConfiguration' => Twilio.serialize_object(channel_configuration),
+                            'AppHash' => app_hash,
+                            'TemplateSid' => template_sid,
+                            'TemplateCustomSubstitutions' => template_custom_substitutions,
+                            'DeviceIp' => device_ip,
+                            'EnableSnaClientToken' => enable_sna_client_token,
+                            'RiskCheck' => risk_check,
+                            'Tags' => tags,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        verification_instance = VerificationInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                        )
+                        VerificationInstanceMetadata.new(
+                            @version,
+                            verification_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -156,6 +239,32 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the VerificationInstanceMetadata
+                    # @return [VerificationInstance] Fetched VerificationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        verification_instance = VerificationInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            sid: @solution[:sid],
+                        )
+                        VerificationInstanceMetadata.new(
+                            @version,
+                            verification_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the VerificationInstance
                     # @param [Status] status 
                     # @return [VerificationInstance] Updated VerificationInstance
@@ -182,6 +291,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the VerificationInstanceMetadata
+                    # @param [Status] status 
+                    # @return [VerificationInstance] Updated VerificationInstance
+                    def update_with_metadata(
+                      status: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Status' => status,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        verification_instance = VerificationInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            sid: @solution[:sid],
+                        )
+                        VerificationInstanceMetadata.new(
+                            @version,
+                            verification_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -197,6 +339,45 @@ module Twilio
                         "#<Twilio.Verify.V2.VerificationContext #{context}>"
                     end
                 end
+
+                class VerificationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new VerificationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}VerificationInstance] verification_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [VerificationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, verification_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @verification_instance = verification_instance
+                    end
+
+                    def verification
+                        @verification_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.VerificationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class VerificationListResponse < InstanceListResource
+                    # @param [Array<VerificationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @verification_instance = payload.body[key].map do |data|
+                        VerificationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def verification_instance
+                          @instance
+                      end
+                  end
 
                 class VerificationPage < Page
                     ##
@@ -226,6 +407,54 @@ module Twilio
                         '<Twilio.Verify.V2.VerificationPage>'
                     end
                 end
+
+                class VerificationPageMetadata < PageMetadata
+                    attr_reader :verification_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @verification_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @verification_page << VerificationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @verification_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class VerificationListResponse < InstanceListResource
+
+                    # @param [Array<VerificationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @verification = payload.body[key].map do |data|
+                      VerificationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def verification
+                        @verification
+                    end
+                end
+
                 class VerificationInstance < InstanceResource
                     ##
                     # Initialize the VerificationInstance

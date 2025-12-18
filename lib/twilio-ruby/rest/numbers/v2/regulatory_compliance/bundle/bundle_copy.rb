@@ -59,6 +59,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the BundleCopyInstanceMetadata
+                    # @param [String] friendly_name The string that you assigned to describe the copied bundle.
+                    # @return [BundleCopyInstance] Created BundleCopyInstance
+                    def create_with_metadata(
+                      friendly_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        bundleCopy_instance = BundleCopyInstance.new(
+                            @version,
+                            response.body,
+                            bundle_sid: @solution[:bundle_sid],
+                        )
+                        BundleCopyInstanceMetadata.new(
+                            @version,
+                            bundleCopy_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists BundleCopyInstance records from the API as a list.
@@ -96,6 +128,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists BundleCopyPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        BundleCopyPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -183,6 +237,54 @@ module Twilio
                         '<Twilio.Numbers.V2.BundleCopyPage>'
                     end
                 end
+
+                class BundleCopyPageMetadata < PageMetadata
+                    attr_reader :bundle_copy_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @bundle_copy_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @bundle_copy_page << BundleCopyListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @bundle_copy_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V2PageMetadata>';
+                    end
+                end
+                class BundleCopyListResponse < InstanceListResource
+
+                    # @param [Array<BundleCopyInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @bundle_copy = payload.body[key].map do |data|
+                      BundleCopyInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def bundle_copy
+                        @bundle_copy
+                    end
+                end
+
                 class BundleCopyInstance < InstanceResource
                     ##
                     # Initialize the BundleCopyInstance

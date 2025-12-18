@@ -63,6 +63,42 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the DeploymentInstanceMetadata
+                    # @param [String] build_sid The SID of the Build for the Deployment.
+                    # @param [Boolean] is_plugin Whether the Deployment is a plugin.
+                    # @return [DeploymentInstance] Created DeploymentInstance
+                    def create_with_metadata(
+                      build_sid: :unset, 
+                      is_plugin: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'BuildSid' => build_sid,
+                            'IsPlugin' => is_plugin,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        deployment_instance = DeploymentInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            environment_sid: @solution[:environment_sid],
+                        )
+                        DeploymentInstanceMetadata.new(
+                            @version,
+                            deployment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists DeploymentInstance records from the API as a list.
@@ -100,6 +136,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists DeploymentPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        DeploymentPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -198,6 +256,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the DeploymentInstanceMetadata
+                    # @return [DeploymentInstance] Fetched DeploymentInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        deployment_instance = DeploymentInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            environment_sid: @solution[:environment_sid],
+                            sid: @solution[:sid],
+                        )
+                        DeploymentInstanceMetadata.new(
+                            @version,
+                            deployment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -213,6 +298,45 @@ module Twilio
                         "#<Twilio.Serverless.V1.DeploymentContext #{context}>"
                     end
                 end
+
+                class DeploymentInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new DeploymentInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}DeploymentInstance] deployment_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [DeploymentInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, deployment_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @deployment_instance = deployment_instance
+                    end
+
+                    def deployment
+                        @deployment_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.DeploymentInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class DeploymentListResponse < InstanceListResource
+                    # @param [Array<DeploymentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @deployment_instance = payload.body[key].map do |data|
+                        DeploymentInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def deployment_instance
+                          @instance
+                      end
+                  end
 
                 class DeploymentPage < Page
                     ##
@@ -242,6 +366,54 @@ module Twilio
                         '<Twilio.Serverless.V1.DeploymentPage>'
                     end
                 end
+
+                class DeploymentPageMetadata < PageMetadata
+                    attr_reader :deployment_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @deployment_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @deployment_page << DeploymentListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @deployment_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Serverless::V1PageMetadata>';
+                    end
+                end
+                class DeploymentListResponse < InstanceListResource
+
+                    # @param [Array<DeploymentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @deployment = payload.body[key].map do |data|
+                      DeploymentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def deployment
+                        @deployment
+                    end
+                end
+
                 class DeploymentInstance < InstanceResource
                     ##
                     # Initialize the DeploymentInstance

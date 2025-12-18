@@ -55,6 +55,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ServiceInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @return [ServiceInstance] Created ServiceInstance
+                    def create_with_metadata(
+                      friendly_name: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ServiceInstance records from the API as a list.
@@ -92,6 +123,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists ServicePageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ServicePageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -179,7 +232,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ServiceInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          service_instance = ServiceInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ServiceInstanceMetadata.new(@version, service_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -198,6 +270,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ServiceInstanceMetadata
+                    # @return [ServiceInstance] Fetched ServiceInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -387,6 +484,197 @@ module Twilio
                     end
 
                     ##
+                    # Update the ServiceInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [String] default_service_role_sid The service role assigned to users when they are added to the service. See the [Roles endpoint](https://www.twilio.com/docs/chat/api/roles) for more details.
+                    # @param [String] default_channel_role_sid The channel role assigned to users when they are added to a channel. See the [Roles endpoint](https://www.twilio.com/docs/chat/api/roles) for more details.
+                    # @param [String] default_channel_creator_role_sid The channel role assigned to a channel creator when they join a new channel. See the [Roles endpoint](https://www.twilio.com/docs/chat/api/roles) for more details.
+                    # @param [Boolean] read_status_enabled Whether to enable the [Message Consumption Horizon](https://www.twilio.com/docs/chat/consumption-horizon) feature. The default is `true`.
+                    # @param [Boolean] reachability_enabled Whether to enable the [Reachability Indicator](https://www.twilio.com/docs/chat/reachability-indicator) for this Service instance. The default is `false`.
+                    # @param [String] typing_indicator_timeout How long in seconds after a `started typing` event until clients should assume that user is no longer typing, even if no `ended typing` message was received.  The default is 5 seconds.
+                    # @param [String] consumption_report_interval DEPRECATED. The interval in seconds between consumption reports submission batches from client endpoints.
+                    # @param [Boolean] notifications_new_message_enabled Whether to send a notification when a new message is added to a channel. Can be: `true` or `false` and the default is `false`.
+                    # @param [String] notifications_new_message_template The template to use to create the notification text displayed when a new message is added to a channel and `notifications.new_message.enabled` is `true`.
+                    # @param [Boolean] notifications_added_to_channel_enabled Whether to send a notification when a member is added to a channel. Can be: `true` or `false` and the default is `false`.
+                    # @param [String] notifications_added_to_channel_template The template to use to create the notification text displayed when a member is added to a channel and `notifications.added_to_channel.enabled` is `true`.
+                    # @param [Boolean] notifications_removed_from_channel_enabled Whether to send a notification to a user when they are removed from a channel. Can be: `true` or `false` and the default is `false`.
+                    # @param [String] notifications_removed_from_channel_template The template to use to create the notification text displayed to a user when they are removed from a channel and `notifications.removed_from_channel.enabled` is `true`.
+                    # @param [Boolean] notifications_invited_to_channel_enabled Whether to send a notification when a user is invited to a channel. Can be: `true` or `false` and the default is `false`.
+                    # @param [String] notifications_invited_to_channel_template The template to use to create the notification text displayed when a user is invited to a channel and `notifications.invited_to_channel.enabled` is `true`.
+                    # @param [String] pre_webhook_url The URL for pre-event webhooks, which are called by using the `webhook_method`. See [Webhook Events](https://www.twilio.com/docs/api/chat/webhooks) for more details.
+                    # @param [String] post_webhook_url The URL for post-event webhooks, which are called by using the `webhook_method`. See [Webhook Events](https://www.twilio.com/docs/api/chat/webhooks) for more details.
+                    # @param [String] webhook_method The HTTP method to use for calls to the `pre_webhook_url` and `post_webhook_url` webhooks.  Can be: `POST` or `GET` and the default is `POST`. See [Webhook Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+                    # @param [Array[String]] webhook_filters The list of WebHook events that are enabled for this Service instance. See [Webhook Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+                    # @param [String] webhooks_on_message_send_url The URL of the webhook to call in response to the `on_message_send` event using the `webhooks.on_message_send.method` HTTP method.
+                    # @param [String] webhooks_on_message_send_method The HTTP method to use when calling the `webhooks.on_message_send.url`.
+                    # @param [String] webhooks_on_message_update_url The URL of the webhook to call in response to the `on_message_update` event using the `webhooks.on_message_update.method` HTTP method.
+                    # @param [String] webhooks_on_message_update_method The HTTP method to use when calling the `webhooks.on_message_update.url`.
+                    # @param [String] webhooks_on_message_remove_url The URL of the webhook to call in response to the `on_message_remove` event using the `webhooks.on_message_remove.method` HTTP method.
+                    # @param [String] webhooks_on_message_remove_method The HTTP method to use when calling the `webhooks.on_message_remove.url`.
+                    # @param [String] webhooks_on_channel_add_url The URL of the webhook to call in response to the `on_channel_add` event using the `webhooks.on_channel_add.method` HTTP method.
+                    # @param [String] webhooks_on_channel_add_method The HTTP method to use when calling the `webhooks.on_channel_add.url`.
+                    # @param [String] webhooks_on_channel_destroy_url The URL of the webhook to call in response to the `on_channel_destroy` event using the `webhooks.on_channel_destroy.method` HTTP method.
+                    # @param [String] webhooks_on_channel_destroy_method The HTTP method to use when calling the `webhooks.on_channel_destroy.url`.
+                    # @param [String] webhooks_on_channel_update_url The URL of the webhook to call in response to the `on_channel_update` event using the `webhooks.on_channel_update.method` HTTP method.
+                    # @param [String] webhooks_on_channel_update_method The HTTP method to use when calling the `webhooks.on_channel_update.url`.
+                    # @param [String] webhooks_on_member_add_url The URL of the webhook to call in response to the `on_member_add` event using the `webhooks.on_member_add.method` HTTP method.
+                    # @param [String] webhooks_on_member_add_method The HTTP method to use when calling the `webhooks.on_member_add.url`.
+                    # @param [String] webhooks_on_member_remove_url The URL of the webhook to call in response to the `on_member_remove` event using the `webhooks.on_member_remove.method` HTTP method.
+                    # @param [String] webhooks_on_member_remove_method The HTTP method to use when calling the `webhooks.on_member_remove.url`.
+                    # @param [String] webhooks_on_message_sent_url The URL of the webhook to call in response to the `on_message_sent` event using the `webhooks.on_message_sent.method` HTTP method.
+                    # @param [String] webhooks_on_message_sent_method The URL of the webhook to call in response to the `on_message_sent` event`.
+                    # @param [String] webhooks_on_message_updated_url The URL of the webhook to call in response to the `on_message_updated` event using the `webhooks.on_message_updated.method` HTTP method.
+                    # @param [String] webhooks_on_message_updated_method The HTTP method to use when calling the `webhooks.on_message_updated.url`.
+                    # @param [String] webhooks_on_message_removed_url The URL of the webhook to call in response to the `on_message_removed` event using the `webhooks.on_message_removed.method` HTTP method.
+                    # @param [String] webhooks_on_message_removed_method The HTTP method to use when calling the `webhooks.on_message_removed.url`.
+                    # @param [String] webhooks_on_channel_added_url The URL of the webhook to call in response to the `on_channel_added` event using the `webhooks.on_channel_added.method` HTTP method.
+                    # @param [String] webhooks_on_channel_added_method The URL of the webhook to call in response to the `on_channel_added` event`.
+                    # @param [String] webhooks_on_channel_destroyed_url The URL of the webhook to call in response to the `on_channel_added` event using the `webhooks.on_channel_destroyed.method` HTTP method.
+                    # @param [String] webhooks_on_channel_destroyed_method The HTTP method to use when calling the `webhooks.on_channel_destroyed.url`.
+                    # @param [String] webhooks_on_channel_updated_url The URL of the webhook to call in response to the `on_channel_updated` event using the `webhooks.on_channel_updated.method` HTTP method.
+                    # @param [String] webhooks_on_channel_updated_method The HTTP method to use when calling the `webhooks.on_channel_updated.url`.
+                    # @param [String] webhooks_on_member_added_url The URL of the webhook to call in response to the `on_channel_updated` event using the `webhooks.on_channel_updated.method` HTTP method.
+                    # @param [String] webhooks_on_member_added_method The HTTP method to use when calling the `webhooks.on_channel_updated.url`.
+                    # @param [String] webhooks_on_member_removed_url The URL of the webhook to call in response to the `on_member_removed` event using the `webhooks.on_member_removed.method` HTTP method.
+                    # @param [String] webhooks_on_member_removed_method The HTTP method to use when calling the `webhooks.on_member_removed.url`.
+                    # @param [String] limits_channel_members The maximum number of Members that can be added to Channels within this Service. Can be up to 1,000.
+                    # @param [String] limits_user_channels The maximum number of Channels Users can be a Member of within this Service. Can be up to 1,000.
+                    # @return [ServiceInstance] Updated ServiceInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      default_service_role_sid: :unset, 
+                      default_channel_role_sid: :unset, 
+                      default_channel_creator_role_sid: :unset, 
+                      read_status_enabled: :unset, 
+                      reachability_enabled: :unset, 
+                      typing_indicator_timeout: :unset, 
+                      consumption_report_interval: :unset, 
+                      notifications_new_message_enabled: :unset, 
+                      notifications_new_message_template: :unset, 
+                      notifications_added_to_channel_enabled: :unset, 
+                      notifications_added_to_channel_template: :unset, 
+                      notifications_removed_from_channel_enabled: :unset, 
+                      notifications_removed_from_channel_template: :unset, 
+                      notifications_invited_to_channel_enabled: :unset, 
+                      notifications_invited_to_channel_template: :unset, 
+                      pre_webhook_url: :unset, 
+                      post_webhook_url: :unset, 
+                      webhook_method: :unset, 
+                      webhook_filters: :unset, 
+                      webhooks_on_message_send_url: :unset, 
+                      webhooks_on_message_send_method: :unset, 
+                      webhooks_on_message_update_url: :unset, 
+                      webhooks_on_message_update_method: :unset, 
+                      webhooks_on_message_remove_url: :unset, 
+                      webhooks_on_message_remove_method: :unset, 
+                      webhooks_on_channel_add_url: :unset, 
+                      webhooks_on_channel_add_method: :unset, 
+                      webhooks_on_channel_destroy_url: :unset, 
+                      webhooks_on_channel_destroy_method: :unset, 
+                      webhooks_on_channel_update_url: :unset, 
+                      webhooks_on_channel_update_method: :unset, 
+                      webhooks_on_member_add_url: :unset, 
+                      webhooks_on_member_add_method: :unset, 
+                      webhooks_on_member_remove_url: :unset, 
+                      webhooks_on_member_remove_method: :unset, 
+                      webhooks_on_message_sent_url: :unset, 
+                      webhooks_on_message_sent_method: :unset, 
+                      webhooks_on_message_updated_url: :unset, 
+                      webhooks_on_message_updated_method: :unset, 
+                      webhooks_on_message_removed_url: :unset, 
+                      webhooks_on_message_removed_method: :unset, 
+                      webhooks_on_channel_added_url: :unset, 
+                      webhooks_on_channel_added_method: :unset, 
+                      webhooks_on_channel_destroyed_url: :unset, 
+                      webhooks_on_channel_destroyed_method: :unset, 
+                      webhooks_on_channel_updated_url: :unset, 
+                      webhooks_on_channel_updated_method: :unset, 
+                      webhooks_on_member_added_url: :unset, 
+                      webhooks_on_member_added_method: :unset, 
+                      webhooks_on_member_removed_url: :unset, 
+                      webhooks_on_member_removed_method: :unset, 
+                      limits_channel_members: :unset, 
+                      limits_user_channels: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'DefaultServiceRoleSid' => default_service_role_sid,
+                            'DefaultChannelRoleSid' => default_channel_role_sid,
+                            'DefaultChannelCreatorRoleSid' => default_channel_creator_role_sid,
+                            'ReadStatusEnabled' => read_status_enabled,
+                            'ReachabilityEnabled' => reachability_enabled,
+                            'TypingIndicatorTimeout' => typing_indicator_timeout,
+                            'ConsumptionReportInterval' => consumption_report_interval,
+                            'Notifications.NewMessage.Enabled' => notifications_new_message_enabled,
+                            'Notifications.NewMessage.Template' => notifications_new_message_template,
+                            'Notifications.AddedToChannel.Enabled' => notifications_added_to_channel_enabled,
+                            'Notifications.AddedToChannel.Template' => notifications_added_to_channel_template,
+                            'Notifications.RemovedFromChannel.Enabled' => notifications_removed_from_channel_enabled,
+                            'Notifications.RemovedFromChannel.Template' => notifications_removed_from_channel_template,
+                            'Notifications.InvitedToChannel.Enabled' => notifications_invited_to_channel_enabled,
+                            'Notifications.InvitedToChannel.Template' => notifications_invited_to_channel_template,
+                            'PreWebhookUrl' => pre_webhook_url,
+                            'PostWebhookUrl' => post_webhook_url,
+                            'WebhookMethod' => webhook_method,
+                            'WebhookFilters' => Twilio.serialize_list(webhook_filters) { |e| e },
+                            'Webhooks.OnMessageSend.Url' => webhooks_on_message_send_url,
+                            'Webhooks.OnMessageSend.Method' => webhooks_on_message_send_method,
+                            'Webhooks.OnMessageUpdate.Url' => webhooks_on_message_update_url,
+                            'Webhooks.OnMessageUpdate.Method' => webhooks_on_message_update_method,
+                            'Webhooks.OnMessageRemove.Url' => webhooks_on_message_remove_url,
+                            'Webhooks.OnMessageRemove.Method' => webhooks_on_message_remove_method,
+                            'Webhooks.OnChannelAdd.Url' => webhooks_on_channel_add_url,
+                            'Webhooks.OnChannelAdd.Method' => webhooks_on_channel_add_method,
+                            'Webhooks.OnChannelDestroy.Url' => webhooks_on_channel_destroy_url,
+                            'Webhooks.OnChannelDestroy.Method' => webhooks_on_channel_destroy_method,
+                            'Webhooks.OnChannelUpdate.Url' => webhooks_on_channel_update_url,
+                            'Webhooks.OnChannelUpdate.Method' => webhooks_on_channel_update_method,
+                            'Webhooks.OnMemberAdd.Url' => webhooks_on_member_add_url,
+                            'Webhooks.OnMemberAdd.Method' => webhooks_on_member_add_method,
+                            'Webhooks.OnMemberRemove.Url' => webhooks_on_member_remove_url,
+                            'Webhooks.OnMemberRemove.Method' => webhooks_on_member_remove_method,
+                            'Webhooks.OnMessageSent.Url' => webhooks_on_message_sent_url,
+                            'Webhooks.OnMessageSent.Method' => webhooks_on_message_sent_method,
+                            'Webhooks.OnMessageUpdated.Url' => webhooks_on_message_updated_url,
+                            'Webhooks.OnMessageUpdated.Method' => webhooks_on_message_updated_method,
+                            'Webhooks.OnMessageRemoved.Url' => webhooks_on_message_removed_url,
+                            'Webhooks.OnMessageRemoved.Method' => webhooks_on_message_removed_method,
+                            'Webhooks.OnChannelAdded.Url' => webhooks_on_channel_added_url,
+                            'Webhooks.OnChannelAdded.Method' => webhooks_on_channel_added_method,
+                            'Webhooks.OnChannelDestroyed.Url' => webhooks_on_channel_destroyed_url,
+                            'Webhooks.OnChannelDestroyed.Method' => webhooks_on_channel_destroyed_method,
+                            'Webhooks.OnChannelUpdated.Url' => webhooks_on_channel_updated_url,
+                            'Webhooks.OnChannelUpdated.Method' => webhooks_on_channel_updated_method,
+                            'Webhooks.OnMemberAdded.Url' => webhooks_on_member_added_url,
+                            'Webhooks.OnMemberAdded.Method' => webhooks_on_member_added_method,
+                            'Webhooks.OnMemberRemoved.Url' => webhooks_on_member_removed_url,
+                            'Webhooks.OnMemberRemoved.Method' => webhooks_on_member_removed_method,
+                            'Limits.ChannelMembers' => limits_channel_members,
+                            'Limits.UserChannels' => limits_user_channels,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the channels
                     # @return [ChannelList]
                     # @return [ChannelContext] if sid was passed.
@@ -459,6 +747,45 @@ module Twilio
                     end
                 end
 
+                class ServiceInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ServiceInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ServiceInstance] service_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ServiceInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, service_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @service_instance = service_instance
+                    end
+
+                    def service
+                        @service_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ServiceInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ServiceListResponse < InstanceListResource
+                    # @param [Array<ServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @service_instance = payload.body[key].map do |data|
+                        ServiceInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def service_instance
+                          @instance
+                      end
+                  end
+
                 class ServicePage < Page
                     ##
                     # Initialize the ServicePage
@@ -487,6 +814,54 @@ module Twilio
                         '<Twilio.Chat.V1.ServicePage>'
                     end
                 end
+
+                class ServicePageMetadata < PageMetadata
+                    attr_reader :service_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @service_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @service_page << ServiceListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @service_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Chat::V1PageMetadata>';
+                    end
+                end
+                class ServiceListResponse < InstanceListResource
+
+                    # @param [Array<ServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @service = payload.body[key].map do |data|
+                      ServiceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def service
+                        @service
+                    end
+                end
+
                 class ServiceInstance < InstanceResource
                     ##
                     # Initialize the ServiceInstance

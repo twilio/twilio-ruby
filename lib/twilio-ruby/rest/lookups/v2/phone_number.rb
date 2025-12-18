@@ -122,6 +122,79 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the PhoneNumberInstanceMetadata
+                    # @param [String] fields A comma-separated list of fields to return. Possible values are validation, caller_name, sim_swap, call_forwarding, line_status, line_type_intelligence, identity_match, reassigned_number, sms_pumping_risk, phone_number_quality_score, pre_fill.
+                    # @param [String] country_code The [country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) used if the phone number provided is in national format.
+                    # @param [String] first_name User’s first name. This query parameter is only used (optionally) for identity_match package requests.
+                    # @param [String] last_name User’s last name. This query parameter is only used (optionally) for identity_match package requests.
+                    # @param [String] address_line1 User’s first address line. This query parameter is only used (optionally) for identity_match package requests.
+                    # @param [String] address_line2 User’s second address line. This query parameter is only used (optionally) for identity_match package requests.
+                    # @param [String] city User’s city. This query parameter is only used (optionally) for identity_match package requests.
+                    # @param [String] state User’s country subdivision, such as state, province, or locality. This query parameter is only used (optionally) for identity_match package requests.
+                    # @param [String] postal_code User’s postal zip code. This query parameter is only used (optionally) for identity_match package requests.
+                    # @param [String] address_country_code User’s country, up to two characters. This query parameter is only used (optionally) for identity_match package requests.
+                    # @param [String] national_id User’s national ID, such as SSN or Passport ID. This query parameter is only used (optionally) for identity_match package requests.
+                    # @param [String] date_of_birth User’s date of birth, in YYYYMMDD format. This query parameter is only used (optionally) for identity_match package requests.
+                    # @param [String] last_verified_date The date you obtained consent to call or text the end-user of the phone number or a date on which you are reasonably certain that the end-user could still be reached at that number. This query parameter is only used (optionally) for reassigned_number package requests.
+                    # @param [String] verification_sid The unique identifier associated with a verification process through verify API. This query parameter is only used (optionally) for pre_fill package requests.
+                    # @param [String] partner_sub_id The optional partnerSubId parameter to provide context for your sub-accounts, tenantIDs, sender IDs or other segmentation, enhancing the accuracy of the risk analysis.
+                    # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
+                    def fetch_with_metadata(
+                      fields: :unset, 
+                      country_code: :unset, 
+                      first_name: :unset, 
+                      last_name: :unset, 
+                      address_line1: :unset, 
+                      address_line2: :unset, 
+                      city: :unset, 
+                      state: :unset, 
+                      postal_code: :unset, 
+                      address_country_code: :unset, 
+                      national_id: :unset, 
+                      date_of_birth: :unset, 
+                      last_verified_date: :unset, 
+                      verification_sid: :unset, 
+                      partner_sub_id: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'Fields' => fields,
+                            'CountryCode' => country_code,
+                            'FirstName' => first_name,
+                            'LastName' => last_name,
+                            'AddressLine1' => address_line1,
+                            'AddressLine2' => address_line2,
+                            'City' => city,
+                            'State' => state,
+                            'PostalCode' => postal_code,
+                            'AddressCountryCode' => address_country_code,
+                            'NationalId' => national_id,
+                            'DateOfBirth' => date_of_birth,
+                            'LastVerifiedDate' => last_verified_date,
+                            'VerificationSid' => verification_sid,
+                            'PartnerSubId' => partner_sub_id,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        phoneNumber_instance = PhoneNumberInstance.new(
+                            @version,
+                            response.body,
+                            phone_number: @solution[:phone_number],
+                        )
+                        PhoneNumberInstanceMetadata.new(
+                            @version,
+                            phoneNumber_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -137,6 +210,45 @@ module Twilio
                         "#<Twilio.Lookups.V2.PhoneNumberContext #{context}>"
                     end
                 end
+
+                class PhoneNumberInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new PhoneNumberInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}PhoneNumberInstance] phone_number_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [PhoneNumberInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, phone_number_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @phone_number_instance = phone_number_instance
+                    end
+
+                    def phone_number
+                        @phone_number_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.PhoneNumberInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class PhoneNumberListResponse < InstanceListResource
+                    # @param [Array<PhoneNumberInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @phone_number_instance = payload.body[key].map do |data|
+                        PhoneNumberInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def phone_number_instance
+                          @instance
+                      end
+                  end
 
                 class PhoneNumberPage < Page
                     ##
@@ -166,6 +278,54 @@ module Twilio
                         '<Twilio.Lookups.V2.PhoneNumberPage>'
                     end
                 end
+
+                class PhoneNumberPageMetadata < PageMetadata
+                    attr_reader :phone_number_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @phone_number_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @phone_number_page << PhoneNumberListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @phone_number_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Lookups::V2PageMetadata>';
+                    end
+                end
+                class PhoneNumberListResponse < InstanceListResource
+
+                    # @param [Array<PhoneNumberInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @phone_number = payload.body[key].map do |data|
+                      PhoneNumberInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def phone_number
+                        @phone_number
+                    end
+                end
+
                 class PhoneNumberInstance < InstanceResource
                     ##
                     # Initialize the PhoneNumberInstance

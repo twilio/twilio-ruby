@@ -73,6 +73,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists MemberPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        MemberPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields MemberInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -169,6 +191,33 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the MemberInstanceMetadata
+                    # @return [MemberInstance] Fetched MemberInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        member_instance = MemberInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            queue_sid: @solution[:queue_sid],
+                            call_sid: @solution[:call_sid],
+                        )
+                        MemberInstanceMetadata.new(
+                            @version,
+                            member_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the MemberInstance
                     # @param [String] url The absolute URL of the Queue resource.
                     # @param [String] method How to pass the update request data. Can be `GET` or `POST` and the default is `POST`. `POST` sends the data as encoded form data and `GET` sends the data as query parameters.
@@ -199,6 +248,43 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the MemberInstanceMetadata
+                    # @param [String] url The absolute URL of the Queue resource.
+                    # @param [String] method How to pass the update request data. Can be `GET` or `POST` and the default is `POST`. `POST` sends the data as encoded form data and `GET` sends the data as query parameters.
+                    # @return [MemberInstance] Updated MemberInstance
+                    def update_with_metadata(
+                      url: nil, 
+                      method: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Url' => url,
+                            'Method' => method,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        member_instance = MemberInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            queue_sid: @solution[:queue_sid],
+                            call_sid: @solution[:call_sid],
+                        )
+                        MemberInstanceMetadata.new(
+                            @version,
+                            member_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -214,6 +300,45 @@ module Twilio
                         "#<Twilio.Api.V2010.MemberContext #{context}>"
                     end
                 end
+
+                class MemberInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new MemberInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}MemberInstance] member_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [MemberInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, member_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @member_instance = member_instance
+                    end
+
+                    def member
+                        @member_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.MemberInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class MemberListResponse < InstanceListResource
+                    # @param [Array<MemberInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @member_instance = payload.body[key].map do |data|
+                        MemberInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def member_instance
+                          @instance
+                      end
+                  end
 
                 class MemberPage < Page
                     ##
@@ -243,6 +368,54 @@ module Twilio
                         '<Twilio.Api.V2010.MemberPage>'
                     end
                 end
+
+                class MemberPageMetadata < PageMetadata
+                    attr_reader :member_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @member_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @member_page << MemberListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @member_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class MemberListResponse < InstanceListResource
+
+                    # @param [Array<MemberInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @member = payload.body[key].map do |data|
+                      MemberInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def member
+                        @member
+                    end
+                end
+
                 class MemberInstance < InstanceResource
                     ##
                     # Initialize the MemberInstance

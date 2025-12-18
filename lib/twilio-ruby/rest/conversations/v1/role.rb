@@ -61,6 +61,43 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the RoleInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the new resource. It can be up to 64 characters long.
+                    # @param [RoleType] type 
+                    # @param [Array[String]] permission A permission that you grant to the new role. Only one permission can be granted per parameter. To assign more than one permission, repeat this parameter for each permission value. The values for this parameter depend on the role's `type`.
+                    # @return [RoleInstance] Created RoleInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      type: nil, 
+                      permission: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Type' => type,
+                            'Permission' => Twilio.serialize_list(permission) { |e| e },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        role_instance = RoleInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        RoleInstanceMetadata.new(
+                            @version,
+                            role_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists RoleInstance records from the API as a list.
@@ -98,6 +135,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists RolePageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        RolePageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -182,7 +241,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the RoleInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          role_instance = RoleInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          RoleInstanceMetadata.new(@version, role_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -201,6 +279,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the RoleInstanceMetadata
+                    # @return [RoleInstance] Fetched RoleInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        role_instance = RoleInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        RoleInstanceMetadata.new(
+                            @version,
+                            role_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -230,6 +333,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the RoleInstanceMetadata
+                    # @param [Array[String]] permission A permission that you grant to the role. Only one permission can be granted per parameter. To assign more than one permission, repeat this parameter for each permission value. Note that the update action replaces all previously assigned permissions with those defined in the update action. To remove a permission, do not include it in the subsequent update action. The values for this parameter depend on the role's `type`.
+                    # @return [RoleInstance] Updated RoleInstance
+                    def update_with_metadata(
+                      permission: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Permission' => Twilio.serialize_list(permission) { |e| e },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        role_instance = RoleInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        RoleInstanceMetadata.new(
+                            @version,
+                            role_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -245,6 +380,45 @@ module Twilio
                         "#<Twilio.Conversations.V1.RoleContext #{context}>"
                     end
                 end
+
+                class RoleInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new RoleInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}RoleInstance] role_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [RoleInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, role_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @role_instance = role_instance
+                    end
+
+                    def role
+                        @role_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.RoleInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class RoleListResponse < InstanceListResource
+                    # @param [Array<RoleInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @role_instance = payload.body[key].map do |data|
+                        RoleInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def role_instance
+                          @instance
+                      end
+                  end
 
                 class RolePage < Page
                     ##
@@ -274,6 +448,54 @@ module Twilio
                         '<Twilio.Conversations.V1.RolePage>'
                     end
                 end
+
+                class RolePageMetadata < PageMetadata
+                    attr_reader :role_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @role_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @role_page << RoleListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @role_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Conversations::V1PageMetadata>';
+                    end
+                end
+                class RoleListResponse < InstanceListResource
+
+                    # @param [Array<RoleInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @role = payload.body[key].map do |data|
+                      RoleInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def role
+                        @role
+                    end
+                end
+
                 class RoleInstance < InstanceResource
                     ##
                     # Initialize the RoleInstance

@@ -116,6 +116,50 @@ module Twilio
                     end
 
                     ##
+                    # Lists EventPageMetadata records from the API as a list.
+                      # @param [Time] end_date Only include Events that occurred on or before this date, specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+                      # @param [String] event_type The type of Events to read. Returns only Events of the type specified.
+                      # @param [String] minutes The period of events to read in minutes. Returns only Events that occurred since this many minutes in the past. The default is `15` minutes. Task Attributes for Events occuring more 43,200 minutes ago will be redacted.
+                      # @param [String] reservation_sid The SID of the Reservation with the Events to read. Returns only Events that pertain to the specified Reservation.
+                      # @param [Time] start_date Only include Events from on or after this date and time, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. Task Attributes for Events older than 30 days will be redacted.
+                      # @param [String] task_queue_sid The SID of the TaskQueue with the Events to read. Returns only the Events that pertain to the specified TaskQueue.
+                      # @param [String] task_sid The SID of the Task with the Events to read. Returns only the Events that pertain to the specified Task.
+                      # @param [String] worker_sid The SID of the Worker with the Events to read. Returns only the Events that pertain to the specified Worker.
+                      # @param [String] workflow_sid The SID of the Workflow with the Events to read. Returns only the Events that pertain to the specified Workflow.
+                      # @param [String] task_channel The TaskChannel with the Events to read. Returns only the Events that pertain to the specified TaskChannel.
+                      # @param [String] sid The SID of the Event resource to read.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(end_date: :unset, event_type: :unset, minutes: :unset, reservation_sid: :unset, start_date: :unset, task_queue_sid: :unset, task_sid: :unset, worker_sid: :unset, workflow_sid: :unset, task_channel: :unset, sid: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
+                            'EventType' => event_type,
+                            'Minutes' => minutes,
+                            'ReservationSid' => reservation_sid,
+                            'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
+                            'TaskQueueSid' => task_queue_sid,
+                            'TaskSid' => task_sid,
+                            'WorkerSid' => worker_sid,
+                            'WorkflowSid' => workflow_sid,
+                            'TaskChannel' => task_channel,
+                            'Sid' => sid,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        EventPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields EventInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -231,6 +275,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the EventInstanceMetadata
+                    # @return [EventInstance] Fetched EventInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        event_instance = EventInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        EventInstanceMetadata.new(
+                            @version,
+                            event_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -246,6 +316,45 @@ module Twilio
                         "#<Twilio.Taskrouter.V1.EventContext #{context}>"
                     end
                 end
+
+                class EventInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new EventInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}EventInstance] event_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [EventInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, event_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @event_instance = event_instance
+                    end
+
+                    def event
+                        @event_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.EventInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class EventListResponse < InstanceListResource
+                    # @param [Array<EventInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @event_instance = payload.body[key].map do |data|
+                        EventInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def event_instance
+                          @instance
+                      end
+                  end
 
                 class EventPage < Page
                     ##
@@ -275,6 +384,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.EventPage>'
                     end
                 end
+
+                class EventPageMetadata < PageMetadata
+                    attr_reader :event_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @event_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @event_page << EventListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @event_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class EventListResponse < InstanceListResource
+
+                    # @param [Array<EventInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @event = payload.body[key].map do |data|
+                      EventInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def event
+                        @event
+                    end
+                end
+
                 class EventInstance < InstanceResource
                     ##
                     # Initialize the EventInstance

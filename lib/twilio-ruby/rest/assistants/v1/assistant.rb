@@ -222,6 +222,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the AssistantInstanceMetadata
+                    # @param [AssistantsV1ServiceCreateAssistantRequest] assistants_v1_service_create_assistant_request 
+                    # @return [AssistantInstance] Created AssistantInstance
+                    def create_with_metadata(assistants_v1_service_create_assistant_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: assistants_v1_service_create_assistant_request.to_json)
+                        assistant_instance = AssistantInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        AssistantInstanceMetadata.new(
+                            @version,
+                            assistant_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists AssistantInstance records from the API as a list.
@@ -259,6 +285,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists AssistantPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        AssistantPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -347,7 +395,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the AssistantInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          assistant_instance = AssistantInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          AssistantInstanceMetadata.new(@version, assistant_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -370,6 +437,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the AssistantInstanceMetadata
+                    # @return [AssistantInstance] Fetched AssistantInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        assistant_instance = AssistantInstance.new(
+                            @version,
+                            response.body,
+                            id: @solution[:id],
+                        )
+                        AssistantInstanceMetadata.new(
+                            @version,
+                            assistant_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the AssistantInstance
                     # @param [AssistantsV1ServiceUpdateAssistantRequest] assistants_v1_service_update_assistant_request 
                     # @return [AssistantInstance] Updated AssistantInstance
@@ -387,6 +479,33 @@ module Twilio
                             @version,
                             payload,
                             id: @solution[:id],
+                        )
+                    end
+
+                    ##
+                    # Update the AssistantInstanceMetadata
+                    # @param [AssistantsV1ServiceUpdateAssistantRequest] assistants_v1_service_update_assistant_request 
+                    # @return [AssistantInstance] Updated AssistantInstance
+                    def update_with_metadata(assistants_v1_service_update_assistant_request: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('PUT', @uri, headers: headers, data: assistants_v1_service_update_assistant_request.to_json)
+                        assistant_instance = AssistantInstance.new(
+                            @version,
+                            response.body,
+                            id: @solution[:id],
+                        )
+                        AssistantInstanceMetadata.new(
+                            @version,
+                            assistant_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -466,6 +585,45 @@ module Twilio
                     end
                 end
 
+                class AssistantInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AssistantInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AssistantInstance] assistant_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AssistantInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, assistant_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @assistant_instance = assistant_instance
+                    end
+
+                    def assistant
+                        @assistant_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AssistantInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AssistantListResponse < InstanceListResource
+                    # @param [Array<AssistantInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @assistant_instance = payload.body[key].map do |data|
+                        AssistantInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def assistant_instance
+                          @instance
+                      end
+                  end
+
                 class AssistantPage < Page
                     ##
                     # Initialize the AssistantPage
@@ -494,6 +652,54 @@ module Twilio
                         '<Twilio.Assistants.V1.AssistantPage>'
                     end
                 end
+
+                class AssistantPageMetadata < PageMetadata
+                    attr_reader :assistant_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @assistant_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @assistant_page << AssistantListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @assistant_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Assistants::V1PageMetadata>';
+                    end
+                end
+                class AssistantListResponse < InstanceListResource
+
+                    # @param [Array<AssistantInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @assistant = payload.body[key].map do |data|
+                      AssistantInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def assistant
+                        @assistant
+                    end
+                end
+
                 class AssistantInstance < InstanceResource
                     ##
                     # Initialize the AssistantInstance

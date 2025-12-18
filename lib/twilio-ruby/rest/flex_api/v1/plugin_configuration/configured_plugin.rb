@@ -76,6 +76,30 @@ module Twilio
                     end
 
                     ##
+                    # Lists ConfiguredPluginPageMetadata records from the API as a list.
+                      # @param [String] flex_metadata The Flex-Metadata HTTP request header
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(flex_metadata: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Flex-Metadata' => flex_metadata,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ConfiguredPluginPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ConfiguredPluginInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -174,6 +198,35 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the ConfiguredPluginInstanceMetadata
+                    # @param [String] flex_metadata The Flex-Metadata HTTP request header
+                    # @return [ConfiguredPluginInstance] Fetched ConfiguredPluginInstance
+                    def fetch_with_metadata(
+                      flex_metadata: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        configuredPlugin_instance = ConfiguredPluginInstance.new(
+                            @version,
+                            response.body,
+                            configuration_sid: @solution[:configuration_sid],
+                            plugin_sid: @solution[:plugin_sid],
+                        )
+                        ConfiguredPluginInstanceMetadata.new(
+                            @version,
+                            configuredPlugin_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -189,6 +242,45 @@ module Twilio
                         "#<Twilio.FlexApi.V1.ConfiguredPluginContext #{context}>"
                     end
                 end
+
+                class ConfiguredPluginInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ConfiguredPluginInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ConfiguredPluginInstance] configured_plugin_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ConfiguredPluginInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, configured_plugin_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @configured_plugin_instance = configured_plugin_instance
+                    end
+
+                    def configured_plugin
+                        @configured_plugin_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ConfiguredPluginInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ConfiguredPluginListResponse < InstanceListResource
+                    # @param [Array<ConfiguredPluginInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @configured_plugin_instance = payload.body[key].map do |data|
+                        ConfiguredPluginInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def configured_plugin_instance
+                          @instance
+                      end
+                  end
 
                 class ConfiguredPluginPage < Page
                     ##
@@ -218,6 +310,54 @@ module Twilio
                         '<Twilio.FlexApi.V1.ConfiguredPluginPage>'
                     end
                 end
+
+                class ConfiguredPluginPageMetadata < PageMetadata
+                    attr_reader :configured_plugin_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @configured_plugin_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @configured_plugin_page << ConfiguredPluginListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @configured_plugin_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class ConfiguredPluginListResponse < InstanceListResource
+
+                    # @param [Array<ConfiguredPluginInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @configured_plugin = payload.body[key].map do |data|
+                      ConfiguredPluginInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def configured_plugin
+                        @configured_plugin
+                    end
+                end
+
                 class ConfiguredPluginInstance < InstanceResource
                     ##
                     # Initialize the ConfiguredPluginInstance

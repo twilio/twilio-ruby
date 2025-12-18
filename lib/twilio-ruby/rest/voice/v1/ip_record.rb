@@ -61,6 +61,43 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the IpRecordInstanceMetadata
+                    # @param [String] ip_address An IP address in dotted decimal notation, IPv4 only.
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It is not unique and can be up to 255 characters long.
+                    # @param [String] cidr_prefix_length An integer representing the length of the [CIDR](https://tools.ietf.org/html/rfc4632) prefix to use with this IP address. By default the entire IP address is used, which for IPv4 is value 32.
+                    # @return [IpRecordInstance] Created IpRecordInstance
+                    def create_with_metadata(
+                      ip_address: nil, 
+                      friendly_name: :unset, 
+                      cidr_prefix_length: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'IpAddress' => ip_address,
+                            'FriendlyName' => friendly_name,
+                            'CidrPrefixLength' => cidr_prefix_length,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        ipRecord_instance = IpRecordInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        IpRecordInstanceMetadata.new(
+                            @version,
+                            ipRecord_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists IpRecordInstance records from the API as a list.
@@ -98,6 +135,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists IpRecordPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        IpRecordPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -182,7 +241,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the IpRecordInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          ipRecord_instance = IpRecordInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          IpRecordInstanceMetadata.new(@version, ipRecord_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -201,6 +279,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the IpRecordInstanceMetadata
+                    # @return [IpRecordInstance] Fetched IpRecordInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        ipRecord_instance = IpRecordInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        IpRecordInstanceMetadata.new(
+                            @version,
+                            ipRecord_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -230,6 +333,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the IpRecordInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It is not unique and can be up to 255 characters long.
+                    # @return [IpRecordInstance] Updated IpRecordInstance
+                    def update_with_metadata(
+                      friendly_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        ipRecord_instance = IpRecordInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        IpRecordInstanceMetadata.new(
+                            @version,
+                            ipRecord_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -245,6 +380,45 @@ module Twilio
                         "#<Twilio.Voice.V1.IpRecordContext #{context}>"
                     end
                 end
+
+                class IpRecordInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new IpRecordInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}IpRecordInstance] ip_record_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [IpRecordInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, ip_record_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @ip_record_instance = ip_record_instance
+                    end
+
+                    def ip_record
+                        @ip_record_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.IpRecordInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class IpRecordListResponse < InstanceListResource
+                    # @param [Array<IpRecordInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @ip_record_instance = payload.body[key].map do |data|
+                        IpRecordInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def ip_record_instance
+                          @instance
+                      end
+                  end
 
                 class IpRecordPage < Page
                     ##
@@ -274,6 +448,54 @@ module Twilio
                         '<Twilio.Voice.V1.IpRecordPage>'
                     end
                 end
+
+                class IpRecordPageMetadata < PageMetadata
+                    attr_reader :ip_record_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @ip_record_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @ip_record_page << IpRecordListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @ip_record_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Voice::V1PageMetadata>';
+                    end
+                end
+                class IpRecordListResponse < InstanceListResource
+
+                    # @param [Array<IpRecordInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @ip_record = payload.body[key].map do |data|
+                      IpRecordInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def ip_record
+                        @ip_record
+                    end
+                end
+
                 class IpRecordInstance < InstanceResource
                     ##
                     # Initialize the IpRecordInstance

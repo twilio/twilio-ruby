@@ -61,6 +61,41 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the CustomerProfilesChannelEndpointAssignmentInstanceMetadata
+                    # @param [String] channel_endpoint_type The type of channel endpoint. eg: phone-number
+                    # @param [String] channel_endpoint_sid The SID of an channel endpoint
+                    # @return [CustomerProfilesChannelEndpointAssignmentInstance] Created CustomerProfilesChannelEndpointAssignmentInstance
+                    def create_with_metadata(
+                      channel_endpoint_type: nil, 
+                      channel_endpoint_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'ChannelEndpointType' => channel_endpoint_type,
+                            'ChannelEndpointSid' => channel_endpoint_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        customerProfilesChannelEndpointAssignment_instance = CustomerProfilesChannelEndpointAssignmentInstance.new(
+                            @version,
+                            response.body,
+                            customer_profile_sid: @solution[:customer_profile_sid],
+                        )
+                        CustomerProfilesChannelEndpointAssignmentInstanceMetadata.new(
+                            @version,
+                            customerProfilesChannelEndpointAssignment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists CustomerProfilesChannelEndpointAssignmentInstance records from the API as a list.
@@ -106,6 +141,32 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists CustomerProfilesChannelEndpointAssignmentPageMetadata records from the API as a list.
+                      # @param [String] channel_endpoint_sid The SID of an channel endpoint
+                      # @param [String] channel_endpoint_sids comma separated list of channel endpoint sids
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(channel_endpoint_sid: :unset, channel_endpoint_sids: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'ChannelEndpointSid' => channel_endpoint_sid,
+                            'ChannelEndpointSids' => channel_endpoint_sids,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CustomerProfilesChannelEndpointAssignmentPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -195,7 +256,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the CustomerProfilesChannelEndpointAssignmentInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          customerProfilesChannelEndpointAssignment_instance = CustomerProfilesChannelEndpointAssignmentInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          CustomerProfilesChannelEndpointAssignmentInstanceMetadata.new(@version, customerProfilesChannelEndpointAssignment_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -218,6 +298,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the CustomerProfilesChannelEndpointAssignmentInstanceMetadata
+                    # @return [CustomerProfilesChannelEndpointAssignmentInstance] Fetched CustomerProfilesChannelEndpointAssignmentInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        customerProfilesChannelEndpointAssignment_instance = CustomerProfilesChannelEndpointAssignmentInstance.new(
+                            @version,
+                            response.body,
+                            customer_profile_sid: @solution[:customer_profile_sid],
+                            sid: @solution[:sid],
+                        )
+                        CustomerProfilesChannelEndpointAssignmentInstanceMetadata.new(
+                            @version,
+                            customerProfilesChannelEndpointAssignment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -233,6 +339,45 @@ module Twilio
                         "#<Twilio.Trusthub.V1.CustomerProfilesChannelEndpointAssignmentContext #{context}>"
                     end
                 end
+
+                class CustomerProfilesChannelEndpointAssignmentInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CustomerProfilesChannelEndpointAssignmentInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CustomerProfilesChannelEndpointAssignmentInstance] customer_profiles_channel_endpoint_assignment_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CustomerProfilesChannelEndpointAssignmentInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, customer_profiles_channel_endpoint_assignment_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @customer_profiles_channel_endpoint_assignment_instance = customer_profiles_channel_endpoint_assignment_instance
+                    end
+
+                    def customer_profiles_channel_endpoint_assignment
+                        @customer_profiles_channel_endpoint_assignment_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CustomerProfilesChannelEndpointAssignmentInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CustomerProfilesChannelEndpointAssignmentListResponse < InstanceListResource
+                    # @param [Array<CustomerProfilesChannelEndpointAssignmentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @customer_profiles_channel_endpoint_assignment_instance = payload.body[key].map do |data|
+                        CustomerProfilesChannelEndpointAssignmentInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def customer_profiles_channel_endpoint_assignment_instance
+                          @instance
+                      end
+                  end
 
                 class CustomerProfilesChannelEndpointAssignmentPage < Page
                     ##
@@ -262,6 +407,54 @@ module Twilio
                         '<Twilio.Trusthub.V1.CustomerProfilesChannelEndpointAssignmentPage>'
                     end
                 end
+
+                class CustomerProfilesChannelEndpointAssignmentPageMetadata < PageMetadata
+                    attr_reader :customer_profiles_channel_endpoint_assignment_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @customer_profiles_channel_endpoint_assignment_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @customer_profiles_channel_endpoint_assignment_page << CustomerProfilesChannelEndpointAssignmentListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @customer_profiles_channel_endpoint_assignment_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Trusthub::V1PageMetadata>';
+                    end
+                end
+                class CustomerProfilesChannelEndpointAssignmentListResponse < InstanceListResource
+
+                    # @param [Array<CustomerProfilesChannelEndpointAssignmentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @customer_profiles_channel_endpoint_assignment = payload.body[key].map do |data|
+                      CustomerProfilesChannelEndpointAssignmentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def customer_profiles_channel_endpoint_assignment
+                        @customer_profiles_channel_endpoint_assignment
+                    end
+                end
+
                 class CustomerProfilesChannelEndpointAssignmentInstance < InstanceResource
                     ##
                     # Initialize the CustomerProfilesChannelEndpointAssignmentInstance

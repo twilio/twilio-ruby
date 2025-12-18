@@ -73,6 +73,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists ExecutionStepPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ExecutionStepPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ExecutionStepInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -170,6 +192,33 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the ExecutionStepInstanceMetadata
+                    # @return [ExecutionStepInstance] Fetched ExecutionStepInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        executionStep_instance = ExecutionStepInstance.new(
+                            @version,
+                            response.body,
+                            flow_sid: @solution[:flow_sid],
+                            execution_sid: @solution[:execution_sid],
+                            sid: @solution[:sid],
+                        )
+                        ExecutionStepInstanceMetadata.new(
+                            @version,
+                            executionStep_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the step_context
                     # @return [ExecutionStepContextList]
                     # @return [ExecutionStepContextContext]
@@ -196,6 +245,45 @@ module Twilio
                         "#<Twilio.Studio.V2.ExecutionStepContext #{context}>"
                     end
                 end
+
+                class ExecutionStepInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ExecutionStepInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ExecutionStepInstance] execution_step_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ExecutionStepInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, execution_step_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @execution_step_instance = execution_step_instance
+                    end
+
+                    def execution_step
+                        @execution_step_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ExecutionStepInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ExecutionStepListResponse < InstanceListResource
+                    # @param [Array<ExecutionStepInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @execution_step_instance = payload.body[key].map do |data|
+                        ExecutionStepInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def execution_step_instance
+                          @instance
+                      end
+                  end
 
                 class ExecutionStepPage < Page
                     ##
@@ -225,6 +313,54 @@ module Twilio
                         '<Twilio.Studio.V2.ExecutionStepPage>'
                     end
                 end
+
+                class ExecutionStepPageMetadata < PageMetadata
+                    attr_reader :execution_step_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @execution_step_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @execution_step_page << ExecutionStepListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @execution_step_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Studio::V2PageMetadata>';
+                    end
+                end
+                class ExecutionStepListResponse < InstanceListResource
+
+                    # @param [Array<ExecutionStepInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @execution_step = payload.body[key].map do |data|
+                      ExecutionStepInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def execution_step
+                        @execution_step
+                    end
+                end
+
                 class ExecutionStepInstance < InstanceResource
                     ##
                     # Initialize the ExecutionStepInstance

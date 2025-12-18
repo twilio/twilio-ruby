@@ -138,6 +138,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the PortingPortInInstanceMetadata
+                    # @param [NumbersV1PortingPortInCreate] numbers_v1_porting_port_in_create 
+                    # @return [PortingPortInInstance] Created PortingPortInInstance
+                    def create_with_metadata(numbers_v1_porting_port_in_create: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: numbers_v1_porting_port_in_create.to_json)
+                        portingPortIn_instance = PortingPortInInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        PortingPortInInstanceMetadata.new(
+                            @version,
+                            portingPortIn_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -172,7 +198,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the PortingPortInInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          portingPortIn_instance = PortingPortInInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          PortingPortInInstanceMetadata.new(@version, portingPortIn_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -194,6 +239,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the PortingPortInInstanceMetadata
+                    # @return [PortingPortInInstance] Fetched PortingPortInInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        portingPortIn_instance = PortingPortInInstance.new(
+                            @version,
+                            response.body,
+                            port_in_request_sid: @solution[:port_in_request_sid],
+                        )
+                        PortingPortInInstanceMetadata.new(
+                            @version,
+                            portingPortIn_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -209,6 +279,45 @@ module Twilio
                         "#<Twilio.Numbers.V1.PortingPortInContext #{context}>"
                     end
                 end
+
+                class PortingPortInInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new PortingPortInInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}PortingPortInInstance] porting_port_in_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [PortingPortInInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, porting_port_in_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @porting_port_in_instance = porting_port_in_instance
+                    end
+
+                    def porting_port_in
+                        @porting_port_in_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.PortingPortInInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class PortingPortInListResponse < InstanceListResource
+                    # @param [Array<PortingPortInInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @porting_port_in_instance = payload.body[key].map do |data|
+                        PortingPortInInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def porting_port_in_instance
+                          @instance
+                      end
+                  end
 
                 class PortingPortInPage < Page
                     ##
@@ -238,6 +347,54 @@ module Twilio
                         '<Twilio.Numbers.V1.PortingPortInPage>'
                     end
                 end
+
+                class PortingPortInPageMetadata < PageMetadata
+                    attr_reader :porting_port_in_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @porting_port_in_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @porting_port_in_page << PortingPortInListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @porting_port_in_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V1PageMetadata>';
+                    end
+                end
+                class PortingPortInListResponse < InstanceListResource
+
+                    # @param [Array<PortingPortInInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @porting_port_in = payload.body[key].map do |data|
+                      PortingPortInInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def porting_port_in
+                        @porting_port_in
+                    end
+                end
+
                 class PortingPortInInstance < InstanceResource
                     ##
                     # Initialize the PortingPortInInstance

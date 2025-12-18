@@ -51,6 +51,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the BrandRegistrationOtpInstanceMetadata
+                    # @return [BrandRegistrationOtpInstance] Created BrandRegistrationOtpInstance
+                    def create_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers)
+                        brandRegistrationOtp_instance = BrandRegistrationOtpInstance.new(
+                            @version,
+                            response.body,
+                            brand_registration_sid: @solution[:brand_registration_sid],
+                        )
+                        BrandRegistrationOtpInstanceMetadata.new(
+                            @version,
+                            brandRegistrationOtp_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -88,6 +113,54 @@ module Twilio
                         '<Twilio.Messaging.V1.BrandRegistrationOtpPage>'
                     end
                 end
+
+                class BrandRegistrationOtpPageMetadata < PageMetadata
+                    attr_reader :brand_registration_otp_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @brand_registration_otp_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @brand_registration_otp_page << BrandRegistrationOtpListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @brand_registration_otp_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class BrandRegistrationOtpListResponse < InstanceListResource
+
+                    # @param [Array<BrandRegistrationOtpInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @brand_registration_otp = payload.body[key].map do |data|
+                      BrandRegistrationOtpInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def brand_registration_otp
+                        @brand_registration_otp
+                    end
+                end
+
                 class BrandRegistrationOtpInstance < InstanceResource
                     ##
                     # Initialize the BrandRegistrationOtpInstance

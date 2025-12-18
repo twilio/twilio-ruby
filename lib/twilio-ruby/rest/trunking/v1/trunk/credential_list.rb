@@ -58,6 +58,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the CredentialListInstanceMetadata
+                    # @param [String] credential_list_sid The SID of the [Credential List](https://www.twilio.com/docs/voice/sip/api/sip-credentiallist-resource) that you want to associate with the trunk. Once associated, we will authenticate access to the trunk against this list.
+                    # @return [CredentialListInstance] Created CredentialListInstance
+                    def create_with_metadata(
+                      credential_list_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'CredentialListSid' => credential_list_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        credentialList_instance = CredentialListInstance.new(
+                            @version,
+                            response.body,
+                            trunk_sid: @solution[:trunk_sid],
+                        )
+                        CredentialListInstanceMetadata.new(
+                            @version,
+                            credentialList_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists CredentialListInstance records from the API as a list.
@@ -95,6 +127,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists CredentialListPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CredentialListPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -180,7 +234,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the CredentialListInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          credentialList_instance = CredentialListInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          CredentialListInstanceMetadata.new(@version, credentialList_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -203,6 +276,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the CredentialListInstanceMetadata
+                    # @return [CredentialListInstance] Fetched CredentialListInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        credentialList_instance = CredentialListInstance.new(
+                            @version,
+                            response.body,
+                            trunk_sid: @solution[:trunk_sid],
+                            sid: @solution[:sid],
+                        )
+                        CredentialListInstanceMetadata.new(
+                            @version,
+                            credentialList_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -218,6 +317,45 @@ module Twilio
                         "#<Twilio.Trunking.V1.CredentialListContext #{context}>"
                     end
                 end
+
+                class CredentialListInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CredentialListInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CredentialListInstance] credential_list_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CredentialListInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, credential_list_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @credential_list_instance = credential_list_instance
+                    end
+
+                    def credential_list
+                        @credential_list_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CredentialListInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CredentialListListResponse < InstanceListResource
+                    # @param [Array<CredentialListInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @credential_list_instance = payload.body[key].map do |data|
+                        CredentialListInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def credential_list_instance
+                          @instance
+                      end
+                  end
 
                 class CredentialListPage < Page
                     ##
@@ -247,6 +385,54 @@ module Twilio
                         '<Twilio.Trunking.V1.CredentialListPage>'
                     end
                 end
+
+                class CredentialListPageMetadata < PageMetadata
+                    attr_reader :credential_list_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @credential_list_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @credential_list_page << CredentialListListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @credential_list_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Trunking::V1PageMetadata>';
+                    end
+                end
+                class CredentialListListResponse < InstanceListResource
+
+                    # @param [Array<CredentialListInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @credential_list = payload.body[key].map do |data|
+                      CredentialListInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def credential_list
+                        @credential_list
+                    end
+                end
+
                 class CredentialListInstance < InstanceResource
                     ##
                     # Initialize the CredentialListInstance

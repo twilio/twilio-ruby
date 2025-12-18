@@ -70,6 +70,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists SupportingDocumentTypePageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SupportingDocumentTypePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields SupportingDocumentTypeInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -161,6 +183,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the SupportingDocumentTypeInstanceMetadata
+                    # @return [SupportingDocumentTypeInstance] Fetched SupportingDocumentTypeInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        supportingDocumentType_instance = SupportingDocumentTypeInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        SupportingDocumentTypeInstanceMetadata.new(
+                            @version,
+                            supportingDocumentType_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -176,6 +223,45 @@ module Twilio
                         "#<Twilio.Trusthub.V1.SupportingDocumentTypeContext #{context}>"
                     end
                 end
+
+                class SupportingDocumentTypeInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SupportingDocumentTypeInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SupportingDocumentTypeInstance] supporting_document_type_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SupportingDocumentTypeInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, supporting_document_type_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @supporting_document_type_instance = supporting_document_type_instance
+                    end
+
+                    def supporting_document_type
+                        @supporting_document_type_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SupportingDocumentTypeInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SupportingDocumentTypeListResponse < InstanceListResource
+                    # @param [Array<SupportingDocumentTypeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @supporting_document_type_instance = payload.body[key].map do |data|
+                        SupportingDocumentTypeInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def supporting_document_type_instance
+                          @instance
+                      end
+                  end
 
                 class SupportingDocumentTypePage < Page
                     ##
@@ -205,6 +291,54 @@ module Twilio
                         '<Twilio.Trusthub.V1.SupportingDocumentTypePage>'
                     end
                 end
+
+                class SupportingDocumentTypePageMetadata < PageMetadata
+                    attr_reader :supporting_document_type_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @supporting_document_type_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @supporting_document_type_page << SupportingDocumentTypeListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @supporting_document_type_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Trusthub::V1PageMetadata>';
+                    end
+                end
+                class SupportingDocumentTypeListResponse < InstanceListResource
+
+                    # @param [Array<SupportingDocumentTypeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @supporting_document_type = payload.body[key].map do |data|
+                      SupportingDocumentTypeInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def supporting_document_type
+                        @supporting_document_type
+                    end
+                end
+
                 class SupportingDocumentTypeInstance < InstanceResource
                     ##
                     # Initialize the SupportingDocumentTypeInstance

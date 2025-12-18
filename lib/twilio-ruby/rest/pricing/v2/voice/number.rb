@@ -82,6 +82,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the NumberInstanceMetadata
+                    # @param [String] origination_number The origination phone number, in [E.164](https://www.twilio.com/docs/glossary/what-e164) format, for which to fetch the origin-based voice pricing information. E.164 format consists of a + followed by the country code and subscriber number.
+                    # @return [NumberInstance] Fetched NumberInstance
+                    def fetch_with_metadata(
+                      origination_number: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'OriginationNumber' => origination_number,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        number_instance = NumberInstance.new(
+                            @version,
+                            response.body,
+                            destination_number: @solution[:destination_number],
+                        )
+                        NumberInstanceMetadata.new(
+                            @version,
+                            number_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -97,6 +128,45 @@ module Twilio
                         "#<Twilio.Pricing.V2.NumberContext #{context}>"
                     end
                 end
+
+                class NumberInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new NumberInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}NumberInstance] number_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [NumberInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, number_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @number_instance = number_instance
+                    end
+
+                    def number
+                        @number_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.NumberInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class NumberListResponse < InstanceListResource
+                    # @param [Array<NumberInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @number_instance = payload.body[key].map do |data|
+                        NumberInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def number_instance
+                          @instance
+                      end
+                  end
 
                 class NumberPage < Page
                     ##
@@ -126,6 +196,54 @@ module Twilio
                         '<Twilio.Pricing.V2.NumberPage>'
                     end
                 end
+
+                class NumberPageMetadata < PageMetadata
+                    attr_reader :number_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @number_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @number_page << NumberListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @number_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Pricing::V2PageMetadata>';
+                    end
+                end
+                class NumberListResponse < InstanceListResource
+
+                    # @param [Array<NumberInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @number = payload.body[key].map do |data|
+                      NumberInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def number
+                        @number
+                    end
+                end
+
                 class NumberInstance < InstanceResource
                     ##
                     # Initialize the NumberInstance

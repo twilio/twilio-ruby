@@ -59,6 +59,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ReplaceItemsInstanceMetadata
+                    # @param [String] from_bundle_sid The source bundle sid to copy the item assignments from.
+                    # @return [ReplaceItemsInstance] Created ReplaceItemsInstance
+                    def create_with_metadata(
+                      from_bundle_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'FromBundleSid' => from_bundle_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        replaceItems_instance = ReplaceItemsInstance.new(
+                            @version,
+                            response.body,
+                            bundle_sid: @solution[:bundle_sid],
+                        )
+                        ReplaceItemsInstanceMetadata.new(
+                            @version,
+                            replaceItems_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -96,6 +128,54 @@ module Twilio
                         '<Twilio.Numbers.V2.ReplaceItemsPage>'
                     end
                 end
+
+                class ReplaceItemsPageMetadata < PageMetadata
+                    attr_reader :replace_items_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @replace_items_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @replace_items_page << ReplaceItemsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @replace_items_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V2PageMetadata>';
+                    end
+                end
+                class ReplaceItemsListResponse < InstanceListResource
+
+                    # @param [Array<ReplaceItemsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @replace_items = payload.body[key].map do |data|
+                      ReplaceItemsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def replace_items
+                        @replace_items
+                    end
+                end
+
                 class ReplaceItemsInstance < InstanceResource
                     ##
                     # Initialize the ReplaceItemsInstance

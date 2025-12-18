@@ -60,6 +60,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the AssignedAddOnInstanceMetadata
+                    # @param [String] installed_add_on_sid The SID that identifies the Add-on installation.
+                    # @return [AssignedAddOnInstance] Created AssignedAddOnInstance
+                    def create_with_metadata(
+                      installed_add_on_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'InstalledAddOnSid' => installed_add_on_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        assignedAddOn_instance = AssignedAddOnInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            resource_sid: @solution[:resource_sid],
+                        )
+                        AssignedAddOnInstanceMetadata.new(
+                            @version,
+                            assignedAddOn_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists AssignedAddOnInstance records from the API as a list.
@@ -97,6 +130,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists AssignedAddOnPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        AssignedAddOnPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -184,7 +239,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the AssignedAddOnInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          assignedAddOn_instance = AssignedAddOnInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          AssignedAddOnInstanceMetadata.new(@version, assignedAddOn_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -205,6 +279,33 @@ module Twilio
                             account_sid: @solution[:account_sid],
                             resource_sid: @solution[:resource_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the AssignedAddOnInstanceMetadata
+                    # @return [AssignedAddOnInstance] Fetched AssignedAddOnInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        assignedAddOn_instance = AssignedAddOnInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            resource_sid: @solution[:resource_sid],
+                            sid: @solution[:sid],
+                        )
+                        AssignedAddOnInstanceMetadata.new(
+                            @version,
+                            assignedAddOn_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -243,6 +344,45 @@ module Twilio
                     end
                 end
 
+                class AssignedAddOnInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AssignedAddOnInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AssignedAddOnInstance] assigned_add_on_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AssignedAddOnInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, assigned_add_on_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @assigned_add_on_instance = assigned_add_on_instance
+                    end
+
+                    def assigned_add_on
+                        @assigned_add_on_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AssignedAddOnInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AssignedAddOnListResponse < InstanceListResource
+                    # @param [Array<AssignedAddOnInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @assigned_add_on_instance = payload.body[key].map do |data|
+                        AssignedAddOnInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def assigned_add_on_instance
+                          @instance
+                      end
+                  end
+
                 class AssignedAddOnPage < Page
                     ##
                     # Initialize the AssignedAddOnPage
@@ -271,6 +411,54 @@ module Twilio
                         '<Twilio.Api.V2010.AssignedAddOnPage>'
                     end
                 end
+
+                class AssignedAddOnPageMetadata < PageMetadata
+                    attr_reader :assigned_add_on_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @assigned_add_on_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @assigned_add_on_page << AssignedAddOnListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @assigned_add_on_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class AssignedAddOnListResponse < InstanceListResource
+
+                    # @param [Array<AssignedAddOnInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @assigned_add_on = payload.body[key].map do |data|
+                      AssignedAddOnInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def assigned_add_on
+                        @assigned_add_on
+                    end
+                end
+
                 class AssignedAddOnInstance < InstanceResource
                     ##
                     # Initialize the AssignedAddOnInstance

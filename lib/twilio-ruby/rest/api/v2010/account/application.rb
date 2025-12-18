@@ -103,6 +103,83 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ApplicationInstanceMetadata
+                    # @param [String] api_version The API version to use to start a new TwiML session. Can be: `2010-04-01` or `2008-08-01`. The default value is the account's default API version.
+                    # @param [String] voice_url The URL we should call when the phone number assigned to this application receives a call.
+                    # @param [String] voice_method The HTTP method we should use to call `voice_url`. Can be: `GET` or `POST`.
+                    # @param [String] voice_fallback_url The URL that we should call when an error occurs retrieving or executing the TwiML requested by `url`.
+                    # @param [String] voice_fallback_method The HTTP method we should use to call `voice_fallback_url`. Can be: `GET` or `POST`.
+                    # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application.
+                    # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `GET` or `POST`.
+                    # @param [Boolean] voice_caller_id_lookup Whether we should look up the caller's caller-ID name from the CNAM database (additional charges apply). Can be: `true` or `false`.
+                    # @param [String] sms_url The URL we should call when the phone number receives an incoming SMS message.
+                    # @param [String] sms_method The HTTP method we should use to call `sms_url`. Can be: `GET` or `POST`.
+                    # @param [String] sms_fallback_url The URL that we should call when an error occurs while retrieving or executing the TwiML from `sms_url`.
+                    # @param [String] sms_fallback_method The HTTP method we should use to call `sms_fallback_url`. Can be: `GET` or `POST`.
+                    # @param [String] sms_status_callback The URL we should call using a POST method to send status information about SMS messages sent by the application.
+                    # @param [String] message_status_callback The URL we should call using a POST method to send message status information to your application.
+                    # @param [String] friendly_name A descriptive string that you create to describe the new application. It can be up to 64 characters long.
+                    # @param [Boolean] public_application_connect_enabled Whether to allow other Twilio accounts to dial this applicaton using Dial verb. Can be: `true` or `false`.
+                    # @return [ApplicationInstance] Created ApplicationInstance
+                    def create_with_metadata(
+                      api_version: :unset, 
+                      voice_url: :unset, 
+                      voice_method: :unset, 
+                      voice_fallback_url: :unset, 
+                      voice_fallback_method: :unset, 
+                      status_callback: :unset, 
+                      status_callback_method: :unset, 
+                      voice_caller_id_lookup: :unset, 
+                      sms_url: :unset, 
+                      sms_method: :unset, 
+                      sms_fallback_url: :unset, 
+                      sms_fallback_method: :unset, 
+                      sms_status_callback: :unset, 
+                      message_status_callback: :unset, 
+                      friendly_name: :unset, 
+                      public_application_connect_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'ApiVersion' => api_version,
+                            'VoiceUrl' => voice_url,
+                            'VoiceMethod' => voice_method,
+                            'VoiceFallbackUrl' => voice_fallback_url,
+                            'VoiceFallbackMethod' => voice_fallback_method,
+                            'StatusCallback' => status_callback,
+                            'StatusCallbackMethod' => status_callback_method,
+                            'VoiceCallerIdLookup' => voice_caller_id_lookup,
+                            'SmsUrl' => sms_url,
+                            'SmsMethod' => sms_method,
+                            'SmsFallbackUrl' => sms_fallback_url,
+                            'SmsFallbackMethod' => sms_fallback_method,
+                            'SmsStatusCallback' => sms_status_callback,
+                            'MessageStatusCallback' => message_status_callback,
+                            'FriendlyName' => friendly_name,
+                            'PublicApplicationConnectEnabled' => public_application_connect_enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        application_instance = ApplicationInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                        )
+                        ApplicationInstanceMetadata.new(
+                            @version,
+                            application_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ApplicationInstance records from the API as a list.
@@ -144,6 +221,30 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists ApplicationPageMetadata records from the API as a list.
+                      # @param [String] friendly_name The string that identifies the Application resources to read.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(friendly_name: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ApplicationPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -231,7 +332,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ApplicationInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          application_instance = ApplicationInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ApplicationInstanceMetadata.new(@version, application_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -251,6 +371,32 @@ module Twilio
                             payload,
                             account_sid: @solution[:account_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ApplicationInstanceMetadata
+                    # @return [ApplicationInstance] Fetched ApplicationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        application_instance = ApplicationInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        ApplicationInstanceMetadata.new(
+                            @version,
+                            application_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -326,6 +472,84 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ApplicationInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [String] api_version The API version to use to start a new TwiML session. Can be: `2010-04-01` or `2008-08-01`. The default value is your account's default API version.
+                    # @param [String] voice_url The URL we should call when the phone number assigned to this application receives a call.
+                    # @param [String] voice_method The HTTP method we should use to call `voice_url`. Can be: `GET` or `POST`.
+                    # @param [String] voice_fallback_url The URL that we should call when an error occurs retrieving or executing the TwiML requested by `url`.
+                    # @param [String] voice_fallback_method The HTTP method we should use to call `voice_fallback_url`. Can be: `GET` or `POST`.
+                    # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application.
+                    # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `GET` or `POST`.
+                    # @param [Boolean] voice_caller_id_lookup Whether we should look up the caller's caller-ID name from the CNAM database (additional charges apply). Can be: `true` or `false`.
+                    # @param [String] sms_url The URL we should call when the phone number receives an incoming SMS message.
+                    # @param [String] sms_method The HTTP method we should use to call `sms_url`. Can be: `GET` or `POST`.
+                    # @param [String] sms_fallback_url The URL that we should call when an error occurs while retrieving or executing the TwiML from `sms_url`.
+                    # @param [String] sms_fallback_method The HTTP method we should use to call `sms_fallback_url`. Can be: `GET` or `POST`.
+                    # @param [String] sms_status_callback Same as message_status_callback: The URL we should call using a POST method to send status information about SMS messages sent by the application. Deprecated, included for backwards compatibility.
+                    # @param [String] message_status_callback The URL we should call using a POST method to send message status information to your application.
+                    # @param [Boolean] public_application_connect_enabled Whether to allow other Twilio accounts to dial this applicaton using Dial verb. Can be: `true` or `false`.
+                    # @return [ApplicationInstance] Updated ApplicationInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      api_version: :unset, 
+                      voice_url: :unset, 
+                      voice_method: :unset, 
+                      voice_fallback_url: :unset, 
+                      voice_fallback_method: :unset, 
+                      status_callback: :unset, 
+                      status_callback_method: :unset, 
+                      voice_caller_id_lookup: :unset, 
+                      sms_url: :unset, 
+                      sms_method: :unset, 
+                      sms_fallback_url: :unset, 
+                      sms_fallback_method: :unset, 
+                      sms_status_callback: :unset, 
+                      message_status_callback: :unset, 
+                      public_application_connect_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'ApiVersion' => api_version,
+                            'VoiceUrl' => voice_url,
+                            'VoiceMethod' => voice_method,
+                            'VoiceFallbackUrl' => voice_fallback_url,
+                            'VoiceFallbackMethod' => voice_fallback_method,
+                            'StatusCallback' => status_callback,
+                            'StatusCallbackMethod' => status_callback_method,
+                            'VoiceCallerIdLookup' => voice_caller_id_lookup,
+                            'SmsUrl' => sms_url,
+                            'SmsMethod' => sms_method,
+                            'SmsFallbackUrl' => sms_fallback_url,
+                            'SmsFallbackMethod' => sms_fallback_method,
+                            'SmsStatusCallback' => sms_status_callback,
+                            'MessageStatusCallback' => message_status_callback,
+                            'PublicApplicationConnectEnabled' => public_application_connect_enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        application_instance = ApplicationInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        ApplicationInstanceMetadata.new(
+                            @version,
+                            application_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -341,6 +565,45 @@ module Twilio
                         "#<Twilio.Api.V2010.ApplicationContext #{context}>"
                     end
                 end
+
+                class ApplicationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ApplicationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ApplicationInstance] application_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ApplicationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, application_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @application_instance = application_instance
+                    end
+
+                    def application
+                        @application_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ApplicationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ApplicationListResponse < InstanceListResource
+                    # @param [Array<ApplicationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @application_instance = payload.body[key].map do |data|
+                        ApplicationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def application_instance
+                          @instance
+                      end
+                  end
 
                 class ApplicationPage < Page
                     ##
@@ -370,6 +633,54 @@ module Twilio
                         '<Twilio.Api.V2010.ApplicationPage>'
                     end
                 end
+
+                class ApplicationPageMetadata < PageMetadata
+                    attr_reader :application_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @application_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @application_page << ApplicationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @application_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class ApplicationListResponse < InstanceListResource
+
+                    # @param [Array<ApplicationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @application = payload.body[key].map do |data|
+                      ApplicationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def application
+                        @application
+                    end
+                end
+
                 class ApplicationInstance < InstanceResource
                     ##
                     # Initialize the ApplicationInstance

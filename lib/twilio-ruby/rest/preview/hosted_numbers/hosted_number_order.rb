@@ -103,6 +103,85 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the HostedNumberOrderInstanceMetadata
+                    # @param [String] phone_number The number to host in [+E.164](https://en.wikipedia.org/wiki/E.164) format
+                    # @param [Boolean] sms_capability Used to specify that the SMS capability will be hosted on Twilio's platform.
+                    # @param [String] account_sid This defaults to the AccountSid of the authorization the user is using. This can be provided to specify a subaccount to add the HostedNumberOrder to.
+                    # @param [String] friendly_name A 64 character string that is a human readable text that describes this resource.
+                    # @param [String] unique_name Optional. Provides a unique and addressable name to be assigned to this HostedNumberOrder, assigned by the developer, to be optionally used in addition to SID.
+                    # @param [Array[String]] cc_emails Optional. A list of emails that the LOA document for this HostedNumberOrder will be carbon copied to.
+                    # @param [String] sms_url The URL that Twilio should request when somebody sends an SMS to the phone number. This will be copied onto the IncomingPhoneNumber resource.
+                    # @param [String] sms_method The HTTP method that should be used to request the SmsUrl. Must be either `GET` or `POST`.  This will be copied onto the IncomingPhoneNumber resource.
+                    # @param [String] sms_fallback_url A URL that Twilio will request if an error occurs requesting or executing the TwiML defined by SmsUrl. This will be copied onto the IncomingPhoneNumber resource.
+                    # @param [String] sms_fallback_method The HTTP method that should be used to request the SmsFallbackUrl. Must be either `GET` or `POST`. This will be copied onto the IncomingPhoneNumber resource.
+                    # @param [String] status_callback_url Optional. The Status Callback URL attached to the IncomingPhoneNumber resource.
+                    # @param [String] status_callback_method Optional. The Status Callback Method attached to the IncomingPhoneNumber resource.
+                    # @param [String] sms_application_sid Optional. The 34 character sid of the application Twilio should use to handle SMS messages sent to this number. If a `SmsApplicationSid` is present, Twilio will ignore all of the SMS urls above and use those set on the application.
+                    # @param [String] address_sid Optional. A 34 character string that uniquely identifies the Address resource that represents the address of the owner of this phone number.
+                    # @param [String] email Optional. Email of the owner of this phone number that is being hosted.
+                    # @param [VerificationType] verification_type 
+                    # @param [String] verification_document_sid Optional. The unique sid identifier of the Identity Document that represents the document for verifying ownership of the number to be hosted. Required when VerificationType is phone-bill.
+                    # @return [HostedNumberOrderInstance] Created HostedNumberOrderInstance
+                    def create_with_metadata(
+                      phone_number: nil, 
+                      sms_capability: nil, 
+                      account_sid: :unset, 
+                      friendly_name: :unset, 
+                      unique_name: :unset, 
+                      cc_emails: :unset, 
+                      sms_url: :unset, 
+                      sms_method: :unset, 
+                      sms_fallback_url: :unset, 
+                      sms_fallback_method: :unset, 
+                      status_callback_url: :unset, 
+                      status_callback_method: :unset, 
+                      sms_application_sid: :unset, 
+                      address_sid: :unset, 
+                      email: :unset, 
+                      verification_type: :unset, 
+                      verification_document_sid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'PhoneNumber' => phone_number,
+                            'SmsCapability' => sms_capability,
+                            'AccountSid' => account_sid,
+                            'FriendlyName' => friendly_name,
+                            'UniqueName' => unique_name,
+                            'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
+                            'SmsUrl' => sms_url,
+                            'SmsMethod' => sms_method,
+                            'SmsFallbackUrl' => sms_fallback_url,
+                            'SmsFallbackMethod' => sms_fallback_method,
+                            'StatusCallbackUrl' => status_callback_url,
+                            'StatusCallbackMethod' => status_callback_method,
+                            'SmsApplicationSid' => sms_application_sid,
+                            'AddressSid' => address_sid,
+                            'Email' => email,
+                            'VerificationType' => verification_type,
+                            'VerificationDocumentSid' => verification_document_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        hostedNumberOrder_instance = HostedNumberOrderInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        HostedNumberOrderInstanceMetadata.new(
+                            @version,
+                            hostedNumberOrder_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists HostedNumberOrderInstance records from the API as a list.
@@ -160,6 +239,38 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists HostedNumberOrderPageMetadata records from the API as a list.
+                      # @param [Status] status The Status of this HostedNumberOrder. One of `received`, `pending-verification`, `verified`, `pending-loa`, `carrier-processing`, `testing`, `completed`, `failed`, or `action-required`.
+                      # @param [String] phone_number An E164 formatted phone number hosted by this HostedNumberOrder.
+                      # @param [String] incoming_phone_number_sid A 34 character string that uniquely identifies the IncomingPhoneNumber resource created by this HostedNumberOrder.
+                      # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
+                      # @param [String] unique_name Provides a unique and addressable name to be assigned to this HostedNumberOrder, assigned by the developer, to be optionally used in addition to SID.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(status: :unset, phone_number: :unset, incoming_phone_number_sid: :unset, friendly_name: :unset, unique_name: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Status' => status,
+                            'PhoneNumber' => phone_number,
+                            'IncomingPhoneNumberSid' => incoming_phone_number_sid,
+                            'FriendlyName' => friendly_name,
+                            'UniqueName' => unique_name,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        HostedNumberOrderPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -254,7 +365,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the HostedNumberOrderInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          hostedNumberOrder_instance = HostedNumberOrderInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          HostedNumberOrderInstanceMetadata.new(@version, hostedNumberOrder_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -273,6 +403,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the HostedNumberOrderInstanceMetadata
+                    # @return [HostedNumberOrderInstance] Fetched HostedNumberOrderInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        hostedNumberOrder_instance = HostedNumberOrderInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        HostedNumberOrderInstanceMetadata.new(
+                            @version,
+                            hostedNumberOrder_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -329,6 +484,65 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the HostedNumberOrderInstanceMetadata
+                    # @param [String] friendly_name A 64 character string that is a human readable text that describes this resource.
+                    # @param [String] unique_name Provides a unique and addressable name to be assigned to this HostedNumberOrder, assigned by the developer, to be optionally used in addition to SID.
+                    # @param [String] email Email of the owner of this phone number that is being hosted.
+                    # @param [Array[String]] cc_emails Optional. A list of emails that LOA document for this HostedNumberOrder will be carbon copied to.
+                    # @param [Status] status 
+                    # @param [String] verification_code A verification code that is given to the user via a phone call to the phone number that is being hosted.
+                    # @param [VerificationType] verification_type 
+                    # @param [String] verification_document_sid Optional. The unique sid identifier of the Identity Document that represents the document for verifying ownership of the number to be hosted. Required when VerificationType is phone-bill.
+                    # @param [String] extension Digits to dial after connecting the verification call.
+                    # @param [String] call_delay The number of seconds, between 0 and 60, to delay before initiating the verification call. Defaults to 0.
+                    # @return [HostedNumberOrderInstance] Updated HostedNumberOrderInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      unique_name: :unset, 
+                      email: :unset, 
+                      cc_emails: :unset, 
+                      status: :unset, 
+                      verification_code: :unset, 
+                      verification_type: :unset, 
+                      verification_document_sid: :unset, 
+                      extension: :unset, 
+                      call_delay: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'UniqueName' => unique_name,
+                            'Email' => email,
+                            'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
+                            'Status' => status,
+                            'VerificationCode' => verification_code,
+                            'VerificationType' => verification_type,
+                            'VerificationDocumentSid' => verification_document_sid,
+                            'Extension' => extension,
+                            'CallDelay' => call_delay,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        hostedNumberOrder_instance = HostedNumberOrderInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        HostedNumberOrderInstanceMetadata.new(
+                            @version,
+                            hostedNumberOrder_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -344,6 +558,45 @@ module Twilio
                         "#<Twilio.Preview.HostedNumbers.HostedNumberOrderContext #{context}>"
                     end
                 end
+
+                class HostedNumberOrderInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new HostedNumberOrderInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}HostedNumberOrderInstance] hosted_number_order_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [HostedNumberOrderInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, hosted_number_order_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @hosted_number_order_instance = hosted_number_order_instance
+                    end
+
+                    def hosted_number_order
+                        @hosted_number_order_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.HostedNumberOrderInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class HostedNumberOrderListResponse < InstanceListResource
+                    # @param [Array<HostedNumberOrderInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @hosted_number_order_instance = payload.body[key].map do |data|
+                        HostedNumberOrderInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def hosted_number_order_instance
+                          @instance
+                      end
+                  end
 
                 class HostedNumberOrderPage < Page
                     ##
@@ -373,6 +626,54 @@ module Twilio
                         '<Twilio.Preview.HostedNumbers.HostedNumberOrderPage>'
                     end
                 end
+
+                class HostedNumberOrderPageMetadata < PageMetadata
+                    attr_reader :hosted_number_order_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @hosted_number_order_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @hosted_number_order_page << HostedNumberOrderListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @hosted_number_order_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Preview::HostedNumbersPageMetadata>';
+                    end
+                end
+                class HostedNumberOrderListResponse < InstanceListResource
+
+                    # @param [Array<HostedNumberOrderInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @hosted_number_order = payload.body[key].map do |data|
+                      HostedNumberOrderInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def hosted_number_order
+                        @hosted_number_order
+                    end
+                end
+
                 class HostedNumberOrderInstance < InstanceResource
                     ##
                     # Initialize the HostedNumberOrderInstance

@@ -55,6 +55,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the AccountInstanceMetadata
+                    # @param [String] friendly_name A human readable description of the account to create, defaults to `SubAccount Created at {YYYY-MM-DD HH:MM meridian}`
+                    # @return [AccountInstance] Created AccountInstance
+                    def create_with_metadata(
+                      friendly_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        account_instance = AccountInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        AccountInstanceMetadata.new(
+                            @version,
+                            account_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists AccountInstance records from the API as a list.
@@ -100,6 +131,32 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists AccountPageMetadata records from the API as a list.
+                      # @param [String] friendly_name Only return the Account resources with friendly names that exactly match this name.
+                      # @param [Status] status Only return Account resources with the given status. Can be `closed`, `suspended` or `active`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(friendly_name: :unset, status: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Status' => status,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        AccountPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -223,6 +280,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the AccountInstanceMetadata
+                    # @return [AccountInstance] Fetched AccountInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        account_instance = AccountInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        AccountInstanceMetadata.new(
+                            @version,
+                            account_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the AccountInstance
                     # @param [String] friendly_name Update the human-readable description of this Account
                     # @param [Status] status 
@@ -248,6 +330,41 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the AccountInstanceMetadata
+                    # @param [String] friendly_name Update the human-readable description of this Account
+                    # @param [Status] status 
+                    # @return [AccountInstance] Updated AccountInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      status: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Status' => status,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        account_instance = AccountInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        AccountInstanceMetadata.new(
+                            @version,
+                            account_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -667,6 +784,45 @@ module Twilio
                     end
                 end
 
+                class AccountInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AccountInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AccountInstance] account_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AccountInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, account_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @account_instance = account_instance
+                    end
+
+                    def account
+                        @account_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AccountInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AccountListResponse < InstanceListResource
+                    # @param [Array<AccountInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @account_instance = payload.body[key].map do |data|
+                        AccountInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def account_instance
+                          @instance
+                      end
+                  end
+
                 class AccountPage < Page
                     ##
                     # Initialize the AccountPage
@@ -695,6 +851,54 @@ module Twilio
                         '<Twilio.Api.V2010.AccountPage>'
                     end
                 end
+
+                class AccountPageMetadata < PageMetadata
+                    attr_reader :account_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @account_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @account_page << AccountListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @account_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class AccountListResponse < InstanceListResource
+
+                    # @param [Array<AccountInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @account = payload.body[key].map do |data|
+                      AccountInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def account
+                        @account
+                    end
+                end
+
                 class AccountInstance < InstanceResource
                     ##
                     # Initialize the AccountInstance

@@ -72,6 +72,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists InstalledAddOnExtensionPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        InstalledAddOnExtensionPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields InstalledAddOnExtensionInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -166,6 +188,32 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the InstalledAddOnExtensionInstanceMetadata
+                    # @return [InstalledAddOnExtensionInstance] Fetched InstalledAddOnExtensionInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        installedAddOnExtension_instance = InstalledAddOnExtensionInstance.new(
+                            @version,
+                            response.body,
+                            installed_add_on_sid: @solution[:installed_add_on_sid],
+                            sid: @solution[:sid],
+                        )
+                        InstalledAddOnExtensionInstanceMetadata.new(
+                            @version,
+                            installedAddOnExtension_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the InstalledAddOnExtensionInstance
                     # @param [Boolean] enabled Whether the Extension should be invoked.
                     # @return [InstalledAddOnExtensionInstance] Updated InstalledAddOnExtensionInstance
@@ -192,6 +240,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the InstalledAddOnExtensionInstanceMetadata
+                    # @param [Boolean] enabled Whether the Extension should be invoked.
+                    # @return [InstalledAddOnExtensionInstance] Updated InstalledAddOnExtensionInstance
+                    def update_with_metadata(
+                      enabled: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Enabled' => enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        installedAddOnExtension_instance = InstalledAddOnExtensionInstance.new(
+                            @version,
+                            response.body,
+                            installed_add_on_sid: @solution[:installed_add_on_sid],
+                            sid: @solution[:sid],
+                        )
+                        InstalledAddOnExtensionInstanceMetadata.new(
+                            @version,
+                            installedAddOnExtension_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -207,6 +288,45 @@ module Twilio
                         "#<Twilio.Marketplace.V1.InstalledAddOnExtensionContext #{context}>"
                     end
                 end
+
+                class InstalledAddOnExtensionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new InstalledAddOnExtensionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}InstalledAddOnExtensionInstance] installed_add_on_extension_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [InstalledAddOnExtensionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, installed_add_on_extension_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @installed_add_on_extension_instance = installed_add_on_extension_instance
+                    end
+
+                    def installed_add_on_extension
+                        @installed_add_on_extension_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.InstalledAddOnExtensionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class InstalledAddOnExtensionListResponse < InstanceListResource
+                    # @param [Array<InstalledAddOnExtensionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @installed_add_on_extension_instance = payload.body[key].map do |data|
+                        InstalledAddOnExtensionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def installed_add_on_extension_instance
+                          @instance
+                      end
+                  end
 
                 class InstalledAddOnExtensionPage < Page
                     ##
@@ -236,6 +356,54 @@ module Twilio
                         '<Twilio.Marketplace.V1.InstalledAddOnExtensionPage>'
                     end
                 end
+
+                class InstalledAddOnExtensionPageMetadata < PageMetadata
+                    attr_reader :installed_add_on_extension_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @installed_add_on_extension_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @installed_add_on_extension_page << InstalledAddOnExtensionListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @installed_add_on_extension_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Marketplace::V1PageMetadata>';
+                    end
+                end
+                class InstalledAddOnExtensionListResponse < InstanceListResource
+
+                    # @param [Array<InstalledAddOnExtensionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @installed_add_on_extension = payload.body[key].map do |data|
+                      InstalledAddOnExtensionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def installed_add_on_extension
+                        @installed_add_on_extension
+                    end
+                end
+
                 class InstalledAddOnExtensionInstance < InstanceResource
                     ##
                     # Initialize the InstalledAddOnExtensionInstance

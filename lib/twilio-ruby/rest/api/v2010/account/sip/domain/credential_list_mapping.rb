@@ -61,6 +61,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the CredentialListMappingInstanceMetadata
+                    # @param [String] credential_list_sid A 34 character string that uniquely identifies the CredentialList resource to map to the SIP domain.
+                    # @return [CredentialListMappingInstance] Created CredentialListMappingInstance
+                    def create_with_metadata(
+                      credential_list_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'CredentialListSid' => credential_list_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        credentialListMapping_instance = CredentialListMappingInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            domain_sid: @solution[:domain_sid],
+                        )
+                        CredentialListMappingInstanceMetadata.new(
+                            @version,
+                            credentialListMapping_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists CredentialListMappingInstance records from the API as a list.
@@ -98,6 +131,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists CredentialListMappingPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CredentialListMappingPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -184,7 +239,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the CredentialListMappingInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          credentialListMapping_instance = CredentialListMappingInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          CredentialListMappingInstanceMetadata.new(@version, credentialListMapping_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -208,6 +282,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the CredentialListMappingInstanceMetadata
+                    # @return [CredentialListMappingInstance] Fetched CredentialListMappingInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        credentialListMapping_instance = CredentialListMappingInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            domain_sid: @solution[:domain_sid],
+                            sid: @solution[:sid],
+                        )
+                        CredentialListMappingInstanceMetadata.new(
+                            @version,
+                            credentialListMapping_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -223,6 +324,45 @@ module Twilio
                         "#<Twilio.Api.V2010.CredentialListMappingContext #{context}>"
                     end
                 end
+
+                class CredentialListMappingInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CredentialListMappingInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CredentialListMappingInstance] credential_list_mapping_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CredentialListMappingInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, credential_list_mapping_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @credential_list_mapping_instance = credential_list_mapping_instance
+                    end
+
+                    def credential_list_mapping
+                        @credential_list_mapping_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CredentialListMappingInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CredentialListMappingListResponse < InstanceListResource
+                    # @param [Array<CredentialListMappingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @credential_list_mapping_instance = payload.body[key].map do |data|
+                        CredentialListMappingInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def credential_list_mapping_instance
+                          @instance
+                      end
+                  end
 
                 class CredentialListMappingPage < Page
                     ##
@@ -252,6 +392,54 @@ module Twilio
                         '<Twilio.Api.V2010.CredentialListMappingPage>'
                     end
                 end
+
+                class CredentialListMappingPageMetadata < PageMetadata
+                    attr_reader :credential_list_mapping_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @credential_list_mapping_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @credential_list_mapping_page << CredentialListMappingListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @credential_list_mapping_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class CredentialListMappingListResponse < InstanceListResource
+
+                    # @param [Array<CredentialListMappingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @credential_list_mapping = payload.body[key].map do |data|
+                      CredentialListMappingInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def credential_list_mapping
+                        @credential_list_mapping
+                    end
+                end
+
                 class CredentialListMappingInstance < InstanceResource
                     ##
                     # Initialize the CredentialListMappingInstance

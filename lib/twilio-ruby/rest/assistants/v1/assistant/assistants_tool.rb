@@ -72,6 +72,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists AssistantsToolPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        AssistantsToolPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields AssistantsToolInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -166,6 +188,32 @@ module Twilio
                     end
 
                     ##
+                    # Create the AssistantsToolInstanceMetadata
+                    # @return [AssistantsToolInstance] Created AssistantsToolInstance
+                    def create_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers)
+                        assistantsTool_instance = AssistantsToolInstance.new(
+                            @version,
+                            response.body,
+                            assistant_id: @solution[:assistant_id],
+                            id: @solution[:id],
+                        )
+                        AssistantsToolInstanceMetadata.new(
+                            @version,
+                            assistantsTool_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Delete the AssistantsToolInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
@@ -174,7 +222,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the AssistantsToolInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          assistantsTool_instance = AssistantsToolInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          AssistantsToolInstanceMetadata.new(@version, assistantsTool_instance, response.headers, response.status_code)
                     end
 
 
@@ -192,6 +259,45 @@ module Twilio
                         "#<Twilio.Assistants.V1.AssistantsToolContext #{context}>"
                     end
                 end
+
+                class AssistantsToolInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AssistantsToolInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AssistantsToolInstance] assistants_tool_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AssistantsToolInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, assistants_tool_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @assistants_tool_instance = assistants_tool_instance
+                    end
+
+                    def assistants_tool
+                        @assistants_tool_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AssistantsToolInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AssistantsToolListResponse < InstanceListResource
+                    # @param [Array<AssistantsToolInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @assistants_tool_instance = payload.body[key].map do |data|
+                        AssistantsToolInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def assistants_tool_instance
+                          @instance
+                      end
+                  end
 
                 class AssistantsToolPage < Page
                     ##
@@ -221,6 +327,54 @@ module Twilio
                         '<Twilio.Assistants.V1.AssistantsToolPage>'
                     end
                 end
+
+                class AssistantsToolPageMetadata < PageMetadata
+                    attr_reader :assistants_tool_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @assistants_tool_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @assistants_tool_page << AssistantsToolListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @assistants_tool_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Assistants::V1PageMetadata>';
+                    end
+                end
+                class AssistantsToolListResponse < InstanceListResource
+
+                    # @param [Array<AssistantsToolInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @assistants_tool = payload.body[key].map do |data|
+                      AssistantsToolInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def assistants_tool
+                        @assistants_tool
+                    end
+                end
+
                 class AssistantsToolInstance < InstanceResource
                     ##
                     # Initialize the AssistantsToolInstance

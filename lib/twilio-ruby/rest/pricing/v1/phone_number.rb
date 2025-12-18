@@ -81,6 +81,54 @@ module Twilio
                         '<Twilio.Pricing.V1.PhoneNumberPage>'
                     end
                 end
+
+                class PhoneNumberPageMetadata < PageMetadata
+                    attr_reader :phone_number_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @phone_number_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @phone_number_page << PhoneNumberListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @phone_number_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Pricing::V1PageMetadata>';
+                    end
+                end
+                class PhoneNumberListResponse < InstanceListResource
+
+                    # @param [Array<PhoneNumberInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @phone_number = payload.body[key].map do |data|
+                      PhoneNumberInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def phone_number
+                        @phone_number
+                    end
+                end
+
                 class PhoneNumberInstance < InstanceResource
                     ##
                     # Initialize the PhoneNumberInstance

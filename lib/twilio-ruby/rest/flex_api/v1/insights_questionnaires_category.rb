@@ -57,6 +57,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the InsightsQuestionnairesCategoryInstanceMetadata
+                    # @param [String] name The name of this category.
+                    # @param [String] authorization The Authorization HTTP request header
+                    # @return [InsightsQuestionnairesCategoryInstance] Created InsightsQuestionnairesCategoryInstance
+                    def create_with_metadata(
+                      name: nil, 
+                      authorization: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Name' => name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        insightsQuestionnairesCategory_instance = InsightsQuestionnairesCategoryInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        InsightsQuestionnairesCategoryInstanceMetadata.new(
+                            @version,
+                            insightsQuestionnairesCategory_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists InsightsQuestionnairesCategoryInstance records from the API as a list.
@@ -98,6 +131,30 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists InsightsQuestionnairesCategoryPageMetadata records from the API as a list.
+                      # @param [String] authorization The Authorization HTTP request header
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(authorization: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Authorization' => authorization,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        InsightsQuestionnairesCategoryPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -187,7 +244,29 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the InsightsQuestionnairesCategoryInstanceMetadata
+                    # @param [String] authorization The Authorization HTTP request header
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata(
+                      authorization: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          insightsQuestionnairesCategory_instance = InsightsQuestionnairesCategoryInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          InsightsQuestionnairesCategoryInstanceMetadata.new(@version, insightsQuestionnairesCategory_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -218,6 +297,40 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the InsightsQuestionnairesCategoryInstanceMetadata
+                    # @param [String] name The name of this category.
+                    # @param [String] authorization The Authorization HTTP request header
+                    # @return [InsightsQuestionnairesCategoryInstance] Updated InsightsQuestionnairesCategoryInstance
+                    def update_with_metadata(
+                      name: nil, 
+                      authorization: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Name' => name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        insightsQuestionnairesCategory_instance = InsightsQuestionnairesCategoryInstance.new(
+                            @version,
+                            response.body,
+                            category_sid: @solution[:category_sid],
+                        )
+                        InsightsQuestionnairesCategoryInstanceMetadata.new(
+                            @version,
+                            insightsQuestionnairesCategory_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -233,6 +346,45 @@ module Twilio
                         "#<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryContext #{context}>"
                     end
                 end
+
+                class InsightsQuestionnairesCategoryInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new InsightsQuestionnairesCategoryInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}InsightsQuestionnairesCategoryInstance] insights_questionnaires_category_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [InsightsQuestionnairesCategoryInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, insights_questionnaires_category_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @insights_questionnaires_category_instance = insights_questionnaires_category_instance
+                    end
+
+                    def insights_questionnaires_category
+                        @insights_questionnaires_category_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.InsightsQuestionnairesCategoryInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class InsightsQuestionnairesCategoryListResponse < InstanceListResource
+                    # @param [Array<InsightsQuestionnairesCategoryInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @insights_questionnaires_category_instance = payload.body[key].map do |data|
+                        InsightsQuestionnairesCategoryInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def insights_questionnaires_category_instance
+                          @instance
+                      end
+                  end
 
                 class InsightsQuestionnairesCategoryPage < Page
                     ##
@@ -262,6 +414,54 @@ module Twilio
                         '<Twilio.FlexApi.V1.InsightsQuestionnairesCategoryPage>'
                     end
                 end
+
+                class InsightsQuestionnairesCategoryPageMetadata < PageMetadata
+                    attr_reader :insights_questionnaires_category_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @insights_questionnaires_category_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @insights_questionnaires_category_page << InsightsQuestionnairesCategoryListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @insights_questionnaires_category_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InsightsQuestionnairesCategoryListResponse < InstanceListResource
+
+                    # @param [Array<InsightsQuestionnairesCategoryInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @insights_questionnaires_category = payload.body[key].map do |data|
+                      InsightsQuestionnairesCategoryInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def insights_questionnaires_category
+                        @insights_questionnaires_category
+                    end
+                end
+
                 class InsightsQuestionnairesCategoryInstance < InstanceResource
                     ##
                     # Initialize the InsightsQuestionnairesCategoryInstance

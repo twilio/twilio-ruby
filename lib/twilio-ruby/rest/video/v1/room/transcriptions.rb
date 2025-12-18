@@ -58,6 +58,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TranscriptionsInstanceMetadata
+                    # @param [Object] configuration A collection of properties that describe transcription behaviour.
+                    # @return [TranscriptionsInstance] Created TranscriptionsInstance
+                    def create_with_metadata(
+                      configuration: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Configuration' => Twilio.serialize_object(configuration),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        transcriptions_instance = TranscriptionsInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                        )
+                        TranscriptionsInstanceMetadata.new(
+                            @version,
+                            transcriptions_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists TranscriptionsInstance records from the API as a list.
@@ -95,6 +127,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists TranscriptionsPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TranscriptionsPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -192,6 +246,32 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the TranscriptionsInstanceMetadata
+                    # @return [TranscriptionsInstance] Fetched TranscriptionsInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        transcriptions_instance = TranscriptionsInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                            ttid: @solution[:ttid],
+                        )
+                        TranscriptionsInstanceMetadata.new(
+                            @version,
+                            transcriptions_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the TranscriptionsInstance
                     # @param [Status] status 
                     # @return [TranscriptionsInstance] Updated TranscriptionsInstance
@@ -218,6 +298,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the TranscriptionsInstanceMetadata
+                    # @param [Status] status 
+                    # @return [TranscriptionsInstance] Updated TranscriptionsInstance
+                    def update_with_metadata(
+                      status: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Status' => status,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        transcriptions_instance = TranscriptionsInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                            ttid: @solution[:ttid],
+                        )
+                        TranscriptionsInstanceMetadata.new(
+                            @version,
+                            transcriptions_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -233,6 +346,45 @@ module Twilio
                         "#<Twilio.Video.V1.TranscriptionsContext #{context}>"
                     end
                 end
+
+                class TranscriptionsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new TranscriptionsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}TranscriptionsInstance] transcriptions_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [TranscriptionsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, transcriptions_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @transcriptions_instance = transcriptions_instance
+                    end
+
+                    def transcriptions
+                        @transcriptions_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.TranscriptionsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class TranscriptionsListResponse < InstanceListResource
+                    # @param [Array<TranscriptionsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @transcriptions_instance = payload.body[key].map do |data|
+                        TranscriptionsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def transcriptions_instance
+                          @instance
+                      end
+                  end
 
                 class TranscriptionsPage < Page
                     ##
@@ -262,6 +414,54 @@ module Twilio
                         '<Twilio.Video.V1.TranscriptionsPage>'
                     end
                 end
+
+                class TranscriptionsPageMetadata < PageMetadata
+                    attr_reader :transcriptions_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @transcriptions_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @transcriptions_page << TranscriptionsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @transcriptions_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Video::V1PageMetadata>';
+                    end
+                end
+                class TranscriptionsListResponse < InstanceListResource
+
+                    # @param [Array<TranscriptionsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @transcriptions = payload.body[key].map do |data|
+                      TranscriptionsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def transcriptions
+                        @transcriptions
+                    end
+                end
+
                 class TranscriptionsInstance < InstanceResource
                     ##
                     # Initialize the TranscriptionsInstance

@@ -51,6 +51,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the InsightsSettingsCommentInstanceMetadata
+                    # @param [String] authorization The Authorization HTTP request header
+                    # @return [InsightsSettingsCommentInstance] Fetched InsightsSettingsCommentInstance
+                    def fetch_with_metadata(
+                      authorization: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        insightsSettingsComment_instance = InsightsSettingsCommentInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        InsightsSettingsCommentInstanceMetadata.new(
+                            @version,
+                            insightsSettingsComment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -88,6 +115,54 @@ module Twilio
                         '<Twilio.FlexApi.V1.InsightsSettingsCommentPage>'
                     end
                 end
+
+                class InsightsSettingsCommentPageMetadata < PageMetadata
+                    attr_reader :insights_settings_comment_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @insights_settings_comment_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @insights_settings_comment_page << InsightsSettingsCommentListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @insights_settings_comment_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InsightsSettingsCommentListResponse < InstanceListResource
+
+                    # @param [Array<InsightsSettingsCommentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @insights_settings_comment = payload.body[key].map do |data|
+                      InsightsSettingsCommentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def insights_settings_comment
+                        @insights_settings_comment
+                    end
+                end
+
                 class InsightsSettingsCommentInstance < InstanceResource
                     ##
                     # Initialize the InsightsSettingsCommentInstance

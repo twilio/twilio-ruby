@@ -103,6 +103,85 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the RoomInstanceMetadata
+                    # @param [Boolean] enable_turn Deprecated, now always considered to be true.
+                    # @param [RoomType] type 
+                    # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used as a `room_sid` in place of the resource's `sid` in the URL to address the resource, assuming it does not contain any [reserved characters](https://tools.ietf.org/html/rfc3986#section-2.2) that would need to be URL encoded. This value is unique for `in-progress` rooms. SDK clients can use this name to connect to the room. REST API clients can use this name in place of the Room SID to interact with the room as long as the room is `in-progress`.
+                    # @param [String] status_callback The URL Twilio should call using the `status_callback_method` to send status information to your application on every room event. See [Status Callbacks](https://www.twilio.com/docs/video/api/status-callbacks) for more info.
+                    # @param [String] status_callback_method The HTTP method Twilio should use to call `status_callback`. Can be `POST` or `GET`.
+                    # @param [String] max_participants The maximum number of concurrent Participants allowed in the room. The maximum allowed value is 50.
+                    # @param [Boolean] record_participants_on_connect Whether to start recording when Participants connect.
+                    # @param [Boolean] transcribe_participants_on_connect Whether to start transcriptions when Participants connect. If TranscriptionsConfiguration is not provided, default settings will be used.
+                    # @param [Array[VideoCodec]] video_codecs An array of the video codecs that are supported when publishing a track in the room.  Can be: `VP8` and `H264`.
+                    # @param [String] media_region The region for the Room's media server.  Can be one of the [available Media Regions](https://www.twilio.com/docs/video/ip-addresses#group-rooms-media-servers).
+                    # @param [Object] recording_rules A collection of Recording Rules that describe how to include or exclude matching tracks for recording
+                    # @param [Object] transcriptions_configuration A collection of properties that describe transcription behaviour. If TranscribeParticipantsOnConnect is set to true and TranscriptionsConfiguration is not provided, default settings will be used.
+                    # @param [Boolean] audio_only When set to true, indicates that the participants in the room will only publish audio. No video tracks will be allowed.
+                    # @param [String] max_participant_duration The maximum number of seconds a Participant can be connected to the room. The maximum possible value is 86400 seconds (24 hours). The default is 14400 seconds (4 hours).
+                    # @param [String] empty_room_timeout Configures how long (in minutes) a room will remain active after last participant leaves. Valid values range from 1 to 60 minutes (no fractions).
+                    # @param [String] unused_room_timeout Configures how long (in minutes) a room will remain active if no one joins. Valid values range from 1 to 60 minutes (no fractions).
+                    # @param [Boolean] large_room When set to true, indicated that this is the large room.
+                    # @return [RoomInstance] Created RoomInstance
+                    def create_with_metadata(
+                      enable_turn: :unset, 
+                      type: :unset, 
+                      unique_name: :unset, 
+                      status_callback: :unset, 
+                      status_callback_method: :unset, 
+                      max_participants: :unset, 
+                      record_participants_on_connect: :unset, 
+                      transcribe_participants_on_connect: :unset, 
+                      video_codecs: :unset, 
+                      media_region: :unset, 
+                      recording_rules: :unset, 
+                      transcriptions_configuration: :unset, 
+                      audio_only: :unset, 
+                      max_participant_duration: :unset, 
+                      empty_room_timeout: :unset, 
+                      unused_room_timeout: :unset, 
+                      large_room: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'EnableTurn' => enable_turn,
+                            'Type' => type,
+                            'UniqueName' => unique_name,
+                            'StatusCallback' => status_callback,
+                            'StatusCallbackMethod' => status_callback_method,
+                            'MaxParticipants' => max_participants,
+                            'RecordParticipantsOnConnect' => record_participants_on_connect,
+                            'TranscribeParticipantsOnConnect' => transcribe_participants_on_connect,
+                            'VideoCodecs' => Twilio.serialize_list(video_codecs) { |e| e },
+                            'MediaRegion' => media_region,
+                            'RecordingRules' => Twilio.serialize_object(recording_rules),
+                            'TranscriptionsConfiguration' => Twilio.serialize_object(transcriptions_configuration),
+                            'AudioOnly' => audio_only,
+                            'MaxParticipantDuration' => max_participant_duration,
+                            'EmptyRoomTimeout' => empty_room_timeout,
+                            'UnusedRoomTimeout' => unused_room_timeout,
+                            'LargeRoom' => large_room,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        room_instance = RoomInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        RoomInstanceMetadata.new(
+                            @version,
+                            room_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists RoomInstance records from the API as a list.
@@ -156,6 +235,36 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists RoomPageMetadata records from the API as a list.
+                      # @param [RoomStatus] status Read only the rooms with this status. Can be: `in-progress` (default) or `completed`
+                      # @param [String] unique_name Read only rooms with the this `unique_name`.
+                      # @param [Time] date_created_after Read only rooms that started on or after this date, given as `YYYY-MM-DD`.
+                      # @param [Time] date_created_before Read only rooms that started before this date, given as `YYYY-MM-DD`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(status: :unset, unique_name: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Status' => status,
+                            'UniqueName' => unique_name,
+                            'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
+                            'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        RoomPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -263,6 +372,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the RoomInstanceMetadata
+                    # @return [RoomInstance] Fetched RoomInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        room_instance = RoomInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        RoomInstanceMetadata.new(
+                            @version,
+                            room_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the RoomInstance
                     # @param [RoomStatus] status 
                     # @return [RoomInstance] Updated RoomInstance
@@ -285,6 +419,38 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the RoomInstanceMetadata
+                    # @param [RoomStatus] status 
+                    # @return [RoomInstance] Updated RoomInstance
+                    def update_with_metadata(
+                      status: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Status' => status,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        room_instance = RoomInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        RoomInstanceMetadata.new(
+                            @version,
+                            room_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -372,6 +538,45 @@ module Twilio
                     end
                 end
 
+                class RoomInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new RoomInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}RoomInstance] room_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [RoomInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, room_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @room_instance = room_instance
+                    end
+
+                    def room
+                        @room_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.RoomInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class RoomListResponse < InstanceListResource
+                    # @param [Array<RoomInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @room_instance = payload.body[key].map do |data|
+                        RoomInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def room_instance
+                          @instance
+                      end
+                  end
+
                 class RoomPage < Page
                     ##
                     # Initialize the RoomPage
@@ -400,6 +605,54 @@ module Twilio
                         '<Twilio.Video.V1.RoomPage>'
                     end
                 end
+
+                class RoomPageMetadata < PageMetadata
+                    attr_reader :room_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @room_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @room_page << RoomListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @room_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Video::V1PageMetadata>';
+                    end
+                end
+                class RoomListResponse < InstanceListResource
+
+                    # @param [Array<RoomInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @room = payload.body[key].map do |data|
+                      RoomInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def room
+                        @room
+                    end
+                end
+
                 class RoomInstance < InstanceResource
                     ##
                     # Initialize the RoomInstance

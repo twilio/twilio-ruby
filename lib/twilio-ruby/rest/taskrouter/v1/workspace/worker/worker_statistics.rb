@@ -94,6 +94,47 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the WorkerStatisticsInstanceMetadata
+                    # @param [String] minutes Only calculate statistics since this many minutes in the past. The default 15 minutes. This is helpful for displaying statistics for the last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
+                    # @param [Time] start_date Only calculate statistics from this date and time and later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+                    # @param [Time] end_date Only include usage that occurred on or before this date, specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+                    # @param [String] task_channel Only calculate statistics on this TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or `default`.
+                    # @return [WorkerStatisticsInstance] Fetched WorkerStatisticsInstance
+                    def fetch_with_metadata(
+                      minutes: :unset, 
+                      start_date: :unset, 
+                      end_date: :unset, 
+                      task_channel: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'Minutes' => minutes,
+                            'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
+                            'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
+                            'TaskChannel' => task_channel,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        workerStatistics_instance = WorkerStatisticsInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            worker_sid: @solution[:worker_sid],
+                        )
+                        WorkerStatisticsInstanceMetadata.new(
+                            @version,
+                            workerStatistics_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -109,6 +150,45 @@ module Twilio
                         "#<Twilio.Taskrouter.V1.WorkerStatisticsContext #{context}>"
                     end
                 end
+
+                class WorkerStatisticsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new WorkerStatisticsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}WorkerStatisticsInstance] worker_statistics_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [WorkerStatisticsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, worker_statistics_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @worker_statistics_instance = worker_statistics_instance
+                    end
+
+                    def worker_statistics
+                        @worker_statistics_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.WorkerStatisticsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class WorkerStatisticsListResponse < InstanceListResource
+                    # @param [Array<WorkerStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @worker_statistics_instance = payload.body[key].map do |data|
+                        WorkerStatisticsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def worker_statistics_instance
+                          @instance
+                      end
+                  end
 
                 class WorkerStatisticsPage < Page
                     ##
@@ -138,6 +218,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.WorkerStatisticsPage>'
                     end
                 end
+
+                class WorkerStatisticsPageMetadata < PageMetadata
+                    attr_reader :worker_statistics_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @worker_statistics_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @worker_statistics_page << WorkerStatisticsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @worker_statistics_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class WorkerStatisticsListResponse < InstanceListResource
+
+                    # @param [Array<WorkerStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @worker_statistics = payload.body[key].map do |data|
+                      WorkerStatisticsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def worker_statistics
+                        @worker_statistics
+                    end
+                end
+
                 class WorkerStatisticsInstance < InstanceResource
                     ##
                     # Initialize the WorkerStatisticsInstance

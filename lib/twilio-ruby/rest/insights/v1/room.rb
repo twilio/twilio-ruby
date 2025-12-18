@@ -90,6 +90,40 @@ module Twilio
                     end
 
                     ##
+                    # Lists RoomPageMetadata records from the API as a list.
+                      # @param [Array[RoomType]] room_type Type of room. Can be `go`, `peer_to_peer`, `group`, or `group_small`.
+                      # @param [Array[Codec]] codec Codecs used by participants in the room. Can be `VP8`, `H264`, or `VP9`.
+                      # @param [String] room_name Room friendly name.
+                      # @param [Time] created_after Only read rooms that started on or after this ISO 8601 timestamp.
+                      # @param [Time] created_before Only read rooms that started before this ISO 8601 timestamp.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(room_type: :unset, codec: :unset, room_name: :unset, created_after: :unset, created_before: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'RoomType' =>  Twilio.serialize_list(room_type) { |e| e },
+                            
+                            'Codec' =>  Twilio.serialize_list(codec) { |e| e },
+                            'RoomName' => room_name,
+                            'CreatedAfter' =>  Twilio.serialize_iso8601_datetime(created_after),
+                            'CreatedBefore' =>  Twilio.serialize_iso8601_datetime(created_before),
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        RoomPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields RoomInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -195,6 +229,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the RoomInstanceMetadata
+                    # @return [RoomInstance] Fetched RoomInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        room_instance = RoomInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                        )
+                        RoomInstanceMetadata.new(
+                            @version,
+                            room_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the participants
                     # @return [ParticipantList]
                     # @return [ParticipantContext] if sid was passed.
@@ -229,6 +288,45 @@ module Twilio
                     end
                 end
 
+                class RoomInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new RoomInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}RoomInstance] room_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [RoomInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, room_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @room_instance = room_instance
+                    end
+
+                    def room
+                        @room_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.RoomInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class RoomListResponse < InstanceListResource
+                    # @param [Array<RoomInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @room_instance = payload.body[key].map do |data|
+                        RoomInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def room_instance
+                          @instance
+                      end
+                  end
+
                 class RoomPage < Page
                     ##
                     # Initialize the RoomPage
@@ -257,6 +355,54 @@ module Twilio
                         '<Twilio.Insights.V1.RoomPage>'
                     end
                 end
+
+                class RoomPageMetadata < PageMetadata
+                    attr_reader :room_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @room_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @room_page << RoomListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @room_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Insights::V1PageMetadata>';
+                    end
+                end
+                class RoomListResponse < InstanceListResource
+
+                    # @param [Array<RoomInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @room = payload.body[key].map do |data|
+                      RoomInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def room
+                        @room
+                    end
+                end
+
                 class RoomInstance < InstanceResource
                     ##
                     # Initialize the RoomInstance

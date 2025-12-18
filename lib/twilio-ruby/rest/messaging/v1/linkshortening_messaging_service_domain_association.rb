@@ -74,6 +74,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the LinkshorteningMessagingServiceDomainAssociationInstanceMetadata
+                    # @return [LinkshorteningMessagingServiceDomainAssociationInstance] Fetched LinkshorteningMessagingServiceDomainAssociationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        linkshorteningMessagingServiceDomainAssociation_instance = LinkshorteningMessagingServiceDomainAssociationInstance.new(
+                            @version,
+                            response.body,
+                            messaging_service_sid: @solution[:messaging_service_sid],
+                        )
+                        LinkshorteningMessagingServiceDomainAssociationInstanceMetadata.new(
+                            @version,
+                            linkshorteningMessagingServiceDomainAssociation_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -89,6 +114,45 @@ module Twilio
                         "#<Twilio.Messaging.V1.LinkshorteningMessagingServiceDomainAssociationContext #{context}>"
                     end
                 end
+
+                class LinkshorteningMessagingServiceDomainAssociationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new LinkshorteningMessagingServiceDomainAssociationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}LinkshorteningMessagingServiceDomainAssociationInstance] linkshortening_messaging_service_domain_association_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [LinkshorteningMessagingServiceDomainAssociationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, linkshortening_messaging_service_domain_association_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @linkshortening_messaging_service_domain_association_instance = linkshortening_messaging_service_domain_association_instance
+                    end
+
+                    def linkshortening_messaging_service_domain_association
+                        @linkshortening_messaging_service_domain_association_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.LinkshorteningMessagingServiceDomainAssociationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class LinkshorteningMessagingServiceDomainAssociationListResponse < InstanceListResource
+                    # @param [Array<LinkshorteningMessagingServiceDomainAssociationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @linkshortening_messaging_service_domain_association_instance = payload.body[key].map do |data|
+                        LinkshorteningMessagingServiceDomainAssociationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def linkshortening_messaging_service_domain_association_instance
+                          @instance
+                      end
+                  end
 
                 class LinkshorteningMessagingServiceDomainAssociationPage < Page
                     ##
@@ -118,6 +182,54 @@ module Twilio
                         '<Twilio.Messaging.V1.LinkshorteningMessagingServiceDomainAssociationPage>'
                     end
                 end
+
+                class LinkshorteningMessagingServiceDomainAssociationPageMetadata < PageMetadata
+                    attr_reader :linkshortening_messaging_service_domain_association_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @linkshortening_messaging_service_domain_association_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @linkshortening_messaging_service_domain_association_page << LinkshorteningMessagingServiceDomainAssociationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @linkshortening_messaging_service_domain_association_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class LinkshorteningMessagingServiceDomainAssociationListResponse < InstanceListResource
+
+                    # @param [Array<LinkshorteningMessagingServiceDomainAssociationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @linkshortening_messaging_service_domain_association = payload.body[key].map do |data|
+                      LinkshorteningMessagingServiceDomainAssociationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def linkshortening_messaging_service_domain_association
+                        @linkshortening_messaging_service_domain_association
+                    end
+                end
+
                 class LinkshorteningMessagingServiceDomainAssociationInstance < InstanceResource
                     ##
                     # Initialize the LinkshorteningMessagingServiceDomainAssociationInstance

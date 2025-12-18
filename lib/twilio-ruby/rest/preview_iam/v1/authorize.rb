@@ -66,6 +66,48 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the AuthorizeInstanceMetadata
+                    # @param [String] response_type Response Type
+                    # @param [String] client_id The Client Identifier
+                    # @param [String] redirect_uri The url to which response will be redirected to
+                    # @param [String] scope The scope of the access request
+                    # @param [String] state An opaque value which can be used to maintain state between the request and callback
+                    # @return [AuthorizeInstance] Fetched AuthorizeInstance
+                    def fetch_with_metadata(
+                      response_type: :unset, 
+                      client_id: :unset, 
+                      redirect_uri: :unset, 
+                      scope: :unset, 
+                      state: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'response_type' => response_type,
+                            'client_id' => client_id,
+                            'redirect_uri' => redirect_uri,
+                            'scope' => scope,
+                            'state' => state,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        authorize_instance = AuthorizeInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        AuthorizeInstanceMetadata.new(
+                            @version,
+                            authorize_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -103,6 +145,54 @@ module Twilio
                         '<Twilio.PreviewIam.V1.AuthorizePage>'
                     end
                 end
+
+                class AuthorizePageMetadata < PageMetadata
+                    attr_reader :authorize_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @authorize_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @authorize_page << AuthorizeListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @authorize_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::PreviewIam::V1PageMetadata>';
+                    end
+                end
+                class AuthorizeListResponse < InstanceListResource
+
+                    # @param [Array<AuthorizeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @authorize = payload.body[key].map do |data|
+                      AuthorizeInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def authorize
+                        @authorize
+                    end
+                end
+
                 class AuthorizeInstance < InstanceResource
                     ##
                     # Initialize the AuthorizeInstance

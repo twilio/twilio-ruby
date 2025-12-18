@@ -82,6 +82,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the MediaInstanceMetadata
+                    # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Media. If redaction is enabled, the default is `true` to access redacted media.
+                    # @return [MediaInstance] Fetched MediaInstance
+                    def fetch_with_metadata(
+                      redacted: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'Redacted' => redacted,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        media_instance = MediaInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        MediaInstanceMetadata.new(
+                            @version,
+                            media_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -97,6 +128,45 @@ module Twilio
                         "#<Twilio.Intelligence.V2.MediaContext #{context}>"
                     end
                 end
+
+                class MediaInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new MediaInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}MediaInstance] media_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [MediaInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, media_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @media_instance = media_instance
+                    end
+
+                    def media
+                        @media_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.MediaInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class MediaListResponse < InstanceListResource
+                    # @param [Array<MediaInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @media_instance = payload.body[key].map do |data|
+                        MediaInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def media_instance
+                          @instance
+                      end
+                  end
 
                 class MediaPage < Page
                     ##
@@ -126,6 +196,54 @@ module Twilio
                         '<Twilio.Intelligence.V2.MediaPage>'
                     end
                 end
+
+                class MediaPageMetadata < PageMetadata
+                    attr_reader :media_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @media_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @media_page << MediaListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @media_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Intelligence::V2PageMetadata>';
+                    end
+                end
+                class MediaListResponse < InstanceListResource
+
+                    # @param [Array<MediaInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @media = payload.body[key].map do |data|
+                      MediaInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def media
+                        @media
+                    end
+                end
+
                 class MediaInstance < InstanceResource
                     ##
                     # Initialize the MediaInstance

@@ -67,6 +67,47 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the BuildInstanceMetadata
+                    # @param [Array[String]] asset_versions The list of Asset Version resource SIDs to include in the Build.
+                    # @param [Array[String]] function_versions The list of the Function Version resource SIDs to include in the Build.
+                    # @param [String] dependencies A list of objects that describe the Dependencies included in the Build. Each object contains the `name` and `version` of the dependency.
+                    # @param [String] runtime The Runtime version that will be used to run the Build resource when it is deployed.
+                    # @return [BuildInstance] Created BuildInstance
+                    def create_with_metadata(
+                      asset_versions: :unset, 
+                      function_versions: :unset, 
+                      dependencies: :unset, 
+                      runtime: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'AssetVersions' => Twilio.serialize_list(asset_versions) { |e| e },
+                            'FunctionVersions' => Twilio.serialize_list(function_versions) { |e| e },
+                            'Dependencies' => dependencies,
+                            'Runtime' => runtime,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        build_instance = BuildInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                        )
+                        BuildInstanceMetadata.new(
+                            @version,
+                            build_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists BuildInstance records from the API as a list.
@@ -104,6 +145,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists BuildPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        BuildPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -190,7 +253,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the BuildInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          build_instance = BuildInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          BuildInstanceMetadata.new(@version, build_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -210,6 +292,32 @@ module Twilio
                             payload,
                             service_sid: @solution[:service_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the BuildInstanceMetadata
+                    # @return [BuildInstance] Fetched BuildInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        build_instance = BuildInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            sid: @solution[:sid],
+                        )
+                        BuildInstanceMetadata.new(
+                            @version,
+                            build_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -240,6 +348,45 @@ module Twilio
                     end
                 end
 
+                class BuildInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new BuildInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}BuildInstance] build_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [BuildInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, build_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @build_instance = build_instance
+                    end
+
+                    def build
+                        @build_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.BuildInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class BuildListResponse < InstanceListResource
+                    # @param [Array<BuildInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @build_instance = payload.body[key].map do |data|
+                        BuildInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def build_instance
+                          @instance
+                      end
+                  end
+
                 class BuildPage < Page
                     ##
                     # Initialize the BuildPage
@@ -268,6 +415,54 @@ module Twilio
                         '<Twilio.Serverless.V1.BuildPage>'
                     end
                 end
+
+                class BuildPageMetadata < PageMetadata
+                    attr_reader :build_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @build_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @build_page << BuildListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @build_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Serverless::V1PageMetadata>';
+                    end
+                end
+                class BuildListResponse < InstanceListResource
+
+                    # @param [Array<BuildInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @build = payload.body[key].map do |data|
+                      BuildInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def build
+                        @build
+                    end
+                end
+
                 class BuildInstance < InstanceResource
                     ##
                     # Initialize the BuildInstance

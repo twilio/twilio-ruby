@@ -64,6 +64,46 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TranscriptInstanceMetadata
+                    # @param [String] service_sid The unique SID identifier of the Service.
+                    # @param [Object] channel JSON object describing Media Channel including Source and Participants
+                    # @param [String] customer_key Used to store client provided metadata. Maximum of 64 double-byte UTF8 characters.
+                    # @param [Time] media_start_time The date that this Transcript's media was started, given in ISO 8601 format.
+                    # @return [TranscriptInstance] Created TranscriptInstance
+                    def create_with_metadata(
+                      service_sid: nil, 
+                      channel: nil, 
+                      customer_key: :unset, 
+                      media_start_time: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'ServiceSid' => service_sid,
+                            'Channel' => Twilio.serialize_object(channel),
+                            'CustomerKey' => customer_key,
+                            'MediaStartTime' => Twilio.serialize_iso8601_datetime(media_start_time),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        transcript_instance = TranscriptInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        TranscriptInstanceMetadata.new(
+                            @version,
+                            transcript_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists TranscriptInstance records from the API as a list.
@@ -133,6 +173,44 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists TranscriptPageMetadata records from the API as a list.
+                      # @param [String] service_sid The unique SID identifier of the Service.
+                      # @param [String] before_start_time Filter by before StartTime.
+                      # @param [String] after_start_time Filter by after StartTime.
+                      # @param [String] before_date_created Filter by before DateCreated.
+                      # @param [String] after_date_created Filter by after DateCreated.
+                      # @param [String] status Filter by status.
+                      # @param [String] language_code Filter by Language Code.
+                      # @param [String] source_sid Filter by SourceSid.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(service_sid: :unset, before_start_time: :unset, after_start_time: :unset, before_date_created: :unset, after_date_created: :unset, status: :unset, language_code: :unset, source_sid: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'ServiceSid' => service_sid,
+                            'BeforeStartTime' => before_start_time,
+                            'AfterStartTime' => after_start_time,
+                            'BeforeDateCreated' => before_date_created,
+                            'AfterDateCreated' => after_date_created,
+                            'Status' => status,
+                            'LanguageCode' => language_code,
+                            'SourceSid' => source_sid,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TranscriptPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -238,7 +316,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the TranscriptInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          transcript_instance = TranscriptInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          TranscriptInstanceMetadata.new(@version, transcript_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -257,6 +354,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the TranscriptInstanceMetadata
+                    # @return [TranscriptInstance] Fetched TranscriptInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        transcript_instance = TranscriptInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        TranscriptInstanceMetadata.new(
+                            @version,
+                            transcript_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -336,6 +458,45 @@ module Twilio
                     end
                 end
 
+                class TranscriptInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new TranscriptInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}TranscriptInstance] transcript_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [TranscriptInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, transcript_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @transcript_instance = transcript_instance
+                    end
+
+                    def transcript
+                        @transcript_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.TranscriptInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class TranscriptListResponse < InstanceListResource
+                    # @param [Array<TranscriptInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @transcript_instance = payload.body[key].map do |data|
+                        TranscriptInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def transcript_instance
+                          @instance
+                      end
+                  end
+
                 class TranscriptPage < Page
                     ##
                     # Initialize the TranscriptPage
@@ -364,6 +525,54 @@ module Twilio
                         '<Twilio.Intelligence.V2.TranscriptPage>'
                     end
                 end
+
+                class TranscriptPageMetadata < PageMetadata
+                    attr_reader :transcript_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @transcript_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @transcript_page << TranscriptListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @transcript_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Intelligence::V2PageMetadata>';
+                    end
+                end
+                class TranscriptListResponse < InstanceListResource
+
+                    # @param [Array<TranscriptInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @transcript = payload.body[key].map do |data|
+                      TranscriptInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def transcript
+                        @transcript
+                    end
+                end
+
                 class TranscriptInstance < InstanceResource
                     ##
                     # Initialize the TranscriptInstance

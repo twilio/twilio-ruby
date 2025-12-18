@@ -57,6 +57,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the BulkCountryUpdateInstanceMetadata
+                    # @param [String] update_request URL encoded JSON array of update objects. example : `[ { \\\"iso_code\\\": \\\"GB\\\", \\\"low_risk_numbers_enabled\\\": \\\"true\\\", \\\"high_risk_special_numbers_enabled\\\":\\\"true\\\", \\\"high_risk_tollfraud_numbers_enabled\\\": \\\"false\\\" } ]`
+                    # @return [BulkCountryUpdateInstance] Created BulkCountryUpdateInstance
+                    def create_with_metadata(
+                      update_request: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'UpdateRequest' => update_request,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        bulkCountryUpdate_instance = BulkCountryUpdateInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        BulkCountryUpdateInstanceMetadata.new(
+                            @version,
+                            bulkCountryUpdate_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -94,6 +125,54 @@ module Twilio
                         '<Twilio.Voice.V1.BulkCountryUpdatePage>'
                     end
                 end
+
+                class BulkCountryUpdatePageMetadata < PageMetadata
+                    attr_reader :bulk_country_update_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @bulk_country_update_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @bulk_country_update_page << BulkCountryUpdateListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @bulk_country_update_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Voice::V1PageMetadata>';
+                    end
+                end
+                class BulkCountryUpdateListResponse < InstanceListResource
+
+                    # @param [Array<BulkCountryUpdateInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @bulk_country_update = payload.body[key].map do |data|
+                      BulkCountryUpdateInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def bulk_country_update
+                        @bulk_country_update
+                    end
+                end
+
                 class BulkCountryUpdateInstance < InstanceResource
                     ##
                     # Initialize the BulkCountryUpdateInstance

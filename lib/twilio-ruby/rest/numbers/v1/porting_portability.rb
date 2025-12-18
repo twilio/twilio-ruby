@@ -83,6 +83,40 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the PortingPortabilityInstanceMetadata
+                    # @param [String] target_account_sid Account Sid to which the number will be ported. This can be used to determine if a sub account already has the number in its inventory or a different sub account. If this is not provided, the authenticated account will be assumed to be the target account.
+                    # @param [String] address_sid Address Sid of customer to which the number will be ported.
+                    # @return [PortingPortabilityInstance] Fetched PortingPortabilityInstance
+                    def fetch_with_metadata(
+                      target_account_sid: :unset, 
+                      address_sid: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'TargetAccountSid' => target_account_sid,
+                            'AddressSid' => address_sid,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        portingPortability_instance = PortingPortabilityInstance.new(
+                            @version,
+                            response.body,
+                            phone_number: @solution[:phone_number],
+                        )
+                        PortingPortabilityInstanceMetadata.new(
+                            @version,
+                            portingPortability_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -98,6 +132,45 @@ module Twilio
                         "#<Twilio.Numbers.V1.PortingPortabilityContext #{context}>"
                     end
                 end
+
+                class PortingPortabilityInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new PortingPortabilityInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}PortingPortabilityInstance] porting_portability_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [PortingPortabilityInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, porting_portability_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @porting_portability_instance = porting_portability_instance
+                    end
+
+                    def porting_portability
+                        @porting_portability_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.PortingPortabilityInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class PortingPortabilityListResponse < InstanceListResource
+                    # @param [Array<PortingPortabilityInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @porting_portability_instance = payload.body[key].map do |data|
+                        PortingPortabilityInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def porting_portability_instance
+                          @instance
+                      end
+                  end
 
                 class PortingPortabilityPage < Page
                     ##
@@ -127,6 +200,54 @@ module Twilio
                         '<Twilio.Numbers.V1.PortingPortabilityPage>'
                     end
                 end
+
+                class PortingPortabilityPageMetadata < PageMetadata
+                    attr_reader :porting_portability_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @porting_portability_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @porting_portability_page << PortingPortabilityListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @porting_portability_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V1PageMetadata>';
+                    end
+                end
+                class PortingPortabilityListResponse < InstanceListResource
+
+                    # @param [Array<PortingPortabilityInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @porting_portability = payload.body[key].map do |data|
+                      PortingPortabilityInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def porting_portability
+                        @porting_portability
+                    end
+                end
+
                 class PortingPortabilityInstance < InstanceResource
                     ##
                     # Initialize the PortingPortabilityInstance

@@ -81,6 +81,32 @@ module Twilio
                     end
 
                     ##
+                    # Lists ReservationPageMetadata records from the API as a list.
+                      # @param [Status] reservation_status Returns the list of reservations for a task with a specified ReservationStatus.  Can be: `pending`, `accepted`, `rejected`, or `timeout`.
+                      # @param [String] worker_sid The SID of the reserved Worker resource to read.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(reservation_status: :unset, worker_sid: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'ReservationStatus' => reservation_status,
+                            'WorkerSid' => worker_sid,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ReservationPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ReservationInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -177,6 +203,33 @@ module Twilio
                             workspace_sid: @solution[:workspace_sid],
                             task_sid: @solution[:task_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ReservationInstanceMetadata
+                    # @return [ReservationInstance] Fetched ReservationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        reservation_instance = ReservationInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            task_sid: @solution[:task_sid],
+                            sid: @solution[:sid],
+                        )
+                        ReservationInstanceMetadata.new(
+                            @version,
+                            reservation_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -369,6 +422,201 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ReservationInstanceMetadata
+                    # @param [Status] reservation_status 
+                    # @param [String] worker_activity_sid The new worker activity SID if rejecting a reservation.
+                    # @param [String] instruction The assignment instruction for reservation.
+                    # @param [String] dequeue_post_work_activity_sid The SID of the Activity resource to start after executing a Dequeue instruction.
+                    # @param [String] dequeue_from The Caller ID of the call to the worker when executing a Dequeue instruction.
+                    # @param [String] dequeue_record Whether to record both legs of a call when executing a Dequeue instruction or which leg to record.
+                    # @param [String] dequeue_timeout Timeout for call when executing a Dequeue instruction.
+                    # @param [String] dequeue_to The Contact URI of the worker when executing a Dequeue instruction. Can be the URI of the Twilio Client, the SIP URI for Programmable SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164) formatted phone number, depending on the destination.
+                    # @param [String] dequeue_status_callback_url The Callback URL for completed call event when executing a Dequeue instruction.
+                    # @param [String] call_from The Caller ID of the outbound call when executing a Call instruction.
+                    # @param [String] call_record Whether to record both legs of a call when executing a Call instruction or which leg to record.
+                    # @param [String] call_timeout Timeout for call when executing a Call instruction.
+                    # @param [String] call_to The Contact URI of the worker when executing a Call instruction.  Can be the URI of the Twilio Client, the SIP URI for Programmable SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164) formatted phone number, depending on the destination.
+                    # @param [String] call_url TwiML URI executed on answering the worker's leg as a result of the Call instruction.
+                    # @param [String] call_status_callback_url The URL to call  for the completed call event when executing a Call instruction.
+                    # @param [Boolean] call_accept Whether to accept a reservation when executing a Call instruction.
+                    # @param [String] redirect_call_sid The Call SID of the call parked in the queue when executing a Redirect instruction.
+                    # @param [Boolean] redirect_accept Whether the reservation should be accepted when executing a Redirect instruction.
+                    # @param [String] redirect_url TwiML URI to redirect the call to when executing the Redirect instruction.
+                    # @param [String] to The Contact URI of the worker when executing a Conference instruction. Can be the URI of the Twilio Client, the SIP URI for Programmable SIP, or the [E.164](https://www.twilio.com/docs/glossary/what-e164) formatted phone number, depending on the destination.
+                    # @param [String] from The Caller ID of the call to the worker when executing a Conference instruction.
+                    # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application.
+                    # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `POST` or `GET` and the default is `POST`.
+                    # @param [Array[CallStatus]] status_callback_event The call progress events that we will send to `status_callback`. Can be: `initiated`, `ringing`, `answered`, or `completed`.
+                    # @param [String] timeout Timeout for call when executing a Conference instruction.
+                    # @param [Boolean] record Whether to record the participant and their conferences, including the time between conferences. The default is `false`.
+                    # @param [Boolean] muted Whether the agent is muted in the conference. The default is `false`.
+                    # @param [String] beep Whether to play a notification beep when the participant joins or when to play a beep. Can be: `true`, `false`, `onEnter`, or `onExit`. The default value is `true`.
+                    # @param [Boolean] start_conference_on_enter Whether to start the conference when the participant joins, if it has not already started. The default is `true`. If `false` and the conference has not started, the participant is muted and hears background music until another participant starts the conference.
+                    # @param [Boolean] end_conference_on_exit Whether to end the conference when the agent leaves.
+                    # @param [String] wait_url The URL we should call using the `wait_method` for the music to play while participants are waiting for the conference to start. The default value is the URL of our standard hold music. [Learn more about hold music](https://www.twilio.com/labs/twimlets/holdmusic).
+                    # @param [String] wait_method The HTTP method we should use to call `wait_url`. Can be `GET` or `POST` and the default is `POST`. When using a static audio file, this should be `GET` so that we can cache the file.
+                    # @param [Boolean] early_media Whether to allow an agent to hear the state of the outbound call, including ringing or disconnect messages. The default is `true`.
+                    # @param [String] max_participants The maximum number of participants in the conference. Can be a positive integer from `2` to `250`. The default value is `250`.
+                    # @param [String] conference_status_callback The URL we should call using the `conference_status_callback_method` when the conference events in `conference_status_callback_event` occur. Only the value set by the first participant to join the conference is used. Subsequent `conference_status_callback` values are ignored.
+                    # @param [String] conference_status_callback_method The HTTP method we should use to call `conference_status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
+                    # @param [Array[ConferenceEvent]] conference_status_callback_event The conference status events that we will send to `conference_status_callback`. Can be: `start`, `end`, `join`, `leave`, `mute`, `hold`, `speaker`.
+                    # @param [String] conference_record Whether to record the conference the participant is joining or when to record the conference. Can be: `true`, `false`, `record-from-start`, and `do-not-record`. The default value is `false`.
+                    # @param [String] conference_trim How to trim the leading and trailing silence from your recorded conference audio files. Can be: `trim-silence` or `do-not-trim` and defaults to `trim-silence`.
+                    # @param [String] recording_channels The recording channels for the final recording. Can be: `mono` or `dual` and the default is `mono`.
+                    # @param [String] recording_status_callback The URL that we should call using the `recording_status_callback_method` when the recording status changes.
+                    # @param [String] recording_status_callback_method The HTTP method we should use when we call `recording_status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
+                    # @param [String] conference_recording_status_callback The URL we should call using the `conference_recording_status_callback_method` when the conference recording is available.
+                    # @param [String] conference_recording_status_callback_method The HTTP method we should use to call `conference_recording_status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
+                    # @param [String] region The [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls) where we should mix the recorded audio. Can be:`us1`, `us2`, `ie1`, `de1`, `sg1`, `br1`, `au1`, or `jp1`.
+                    # @param [String] sip_auth_username The SIP username used for authentication.
+                    # @param [String] sip_auth_password The SIP password for authentication.
+                    # @param [Array[String]] dequeue_status_callback_event The Call progress events sent via webhooks as a result of a Dequeue instruction.
+                    # @param [String] post_work_activity_sid The new worker activity SID after executing a Conference instruction.
+                    # @param [SupervisorMode] supervisor_mode 
+                    # @param [String] supervisor The Supervisor SID/URI when executing the Supervise instruction.
+                    # @param [Boolean] end_conference_on_customer_exit Whether to end the conference when the customer leaves.
+                    # @param [Boolean] beep_on_customer_entrance Whether to play a notification beep when the customer joins.
+                    # @param [String] jitter_buffer_size The jitter buffer size for conference. Can be: `small`, `medium`, `large`, `off`.
+                    # @param [String] if_match The If-Match HTTP request header
+                    # @return [ReservationInstance] Updated ReservationInstance
+                    def update_with_metadata(
+                      reservation_status: :unset, 
+                      worker_activity_sid: :unset, 
+                      instruction: :unset, 
+                      dequeue_post_work_activity_sid: :unset, 
+                      dequeue_from: :unset, 
+                      dequeue_record: :unset, 
+                      dequeue_timeout: :unset, 
+                      dequeue_to: :unset, 
+                      dequeue_status_callback_url: :unset, 
+                      call_from: :unset, 
+                      call_record: :unset, 
+                      call_timeout: :unset, 
+                      call_to: :unset, 
+                      call_url: :unset, 
+                      call_status_callback_url: :unset, 
+                      call_accept: :unset, 
+                      redirect_call_sid: :unset, 
+                      redirect_accept: :unset, 
+                      redirect_url: :unset, 
+                      to: :unset, 
+                      from: :unset, 
+                      status_callback: :unset, 
+                      status_callback_method: :unset, 
+                      status_callback_event: :unset, 
+                      timeout: :unset, 
+                      record: :unset, 
+                      muted: :unset, 
+                      beep: :unset, 
+                      start_conference_on_enter: :unset, 
+                      end_conference_on_exit: :unset, 
+                      wait_url: :unset, 
+                      wait_method: :unset, 
+                      early_media: :unset, 
+                      max_participants: :unset, 
+                      conference_status_callback: :unset, 
+                      conference_status_callback_method: :unset, 
+                      conference_status_callback_event: :unset, 
+                      conference_record: :unset, 
+                      conference_trim: :unset, 
+                      recording_channels: :unset, 
+                      recording_status_callback: :unset, 
+                      recording_status_callback_method: :unset, 
+                      conference_recording_status_callback: :unset, 
+                      conference_recording_status_callback_method: :unset, 
+                      region: :unset, 
+                      sip_auth_username: :unset, 
+                      sip_auth_password: :unset, 
+                      dequeue_status_callback_event: :unset, 
+                      post_work_activity_sid: :unset, 
+                      supervisor_mode: :unset, 
+                      supervisor: :unset, 
+                      end_conference_on_customer_exit: :unset, 
+                      beep_on_customer_entrance: :unset, 
+                      jitter_buffer_size: :unset, 
+                      if_match: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'ReservationStatus' => reservation_status,
+                            'WorkerActivitySid' => worker_activity_sid,
+                            'Instruction' => instruction,
+                            'DequeuePostWorkActivitySid' => dequeue_post_work_activity_sid,
+                            'DequeueFrom' => dequeue_from,
+                            'DequeueRecord' => dequeue_record,
+                            'DequeueTimeout' => dequeue_timeout,
+                            'DequeueTo' => dequeue_to,
+                            'DequeueStatusCallbackUrl' => dequeue_status_callback_url,
+                            'CallFrom' => call_from,
+                            'CallRecord' => call_record,
+                            'CallTimeout' => call_timeout,
+                            'CallTo' => call_to,
+                            'CallUrl' => call_url,
+                            'CallStatusCallbackUrl' => call_status_callback_url,
+                            'CallAccept' => call_accept,
+                            'RedirectCallSid' => redirect_call_sid,
+                            'RedirectAccept' => redirect_accept,
+                            'RedirectUrl' => redirect_url,
+                            'To' => to,
+                            'From' => from,
+                            'StatusCallback' => status_callback,
+                            'StatusCallbackMethod' => status_callback_method,
+                            'StatusCallbackEvent' => Twilio.serialize_list(status_callback_event) { |e| e },
+                            'Timeout' => timeout,
+                            'Record' => record,
+                            'Muted' => muted,
+                            'Beep' => beep,
+                            'StartConferenceOnEnter' => start_conference_on_enter,
+                            'EndConferenceOnExit' => end_conference_on_exit,
+                            'WaitUrl' => wait_url,
+                            'WaitMethod' => wait_method,
+                            'EarlyMedia' => early_media,
+                            'MaxParticipants' => max_participants,
+                            'ConferenceStatusCallback' => conference_status_callback,
+                            'ConferenceStatusCallbackMethod' => conference_status_callback_method,
+                            'ConferenceStatusCallbackEvent' => Twilio.serialize_list(conference_status_callback_event) { |e| e },
+                            'ConferenceRecord' => conference_record,
+                            'ConferenceTrim' => conference_trim,
+                            'RecordingChannels' => recording_channels,
+                            'RecordingStatusCallback' => recording_status_callback,
+                            'RecordingStatusCallbackMethod' => recording_status_callback_method,
+                            'ConferenceRecordingStatusCallback' => conference_recording_status_callback,
+                            'ConferenceRecordingStatusCallbackMethod' => conference_recording_status_callback_method,
+                            'Region' => region,
+                            'SipAuthUsername' => sip_auth_username,
+                            'SipAuthPassword' => sip_auth_password,
+                            'DequeueStatusCallbackEvent' => Twilio.serialize_list(dequeue_status_callback_event) { |e| e },
+                            'PostWorkActivitySid' => post_work_activity_sid,
+                            'SupervisorMode' => supervisor_mode,
+                            'Supervisor' => supervisor,
+                            'EndConferenceOnCustomerExit' => end_conference_on_customer_exit,
+                            'BeepOnCustomerEntrance' => beep_on_customer_entrance,
+                            'JitterBufferSize' => jitter_buffer_size,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        reservation_instance = ReservationInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            task_sid: @solution[:task_sid],
+                            sid: @solution[:sid],
+                        )
+                        ReservationInstanceMetadata.new(
+                            @version,
+                            reservation_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -384,6 +632,45 @@ module Twilio
                         "#<Twilio.Taskrouter.V1.ReservationContext #{context}>"
                     end
                 end
+
+                class ReservationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ReservationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ReservationInstance] reservation_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ReservationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, reservation_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @reservation_instance = reservation_instance
+                    end
+
+                    def reservation
+                        @reservation_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ReservationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ReservationListResponse < InstanceListResource
+                    # @param [Array<ReservationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @reservation_instance = payload.body[key].map do |data|
+                        ReservationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def reservation_instance
+                          @instance
+                      end
+                  end
 
                 class ReservationPage < Page
                     ##
@@ -413,6 +700,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.ReservationPage>'
                     end
                 end
+
+                class ReservationPageMetadata < PageMetadata
+                    attr_reader :reservation_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @reservation_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @reservation_page << ReservationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @reservation_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class ReservationListResponse < InstanceListResource
+
+                    # @param [Array<ReservationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @reservation = payload.body[key].map do |data|
+                      ReservationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def reservation
+                        @reservation
+                    end
+                end
+
                 class ReservationInstance < InstanceResource
                     ##
                     # Initialize the ReservationInstance

@@ -70,6 +70,52 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the IpCommandInstanceMetadata
+                    # @param [String] sim The `sid` or `unique_name` of the [Super SIM](https://www.twilio.com/docs/iot/supersim/api/sim-resource) to send the IP Command to.
+                    # @param [String] payload The data that will be sent to the device. The payload cannot exceed 1300 bytes. If the PayloadType is set to text, the payload is encoded in UTF-8. If PayloadType is set to binary, the payload is encoded in Base64.
+                    # @param [String] device_port The device port to which the IP Command will be sent.
+                    # @param [PayloadType] payload_type 
+                    # @param [String] callback_url The URL we should call using the `callback_method` after we have sent the IP Command.
+                    # @param [String] callback_method The HTTP method we should use to call `callback_url`. Can be `GET` or `POST`, and the default is `POST`.
+                    # @return [IpCommandInstance] Created IpCommandInstance
+                    def create_with_metadata(
+                      sim: nil, 
+                      payload: nil, 
+                      device_port: nil, 
+                      payload_type: :unset, 
+                      callback_url: :unset, 
+                      callback_method: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Sim' => sim,
+                            'Payload' => payload,
+                            'DevicePort' => device_port,
+                            'PayloadType' => payload_type,
+                            'CallbackUrl' => callback_url,
+                            'CallbackMethod' => callback_method,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        ipCommand_instance = IpCommandInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        IpCommandInstanceMetadata.new(
+                            @version,
+                            ipCommand_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists IpCommandInstance records from the API as a list.
@@ -123,6 +169,36 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists IpCommandPageMetadata records from the API as a list.
+                      # @param [String] sim The SID or unique name of the Sim resource that IP Command was sent to or from.
+                      # @param [String] sim_iccid The ICCID of the Sim resource that IP Command was sent to or from.
+                      # @param [Status] status The status of the IP Command. Can be: `queued`, `sent`, `received` or `failed`. See the [IP Command Status Values](https://www.twilio.com/docs/iot/supersim/api/ipcommand-resource#status-values) for a description of each.
+                      # @param [Direction] direction The direction of the IP Command. Can be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term `mobile terminated`, and `from_sim` is synonymous with the term `mobile originated`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(sim: :unset, sim_iccid: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Sim' => sim,
+                            'SimIccid' => sim_iccid,
+                            'Status' => status,
+                            'Direction' => direction,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        IpCommandPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -225,6 +301,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the IpCommandInstanceMetadata
+                    # @return [IpCommandInstance] Fetched IpCommandInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        ipCommand_instance = IpCommandInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        IpCommandInstanceMetadata.new(
+                            @version,
+                            ipCommand_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -240,6 +341,45 @@ module Twilio
                         "#<Twilio.Supersim.V1.IpCommandContext #{context}>"
                     end
                 end
+
+                class IpCommandInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new IpCommandInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}IpCommandInstance] ip_command_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [IpCommandInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, ip_command_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @ip_command_instance = ip_command_instance
+                    end
+
+                    def ip_command
+                        @ip_command_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.IpCommandInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class IpCommandListResponse < InstanceListResource
+                    # @param [Array<IpCommandInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @ip_command_instance = payload.body[key].map do |data|
+                        IpCommandInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def ip_command_instance
+                          @instance
+                      end
+                  end
 
                 class IpCommandPage < Page
                     ##
@@ -269,6 +409,54 @@ module Twilio
                         '<Twilio.Supersim.V1.IpCommandPage>'
                     end
                 end
+
+                class IpCommandPageMetadata < PageMetadata
+                    attr_reader :ip_command_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @ip_command_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @ip_command_page << IpCommandListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @ip_command_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Supersim::V1PageMetadata>';
+                    end
+                end
+                class IpCommandListResponse < InstanceListResource
+
+                    # @param [Array<IpCommandInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @ip_command = payload.body[key].map do |data|
+                      IpCommandInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def ip_command
+                        @ip_command
+                    end
+                end
+
                 class IpCommandInstance < InstanceResource
                     ##
                     # Initialize the IpCommandInstance

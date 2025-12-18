@@ -55,6 +55,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ServiceInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the new resource.
+                    # @return [ServiceInstance] Created ServiceInstance
+                    def create_with_metadata(
+                      friendly_name: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ServiceInstance records from the API as a list.
@@ -92,6 +123,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists ServicePageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ServicePageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -180,7 +233,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ServiceInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          service_instance = ServiceInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ServiceInstanceMetadata.new(@version, service_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -199,6 +271,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ServiceInstanceMetadata
+                    # @return [ServiceInstance] Fetched ServiceInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -319,6 +416,128 @@ module Twilio
                     end
 
                     ##
+                    # Update the ServiceInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource.
+                    # @param [String] default_service_role_sid The service role assigned to users when they are added to the service. See the [Role resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info about roles.
+                    # @param [String] default_channel_role_sid The channel role assigned to users when they are added to a channel. See the [Role resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info about roles.
+                    # @param [String] default_channel_creator_role_sid The channel role assigned to a channel creator when they join a new channel. See the [Role resource](https://www.twilio.com/docs/chat/rest/role-resource) for more info about roles.
+                    # @param [Boolean] read_status_enabled Whether to enable the [Message Consumption Horizon](https://www.twilio.com/docs/chat/consumption-horizon) feature. The default is `true`.
+                    # @param [Boolean] reachability_enabled Whether to enable the [Reachability Indicator](https://www.twilio.com/docs/chat/reachability-indicator) for this Service instance. The default is `false`.
+                    # @param [String] typing_indicator_timeout How long in seconds after a `started typing` event until clients should assume that user is no longer typing, even if no `ended typing` message was received.  The default is 5 seconds.
+                    # @param [String] consumption_report_interval DEPRECATED. The interval in seconds between consumption reports submission batches from client endpoints.
+                    # @param [Boolean] notifications_new_message_enabled Whether to send a notification when a new message is added to a channel. The default is `false`.
+                    # @param [String] notifications_new_message_template The template to use to create the notification text displayed when a new message is added to a channel and `notifications.new_message.enabled` is `true`.
+                    # @param [String] notifications_new_message_sound The name of the sound to play when a new message is added to a channel and `notifications.new_message.enabled` is `true`.
+                    # @param [Boolean] notifications_new_message_badge_count_enabled Whether the new message badge is enabled. The default is `false`.
+                    # @param [Boolean] notifications_added_to_channel_enabled Whether to send a notification when a member is added to a channel. The default is `false`.
+                    # @param [String] notifications_added_to_channel_template The template to use to create the notification text displayed when a member is added to a channel and `notifications.added_to_channel.enabled` is `true`.
+                    # @param [String] notifications_added_to_channel_sound The name of the sound to play when a member is added to a channel and `notifications.added_to_channel.enabled` is `true`.
+                    # @param [Boolean] notifications_removed_from_channel_enabled Whether to send a notification to a user when they are removed from a channel. The default is `false`.
+                    # @param [String] notifications_removed_from_channel_template The template to use to create the notification text displayed to a user when they are removed from a channel and `notifications.removed_from_channel.enabled` is `true`.
+                    # @param [String] notifications_removed_from_channel_sound The name of the sound to play to a user when they are removed from a channel and `notifications.removed_from_channel.enabled` is `true`.
+                    # @param [Boolean] notifications_invited_to_channel_enabled Whether to send a notification when a user is invited to a channel. The default is `false`.
+                    # @param [String] notifications_invited_to_channel_template The template to use to create the notification text displayed when a user is invited to a channel and `notifications.invited_to_channel.enabled` is `true`.
+                    # @param [String] notifications_invited_to_channel_sound The name of the sound to play when a user is invited to a channel and `notifications.invited_to_channel.enabled` is `true`.
+                    # @param [String] pre_webhook_url The URL for pre-event webhooks, which are called by using the `webhook_method`. See [Webhook Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+                    # @param [String] post_webhook_url The URL for post-event webhooks, which are called by using the `webhook_method`. See [Webhook Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+                    # @param [String] webhook_method The HTTP method to use for calls to the `pre_webhook_url` and `post_webhook_url` webhooks.  Can be: `POST` or `GET` and the default is `POST`. See [Webhook Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+                    # @param [Array[String]] webhook_filters The list of webhook events that are enabled for this Service instance. See [Webhook Events](https://www.twilio.com/docs/chat/webhook-events) for more details.
+                    # @param [String] limits_channel_members The maximum number of Members that can be added to Channels within this Service. Can be up to 1,000.
+                    # @param [String] limits_user_channels The maximum number of Channels Users can be a Member of within this Service. Can be up to 1,000.
+                    # @param [String] media_compatibility_message The message to send when a media message has no text. Can be used as placeholder message.
+                    # @param [String] pre_webhook_retry_count The number of times to retry a call to the `pre_webhook_url` if the request times out (after 5 seconds) or it receives a 429, 503, or 504 HTTP response. Default retry count is 0 times, which means the call won't be retried.
+                    # @param [String] post_webhook_retry_count The number of times to retry a call to the `post_webhook_url` if the request times out (after 5 seconds) or it receives a 429, 503, or 504 HTTP response. The default is 0, which means the call won't be retried.
+                    # @param [Boolean] notifications_log_enabled Whether to log notifications. The default is `false`.
+                    # @return [ServiceInstance] Updated ServiceInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      default_service_role_sid: :unset, 
+                      default_channel_role_sid: :unset, 
+                      default_channel_creator_role_sid: :unset, 
+                      read_status_enabled: :unset, 
+                      reachability_enabled: :unset, 
+                      typing_indicator_timeout: :unset, 
+                      consumption_report_interval: :unset, 
+                      notifications_new_message_enabled: :unset, 
+                      notifications_new_message_template: :unset, 
+                      notifications_new_message_sound: :unset, 
+                      notifications_new_message_badge_count_enabled: :unset, 
+                      notifications_added_to_channel_enabled: :unset, 
+                      notifications_added_to_channel_template: :unset, 
+                      notifications_added_to_channel_sound: :unset, 
+                      notifications_removed_from_channel_enabled: :unset, 
+                      notifications_removed_from_channel_template: :unset, 
+                      notifications_removed_from_channel_sound: :unset, 
+                      notifications_invited_to_channel_enabled: :unset, 
+                      notifications_invited_to_channel_template: :unset, 
+                      notifications_invited_to_channel_sound: :unset, 
+                      pre_webhook_url: :unset, 
+                      post_webhook_url: :unset, 
+                      webhook_method: :unset, 
+                      webhook_filters: :unset, 
+                      limits_channel_members: :unset, 
+                      limits_user_channels: :unset, 
+                      media_compatibility_message: :unset, 
+                      pre_webhook_retry_count: :unset, 
+                      post_webhook_retry_count: :unset, 
+                      notifications_log_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'DefaultServiceRoleSid' => default_service_role_sid,
+                            'DefaultChannelRoleSid' => default_channel_role_sid,
+                            'DefaultChannelCreatorRoleSid' => default_channel_creator_role_sid,
+                            'ReadStatusEnabled' => read_status_enabled,
+                            'ReachabilityEnabled' => reachability_enabled,
+                            'TypingIndicatorTimeout' => typing_indicator_timeout,
+                            'ConsumptionReportInterval' => consumption_report_interval,
+                            'Notifications.NewMessage.Enabled' => notifications_new_message_enabled,
+                            'Notifications.NewMessage.Template' => notifications_new_message_template,
+                            'Notifications.NewMessage.Sound' => notifications_new_message_sound,
+                            'Notifications.NewMessage.BadgeCountEnabled' => notifications_new_message_badge_count_enabled,
+                            'Notifications.AddedToChannel.Enabled' => notifications_added_to_channel_enabled,
+                            'Notifications.AddedToChannel.Template' => notifications_added_to_channel_template,
+                            'Notifications.AddedToChannel.Sound' => notifications_added_to_channel_sound,
+                            'Notifications.RemovedFromChannel.Enabled' => notifications_removed_from_channel_enabled,
+                            'Notifications.RemovedFromChannel.Template' => notifications_removed_from_channel_template,
+                            'Notifications.RemovedFromChannel.Sound' => notifications_removed_from_channel_sound,
+                            'Notifications.InvitedToChannel.Enabled' => notifications_invited_to_channel_enabled,
+                            'Notifications.InvitedToChannel.Template' => notifications_invited_to_channel_template,
+                            'Notifications.InvitedToChannel.Sound' => notifications_invited_to_channel_sound,
+                            'PreWebhookUrl' => pre_webhook_url,
+                            'PostWebhookUrl' => post_webhook_url,
+                            'WebhookMethod' => webhook_method,
+                            'WebhookFilters' => Twilio.serialize_list(webhook_filters) { |e| e },
+                            'Limits.ChannelMembers' => limits_channel_members,
+                            'Limits.UserChannels' => limits_user_channels,
+                            'Media.CompatibilityMessage' => media_compatibility_message,
+                            'PreWebhookRetryCount' => pre_webhook_retry_count,
+                            'PostWebhookRetryCount' => post_webhook_retry_count,
+                            'Notifications.LogEnabled' => notifications_log_enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the bindings
                     # @return [BindingList]
                     # @return [BindingContext] if sid was passed.
@@ -410,6 +629,45 @@ module Twilio
                     end
                 end
 
+                class ServiceInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ServiceInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ServiceInstance] service_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ServiceInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, service_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @service_instance = service_instance
+                    end
+
+                    def service
+                        @service_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ServiceInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ServiceListResponse < InstanceListResource
+                    # @param [Array<ServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @service_instance = payload.body[key].map do |data|
+                        ServiceInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def service_instance
+                          @instance
+                      end
+                  end
+
                 class ServicePage < Page
                     ##
                     # Initialize the ServicePage
@@ -438,6 +696,54 @@ module Twilio
                         '<Twilio.Chat.V2.ServicePage>'
                     end
                 end
+
+                class ServicePageMetadata < PageMetadata
+                    attr_reader :service_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @service_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @service_page << ServiceListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @service_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Chat::V2PageMetadata>';
+                    end
+                end
+                class ServiceListResponse < InstanceListResource
+
+                    # @param [Array<ServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @service = payload.body[key].map do |data|
+                      ServiceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def service
+                        @service
+                    end
+                end
+
                 class ServiceInstance < InstanceResource
                     ##
                     # Initialize the ServiceInstance

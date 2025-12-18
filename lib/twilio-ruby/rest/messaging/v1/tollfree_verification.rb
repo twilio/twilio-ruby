@@ -157,6 +157,139 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TollfreeVerificationInstanceMetadata
+                    # @param [String] business_name The name of the business or organization using the Tollfree number.
+                    # @param [String] business_website The website of the business or organization using the Tollfree number.
+                    # @param [String] notification_email The email address to receive the notification about the verification result. .
+                    # @param [Array[String]] use_case_categories The category of the use case for the Tollfree Number. List as many are applicable..
+                    # @param [String] use_case_summary Use this to further explain how messaging is used by the business or organization.
+                    # @param [String] production_message_sample An example of message content, i.e. a sample message.
+                    # @param [Array[String]] opt_in_image_urls Link to an image that shows the opt-in workflow. Multiple images allowed and must be a publicly hosted URL.
+                    # @param [OptInType] opt_in_type 
+                    # @param [String] message_volume Estimate monthly volume of messages from the Tollfree Number.
+                    # @param [String] tollfree_phone_number_sid The SID of the Phone Number associated with the Tollfree Verification.
+                    # @param [String] customer_profile_sid Customer's Profile Bundle BundleSid.
+                    # @param [String] business_street_address The address of the business or organization using the Tollfree number.
+                    # @param [String] business_street_address2 The address of the business or organization using the Tollfree number.
+                    # @param [String] business_city The city of the business or organization using the Tollfree number.
+                    # @param [String] business_state_province_region The state/province/region of the business or organization using the Tollfree number.
+                    # @param [String] business_postal_code The postal code of the business or organization using the Tollfree number.
+                    # @param [String] business_country The country of the business or organization using the Tollfree number.
+                    # @param [String] additional_information Additional information to be provided for verification.
+                    # @param [String] business_contact_first_name The first name of the contact for the business or organization using the Tollfree number.
+                    # @param [String] business_contact_last_name The last name of the contact for the business or organization using the Tollfree number.
+                    # @param [String] business_contact_email The email address of the contact for the business or organization using the Tollfree number.
+                    # @param [String] business_contact_phone The E.164 formatted phone number of the contact for the business or organization using the Tollfree number.
+                    # @param [String] external_reference_id An optional external reference ID supplied by customer and echoed back on status retrieval.
+                    # @param [String] business_registration_number A legally recognized business registration number
+                    # @param [String] business_registration_authority The organizational authority for business registrations
+                    # @param [String] business_registration_country Country business is registered in
+                    # @param [String] business_type The type of business, valid values are PRIVATE_PROFIT, PUBLIC_PROFIT, NON_PROFIT, SOLE_PROPRIETOR, GOVERNMENT
+                    # @param [String] business_registration_phone_number The E.164 formatted number associated with the business.
+                    # @param [String] doing_business_as Trade name, sub entity, or downstream business name of business being submitted for verification
+                    # @param [String] opt_in_confirmation_message The confirmation message sent to users when they opt in to receive messages.
+                    # @param [String] help_message_sample A sample help message provided to users.
+                    # @param [String] privacy_policy_url The URL to the privacy policy for the business or organization.
+                    # @param [String] terms_and_conditions_url The URL to the terms and conditions for the business or organization.
+                    # @param [Boolean] age_gated_content Indicates if the content is age gated.
+                    # @param [Array[String]] opt_in_keywords List of keywords that users can text in to opt in to receive messages.
+                    # @return [TollfreeVerificationInstance] Created TollfreeVerificationInstance
+                    def create_with_metadata(
+                      business_name: nil, 
+                      business_website: nil, 
+                      notification_email: nil, 
+                      use_case_categories: nil, 
+                      use_case_summary: nil, 
+                      production_message_sample: nil, 
+                      opt_in_image_urls: nil, 
+                      opt_in_type: nil, 
+                      message_volume: nil, 
+                      tollfree_phone_number_sid: nil, 
+                      customer_profile_sid: :unset, 
+                      business_street_address: :unset, 
+                      business_street_address2: :unset, 
+                      business_city: :unset, 
+                      business_state_province_region: :unset, 
+                      business_postal_code: :unset, 
+                      business_country: :unset, 
+                      additional_information: :unset, 
+                      business_contact_first_name: :unset, 
+                      business_contact_last_name: :unset, 
+                      business_contact_email: :unset, 
+                      business_contact_phone: :unset, 
+                      external_reference_id: :unset, 
+                      business_registration_number: :unset, 
+                      business_registration_authority: :unset, 
+                      business_registration_country: :unset, 
+                      business_type: :unset, 
+                      business_registration_phone_number: :unset, 
+                      doing_business_as: :unset, 
+                      opt_in_confirmation_message: :unset, 
+                      help_message_sample: :unset, 
+                      privacy_policy_url: :unset, 
+                      terms_and_conditions_url: :unset, 
+                      age_gated_content: :unset, 
+                      opt_in_keywords: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'BusinessName' => business_name,
+                            'BusinessWebsite' => business_website,
+                            'NotificationEmail' => notification_email,
+                            'UseCaseCategories' => Twilio.serialize_list(use_case_categories) { |e| e },
+                            'UseCaseSummary' => use_case_summary,
+                            'ProductionMessageSample' => production_message_sample,
+                            'OptInImageUrls' => Twilio.serialize_list(opt_in_image_urls) { |e| e },
+                            'OptInType' => opt_in_type,
+                            'MessageVolume' => message_volume,
+                            'TollfreePhoneNumberSid' => tollfree_phone_number_sid,
+                            'CustomerProfileSid' => customer_profile_sid,
+                            'BusinessStreetAddress' => business_street_address,
+                            'BusinessStreetAddress2' => business_street_address2,
+                            'BusinessCity' => business_city,
+                            'BusinessStateProvinceRegion' => business_state_province_region,
+                            'BusinessPostalCode' => business_postal_code,
+                            'BusinessCountry' => business_country,
+                            'AdditionalInformation' => additional_information,
+                            'BusinessContactFirstName' => business_contact_first_name,
+                            'BusinessContactLastName' => business_contact_last_name,
+                            'BusinessContactEmail' => business_contact_email,
+                            'BusinessContactPhone' => business_contact_phone,
+                            'ExternalReferenceId' => external_reference_id,
+                            'BusinessRegistrationNumber' => business_registration_number,
+                            'BusinessRegistrationAuthority' => business_registration_authority,
+                            'BusinessRegistrationCountry' => business_registration_country,
+                            'BusinessType' => business_type,
+                            'BusinessRegistrationPhoneNumber' => business_registration_phone_number,
+                            'DoingBusinessAs' => doing_business_as,
+                            'OptInConfirmationMessage' => opt_in_confirmation_message,
+                            'HelpMessageSample' => help_message_sample,
+                            'PrivacyPolicyUrl' => privacy_policy_url,
+                            'TermsAndConditionsUrl' => terms_and_conditions_url,
+                            'AgeGatedContent' => age_gated_content,
+                            'OptInKeywords' => Twilio.serialize_list(opt_in_keywords) { |e| e },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        tollfreeVerification_instance = TollfreeVerificationInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        TollfreeVerificationInstanceMetadata.new(
+                            @version,
+                            tollfreeVerification_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists TollfreeVerificationInstance records from the API as a list.
@@ -214,6 +347,39 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists TollfreeVerificationPageMetadata records from the API as a list.
+                      # @param [String] tollfree_phone_number_sid The SID of the Phone Number associated with the Tollfree Verification.
+                      # @param [Status] status The compliance status of the Tollfree Verification record.
+                      # @param [String] external_reference_id Customer supplied reference id for the Tollfree Verification record.
+                      # @param [Boolean] include_sub_accounts Whether to include Tollfree Verifications from sub accounts in list response.
+                      # @param [Array[String]] trust_product_sid The trust product sids / tollfree bundle sids of tollfree verifications
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(tollfree_phone_number_sid: :unset, status: :unset, external_reference_id: :unset, include_sub_accounts: :unset, trust_product_sid: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'TollfreePhoneNumberSid' => tollfree_phone_number_sid,
+                            'Status' => status,
+                            'ExternalReferenceId' => external_reference_id,
+                            'IncludeSubAccounts' => include_sub_accounts,
+                            
+                            'TrustProductSid' =>  Twilio.serialize_list(trust_product_sid) { |e| e },
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TollfreeVerificationPageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -309,7 +475,26 @@ module Twilio
                         
                         
                         
-                        @version.delete('DELETE', @uri, headers: headers)
+                          @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the TollfreeVerificationInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          tollfreeVerification_instance = TollfreeVerificationInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          TollfreeVerificationInstanceMetadata.new(@version, tollfreeVerification_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -328,6 +513,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the TollfreeVerificationInstanceMetadata
+                    # @return [TollfreeVerificationInstance] Fetched TollfreeVerificationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        tollfreeVerification_instance = TollfreeVerificationInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        TollfreeVerificationInstanceMetadata.new(
+                            @version,
+                            tollfreeVerification_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -453,6 +663,134 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the TollfreeVerificationInstanceMetadata
+                    # @param [String] business_name The name of the business or organization using the Tollfree number.
+                    # @param [String] business_website The website of the business or organization using the Tollfree number.
+                    # @param [String] notification_email The email address to receive the notification about the verification result. .
+                    # @param [Array[String]] use_case_categories The category of the use case for the Tollfree Number. List as many are applicable..
+                    # @param [String] use_case_summary Use this to further explain how messaging is used by the business or organization.
+                    # @param [String] production_message_sample An example of message content, i.e. a sample message.
+                    # @param [Array[String]] opt_in_image_urls Link to an image that shows the opt-in workflow. Multiple images allowed and must be a publicly hosted URL.
+                    # @param [OptInType] opt_in_type 
+                    # @param [String] message_volume Estimate monthly volume of messages from the Tollfree Number.
+                    # @param [String] business_street_address The address of the business or organization using the Tollfree number.
+                    # @param [String] business_street_address2 The address of the business or organization using the Tollfree number.
+                    # @param [String] business_city The city of the business or organization using the Tollfree number.
+                    # @param [String] business_state_province_region The state/province/region of the business or organization using the Tollfree number.
+                    # @param [String] business_postal_code The postal code of the business or organization using the Tollfree number.
+                    # @param [String] business_country The country of the business or organization using the Tollfree number.
+                    # @param [String] additional_information Additional information to be provided for verification.
+                    # @param [String] business_contact_first_name The first name of the contact for the business or organization using the Tollfree number.
+                    # @param [String] business_contact_last_name The last name of the contact for the business or organization using the Tollfree number.
+                    # @param [String] business_contact_email The email address of the contact for the business or organization using the Tollfree number.
+                    # @param [String] business_contact_phone The E.164 formatted phone number of the contact for the business or organization using the Tollfree number.
+                    # @param [String] edit_reason Describe why the verification is being edited. If the verification was rejected because of a technical issue, such as the website being down, and the issue has been resolved this parameter should be set to something similar to 'Website fixed'.
+                    # @param [String] business_registration_number A legaly recognized business registration number
+                    # @param [String] business_registration_authority The organizational authority for business registrations
+                    # @param [String] business_registration_country Country business is registered in
+                    # @param [String] business_type The type of business, valid values are PRIVATE_PROFIT, PUBLIC_PROFIT, NON_PROFIT, SOLE_PROPRIETOR, GOVERNMENT
+                    # @param [String] business_registration_phone_number The E.164 formatted number associated with the business.
+                    # @param [String] doing_business_as Trade name, sub entity, or downstream business name of business being submitted for verification
+                    # @param [String] opt_in_confirmation_message The confirmation message sent to users when they opt in to receive messages.
+                    # @param [String] help_message_sample A sample help message provided to users.
+                    # @param [String] privacy_policy_url The URL to the privacy policy for the business or organization.
+                    # @param [String] terms_and_conditions_url The URL to the terms and conditions for the business or organization.
+                    # @param [Boolean] age_gated_content Indicates if the content is age gated.
+                    # @param [Array[String]] opt_in_keywords List of keywords that users can text in to opt in to receive messages.
+                    # @return [TollfreeVerificationInstance] Updated TollfreeVerificationInstance
+                    def update_with_metadata(
+                      business_name: :unset, 
+                      business_website: :unset, 
+                      notification_email: :unset, 
+                      use_case_categories: :unset, 
+                      use_case_summary: :unset, 
+                      production_message_sample: :unset, 
+                      opt_in_image_urls: :unset, 
+                      opt_in_type: :unset, 
+                      message_volume: :unset, 
+                      business_street_address: :unset, 
+                      business_street_address2: :unset, 
+                      business_city: :unset, 
+                      business_state_province_region: :unset, 
+                      business_postal_code: :unset, 
+                      business_country: :unset, 
+                      additional_information: :unset, 
+                      business_contact_first_name: :unset, 
+                      business_contact_last_name: :unset, 
+                      business_contact_email: :unset, 
+                      business_contact_phone: :unset, 
+                      edit_reason: :unset, 
+                      business_registration_number: :unset, 
+                      business_registration_authority: :unset, 
+                      business_registration_country: :unset, 
+                      business_type: :unset, 
+                      business_registration_phone_number: :unset, 
+                      doing_business_as: :unset, 
+                      opt_in_confirmation_message: :unset, 
+                      help_message_sample: :unset, 
+                      privacy_policy_url: :unset, 
+                      terms_and_conditions_url: :unset, 
+                      age_gated_content: :unset, 
+                      opt_in_keywords: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'BusinessName' => business_name,
+                            'BusinessWebsite' => business_website,
+                            'NotificationEmail' => notification_email,
+                            'UseCaseCategories' => Twilio.serialize_list(use_case_categories) { |e| e },
+                            'UseCaseSummary' => use_case_summary,
+                            'ProductionMessageSample' => production_message_sample,
+                            'OptInImageUrls' => Twilio.serialize_list(opt_in_image_urls) { |e| e },
+                            'OptInType' => opt_in_type,
+                            'MessageVolume' => message_volume,
+                            'BusinessStreetAddress' => business_street_address,
+                            'BusinessStreetAddress2' => business_street_address2,
+                            'BusinessCity' => business_city,
+                            'BusinessStateProvinceRegion' => business_state_province_region,
+                            'BusinessPostalCode' => business_postal_code,
+                            'BusinessCountry' => business_country,
+                            'AdditionalInformation' => additional_information,
+                            'BusinessContactFirstName' => business_contact_first_name,
+                            'BusinessContactLastName' => business_contact_last_name,
+                            'BusinessContactEmail' => business_contact_email,
+                            'BusinessContactPhone' => business_contact_phone,
+                            'EditReason' => edit_reason,
+                            'BusinessRegistrationNumber' => business_registration_number,
+                            'BusinessRegistrationAuthority' => business_registration_authority,
+                            'BusinessRegistrationCountry' => business_registration_country,
+                            'BusinessType' => business_type,
+                            'BusinessRegistrationPhoneNumber' => business_registration_phone_number,
+                            'DoingBusinessAs' => doing_business_as,
+                            'OptInConfirmationMessage' => opt_in_confirmation_message,
+                            'HelpMessageSample' => help_message_sample,
+                            'PrivacyPolicyUrl' => privacy_policy_url,
+                            'TermsAndConditionsUrl' => terms_and_conditions_url,
+                            'AgeGatedContent' => age_gated_content,
+                            'OptInKeywords' => Twilio.serialize_list(opt_in_keywords) { |e| e },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        tollfreeVerification_instance = TollfreeVerificationInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        TollfreeVerificationInstanceMetadata.new(
+                            @version,
+                            tollfreeVerification_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -468,6 +806,45 @@ module Twilio
                         "#<Twilio.Messaging.V1.TollfreeVerificationContext #{context}>"
                     end
                 end
+
+                class TollfreeVerificationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new TollfreeVerificationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}TollfreeVerificationInstance] tollfree_verification_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [TollfreeVerificationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, tollfree_verification_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @tollfree_verification_instance = tollfree_verification_instance
+                    end
+
+                    def tollfree_verification
+                        @tollfree_verification_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.TollfreeVerificationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class TollfreeVerificationListResponse < InstanceListResource
+                    # @param [Array<TollfreeVerificationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @tollfree_verification_instance = payload.body[key].map do |data|
+                        TollfreeVerificationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def tollfree_verification_instance
+                          @instance
+                      end
+                  end
 
                 class TollfreeVerificationPage < Page
                     ##
@@ -497,6 +874,54 @@ module Twilio
                         '<Twilio.Messaging.V1.TollfreeVerificationPage>'
                     end
                 end
+
+                class TollfreeVerificationPageMetadata < PageMetadata
+                    attr_reader :tollfree_verification_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @tollfree_verification_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @tollfree_verification_page << TollfreeVerificationListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @tollfree_verification_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class TollfreeVerificationListResponse < InstanceListResource
+
+                    # @param [Array<TollfreeVerificationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @tollfree_verification = payload.body[key].map do |data|
+                      TollfreeVerificationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def tollfree_verification
+                        @tollfree_verification
+                    end
+                end
+
                 class TollfreeVerificationInstance < InstanceResource
                     ##
                     # Initialize the TollfreeVerificationInstance

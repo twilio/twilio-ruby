@@ -54,6 +54,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TaskQueueBulkRealTimeStatisticsInstanceMetadata
+                    # @param [Object] body 
+                    # @return [TaskQueueBulkRealTimeStatisticsInstance] Created TaskQueueBulkRealTimeStatisticsInstance
+                    def create_with_metadata(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: body.to_json)
+                        taskQueueBulkRealTimeStatistics_instance = TaskQueueBulkRealTimeStatisticsInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                        )
+                        TaskQueueBulkRealTimeStatisticsInstanceMetadata.new(
+                            @version,
+                            taskQueueBulkRealTimeStatistics_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -91,6 +118,54 @@ module Twilio
                         '<Twilio.Taskrouter.V1.TaskQueueBulkRealTimeStatisticsPage>'
                     end
                 end
+
+                class TaskQueueBulkRealTimeStatisticsPageMetadata < PageMetadata
+                    attr_reader :task_queue_bulk_real_time_statistics_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @task_queue_bulk_real_time_statistics_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @task_queue_bulk_real_time_statistics_page << TaskQueueBulkRealTimeStatisticsListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @task_queue_bulk_real_time_statistics_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class TaskQueueBulkRealTimeStatisticsListResponse < InstanceListResource
+
+                    # @param [Array<TaskQueueBulkRealTimeStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @task_queue_bulk_real_time_statistics = payload.body[key].map do |data|
+                      TaskQueueBulkRealTimeStatisticsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def task_queue_bulk_real_time_statistics
+                        @task_queue_bulk_real_time_statistics
+                    end
+                end
+
                 class TaskQueueBulkRealTimeStatisticsInstance < InstanceResource
                     ##
                     # Initialize the TaskQueueBulkRealTimeStatisticsInstance

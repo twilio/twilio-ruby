@@ -60,6 +60,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the InteractionChannelInviteInstanceMetadata
+                    # @param [Object] routing The Interaction's routing logic.
+                    # @return [InteractionChannelInviteInstance] Created InteractionChannelInviteInstance
+                    def create_with_metadata(
+                      routing: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Routing' => Twilio.serialize_object(routing),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        interactionChannelInvite_instance = InteractionChannelInviteInstance.new(
+                            @version,
+                            response.body,
+                            interaction_sid: @solution[:interaction_sid],
+                            channel_sid: @solution[:channel_sid],
+                        )
+                        InteractionChannelInviteInstanceMetadata.new(
+                            @version,
+                            interactionChannelInvite_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists InteractionChannelInviteInstance records from the API as a list.
@@ -97,6 +130,28 @@ module Twilio
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                    end
+
+                    ##
+                    # Lists InteractionChannelInvitePageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        InteractionChannelInvitePageMetadata.new(@version, response, @solution, limits[:limit])
                     end
 
                     ##
@@ -184,6 +239,54 @@ module Twilio
                         '<Twilio.FlexApi.V1.InteractionChannelInvitePage>'
                     end
                 end
+
+                class InteractionChannelInvitePageMetadata < PageMetadata
+                    attr_reader :interaction_channel_invite_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @interaction_channel_invite_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @interaction_channel_invite_page << InteractionChannelInviteListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @interaction_channel_invite_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InteractionChannelInviteListResponse < InstanceListResource
+
+                    # @param [Array<InteractionChannelInviteInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @interaction_channel_invite = payload.body[key].map do |data|
+                      InteractionChannelInviteInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def interaction_channel_invite
+                        @interaction_channel_invite
+                    end
+                end
+
                 class InteractionChannelInviteInstance < InstanceResource
                     ##
                     # Initialize the InteractionChannelInviteInstance

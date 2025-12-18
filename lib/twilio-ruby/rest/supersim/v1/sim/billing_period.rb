@@ -72,6 +72,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists BillingPeriodPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        BillingPeriodPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields BillingPeriodInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -156,6 +178,54 @@ module Twilio
                         '<Twilio.Supersim.V1.BillingPeriodPage>'
                     end
                 end
+
+                class BillingPeriodPageMetadata < PageMetadata
+                    attr_reader :billing_period_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @billing_period_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @billing_period_page << BillingPeriodListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @billing_period_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Supersim::V1PageMetadata>';
+                    end
+                end
+                class BillingPeriodListResponse < InstanceListResource
+
+                    # @param [Array<BillingPeriodInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @billing_period = payload.body[key].map do |data|
+                      BillingPeriodInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def billing_period
+                        @billing_period
+                    end
+                end
+
                 class BillingPeriodInstance < InstanceResource
                     ##
                     # Initialize the BillingPeriodInstance

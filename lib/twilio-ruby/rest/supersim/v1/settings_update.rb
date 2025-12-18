@@ -78,6 +78,32 @@ module Twilio
                     end
 
                     ##
+                    # Lists SettingsUpdatePageMetadata records from the API as a list.
+                      # @param [String] sim Filter the Settings Updates by a Super SIM's SID or UniqueName.
+                      # @param [Status] status Filter the Settings Updates by status. Can be `scheduled`, `in-progress`, `successful`, or `failed`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(sim: :unset, status: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Sim' => sim,
+                            'Status' => status,
+                            
+                            'PageSize' => page_size,
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SettingsUpdatePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields SettingsUpdateInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -166,6 +192,54 @@ module Twilio
                         '<Twilio.Supersim.V1.SettingsUpdatePage>'
                     end
                 end
+
+                class SettingsUpdatePageMetadata < PageMetadata
+                    attr_reader :settings_update_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @settings_update_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @settings_update_page << SettingsUpdateListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @settings_update_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Supersim::V1PageMetadata>';
+                    end
+                end
+                class SettingsUpdateListResponse < InstanceListResource
+
+                    # @param [Array<SettingsUpdateInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @settings_update = payload.body[key].map do |data|
+                      SettingsUpdateInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def settings_update
+                        @settings_update
+                    end
+                end
+
                 class SettingsUpdateInstance < InstanceResource
                     ##
                     # Initialize the SettingsUpdateInstance

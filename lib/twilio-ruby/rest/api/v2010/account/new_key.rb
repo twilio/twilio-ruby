@@ -58,6 +58,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the NewKeyInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @return [NewKeyInstance] Created NewKeyInstance
+                    def create_with_metadata(
+                      friendly_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        newKey_instance = NewKeyInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                        )
+                        NewKeyInstanceMetadata.new(
+                            @version,
+                            newKey_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -95,6 +127,54 @@ module Twilio
                         '<Twilio.Api.V2010.NewKeyPage>'
                     end
                 end
+
+                class NewKeyPageMetadata < PageMetadata
+                    attr_reader :new_key_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @new_key_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @new_key_page << NewKeyListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @new_key_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class NewKeyListResponse < InstanceListResource
+
+                    # @param [Array<NewKeyInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @new_key = payload.body[key].map do |data|
+                      NewKeyInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def new_key
+                        @new_key
+                    end
+                end
+
                 class NewKeyInstance < InstanceResource
                     ##
                     # Initialize the NewKeyInstance

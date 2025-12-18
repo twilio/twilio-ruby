@@ -79,6 +79,35 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the PluginVersionArchiveInstanceMetadata
+                    # @param [String] flex_metadata The Flex-Metadata HTTP request header
+                    # @return [PluginVersionArchiveInstance] Updated PluginVersionArchiveInstance
+                    def update_with_metadata(
+                      flex_metadata: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, headers: headers)
+                        pluginVersionArchive_instance = PluginVersionArchiveInstance.new(
+                            @version,
+                            response.body,
+                            plugin_sid: @solution[:plugin_sid],
+                            sid: @solution[:sid],
+                        )
+                        PluginVersionArchiveInstanceMetadata.new(
+                            @version,
+                            pluginVersionArchive_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -94,6 +123,45 @@ module Twilio
                         "#<Twilio.FlexApi.V1.PluginVersionArchiveContext #{context}>"
                     end
                 end
+
+                class PluginVersionArchiveInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new PluginVersionArchiveInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}PluginVersionArchiveInstance] plugin_version_archive_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [PluginVersionArchiveInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, plugin_version_archive_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @plugin_version_archive_instance = plugin_version_archive_instance
+                    end
+
+                    def plugin_version_archive
+                        @plugin_version_archive_instance
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.PluginVersionArchiveInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class PluginVersionArchiveListResponse < InstanceListResource
+                    # @param [Array<PluginVersionArchiveInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @plugin_version_archive_instance = payload.body[key].map do |data|
+                        PluginVersionArchiveInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def plugin_version_archive_instance
+                          @instance
+                      end
+                  end
 
                 class PluginVersionArchivePage < Page
                     ##
@@ -123,6 +191,54 @@ module Twilio
                         '<Twilio.FlexApi.V1.PluginVersionArchivePage>'
                     end
                 end
+
+                class PluginVersionArchivePageMetadata < PageMetadata
+                    attr_reader :plugin_version_archive_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @plugin_version_archive_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        number_of_records = response.body[key].size
+                        while( limit != :unset && number_of_records <= limit )
+                            @plugin_version_archive_page << PluginVersionArchiveListResponse.new(version, @payload, key)
+                            @payload = self.next_page
+                            break unless @payload
+                            number_of_records += page_size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @plugin_version_archive_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class PluginVersionArchiveListResponse < InstanceListResource
+
+                    # @param [Array<PluginVersionArchiveInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                      @plugin_version_archive = payload.body[key].map do |data|
+                      PluginVersionArchiveInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def plugin_version_archive
+                        @plugin_version_archive
+                    end
+                end
+
                 class PluginVersionArchiveInstance < InstanceResource
                     ##
                     # Initialize the PluginVersionArchiveInstance

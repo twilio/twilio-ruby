@@ -157,10 +157,6 @@ module Twilio
         RecordStream.new(page, limit: limit, page_limit: page_limit)
       end
 
-      def stream_with_metadata(page, limit: nil, page_limit: nil)
-        RecordStream.new(page, limit: limit, page_limit: page_limit)
-      end
-
       def create(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(method, uri, params, data, headers, auth, timeout)
 
@@ -213,6 +209,24 @@ module Twilio
 
         if response.status_code < 200 || response.status_code >= 300
           raise exception(response, 'Unable to update record')
+        end
+
+        response
+      end
+
+      def delete_with_metadata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        response = request(
+          method,
+          uri,
+          params,
+          data,
+          headers,
+          auth,
+          timeout
+        )
+
+        if response.status_code < 200 || response.status_code >= 400
+          raise exception(response, 'Unable to delete record')
         end
 
         response
