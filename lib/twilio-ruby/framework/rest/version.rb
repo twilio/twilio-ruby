@@ -217,6 +217,24 @@ module Twilio
 
         response
       end
+
+      def delete_with_metadata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        response = request(
+          method,
+          uri,
+          params,
+          data,
+          headers,
+          auth,
+          timeout
+        )
+
+        if response.status_code < 200 || response.status_code >= 400
+          raise exception(response, 'Unable to delete record')
+        end
+
+        response
+      end
     end
   end
 end
