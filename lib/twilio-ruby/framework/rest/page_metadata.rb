@@ -4,7 +4,6 @@ module Twilio
   module REST
     # Page Base Class
     class PageMetadata
-
       META_KEYS = [
         'end',
         'first_page_uri',
@@ -29,22 +28,16 @@ module Twilio
       end
 
       def process_response(response)
-        if response.status_code != 200
-          raise Twilio::REST::RestError.new('Unable to fetch page', response)
-        end
-
-        response
+        return response if response.status_code == 200
+        raise Twilio::REST::RestError.new('Unable to fetch page', response)
       end
 
       def get_key(payload)
         return 'Resources' if payload['Resources']
-        if payload['meta'] && payload['meta']['key']
-          return payload['meta']['key']
-        else
-          keys = payload.keys
-          key = keys - META_KEYS
-          return key.first if key.size == 1
-        end
+        return payload['meta']['key'] if payload['meta'] && payload['meta']['key']
+        keys = payload.keys
+        key = keys - META_KEYS
+        return key.first if key.size == 1
 
         raise Twilio::REST::TwilioError, 'Page Records can not be deserialized'
       end
@@ -67,10 +60,6 @@ module Twilio
         end
 
         nil
-      end
-
-      def get_instance(payload)
-        raise Twilio::REST::TwilioError, 'Page.get_instance() must be implemented in the derived class'
       end
 
       def previous_page
