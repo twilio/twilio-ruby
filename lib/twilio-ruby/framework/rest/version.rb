@@ -48,7 +48,7 @@ module Twilio
 
       def request(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
         url = relative_uri(uri)
-        params = params.delete_if { |_k, v| v.nil? }
+        params.delete_if { |_k, v| v.nil? }
         data = data
         @domain.request(method, url, params, data, headers, auth, timeout)
       end
