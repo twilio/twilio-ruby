@@ -67,6 +67,8 @@ module Twilio
                     # @param [String] terms_and_conditions_url The URL to the terms and conditions for the business or organization.
                     # @param [Boolean] age_gated_content Indicates if the content is age gated.
                     # @param [Array[String]] opt_in_keywords List of keywords that users can text in to opt in to receive messages.
+                    # @param [VettingProvider] vetting_provider 
+                    # @param [String] vetting_id The unique ID of the vetting
                     # @return [TollfreeVerificationInstance] Created TollfreeVerificationInstance
                     def create(
                         business_name: nil, 
@@ -103,7 +105,9 @@ module Twilio
                         privacy_policy_url: :unset, 
                         terms_and_conditions_url: :unset, 
                         age_gated_content: :unset, 
-                        opt_in_keywords: :unset
+                        opt_in_keywords: :unset, 
+                        vetting_provider: :unset, 
+                        vetting_id: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -142,6 +146,8 @@ module Twilio
                             'TermsAndConditionsUrl' => terms_and_conditions_url,
                             'AgeGatedContent' => age_gated_content,
                             'OptInKeywords' => Twilio.serialize_list(opt_in_keywords) { |e| e },
+                            'VettingProvider' => vetting_provider,
+                            'VettingId' => vetting_id,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -366,6 +372,8 @@ module Twilio
                     # @param [String] terms_and_conditions_url The URL to the terms and conditions for the business or organization.
                     # @param [Boolean] age_gated_content Indicates if the content is age gated.
                     # @param [Array[String]] opt_in_keywords List of keywords that users can text in to opt in to receive messages.
+                    # @param [VettingProvider] vetting_provider 
+                    # @param [String] vetting_id The unique ID of the vetting
                     # @return [TollfreeVerificationInstance] Updated TollfreeVerificationInstance
                     def update(
                         business_name: :unset, 
@@ -400,7 +408,9 @@ module Twilio
                         privacy_policy_url: :unset, 
                         terms_and_conditions_url: :unset, 
                         age_gated_content: :unset, 
-                        opt_in_keywords: :unset
+                        opt_in_keywords: :unset, 
+                        vetting_provider: :unset, 
+                        vetting_id: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -437,6 +447,8 @@ module Twilio
                             'TermsAndConditionsUrl' => terms_and_conditions_url,
                             'AgeGatedContent' => age_gated_content,
                             'OptInKeywords' => Twilio.serialize_list(opt_in_keywords) { |e| e },
+                            'VettingProvider' => vetting_provider,
+                            'VettingId' => vetting_id,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -562,6 +574,9 @@ module Twilio
                             'rejection_reasons' => payload['rejection_reasons'],
                             'resource_links' => payload['resource_links'],
                             'external_reference_id' => payload['external_reference_id'],
+                            'vetting_id' => payload['vetting_id'],
+                            'vetting_provider' => payload['vetting_provider'],
+                            'vetting_id_expiration' => Twilio.deserialize_iso8601_datetime(payload['vetting_id_expiration']),
                         }
 
                         # Context
@@ -881,6 +896,24 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] 
+                    def vetting_id
+                        @properties['vetting_id']
+                    end
+                    
+                    ##
+                    # @return [VettingProvider] 
+                    def vetting_provider
+                        @properties['vetting_provider']
+                    end
+                    
+                    ##
+                    # @return [Time] 
+                    def vetting_id_expiration
+                        @properties['vetting_id_expiration']
+                    end
+                    
+                    ##
                     # Delete the TollfreeVerificationInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
@@ -931,6 +964,8 @@ module Twilio
                     # @param [String] terms_and_conditions_url The URL to the terms and conditions for the business or organization.
                     # @param [Boolean] age_gated_content Indicates if the content is age gated.
                     # @param [Array[String]] opt_in_keywords List of keywords that users can text in to opt in to receive messages.
+                    # @param [VettingProvider] vetting_provider 
+                    # @param [String] vetting_id The unique ID of the vetting
                     # @return [TollfreeVerificationInstance] Updated TollfreeVerificationInstance
                     def update(
                         business_name: :unset, 
@@ -965,7 +1000,9 @@ module Twilio
                         privacy_policy_url: :unset, 
                         terms_and_conditions_url: :unset, 
                         age_gated_content: :unset, 
-                        opt_in_keywords: :unset
+                        opt_in_keywords: :unset, 
+                        vetting_provider: :unset, 
+                        vetting_id: :unset
                     )
 
                         context.update(
@@ -1002,6 +1039,8 @@ module Twilio
                             terms_and_conditions_url: terms_and_conditions_url, 
                             age_gated_content: age_gated_content, 
                             opt_in_keywords: opt_in_keywords, 
+                            vetting_provider: vetting_provider, 
+                            vetting_id: vetting_id, 
                         )
                     end
 
