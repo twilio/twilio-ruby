@@ -1,6 +1,17 @@
 twilio-ruby changelog
 =====================
 
+[2026-01-07] Version 7.9.1
+--------------------------
+**Library - Chore**
+- [PR #772](https://github.com/twilio/twilio-ruby/pull/772): Token Pagination support. Thanks to [@manisha1997](https://github.com/manisha1997)!
+- [PR #773](https://github.com/twilio/twilio-ruby/pull/773): custom error response redesign. Thanks to [@manisha1997](https://github.com/manisha1997)!
+
+**Api**
+- Added optional parameter `clientNotificationUrl` for create call api
+- Added optional parameter `clientNotificationUrl` for create participant api
+
+
 [2025-12-17] Version 7.9.0
 --------------------------
 **Library - Chore**
