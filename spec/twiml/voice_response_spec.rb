@@ -625,7 +625,7 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       dial = Twilio::TwiML::Dial.new
-      dial.sip 'foo@example.com'
+      dial.sip(sip_url: 'foo@example.com')
 
       response = Twilio::TwiML::VoiceResponse.new
       response.append(dial)
@@ -642,7 +642,7 @@ describe Twilio::TwiML::VoiceResponse do
         </Response>
       XML
       dial = Twilio::TwiML::Dial.new
-      dial.sip('foo@example.com', username: 'foo', password: 'bar')
+      dial.sip(sip_url: 'foo@example.com', username: 'foo', password: 'bar')
 
       response = Twilio::TwiML::VoiceResponse.new
       response.append(dial)
