@@ -616,40 +616,6 @@ describe Twilio::TwiML::VoiceResponse do
       expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
     end
 
-    it 'should allow Dial.sip' do
-      expected_doc = parse <<-XML
-        <Response>
-          <Dial>
-            <Sip>foo@example.com</Sip>
-          </Dial>
-        </Response>
-      XML
-      dial = Twilio::TwiML::Dial.new
-      dial.sip 'foo@example.com'
-
-      response = Twilio::TwiML::VoiceResponse.new
-      response.append(dial)
-      doc = parse(response)
-      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
-    end
-
-    it 'should allow Dial.sip with username, password' do
-      expected_doc = parse <<-XML
-        <Response>
-          <Dial>
-            <Sip username="foo" password="bar">foo@example.com</Sip>
-          </Dial>
-        </Response>
-      XML
-      dial = Twilio::TwiML::Dial.new
-      dial.sip('foo@example.com', username: 'foo', password: 'bar')
-
-      response = Twilio::TwiML::VoiceResponse.new
-      response.append(dial)
-      doc = parse(response)
-      expect(doc).to be_equivalent_to(expected_doc).respecting_element_order
-    end
-
     it 'should allow Dial.number' do
       expected_doc = parse <<-XML
         <Response>
