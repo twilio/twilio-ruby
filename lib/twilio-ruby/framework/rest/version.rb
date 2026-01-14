@@ -48,7 +48,7 @@ module Twilio
 
       def request(method, uri, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
         url = relative_uri(uri)
-        params = params.delete_if { |_k, v| v.nil? }
+        params.delete_if { |_k, v| v.nil? }
         data = data
         @domain.request(method, url, params, data, headers, auth, timeout)
       end
@@ -157,6 +157,10 @@ module Twilio
         RecordStream.new(page, limit: limit, page_limit: page_limit)
       end
 
+      def stream_with_metadata(page, limit: nil, page_limit: nil)
+        RecordStream.new(page, limit: limit, page_limit: page_limit)
+      end
+
       def create(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
         response = request(method, uri, params, data, headers, auth, timeout)
 
@@ -165,6 +169,71 @@ module Twilio
         end
 
         response.body
+      end
+
+      def create_with_metadata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        response = request(method, uri, params, data, headers, auth, timeout)
+
+        if response.status_code < 200 || response.status_code >= 300
+          raise exception(response, 'Unable to create record')
+        end
+
+        response
+      end
+
+      def fetch_with_metadata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        response = request(
+          method,
+          uri,
+          params,
+          data,
+          headers,
+          auth,
+          timeout
+        )
+
+        # Note that 3XX response codes are allowed for fetches.
+        if response.status_code < 200 || response.status_code >= 400
+          raise exception(response, 'Unable to fetch record')
+        end
+
+        response
+      end
+
+      def update_with_metadata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        response = request(
+          method,
+          uri,
+          params,
+          data,
+          headers,
+          auth,
+          timeout
+        )
+
+        if response.status_code < 200 || response.status_code >= 300
+          raise exception(response, 'Unable to update record')
+        end
+
+        response
+      end
+
+      def delete_with_metadata(method, uri, params: {}, data: {}, headers: {}, auth: nil, timeout: nil)
+        response = request(
+          method,
+          uri,
+          params,
+          data,
+          headers,
+          auth,
+          timeout
+        )
+
+        if response.status_code < 200 || response.status_code >= 400
+          raise exception(response, 'Unable to delete record')
+        end
+
+        response
       end
     end
   end
