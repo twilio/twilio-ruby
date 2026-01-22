@@ -29,6 +29,7 @@ module Twilio
                     # @return [StepContextList] StepContextList
                     def initialize(version, flow_sid: nil, engagement_sid: nil, step_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { flow_sid: flow_sid, engagement_sid: engagement_sid, step_sid: step_sid }
                         
@@ -54,6 +55,7 @@ module Twilio
                     # @return [StepContextContext] StepContextContext
                     def initialize(version, flow_sid, engagement_sid, step_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { flow_sid: flow_sid, engagement_sid: engagement_sid, step_sid: step_sid,  }
@@ -82,6 +84,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the StepContextInstanceMetadata
+                    # @return [StepContextInstance] Fetched StepContextInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        step_context_instance = StepContextInstance.new(
+                            @version,
+                            response.body,
+                            flow_sid: @solution[:flow_sid],
+                            engagement_sid: @solution[:engagement_sid],
+                            step_sid: @solution[:step_sid],
+                        )
+                        StepContextInstanceMetadata.new(
+                            @version,
+                            step_context_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -98,6 +127,53 @@ module Twilio
                     end
                 end
 
+                class StepContextInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new StepContextInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}StepContextInstance] step_context_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [StepContextInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, step_context_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @step_context_instance = step_context_instance
+                    end
+
+                    def step_context
+                        @step_context_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.StepContextInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class StepContextListResponse < InstanceListResource
+                    # @param [Array<StepContextInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @step_context_instance = payload.body[key].map do |data|
+                        StepContextInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def step_context_instance
+                          @instance
+                      end
+                  end
+
                 class StepContextPage < Page
                     ##
                     # Initialize the StepContextPage
@@ -107,6 +183,7 @@ module Twilio
                     # @return [StepContextPage] StepContextPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -126,6 +203,66 @@ module Twilio
                         '<Twilio.Studio.V1.StepContextPage>'
                     end
                 end
+
+                class StepContextPageMetadata < PageMetadata
+                    attr_reader :step_context_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @step_context_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @step_context_page << StepContextListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @step_context_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Studio::V1PageMetadata>';
+                    end
+                end
+                class StepContextListResponse < InstanceListResource
+
+                    # @param [Array<StepContextInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @step_context = data_list.map do |data|
+                        StepContextInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def step_context
+                        @step_context
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class StepContextInstance < InstanceResource
                     ##
                     # Initialize the StepContextInstance
@@ -138,6 +275,7 @@ module Twilio
                     # @return [StepContextInstance] StepContextInstance
                     def initialize(version, payload , flow_sid: nil, engagement_sid: nil, step_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

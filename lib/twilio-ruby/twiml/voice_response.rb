@@ -1764,8 +1764,11 @@ module Twilio
       # machine_detection_speech_end_threshold:: Number of milliseconds of silence after speech activity
       # machine_detection_silence_timeout:: Number of milliseconds of initial silence
       # keyword_args:: additional attributes
-      def sip(sip_url, username: nil, password: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, machine_detection: nil, amd_status_callback_method: nil, amd_status_callback: nil, machine_detection_timeout: nil, machine_detection_speech_threshold: nil, machine_detection_speech_end_threshold: nil, machine_detection_silence_timeout: nil, **keyword_args)
-        append(Sip.new(sip_url, username: username, password: password, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, machine_detection: machine_detection, amd_status_callback_method: amd_status_callback_method, amd_status_callback: amd_status_callback, machine_detection_timeout: machine_detection_timeout, machine_detection_speech_threshold: machine_detection_speech_threshold, machine_detection_speech_end_threshold: machine_detection_speech_end_threshold, machine_detection_silence_timeout: machine_detection_silence_timeout, **keyword_args))
+      def sip(sip_url: nil, username: nil, password: nil, url: nil, method: nil, status_callback_event: nil, status_callback: nil, status_callback_method: nil, machine_detection: nil, amd_status_callback_method: nil, amd_status_callback: nil, machine_detection_timeout: nil, machine_detection_speech_threshold: nil, machine_detection_speech_end_threshold: nil, machine_detection_silence_timeout: nil, **keyword_args)
+        sip = Sip.new(sip_url: sip_url, username: username, password: password, url: url, method: method, status_callback_event: status_callback_event, status_callback: status_callback, status_callback_method: status_callback_method, machine_detection: machine_detection, amd_status_callback_method: amd_status_callback_method, amd_status_callback: amd_status_callback, machine_detection_timeout: machine_detection_timeout, machine_detection_speech_threshold: machine_detection_speech_threshold, machine_detection_speech_end_threshold: machine_detection_speech_end_threshold, machine_detection_silence_timeout: machine_detection_silence_timeout, **keyword_args)
+
+        yield(sip) if block_given?
+        append(sip)
       end
 
       ##
@@ -1853,10 +1856,74 @@ module Twilio
     ##
     # <Sip> TwiML Noun
     class Sip < TwiML
-      def initialize(sip_url, **keyword_args)
+      def initialize(sip_url: nil, **keyword_args)
         super(**keyword_args)
         @name = 'Sip'
-        @value = sip_url
+        @value = sip_url unless sip_url.nil?
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Uri> element
+      # sip_url:: The SIP URI
+      # priority:: The priority of this SIP URI
+      # weight:: The weight of this SIP URI
+      # username:: The username for authentication
+      # password:: The password for authentication
+      # keyword_args:: additional attributes
+      def uri(sip_url: nil, priority: nil, weight: nil, username: nil, password: nil, **keyword_args)
+        append(SipUri.new(sip_url: sip_url, priority: priority, weight: weight, username: username, password: password, **keyword_args))
+      end
+
+      ##
+      # Create a new <Headers> element
+      # keyword_args:: additional attributes
+      def headers(**keyword_args)
+        headers = Headers.new(**keyword_args)
+
+        yield(headers) if block_given?
+        append(headers)
+      end
+    end
+
+    ##
+    # The SIP headers to include in the request
+    class Headers < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Headers'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Header> element
+      # name:: The name of the custom header
+      # value:: The value of the custom header
+      # keyword_args:: additional attributes
+      def header(name: nil, value: nil, **keyword_args)
+        append(Header.new(name: name, value: value, **keyword_args))
+      end
+    end
+
+    ##
+    # A custom SIP header to include in the request
+    class Header < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Header'
+
+        yield(self) if block_given?
+      end
+    end
+
+    ##
+    # The SIP URI to dial. Multiple Uri elements can be provided, in which case they will be attempted in priority order. URIs with the same priority will be selected proportionally based on its weight.
+    class SipUri < TwiML
+      def initialize(sip_url: nil, **keyword_args)
+        super(**keyword_args)
+        @name = 'Uri'
+        @value = sip_url unless sip_url.nil?
         yield(self) if block_given?
       end
     end

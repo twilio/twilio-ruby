@@ -195,6 +195,7 @@ module Twilio
                     # @return [KnowledgeList] KnowledgeList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Knowledge"
@@ -217,6 +218,32 @@ module Twilio
                         KnowledgeInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the KnowledgeInstanceMetadata
+                    # @param [AssistantsV1ServiceCreateKnowledgeRequest] assistants_v1_service_create_knowledge_request 
+                    # @return [KnowledgeInstance] Created KnowledgeInstance
+                    def create_with_metadata(assistants_v1_service_create_knowledge_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: assistants_v1_service_create_knowledge_request.to_json)
+                        knowledge_instance = KnowledgeInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        KnowledgeInstanceMetadata.new(
+                            @version,
+                            knowledge_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -264,6 +291,30 @@ module Twilio
                     end
 
                     ##
+                    # Lists KnowledgePageMetadata records from the API as a list.
+                      # @param [String] assistant_id 
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(assistant_id: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'AssistantId' => assistant_id,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        KnowledgePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields KnowledgeInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -285,7 +336,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of KnowledgeInstance
-                    def page(assistant_id: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(assistant_id: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'AssistantId' => assistant_id,
                             'PageToken' => page_token,
@@ -331,6 +382,7 @@ module Twilio
                     # @return [KnowledgeContext] KnowledgeContext
                     def initialize(version, id)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { id: id,  }
@@ -349,7 +401,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the KnowledgeInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          knowledge_instance = KnowledgeInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          KnowledgeInstanceMetadata.new(@version, knowledge_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -372,6 +444,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the KnowledgeInstanceMetadata
+                    # @return [KnowledgeInstance] Fetched KnowledgeInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        knowledge_instance = KnowledgeInstance.new(
+                            @version,
+                            response.body,
+                            id: @solution[:id],
+                        )
+                        KnowledgeInstanceMetadata.new(
+                            @version,
+                            knowledge_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the KnowledgeInstance
                     # @param [AssistantsV1ServiceUpdateKnowledgeRequest] assistants_v1_service_update_knowledge_request 
                     # @return [KnowledgeInstance] Updated KnowledgeInstance
@@ -389,6 +486,33 @@ module Twilio
                             @version,
                             payload,
                             id: @solution[:id],
+                        )
+                    end
+
+                    ##
+                    # Update the KnowledgeInstanceMetadata
+                    # @param [AssistantsV1ServiceUpdateKnowledgeRequest] assistants_v1_service_update_knowledge_request 
+                    # @return [KnowledgeInstance] Updated KnowledgeInstance
+                    def update_with_metadata(assistants_v1_service_update_knowledge_request: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('PUT', @uri, headers: headers, data: assistants_v1_service_update_knowledge_request.to_json)
+                        knowledge_instance = KnowledgeInstance.new(
+                            @version,
+                            response.body,
+                            id: @solution[:id],
+                        )
+                        KnowledgeInstanceMetadata.new(
+                            @version,
+                            knowledge_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -429,6 +553,53 @@ module Twilio
                     end
                 end
 
+                class KnowledgeInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new KnowledgeInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}KnowledgeInstance] knowledge_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [KnowledgeInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, knowledge_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @knowledge_instance = knowledge_instance
+                    end
+
+                    def knowledge
+                        @knowledge_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.KnowledgeInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class KnowledgeListResponse < InstanceListResource
+                    # @param [Array<KnowledgeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @knowledge_instance = payload.body[key].map do |data|
+                        KnowledgeInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def knowledge_instance
+                          @instance
+                      end
+                  end
+
                 class KnowledgePage < Page
                     ##
                     # Initialize the KnowledgePage
@@ -438,6 +609,7 @@ module Twilio
                     # @return [KnowledgePage] KnowledgePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -457,6 +629,66 @@ module Twilio
                         '<Twilio.Assistants.V1.KnowledgePage>'
                     end
                 end
+
+                class KnowledgePageMetadata < PageMetadata
+                    attr_reader :knowledge_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @knowledge_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @knowledge_page << KnowledgeListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @knowledge_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Assistants::V1PageMetadata>';
+                    end
+                end
+                class KnowledgeListResponse < InstanceListResource
+
+                    # @param [Array<KnowledgeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @knowledge = data_list.map do |data|
+                        KnowledgeInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def knowledge
+                        @knowledge
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class KnowledgeInstance < InstanceResource
                     ##
                     # Initialize the KnowledgeInstance
@@ -469,6 +701,7 @@ module Twilio
                     # @return [KnowledgeInstance] KnowledgeInstance
                     def initialize(version, payload , id: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

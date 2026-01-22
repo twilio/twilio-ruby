@@ -25,6 +25,7 @@ module Twilio
                     # @return [BundleCloneList] BundleCloneList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -48,6 +49,7 @@ module Twilio
                     # @return [BundleCloneContext] BundleCloneContext
                     def initialize(version, bundle_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { bundle_sid: bundle_sid,  }
@@ -87,6 +89,44 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the BundleCloneInstanceMetadata
+                    # @param [String] target_account_sid The SID of the [Account](https://www.twilio.com/docs/iam/api/account) where the bundle needs to be cloned.
+                    # @param [Boolean] move_to_draft If set to true, the cloned bundle will be in the DRAFT state, else it will be twilio-approved
+                    # @param [String] friendly_name The string that you assigned to describe the cloned bundle.
+                    # @return [BundleCloneInstance] Created BundleCloneInstance
+                    def create_with_metadata(
+                      target_account_sid: nil, 
+                      move_to_draft: :unset, 
+                      friendly_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'TargetAccountSid' => target_account_sid,
+                            'MoveToDraft' => move_to_draft,
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        bundle_clone_instance = BundleCloneInstance.new(
+                            @version,
+                            response.body,
+                            bundle_sid: @solution[:bundle_sid],
+                        )
+                        BundleCloneInstanceMetadata.new(
+                            @version,
+                            bundle_clone_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -103,6 +143,53 @@ module Twilio
                     end
                 end
 
+                class BundleCloneInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new BundleCloneInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}BundleCloneInstance] bundle_clone_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [BundleCloneInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, bundle_clone_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @bundle_clone_instance = bundle_clone_instance
+                    end
+
+                    def bundle_clone
+                        @bundle_clone_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.BundleCloneInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class BundleCloneListResponse < InstanceListResource
+                    # @param [Array<BundleCloneInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @bundle_clone_instance = payload.body[key].map do |data|
+                        BundleCloneInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def bundle_clone_instance
+                          @instance
+                      end
+                  end
+
                 class BundleClonePage < Page
                     ##
                     # Initialize the BundleClonePage
@@ -112,6 +199,7 @@ module Twilio
                     # @return [BundleClonePage] BundleClonePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -131,6 +219,66 @@ module Twilio
                         '<Twilio.Numbers.V2.BundleClonePage>'
                     end
                 end
+
+                class BundleClonePageMetadata < PageMetadata
+                    attr_reader :bundle_clone_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @bundle_clone_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @bundle_clone_page << BundleCloneListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @bundle_clone_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V2PageMetadata>';
+                    end
+                end
+                class BundleCloneListResponse < InstanceListResource
+
+                    # @param [Array<BundleCloneInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @bundle_clone = data_list.map do |data|
+                        BundleCloneInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def bundle_clone
+                        @bundle_clone
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class BundleCloneInstance < InstanceResource
                     ##
                     # Initialize the BundleCloneInstance
@@ -143,6 +291,7 @@ module Twilio
                     # @return [BundleCloneInstance] BundleCloneInstance
                     def initialize(version, payload , bundle_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

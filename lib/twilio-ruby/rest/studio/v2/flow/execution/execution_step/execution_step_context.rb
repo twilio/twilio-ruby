@@ -29,6 +29,7 @@ module Twilio
                     # @return [ExecutionStepContextList] ExecutionStepContextList
                     def initialize(version, flow_sid: nil, execution_sid: nil, step_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { flow_sid: flow_sid, execution_sid: execution_sid, step_sid: step_sid }
                         
@@ -54,6 +55,7 @@ module Twilio
                     # @return [ExecutionStepContextContext] ExecutionStepContextContext
                     def initialize(version, flow_sid, execution_sid, step_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { flow_sid: flow_sid, execution_sid: execution_sid, step_sid: step_sid,  }
@@ -82,6 +84,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the ExecutionStepContextInstanceMetadata
+                    # @return [ExecutionStepContextInstance] Fetched ExecutionStepContextInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        execution_step_context_instance = ExecutionStepContextInstance.new(
+                            @version,
+                            response.body,
+                            flow_sid: @solution[:flow_sid],
+                            execution_sid: @solution[:execution_sid],
+                            step_sid: @solution[:step_sid],
+                        )
+                        ExecutionStepContextInstanceMetadata.new(
+                            @version,
+                            execution_step_context_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -98,6 +127,53 @@ module Twilio
                     end
                 end
 
+                class ExecutionStepContextInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ExecutionStepContextInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ExecutionStepContextInstance] execution_step_context_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ExecutionStepContextInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, execution_step_context_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @execution_step_context_instance = execution_step_context_instance
+                    end
+
+                    def execution_step_context
+                        @execution_step_context_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ExecutionStepContextInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ExecutionStepContextListResponse < InstanceListResource
+                    # @param [Array<ExecutionStepContextInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @execution_step_context_instance = payload.body[key].map do |data|
+                        ExecutionStepContextInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def execution_step_context_instance
+                          @instance
+                      end
+                  end
+
                 class ExecutionStepContextPage < Page
                     ##
                     # Initialize the ExecutionStepContextPage
@@ -107,6 +183,7 @@ module Twilio
                     # @return [ExecutionStepContextPage] ExecutionStepContextPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -126,6 +203,66 @@ module Twilio
                         '<Twilio.Studio.V2.ExecutionStepContextPage>'
                     end
                 end
+
+                class ExecutionStepContextPageMetadata < PageMetadata
+                    attr_reader :execution_step_context_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @execution_step_context_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @execution_step_context_page << ExecutionStepContextListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @execution_step_context_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Studio::V2PageMetadata>';
+                    end
+                end
+                class ExecutionStepContextListResponse < InstanceListResource
+
+                    # @param [Array<ExecutionStepContextInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @execution_step_context = data_list.map do |data|
+                        ExecutionStepContextInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def execution_step_context
+                        @execution_step_context
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ExecutionStepContextInstance < InstanceResource
                     ##
                     # Initialize the ExecutionStepContextInstance
@@ -138,6 +275,7 @@ module Twilio
                     # @return [ExecutionStepContextInstance] ExecutionStepContextInstance
                     def initialize(version, payload , flow_sid: nil, execution_sid: nil, step_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

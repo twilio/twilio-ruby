@@ -25,6 +25,7 @@ module Twilio
                     # @return [InteractionList] InteractionList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Interactions"
@@ -64,6 +65,46 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the InteractionInstanceMetadata
+                    # @param [Object] channel The Interaction's channel.
+                    # @param [Object] routing The Interaction's routing logic.
+                    # @param [String] interaction_context_sid The Interaction context sid is used for adding a context lookup sid
+                    # @param [String] webhook_ttid The unique identifier for Interaction level webhook
+                    # @return [InteractionInstance] Created InteractionInstance
+                    def create_with_metadata(
+                      channel: nil, 
+                      routing: :unset, 
+                      interaction_context_sid: :unset, 
+                      webhook_ttid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Channel' => Twilio.serialize_object(channel),
+                            'Routing' => Twilio.serialize_object(routing),
+                            'InteractionContextSid' => interaction_context_sid,
+                            'WebhookTtid' => webhook_ttid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        interaction_instance = InteractionInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        InteractionInstanceMetadata.new(
+                            @version,
+                            interaction_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -82,6 +123,7 @@ module Twilio
                     # @return [InteractionContext] InteractionContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -110,6 +152,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the InteractionInstanceMetadata
+                    # @return [InteractionInstance] Fetched InteractionInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        interaction_instance = InteractionInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        InteractionInstanceMetadata.new(
+                            @version,
+                            interaction_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the InteractionInstance
                     # @param [String] webhook_ttid The unique identifier for Interaction level webhook
                     # @return [InteractionInstance] Updated InteractionInstance
@@ -132,6 +199,38 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the InteractionInstanceMetadata
+                    # @param [String] webhook_ttid The unique identifier for Interaction level webhook
+                    # @return [InteractionInstance] Updated InteractionInstance
+                    def update_with_metadata(
+                      webhook_ttid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'WebhookTtid' => webhook_ttid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        interaction_instance = InteractionInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        InteractionInstanceMetadata.new(
+                            @version,
+                            interaction_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -170,6 +269,53 @@ module Twilio
                     end
                 end
 
+                class InteractionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new InteractionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}InteractionInstance] interaction_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [InteractionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, interaction_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @interaction_instance = interaction_instance
+                    end
+
+                    def interaction
+                        @interaction_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.InteractionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class InteractionListResponse < InstanceListResource
+                    # @param [Array<InteractionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @interaction_instance = payload.body[key].map do |data|
+                        InteractionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def interaction_instance
+                          @instance
+                      end
+                  end
+
                 class InteractionPage < Page
                     ##
                     # Initialize the InteractionPage
@@ -179,6 +325,7 @@ module Twilio
                     # @return [InteractionPage] InteractionPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -198,6 +345,66 @@ module Twilio
                         '<Twilio.FlexApi.V1.InteractionPage>'
                     end
                 end
+
+                class InteractionPageMetadata < PageMetadata
+                    attr_reader :interaction_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @interaction_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @interaction_page << InteractionListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @interaction_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InteractionListResponse < InstanceListResource
+
+                    # @param [Array<InteractionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @interaction = data_list.map do |data|
+                        InteractionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def interaction
+                        @interaction
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class InteractionInstance < InstanceResource
                     ##
                     # Initialize the InteractionInstance
@@ -210,6 +417,7 @@ module Twilio
                     # @return [InteractionInstance] InteractionInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

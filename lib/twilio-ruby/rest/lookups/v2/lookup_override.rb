@@ -42,6 +42,7 @@ module Twilio
                     # @return [LookupOverrideList] LookupOverrideList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -66,6 +67,7 @@ module Twilio
                     # @return [LookupOverrideContext] LookupOverrideContext
                     def initialize(version, field, phone_number)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { field: field, phone_number: phone_number,  }
@@ -96,6 +98,34 @@ module Twilio
                     end
 
                     ##
+                    # Create the LookupOverrideInstanceMetadata
+                    # @param [OverridesRequest] overrides_request 
+                    # @return [LookupOverrideInstance] Created LookupOverrideInstance
+                    def create_with_metadata(overrides_request: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: overrides_request.to_json)
+                        lookup_override_instance = LookupOverrideInstance.new(
+                            @version,
+                            response.body,
+                            field: @solution[:field],
+                            phone_number: @solution[:phone_number],
+                        )
+                        LookupOverrideInstanceMetadata.new(
+                            @version,
+                            lookup_override_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Delete the LookupOverrideInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
@@ -104,7 +134,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the LookupOverrideInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          lookupOverride_instance = LookupOverrideInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          LookupOverrideInstanceMetadata.new(@version, lookupOverride_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -124,6 +174,32 @@ module Twilio
                             payload,
                             field: @solution[:field],
                             phone_number: @solution[:phone_number],
+                        )
+                    end
+
+                    ##
+                    # Fetch the LookupOverrideInstanceMetadata
+                    # @return [LookupOverrideInstance] Fetched LookupOverrideInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        lookup_override_instance = LookupOverrideInstance.new(
+                            @version,
+                            response.body,
+                            field: @solution[:field],
+                            phone_number: @solution[:phone_number],
+                        )
+                        LookupOverrideInstanceMetadata.new(
+                            @version,
+                            lookup_override_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -149,6 +225,34 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the LookupOverrideInstanceMetadata
+                    # @param [OverridesRequest] overrides_request 
+                    # @return [LookupOverrideInstance] Updated LookupOverrideInstance
+                    def update_with_metadata(overrides_request: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('PUT', @uri, headers: headers, data: overrides_request.to_json)
+                        lookup_override_instance = LookupOverrideInstance.new(
+                            @version,
+                            response.body,
+                            field: @solution[:field],
+                            phone_number: @solution[:phone_number],
+                        )
+                        LookupOverrideInstanceMetadata.new(
+                            @version,
+                            lookup_override_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -165,6 +269,53 @@ module Twilio
                     end
                 end
 
+                class LookupOverrideInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new LookupOverrideInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}LookupOverrideInstance] lookup_override_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [LookupOverrideInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, lookup_override_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @lookup_override_instance = lookup_override_instance
+                    end
+
+                    def lookup_override
+                        @lookup_override_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.LookupOverrideInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class LookupOverrideListResponse < InstanceListResource
+                    # @param [Array<LookupOverrideInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @lookup_override_instance = payload.body[key].map do |data|
+                        LookupOverrideInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def lookup_override_instance
+                          @instance
+                      end
+                  end
+
                 class LookupOverridePage < Page
                     ##
                     # Initialize the LookupOverridePage
@@ -174,6 +325,7 @@ module Twilio
                     # @return [LookupOverridePage] LookupOverridePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -193,6 +345,66 @@ module Twilio
                         '<Twilio.Lookups.V2.LookupOverridePage>'
                     end
                 end
+
+                class LookupOverridePageMetadata < PageMetadata
+                    attr_reader :lookup_override_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @lookup_override_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @lookup_override_page << LookupOverrideListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @lookup_override_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Lookups::V2PageMetadata>';
+                    end
+                end
+                class LookupOverrideListResponse < InstanceListResource
+
+                    # @param [Array<LookupOverrideInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @lookup_override = data_list.map do |data|
+                        LookupOverrideInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def lookup_override
+                        @lookup_override
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class LookupOverrideInstance < InstanceResource
                     ##
                     # Initialize the LookupOverrideInstance
@@ -205,6 +417,7 @@ module Twilio
                     # @return [LookupOverrideInstance] LookupOverrideInstance
                     def initialize(version, payload , field: nil, phone_number: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

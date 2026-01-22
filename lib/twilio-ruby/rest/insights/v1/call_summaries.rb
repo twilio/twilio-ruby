@@ -25,6 +25,7 @@ module Twilio
                     # @return [CallSummariesList] CallSummariesList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Voice/Summaries"
@@ -214,6 +215,100 @@ module Twilio
                     end
 
                     ##
+                    # Lists CallSummariesPageMetadata records from the API as a list.
+                      # @param [String] from A calling party. Could be an E.164 number, a SIP URI, or a Twilio Client registered name.
+                      # @param [String] to A called party. Could be an E.164 number, a SIP URI, or a Twilio Client registered name.
+                      # @param [String] from_carrier An origination carrier.
+                      # @param [String] to_carrier A destination carrier.
+                      # @param [String] from_country_code A source country code based on phone number in From.
+                      # @param [String] to_country_code A destination country code. Based on phone number in To.
+                      # @param [Boolean] verified_caller A boolean flag indicating whether or not the caller was verified using SHAKEN/STIR.One of 'true' or 'false'.
+                      # @param [Boolean] has_tag A boolean flag indicating the presence of one or more [Voice Insights Call Tags](https://www.twilio.com/docs/voice/voice-insights/api/call/details-call-tags).
+                      # @param [String] start_time A Start time of the calls. xm (x minutes), xh (x hours), xd (x days), 1w, 30m, 3d, 4w or datetime-ISO. Defaults to 4h.
+                      # @param [String] end_time An End Time of the calls. xm (x minutes), xh (x hours), xd (x days), 1w, 30m, 3d, 4w or datetime-ISO. Defaults to 0m.
+                      # @param [String] call_type A Call Type of the calls. One of `carrier`, `sip`, `trunking` or `client`.
+                      # @param [String] call_state A Call State of the calls. One of `ringing`, `completed`, `busy`, `fail`, `noanswer`, `canceled`, `answered`, `undialed`.
+                      # @param [String] direction A Direction of the calls. One of `outbound_api`, `outbound_dial`, `inbound`, `trunking_originating`, `trunking_terminating`.
+                      # @param [ProcessingStateRequest] processing_state A Processing State of the Call Summaries. One of `completed`, `partial` or `all`.
+                      # @param [SortBy] sort_by A Sort By criterion for the returned list of Call Summaries. One of `start_time` or `end_time`.
+                      # @param [String] subaccount A unique SID identifier of a Subaccount.
+                      # @param [Boolean] abnormal_session A boolean flag indicating an abnormal session where the last SIP response was not 200 OK.
+                      # @param [AnsweredBy] answered_by An Answered By value for the calls based on `Answering Machine Detection (AMD)`. One of `unknown`, `machine_start`, `machine_end_beep`, `machine_end_silence`, `machine_end_other`, `human` or `fax`.
+                      # @param [String] answered_by_annotation Either machine or human.
+                      # @param [String] connectivity_issue_annotation A Connectivity Issue with the calls. One of `no_connectivity_issue`, `invalid_number`, `caller_id`, `dropped_call`, or `number_reachability`.
+                      # @param [String] quality_issue_annotation A subjective Quality Issue with the calls. One of `no_quality_issue`, `low_volume`, `choppy_robotic`, `echo`, `dtmf`, `latency`, `owa`, `static_noise`.
+                      # @param [Boolean] spam_annotation A boolean flag indicating spam calls.
+                      # @param [String] call_score_annotation A Call Score of the calls. Use a range of 1-5 to indicate the call experience score, with the following mapping as a reference for the rated call [5: Excellent, 4: Good, 3 : Fair, 2 : Poor, 1: Bad].
+                      # @param [Boolean] branded_enabled A boolean flag indicating whether or not the calls were branded using Twilio Branded Calls. One of 'true' or 'false'
+                      # @param [Boolean] voice_integrity_enabled A boolean flag indicating whether or not the phone number had voice integrity enabled.One of 'true' or 'false'
+                      # @param [String] branded_bundle_sid A unique SID identifier of the Branded Call.
+                      # @param [Boolean] branded_logo Indicates whether the branded logo was displayed during the in_brand branded call. Possible values are true (logo was present) or false (logo was not present).
+                      # @param [String] branded_type Indicates whether the Branded Call is in_band vs out_of_band.
+                      # @param [String] branded_use_case Specifies the user-defined purpose for the call, as provided during the setup of in_band branded calling.
+                      # @param [String] branded_call_reason Specifies the user-defined reason for the call, which will be displayed to the end user on their mobile device during an in_band branded call.
+                      # @param [String] voice_integrity_bundle_sid A unique SID identifier of the Voice Integrity Profile.
+                      # @param [String] voice_integrity_use_case A Voice Integrity Use Case . Is of type enum. One of 'abandoned_cart', 'appointment_reminders', 'appointment_scheduling', 'asset_management', 'automated_support', 'call_tracking', 'click_to_call', 'contact_tracing', 'contactless_delivery', 'customer_support', 'dating/social', 'delivery_notifications', 'distance_learning', 'emergency_notifications', 'employee_notifications', 'exam_proctoring', 'field_notifications', 'first_responder', 'fraud_alerts', 'group_messaging', 'identify_&_verification', 'intelligent_routing', 'lead_alerts', 'lead_distribution', 'lead_generation', 'lead_management', 'lead_nurturing', 'marketing_events', 'mass_alerts', 'meetings/collaboration', 'order_notifications', 'outbound_dialer', 'pharmacy', 'phone_system', 'purchase_confirmation', 'remote_appointments', 'rewards_program', 'self-service', 'service_alerts', 'shift_management', 'survey/research', 'telehealth', 'telemarketing', 'therapy_(individual+group)'.
+                      # @param [String] business_profile_identity A Business Identity of the calls. Is of type enum. One of 'direct_customer', 'isv_reseller_or_partner'. 
+                      # @param [String] business_profile_industry A Business Industry of the calls. Is of type enum. One of 'automotive', 'agriculture', 'banking', 'consumer', 'construction', 'education', 'engineering', 'energy', 'oil_and_gas', 'fast_moving_consumer_goods', 'financial', 'fintech', 'food_and_beverage', 'government', 'healthcare', 'hospitality', 'insurance', 'legal', 'manufacturing', 'media', 'online', 'professional_services', 'raw_materials', 'real_estate', 'religion', 'retail', 'jewelry', 'technology', 'telecommunications', 'transportation', 'travel', 'electronics', 'not_for_profit' 
+                      # @param [String] business_profile_bundle_sid A unique SID identifier of the Business Profile.
+                      # @param [String] business_profile_type A Business Profile Type of the calls. Is of type enum. One of 'primary', 'secondary'.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, answered_by_annotation: :unset, connectivity_issue_annotation: :unset, quality_issue_annotation: :unset, spam_annotation: :unset, call_score_annotation: :unset, branded_enabled: :unset, voice_integrity_enabled: :unset, branded_bundle_sid: :unset, branded_logo: :unset, branded_type: :unset, branded_use_case: :unset, branded_call_reason: :unset, voice_integrity_bundle_sid: :unset, voice_integrity_use_case: :unset, business_profile_identity: :unset, business_profile_industry: :unset, business_profile_bundle_sid: :unset, business_profile_type: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'From' => from,
+                            'To' => to,
+                            'FromCarrier' => from_carrier,
+                            'ToCarrier' => to_carrier,
+                            'FromCountryCode' => from_country_code,
+                            'ToCountryCode' => to_country_code,
+                            'VerifiedCaller' => verified_caller,
+                            'HasTag' => has_tag,
+                            'StartTime' => start_time,
+                            'EndTime' => end_time,
+                            'CallType' => call_type,
+                            'CallState' => call_state,
+                            'Direction' => direction,
+                            'ProcessingState' => processing_state,
+                            'SortBy' => sort_by,
+                            'Subaccount' => subaccount,
+                            'AbnormalSession' => abnormal_session,
+                            'AnsweredBy' => answered_by,
+                            'AnsweredByAnnotation' => answered_by_annotation,
+                            'ConnectivityIssueAnnotation' => connectivity_issue_annotation,
+                            'QualityIssueAnnotation' => quality_issue_annotation,
+                            'SpamAnnotation' => spam_annotation,
+                            'CallScoreAnnotation' => call_score_annotation,
+                            'BrandedEnabled' => branded_enabled,
+                            'VoiceIntegrityEnabled' => voice_integrity_enabled,
+                            'BrandedBundleSid' => branded_bundle_sid,
+                            'BrandedLogo' => branded_logo,
+                            'BrandedType' => branded_type,
+                            'BrandedUseCase' => branded_use_case,
+                            'BrandedCallReason' => branded_call_reason,
+                            'VoiceIntegrityBundleSid' => voice_integrity_bundle_sid,
+                            'VoiceIntegrityUseCase' => voice_integrity_use_case,
+                            'BusinessProfileIdentity' => business_profile_identity,
+                            'BusinessProfileIndustry' => business_profile_industry,
+                            'BusinessProfileBundleSid' => business_profile_bundle_sid,
+                            'BusinessProfileType' => business_profile_type,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CallSummariesPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields CallSummariesInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -270,7 +365,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of CallSummariesInstance
-                    def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, answered_by_annotation: :unset, connectivity_issue_annotation: :unset, quality_issue_annotation: :unset, spam_annotation: :unset, call_score_annotation: :unset, branded_enabled: :unset, voice_integrity_enabled: :unset, branded_bundle_sid: :unset, branded_logo: :unset, branded_type: :unset, branded_use_case: :unset, branded_call_reason: :unset, voice_integrity_bundle_sid: :unset, voice_integrity_use_case: :unset, business_profile_identity: :unset, business_profile_industry: :unset, business_profile_bundle_sid: :unset, business_profile_type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(from: :unset, to: :unset, from_carrier: :unset, to_carrier: :unset, from_country_code: :unset, to_country_code: :unset, verified_caller: :unset, has_tag: :unset, start_time: :unset, end_time: :unset, call_type: :unset, call_state: :unset, direction: :unset, processing_state: :unset, sort_by: :unset, subaccount: :unset, abnormal_session: :unset, answered_by: :unset, answered_by_annotation: :unset, connectivity_issue_annotation: :unset, quality_issue_annotation: :unset, spam_annotation: :unset, call_score_annotation: :unset, branded_enabled: :unset, voice_integrity_enabled: :unset, branded_bundle_sid: :unset, branded_logo: :unset, branded_type: :unset, branded_use_case: :unset, branded_call_reason: :unset, voice_integrity_bundle_sid: :unset, voice_integrity_use_case: :unset, business_profile_identity: :unset, business_profile_industry: :unset, business_profile_bundle_sid: :unset, business_profile_type: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'From' => from,
                             'To' => to,
@@ -351,6 +446,7 @@ module Twilio
                     # @return [CallSummariesPage] CallSummariesPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -370,6 +466,66 @@ module Twilio
                         '<Twilio.Insights.V1.CallSummariesPage>'
                     end
                 end
+
+                class CallSummariesPageMetadata < PageMetadata
+                    attr_reader :call_summaries_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @call_summaries_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @call_summaries_page << CallSummariesListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @call_summaries_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Insights::V1PageMetadata>';
+                    end
+                end
+                class CallSummariesListResponse < InstanceListResource
+
+                    # @param [Array<CallSummariesInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @call_summaries = data_list.map do |data|
+                        CallSummariesInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def call_summaries
+                        @call_summaries
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class CallSummariesInstance < InstanceResource
                     ##
                     # Initialize the CallSummariesInstance
@@ -382,6 +538,7 @@ module Twilio
                     # @return [CallSummariesInstance] CallSummariesInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

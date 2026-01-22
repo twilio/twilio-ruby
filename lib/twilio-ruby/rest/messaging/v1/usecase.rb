@@ -25,6 +25,7 @@ module Twilio
                     # @return [UsecaseList] UsecaseList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Services/Usecases"
@@ -48,6 +49,30 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the UsecaseInstanceMetadata
+                    # @return [UsecaseInstance] Fetched UsecaseInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        usecase_instance = UsecaseInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        UsecaseInstanceMetadata.new(
+                            @version,
+                            usecase_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -66,6 +91,7 @@ module Twilio
                     # @return [UsecasePage] UsecasePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -85,6 +111,66 @@ module Twilio
                         '<Twilio.Messaging.V1.UsecasePage>'
                     end
                 end
+
+                class UsecasePageMetadata < PageMetadata
+                    attr_reader :usecase_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @usecase_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @usecase_page << UsecaseListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @usecase_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class UsecaseListResponse < InstanceListResource
+
+                    # @param [Array<UsecaseInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @usecase = data_list.map do |data|
+                        UsecaseInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def usecase
+                        @usecase
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class UsecaseInstance < InstanceResource
                     ##
                     # Initialize the UsecaseInstance
@@ -97,6 +183,7 @@ module Twilio
                     # @return [UsecaseInstance] UsecaseInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

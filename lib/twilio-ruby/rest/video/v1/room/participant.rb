@@ -27,6 +27,7 @@ module Twilio
                     # @return [ParticipantList] ParticipantList
                     def initialize(version, room_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { room_sid: room_sid }
                         @uri = "/Rooms/#{@solution[:room_sid]}/Participants"
@@ -88,6 +89,36 @@ module Twilio
                     end
 
                     ##
+                    # Lists ParticipantPageMetadata records from the API as a list.
+                      # @param [Status] status Read only the participants with this status. Can be: `connected` or `disconnected`. For `in-progress` Rooms the default Status is `connected`, for `completed` Rooms only `disconnected` Participants are returned.
+                      # @param [String] identity Read only the Participants with this [User](https://www.twilio.com/docs/chat/rest/user-resource) `identity` value.
+                      # @param [Time] date_created_after Read only Participants that started after this date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
+                      # @param [Time] date_created_before Read only Participants that started before this date in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#UTC) format.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(status: :unset, identity: :unset, date_created_after: :unset, date_created_before: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Status' => status,
+                            'Identity' => identity,
+                            'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
+                            'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ParticipantPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ParticipantInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -112,7 +143,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ParticipantInstance
-                    def page(status: :unset, identity: :unset, date_created_after: :unset, date_created_before: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(status: :unset, identity: :unset, date_created_after: :unset, date_created_before: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Status' => status,
                             'Identity' => identity,
@@ -162,6 +193,7 @@ module Twilio
                     # @return [ParticipantContext] ParticipantContext
                     def initialize(version, room_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { room_sid: room_sid, sid: sid,  }
@@ -194,6 +226,32 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the ParticipantInstanceMetadata
+                    # @return [ParticipantInstance] Fetched ParticipantInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        participant_instance = ParticipantInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                            sid: @solution[:sid],
+                        )
+                        ParticipantInstanceMetadata.new(
+                            @version,
+                            participant_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the ParticipantInstance
                     # @param [Status] status 
                     # @return [ParticipantInstance] Updated ParticipantInstance
@@ -217,6 +275,39 @@ module Twilio
                             payload,
                             room_sid: @solution[:room_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the ParticipantInstanceMetadata
+                    # @param [Status] status 
+                    # @return [ParticipantInstance] Updated ParticipantInstance
+                    def update_with_metadata(
+                      status: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Status' => status,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        participant_instance = ParticipantInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                            sid: @solution[:sid],
+                        )
+                        ParticipantInstanceMetadata.new(
+                            @version,
+                            participant_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -296,6 +387,53 @@ module Twilio
                     end
                 end
 
+                class ParticipantInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ParticipantInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ParticipantInstance] participant_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ParticipantInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, participant_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @participant_instance = participant_instance
+                    end
+
+                    def participant
+                        @participant_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ParticipantInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ParticipantListResponse < InstanceListResource
+                    # @param [Array<ParticipantInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @participant_instance = payload.body[key].map do |data|
+                        ParticipantInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def participant_instance
+                          @instance
+                      end
+                  end
+
                 class ParticipantPage < Page
                     ##
                     # Initialize the ParticipantPage
@@ -305,6 +443,7 @@ module Twilio
                     # @return [ParticipantPage] ParticipantPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -324,6 +463,66 @@ module Twilio
                         '<Twilio.Video.V1.ParticipantPage>'
                     end
                 end
+
+                class ParticipantPageMetadata < PageMetadata
+                    attr_reader :participant_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @participant_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @participant_page << ParticipantListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @participant_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Video::V1PageMetadata>';
+                    end
+                end
+                class ParticipantListResponse < InstanceListResource
+
+                    # @param [Array<ParticipantInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @participant = data_list.map do |data|
+                        ParticipantInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def participant
+                        @participant
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ParticipantInstance < InstanceResource
                     ##
                     # Initialize the ParticipantInstance
@@ -336,6 +535,7 @@ module Twilio
                     # @return [ParticipantInstance] ParticipantInstance
                     def initialize(version, payload , room_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

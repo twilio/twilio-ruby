@@ -25,6 +25,7 @@ module Twilio
                     # @return [SmsCommandList] SmsCommandList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/SmsCommands"
@@ -61,6 +62,46 @@ module Twilio
                         SmsCommandInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the SmsCommandInstanceMetadata
+                    # @param [String] sim The `sid` or `unique_name` of the [SIM](https://www.twilio.com/docs/iot/supersim/api/sim-resource) to send the SMS Command to.
+                    # @param [String] payload The message body of the SMS Command.
+                    # @param [String] callback_method The HTTP method we should use to call `callback_url`. Can be: `GET` or `POST` and the default is POST.
+                    # @param [String] callback_url The URL we should call using the `callback_method` after we have sent the command.
+                    # @return [SmsCommandInstance] Created SmsCommandInstance
+                    def create_with_metadata(
+                      sim: nil, 
+                      payload: nil, 
+                      callback_method: :unset, 
+                      callback_url: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Sim' => sim,
+                            'Payload' => payload,
+                            'CallbackMethod' => callback_method,
+                            'CallbackUrl' => callback_url,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        sms_command_instance = SmsCommandInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        SmsCommandInstanceMetadata.new(
+                            @version,
+                            sms_command_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -116,6 +157,34 @@ module Twilio
                     end
 
                     ##
+                    # Lists SmsCommandPageMetadata records from the API as a list.
+                      # @param [String] sim The SID or unique name of the Sim resource that SMS Command was sent to or from.
+                      # @param [Status] status The status of the SMS Command. Can be: `queued`, `sent`, `delivered`, `received` or `failed`. See the [SMS Command Status Values](https://www.twilio.com/docs/iot/supersim/api/smscommand-resource#status-values) for a description of each.
+                      # @param [Direction] direction The direction of the SMS Command. Can be `to_sim` or `from_sim`. The value of `to_sim` is synonymous with the term `mobile terminated`, and `from_sim` is synonymous with the term `mobile originated`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(sim: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Sim' => sim,
+                            'Status' => status,
+                            'Direction' => direction,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SmsCommandPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields SmsCommandInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -139,7 +208,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of SmsCommandInstance
-                    def page(sim: :unset, status: :unset, direction: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(sim: :unset, status: :unset, direction: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Sim' => sim,
                             'Status' => status,
@@ -187,6 +256,7 @@ module Twilio
                     # @return [SmsCommandContext] SmsCommandContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -213,6 +283,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the SmsCommandInstanceMetadata
+                    # @return [SmsCommandInstance] Fetched SmsCommandInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        sms_command_instance = SmsCommandInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        SmsCommandInstanceMetadata.new(
+                            @version,
+                            sms_command_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -229,6 +324,53 @@ module Twilio
                     end
                 end
 
+                class SmsCommandInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SmsCommandInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SmsCommandInstance] sms_command_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SmsCommandInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, sms_command_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @sms_command_instance = sms_command_instance
+                    end
+
+                    def sms_command
+                        @sms_command_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SmsCommandInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SmsCommandListResponse < InstanceListResource
+                    # @param [Array<SmsCommandInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @sms_command_instance = payload.body[key].map do |data|
+                        SmsCommandInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def sms_command_instance
+                          @instance
+                      end
+                  end
+
                 class SmsCommandPage < Page
                     ##
                     # Initialize the SmsCommandPage
@@ -238,6 +380,7 @@ module Twilio
                     # @return [SmsCommandPage] SmsCommandPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -257,6 +400,66 @@ module Twilio
                         '<Twilio.Supersim.V1.SmsCommandPage>'
                     end
                 end
+
+                class SmsCommandPageMetadata < PageMetadata
+                    attr_reader :sms_command_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @sms_command_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @sms_command_page << SmsCommandListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @sms_command_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Supersim::V1PageMetadata>';
+                    end
+                end
+                class SmsCommandListResponse < InstanceListResource
+
+                    # @param [Array<SmsCommandInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @sms_command = data_list.map do |data|
+                        SmsCommandInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def sms_command
+                        @sms_command
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class SmsCommandInstance < InstanceResource
                     ##
                     # Initialize the SmsCommandInstance
@@ -269,6 +472,7 @@ module Twilio
                     # @return [SmsCommandInstance] SmsCommandInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

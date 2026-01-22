@@ -27,6 +27,7 @@ module Twilio
                     # @return [ConnectionPolicyTargetList] ConnectionPolicyTargetList
                     def initialize(version, connection_policy_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { connection_policy_sid: connection_policy_sid }
                         @uri = "/ConnectionPolicies/#{@solution[:connection_policy_sid]}/Targets"
@@ -70,6 +71,50 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ConnectionPolicyTargetInstanceMetadata
+                    # @param [String] target The SIP address you want Twilio to route your calls to. This must be a `sip:` schema. `sips` is NOT supported.
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It is not unique and can be up to 255 characters long.
+                    # @param [String] priority The relative importance of the target. Can be an integer from 0 to 65535, inclusive, and the default is 10. The lowest number represents the most important target.
+                    # @param [String] weight The value that determines the relative share of the load the Target should receive compared to other Targets with the same priority. Can be an integer from 1 to 65535, inclusive, and the default is 10. Targets with higher values receive more load than those with lower ones with the same priority.
+                    # @param [Boolean] enabled Whether the Target is enabled. The default is `true`.
+                    # @return [ConnectionPolicyTargetInstance] Created ConnectionPolicyTargetInstance
+                    def create_with_metadata(
+                      target: nil, 
+                      friendly_name: :unset, 
+                      priority: :unset, 
+                      weight: :unset, 
+                      enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Target' => target,
+                            'FriendlyName' => friendly_name,
+                            'Priority' => priority,
+                            'Weight' => weight,
+                            'Enabled' => enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        connection_policy_target_instance = ConnectionPolicyTargetInstance.new(
+                            @version,
+                            response.body,
+                            connection_policy_sid: @solution[:connection_policy_sid],
+                        )
+                        ConnectionPolicyTargetInstanceMetadata.new(
+                            @version,
+                            connection_policy_target_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ConnectionPolicyTargetInstance records from the API as a list.
@@ -110,6 +155,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists ConnectionPolicyTargetPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ConnectionPolicyTargetPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ConnectionPolicyTargetInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -130,7 +197,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ConnectionPolicyTargetInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -176,6 +243,7 @@ module Twilio
                     # @return [ConnectionPolicyTargetContext] ConnectionPolicyTargetContext
                     def initialize(version, connection_policy_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { connection_policy_sid: connection_policy_sid, sid: sid,  }
@@ -192,7 +260,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ConnectionPolicyTargetInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          connectionPolicyTarget_instance = ConnectionPolicyTargetInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ConnectionPolicyTargetInstanceMetadata.new(@version, connectionPolicyTarget_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -212,6 +300,32 @@ module Twilio
                             payload,
                             connection_policy_sid: @solution[:connection_policy_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ConnectionPolicyTargetInstanceMetadata
+                    # @return [ConnectionPolicyTargetInstance] Fetched ConnectionPolicyTargetInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        connection_policy_target_instance = ConnectionPolicyTargetInstance.new(
+                            @version,
+                            response.body,
+                            connection_policy_sid: @solution[:connection_policy_sid],
+                            sid: @solution[:sid],
+                        )
+                        ConnectionPolicyTargetInstanceMetadata.new(
+                            @version,
+                            connection_policy_target_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -254,6 +368,51 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ConnectionPolicyTargetInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It is not unique and can be up to 255 characters long.
+                    # @param [String] target The SIP address you want Twilio to route your calls to. This must be a `sip:` schema. `sips` is NOT supported.
+                    # @param [String] priority The relative importance of the target. Can be an integer from 0 to 65535, inclusive. The lowest number represents the most important target.
+                    # @param [String] weight The value that determines the relative share of the load the Target should receive compared to other Targets with the same priority. Can be an integer from 1 to 65535, inclusive. Targets with higher values receive more load than those with lower ones with the same priority.
+                    # @param [Boolean] enabled Whether the Target is enabled.
+                    # @return [ConnectionPolicyTargetInstance] Updated ConnectionPolicyTargetInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      target: :unset, 
+                      priority: :unset, 
+                      weight: :unset, 
+                      enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Target' => target,
+                            'Priority' => priority,
+                            'Weight' => weight,
+                            'Enabled' => enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        connection_policy_target_instance = ConnectionPolicyTargetInstance.new(
+                            @version,
+                            response.body,
+                            connection_policy_sid: @solution[:connection_policy_sid],
+                            sid: @solution[:sid],
+                        )
+                        ConnectionPolicyTargetInstanceMetadata.new(
+                            @version,
+                            connection_policy_target_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -270,6 +429,53 @@ module Twilio
                     end
                 end
 
+                class ConnectionPolicyTargetInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ConnectionPolicyTargetInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ConnectionPolicyTargetInstance] connection_policy_target_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ConnectionPolicyTargetInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, connection_policy_target_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @connection_policy_target_instance = connection_policy_target_instance
+                    end
+
+                    def connection_policy_target
+                        @connection_policy_target_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ConnectionPolicyTargetInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ConnectionPolicyTargetListResponse < InstanceListResource
+                    # @param [Array<ConnectionPolicyTargetInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @connection_policy_target_instance = payload.body[key].map do |data|
+                        ConnectionPolicyTargetInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def connection_policy_target_instance
+                          @instance
+                      end
+                  end
+
                 class ConnectionPolicyTargetPage < Page
                     ##
                     # Initialize the ConnectionPolicyTargetPage
@@ -279,6 +485,7 @@ module Twilio
                     # @return [ConnectionPolicyTargetPage] ConnectionPolicyTargetPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -298,6 +505,66 @@ module Twilio
                         '<Twilio.Voice.V1.ConnectionPolicyTargetPage>'
                     end
                 end
+
+                class ConnectionPolicyTargetPageMetadata < PageMetadata
+                    attr_reader :connection_policy_target_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @connection_policy_target_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @connection_policy_target_page << ConnectionPolicyTargetListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @connection_policy_target_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Voice::V1PageMetadata>';
+                    end
+                end
+                class ConnectionPolicyTargetListResponse < InstanceListResource
+
+                    # @param [Array<ConnectionPolicyTargetInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @connection_policy_target = data_list.map do |data|
+                        ConnectionPolicyTargetInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def connection_policy_target
+                        @connection_policy_target
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ConnectionPolicyTargetInstance < InstanceResource
                     ##
                     # Initialize the ConnectionPolicyTargetInstance
@@ -310,6 +577,7 @@ module Twilio
                     # @return [ConnectionPolicyTargetInstance] ConnectionPolicyTargetInstance
                     def initialize(version, payload , connection_policy_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

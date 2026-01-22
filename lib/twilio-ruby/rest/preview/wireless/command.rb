@@ -25,6 +25,7 @@ module Twilio
                     # @return [CommandList] CommandList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Commands"
@@ -70,6 +71,55 @@ module Twilio
                         CommandInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the CommandInstanceMetadata
+                    # @param [String] command 
+                    # @param [String] device 
+                    # @param [String] sim 
+                    # @param [String] callback_method 
+                    # @param [String] callback_url 
+                    # @param [String] command_mode 
+                    # @param [String] include_sid 
+                    # @return [CommandInstance] Created CommandInstance
+                    def create_with_metadata(
+                      command: nil, 
+                      device: :unset, 
+                      sim: :unset, 
+                      callback_method: :unset, 
+                      callback_url: :unset, 
+                      command_mode: :unset, 
+                      include_sid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Command' => command,
+                            'Device' => device,
+                            'Sim' => sim,
+                            'CallbackMethod' => callback_method,
+                            'CallbackUrl' => callback_url,
+                            'CommandMode' => command_mode,
+                            'IncludeSid' => include_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        command_instance = CommandInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        CommandInstanceMetadata.new(
+                            @version,
+                            command_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -129,6 +179,36 @@ module Twilio
                     end
 
                     ##
+                    # Lists CommandPageMetadata records from the API as a list.
+                      # @param [String] device 
+                      # @param [String] sim 
+                      # @param [String] status 
+                      # @param [String] direction 
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(device: :unset, sim: :unset, status: :unset, direction: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Device' => device,
+                            'Sim' => sim,
+                            'Status' => status,
+                            'Direction' => direction,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CommandPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields CommandInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -153,7 +233,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of CommandInstance
-                    def page(device: :unset, sim: :unset, status: :unset, direction: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(device: :unset, sim: :unset, status: :unset, direction: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Device' => device,
                             'Sim' => sim,
@@ -202,6 +282,7 @@ module Twilio
                     # @return [CommandContext] CommandContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -228,6 +309,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the CommandInstanceMetadata
+                    # @return [CommandInstance] Fetched CommandInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        command_instance = CommandInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        CommandInstanceMetadata.new(
+                            @version,
+                            command_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -244,6 +350,53 @@ module Twilio
                     end
                 end
 
+                class CommandInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CommandInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CommandInstance] command_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CommandInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, command_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @command_instance = command_instance
+                    end
+
+                    def command
+                        @command_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CommandInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CommandListResponse < InstanceListResource
+                    # @param [Array<CommandInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @command_instance = payload.body[key].map do |data|
+                        CommandInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def command_instance
+                          @instance
+                      end
+                  end
+
                 class CommandPage < Page
                     ##
                     # Initialize the CommandPage
@@ -253,6 +406,7 @@ module Twilio
                     # @return [CommandPage] CommandPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -272,6 +426,66 @@ module Twilio
                         '<Twilio.Preview.Wireless.CommandPage>'
                     end
                 end
+
+                class CommandPageMetadata < PageMetadata
+                    attr_reader :command_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @command_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @command_page << CommandListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @command_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Preview::WirelessPageMetadata>';
+                    end
+                end
+                class CommandListResponse < InstanceListResource
+
+                    # @param [Array<CommandInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @command = data_list.map do |data|
+                        CommandInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def command
+                        @command
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class CommandInstance < InstanceResource
                     ##
                     # Initialize the CommandInstance
@@ -284,6 +498,7 @@ module Twilio
                     # @return [CommandInstance] CommandInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

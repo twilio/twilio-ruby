@@ -28,6 +28,7 @@ module Twilio
                     # @return [VariableList] VariableList
                     def initialize(version, service_sid: nil, environment_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { service_sid: service_sid, environment_sid: environment_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Environments/#{@solution[:environment_sid]}/Variables"
@@ -60,6 +61,42 @@ module Twilio
                             payload,
                             service_sid: @solution[:service_sid],
                             environment_sid: @solution[:environment_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the VariableInstanceMetadata
+                    # @param [String] key A string by which the Variable resource can be referenced. It can be a maximum of 128 characters.
+                    # @param [String] value A string that contains the actual value of the Variable. It can be a maximum of 450 bytes in size.
+                    # @return [VariableInstance] Created VariableInstance
+                    def create_with_metadata(
+                      key: nil, 
+                      value: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Key' => key,
+                            'Value' => value,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        variable_instance = VariableInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            environment_sid: @solution[:environment_sid],
+                        )
+                        VariableInstanceMetadata.new(
+                            @version,
+                            variable_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -103,6 +140,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists VariablePageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        VariablePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields VariableInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -123,7 +182,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of VariableInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -170,6 +229,7 @@ module Twilio
                     # @return [VariableContext] VariableContext
                     def initialize(version, service_sid, environment_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { service_sid: service_sid, environment_sid: environment_sid, sid: sid,  }
@@ -186,7 +246,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the VariableInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          variable_instance = VariableInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          VariableInstanceMetadata.new(@version, variable_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -207,6 +287,33 @@ module Twilio
                             service_sid: @solution[:service_sid],
                             environment_sid: @solution[:environment_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the VariableInstanceMetadata
+                    # @return [VariableInstance] Fetched VariableInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        variable_instance = VariableInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            environment_sid: @solution[:environment_sid],
+                            sid: @solution[:sid],
+                        )
+                        VariableInstanceMetadata.new(
+                            @version,
+                            variable_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -241,6 +348,43 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the VariableInstanceMetadata
+                    # @param [String] key A string by which the Variable resource can be referenced. It can be a maximum of 128 characters.
+                    # @param [String] value A string that contains the actual value of the Variable. It can be a maximum of 450 bytes in size.
+                    # @return [VariableInstance] Updated VariableInstance
+                    def update_with_metadata(
+                      key: :unset, 
+                      value: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Key' => key,
+                            'Value' => value,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        variable_instance = VariableInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            environment_sid: @solution[:environment_sid],
+                            sid: @solution[:sid],
+                        )
+                        VariableInstanceMetadata.new(
+                            @version,
+                            variable_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -257,6 +401,53 @@ module Twilio
                     end
                 end
 
+                class VariableInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new VariableInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}VariableInstance] variable_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [VariableInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, variable_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @variable_instance = variable_instance
+                    end
+
+                    def variable
+                        @variable_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.VariableInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class VariableListResponse < InstanceListResource
+                    # @param [Array<VariableInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @variable_instance = payload.body[key].map do |data|
+                        VariableInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def variable_instance
+                          @instance
+                      end
+                  end
+
                 class VariablePage < Page
                     ##
                     # Initialize the VariablePage
@@ -266,6 +457,7 @@ module Twilio
                     # @return [VariablePage] VariablePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -285,6 +477,66 @@ module Twilio
                         '<Twilio.Serverless.V1.VariablePage>'
                     end
                 end
+
+                class VariablePageMetadata < PageMetadata
+                    attr_reader :variable_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @variable_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @variable_page << VariableListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @variable_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Serverless::V1PageMetadata>';
+                    end
+                end
+                class VariableListResponse < InstanceListResource
+
+                    # @param [Array<VariableInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @variable = data_list.map do |data|
+                        VariableInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def variable
+                        @variable
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class VariableInstance < InstanceResource
                     ##
                     # Initialize the VariableInstance
@@ -297,6 +549,7 @@ module Twilio
                     # @return [VariableInstance] VariableInstance
                     def initialize(version, payload , service_sid: nil, environment_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

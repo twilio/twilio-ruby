@@ -25,6 +25,7 @@ module Twilio
                     # @return [RateLimitList] RateLimitList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/RateLimits"
@@ -54,6 +55,36 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the RateLimitInstanceMetadata
+                    # @param [Array[String]] fields 
+                    # @return [RateLimitInstance] Fetched RateLimitInstance
+                    def fetch_with_metadata(
+                      fields: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'Fields' => Twilio.serialize_list(fields) { |e| e },
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        rate_limit_instance = RateLimitInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        RateLimitInstanceMetadata.new(
+                            @version,
+                            rate_limit_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -72,6 +103,7 @@ module Twilio
                     # @return [RateLimitPage] RateLimitPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -91,6 +123,66 @@ module Twilio
                         '<Twilio.Lookups.V2.RateLimitPage>'
                     end
                 end
+
+                class RateLimitPageMetadata < PageMetadata
+                    attr_reader :rate_limit_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @rate_limit_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @rate_limit_page << RateLimitListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @rate_limit_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Lookups::V2PageMetadata>';
+                    end
+                end
+                class RateLimitListResponse < InstanceListResource
+
+                    # @param [Array<RateLimitInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @rate_limit = data_list.map do |data|
+                        RateLimitInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def rate_limit
+                        @rate_limit
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class RateLimitInstance < InstanceResource
                     ##
                     # Initialize the RateLimitInstance
@@ -103,6 +195,7 @@ module Twilio
                     # @return [RateLimitInstance] RateLimitInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

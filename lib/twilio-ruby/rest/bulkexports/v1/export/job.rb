@@ -27,6 +27,7 @@ module Twilio
                     # @return [JobList] JobList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -50,6 +51,7 @@ module Twilio
                     # @return [JobContext] JobContext
                     def initialize(version, job_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { job_sid: job_sid,  }
@@ -66,7 +68,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the JobInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          job_instance = JobInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          JobInstanceMetadata.new(@version, job_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -88,6 +110,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the JobInstanceMetadata
+                    # @return [JobInstance] Fetched JobInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        job_instance = JobInstance.new(
+                            @version,
+                            response.body,
+                            job_sid: @solution[:job_sid],
+                        )
+                        JobInstanceMetadata.new(
+                            @version,
+                            job_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -104,6 +151,53 @@ module Twilio
                     end
                 end
 
+                class JobInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new JobInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}JobInstance] job_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [JobInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, job_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @job_instance = job_instance
+                    end
+
+                    def job
+                        @job_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.JobInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class JobListResponse < InstanceListResource
+                    # @param [Array<JobInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @job_instance = payload.body[key].map do |data|
+                        JobInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def job_instance
+                          @instance
+                      end
+                  end
+
                 class JobPage < Page
                     ##
                     # Initialize the JobPage
@@ -113,6 +207,7 @@ module Twilio
                     # @return [JobPage] JobPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -132,6 +227,66 @@ module Twilio
                         '<Twilio.Bulkexports.V1.JobPage>'
                     end
                 end
+
+                class JobPageMetadata < PageMetadata
+                    attr_reader :job_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @job_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @job_page << JobListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @job_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Bulkexports::V1PageMetadata>';
+                    end
+                end
+                class JobListResponse < InstanceListResource
+
+                    # @param [Array<JobInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @job = data_list.map do |data|
+                        JobInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def job
+                        @job
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class JobInstance < InstanceResource
                     ##
                     # Initialize the JobInstance
@@ -144,6 +299,7 @@ module Twilio
                     # @return [JobInstance] JobInstance
                     def initialize(version, payload , job_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

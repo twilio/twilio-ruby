@@ -25,6 +25,7 @@ module Twilio
                     # @return [PortingWebhookConfigurationDeleteList] PortingWebhookConfigurationDeleteList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -48,6 +49,7 @@ module Twilio
                     # @return [PortingWebhookConfigurationDeleteContext] PortingWebhookConfigurationDeleteContext
                     def initialize(version, webhook_type)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { webhook_type: webhook_type,  }
@@ -64,7 +66,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the PortingWebhookConfigurationDeleteInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          portingWebhookConfigurationDelete_instance = PortingWebhookConfigurationDeleteInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          PortingWebhookConfigurationDeleteInstanceMetadata.new(@version, portingWebhookConfigurationDelete_instance, response.headers, response.status_code)
                     end
 
 
@@ -83,6 +105,53 @@ module Twilio
                     end
                 end
 
+                class PortingWebhookConfigurationDeleteInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new PortingWebhookConfigurationDeleteInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}PortingWebhookConfigurationDeleteInstance] porting_webhook_configuration_delete_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [PortingWebhookConfigurationDeleteInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, porting_webhook_configuration_delete_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @porting_webhook_configuration_delete_instance = porting_webhook_configuration_delete_instance
+                    end
+
+                    def porting_webhook_configuration_delete
+                        @porting_webhook_configuration_delete_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.PortingWebhookConfigurationDeleteInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class PortingWebhookConfigurationDeleteListResponse < InstanceListResource
+                    # @param [Array<PortingWebhookConfigurationDeleteInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @porting_webhook_configuration_delete_instance = payload.body[key].map do |data|
+                        PortingWebhookConfigurationDeleteInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def porting_webhook_configuration_delete_instance
+                          @instance
+                      end
+                  end
+
                 class PortingWebhookConfigurationDeletePage < Page
                     ##
                     # Initialize the PortingWebhookConfigurationDeletePage
@@ -92,6 +161,7 @@ module Twilio
                     # @return [PortingWebhookConfigurationDeletePage] PortingWebhookConfigurationDeletePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -111,6 +181,66 @@ module Twilio
                         '<Twilio.Numbers.V1.PortingWebhookConfigurationDeletePage>'
                     end
                 end
+
+                class PortingWebhookConfigurationDeletePageMetadata < PageMetadata
+                    attr_reader :porting_webhook_configuration_delete_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @porting_webhook_configuration_delete_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @porting_webhook_configuration_delete_page << PortingWebhookConfigurationDeleteListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @porting_webhook_configuration_delete_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V1PageMetadata>';
+                    end
+                end
+                class PortingWebhookConfigurationDeleteListResponse < InstanceListResource
+
+                    # @param [Array<PortingWebhookConfigurationDeleteInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @porting_webhook_configuration_delete = data_list.map do |data|
+                        PortingWebhookConfigurationDeleteInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def porting_webhook_configuration_delete
+                        @porting_webhook_configuration_delete
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class PortingWebhookConfigurationDeleteInstance < InstanceResource
                     ##
                     # Initialize the PortingWebhookConfigurationDeleteInstance
@@ -123,6 +253,7 @@ module Twilio
                     # @return [PortingWebhookConfigurationDeleteInstance] PortingWebhookConfigurationDeleteInstance
                     def initialize(version , webhook_type: nil)
                         super(version)
+                        
                         
 
                         # Context

@@ -25,6 +25,7 @@ module Twilio
                     # @return [BrandRegistrationList] BrandRegistrationList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/a2p/BrandRegistrations"
@@ -64,6 +65,49 @@ module Twilio
                         BrandRegistrationInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the BrandRegistrationInstanceMetadata
+                    # @param [String] customer_profile_bundle_sid Customer Profile Bundle Sid.
+                    # @param [String] a2p_profile_bundle_sid A2P Messaging Profile Bundle Sid.
+                    # @param [String] brand_type Type of brand being created. One of: \\\"STANDARD\\\", \\\"SOLE_PROPRIETOR\\\". SOLE_PROPRIETOR is for low volume, SOLE_PROPRIETOR use cases. STANDARD is for all other use cases.
+                    # @param [Boolean] mock A boolean that specifies whether brand should be a mock or not. If true, brand will be registered as a mock brand. Defaults to false if no value is provided.
+                    # @param [Boolean] skip_automatic_sec_vet A flag to disable automatic secondary vetting for brands which it would otherwise be done.
+                    # @return [BrandRegistrationInstance] Created BrandRegistrationInstance
+                    def create_with_metadata(
+                      customer_profile_bundle_sid: nil, 
+                      a2p_profile_bundle_sid: nil, 
+                      brand_type: :unset, 
+                      mock: :unset, 
+                      skip_automatic_sec_vet: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'CustomerProfileBundleSid' => customer_profile_bundle_sid,
+                            'A2PProfileBundleSid' => a2p_profile_bundle_sid,
+                            'BrandType' => brand_type,
+                            'Mock' => mock,
+                            'SkipAutomaticSecVet' => skip_automatic_sec_vet,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        brand_registration_instance = BrandRegistrationInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        BrandRegistrationInstanceMetadata.new(
+                            @version,
+                            brand_registration_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -107,6 +151,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists BrandRegistrationPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        BrandRegistrationPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields BrandRegistrationInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -127,7 +193,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of BrandRegistrationInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -172,6 +238,7 @@ module Twilio
                     # @return [BrandRegistrationContext] BrandRegistrationContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -202,6 +269,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the BrandRegistrationInstanceMetadata
+                    # @return [BrandRegistrationInstance] Fetched BrandRegistrationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        brand_registration_instance = BrandRegistrationInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        BrandRegistrationInstanceMetadata.new(
+                            @version,
+                            brand_registration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the BrandRegistrationInstance
                     # @return [BrandRegistrationInstance] Updated BrandRegistrationInstance
                     def update
@@ -217,6 +309,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the BrandRegistrationInstanceMetadata
+                    # @return [BrandRegistrationInstance] Updated BrandRegistrationInstance
+                    def update_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, headers: headers)
+                        brand_registration_instance = BrandRegistrationInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        BrandRegistrationInstanceMetadata.new(
+                            @version,
+                            brand_registration_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -276,6 +393,53 @@ module Twilio
                     end
                 end
 
+                class BrandRegistrationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new BrandRegistrationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}BrandRegistrationInstance] brand_registration_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [BrandRegistrationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, brand_registration_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @brand_registration_instance = brand_registration_instance
+                    end
+
+                    def brand_registration
+                        @brand_registration_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.BrandRegistrationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class BrandRegistrationListResponse < InstanceListResource
+                    # @param [Array<BrandRegistrationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @brand_registration_instance = payload.body[key].map do |data|
+                        BrandRegistrationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def brand_registration_instance
+                          @instance
+                      end
+                  end
+
                 class BrandRegistrationPage < Page
                     ##
                     # Initialize the BrandRegistrationPage
@@ -285,6 +449,7 @@ module Twilio
                     # @return [BrandRegistrationPage] BrandRegistrationPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -304,6 +469,66 @@ module Twilio
                         '<Twilio.Messaging.V1.BrandRegistrationPage>'
                     end
                 end
+
+                class BrandRegistrationPageMetadata < PageMetadata
+                    attr_reader :brand_registration_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @brand_registration_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @brand_registration_page << BrandRegistrationListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @brand_registration_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class BrandRegistrationListResponse < InstanceListResource
+
+                    # @param [Array<BrandRegistrationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @brand_registration = data_list.map do |data|
+                        BrandRegistrationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def brand_registration
+                        @brand_registration
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class BrandRegistrationInstance < InstanceResource
                     ##
                     # Initialize the BrandRegistrationInstance
@@ -316,6 +541,7 @@ module Twilio
                     # @return [BrandRegistrationInstance] BrandRegistrationInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

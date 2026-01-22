@@ -25,6 +25,7 @@ module Twilio
                     # @return [CompositionList] CompositionList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Compositions"
@@ -76,6 +77,61 @@ module Twilio
                         CompositionInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the CompositionInstanceMetadata
+                    # @param [String] room_sid The SID of the Group Room with the media tracks to be used as composition sources.
+                    # @param [Object] video_layout An object that describes the video layout of the composition in terms of regions. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info. Please, be aware that either video_layout or audio_sources have to be provided to get a valid creation request
+                    # @param [Array[String]] audio_sources An array of track names from the same group room to merge into the new composition. Can include zero or more track names. The new composition includes all audio sources specified in `audio_sources` except for those specified in `audio_sources_excluded`. The track names in this parameter can include an asterisk as a wild card character, which will match zero or more characters in a track name. For example, `student*` includes `student` as well as `studentTeam`. Please, be aware that either video_layout or audio_sources have to be provided to get a valid creation request
+                    # @param [Array[String]] audio_sources_excluded An array of track names to exclude. The new composition includes all audio sources specified in `audio_sources` except for those specified in `audio_sources_excluded`. The track names in this parameter can include an asterisk as a wild card character, which will match zero or more characters in a track name. For example, `student*` excludes `student` as well as `studentTeam`. This parameter can also be empty.
+                    # @param [String] resolution A string that describes the columns (width) and rows (height) of the generated composed video in pixels. Defaults to `640x480`.  The string's format is `{width}x{height}` where:   * 16 <= `{width}` <= 1280 * 16 <= `{height}` <= 1280 * `{width}` * `{height}` <= 921,600  Typical values are:   * HD = `1280x720` * PAL = `1024x576` * VGA = `640x480` * CIF = `320x240`  Note that the `resolution` imposes an aspect ratio to the resulting composition. When the original video tracks are constrained by the aspect ratio, they are scaled to fit. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+                    # @param [Format] format 
+                    # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application on every composition event. If not provided, status callback events will not be dispatched.
+                    # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `POST` or `GET` and the default is `POST`.
+                    # @param [Boolean] trim Whether to clip the intervals where there is no active media in the composition. The default is `true`. Compositions with `trim` enabled are shorter when the Room is created and no Participant joins for a while as well as if all the Participants leave the room and join later, because those gaps will be removed. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+                    # @return [CompositionInstance] Created CompositionInstance
+                    def create_with_metadata(
+                      room_sid: nil, 
+                      video_layout: :unset, 
+                      audio_sources: :unset, 
+                      audio_sources_excluded: :unset, 
+                      resolution: :unset, 
+                      format: :unset, 
+                      status_callback: :unset, 
+                      status_callback_method: :unset, 
+                      trim: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'RoomSid' => room_sid,
+                            'VideoLayout' => Twilio.serialize_object(video_layout),
+                            'AudioSources' => Twilio.serialize_list(audio_sources) { |e| e },
+                            'AudioSourcesExcluded' => Twilio.serialize_list(audio_sources_excluded) { |e| e },
+                            'Resolution' => resolution,
+                            'Format' => format,
+                            'StatusCallback' => status_callback,
+                            'StatusCallbackMethod' => status_callback_method,
+                            'Trim' => trim,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        composition_instance = CompositionInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        CompositionInstanceMetadata.new(
+                            @version,
+                            composition_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -135,6 +191,36 @@ module Twilio
                     end
 
                     ##
+                    # Lists CompositionPageMetadata records from the API as a list.
+                      # @param [Status] status Read only Composition resources with this status. Can be: `enqueued`, `processing`, `completed`, `deleted`, or `failed`.
+                      # @param [Time] date_created_after Read only Composition resources created on or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time with time zone.
+                      # @param [Time] date_created_before Read only Composition resources created before this ISO 8601 date-time with time zone.
+                      # @param [String] room_sid Read only Composition resources with this Room SID.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(status: :unset, date_created_after: :unset, date_created_before: :unset, room_sid: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Status' => status,
+                            'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
+                            'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
+                            'RoomSid' => room_sid,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CompositionPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields CompositionInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -159,7 +245,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of CompositionInstance
-                    def page(status: :unset, date_created_after: :unset, date_created_before: :unset, room_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(status: :unset, date_created_after: :unset, date_created_before: :unset, room_sid: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Status' => status,
                             'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
@@ -208,6 +294,7 @@ module Twilio
                     # @return [CompositionContext] CompositionContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -224,7 +311,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the CompositionInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          composition_instance = CompositionInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          CompositionInstanceMetadata.new(@version, composition_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -246,6 +353,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the CompositionInstanceMetadata
+                    # @return [CompositionInstance] Fetched CompositionInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        composition_instance = CompositionInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        CompositionInstanceMetadata.new(
+                            @version,
+                            composition_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -262,6 +394,53 @@ module Twilio
                     end
                 end
 
+                class CompositionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CompositionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CompositionInstance] composition_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CompositionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, composition_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @composition_instance = composition_instance
+                    end
+
+                    def composition
+                        @composition_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CompositionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CompositionListResponse < InstanceListResource
+                    # @param [Array<CompositionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @composition_instance = payload.body[key].map do |data|
+                        CompositionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def composition_instance
+                          @instance
+                      end
+                  end
+
                 class CompositionPage < Page
                     ##
                     # Initialize the CompositionPage
@@ -271,6 +450,7 @@ module Twilio
                     # @return [CompositionPage] CompositionPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -290,6 +470,66 @@ module Twilio
                         '<Twilio.Video.V1.CompositionPage>'
                     end
                 end
+
+                class CompositionPageMetadata < PageMetadata
+                    attr_reader :composition_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @composition_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @composition_page << CompositionListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @composition_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Video::V1PageMetadata>';
+                    end
+                end
+                class CompositionListResponse < InstanceListResource
+
+                    # @param [Array<CompositionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @composition = data_list.map do |data|
+                        CompositionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def composition
+                        @composition
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class CompositionInstance < InstanceResource
                     ##
                     # Initialize the CompositionInstance
@@ -302,6 +542,7 @@ module Twilio
                     # @return [CompositionInstance] CompositionInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

@@ -25,6 +25,7 @@ module Twilio
                     # @return [InsightsUserRolesList] InsightsUserRolesList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -47,6 +48,7 @@ module Twilio
                     # @return [InsightsUserRolesContext] InsightsUserRolesContext
                     def initialize(version)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = {  }
@@ -75,6 +77,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the InsightsUserRolesInstanceMetadata
+                    # @param [String] authorization The Authorization HTTP request header
+                    # @return [InsightsUserRolesInstance] Fetched InsightsUserRolesInstance
+                    def fetch_with_metadata(
+                      authorization: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        insights_user_roles_instance = InsightsUserRolesInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        InsightsUserRolesInstanceMetadata.new(
+                            @version,
+                            insights_user_roles_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -91,6 +120,53 @@ module Twilio
                     end
                 end
 
+                class InsightsUserRolesInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new InsightsUserRolesInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}InsightsUserRolesInstance] insights_user_roles_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [InsightsUserRolesInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, insights_user_roles_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @insights_user_roles_instance = insights_user_roles_instance
+                    end
+
+                    def insights_user_roles
+                        @insights_user_roles_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.InsightsUserRolesInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class InsightsUserRolesListResponse < InstanceListResource
+                    # @param [Array<InsightsUserRolesInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @insights_user_roles_instance = payload.body[key].map do |data|
+                        InsightsUserRolesInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def insights_user_roles_instance
+                          @instance
+                      end
+                  end
+
                 class InsightsUserRolesPage < Page
                     ##
                     # Initialize the InsightsUserRolesPage
@@ -100,6 +176,7 @@ module Twilio
                     # @return [InsightsUserRolesPage] InsightsUserRolesPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -119,6 +196,66 @@ module Twilio
                         '<Twilio.FlexApi.V1.InsightsUserRolesPage>'
                     end
                 end
+
+                class InsightsUserRolesPageMetadata < PageMetadata
+                    attr_reader :insights_user_roles_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @insights_user_roles_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @insights_user_roles_page << InsightsUserRolesListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @insights_user_roles_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InsightsUserRolesListResponse < InstanceListResource
+
+                    # @param [Array<InsightsUserRolesInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @insights_user_roles = data_list.map do |data|
+                        InsightsUserRolesInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def insights_user_roles
+                        @insights_user_roles
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class InsightsUserRolesInstance < InstanceResource
                     ##
                     # Initialize the InsightsUserRolesInstance
@@ -131,6 +268,7 @@ module Twilio
                     # @return [InsightsUserRolesInstance] InsightsUserRolesInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

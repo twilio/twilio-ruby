@@ -25,6 +25,7 @@ module Twilio
                     # @return [ConfigurationList] ConfigurationList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -47,6 +48,7 @@ module Twilio
                     # @return [ConfigurationContext] ConfigurationContext
                     def initialize(version)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = {  }
@@ -79,6 +81,36 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the ConfigurationInstanceMetadata
+                    # @param [String] ui_version The Pinned UI version of the Configuration resource to fetch.
+                    # @return [ConfigurationInstance] Fetched ConfigurationInstance
+                    def fetch_with_metadata(
+                      ui_version: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'UiVersion' => ui_version,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        configuration_instance = ConfigurationInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ConfigurationInstanceMetadata.new(
+                            @version,
+                            configuration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the ConfigurationInstance
                     # @param [Object] body 
                     # @return [ConfigurationInstance] Updated ConfigurationInstance
@@ -98,6 +130,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ConfigurationInstanceMetadata
+                    # @param [Object] body 
+                    # @return [ConfigurationInstance] Updated ConfigurationInstance
+                    def update_with_metadata(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, headers: headers, data: body.to_json)
+                        configuration_instance = ConfigurationInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ConfigurationInstanceMetadata.new(
+                            @version,
+                            configuration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -114,6 +172,53 @@ module Twilio
                     end
                 end
 
+                class ConfigurationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ConfigurationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ConfigurationInstance] configuration_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ConfigurationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, configuration_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @configuration_instance = configuration_instance
+                    end
+
+                    def configuration
+                        @configuration_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ConfigurationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ConfigurationListResponse < InstanceListResource
+                    # @param [Array<ConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @configuration_instance = payload.body[key].map do |data|
+                        ConfigurationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def configuration_instance
+                          @instance
+                      end
+                  end
+
                 class ConfigurationPage < Page
                     ##
                     # Initialize the ConfigurationPage
@@ -123,6 +228,7 @@ module Twilio
                     # @return [ConfigurationPage] ConfigurationPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -142,6 +248,66 @@ module Twilio
                         '<Twilio.FlexApi.V1.ConfigurationPage>'
                     end
                 end
+
+                class ConfigurationPageMetadata < PageMetadata
+                    attr_reader :configuration_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @configuration_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @configuration_page << ConfigurationListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @configuration_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class ConfigurationListResponse < InstanceListResource
+
+                    # @param [Array<ConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @configuration = data_list.map do |data|
+                        ConfigurationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def configuration
+                        @configuration
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ConfigurationInstance < InstanceResource
                     ##
                     # Initialize the ConfigurationInstance
@@ -154,6 +320,7 @@ module Twilio
                     # @return [ConfigurationInstance] ConfigurationInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

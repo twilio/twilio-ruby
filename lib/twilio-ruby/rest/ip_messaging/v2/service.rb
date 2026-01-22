@@ -25,6 +25,7 @@ module Twilio
                     # @return [ServiceList] ServiceList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Services"
@@ -52,6 +53,37 @@ module Twilio
                         ServiceInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the ServiceInstanceMetadata
+                    # @param [String] friendly_name 
+                    # @return [ServiceInstance] Created ServiceInstance
+                    def create_with_metadata(
+                      friendly_name: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -95,6 +127,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists ServicePageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ServicePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ServiceInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -115,7 +169,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ServiceInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -160,6 +214,7 @@ module Twilio
                     # @return [ServiceContext] ServiceContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -180,7 +235,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ServiceInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          service_instance = ServiceInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ServiceInstanceMetadata.new(@version, service_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -199,6 +274,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ServiceInstanceMetadata
+                    # @return [ServiceInstance] Fetched ServiceInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -319,6 +419,128 @@ module Twilio
                     end
 
                     ##
+                    # Update the ServiceInstanceMetadata
+                    # @param [String] friendly_name 
+                    # @param [String] default_service_role_sid 
+                    # @param [String] default_channel_role_sid 
+                    # @param [String] default_channel_creator_role_sid 
+                    # @param [Boolean] read_status_enabled 
+                    # @param [Boolean] reachability_enabled 
+                    # @param [String] typing_indicator_timeout 
+                    # @param [String] consumption_report_interval 
+                    # @param [Boolean] notifications_new_message_enabled 
+                    # @param [String] notifications_new_message_template 
+                    # @param [String] notifications_new_message_sound 
+                    # @param [Boolean] notifications_new_message_badge_count_enabled 
+                    # @param [Boolean] notifications_added_to_channel_enabled 
+                    # @param [String] notifications_added_to_channel_template 
+                    # @param [String] notifications_added_to_channel_sound 
+                    # @param [Boolean] notifications_removed_from_channel_enabled 
+                    # @param [String] notifications_removed_from_channel_template 
+                    # @param [String] notifications_removed_from_channel_sound 
+                    # @param [Boolean] notifications_invited_to_channel_enabled 
+                    # @param [String] notifications_invited_to_channel_template 
+                    # @param [String] notifications_invited_to_channel_sound 
+                    # @param [String] pre_webhook_url 
+                    # @param [String] post_webhook_url 
+                    # @param [String] webhook_method 
+                    # @param [Array[String]] webhook_filters 
+                    # @param [String] limits_channel_members 
+                    # @param [String] limits_user_channels 
+                    # @param [String] media_compatibility_message 
+                    # @param [String] pre_webhook_retry_count 
+                    # @param [String] post_webhook_retry_count 
+                    # @param [Boolean] notifications_log_enabled 
+                    # @return [ServiceInstance] Updated ServiceInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      default_service_role_sid: :unset, 
+                      default_channel_role_sid: :unset, 
+                      default_channel_creator_role_sid: :unset, 
+                      read_status_enabled: :unset, 
+                      reachability_enabled: :unset, 
+                      typing_indicator_timeout: :unset, 
+                      consumption_report_interval: :unset, 
+                      notifications_new_message_enabled: :unset, 
+                      notifications_new_message_template: :unset, 
+                      notifications_new_message_sound: :unset, 
+                      notifications_new_message_badge_count_enabled: :unset, 
+                      notifications_added_to_channel_enabled: :unset, 
+                      notifications_added_to_channel_template: :unset, 
+                      notifications_added_to_channel_sound: :unset, 
+                      notifications_removed_from_channel_enabled: :unset, 
+                      notifications_removed_from_channel_template: :unset, 
+                      notifications_removed_from_channel_sound: :unset, 
+                      notifications_invited_to_channel_enabled: :unset, 
+                      notifications_invited_to_channel_template: :unset, 
+                      notifications_invited_to_channel_sound: :unset, 
+                      pre_webhook_url: :unset, 
+                      post_webhook_url: :unset, 
+                      webhook_method: :unset, 
+                      webhook_filters: :unset, 
+                      limits_channel_members: :unset, 
+                      limits_user_channels: :unset, 
+                      media_compatibility_message: :unset, 
+                      pre_webhook_retry_count: :unset, 
+                      post_webhook_retry_count: :unset, 
+                      notifications_log_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'DefaultServiceRoleSid' => default_service_role_sid,
+                            'DefaultChannelRoleSid' => default_channel_role_sid,
+                            'DefaultChannelCreatorRoleSid' => default_channel_creator_role_sid,
+                            'ReadStatusEnabled' => read_status_enabled,
+                            'ReachabilityEnabled' => reachability_enabled,
+                            'TypingIndicatorTimeout' => typing_indicator_timeout,
+                            'ConsumptionReportInterval' => consumption_report_interval,
+                            'Notifications.NewMessage.Enabled' => notifications_new_message_enabled,
+                            'Notifications.NewMessage.Template' => notifications_new_message_template,
+                            'Notifications.NewMessage.Sound' => notifications_new_message_sound,
+                            'Notifications.NewMessage.BadgeCountEnabled' => notifications_new_message_badge_count_enabled,
+                            'Notifications.AddedToChannel.Enabled' => notifications_added_to_channel_enabled,
+                            'Notifications.AddedToChannel.Template' => notifications_added_to_channel_template,
+                            'Notifications.AddedToChannel.Sound' => notifications_added_to_channel_sound,
+                            'Notifications.RemovedFromChannel.Enabled' => notifications_removed_from_channel_enabled,
+                            'Notifications.RemovedFromChannel.Template' => notifications_removed_from_channel_template,
+                            'Notifications.RemovedFromChannel.Sound' => notifications_removed_from_channel_sound,
+                            'Notifications.InvitedToChannel.Enabled' => notifications_invited_to_channel_enabled,
+                            'Notifications.InvitedToChannel.Template' => notifications_invited_to_channel_template,
+                            'Notifications.InvitedToChannel.Sound' => notifications_invited_to_channel_sound,
+                            'PreWebhookUrl' => pre_webhook_url,
+                            'PostWebhookUrl' => post_webhook_url,
+                            'WebhookMethod' => webhook_method,
+                            'WebhookFilters' => Twilio.serialize_list(webhook_filters) { |e| e },
+                            'Limits.ChannelMembers' => limits_channel_members,
+                            'Limits.UserChannels' => limits_user_channels,
+                            'Media.CompatibilityMessage' => media_compatibility_message,
+                            'PreWebhookRetryCount' => pre_webhook_retry_count,
+                            'PostWebhookRetryCount' => post_webhook_retry_count,
+                            'Notifications.LogEnabled' => notifications_log_enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the bindings
                     # @return [BindingList]
                     # @return [BindingContext] if sid was passed.
@@ -410,6 +632,53 @@ module Twilio
                     end
                 end
 
+                class ServiceInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ServiceInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ServiceInstance] service_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ServiceInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, service_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @service_instance = service_instance
+                    end
+
+                    def service
+                        @service_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ServiceInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ServiceListResponse < InstanceListResource
+                    # @param [Array<ServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @service_instance = payload.body[key].map do |data|
+                        ServiceInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def service_instance
+                          @instance
+                      end
+                  end
+
                 class ServicePage < Page
                     ##
                     # Initialize the ServicePage
@@ -419,6 +688,7 @@ module Twilio
                     # @return [ServicePage] ServicePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -438,6 +708,66 @@ module Twilio
                         '<Twilio.IpMessaging.V2.ServicePage>'
                     end
                 end
+
+                class ServicePageMetadata < PageMetadata
+                    attr_reader :service_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @service_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @service_page << ServiceListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @service_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::IpMessaging::V2PageMetadata>';
+                    end
+                end
+                class ServiceListResponse < InstanceListResource
+
+                    # @param [Array<ServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @service = data_list.map do |data|
+                        ServiceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def service
+                        @service
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ServiceInstance < InstanceResource
                     ##
                     # Initialize the ServiceInstance
@@ -450,6 +780,7 @@ module Twilio
                     # @return [ServiceInstance] ServiceInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

@@ -27,6 +27,7 @@ module Twilio
                     # @return [SinkTestList] SinkTestList
                     def initialize(version, sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { sid: sid }
                         @uri = "/Sinks/#{@solution[:sid]}/Test"
@@ -51,6 +52,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the SinkTestInstanceMetadata
+                    # @return [SinkTestInstance] Created SinkTestInstance
+                    def create_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers)
+                        sink_test_instance = SinkTestInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        SinkTestInstanceMetadata.new(
+                            @version,
+                            sink_test_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -69,6 +95,7 @@ module Twilio
                     # @return [SinkTestPage] SinkTestPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -88,6 +115,66 @@ module Twilio
                         '<Twilio.Events.V1.SinkTestPage>'
                     end
                 end
+
+                class SinkTestPageMetadata < PageMetadata
+                    attr_reader :sink_test_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @sink_test_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @sink_test_page << SinkTestListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @sink_test_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Events::V1PageMetadata>';
+                    end
+                end
+                class SinkTestListResponse < InstanceListResource
+
+                    # @param [Array<SinkTestInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @sink_test = data_list.map do |data|
+                        SinkTestInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def sink_test
+                        @sink_test
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class SinkTestInstance < InstanceResource
                     ##
                     # Initialize the SinkTestInstance
@@ -100,6 +187,7 @@ module Twilio
                     # @return [SinkTestInstance] SinkTestInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

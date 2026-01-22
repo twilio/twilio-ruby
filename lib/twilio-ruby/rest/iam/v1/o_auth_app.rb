@@ -171,6 +171,7 @@ module Twilio
                     # @return [OAuthAppList] OAuthAppList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Account/OAuthApps"
@@ -196,6 +197,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the OAuthAppInstanceMetadata
+                    # @param [IamV1AccountVendorOauthAppCreateRequest] iam_v1_account_vendor_oauth_app_create_request 
+                    # @return [OAuthAppInstance] Created OAuthAppInstance
+                    def create_with_metadata(iam_v1_account_vendor_oauth_app_create_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: iam_v1_account_vendor_oauth_app_create_request.to_json)
+                        o_auth_app_instance = OAuthAppInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        OAuthAppInstanceMetadata.new(
+                            @version,
+                            o_auth_app_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -214,6 +241,7 @@ module Twilio
                     # @return [OAuthAppContext] OAuthAppContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -230,7 +258,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the OAuthAppInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          oAuthApp_instance = OAuthAppInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          OAuthAppInstanceMetadata.new(@version, oAuthApp_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -254,6 +302,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the OAuthAppInstanceMetadata
+                    # @param [IamV1AccountVendorOauthAppUpdateRequest] iam_v1_account_vendor_oauth_app_update_request 
+                    # @return [OAuthAppInstance] Updated OAuthAppInstance
+                    def update_with_metadata(iam_v1_account_vendor_oauth_app_update_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('PUT', @uri, headers: headers, data: iam_v1_account_vendor_oauth_app_update_request.to_json)
+                        o_auth_app_instance = OAuthAppInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        OAuthAppInstanceMetadata.new(
+                            @version,
+                            o_auth_app_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -270,6 +345,53 @@ module Twilio
                     end
                 end
 
+                class OAuthAppInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new OAuthAppInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}OAuthAppInstance] o_auth_app_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [OAuthAppInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, o_auth_app_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @o_auth_app_instance = o_auth_app_instance
+                    end
+
+                    def o_auth_app
+                        @o_auth_app_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.OAuthAppInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class OAuthAppListResponse < InstanceListResource
+                    # @param [Array<OAuthAppInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @o_auth_app_instance = payload.body[key].map do |data|
+                        OAuthAppInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def o_auth_app_instance
+                          @instance
+                      end
+                  end
+
                 class OAuthAppPage < Page
                     ##
                     # Initialize the OAuthAppPage
@@ -279,6 +401,7 @@ module Twilio
                     # @return [OAuthAppPage] OAuthAppPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -298,6 +421,66 @@ module Twilio
                         '<Twilio.Iam.V1.OAuthAppPage>'
                     end
                 end
+
+                class OAuthAppPageMetadata < PageMetadata
+                    attr_reader :o_auth_app_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @o_auth_app_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @o_auth_app_page << OAuthAppListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @o_auth_app_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Iam::V1PageMetadata>';
+                    end
+                end
+                class OAuthAppListResponse < InstanceListResource
+
+                    # @param [Array<OAuthAppInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @o_auth_app = data_list.map do |data|
+                        OAuthAppInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def o_auth_app
+                        @o_auth_app
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class OAuthAppInstance < InstanceResource
                     ##
                     # Initialize the OAuthAppInstance
@@ -310,6 +493,7 @@ module Twilio
                     # @return [OAuthAppInstance] OAuthAppInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

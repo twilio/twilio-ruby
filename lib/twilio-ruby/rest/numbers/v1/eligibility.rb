@@ -25,6 +25,7 @@ module Twilio
                     # @return [EligibilityList] EligibilityList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/HostedNumber/Eligibility"
@@ -50,6 +51,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the EligibilityInstanceMetadata
+                    # @param [Object] body 
+                    # @return [EligibilityInstance] Created EligibilityInstance
+                    def create_with_metadata(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: body.to_json)
+                        eligibility_instance = EligibilityInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        EligibilityInstanceMetadata.new(
+                            @version,
+                            eligibility_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -68,6 +95,7 @@ module Twilio
                     # @return [EligibilityPage] EligibilityPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -87,6 +115,66 @@ module Twilio
                         '<Twilio.Numbers.V1.EligibilityPage>'
                     end
                 end
+
+                class EligibilityPageMetadata < PageMetadata
+                    attr_reader :eligibility_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @eligibility_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @eligibility_page << EligibilityListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @eligibility_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V1PageMetadata>';
+                    end
+                end
+                class EligibilityListResponse < InstanceListResource
+
+                    # @param [Array<EligibilityInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @eligibility = data_list.map do |data|
+                        EligibilityInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def eligibility
+                        @eligibility
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class EligibilityInstance < InstanceResource
                     ##
                     # Initialize the EligibilityInstance
@@ -99,6 +187,7 @@ module Twilio
                     # @return [EligibilityInstance] EligibilityInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

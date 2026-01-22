@@ -27,6 +27,7 @@ module Twilio
                     # @return [SyncStreamList] SyncStreamList
                     def initialize(version, service_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Streams"
@@ -58,6 +59,41 @@ module Twilio
                             @version,
                             payload,
                             service_sid: @solution[:service_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the SyncStreamInstanceMetadata
+                    # @param [String] unique_name An application-defined string that uniquely identifies the resource. This value must be unique within its Service and it can be up to 320 characters long. The `unique_name` value can be used as an alternative to the `sid` in the URL path to address the resource.
+                    # @param [String] ttl How long, [in seconds](https://www.twilio.com/docs/sync/limits#sync-payload-limits), before the Stream expires and is deleted (time-to-live).
+                    # @return [SyncStreamInstance] Created SyncStreamInstance
+                    def create_with_metadata(
+                      unique_name: :unset, 
+                      ttl: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'UniqueName' => unique_name,
+                            'Ttl' => ttl,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        sync_stream_instance = SyncStreamInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                        )
+                        SyncStreamInstanceMetadata.new(
+                            @version,
+                            sync_stream_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -101,6 +137,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists SyncStreamPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SyncStreamPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields SyncStreamInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -121,7 +179,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of SyncStreamInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -167,6 +225,7 @@ module Twilio
                     # @return [SyncStreamContext] SyncStreamContext
                     def initialize(version, service_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { service_sid: service_sid, sid: sid,  }
@@ -184,7 +243,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the SyncStreamInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          syncStream_instance = SyncStreamInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          SyncStreamInstanceMetadata.new(@version, syncStream_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -204,6 +283,32 @@ module Twilio
                             payload,
                             service_sid: @solution[:service_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the SyncStreamInstanceMetadata
+                    # @return [SyncStreamInstance] Fetched SyncStreamInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        sync_stream_instance = SyncStreamInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            sid: @solution[:sid],
+                        )
+                        SyncStreamInstanceMetadata.new(
+                            @version,
+                            sync_stream_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -235,6 +340,39 @@ module Twilio
                     end
 
                     ##
+                    # Update the SyncStreamInstanceMetadata
+                    # @param [String] ttl How long, [in seconds](https://www.twilio.com/docs/sync/limits#sync-payload-limits), before the Stream expires and is deleted (time-to-live).
+                    # @return [SyncStreamInstance] Updated SyncStreamInstance
+                    def update_with_metadata(
+                      ttl: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Ttl' => ttl,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        sync_stream_instance = SyncStreamInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            sid: @solution[:sid],
+                        )
+                        SyncStreamInstanceMetadata.new(
+                            @version,
+                            sync_stream_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the stream_messages
                     # @return [StreamMessageList]
                     # @return [StreamMessageContext]
@@ -261,6 +399,53 @@ module Twilio
                     end
                 end
 
+                class SyncStreamInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SyncStreamInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SyncStreamInstance] sync_stream_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SyncStreamInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, sync_stream_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @sync_stream_instance = sync_stream_instance
+                    end
+
+                    def sync_stream
+                        @sync_stream_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SyncStreamInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SyncStreamListResponse < InstanceListResource
+                    # @param [Array<SyncStreamInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @sync_stream_instance = payload.body[key].map do |data|
+                        SyncStreamInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def sync_stream_instance
+                          @instance
+                      end
+                  end
+
                 class SyncStreamPage < Page
                     ##
                     # Initialize the SyncStreamPage
@@ -270,6 +455,7 @@ module Twilio
                     # @return [SyncStreamPage] SyncStreamPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -289,6 +475,66 @@ module Twilio
                         '<Twilio.Sync.V1.SyncStreamPage>'
                     end
                 end
+
+                class SyncStreamPageMetadata < PageMetadata
+                    attr_reader :sync_stream_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @sync_stream_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @sync_stream_page << SyncStreamListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @sync_stream_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Sync::V1PageMetadata>';
+                    end
+                end
+                class SyncStreamListResponse < InstanceListResource
+
+                    # @param [Array<SyncStreamInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @sync_stream = data_list.map do |data|
+                        SyncStreamInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def sync_stream
+                        @sync_stream
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class SyncStreamInstance < InstanceResource
                     ##
                     # Initialize the SyncStreamInstance
@@ -301,6 +547,7 @@ module Twilio
                     # @return [SyncStreamInstance] SyncStreamInstance
                     def initialize(version, payload , service_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

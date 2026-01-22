@@ -27,6 +27,7 @@ module Twilio
                     # @return [WorkerList] WorkerList
                     def initialize(version, workspace_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { workspace_sid: workspace_sid }
                         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Workers"
@@ -62,6 +63,44 @@ module Twilio
                             @version,
                             payload,
                             workspace_sid: @solution[:workspace_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the WorkerInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the new Worker. It can be up to 64 characters long.
+                    # @param [String] activity_sid The SID of a valid Activity that will describe the new Worker's initial state. See [Activities](https://www.twilio.com/docs/taskrouter/api/activity) for more information. If not provided, the new Worker's initial state is the `default_activity_sid` configured on the Workspace.
+                    # @param [String] attributes A valid JSON string that describes the new Worker. For example: `{ \\\"email\\\": \\\"Bob@example.com\\\", \\\"phone\\\": \\\"+5095551234\\\" }`. This data is passed to the `assignment_callback_url` when TaskRouter assigns a Task to the Worker. Defaults to {}.
+                    # @return [WorkerInstance] Created WorkerInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      activity_sid: :unset, 
+                      attributes: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'ActivitySid' => activity_sid,
+                            'Attributes' => attributes,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        worker_instance = WorkerInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                        )
+                        WorkerInstanceMetadata.new(
+                            @version,
+                            worker_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -137,6 +176,44 @@ module Twilio
                     end
 
                     ##
+                    # Lists WorkerPageMetadata records from the API as a list.
+                      # @param [String] activity_name The `activity_name` of the Worker resources to read.
+                      # @param [String] activity_sid The `activity_sid` of the Worker resources to read.
+                      # @param [String] available Whether to return only Worker resources that are available or unavailable. Can be `true`, `1`, or `yes` to return Worker resources that are available, and `false`, or any value returns the Worker resources that are not available.
+                      # @param [String] friendly_name The `friendly_name` of the Worker resources to read.
+                      # @param [String] target_workers_expression Filter by Workers that would match an expression. In addition to fields in the workers' attributes, the expression can include the following worker fields: `sid`, `friendly_name`, `activity_sid`, or `activity_name`
+                      # @param [String] task_queue_name The `friendly_name` of the TaskQueue that the Workers to read are eligible for.
+                      # @param [String] task_queue_sid The SID of the TaskQueue that the Workers to read are eligible for.
+                      # @param [String] ordering Sorting parameter for Workers
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, ordering: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'ActivityName' => activity_name,
+                            'ActivitySid' => activity_sid,
+                            'Available' => available,
+                            'FriendlyName' => friendly_name,
+                            'TargetWorkersExpression' => target_workers_expression,
+                            'TaskQueueName' => task_queue_name,
+                            'TaskQueueSid' => task_queue_sid,
+                            'Ordering' => ordering,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        WorkerPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields WorkerInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -165,7 +242,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of WorkerInstance
-                    def page(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, ordering: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(activity_name: :unset, activity_sid: :unset, available: :unset, friendly_name: :unset, target_workers_expression: :unset, task_queue_name: :unset, task_queue_sid: :unset, ordering: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'ActivityName' => activity_name,
                             'ActivitySid' => activity_sid,
@@ -225,6 +302,7 @@ module Twilio
                     # @return [WorkerContext] WorkerContext
                     def initialize(version, workspace_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { workspace_sid: workspace_sid, sid: sid,  }
@@ -249,7 +327,30 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the WorkerInstanceMetadata
+                    # @param [String] if_match The If-Match HTTP request header
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata(
+                      if_match: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          worker_instance = WorkerInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          WorkerInstanceMetadata.new(@version, worker_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -269,6 +370,32 @@ module Twilio
                             payload,
                             workspace_sid: @solution[:workspace_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the WorkerInstanceMetadata
+                    # @return [WorkerInstance] Fetched WorkerInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        worker_instance = WorkerInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        WorkerInstanceMetadata.new(
+                            @version,
+                            worker_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -307,6 +434,50 @@ module Twilio
                             payload,
                             workspace_sid: @solution[:workspace_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the WorkerInstanceMetadata
+                    # @param [String] activity_sid The SID of a valid Activity that will describe the Worker's initial state. See [Activities](https://www.twilio.com/docs/taskrouter/api/activity) for more information.
+                    # @param [String] attributes The JSON string that describes the Worker. For example: `{ \\\"email\\\": \\\"Bob@example.com\\\", \\\"phone\\\": \\\"+5095551234\\\" }`. This data is passed to the `assignment_callback_url` when TaskRouter assigns a Task to the Worker. Defaults to {}.
+                    # @param [String] friendly_name A descriptive string that you create to describe the Worker. It can be up to 64 characters long.
+                    # @param [Boolean] reject_pending_reservations Whether to reject the Worker's pending reservations. This option is only valid if the Worker's new [Activity](https://www.twilio.com/docs/taskrouter/api/activity) resource has its `availability` property set to `False`.
+                    # @param [String] if_match The If-Match HTTP request header
+                    # @return [WorkerInstance] Updated WorkerInstance
+                    def update_with_metadata(
+                      activity_sid: :unset, 
+                      attributes: :unset, 
+                      friendly_name: :unset, 
+                      reject_pending_reservations: :unset, 
+                      if_match: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'ActivitySid' => activity_sid,
+                            'Attributes' => attributes,
+                            'FriendlyName' => friendly_name,
+                            'RejectPendingReservations' => reject_pending_reservations,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        worker_instance = WorkerInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        WorkerInstanceMetadata.new(
+                            @version,
+                            worker_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -397,6 +568,53 @@ module Twilio
                     end
                 end
 
+                class WorkerInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new WorkerInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}WorkerInstance] worker_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [WorkerInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, worker_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @worker_instance = worker_instance
+                    end
+
+                    def worker
+                        @worker_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.WorkerInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class WorkerListResponse < InstanceListResource
+                    # @param [Array<WorkerInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @worker_instance = payload.body[key].map do |data|
+                        WorkerInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def worker_instance
+                          @instance
+                      end
+                  end
+
                 class WorkerPage < Page
                     ##
                     # Initialize the WorkerPage
@@ -406,6 +624,7 @@ module Twilio
                     # @return [WorkerPage] WorkerPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -425,6 +644,66 @@ module Twilio
                         '<Twilio.Taskrouter.V1.WorkerPage>'
                     end
                 end
+
+                class WorkerPageMetadata < PageMetadata
+                    attr_reader :worker_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @worker_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @worker_page << WorkerListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @worker_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class WorkerListResponse < InstanceListResource
+
+                    # @param [Array<WorkerInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @worker = data_list.map do |data|
+                        WorkerInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def worker
+                        @worker
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class WorkerInstance < InstanceResource
                     ##
                     # Initialize the WorkerInstance
@@ -437,6 +716,7 @@ module Twilio
                     # @return [WorkerInstance] WorkerInstance
                     def initialize(version, payload , workspace_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

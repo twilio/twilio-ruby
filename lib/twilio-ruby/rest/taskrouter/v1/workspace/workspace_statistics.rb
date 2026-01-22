@@ -27,6 +27,7 @@ module Twilio
                     # @return [WorkspaceStatisticsList] WorkspaceStatisticsList
                     def initialize(version, workspace_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { workspace_sid: workspace_sid }
                         
@@ -50,6 +51,7 @@ module Twilio
                     # @return [WorkspaceStatisticsContext] WorkspaceStatisticsContext
                     def initialize(version, workspace_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { workspace_sid: workspace_sid,  }
@@ -94,6 +96,49 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the WorkspaceStatisticsInstanceMetadata
+                    # @param [String] minutes Only calculate statistics since this many minutes in the past. The default 15 minutes. This is helpful for displaying statistics for the last 15 minutes, 240 minutes (4 hours), and 480 minutes (8 hours) to see trends.
+                    # @param [Time] start_date Only calculate statistics from this date and time and later, specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+                    # @param [Time] end_date Only calculate statistics from this date and time and earlier, specified in GMT as an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date-time.
+                    # @param [String] task_channel Only calculate statistics on this TaskChannel. Can be the TaskChannel's SID or its `unique_name`, such as `voice`, `sms`, or `default`.
+                    # @param [String] split_by_wait_time A comma separated list of values that describes the thresholds, in seconds, to calculate statistics on. For each threshold specified, the number of Tasks canceled and reservations accepted above and below the specified thresholds in seconds are computed. For example, `5,30` would show splits of Tasks that were canceled or accepted before and after 5 seconds and before and after 30 seconds. This can be used to show short abandoned Tasks or Tasks that failed to meet an SLA.
+                    # @return [WorkspaceStatisticsInstance] Fetched WorkspaceStatisticsInstance
+                    def fetch_with_metadata(
+                      minutes: :unset, 
+                      start_date: :unset, 
+                      end_date: :unset, 
+                      task_channel: :unset, 
+                      split_by_wait_time: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'Minutes' => minutes,
+                            'StartDate' => Twilio.serialize_iso8601_datetime(start_date),
+                            'EndDate' => Twilio.serialize_iso8601_datetime(end_date),
+                            'TaskChannel' => task_channel,
+                            'SplitByWaitTime' => split_by_wait_time,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        workspace_statistics_instance = WorkspaceStatisticsInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                        )
+                        WorkspaceStatisticsInstanceMetadata.new(
+                            @version,
+                            workspace_statistics_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -110,6 +155,53 @@ module Twilio
                     end
                 end
 
+                class WorkspaceStatisticsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new WorkspaceStatisticsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}WorkspaceStatisticsInstance] workspace_statistics_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [WorkspaceStatisticsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, workspace_statistics_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @workspace_statistics_instance = workspace_statistics_instance
+                    end
+
+                    def workspace_statistics
+                        @workspace_statistics_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.WorkspaceStatisticsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class WorkspaceStatisticsListResponse < InstanceListResource
+                    # @param [Array<WorkspaceStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @workspace_statistics_instance = payload.body[key].map do |data|
+                        WorkspaceStatisticsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def workspace_statistics_instance
+                          @instance
+                      end
+                  end
+
                 class WorkspaceStatisticsPage < Page
                     ##
                     # Initialize the WorkspaceStatisticsPage
@@ -119,6 +211,7 @@ module Twilio
                     # @return [WorkspaceStatisticsPage] WorkspaceStatisticsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -138,6 +231,66 @@ module Twilio
                         '<Twilio.Taskrouter.V1.WorkspaceStatisticsPage>'
                     end
                 end
+
+                class WorkspaceStatisticsPageMetadata < PageMetadata
+                    attr_reader :workspace_statistics_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @workspace_statistics_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @workspace_statistics_page << WorkspaceStatisticsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @workspace_statistics_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class WorkspaceStatisticsListResponse < InstanceListResource
+
+                    # @param [Array<WorkspaceStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @workspace_statistics = data_list.map do |data|
+                        WorkspaceStatisticsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def workspace_statistics
+                        @workspace_statistics
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class WorkspaceStatisticsInstance < InstanceResource
                     ##
                     # Initialize the WorkspaceStatisticsInstance
@@ -150,6 +303,7 @@ module Twilio
                     # @return [WorkspaceStatisticsInstance] WorkspaceStatisticsInstance
                     def initialize(version, payload , workspace_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

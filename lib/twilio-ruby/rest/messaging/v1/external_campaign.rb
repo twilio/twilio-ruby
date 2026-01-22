@@ -25,6 +25,7 @@ module Twilio
                     # @return [ExternalCampaignList] ExternalCampaignList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Services/PreregisteredUsa2p"
@@ -61,6 +62,43 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ExternalCampaignInstanceMetadata
+                    # @param [String] campaign_id ID of the preregistered campaign.
+                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/api/service-resource) that the resource is associated with.
+                    # @param [Boolean] cnp_migration Customers should use this flag during the ERC registration process to indicate to Twilio that the campaign being registered is undergoing CNP migration. It is important for the user to first trigger the CNP migration process for said campaign in their CSP portal and have Twilio accept the sharing request, before making this api call.
+                    # @return [ExternalCampaignInstance] Created ExternalCampaignInstance
+                    def create_with_metadata(
+                      campaign_id: nil, 
+                      messaging_service_sid: nil, 
+                      cnp_migration: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'CampaignId' => campaign_id,
+                            'MessagingServiceSid' => messaging_service_sid,
+                            'CnpMigration' => cnp_migration,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        external_campaign_instance = ExternalCampaignInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ExternalCampaignInstanceMetadata.new(
+                            @version,
+                            external_campaign_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -79,6 +117,7 @@ module Twilio
                     # @return [ExternalCampaignPage] ExternalCampaignPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -98,6 +137,66 @@ module Twilio
                         '<Twilio.Messaging.V1.ExternalCampaignPage>'
                     end
                 end
+
+                class ExternalCampaignPageMetadata < PageMetadata
+                    attr_reader :external_campaign_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @external_campaign_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @external_campaign_page << ExternalCampaignListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @external_campaign_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class ExternalCampaignListResponse < InstanceListResource
+
+                    # @param [Array<ExternalCampaignInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @external_campaign = data_list.map do |data|
+                        ExternalCampaignInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def external_campaign
+                        @external_campaign
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ExternalCampaignInstance < InstanceResource
                     ##
                     # Initialize the ExternalCampaignInstance
@@ -110,6 +209,7 @@ module Twilio
                     # @return [ExternalCampaignInstance] ExternalCampaignInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

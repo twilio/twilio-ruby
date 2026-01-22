@@ -27,6 +27,7 @@ module Twilio
                     # @return [SinkValidateList] SinkValidateList
                     def initialize(version, sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { sid: sid }
                         @uri = "/Sinks/#{@solution[:sid]}/Validate"
@@ -58,6 +59,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the SinkValidateInstanceMetadata
+                    # @param [String] test_id A 34 character string that uniquely identifies the test event for a Sink being validated.
+                    # @return [SinkValidateInstance] Created SinkValidateInstance
+                    def create_with_metadata(
+                      test_id: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'TestId' => test_id,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        sink_validate_instance = SinkValidateInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        SinkValidateInstanceMetadata.new(
+                            @version,
+                            sink_validate_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -76,6 +109,7 @@ module Twilio
                     # @return [SinkValidatePage] SinkValidatePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -95,6 +129,66 @@ module Twilio
                         '<Twilio.Events.V1.SinkValidatePage>'
                     end
                 end
+
+                class SinkValidatePageMetadata < PageMetadata
+                    attr_reader :sink_validate_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @sink_validate_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @sink_validate_page << SinkValidateListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @sink_validate_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Events::V1PageMetadata>';
+                    end
+                end
+                class SinkValidateListResponse < InstanceListResource
+
+                    # @param [Array<SinkValidateInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @sink_validate = data_list.map do |data|
+                        SinkValidateInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def sink_validate
+                        @sink_validate
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class SinkValidateInstance < InstanceResource
                     ##
                     # Initialize the SinkValidateInstance
@@ -107,6 +201,7 @@ module Twilio
                     # @return [SinkValidateInstance] SinkValidateInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

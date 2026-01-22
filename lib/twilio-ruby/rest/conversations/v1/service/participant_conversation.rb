@@ -27,6 +27,7 @@ module Twilio
                     # @return [ParticipantConversationList] ParticipantConversationList
                     def initialize(version, chat_service_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { chat_service_sid: chat_service_sid }
                         @uri = "/Services/#{@solution[:chat_service_sid]}/ParticipantConversations"
@@ -80,6 +81,32 @@ module Twilio
                     end
 
                     ##
+                    # Lists ParticipantConversationPageMetadata records from the API as a list.
+                      # @param [String] identity A unique string identifier for the conversation participant as [Conversation User](https://www.twilio.com/docs/conversations/api/user-resource). This parameter is non-null if (and only if) the participant is using the Conversations SDK to communicate. Limited to 256 characters.
+                      # @param [String] address A unique string identifier for the conversation participant who's not a Conversation User. This parameter could be found in messaging_binding.address field of Participant resource. It should be url-encoded.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(identity: :unset, address: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Identity' => identity,
+                            'Address' => address,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ParticipantConversationPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ParticipantConversationInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -102,7 +129,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ParticipantConversationInstance
-                    def page(identity: :unset, address: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(identity: :unset, address: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Identity' => identity,
                             'Address' => address,
@@ -149,6 +176,7 @@ module Twilio
                     # @return [ParticipantConversationPage] ParticipantConversationPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -168,6 +196,66 @@ module Twilio
                         '<Twilio.Conversations.V1.ParticipantConversationPage>'
                     end
                 end
+
+                class ParticipantConversationPageMetadata < PageMetadata
+                    attr_reader :participant_conversation_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @participant_conversation_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @participant_conversation_page << ParticipantConversationListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @participant_conversation_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Conversations::V1PageMetadata>';
+                    end
+                end
+                class ParticipantConversationListResponse < InstanceListResource
+
+                    # @param [Array<ParticipantConversationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @participant_conversation = data_list.map do |data|
+                        ParticipantConversationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def participant_conversation
+                        @participant_conversation
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ParticipantConversationInstance < InstanceResource
                     ##
                     # Initialize the ParticipantConversationInstance
@@ -180,6 +268,7 @@ module Twilio
                     # @return [ParticipantConversationInstance] ParticipantConversationInstance
                     def initialize(version, payload , chat_service_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

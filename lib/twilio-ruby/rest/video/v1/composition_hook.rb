@@ -25,6 +25,7 @@ module Twilio
                     # @return [CompositionHookList] CompositionHookList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/CompositionHooks"
@@ -79,6 +80,64 @@ module Twilio
                         CompositionHookInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the CompositionHookInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to  100 characters long and it must be unique within the account.
+                    # @param [Boolean] enabled Whether the composition hook is active. When `true`, the composition hook will be triggered for every completed Group Room in the account. When `false`, the composition hook will never be triggered.
+                    # @param [Object] video_layout An object that describes the video layout of the composition hook in terms of regions. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+                    # @param [Array[String]] audio_sources An array of track names from the same group room to merge into the compositions created by the composition hook. Can include zero or more track names. A composition triggered by the composition hook includes all audio sources specified in `audio_sources` except those specified in `audio_sources_excluded`. The track names in this parameter can include an asterisk as a wild card character, which matches zero or more characters in a track name. For example, `student*` includes tracks named `student` as well as `studentTeam`.
+                    # @param [Array[String]] audio_sources_excluded An array of track names to exclude. A composition triggered by the composition hook includes all audio sources specified in `audio_sources` except for those specified in `audio_sources_excluded`. The track names in this parameter can include an asterisk as a wild card character, which matches zero or more characters in a track name. For example, `student*` excludes `student` as well as `studentTeam`. This parameter can also be empty.
+                    # @param [String] resolution A string that describes the columns (width) and rows (height) of the generated composed video in pixels. Defaults to `640x480`.  The string's format is `{width}x{height}` where:   * 16 <= `{width}` <= 1280 * 16 <= `{height}` <= 1280 * `{width}` * `{height}` <= 921,600  Typical values are:   * HD = `1280x720` * PAL = `1024x576` * VGA = `640x480` * CIF = `320x240`  Note that the `resolution` imposes an aspect ratio to the resulting composition. When the original video tracks are constrained by the aspect ratio, they are scaled to fit. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+                    # @param [Format] format 
+                    # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application on every composition event. If not provided, status callback events will not be dispatched.
+                    # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `POST` or `GET` and the default is `POST`.
+                    # @param [Boolean] trim Whether to clip the intervals where there is no active media in the Compositions triggered by the composition hook. The default is `true`. Compositions with `trim` enabled are shorter when the Room is created and no Participant joins for a while as well as if all the Participants leave the room and join later, because those gaps will be removed. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+                    # @return [CompositionHookInstance] Created CompositionHookInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      enabled: :unset, 
+                      video_layout: :unset, 
+                      audio_sources: :unset, 
+                      audio_sources_excluded: :unset, 
+                      resolution: :unset, 
+                      format: :unset, 
+                      status_callback: :unset, 
+                      status_callback_method: :unset, 
+                      trim: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Enabled' => enabled,
+                            'VideoLayout' => Twilio.serialize_object(video_layout),
+                            'AudioSources' => Twilio.serialize_list(audio_sources) { |e| e },
+                            'AudioSourcesExcluded' => Twilio.serialize_list(audio_sources_excluded) { |e| e },
+                            'Resolution' => resolution,
+                            'Format' => format,
+                            'StatusCallback' => status_callback,
+                            'StatusCallbackMethod' => status_callback_method,
+                            'Trim' => trim,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        composition_hook_instance = CompositionHookInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        CompositionHookInstanceMetadata.new(
+                            @version,
+                            composition_hook_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -138,6 +197,36 @@ module Twilio
                     end
 
                     ##
+                    # Lists CompositionHookPageMetadata records from the API as a list.
+                      # @param [Boolean] enabled Read only CompositionHook resources with an `enabled` value that matches this parameter.
+                      # @param [Time] date_created_after Read only CompositionHook resources created on or after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+                      # @param [Time] date_created_before Read only CompositionHook resources created before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime with time zone.
+                      # @param [String] friendly_name Read only CompositionHook resources with friendly names that match this string. The match is not case sensitive and can include asterisk `*` characters as wildcard match.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(enabled: :unset, date_created_after: :unset, date_created_before: :unset, friendly_name: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Enabled' => enabled,
+                            'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
+                            'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
+                            'FriendlyName' => friendly_name,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CompositionHookPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields CompositionHookInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -162,7 +251,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of CompositionHookInstance
-                    def page(enabled: :unset, date_created_after: :unset, date_created_before: :unset, friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(enabled: :unset, date_created_after: :unset, date_created_before: :unset, friendly_name: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Enabled' => enabled,
                             'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
@@ -211,6 +300,7 @@ module Twilio
                     # @return [CompositionHookContext] CompositionHookContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -227,7 +317,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the CompositionHookInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          compositionHook_instance = CompositionHookInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          CompositionHookInstanceMetadata.new(@version, compositionHook_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -246,6 +356,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the CompositionHookInstanceMetadata
+                    # @return [CompositionHookInstance] Fetched CompositionHookInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        composition_hook_instance = CompositionHookInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        CompositionHookInstanceMetadata.new(
+                            @version,
+                            composition_hook_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -302,6 +437,65 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the CompositionHookInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to  100 characters long and it must be unique within the account.
+                    # @param [Boolean] enabled Whether the composition hook is active. When `true`, the composition hook will be triggered for every completed Group Room in the account. When `false`, the composition hook never triggers.
+                    # @param [Object] video_layout A JSON object that describes the video layout of the composition hook in terms of regions. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+                    # @param [Array[String]] audio_sources An array of track names from the same group room to merge into the compositions created by the composition hook. Can include zero or more track names. A composition triggered by the composition hook includes all audio sources specified in `audio_sources` except those specified in `audio_sources_excluded`. The track names in this parameter can include an asterisk as a wild card character, which matches zero or more characters in a track name. For example, `student*` includes tracks named `student` as well as `studentTeam`.
+                    # @param [Array[String]] audio_sources_excluded An array of track names to exclude. A composition triggered by the composition hook includes all audio sources specified in `audio_sources` except for those specified in `audio_sources_excluded`. The track names in this parameter can include an asterisk as a wild card character, which matches zero or more characters in a track name. For example, `student*` excludes `student` as well as `studentTeam`. This parameter can also be empty.
+                    # @param [Boolean] trim Whether to clip the intervals where there is no active media in the compositions triggered by the composition hook. The default is `true`. Compositions with `trim` enabled are shorter when the Room is created and no Participant joins for a while as well as if all the Participants leave the room and join later, because those gaps will be removed. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+                    # @param [Format] format 
+                    # @param [String] resolution A string that describes the columns (width) and rows (height) of the generated composed video in pixels. Defaults to `640x480`.  The string's format is `{width}x{height}` where:   * 16 <= `{width}` <= 1280 * 16 <= `{height}` <= 1280 * `{width}` * `{height}` <= 921,600  Typical values are:   * HD = `1280x720` * PAL = `1024x576` * VGA = `640x480` * CIF = `320x240`  Note that the `resolution` imposes an aspect ratio to the resulting composition. When the original video tracks are constrained by the aspect ratio, they are scaled to fit. See [Specifying Video Layouts](https://www.twilio.com/docs/video/api/compositions-resource#specifying-video-layouts) for more info.
+                    # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application on every composition event. If not provided, status callback events will not be dispatched.
+                    # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `POST` or `GET` and the default is `POST`.
+                    # @return [CompositionHookInstance] Updated CompositionHookInstance
+                    def update_with_metadata(
+                      friendly_name: nil, 
+                      enabled: :unset, 
+                      video_layout: :unset, 
+                      audio_sources: :unset, 
+                      audio_sources_excluded: :unset, 
+                      trim: :unset, 
+                      format: :unset, 
+                      resolution: :unset, 
+                      status_callback: :unset, 
+                      status_callback_method: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Enabled' => enabled,
+                            'VideoLayout' => Twilio.serialize_object(video_layout),
+                            'AudioSources' => Twilio.serialize_list(audio_sources) { |e| e },
+                            'AudioSourcesExcluded' => Twilio.serialize_list(audio_sources_excluded) { |e| e },
+                            'Trim' => trim,
+                            'Format' => format,
+                            'Resolution' => resolution,
+                            'StatusCallback' => status_callback,
+                            'StatusCallbackMethod' => status_callback_method,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        composition_hook_instance = CompositionHookInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        CompositionHookInstanceMetadata.new(
+                            @version,
+                            composition_hook_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -318,6 +512,53 @@ module Twilio
                     end
                 end
 
+                class CompositionHookInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CompositionHookInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CompositionHookInstance] composition_hook_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CompositionHookInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, composition_hook_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @composition_hook_instance = composition_hook_instance
+                    end
+
+                    def composition_hook
+                        @composition_hook_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CompositionHookInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CompositionHookListResponse < InstanceListResource
+                    # @param [Array<CompositionHookInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @composition_hook_instance = payload.body[key].map do |data|
+                        CompositionHookInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def composition_hook_instance
+                          @instance
+                      end
+                  end
+
                 class CompositionHookPage < Page
                     ##
                     # Initialize the CompositionHookPage
@@ -327,6 +568,7 @@ module Twilio
                     # @return [CompositionHookPage] CompositionHookPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -346,6 +588,66 @@ module Twilio
                         '<Twilio.Video.V1.CompositionHookPage>'
                     end
                 end
+
+                class CompositionHookPageMetadata < PageMetadata
+                    attr_reader :composition_hook_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @composition_hook_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @composition_hook_page << CompositionHookListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @composition_hook_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Video::V1PageMetadata>';
+                    end
+                end
+                class CompositionHookListResponse < InstanceListResource
+
+                    # @param [Array<CompositionHookInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @composition_hook = data_list.map do |data|
+                        CompositionHookInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def composition_hook
+                        @composition_hook
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class CompositionHookInstance < InstanceResource
                     ##
                     # Initialize the CompositionHookInstance
@@ -358,6 +660,7 @@ module Twilio
                     # @return [CompositionHookInstance] CompositionHookInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

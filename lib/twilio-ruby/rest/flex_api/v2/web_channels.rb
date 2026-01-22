@@ -25,6 +25,7 @@ module Twilio
                     # @return [WebChannelsList] WebChannelsList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/WebChats"
@@ -69,6 +70,51 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the WebChannelsInstanceMetadata
+                    # @param [String] address_sid The SID of the Conversations Address. See [Address Configuration Resource](https://www.twilio.com/docs/conversations/api/address-configuration-resource) for configuration details. When a conversation is created on the Flex backend, the callback URL will be set to the corresponding Studio Flow SID or webhook URL in your address configuration.
+                    # @param [String] chat_friendly_name The Conversation's friendly name. See the [Conversation resource](https://www.twilio.com/docs/conversations/api/conversation-resource) for an example.
+                    # @param [String] customer_friendly_name The Conversation participant's friendly name. See the [Conversation Participant Resource](https://www.twilio.com/docs/conversations/api/conversation-participant-resource) for an example.
+                    # @param [String] pre_engagement_data The pre-engagement data.
+                    # @param [String] identity The Identity of the guest user. See the [Conversation User Resource](https://www.twilio.com/docs/conversations/api/user-resource) for an example.
+                    # @param [String] ui_version The Ui-Version HTTP request header
+                    # @return [WebChannelsInstance] Created WebChannelsInstance
+                    def create_with_metadata(
+                      address_sid: nil, 
+                      chat_friendly_name: :unset, 
+                      customer_friendly_name: :unset, 
+                      pre_engagement_data: :unset, 
+                      identity: :unset, 
+                      ui_version: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'AddressSid' => address_sid,
+                            'ChatFriendlyName' => chat_friendly_name,
+                            'CustomerFriendlyName' => customer_friendly_name,
+                            'PreEngagementData' => pre_engagement_data,
+                            'Identity' => identity,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Ui-Version' => ui_version, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        web_channels_instance = WebChannelsInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        WebChannelsInstanceMetadata.new(
+                            @version,
+                            web_channels_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -87,6 +133,7 @@ module Twilio
                     # @return [WebChannelsPage] WebChannelsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -106,6 +153,66 @@ module Twilio
                         '<Twilio.FlexApi.V2.WebChannelsPage>'
                     end
                 end
+
+                class WebChannelsPageMetadata < PageMetadata
+                    attr_reader :web_channels_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @web_channels_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @web_channels_page << WebChannelsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @web_channels_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V2PageMetadata>';
+                    end
+                end
+                class WebChannelsListResponse < InstanceListResource
+
+                    # @param [Array<WebChannelsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @web_channels = data_list.map do |data|
+                        WebChannelsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def web_channels
+                        @web_channels
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class WebChannelsInstance < InstanceResource
                     ##
                     # Initialize the WebChannelsInstance
@@ -118,6 +225,7 @@ module Twilio
                     # @return [WebChannelsInstance] WebChannelsInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

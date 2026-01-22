@@ -28,6 +28,7 @@ module Twilio
                     # @return [ParticipantList] ParticipantList
                     def initialize(version, account_sid: nil, conference_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { account_sid: account_sid, conference_sid: conference_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Conferences/#{@solution[:conference_sid]}/Participants.json"
@@ -207,6 +208,186 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ParticipantInstanceMetadata
+                    # @param [String] from The phone number, Client identifier, or username portion of SIP address that made this call. Phone numbers are in [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g., +16175551212). Client identifiers are formatted `client:name`. If using a phone number, it must be a Twilio number or a Verified [outgoing caller id](https://www.twilio.com/docs/voice/api/outgoing-caller-ids) for your account. If the `to` parameter is a phone number, `from` must also be a phone number. If `to` is sip address, this value of `from` should be a username portion to be used to populate the P-Asserted-Identity header that is passed to the SIP endpoint.
+                    # @param [String] to The phone number, SIP address, Client, TwiML App identifier that received this call. Phone numbers are in [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g., +16175551212). SIP addresses are formatted as `sip:name@company.com`. Client identifiers are formatted `client:name`. TwiML App identifiers are formatted `app:<APP_SID>`. [Custom parameters](https://www.twilio.com/docs/voice/api/conference-participant-resource#custom-parameters) may also be specified.
+                    # @param [String] status_callback The URL we should call using the `status_callback_method` to send status information to your application.
+                    # @param [String] status_callback_method The HTTP method we should use to call `status_callback`. Can be: `GET` and `POST` and defaults to `POST`.
+                    # @param [Array[String]] status_callback_event The conference state changes that should generate a call to `status_callback`. Can be: `initiated`, `ringing`, `answered`, and `completed`. Separate multiple values with a space. The default value is `completed`.
+                    # @param [String] label A label for this participant. If one is supplied, it may subsequently be used to fetch, update or delete the participant.
+                    # @param [String] timeout The number of seconds that we should allow the phone to ring before assuming there is no answer. Can be an integer between `5` and `600`, inclusive. The default value is `60`. We always add a 5-second timeout buffer to outgoing calls, so  value of 10 would result in an actual timeout that was closer to 15 seconds.
+                    # @param [Boolean] record Whether to record the participant and their conferences, including the time between conferences. Can be `true` or `false` and the default is `false`.
+                    # @param [Boolean] muted Whether the agent is muted in the conference. Can be `true` or `false` and the default is `false`.
+                    # @param [String] beep Whether to play a notification beep to the conference when the participant joins. Can be: `true`, `false`, `onEnter`, or `onExit`. The default value is `true`.
+                    # @param [Boolean] start_conference_on_enter Whether to start the conference when the participant joins, if it has not already started. Can be: `true` or `false` and the default is `true`. If `false` and the conference has not started, the participant is muted and hears background music until another participant starts the conference.
+                    # @param [Boolean] end_conference_on_exit Whether to end the conference when the participant leaves. Can be: `true` or `false` and defaults to `false`.
+                    # @param [String] wait_url The URL that Twilio calls using the `wait_method` before the conference has started. The URL may return an MP3 file, a WAV file, or a TwiML document. The default value is the URL of our standard hold music. If you do not want anything to play while waiting for the conference to start, specify an empty string by setting `wait_url` to `''`. For more details on the allowable verbs within the `waitUrl`, see the `waitUrl` attribute in the [<Conference> TwiML instruction](https://www.twilio.com/docs/voice/twiml/conference#attributes-waiturl).
+                    # @param [String] wait_method The HTTP method we should use to call `wait_url`. Can be `GET` or `POST` and the default is `POST`. When using a static audio file, this should be `GET` so that we can cache the file.
+                    # @param [Boolean] early_media Whether to allow an agent to hear the state of the outbound call, including ringing or disconnect messages. Can be: `true` or `false` and defaults to `true`.
+                    # @param [String] max_participants The maximum number of participants in the conference. Can be a positive integer from `2` to `250`. The default value is `250`.
+                    # @param [String] conference_record Whether to record the conference the participant is joining. Can be: `true`, `false`, `record-from-start`, and `do-not-record`. The default value is `false`.
+                    # @param [String] conference_trim Whether to trim leading and trailing silence from the conference recording. Can be: `trim-silence` or `do-not-trim` and defaults to `trim-silence`.
+                    # @param [String] conference_status_callback The URL we should call using the `conference_status_callback_method` when the conference events in `conference_status_callback_event` occur. Only the value set by the first participant to join the conference is used. Subsequent `conference_status_callback` values are ignored.
+                    # @param [String] conference_status_callback_method The HTTP method we should use to call `conference_status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
+                    # @param [Array[String]] conference_status_callback_event The conference state changes that should generate a call to `conference_status_callback`. Can be: `start`, `end`, `join`, `leave`, `mute`, `hold`, `modify`, `speaker`, and `announcement`. Separate multiple values with a space. Defaults to `start end`.
+                    # @param [String] recording_channels The recording channels for the final recording. Can be: `mono` or `dual` and the default is `mono`.
+                    # @param [String] recording_status_callback The URL that we should call using the `recording_status_callback_method` when the recording status changes.
+                    # @param [String] recording_status_callback_method The HTTP method we should use when we call `recording_status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
+                    # @param [String] sip_auth_username The SIP username used for authentication.
+                    # @param [String] sip_auth_password The SIP password for authentication.
+                    # @param [String] region The [region](https://support.twilio.com/hc/en-us/articles/223132167-How-global-low-latency-routing-and-region-selection-work-for-conferences-and-Client-calls) where we should mix the recorded audio. Can be:`us1`, `us2`, `ie1`, `de1`, `sg1`, `br1`, `au1`, or `jp1`.
+                    # @param [String] conference_recording_status_callback The URL we should call using the `conference_recording_status_callback_method` when the conference recording is available.
+                    # @param [String] conference_recording_status_callback_method The HTTP method we should use to call `conference_recording_status_callback`. Can be: `GET` or `POST` and defaults to `POST`.
+                    # @param [Array[String]] recording_status_callback_event The recording state changes that should generate a call to `recording_status_callback`. Can be: `started`, `in-progress`, `paused`, `resumed`, `stopped`, `completed`, `failed`, and `absent`. Separate multiple values with a space, ex: `'in-progress completed failed'`.
+                    # @param [Array[String]] conference_recording_status_callback_event The conference recording state changes that generate a call to `conference_recording_status_callback`. Can be: `in-progress`, `completed`, `failed`, and `absent`. Separate multiple values with a space, ex: `'in-progress completed failed'`
+                    # @param [Boolean] coaching Whether the participant is coaching another call. Can be: `true` or `false`. If not present, defaults to `false` unless `call_sid_to_coach` is defined. If `true`, `call_sid_to_coach` must be defined.
+                    # @param [String] call_sid_to_coach The SID of the participant who is being `coached`. The participant being coached is the only participant who can hear the participant who is `coaching`.
+                    # @param [String] jitter_buffer_size Jitter buffer size for the connecting participant. Twilio will use this setting to apply Jitter Buffer before participant's audio is mixed into the conference. Can be: `off`, `small`, `medium`, and `large`. Default to `large`.
+                    # @param [String] byoc The SID of a BYOC (Bring Your Own Carrier) trunk to route this call with. Note that `byoc` is only meaningful when `to` is a phone number; it will otherwise be ignored. (Beta)
+                    # @param [String] caller_id The phone number, Client identifier, or username portion of SIP address that made this call. Phone numbers are in [E.164](https://www.twilio.com/docs/glossary/what-e164) format (e.g., +16175551212). Client identifiers are formatted `client:name`. If using a phone number, it must be a Twilio number or a Verified [outgoing caller id](https://www.twilio.com/docs/voice/api/outgoing-caller-ids) for your account. If the `to` parameter is a phone number, `callerId` must also be a phone number. If `to` is sip address, this value of `callerId` should be a username portion to be used to populate the From header that is passed to the SIP endpoint.
+                    # @param [String] call_reason The Reason for the outgoing call. Use it to specify the purpose of the call that is presented on the called party's phone. (Branded Calls Beta)
+                    # @param [String] recording_track The audio track to record for the call. Can be: `inbound`, `outbound` or `both`. The default is `both`. `inbound` records the audio that is received by Twilio. `outbound` records the audio that is sent from Twilio. `both` records the audio that is received and sent by Twilio.
+                    # @param [String] time_limit The maximum duration of the call in seconds. Constraints depend on account and configuration.
+                    # @param [String] machine_detection Whether to detect if a human, answering machine, or fax has picked up the call. Can be: `Enable` or `DetectMessageEnd`. Use `Enable` if you would like us to return `AnsweredBy` as soon as the called party is identified. Use `DetectMessageEnd`, if you would like to leave a message on an answering machine. For more information, see [Answering Machine Detection](https://www.twilio.com/docs/voice/answering-machine-detection).
+                    # @param [String] machine_detection_timeout The number of seconds that we should attempt to detect an answering machine before timing out and sending a voice request with `AnsweredBy` of `unknown`. The default timeout is 30 seconds.
+                    # @param [String] machine_detection_speech_threshold The number of milliseconds that is used as the measuring stick for the length of the speech activity, where durations lower than this value will be interpreted as a human and longer than this value as a machine. Possible Values: 1000-6000. Default: 2400.
+                    # @param [String] machine_detection_speech_end_threshold The number of milliseconds of silence after speech activity at which point the speech activity is considered complete. Possible Values: 500-5000. Default: 1200.
+                    # @param [String] machine_detection_silence_timeout The number of milliseconds of initial silence after which an `unknown` AnsweredBy result will be returned. Possible Values: 2000-10000. Default: 5000.
+                    # @param [String] amd_status_callback The URL that we should call using the `amd_status_callback_method` to notify customer application whether the call was answered by human, machine or fax.
+                    # @param [String] amd_status_callback_method The HTTP method we should use when calling the `amd_status_callback` URL. Can be: `GET` or `POST` and the default is `POST`.
+                    # @param [String] trim Whether to trim any leading and trailing silence from the participant recording. Can be: `trim-silence` or `do-not-trim` and the default is `trim-silence`.
+                    # @param [String] call_token A token string needed to invoke a forwarded call. A call_token is generated when an incoming call is received on a Twilio number. Pass an incoming call's call_token value to a forwarded call via the call_token parameter when creating a new call. A forwarded call should bear the same CallerID of the original incoming call.
+                    # @param [String] client_notification_url The URL that we should use to deliver `push call notification`.
+                    # @param [String] caller_display_name The name that populates the display name in the From header. Must be between 2 and 255 characters. Only applicable for calls to sip address.
+                    # @return [ParticipantInstance] Created ParticipantInstance
+                    def create_with_metadata(
+                      from: nil, 
+                      to: nil, 
+                      status_callback: :unset, 
+                      status_callback_method: :unset, 
+                      status_callback_event: :unset, 
+                      label: :unset, 
+                      timeout: :unset, 
+                      record: :unset, 
+                      muted: :unset, 
+                      beep: :unset, 
+                      start_conference_on_enter: :unset, 
+                      end_conference_on_exit: :unset, 
+                      wait_url: :unset, 
+                      wait_method: :unset, 
+                      early_media: :unset, 
+                      max_participants: :unset, 
+                      conference_record: :unset, 
+                      conference_trim: :unset, 
+                      conference_status_callback: :unset, 
+                      conference_status_callback_method: :unset, 
+                      conference_status_callback_event: :unset, 
+                      recording_channels: :unset, 
+                      recording_status_callback: :unset, 
+                      recording_status_callback_method: :unset, 
+                      sip_auth_username: :unset, 
+                      sip_auth_password: :unset, 
+                      region: :unset, 
+                      conference_recording_status_callback: :unset, 
+                      conference_recording_status_callback_method: :unset, 
+                      recording_status_callback_event: :unset, 
+                      conference_recording_status_callback_event: :unset, 
+                      coaching: :unset, 
+                      call_sid_to_coach: :unset, 
+                      jitter_buffer_size: :unset, 
+                      byoc: :unset, 
+                      caller_id: :unset, 
+                      call_reason: :unset, 
+                      recording_track: :unset, 
+                      time_limit: :unset, 
+                      machine_detection: :unset, 
+                      machine_detection_timeout: :unset, 
+                      machine_detection_speech_threshold: :unset, 
+                      machine_detection_speech_end_threshold: :unset, 
+                      machine_detection_silence_timeout: :unset, 
+                      amd_status_callback: :unset, 
+                      amd_status_callback_method: :unset, 
+                      trim: :unset, 
+                      call_token: :unset, 
+                      client_notification_url: :unset, 
+                      caller_display_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'From' => from,
+                            'To' => to,
+                            'StatusCallback' => status_callback,
+                            'StatusCallbackMethod' => status_callback_method,
+                            'StatusCallbackEvent' => Twilio.serialize_list(status_callback_event) { |e| e },
+                            'Label' => label,
+                            'Timeout' => timeout,
+                            'Record' => record,
+                            'Muted' => muted,
+                            'Beep' => beep,
+                            'StartConferenceOnEnter' => start_conference_on_enter,
+                            'EndConferenceOnExit' => end_conference_on_exit,
+                            'WaitUrl' => wait_url,
+                            'WaitMethod' => wait_method,
+                            'EarlyMedia' => early_media,
+                            'MaxParticipants' => max_participants,
+                            'ConferenceRecord' => conference_record,
+                            'ConferenceTrim' => conference_trim,
+                            'ConferenceStatusCallback' => conference_status_callback,
+                            'ConferenceStatusCallbackMethod' => conference_status_callback_method,
+                            'ConferenceStatusCallbackEvent' => Twilio.serialize_list(conference_status_callback_event) { |e| e },
+                            'RecordingChannels' => recording_channels,
+                            'RecordingStatusCallback' => recording_status_callback,
+                            'RecordingStatusCallbackMethod' => recording_status_callback_method,
+                            'SipAuthUsername' => sip_auth_username,
+                            'SipAuthPassword' => sip_auth_password,
+                            'Region' => region,
+                            'ConferenceRecordingStatusCallback' => conference_recording_status_callback,
+                            'ConferenceRecordingStatusCallbackMethod' => conference_recording_status_callback_method,
+                            'RecordingStatusCallbackEvent' => Twilio.serialize_list(recording_status_callback_event) { |e| e },
+                            'ConferenceRecordingStatusCallbackEvent' => Twilio.serialize_list(conference_recording_status_callback_event) { |e| e },
+                            'Coaching' => coaching,
+                            'CallSidToCoach' => call_sid_to_coach,
+                            'JitterBufferSize' => jitter_buffer_size,
+                            'Byoc' => byoc,
+                            'CallerId' => caller_id,
+                            'CallReason' => call_reason,
+                            'RecordingTrack' => recording_track,
+                            'TimeLimit' => time_limit,
+                            'MachineDetection' => machine_detection,
+                            'MachineDetectionTimeout' => machine_detection_timeout,
+                            'MachineDetectionSpeechThreshold' => machine_detection_speech_threshold,
+                            'MachineDetectionSpeechEndThreshold' => machine_detection_speech_end_threshold,
+                            'MachineDetectionSilenceTimeout' => machine_detection_silence_timeout,
+                            'AmdStatusCallback' => amd_status_callback,
+                            'AmdStatusCallbackMethod' => amd_status_callback_method,
+                            'Trim' => trim,
+                            'CallToken' => call_token,
+                            'ClientNotificationUrl' => client_notification_url,
+                            'CallerDisplayName' => caller_display_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        participant_instance = ParticipantInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            conference_sid: @solution[:conference_sid],
+                        )
+                        ParticipantInstanceMetadata.new(
+                            @version,
+                            participant_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ParticipantInstance records from the API as a list.
@@ -259,6 +440,34 @@ module Twilio
                     end
 
                     ##
+                    # Lists ParticipantPageMetadata records from the API as a list.
+                      # @param [Boolean] muted Whether to return only participants that are muted. Can be: `true` or `false`.
+                      # @param [Boolean] hold Whether to return only participants that are on hold. Can be: `true` or `false`.
+                      # @param [Boolean] coaching Whether to return only participants who are coaching another call. Can be: `true` or `false`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(muted: :unset, hold: :unset, coaching: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Muted' => muted,
+                            'Hold' => hold,
+                            'Coaching' => coaching,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ParticipantPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ParticipantInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -282,7 +491,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ParticipantInstance
-                    def page(muted: :unset, hold: :unset, coaching: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(muted: :unset, hold: :unset, coaching: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Muted' => muted,
                             'Hold' => hold,
@@ -332,6 +541,7 @@ module Twilio
                     # @return [ParticipantContext] ParticipantContext
                     def initialize(version, account_sid, conference_sid, call_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { account_sid: account_sid, conference_sid: conference_sid, call_sid: call_sid,  }
@@ -348,7 +558,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ParticipantInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          participant_instance = ParticipantInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ParticipantInstanceMetadata.new(@version, participant_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -369,6 +599,33 @@ module Twilio
                             account_sid: @solution[:account_sid],
                             conference_sid: @solution[:conference_sid],
                             call_sid: @solution[:call_sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ParticipantInstanceMetadata
+                    # @return [ParticipantInstance] Fetched ParticipantInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        participant_instance = ParticipantInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            conference_sid: @solution[:conference_sid],
+                            call_sid: @solution[:call_sid],
+                        )
+                        ParticipantInstanceMetadata.new(
+                            @version,
+                            participant_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -433,6 +690,73 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ParticipantInstanceMetadata
+                    # @param [Boolean] muted Whether the participant should be muted. Can be `true` or `false`. `true` will mute the participant, and `false` will un-mute them. Anything value other than `true` or `false` is interpreted as `false`.
+                    # @param [Boolean] hold Whether the participant should be on hold. Can be: `true` or `false`. `true` puts the participant on hold, and `false` lets them rejoin the conference.
+                    # @param [String] hold_url The URL we call using the `hold_method` for music that plays when the participant is on hold. The URL may return an MP3 file, a WAV file, or a TwiML document that contains `<Play>`, `<Say>`, `<Pause>`, or `<Redirect>` verbs.
+                    # @param [String] hold_method The HTTP method we should use to call `hold_url`. Can be: `GET` or `POST` and the default is `GET`.
+                    # @param [String] announce_url The URL we call using the `announce_method` for an announcement to the participant. The URL may return an MP3 file, a WAV file, or a TwiML document that contains `<Play>`, `<Say>`, `<Pause>`, or `<Redirect>` verbs.
+                    # @param [String] announce_method The HTTP method we should use to call `announce_url`. Can be: `GET` or `POST` and defaults to `POST`.
+                    # @param [String] wait_url The URL that Twilio calls using the `wait_method` before the conference has started. The URL may return an MP3 file, a WAV file, or a TwiML document. The default value is the URL of our standard hold music. If you do not want anything to play while waiting for the conference to start, specify an empty string by setting `wait_url` to `''`. For more details on the allowable verbs within the `waitUrl`, see the `waitUrl` attribute in the [<Conference> TwiML instruction](https://www.twilio.com/docs/voice/twiml/conference#attributes-waiturl).
+                    # @param [String] wait_method The HTTP method we should use to call `wait_url`. Can be `GET` or `POST` and the default is `POST`. When using a static audio file, this should be `GET` so that we can cache the file.
+                    # @param [Boolean] beep_on_exit Whether to play a notification beep to the conference when the participant exits. Can be: `true` or `false`.
+                    # @param [Boolean] end_conference_on_exit Whether to end the conference when the participant leaves. Can be: `true` or `false` and defaults to `false`.
+                    # @param [Boolean] coaching Whether the participant is coaching another call. Can be: `true` or `false`. If not present, defaults to `false` unless `call_sid_to_coach` is defined. If `true`, `call_sid_to_coach` must be defined.
+                    # @param [String] call_sid_to_coach The SID of the participant who is being `coached`. The participant being coached is the only participant who can hear the participant who is `coaching`.
+                    # @return [ParticipantInstance] Updated ParticipantInstance
+                    def update_with_metadata(
+                      muted: :unset, 
+                      hold: :unset, 
+                      hold_url: :unset, 
+                      hold_method: :unset, 
+                      announce_url: :unset, 
+                      announce_method: :unset, 
+                      wait_url: :unset, 
+                      wait_method: :unset, 
+                      beep_on_exit: :unset, 
+                      end_conference_on_exit: :unset, 
+                      coaching: :unset, 
+                      call_sid_to_coach: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Muted' => muted,
+                            'Hold' => hold,
+                            'HoldUrl' => hold_url,
+                            'HoldMethod' => hold_method,
+                            'AnnounceUrl' => announce_url,
+                            'AnnounceMethod' => announce_method,
+                            'WaitUrl' => wait_url,
+                            'WaitMethod' => wait_method,
+                            'BeepOnExit' => beep_on_exit,
+                            'EndConferenceOnExit' => end_conference_on_exit,
+                            'Coaching' => coaching,
+                            'CallSidToCoach' => call_sid_to_coach,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        participant_instance = ParticipantInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            conference_sid: @solution[:conference_sid],
+                            call_sid: @solution[:call_sid],
+                        )
+                        ParticipantInstanceMetadata.new(
+                            @version,
+                            participant_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -449,6 +773,53 @@ module Twilio
                     end
                 end
 
+                class ParticipantInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ParticipantInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ParticipantInstance] participant_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ParticipantInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, participant_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @participant_instance = participant_instance
+                    end
+
+                    def participant
+                        @participant_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ParticipantInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ParticipantListResponse < InstanceListResource
+                    # @param [Array<ParticipantInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @participant_instance = payload.body[key].map do |data|
+                        ParticipantInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def participant_instance
+                          @instance
+                      end
+                  end
+
                 class ParticipantPage < Page
                     ##
                     # Initialize the ParticipantPage
@@ -458,6 +829,7 @@ module Twilio
                     # @return [ParticipantPage] ParticipantPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -477,6 +849,66 @@ module Twilio
                         '<Twilio.Api.V2010.ParticipantPage>'
                     end
                 end
+
+                class ParticipantPageMetadata < PageMetadata
+                    attr_reader :participant_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @participant_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @participant_page << ParticipantListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @participant_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class ParticipantListResponse < InstanceListResource
+
+                    # @param [Array<ParticipantInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @participant = data_list.map do |data|
+                        ParticipantInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def participant
+                        @participant
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ParticipantInstance < InstanceResource
                     ##
                     # Initialize the ParticipantInstance
@@ -489,6 +921,7 @@ module Twilio
                     # @return [ParticipantInstance] ParticipantInstance
                     def initialize(version, payload , account_sid: nil, conference_sid: nil, call_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

@@ -25,6 +25,7 @@ module Twilio
                     # @return [ContentAndApprovalsList] ContentAndApprovalsList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/ContentAndApprovals"
@@ -70,6 +71,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists ContentAndApprovalsPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ContentAndApprovalsPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ContentAndApprovalsInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -90,7 +113,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ContentAndApprovalsInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -135,6 +158,7 @@ module Twilio
                     # @return [ContentAndApprovalsPage] ContentAndApprovalsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -154,6 +178,66 @@ module Twilio
                         '<Twilio.Content.V1.ContentAndApprovalsPage>'
                     end
                 end
+
+                class ContentAndApprovalsPageMetadata < PageMetadata
+                    attr_reader :content_and_approvals_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @content_and_approvals_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @content_and_approvals_page << ContentAndApprovalsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @content_and_approvals_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Content::V1PageMetadata>';
+                    end
+                end
+                class ContentAndApprovalsListResponse < InstanceListResource
+
+                    # @param [Array<ContentAndApprovalsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @content_and_approvals = data_list.map do |data|
+                        ContentAndApprovalsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def content_and_approvals
+                        @content_and_approvals
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ContentAndApprovalsInstance < InstanceResource
                     ##
                     # Initialize the ContentAndApprovalsInstance
@@ -166,6 +250,7 @@ module Twilio
                     # @return [ContentAndApprovalsInstance] ContentAndApprovalsInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

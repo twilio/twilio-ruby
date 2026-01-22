@@ -25,6 +25,7 @@ module Twilio
                     # @return [BulkConsentsList] BulkConsentsList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Consents/Bulk"
@@ -55,6 +56,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the BulkConsentsInstanceMetadata
+                    # @param [Array[Hash]] items This is a list of objects that describes a contact's opt-in status. Each object contains the following fields: `contact_id`, which must be a string representing phone number in [E.164 format](https://www.twilio.com/docs/glossary/what-e164); `correlation_id`, a unique 32-character UUID used to uniquely map the request item with the response item; `sender_id`, which can be either a valid messaging service SID or a from phone number; `status`, a string representing the consent status. Can be one of [`opt-in`, `opt-out`]; `source`, a string indicating the medium through which the consent was collected. Can be one of [`website`, `offline`, `opt-in-message`, `opt-out-message`, `others`]; `date_of_consent`, an optional datetime string field in ISO-8601 format that captures the exact date and time when the user gave or revoked consent. If not provided, it will be empty.
+                    # @return [BulkConsentsInstance] Created BulkConsentsInstance
+                    def create_with_metadata(
+                      items: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Items' => Twilio.serialize_list(items) { |e| Twilio.serialize_object(e) },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        bulk_consents_instance = BulkConsentsInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        BulkConsentsInstanceMetadata.new(
+                            @version,
+                            bulk_consents_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -73,6 +105,7 @@ module Twilio
                     # @return [BulkConsentsPage] BulkConsentsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -92,6 +125,66 @@ module Twilio
                         '<Twilio.Accounts.V1.BulkConsentsPage>'
                     end
                 end
+
+                class BulkConsentsPageMetadata < PageMetadata
+                    attr_reader :bulk_consents_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @bulk_consents_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @bulk_consents_page << BulkConsentsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @bulk_consents_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Accounts::V1PageMetadata>';
+                    end
+                end
+                class BulkConsentsListResponse < InstanceListResource
+
+                    # @param [Array<BulkConsentsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @bulk_consents = data_list.map do |data|
+                        BulkConsentsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def bulk_consents
+                        @bulk_consents
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class BulkConsentsInstance < InstanceResource
                     ##
                     # Initialize the BulkConsentsInstance
@@ -104,6 +197,7 @@ module Twilio
                     # @return [BulkConsentsInstance] BulkConsentsInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

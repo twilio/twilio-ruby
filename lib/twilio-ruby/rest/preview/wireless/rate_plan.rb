@@ -25,6 +25,7 @@ module Twilio
                     # @return [RatePlanList] RatePlanList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/RatePlans"
@@ -82,6 +83,64 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the RatePlanInstanceMetadata
+                    # @param [String] unique_name 
+                    # @param [String] friendly_name 
+                    # @param [Boolean] data_enabled 
+                    # @param [String] data_limit 
+                    # @param [String] data_metering 
+                    # @param [Boolean] messaging_enabled 
+                    # @param [Boolean] voice_enabled 
+                    # @param [Boolean] commands_enabled 
+                    # @param [Boolean] national_roaming_enabled 
+                    # @param [Array[String]] international_roaming 
+                    # @return [RatePlanInstance] Created RatePlanInstance
+                    def create_with_metadata(
+                      unique_name: :unset, 
+                      friendly_name: :unset, 
+                      data_enabled: :unset, 
+                      data_limit: :unset, 
+                      data_metering: :unset, 
+                      messaging_enabled: :unset, 
+                      voice_enabled: :unset, 
+                      commands_enabled: :unset, 
+                      national_roaming_enabled: :unset, 
+                      international_roaming: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'UniqueName' => unique_name,
+                            'FriendlyName' => friendly_name,
+                            'DataEnabled' => data_enabled,
+                            'DataLimit' => data_limit,
+                            'DataMetering' => data_metering,
+                            'MessagingEnabled' => messaging_enabled,
+                            'VoiceEnabled' => voice_enabled,
+                            'CommandsEnabled' => commands_enabled,
+                            'NationalRoamingEnabled' => national_roaming_enabled,
+                            'InternationalRoaming' => Twilio.serialize_list(international_roaming) { |e| e },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        rate_plan_instance = RatePlanInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        RatePlanInstanceMetadata.new(
+                            @version,
+                            rate_plan_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists RatePlanInstance records from the API as a list.
@@ -122,6 +181,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists RatePlanPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        RatePlanPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields RatePlanInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -142,7 +223,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of RatePlanInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -187,6 +268,7 @@ module Twilio
                     # @return [RatePlanContext] RatePlanContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -203,7 +285,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the RatePlanInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          ratePlan_instance = RatePlanInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          RatePlanInstanceMetadata.new(@version, ratePlan_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -222,6 +324,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the RatePlanInstanceMetadata
+                    # @return [RatePlanInstance] Fetched RatePlanInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        rate_plan_instance = RatePlanInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        RatePlanInstanceMetadata.new(
+                            @version,
+                            rate_plan_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -254,6 +381,41 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the RatePlanInstanceMetadata
+                    # @param [String] unique_name 
+                    # @param [String] friendly_name 
+                    # @return [RatePlanInstance] Updated RatePlanInstance
+                    def update_with_metadata(
+                      unique_name: :unset, 
+                      friendly_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'UniqueName' => unique_name,
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        rate_plan_instance = RatePlanInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        RatePlanInstanceMetadata.new(
+                            @version,
+                            rate_plan_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -270,6 +432,53 @@ module Twilio
                     end
                 end
 
+                class RatePlanInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new RatePlanInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}RatePlanInstance] rate_plan_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [RatePlanInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, rate_plan_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @rate_plan_instance = rate_plan_instance
+                    end
+
+                    def rate_plan
+                        @rate_plan_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.RatePlanInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class RatePlanListResponse < InstanceListResource
+                    # @param [Array<RatePlanInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @rate_plan_instance = payload.body[key].map do |data|
+                        RatePlanInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def rate_plan_instance
+                          @instance
+                      end
+                  end
+
                 class RatePlanPage < Page
                     ##
                     # Initialize the RatePlanPage
@@ -279,6 +488,7 @@ module Twilio
                     # @return [RatePlanPage] RatePlanPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -298,6 +508,66 @@ module Twilio
                         '<Twilio.Preview.Wireless.RatePlanPage>'
                     end
                 end
+
+                class RatePlanPageMetadata < PageMetadata
+                    attr_reader :rate_plan_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @rate_plan_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @rate_plan_page << RatePlanListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @rate_plan_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Preview::WirelessPageMetadata>';
+                    end
+                end
+                class RatePlanListResponse < InstanceListResource
+
+                    # @param [Array<RatePlanInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @rate_plan = data_list.map do |data|
+                        RatePlanInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def rate_plan
+                        @rate_plan
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class RatePlanInstance < InstanceResource
                     ##
                     # Initialize the RatePlanInstance
@@ -310,6 +580,7 @@ module Twilio
                     # @return [RatePlanInstance] RatePlanInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

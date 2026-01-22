@@ -28,6 +28,7 @@ module Twilio
                     # @return [TaskQueueBulkRealTimeStatisticsList] TaskQueueBulkRealTimeStatisticsList
                     def initialize(version, workspace_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { workspace_sid: workspace_sid }
                         @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskQueues/RealTimeStatistics"
@@ -54,6 +55,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TaskQueueBulkRealTimeStatisticsInstanceMetadata
+                    # @param [Object] body 
+                    # @return [TaskQueueBulkRealTimeStatisticsInstance] Created TaskQueueBulkRealTimeStatisticsInstance
+                    def create_with_metadata(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: body.to_json)
+                        task_queue_bulk_real_time_statistics_instance = TaskQueueBulkRealTimeStatisticsInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                        )
+                        TaskQueueBulkRealTimeStatisticsInstanceMetadata.new(
+                            @version,
+                            task_queue_bulk_real_time_statistics_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -72,6 +100,7 @@ module Twilio
                     # @return [TaskQueueBulkRealTimeStatisticsPage] TaskQueueBulkRealTimeStatisticsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -91,6 +120,66 @@ module Twilio
                         '<Twilio.Taskrouter.V1.TaskQueueBulkRealTimeStatisticsPage>'
                     end
                 end
+
+                class TaskQueueBulkRealTimeStatisticsPageMetadata < PageMetadata
+                    attr_reader :task_queue_bulk_real_time_statistics_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @task_queue_bulk_real_time_statistics_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @task_queue_bulk_real_time_statistics_page << TaskQueueBulkRealTimeStatisticsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @task_queue_bulk_real_time_statistics_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class TaskQueueBulkRealTimeStatisticsListResponse < InstanceListResource
+
+                    # @param [Array<TaskQueueBulkRealTimeStatisticsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @task_queue_bulk_real_time_statistics = data_list.map do |data|
+                        TaskQueueBulkRealTimeStatisticsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def task_queue_bulk_real_time_statistics
+                        @task_queue_bulk_real_time_statistics
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class TaskQueueBulkRealTimeStatisticsInstance < InstanceResource
                     ##
                     # Initialize the TaskQueueBulkRealTimeStatisticsInstance
@@ -103,6 +192,7 @@ module Twilio
                     # @return [TaskQueueBulkRealTimeStatisticsInstance] TaskQueueBulkRealTimeStatisticsInstance
                     def initialize(version, payload , workspace_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

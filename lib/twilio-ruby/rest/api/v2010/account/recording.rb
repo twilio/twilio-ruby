@@ -27,6 +27,7 @@ module Twilio
                     # @return [RecordingList] RecordingList
                     def initialize(version, account_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Recordings.json"
@@ -96,6 +97,40 @@ module Twilio
                     end
 
                     ##
+                    # Lists RecordingPageMetadata records from the API as a list.
+                      # @param [Time] date_created Only include recordings that were created on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read recordings that were created on this date. You can also specify an inequality, such as `DateCreated<=YYYY-MM-DD`, to read recordings that were created on or before midnight of this date, and `DateCreated>=YYYY-MM-DD` to read recordings that were created on or after midnight of this date.
+                      # @param [Time] date_created_before Only include recordings that were created on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read recordings that were created on this date. You can also specify an inequality, such as `DateCreated<=YYYY-MM-DD`, to read recordings that were created on or before midnight of this date, and `DateCreated>=YYYY-MM-DD` to read recordings that were created on or after midnight of this date.
+                      # @param [Time] date_created_after Only include recordings that were created on this date. Specify a date as `YYYY-MM-DD` in GMT, for example: `2009-07-06`, to read recordings that were created on this date. You can also specify an inequality, such as `DateCreated<=YYYY-MM-DD`, to read recordings that were created on or before midnight of this date, and `DateCreated>=YYYY-MM-DD` to read recordings that were created on or after midnight of this date.
+                      # @param [String] call_sid The [Call](https://www.twilio.com/docs/voice/api/call-resource) SID of the resources to read.
+                      # @param [String] conference_sid The Conference SID that identifies the conference associated with the recording to read.
+                      # @param [Boolean] include_soft_deleted A boolean parameter indicating whether to retrieve soft deleted recordings or not. Recordings metadata are kept after deletion for a retention period of 40 days.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(date_created: :unset, date_created_before: :unset, date_created_after: :unset, call_sid: :unset, conference_sid: :unset, include_soft_deleted: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'DateCreated' =>  Twilio.serialize_iso8601_datetime(date_created),
+                            'DateCreated<' =>  Twilio.serialize_iso8601_datetime(date_created_before),
+                            'DateCreated>' =>  Twilio.serialize_iso8601_datetime(date_created_after),
+                            'CallSid' => call_sid,
+                            'ConferenceSid' => conference_sid,
+                            'IncludeSoftDeleted' => include_soft_deleted,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        RecordingPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields RecordingInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -122,7 +157,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of RecordingInstance
-                    def page(date_created: :unset, date_created_before: :unset, date_created_after: :unset, call_sid: :unset, conference_sid: :unset, include_soft_deleted: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(date_created: :unset, date_created_before: :unset, date_created_after: :unset, call_sid: :unset, conference_sid: :unset, include_soft_deleted: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'DateCreated' =>  Twilio.serialize_iso8601_datetime(date_created),
                             'DateCreated<' =>  Twilio.serialize_iso8601_datetime(date_created_before),
@@ -174,6 +209,7 @@ module Twilio
                     # @return [RecordingContext] RecordingContext
                     def initialize(version, account_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { account_sid: account_sid, sid: sid,  }
@@ -192,7 +228,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the RecordingInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          recording_instance = RecordingInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          RecordingInstanceMetadata.new(@version, recording_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -218,6 +274,38 @@ module Twilio
                             payload,
                             account_sid: @solution[:account_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the RecordingInstanceMetadata
+                    # @param [Boolean] include_soft_deleted A boolean parameter indicating whether to retrieve soft deleted recordings or not. Recordings metadata are kept after deletion for a retention period of 40 days.
+                    # @return [RecordingInstance] Fetched RecordingInstance
+                    def fetch_with_metadata(
+                      include_soft_deleted: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'IncludeSoftDeleted' => include_soft_deleted,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        recording_instance = RecordingInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        RecordingInstanceMetadata.new(
+                            @version,
+                            recording_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -275,6 +363,53 @@ module Twilio
                     end
                 end
 
+                class RecordingInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new RecordingInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}RecordingInstance] recording_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [RecordingInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, recording_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @recording_instance = recording_instance
+                    end
+
+                    def recording
+                        @recording_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.RecordingInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class RecordingListResponse < InstanceListResource
+                    # @param [Array<RecordingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @recording_instance = payload.body[key].map do |data|
+                        RecordingInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def recording_instance
+                          @instance
+                      end
+                  end
+
                 class RecordingPage < Page
                     ##
                     # Initialize the RecordingPage
@@ -284,6 +419,7 @@ module Twilio
                     # @return [RecordingPage] RecordingPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -303,6 +439,66 @@ module Twilio
                         '<Twilio.Api.V2010.RecordingPage>'
                     end
                 end
+
+                class RecordingPageMetadata < PageMetadata
+                    attr_reader :recording_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @recording_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @recording_page << RecordingListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @recording_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class RecordingListResponse < InstanceListResource
+
+                    # @param [Array<RecordingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @recording = data_list.map do |data|
+                        RecordingInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def recording
+                        @recording
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class RecordingInstance < InstanceResource
                     ##
                     # Initialize the RecordingInstance
@@ -315,6 +511,7 @@ module Twilio
                     # @return [RecordingInstance] RecordingInstance
                     def initialize(version, payload , account_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

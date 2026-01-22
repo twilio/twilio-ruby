@@ -27,6 +27,7 @@ module Twilio
                     # @return [KnowledgeStatusList] KnowledgeStatusList
                     def initialize(version, id: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { id: id }
                         
@@ -50,6 +51,7 @@ module Twilio
                     # @return [KnowledgeStatusContext] KnowledgeStatusContext
                     def initialize(version, id)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { id: id,  }
@@ -76,6 +78,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the KnowledgeStatusInstanceMetadata
+                    # @return [KnowledgeStatusInstance] Fetched KnowledgeStatusInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        knowledge_status_instance = KnowledgeStatusInstance.new(
+                            @version,
+                            response.body,
+                            id: @solution[:id],
+                        )
+                        KnowledgeStatusInstanceMetadata.new(
+                            @version,
+                            knowledge_status_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -92,6 +119,53 @@ module Twilio
                     end
                 end
 
+                class KnowledgeStatusInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new KnowledgeStatusInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}KnowledgeStatusInstance] knowledge_status_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [KnowledgeStatusInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, knowledge_status_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @knowledge_status_instance = knowledge_status_instance
+                    end
+
+                    def knowledge_status
+                        @knowledge_status_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.KnowledgeStatusInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class KnowledgeStatusListResponse < InstanceListResource
+                    # @param [Array<KnowledgeStatusInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @knowledge_status_instance = payload.body[key].map do |data|
+                        KnowledgeStatusInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def knowledge_status_instance
+                          @instance
+                      end
+                  end
+
                 class KnowledgeStatusPage < Page
                     ##
                     # Initialize the KnowledgeStatusPage
@@ -101,6 +175,7 @@ module Twilio
                     # @return [KnowledgeStatusPage] KnowledgeStatusPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -120,6 +195,66 @@ module Twilio
                         '<Twilio.Knowledge.V1.KnowledgeStatusPage>'
                     end
                 end
+
+                class KnowledgeStatusPageMetadata < PageMetadata
+                    attr_reader :knowledge_status_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @knowledge_status_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @knowledge_status_page << KnowledgeStatusListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @knowledge_status_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Knowledge::V1PageMetadata>';
+                    end
+                end
+                class KnowledgeStatusListResponse < InstanceListResource
+
+                    # @param [Array<KnowledgeStatusInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @knowledge_status = data_list.map do |data|
+                        KnowledgeStatusInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def knowledge_status
+                        @knowledge_status
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class KnowledgeStatusInstance < InstanceResource
                     ##
                     # Initialize the KnowledgeStatusInstance
@@ -132,6 +267,7 @@ module Twilio
                     # @return [KnowledgeStatusInstance] KnowledgeStatusInstance
                     def initialize(version, payload , id: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

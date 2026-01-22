@@ -25,6 +25,7 @@ module Twilio
                     # @return [ServiceList] ServiceList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Services"
@@ -82,6 +83,64 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ServiceInstanceMetadata
+                    # @param [String] unique_name Provides a unique and addressable name to be assigned to this Service, assigned by the developer, to be optionally used in addition to SID.
+                    # @param [Boolean] auto_transcribe Instructs the Speech Recognition service to automatically transcribe all recordings made on the account.
+                    # @param [Boolean] data_logging Data logging allows Twilio to improve the quality of the speech recognition & language understanding services through using customer data to refine, fine tune and evaluate machine learning models. Note: Data logging cannot be activated via API, only via www.twilio.com, as it requires additional consent.
+                    # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
+                    # @param [String] language_code The language code set during Service creation determines the Transcription language for all call recordings processed by that Service. The default is en-US if no language code is set. A Service can only support one language code, and it cannot be updated once it's set.
+                    # @param [Boolean] auto_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts made on this service.
+                    # @param [Boolean] media_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts media made on this service. The auto_redaction flag must be enabled, results in error otherwise.
+                    # @param [String] webhook_url The URL Twilio will request when executing the Webhook.
+                    # @param [HttpMethod] webhook_http_method 
+                    # @param [String] encryption_credential_sid The unique SID identifier of the Public Key resource used to encrypt the sentences and operator results.
+                    # @return [ServiceInstance] Created ServiceInstance
+                    def create_with_metadata(
+                      unique_name: nil, 
+                      auto_transcribe: :unset, 
+                      data_logging: :unset, 
+                      friendly_name: :unset, 
+                      language_code: :unset, 
+                      auto_redaction: :unset, 
+                      media_redaction: :unset, 
+                      webhook_url: :unset, 
+                      webhook_http_method: :unset, 
+                      encryption_credential_sid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'UniqueName' => unique_name,
+                            'AutoTranscribe' => auto_transcribe,
+                            'DataLogging' => data_logging,
+                            'FriendlyName' => friendly_name,
+                            'LanguageCode' => language_code,
+                            'AutoRedaction' => auto_redaction,
+                            'MediaRedaction' => media_redaction,
+                            'WebhookUrl' => webhook_url,
+                            'WebhookHttpMethod' => webhook_http_method,
+                            'EncryptionCredentialSid' => encryption_credential_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ServiceInstance records from the API as a list.
@@ -122,6 +181,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists ServicePageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ServicePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ServiceInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -142,7 +223,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ServiceInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -187,6 +268,7 @@ module Twilio
                     # @return [ServiceContext] ServiceContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -203,7 +285,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ServiceInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          service_instance = ServiceInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ServiceInstanceMetadata.new(@version, service_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -222,6 +324,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ServiceInstanceMetadata
+                    # @return [ServiceInstance] Fetched ServiceInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -277,6 +404,64 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ServiceInstanceMetadata
+                    # @param [Boolean] auto_transcribe Instructs the Speech Recognition service to automatically transcribe all recordings made on the account.
+                    # @param [Boolean] data_logging Data logging allows Twilio to improve the quality of the speech recognition & language understanding services through using customer data to refine, fine tune and evaluate machine learning models. Note: Data logging cannot be activated via API, only via www.twilio.com, as it requires additional consent.
+                    # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
+                    # @param [String] unique_name Provides a unique and addressable name to be assigned to this Service, assigned by the developer, to be optionally used in addition to SID.
+                    # @param [Boolean] auto_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts made on this service.
+                    # @param [Boolean] media_redaction Instructs the Speech Recognition service to automatically redact PII from all transcripts media made on this service. The auto_redaction flag must be enabled, results in error otherwise.
+                    # @param [String] webhook_url The URL Twilio will request when executing the Webhook.
+                    # @param [HttpMethod] webhook_http_method 
+                    # @param [String] encryption_credential_sid The unique SID identifier of the Public Key resource used to encrypt the sentences and operator results.
+                    # @param [String] if_match The If-Match HTTP request header
+                    # @return [ServiceInstance] Updated ServiceInstance
+                    def update_with_metadata(
+                      auto_transcribe: :unset, 
+                      data_logging: :unset, 
+                      friendly_name: :unset, 
+                      unique_name: :unset, 
+                      auto_redaction: :unset, 
+                      media_redaction: :unset, 
+                      webhook_url: :unset, 
+                      webhook_http_method: :unset, 
+                      encryption_credential_sid: :unset, 
+                      if_match: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'AutoTranscribe' => auto_transcribe,
+                            'DataLogging' => data_logging,
+                            'FriendlyName' => friendly_name,
+                            'UniqueName' => unique_name,
+                            'AutoRedaction' => auto_redaction,
+                            'MediaRedaction' => media_redaction,
+                            'WebhookUrl' => webhook_url,
+                            'WebhookHttpMethod' => webhook_http_method,
+                            'EncryptionCredentialSid' => encryption_credential_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -293,6 +478,53 @@ module Twilio
                     end
                 end
 
+                class ServiceInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ServiceInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ServiceInstance] service_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ServiceInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, service_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @service_instance = service_instance
+                    end
+
+                    def service
+                        @service_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ServiceInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ServiceListResponse < InstanceListResource
+                    # @param [Array<ServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @service_instance = payload.body[key].map do |data|
+                        ServiceInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def service_instance
+                          @instance
+                      end
+                  end
+
                 class ServicePage < Page
                     ##
                     # Initialize the ServicePage
@@ -302,6 +534,7 @@ module Twilio
                     # @return [ServicePage] ServicePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -321,6 +554,66 @@ module Twilio
                         '<Twilio.Intelligence.V2.ServicePage>'
                     end
                 end
+
+                class ServicePageMetadata < PageMetadata
+                    attr_reader :service_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @service_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @service_page << ServiceListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @service_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Intelligence::V2PageMetadata>';
+                    end
+                end
+                class ServiceListResponse < InstanceListResource
+
+                    # @param [Array<ServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @service = data_list.map do |data|
+                        ServiceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def service
+                        @service
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ServiceInstance < InstanceResource
                     ##
                     # Initialize the ServiceInstance
@@ -333,6 +626,7 @@ module Twilio
                     # @return [ServiceInstance] ServiceInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

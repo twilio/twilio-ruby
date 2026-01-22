@@ -25,6 +25,7 @@ module Twilio
                     # @return [ServiceList] ServiceList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Services"
@@ -130,6 +131,112 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ServiceInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the verification service. It can be up to 32 characters long. **This value should not contain PII.**
+                    # @param [String] code_length The length of the verification code to generate. Must be an integer value between 4 and 10, inclusive.
+                    # @param [Boolean] lookup_enabled Whether to perform a lookup with each verification started and return info about the phone number.
+                    # @param [Boolean] skip_sms_to_landlines Whether to skip sending SMS verifications to landlines. Requires `lookup_enabled`.
+                    # @param [Boolean] dtmf_input_required Whether to ask the user to press a number before delivering the verify code in a phone call.
+                    # @param [String] tts_name The name of an alternative text-to-speech service to use in phone calls. Applies only to TTS languages.
+                    # @param [Boolean] psd2_enabled Whether to pass PSD2 transaction parameters when starting a verification.
+                    # @param [Boolean] do_not_share_warning_enabled Whether to add a security warning at the end of an SMS verification body. Disabled by default and applies only to SMS. Example SMS body: `Your AppName verification code is: 1234. Don’t share this code with anyone; our employees will never ask for the code`
+                    # @param [Boolean] custom_code_enabled Whether to allow sending verifications with a custom code instead of a randomly generated one.
+                    # @param [Boolean] push_include_date Optional configuration for the Push factors. If true, include the date in the Challenge's response. Otherwise, the date is omitted from the response. See [Challenge](https://www.twilio.com/docs/verify/api/challenge) resource’s details parameter for more info. Default: false. **Deprecated** do not use this parameter. This timestamp value is the same one as the one found in `date_created`, please use that one instead.
+                    # @param [String] push_apn_credential_sid Optional configuration for the Push factors. Set the APN Credential for this service. This will allow to send push notifications to iOS devices. See [Credential Resource](https://www.twilio.com/docs/notify/api/credential-resource)
+                    # @param [String] push_fcm_credential_sid Optional configuration for the Push factors. Set the FCM Credential for this service. This will allow to send push notifications to Android devices. See [Credential Resource](https://www.twilio.com/docs/notify/api/credential-resource)
+                    # @param [String] totp_issuer Optional configuration for the TOTP factors. Set TOTP Issuer for this service. This will allow to configure the issuer of the TOTP URI. Defaults to the service friendly name if not provided.
+                    # @param [String] totp_time_step Optional configuration for the TOTP factors. Defines how often, in seconds, are TOTP codes generated. i.e, a new TOTP code is generated every time_step seconds. Must be between 20 and 60 seconds, inclusive. Defaults to 30 seconds
+                    # @param [String] totp_code_length Optional configuration for the TOTP factors. Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive. Defaults to 6
+                    # @param [String] totp_skew Optional configuration for the TOTP factors. The number of time-steps, past and future, that are valid for validation of TOTP codes. Must be between 0 and 2, inclusive. Defaults to 1
+                    # @param [String] default_template_sid The default message [template](https://www.twilio.com/docs/verify/api/templates). Will be used for all SMS verifications unless explicitly overriden. SMS channel only.
+                    # @param [String] whatsapp_msg_service_sid The SID of the Messaging Service containing WhatsApp Sender(s) that Verify will use to send WhatsApp messages to your users.
+                    # @param [String] whatsapp_from The number to use as the WhatsApp Sender that Verify will use to send WhatsApp messages to your users.This WhatsApp Sender must be associated with a Messaging Service SID.
+                    # @param [String] passkeys_relying_party_id The Relying Party ID for Passkeys. This is the domain of your application, e.g. `example.com`. It is used to identify your application when creating Passkeys.
+                    # @param [String] passkeys_relying_party_name The Relying Party Name for Passkeys. This is the name of your application, e.g. `Example App`. It is used to identify your application when creating Passkeys.
+                    # @param [String] passkeys_relying_party_origins The Relying Party Origins for Passkeys. This is the origin of your application, e.g. `login.example.com,www.example.com`. It is used to identify your application when creating Passkeys, it can have multiple origins split by `,`.
+                    # @param [String] passkeys_authenticator_attachment The Authenticator Attachment for Passkeys. This is the type of authenticator that will be used to create Passkeys. It can be empty or it can have the values `platform`, `cross-platform` or `any`.
+                    # @param [String] passkeys_discoverable_credentials Indicates whether credentials must be discoverable by the authenticator. It can be empty or it can have the values `required`, `preferred` or `discouraged`.
+                    # @param [String] passkeys_user_verification The User Verification for Passkeys. This is the type of user verification that will be used to create Passkeys. It can be empty or it can have the values `required`, `preferred` or `discouraged`.
+                    # @param [Boolean] verify_event_subscription_enabled Whether to allow verifications from the service to reach the stream-events sinks if configured
+                    # @return [ServiceInstance] Created ServiceInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      code_length: :unset, 
+                      lookup_enabled: :unset, 
+                      skip_sms_to_landlines: :unset, 
+                      dtmf_input_required: :unset, 
+                      tts_name: :unset, 
+                      psd2_enabled: :unset, 
+                      do_not_share_warning_enabled: :unset, 
+                      custom_code_enabled: :unset, 
+                      push_include_date: :unset, 
+                      push_apn_credential_sid: :unset, 
+                      push_fcm_credential_sid: :unset, 
+                      totp_issuer: :unset, 
+                      totp_time_step: :unset, 
+                      totp_code_length: :unset, 
+                      totp_skew: :unset, 
+                      default_template_sid: :unset, 
+                      whatsapp_msg_service_sid: :unset, 
+                      whatsapp_from: :unset, 
+                      passkeys_relying_party_id: :unset, 
+                      passkeys_relying_party_name: :unset, 
+                      passkeys_relying_party_origins: :unset, 
+                      passkeys_authenticator_attachment: :unset, 
+                      passkeys_discoverable_credentials: :unset, 
+                      passkeys_user_verification: :unset, 
+                      verify_event_subscription_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'CodeLength' => code_length,
+                            'LookupEnabled' => lookup_enabled,
+                            'SkipSmsToLandlines' => skip_sms_to_landlines,
+                            'DtmfInputRequired' => dtmf_input_required,
+                            'TtsName' => tts_name,
+                            'Psd2Enabled' => psd2_enabled,
+                            'DoNotShareWarningEnabled' => do_not_share_warning_enabled,
+                            'CustomCodeEnabled' => custom_code_enabled,
+                            'Push.IncludeDate' => push_include_date,
+                            'Push.ApnCredentialSid' => push_apn_credential_sid,
+                            'Push.FcmCredentialSid' => push_fcm_credential_sid,
+                            'Totp.Issuer' => totp_issuer,
+                            'Totp.TimeStep' => totp_time_step,
+                            'Totp.CodeLength' => totp_code_length,
+                            'Totp.Skew' => totp_skew,
+                            'DefaultTemplateSid' => default_template_sid,
+                            'Whatsapp.MsgServiceSid' => whatsapp_msg_service_sid,
+                            'Whatsapp.From' => whatsapp_from,
+                            'Passkeys.RelyingParty.Id' => passkeys_relying_party_id,
+                            'Passkeys.RelyingParty.Name' => passkeys_relying_party_name,
+                            'Passkeys.RelyingParty.Origins' => passkeys_relying_party_origins,
+                            'Passkeys.AuthenticatorAttachment' => passkeys_authenticator_attachment,
+                            'Passkeys.DiscoverableCredentials' => passkeys_discoverable_credentials,
+                            'Passkeys.UserVerification' => passkeys_user_verification,
+                            'VerifyEventSubscriptionEnabled' => verify_event_subscription_enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ServiceInstance records from the API as a list.
@@ -170,6 +277,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists ServicePageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ServicePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ServiceInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -190,7 +319,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ServiceInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -235,6 +364,7 @@ module Twilio
                     # @return [ServiceContext] ServiceContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -262,7 +392,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ServiceInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          service_instance = ServiceInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ServiceInstanceMetadata.new(@version, service_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -281,6 +431,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ServiceInstanceMetadata
+                    # @return [ServiceInstance] Fetched ServiceInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -382,6 +557,113 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the ServiceInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the verification service. It can be up to 32 characters long. **This value should not contain PII.**
+                    # @param [String] code_length The length of the verification code to generate. Must be an integer value between 4 and 10, inclusive.
+                    # @param [Boolean] lookup_enabled Whether to perform a lookup with each verification started and return info about the phone number.
+                    # @param [Boolean] skip_sms_to_landlines Whether to skip sending SMS verifications to landlines. Requires `lookup_enabled`.
+                    # @param [Boolean] dtmf_input_required Whether to ask the user to press a number before delivering the verify code in a phone call.
+                    # @param [String] tts_name The name of an alternative text-to-speech service to use in phone calls. Applies only to TTS languages.
+                    # @param [Boolean] psd2_enabled Whether to pass PSD2 transaction parameters when starting a verification.
+                    # @param [Boolean] do_not_share_warning_enabled Whether to add a privacy warning at the end of an SMS. **Disabled by default and applies only for SMS.**
+                    # @param [Boolean] custom_code_enabled Whether to allow sending verifications with a custom code instead of a randomly generated one.
+                    # @param [Boolean] push_include_date Optional configuration for the Push factors. If true, include the date in the Challenge's response. Otherwise, the date is omitted from the response. See [Challenge](https://www.twilio.com/docs/verify/api/challenge) resource’s details parameter for more info. Default: false. **Deprecated** do not use this parameter.
+                    # @param [String] push_apn_credential_sid Optional configuration for the Push factors. Set the APN Credential for this service. This will allow to send push notifications to iOS devices. See [Credential Resource](https://www.twilio.com/docs/notify/api/credential-resource)
+                    # @param [String] push_fcm_credential_sid Optional configuration for the Push factors. Set the FCM Credential for this service. This will allow to send push notifications to Android devices. See [Credential Resource](https://www.twilio.com/docs/notify/api/credential-resource)
+                    # @param [String] totp_issuer Optional configuration for the TOTP factors. Set TOTP Issuer for this service. This will allow to configure the issuer of the TOTP URI.
+                    # @param [String] totp_time_step Optional configuration for the TOTP factors. Defines how often, in seconds, are TOTP codes generated. i.e, a new TOTP code is generated every time_step seconds. Must be between 20 and 60 seconds, inclusive. Defaults to 30 seconds
+                    # @param [String] totp_code_length Optional configuration for the TOTP factors. Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive. Defaults to 6
+                    # @param [String] totp_skew Optional configuration for the TOTP factors. The number of time-steps, past and future, that are valid for validation of TOTP codes. Must be between 0 and 2, inclusive. Defaults to 1
+                    # @param [String] default_template_sid The default message [template](https://www.twilio.com/docs/verify/api/templates). Will be used for all SMS verifications unless explicitly overriden. SMS channel only.
+                    # @param [String] whatsapp_msg_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/messaging/services) to associate with the Verification Service.
+                    # @param [String] whatsapp_from The WhatsApp number to use as the sender of the verification messages. This number must be associated with the WhatsApp Message Service.
+                    # @param [String] passkeys_relying_party_id The Relying Party ID for Passkeys. This is the domain of your application, e.g. `example.com`. It is used to identify your application when creating Passkeys.
+                    # @param [String] passkeys_relying_party_name The Relying Party Name for Passkeys. This is the name of your application, e.g. `Example App`. It is used to identify your application when creating Passkeys.
+                    # @param [String] passkeys_relying_party_origins The Relying Party Origins for Passkeys. This is the origin of your application, e.g. `login.example.com,www.example.com`. It is used to identify your application when creating Passkeys, it can have multiple origins split by `,`.
+                    # @param [String] passkeys_authenticator_attachment The Authenticator Attachment for Passkeys. This is the type of authenticator that will be used to create Passkeys. It can be empty or it can have the values `platform`, `cross-platform` or `any`.
+                    # @param [String] passkeys_discoverable_credentials Indicates whether credentials must be discoverable by the authenticator. It can be empty or it can have the values `required`, `preferred` or `discouraged`.
+                    # @param [String] passkeys_user_verification The User Verification for Passkeys. This is the type of user verification that will be used to create Passkeys. It can be empty or it can have the values `required`, `preferred` or `discouraged`.
+                    # @param [Boolean] verify_event_subscription_enabled Whether to allow verifications from the service to reach the stream-events sinks if configured
+                    # @return [ServiceInstance] Updated ServiceInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      code_length: :unset, 
+                      lookup_enabled: :unset, 
+                      skip_sms_to_landlines: :unset, 
+                      dtmf_input_required: :unset, 
+                      tts_name: :unset, 
+                      psd2_enabled: :unset, 
+                      do_not_share_warning_enabled: :unset, 
+                      custom_code_enabled: :unset, 
+                      push_include_date: :unset, 
+                      push_apn_credential_sid: :unset, 
+                      push_fcm_credential_sid: :unset, 
+                      totp_issuer: :unset, 
+                      totp_time_step: :unset, 
+                      totp_code_length: :unset, 
+                      totp_skew: :unset, 
+                      default_template_sid: :unset, 
+                      whatsapp_msg_service_sid: :unset, 
+                      whatsapp_from: :unset, 
+                      passkeys_relying_party_id: :unset, 
+                      passkeys_relying_party_name: :unset, 
+                      passkeys_relying_party_origins: :unset, 
+                      passkeys_authenticator_attachment: :unset, 
+                      passkeys_discoverable_credentials: :unset, 
+                      passkeys_user_verification: :unset, 
+                      verify_event_subscription_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'CodeLength' => code_length,
+                            'LookupEnabled' => lookup_enabled,
+                            'SkipSmsToLandlines' => skip_sms_to_landlines,
+                            'DtmfInputRequired' => dtmf_input_required,
+                            'TtsName' => tts_name,
+                            'Psd2Enabled' => psd2_enabled,
+                            'DoNotShareWarningEnabled' => do_not_share_warning_enabled,
+                            'CustomCodeEnabled' => custom_code_enabled,
+                            'Push.IncludeDate' => push_include_date,
+                            'Push.ApnCredentialSid' => push_apn_credential_sid,
+                            'Push.FcmCredentialSid' => push_fcm_credential_sid,
+                            'Totp.Issuer' => totp_issuer,
+                            'Totp.TimeStep' => totp_time_step,
+                            'Totp.CodeLength' => totp_code_length,
+                            'Totp.Skew' => totp_skew,
+                            'DefaultTemplateSid' => default_template_sid,
+                            'Whatsapp.MsgServiceSid' => whatsapp_msg_service_sid,
+                            'Whatsapp.From' => whatsapp_from,
+                            'Passkeys.RelyingParty.Id' => passkeys_relying_party_id,
+                            'Passkeys.RelyingParty.Name' => passkeys_relying_party_name,
+                            'Passkeys.RelyingParty.Origins' => passkeys_relying_party_origins,
+                            'Passkeys.AuthenticatorAttachment' => passkeys_authenticator_attachment,
+                            'Passkeys.DiscoverableCredentials' => passkeys_discoverable_credentials,
+                            'Passkeys.UserVerification' => passkeys_user_verification,
+                            'VerifyEventSubscriptionEnabled' => verify_event_subscription_enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -569,6 +851,53 @@ module Twilio
                     end
                 end
 
+                class ServiceInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ServiceInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ServiceInstance] service_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ServiceInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, service_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @service_instance = service_instance
+                    end
+
+                    def service
+                        @service_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ServiceInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ServiceListResponse < InstanceListResource
+                    # @param [Array<ServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @service_instance = payload.body[key].map do |data|
+                        ServiceInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def service_instance
+                          @instance
+                      end
+                  end
+
                 class ServicePage < Page
                     ##
                     # Initialize the ServicePage
@@ -578,6 +907,7 @@ module Twilio
                     # @return [ServicePage] ServicePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -597,6 +927,66 @@ module Twilio
                         '<Twilio.Verify.V2.ServicePage>'
                     end
                 end
+
+                class ServicePageMetadata < PageMetadata
+                    attr_reader :service_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @service_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @service_page << ServiceListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @service_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class ServiceListResponse < InstanceListResource
+
+                    # @param [Array<ServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @service = data_list.map do |data|
+                        ServiceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def service
+                        @service
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ServiceInstance < InstanceResource
                     ##
                     # Initialize the ServiceInstance
@@ -609,6 +999,7 @@ module Twilio
                     # @return [ServiceInstance] ServiceInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

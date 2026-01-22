@@ -1,6 +1,87 @@
 twilio-ruby changelog
 =====================
 
+[2026-01-22] Version 7.10.0
+---------------------------
+**Library - Feature**
+- [PR #774](https://github.com/twilio/twilio-ruby/pull/774): Response header. Thanks to [@manisha1997](https://github.com/manisha1997)!
+
+**Library - Chore**
+- [PR #778](https://github.com/twilio/twilio-ruby/pull/778): hotfix. Thanks to [@shrutiburman](https://github.com/shrutiburman)!
+
+**Twiml**
+- Added support for <Uri> and <Headers> inside <Dial><Sip>
+
+**Assistants**
+- AI Assistants v1 release
+
+**Autopilot**
+- Remove Export resource from Autopilot Assistant
+- Add dialogue_sid param to Query list resource
+- Add Restore resource to Autopilot Assistant
+- Add one new property in Query i.e dialogue_sid
+- Add Export resource to Autopilot Assistant.
+- Adds two new properties in Assistant i.e needs_model_build and development_stage
+- Add Webhooks resource to Autopilot Assistant.
+- Introduce `autopilot` subdomain with all resources from `preview.understand`
+
+**Compliance**
+- Added the new InventoryComplianceInsights API under version `/v1`.
+
+**Content**
+- changes for adding v2 endpoints
+
+**Marketplace**
+- Initial transition to Marketplace domain
+
+**Memory**
+- # API Changes
+- ## 2026-01-15
+- No path changes (updated metadata only)
+- ## 2026-01-13
+- **Added 1 new path(s)**:
+- `/v1/Stores/{storeId}/Profiles/{profileId}/ConversationSummaries/{summaryId}` (DeleteProfileConversationSummary)
+- ## 2026-01-12
+- No path changes (updated metadata only)
+- ## 2026-01-12
+- No path changes (updated metadata only)
+- ## 2026-01-12
+- No path changes (updated metadata only)
+- ## 2026-01-12
+- **Added 2 new path(s)**:
+- `/v1/Stores/{storeId}/Profiles/Imports` (ListProfileImportsV2, ImportProfilesV2)
+- `/v1/Stores/{storeId}/Profiles/Imports/{importId}` (GetProfileImportV2)
+- ## 2026-01-13
+- No path changes (updated metadata only)
+- ## 2026-01-07
+- No path changes (updated metadata only)
+- ## 2026-01-05
+- No path changes (updated metadata only)
+- ## 2025-12-17
+- No path changes (updated metadata only)
+- ## 2025-12-17
+- No path changes (updated metadata only)
+- ## 2025-12-17
+- **Added 1 new path(s)**:
+- `/v1/Stores/{storeId}/Profiles/{profileId}/Observations/{observationId}/Revisions` (ListObservationRevisions)
+
+**Sender-ids**
+- Added all v2 sender-id-service endpoints
+
+**Trusthub**
+- Add new delete endpoint for compliance_registration.
+
+**Voice**
+- Add ProvisioningStatus public API endpoints.
+
+**Wise_owl**
+- Init API as open-api spec
+- Updated Get Chat, Send Message and Create Chat to include `contexts` in Message, instead of root Chat
+
+**Www**
+- Port APIs from oauth.twilio.com to www.twilio.com
+
+
 [2026-01-07] Version 7.9.1
 --------------------------
 **Library - Chore**

@@ -25,6 +25,7 @@ module Twilio
                     # @return [SchemaList] SchemaList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -48,6 +49,7 @@ module Twilio
                     # @return [SchemaContext] SchemaContext
                     def initialize(version, id)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { id: id,  }
@@ -72,6 +74,31 @@ module Twilio
                             @version,
                             payload,
                             id: @solution[:id],
+                        )
+                    end
+
+                    ##
+                    # Fetch the SchemaInstanceMetadata
+                    # @return [SchemaInstance] Fetched SchemaInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        schema_instance = SchemaInstance.new(
+                            @version,
+                            response.body,
+                            id: @solution[:id],
+                        )
+                        SchemaInstanceMetadata.new(
+                            @version,
+                            schema_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -110,6 +137,53 @@ module Twilio
                     end
                 end
 
+                class SchemaInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SchemaInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SchemaInstance] schema_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SchemaInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, schema_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @schema_instance = schema_instance
+                    end
+
+                    def schema
+                        @schema_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SchemaInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SchemaListResponse < InstanceListResource
+                    # @param [Array<SchemaInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @schema_instance = payload.body[key].map do |data|
+                        SchemaInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def schema_instance
+                          @instance
+                      end
+                  end
+
                 class SchemaPage < Page
                     ##
                     # Initialize the SchemaPage
@@ -119,6 +193,7 @@ module Twilio
                     # @return [SchemaPage] SchemaPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -138,6 +213,66 @@ module Twilio
                         '<Twilio.Events.V1.SchemaPage>'
                     end
                 end
+
+                class SchemaPageMetadata < PageMetadata
+                    attr_reader :schema_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @schema_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @schema_page << SchemaListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @schema_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Events::V1PageMetadata>';
+                    end
+                end
+                class SchemaListResponse < InstanceListResource
+
+                    # @param [Array<SchemaInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @schema = data_list.map do |data|
+                        SchemaInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def schema
+                        @schema
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class SchemaInstance < InstanceResource
                     ##
                     # Initialize the SchemaInstance
@@ -150,6 +285,7 @@ module Twilio
                     # @return [SchemaInstance] SchemaInstance
                     def initialize(version, payload , id: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

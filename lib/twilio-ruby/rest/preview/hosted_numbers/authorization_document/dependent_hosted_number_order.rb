@@ -27,6 +27,7 @@ module Twilio
                     # @return [DependentHostedNumberOrderList] DependentHostedNumberOrderList
                     def initialize(version, signing_document_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { signing_document_sid: signing_document_sid }
                         @uri = "/AuthorizationDocuments/#{@solution[:signing_document_sid]}/DependentHostedNumberOrders"
@@ -92,6 +93,38 @@ module Twilio
                     end
 
                     ##
+                    # Lists DependentHostedNumberOrderPageMetadata records from the API as a list.
+                      # @param [Status] status Status of an instance resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5. failed. See the section entitled [Status Values](https://www.twilio.com/docs/phone-numbers/hosted-numbers/hosted-numbers-api/authorization-document-resource#status-values) for more information on each of these statuses.
+                      # @param [String] phone_number An E164 formatted phone number hosted by this HostedNumberOrder.
+                      # @param [String] incoming_phone_number_sid A 34 character string that uniquely identifies the IncomingPhoneNumber resource created by this HostedNumberOrder.
+                      # @param [String] friendly_name A human readable description of this resource, up to 64 characters.
+                      # @param [String] unique_name Provides a unique and addressable name to be assigned to this HostedNumberOrder, assigned by the developer, to be optionally used in addition to SID.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(status: :unset, phone_number: :unset, incoming_phone_number_sid: :unset, friendly_name: :unset, unique_name: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Status' => status,
+                            'PhoneNumber' => phone_number,
+                            'IncomingPhoneNumberSid' => incoming_phone_number_sid,
+                            'FriendlyName' => friendly_name,
+                            'UniqueName' => unique_name,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        DependentHostedNumberOrderPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields DependentHostedNumberOrderInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -117,7 +150,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of DependentHostedNumberOrderInstance
-                    def page(status: :unset, phone_number: :unset, incoming_phone_number_sid: :unset, friendly_name: :unset, unique_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(status: :unset, phone_number: :unset, incoming_phone_number_sid: :unset, friendly_name: :unset, unique_name: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Status' => status,
                             'PhoneNumber' => phone_number,
@@ -167,6 +200,7 @@ module Twilio
                     # @return [DependentHostedNumberOrderPage] DependentHostedNumberOrderPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -186,6 +220,66 @@ module Twilio
                         '<Twilio.Preview.HostedNumbers.DependentHostedNumberOrderPage>'
                     end
                 end
+
+                class DependentHostedNumberOrderPageMetadata < PageMetadata
+                    attr_reader :dependent_hosted_number_order_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @dependent_hosted_number_order_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @dependent_hosted_number_order_page << DependentHostedNumberOrderListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @dependent_hosted_number_order_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Preview::HostedNumbersPageMetadata>';
+                    end
+                end
+                class DependentHostedNumberOrderListResponse < InstanceListResource
+
+                    # @param [Array<DependentHostedNumberOrderInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @dependent_hosted_number_order = data_list.map do |data|
+                        DependentHostedNumberOrderInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def dependent_hosted_number_order
+                        @dependent_hosted_number_order
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class DependentHostedNumberOrderInstance < InstanceResource
                     ##
                     # Initialize the DependentHostedNumberOrderInstance
@@ -198,6 +292,7 @@ module Twilio
                     # @return [DependentHostedNumberOrderInstance] DependentHostedNumberOrderInstance
                     def initialize(version, payload , signing_document_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

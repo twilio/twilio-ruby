@@ -28,6 +28,7 @@ module Twilio
                     # @return [BuildStatusList] BuildStatusList
                     def initialize(version, service_sid: nil, sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { service_sid: service_sid, sid: sid }
                         
@@ -52,6 +53,7 @@ module Twilio
                     # @return [BuildStatusContext] BuildStatusContext
                     def initialize(version, service_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { service_sid: service_sid, sid: sid,  }
@@ -79,6 +81,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the BuildStatusInstanceMetadata
+                    # @return [BuildStatusInstance] Fetched BuildStatusInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        build_status_instance = BuildStatusInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            sid: @solution[:sid],
+                        )
+                        BuildStatusInstanceMetadata.new(
+                            @version,
+                            build_status_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -95,6 +123,53 @@ module Twilio
                     end
                 end
 
+                class BuildStatusInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new BuildStatusInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}BuildStatusInstance] build_status_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [BuildStatusInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, build_status_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @build_status_instance = build_status_instance
+                    end
+
+                    def build_status
+                        @build_status_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.BuildStatusInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class BuildStatusListResponse < InstanceListResource
+                    # @param [Array<BuildStatusInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @build_status_instance = payload.body[key].map do |data|
+                        BuildStatusInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def build_status_instance
+                          @instance
+                      end
+                  end
+
                 class BuildStatusPage < Page
                     ##
                     # Initialize the BuildStatusPage
@@ -104,6 +179,7 @@ module Twilio
                     # @return [BuildStatusPage] BuildStatusPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -123,6 +199,66 @@ module Twilio
                         '<Twilio.Serverless.V1.BuildStatusPage>'
                     end
                 end
+
+                class BuildStatusPageMetadata < PageMetadata
+                    attr_reader :build_status_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @build_status_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @build_status_page << BuildStatusListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @build_status_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Serverless::V1PageMetadata>';
+                    end
+                end
+                class BuildStatusListResponse < InstanceListResource
+
+                    # @param [Array<BuildStatusInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @build_status = data_list.map do |data|
+                        BuildStatusInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def build_status
+                        @build_status
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class BuildStatusInstance < InstanceResource
                     ##
                     # Initialize the BuildStatusInstance
@@ -135,6 +271,7 @@ module Twilio
                     # @return [BuildStatusInstance] BuildStatusInstance
                     def initialize(version, payload , service_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

@@ -25,6 +25,7 @@ module Twilio
                     # @return [VerificationAttemptList] VerificationAttemptList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Attempts"
@@ -102,6 +103,44 @@ module Twilio
                     end
 
                     ##
+                    # Lists VerificationAttemptPageMetadata records from the API as a list.
+                      # @param [Time] date_created_after Datetime filter used to consider only Verification Attempts created after this datetime on the summary aggregation. Given as GMT in ISO 8601 formatted datetime string: yyyy-MM-dd'T'HH:mm:ss'Z.
+                      # @param [Time] date_created_before Datetime filter used to consider only Verification Attempts created before this datetime on the summary aggregation. Given as GMT in ISO 8601 formatted datetime string: yyyy-MM-dd'T'HH:mm:ss'Z.
+                      # @param [String] channel_data_to Destination of a verification. It is phone number in E.164 format.
+                      # @param [String] country Filter used to query Verification Attempts sent to the specified destination country.
+                      # @param [Channels] channel Filter used to query Verification Attempts by communication channel.
+                      # @param [String] verify_service_sid Filter used to query Verification Attempts by verify service. Only attempts of the provided SID will be returned.
+                      # @param [String] verification_sid Filter used to return all the Verification Attempts of a single verification. Only attempts of the provided verification SID will be returned.
+                      # @param [ConversionStatus] status Filter used to query Verification Attempts by conversion status. Valid values are `UNCONVERTED`, for attempts that were not converted, and `CONVERTED`, for attempts that were confirmed.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(date_created_after: :unset, date_created_before: :unset, channel_data_to: :unset, country: :unset, channel: :unset, verify_service_sid: :unset, verification_sid: :unset, status: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
+                            'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
+                            'ChannelData.To' => channel_data_to,
+                            'Country' => country,
+                            'Channel' => channel,
+                            'VerifyServiceSid' => verify_service_sid,
+                            'VerificationSid' => verification_sid,
+                            'Status' => status,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        VerificationAttemptPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields VerificationAttemptInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -130,7 +169,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of VerificationAttemptInstance
-                    def page(date_created_after: :unset, date_created_before: :unset, channel_data_to: :unset, country: :unset, channel: :unset, verify_service_sid: :unset, verification_sid: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(date_created_after: :unset, date_created_before: :unset, channel_data_to: :unset, country: :unset, channel: :unset, verify_service_sid: :unset, verification_sid: :unset, status: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
                             'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
@@ -183,6 +222,7 @@ module Twilio
                     # @return [VerificationAttemptContext] VerificationAttemptContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -209,6 +249,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the VerificationAttemptInstanceMetadata
+                    # @return [VerificationAttemptInstance] Fetched VerificationAttemptInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        verification_attempt_instance = VerificationAttemptInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        VerificationAttemptInstanceMetadata.new(
+                            @version,
+                            verification_attempt_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -225,6 +290,53 @@ module Twilio
                     end
                 end
 
+                class VerificationAttemptInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new VerificationAttemptInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}VerificationAttemptInstance] verification_attempt_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [VerificationAttemptInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, verification_attempt_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @verification_attempt_instance = verification_attempt_instance
+                    end
+
+                    def verification_attempt
+                        @verification_attempt_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.VerificationAttemptInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class VerificationAttemptListResponse < InstanceListResource
+                    # @param [Array<VerificationAttemptInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @verification_attempt_instance = payload.body[key].map do |data|
+                        VerificationAttemptInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def verification_attempt_instance
+                          @instance
+                      end
+                  end
+
                 class VerificationAttemptPage < Page
                     ##
                     # Initialize the VerificationAttemptPage
@@ -234,6 +346,7 @@ module Twilio
                     # @return [VerificationAttemptPage] VerificationAttemptPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -253,6 +366,66 @@ module Twilio
                         '<Twilio.Verify.V2.VerificationAttemptPage>'
                     end
                 end
+
+                class VerificationAttemptPageMetadata < PageMetadata
+                    attr_reader :verification_attempt_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @verification_attempt_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @verification_attempt_page << VerificationAttemptListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @verification_attempt_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class VerificationAttemptListResponse < InstanceListResource
+
+                    # @param [Array<VerificationAttemptInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @verification_attempt = data_list.map do |data|
+                        VerificationAttemptInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def verification_attempt
+                        @verification_attempt
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class VerificationAttemptInstance < InstanceResource
                     ##
                     # Initialize the VerificationAttemptInstance
@@ -265,6 +438,7 @@ module Twilio
                     # @return [VerificationAttemptInstance] VerificationAttemptInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

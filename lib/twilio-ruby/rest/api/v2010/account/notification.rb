@@ -27,6 +27,7 @@ module Twilio
                     # @return [NotificationList] NotificationList
                     def initialize(version, account_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Notifications.json"
@@ -88,6 +89,36 @@ module Twilio
                     end
 
                     ##
+                    # Lists NotificationPageMetadata records from the API as a list.
+                      # @param [String] log Only read notifications of the specified log level. Can be:  `0` to read only ERROR notifications or `1` to read only WARNING notifications. By default, all notifications are read.
+                      # @param [Date] message_date Only show notifications for the specified date, formatted as `YYYY-MM-DD`. You can also specify an inequality, such as `<=YYYY-MM-DD` for messages logged at or before midnight on a date, or `>=YYYY-MM-DD` for messages logged at or after midnight on a date.
+                      # @param [Date] message_date_before Only show notifications for the specified date, formatted as `YYYY-MM-DD`. You can also specify an inequality, such as `<=YYYY-MM-DD` for messages logged at or before midnight on a date, or `>=YYYY-MM-DD` for messages logged at or after midnight on a date.
+                      # @param [Date] message_date_after Only show notifications for the specified date, formatted as `YYYY-MM-DD`. You can also specify an inequality, such as `<=YYYY-MM-DD` for messages logged at or before midnight on a date, or `>=YYYY-MM-DD` for messages logged at or after midnight on a date.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(log: :unset, message_date: :unset, message_date_before: :unset, message_date_after: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Log' => log,
+                            'MessageDate' =>  Twilio.serialize_iso8601_date(message_date),
+                            'MessageDate<' =>  Twilio.serialize_iso8601_date(message_date_before),
+                            'MessageDate>' =>  Twilio.serialize_iso8601_date(message_date_after),
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        NotificationPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields NotificationInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -112,7 +143,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of NotificationInstance
-                    def page(log: :unset, message_date: :unset, message_date_before: :unset, message_date_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(log: :unset, message_date: :unset, message_date_before: :unset, message_date_after: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Log' => log,
                             'MessageDate' =>  Twilio.serialize_iso8601_date(message_date),
@@ -162,6 +193,7 @@ module Twilio
                     # @return [NotificationContext] NotificationContext
                     def initialize(version, account_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { account_sid: account_sid, sid: sid,  }
@@ -189,6 +221,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the NotificationInstanceMetadata
+                    # @return [NotificationInstance] Fetched NotificationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        notification_instance = NotificationInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        NotificationInstanceMetadata.new(
+                            @version,
+                            notification_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -205,6 +263,53 @@ module Twilio
                     end
                 end
 
+                class NotificationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new NotificationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}NotificationInstance] notification_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [NotificationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, notification_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @notification_instance = notification_instance
+                    end
+
+                    def notification
+                        @notification_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.NotificationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class NotificationListResponse < InstanceListResource
+                    # @param [Array<NotificationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @notification_instance = payload.body[key].map do |data|
+                        NotificationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def notification_instance
+                          @instance
+                      end
+                  end
+
                 class NotificationPage < Page
                     ##
                     # Initialize the NotificationPage
@@ -214,6 +319,7 @@ module Twilio
                     # @return [NotificationPage] NotificationPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -233,6 +339,66 @@ module Twilio
                         '<Twilio.Api.V2010.NotificationPage>'
                     end
                 end
+
+                class NotificationPageMetadata < PageMetadata
+                    attr_reader :notification_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @notification_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @notification_page << NotificationListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @notification_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class NotificationListResponse < InstanceListResource
+
+                    # @param [Array<NotificationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @notification = data_list.map do |data|
+                        NotificationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def notification
+                        @notification
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class NotificationInstance < InstanceResource
                     ##
                     # Initialize the NotificationInstance
@@ -245,6 +411,7 @@ module Twilio
                     # @return [NotificationInstance] NotificationInstance
                     def initialize(version, payload , account_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

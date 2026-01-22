@@ -28,6 +28,7 @@ module Twilio
                     # @return [HighriskSpecialPrefixList] HighriskSpecialPrefixList
                     def initialize(version, iso_code: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { iso_code: iso_code }
                         @uri = "/DialingPermissions/Countries/#{@solution[:iso_code]}/HighRiskSpecialPrefixes"
@@ -73,6 +74,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists HighriskSpecialPrefixPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        HighriskSpecialPrefixPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields HighriskSpecialPrefixInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -93,7 +116,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of HighriskSpecialPrefixInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -138,6 +161,7 @@ module Twilio
                     # @return [HighriskSpecialPrefixPage] HighriskSpecialPrefixPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -157,6 +181,66 @@ module Twilio
                         '<Twilio.Voice.V1.HighriskSpecialPrefixPage>'
                     end
                 end
+
+                class HighriskSpecialPrefixPageMetadata < PageMetadata
+                    attr_reader :highrisk_special_prefix_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @highrisk_special_prefix_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @highrisk_special_prefix_page << HighriskSpecialPrefixListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @highrisk_special_prefix_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Voice::V1PageMetadata>';
+                    end
+                end
+                class HighriskSpecialPrefixListResponse < InstanceListResource
+
+                    # @param [Array<HighriskSpecialPrefixInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @highrisk_special_prefix = data_list.map do |data|
+                        HighriskSpecialPrefixInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def highrisk_special_prefix
+                        @highrisk_special_prefix
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class HighriskSpecialPrefixInstance < InstanceResource
                     ##
                     # Initialize the HighriskSpecialPrefixInstance
@@ -169,6 +253,7 @@ module Twilio
                     # @return [HighriskSpecialPrefixInstance] HighriskSpecialPrefixInstance
                     def initialize(version, payload , iso_code: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

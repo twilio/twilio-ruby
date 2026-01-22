@@ -25,6 +25,7 @@ module Twilio
                     # @return [FlexUserList] FlexUserList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -49,6 +50,7 @@ module Twilio
                     # @return [FlexUserContext] FlexUserContext
                     def initialize(version, instance_sid, flex_user_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { instance_sid: instance_sid, flex_user_sid: flex_user_sid,  }
@@ -73,6 +75,32 @@ module Twilio
                             payload,
                             instance_sid: @solution[:instance_sid],
                             flex_user_sid: @solution[:flex_user_sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the FlexUserInstanceMetadata
+                    # @return [FlexUserInstance] Fetched FlexUserInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        flex_user_instance = FlexUserInstance.new(
+                            @version,
+                            response.body,
+                            instance_sid: @solution[:instance_sid],
+                            flex_user_sid: @solution[:flex_user_sid],
+                        )
+                        FlexUserInstanceMetadata.new(
+                            @version,
+                            flex_user_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -109,6 +137,45 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the FlexUserInstanceMetadata
+                    # @param [String] email Email of the User.
+                    # @param [String] user_sid The unique SID identifier of the Twilio Unified User.
+                    # @param [String] locale The locale preference of the user.
+                    # @return [FlexUserInstance] Updated FlexUserInstance
+                    def update_with_metadata(
+                      email: :unset, 
+                      user_sid: :unset, 
+                      locale: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Email' => email,
+                            'UserSid' => user_sid,
+                            'Locale' => locale,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        flex_user_instance = FlexUserInstance.new(
+                            @version,
+                            response.body,
+                            instance_sid: @solution[:instance_sid],
+                            flex_user_sid: @solution[:flex_user_sid],
+                        )
+                        FlexUserInstanceMetadata.new(
+                            @version,
+                            flex_user_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -125,6 +192,53 @@ module Twilio
                     end
                 end
 
+                class FlexUserInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new FlexUserInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}FlexUserInstance] flex_user_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [FlexUserInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, flex_user_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @flex_user_instance = flex_user_instance
+                    end
+
+                    def flex_user
+                        @flex_user_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.FlexUserInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class FlexUserListResponse < InstanceListResource
+                    # @param [Array<FlexUserInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @flex_user_instance = payload.body[key].map do |data|
+                        FlexUserInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def flex_user_instance
+                          @instance
+                      end
+                  end
+
                 class FlexUserPage < Page
                     ##
                     # Initialize the FlexUserPage
@@ -134,6 +248,7 @@ module Twilio
                     # @return [FlexUserPage] FlexUserPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -153,6 +268,66 @@ module Twilio
                         '<Twilio.FlexApi.V2.FlexUserPage>'
                     end
                 end
+
+                class FlexUserPageMetadata < PageMetadata
+                    attr_reader :flex_user_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @flex_user_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @flex_user_page << FlexUserListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @flex_user_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V2PageMetadata>';
+                    end
+                end
+                class FlexUserListResponse < InstanceListResource
+
+                    # @param [Array<FlexUserInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @flex_user = data_list.map do |data|
+                        FlexUserInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def flex_user
+                        @flex_user
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class FlexUserInstance < InstanceResource
                     ##
                     # Initialize the FlexUserInstance
@@ -165,6 +340,7 @@ module Twilio
                     # @return [FlexUserInstance] FlexUserInstance
                     def initialize(version, payload , instance_sid: nil, flex_user_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

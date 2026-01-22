@@ -25,6 +25,7 @@ module Twilio
                     # @return [SigningRequestConfigurationList] SigningRequestConfigurationList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/SigningRequest/Configuration"
@@ -47,6 +48,32 @@ module Twilio
                         SigningRequestConfigurationInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the SigningRequestConfigurationInstanceMetadata
+                    # @param [Object] body 
+                    # @return [SigningRequestConfigurationInstance] Created SigningRequestConfigurationInstance
+                    def create_with_metadata(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: body.to_json)
+                        signing_request_configuration_instance = SigningRequestConfigurationInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        SigningRequestConfigurationInstanceMetadata.new(
+                            @version,
+                            signing_request_configuration_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -98,6 +125,32 @@ module Twilio
                     end
 
                     ##
+                    # Lists SigningRequestConfigurationPageMetadata records from the API as a list.
+                      # @param [String] country The country ISO code to apply this configuration, this is an optional field, Example: US, MX
+                      # @param [String] product The product or service for which is requesting the signature, this is an optional field, Example: Porting, Hosting
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(country: :unset, product: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Country' => country,
+                            'Product' => product,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        SigningRequestConfigurationPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields SigningRequestConfigurationInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -120,7 +173,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of SigningRequestConfigurationInstance
-                    def page(country: :unset, product: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(country: :unset, product: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Country' => country,
                             'Product' => product,
@@ -167,6 +220,7 @@ module Twilio
                     # @return [SigningRequestConfigurationPage] SigningRequestConfigurationPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -186,6 +240,66 @@ module Twilio
                         '<Twilio.Numbers.V1.SigningRequestConfigurationPage>'
                     end
                 end
+
+                class SigningRequestConfigurationPageMetadata < PageMetadata
+                    attr_reader :signing_request_configuration_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @signing_request_configuration_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @signing_request_configuration_page << SigningRequestConfigurationListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @signing_request_configuration_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V1PageMetadata>';
+                    end
+                end
+                class SigningRequestConfigurationListResponse < InstanceListResource
+
+                    # @param [Array<SigningRequestConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @signing_request_configuration = data_list.map do |data|
+                        SigningRequestConfigurationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def signing_request_configuration
+                        @signing_request_configuration
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class SigningRequestConfigurationInstance < InstanceResource
                     ##
                     # Initialize the SigningRequestConfigurationInstance
@@ -198,6 +312,7 @@ module Twilio
                     # @return [SigningRequestConfigurationInstance] SigningRequestConfigurationInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

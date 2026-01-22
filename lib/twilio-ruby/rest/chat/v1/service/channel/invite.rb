@@ -28,6 +28,7 @@ module Twilio
                     # @return [InviteList] InviteList
                     def initialize(version, service_sid: nil, channel_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { service_sid: service_sid, channel_sid: channel_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Channels/#{@solution[:channel_sid]}/Invites"
@@ -60,6 +61,42 @@ module Twilio
                             payload,
                             service_sid: @solution[:service_sid],
                             channel_sid: @solution[:channel_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the InviteInstanceMetadata
+                    # @param [String] identity The `identity` value that uniquely identifies the new resource's [User](https://www.twilio.com/docs/api/chat/rest/v1/user) within the [Service](https://www.twilio.com/docs/api/chat/rest/v1/service). See [access tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens) for more info.
+                    # @param [String] role_sid The SID of the [Role](https://www.twilio.com/docs/api/chat/rest/roles) assigned to the new member.
+                    # @return [InviteInstance] Created InviteInstance
+                    def create_with_metadata(
+                      identity: nil, 
+                      role_sid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Identity' => identity,
+                            'RoleSid' => role_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        invite_instance = InviteInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            channel_sid: @solution[:channel_sid],
+                        )
+                        InviteInstanceMetadata.new(
+                            @version,
+                            invite_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -107,6 +144,31 @@ module Twilio
                     end
 
                     ##
+                    # Lists InvitePageMetadata records from the API as a list.
+                      # @param [Array[String]] identity The [User](https://www.twilio.com/docs/api/chat/rest/v1/user)'s `identity` value of the resources to read. See [access tokens](https://www.twilio.com/docs/api/chat/guides/create-tokens) for more details.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(identity: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'Identity' =>  Twilio.serialize_list(identity) { |e| e },
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        InvitePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields InviteInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -128,7 +190,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of InviteInstance
-                    def page(identity: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(identity: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             
                             'Identity' =>  Twilio.serialize_list(identity) { |e| e },
@@ -177,6 +239,7 @@ module Twilio
                     # @return [InviteContext] InviteContext
                     def initialize(version, service_sid, channel_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { service_sid: service_sid, channel_sid: channel_sid, sid: sid,  }
@@ -193,7 +256,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the InviteInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          invite_instance = InviteInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          InviteInstanceMetadata.new(@version, invite_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -217,6 +300,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the InviteInstanceMetadata
+                    # @return [InviteInstance] Fetched InviteInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        invite_instance = InviteInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            channel_sid: @solution[:channel_sid],
+                            sid: @solution[:sid],
+                        )
+                        InviteInstanceMetadata.new(
+                            @version,
+                            invite_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -233,6 +343,53 @@ module Twilio
                     end
                 end
 
+                class InviteInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new InviteInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}InviteInstance] invite_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [InviteInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, invite_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @invite_instance = invite_instance
+                    end
+
+                    def invite
+                        @invite_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.InviteInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class InviteListResponse < InstanceListResource
+                    # @param [Array<InviteInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @invite_instance = payload.body[key].map do |data|
+                        InviteInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def invite_instance
+                          @instance
+                      end
+                  end
+
                 class InvitePage < Page
                     ##
                     # Initialize the InvitePage
@@ -242,6 +399,7 @@ module Twilio
                     # @return [InvitePage] InvitePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -261,6 +419,66 @@ module Twilio
                         '<Twilio.Chat.V1.InvitePage>'
                     end
                 end
+
+                class InvitePageMetadata < PageMetadata
+                    attr_reader :invite_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @invite_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @invite_page << InviteListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @invite_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Chat::V1PageMetadata>';
+                    end
+                end
+                class InviteListResponse < InstanceListResource
+
+                    # @param [Array<InviteInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @invite = data_list.map do |data|
+                        InviteInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def invite
+                        @invite
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class InviteInstance < InstanceResource
                     ##
                     # Initialize the InviteInstance
@@ -273,6 +491,7 @@ module Twilio
                     # @return [InviteInstance] InviteInstance
                     def initialize(version, payload , service_sid: nil, channel_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

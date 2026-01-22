@@ -25,6 +25,7 @@ module Twilio
                     # @return [InsightsAssessmentsCommentList] InsightsAssessmentsCommentList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Insights/QualityManagement/Assessments/Comments"
@@ -69,6 +70,54 @@ module Twilio
                         InsightsAssessmentsCommentInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the InsightsAssessmentsCommentInstanceMetadata
+                    # @param [String] category_id The ID of the category
+                    # @param [String] category_name The name of the category
+                    # @param [String] comment The Assessment comment.
+                    # @param [String] segment_id The id of the segment.
+                    # @param [String] agent_id The id of the agent.
+                    # @param [Float] offset The offset
+                    # @param [String] authorization The Authorization HTTP request header
+                    # @return [InsightsAssessmentsCommentInstance] Created InsightsAssessmentsCommentInstance
+                    def create_with_metadata(
+                      category_id: nil, 
+                      category_name: nil, 
+                      comment: nil, 
+                      segment_id: nil, 
+                      agent_id: nil, 
+                      offset: nil, 
+                      authorization: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'CategoryId' => category_id,
+                            'CategoryName' => category_name,
+                            'Comment' => comment,
+                            'SegmentId' => segment_id,
+                            'AgentId' => agent_id,
+                            'Offset' => offset,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        insights_assessments_comment_instance = InsightsAssessmentsCommentInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        InsightsAssessmentsCommentInstanceMetadata.new(
+                            @version,
+                            insights_assessments_comment_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -124,6 +173,34 @@ module Twilio
                     end
 
                     ##
+                    # Lists InsightsAssessmentsCommentPageMetadata records from the API as a list.
+                      # @param [String] authorization The Authorization HTTP request header
+                      # @param [String] segment_id The id of the segment.
+                      # @param [String] agent_id The id of the agent.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(authorization: :unset, segment_id: :unset, agent_id: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Authorization' => authorization,
+                            'SegmentId' => segment_id,
+                            'AgentId' => agent_id,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        InsightsAssessmentsCommentPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields InsightsAssessmentsCommentInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -147,7 +224,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of InsightsAssessmentsCommentInstance
-                    def page(authorization: :unset, segment_id: :unset, agent_id: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(authorization: :unset, segment_id: :unset, agent_id: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Authorization' => authorization,
                             'SegmentId' => segment_id,
@@ -195,6 +272,7 @@ module Twilio
                     # @return [InsightsAssessmentsCommentPage] InsightsAssessmentsCommentPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -214,6 +292,66 @@ module Twilio
                         '<Twilio.FlexApi.V1.InsightsAssessmentsCommentPage>'
                     end
                 end
+
+                class InsightsAssessmentsCommentPageMetadata < PageMetadata
+                    attr_reader :insights_assessments_comment_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @insights_assessments_comment_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @insights_assessments_comment_page << InsightsAssessmentsCommentListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @insights_assessments_comment_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InsightsAssessmentsCommentListResponse < InstanceListResource
+
+                    # @param [Array<InsightsAssessmentsCommentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @insights_assessments_comment = data_list.map do |data|
+                        InsightsAssessmentsCommentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def insights_assessments_comment
+                        @insights_assessments_comment
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class InsightsAssessmentsCommentInstance < InstanceResource
                     ##
                     # Initialize the InsightsAssessmentsCommentInstance
@@ -226,6 +364,7 @@ module Twilio
                     # @return [InsightsAssessmentsCommentInstance] InsightsAssessmentsCommentInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

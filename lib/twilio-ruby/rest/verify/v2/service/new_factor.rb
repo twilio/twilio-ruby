@@ -88,6 +88,7 @@ module Twilio
                     # @return [NewFactorList] NewFactorList
                     def initialize(version, service_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Passkeys/Factors"
@@ -114,6 +115,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the NewFactorInstanceMetadata
+                    # @param [CreateNewPasskeysFactorRequest] create_new_passkeys_factor_request 
+                    # @return [NewFactorInstance] Created NewFactorInstance
+                    def create_with_metadata(create_new_passkeys_factor_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: create_new_passkeys_factor_request.to_json)
+                        new_factor_instance = NewFactorInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                        )
+                        NewFactorInstanceMetadata.new(
+                            @version,
+                            new_factor_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -132,6 +160,7 @@ module Twilio
                     # @return [NewFactorPage] NewFactorPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -151,6 +180,66 @@ module Twilio
                         '<Twilio.Verify.V2.NewFactorPage>'
                     end
                 end
+
+                class NewFactorPageMetadata < PageMetadata
+                    attr_reader :new_factor_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @new_factor_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @new_factor_page << NewFactorListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @new_factor_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class NewFactorListResponse < InstanceListResource
+
+                    # @param [Array<NewFactorInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @new_factor = data_list.map do |data|
+                        NewFactorInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def new_factor
+                        @new_factor
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class NewFactorInstance < InstanceResource
                     ##
                     # Initialize the NewFactorInstance
@@ -163,6 +252,7 @@ module Twilio
                     # @return [NewFactorInstance] NewFactorInstance
                     def initialize(version, payload , service_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

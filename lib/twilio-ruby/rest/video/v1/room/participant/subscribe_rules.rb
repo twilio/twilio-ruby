@@ -28,6 +28,7 @@ module Twilio
                     # @return [SubscribeRulesList] SubscribeRulesList
                     def initialize(version, room_sid: nil, participant_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { room_sid: room_sid, participant_sid: participant_sid }
                         @uri = "/Rooms/#{@solution[:room_sid]}/Participants/#{@solution[:participant_sid]}/SubscribeRules"
@@ -50,6 +51,32 @@ module Twilio
                             payload,
                             room_sid: @solution[:room_sid],
                             participant_sid: @solution[:participant_sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the SubscribeRulesInstanceMetadata
+                    # @return [SubscribeRulesInstance] Fetched SubscribeRulesInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        subscribe_rules_instance = SubscribeRulesInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                            participant_sid: @solution[:participant_sid],
+                        )
+                        SubscribeRulesInstanceMetadata.new(
+                            @version,
+                            subscribe_rules_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -80,6 +107,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the SubscribeRulesInstanceMetadata
+                    # @param [Object] rules A JSON-encoded array of subscribe rules. See the [Specifying Subscribe Rules](https://www.twilio.com/docs/video/api/track-subscriptions#specifying-sr) section for further information.
+                    # @return [SubscribeRulesInstance] Updated SubscribeRulesInstance
+                    def update_with_metadata(
+                      rules: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Rules' => Twilio.serialize_object(rules),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        subscribe_rules_instance = SubscribeRulesInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                            participant_sid: @solution[:participant_sid],
+                        )
+                        SubscribeRulesInstanceMetadata.new(
+                            @version,
+                            subscribe_rules_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -98,6 +158,7 @@ module Twilio
                     # @return [SubscribeRulesPage] SubscribeRulesPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -117,6 +178,66 @@ module Twilio
                         '<Twilio.Video.V1.SubscribeRulesPage>'
                     end
                 end
+
+                class SubscribeRulesPageMetadata < PageMetadata
+                    attr_reader :subscribe_rules_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @subscribe_rules_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @subscribe_rules_page << SubscribeRulesListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @subscribe_rules_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Video::V1PageMetadata>';
+                    end
+                end
+                class SubscribeRulesListResponse < InstanceListResource
+
+                    # @param [Array<SubscribeRulesInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @subscribe_rules = data_list.map do |data|
+                        SubscribeRulesInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def subscribe_rules
+                        @subscribe_rules
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class SubscribeRulesInstance < InstanceResource
                     ##
                     # Initialize the SubscribeRulesInstance
@@ -129,6 +250,7 @@ module Twilio
                     # @return [SubscribeRulesInstance] SubscribeRulesInstance
                     def initialize(version, payload , room_sid: nil, participant_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

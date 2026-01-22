@@ -28,6 +28,7 @@ module Twilio
                     # @return [AssetVersionList] AssetVersionList
                     def initialize(version, service_sid: nil, asset_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { service_sid: service_sid, asset_sid: asset_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/Assets/#{@solution[:asset_sid]}/Versions"
@@ -73,6 +74,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists AssetVersionPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        AssetVersionPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields AssetVersionInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -93,7 +116,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of AssetVersionInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -140,6 +163,7 @@ module Twilio
                     # @return [AssetVersionContext] AssetVersionContext
                     def initialize(version, service_sid, asset_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { service_sid: service_sid, asset_sid: asset_sid, sid: sid,  }
@@ -168,6 +192,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the AssetVersionInstanceMetadata
+                    # @return [AssetVersionInstance] Fetched AssetVersionInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        asset_version_instance = AssetVersionInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            asset_sid: @solution[:asset_sid],
+                            sid: @solution[:sid],
+                        )
+                        AssetVersionInstanceMetadata.new(
+                            @version,
+                            asset_version_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -184,6 +235,53 @@ module Twilio
                     end
                 end
 
+                class AssetVersionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AssetVersionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AssetVersionInstance] asset_version_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AssetVersionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, asset_version_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @asset_version_instance = asset_version_instance
+                    end
+
+                    def asset_version
+                        @asset_version_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AssetVersionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AssetVersionListResponse < InstanceListResource
+                    # @param [Array<AssetVersionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @asset_version_instance = payload.body[key].map do |data|
+                        AssetVersionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def asset_version_instance
+                          @instance
+                      end
+                  end
+
                 class AssetVersionPage < Page
                     ##
                     # Initialize the AssetVersionPage
@@ -193,6 +291,7 @@ module Twilio
                     # @return [AssetVersionPage] AssetVersionPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -212,6 +311,66 @@ module Twilio
                         '<Twilio.Serverless.V1.AssetVersionPage>'
                     end
                 end
+
+                class AssetVersionPageMetadata < PageMetadata
+                    attr_reader :asset_version_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @asset_version_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @asset_version_page << AssetVersionListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @asset_version_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Serverless::V1PageMetadata>';
+                    end
+                end
+                class AssetVersionListResponse < InstanceListResource
+
+                    # @param [Array<AssetVersionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @asset_version = data_list.map do |data|
+                        AssetVersionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def asset_version
+                        @asset_version
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class AssetVersionInstance < InstanceResource
                     ##
                     # Initialize the AssetVersionInstance
@@ -224,6 +383,7 @@ module Twilio
                     # @return [AssetVersionInstance] AssetVersionInstance
                     def initialize(version, payload , service_sid: nil, asset_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

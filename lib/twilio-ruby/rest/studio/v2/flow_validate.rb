@@ -25,6 +25,7 @@ module Twilio
                     # @return [FlowValidateList] FlowValidateList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Flows/Validate"
@@ -64,6 +65,46 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the FlowValidateInstanceMetadata
+                    # @param [String] friendly_name The string that you assigned to describe the Flow.
+                    # @param [Status] status 
+                    # @param [Object] definition JSON representation of flow definition.
+                    # @param [String] commit_message Description of change made in the revision.
+                    # @return [FlowValidateInstance] Updated FlowValidateInstance
+                    def update_with_metadata(
+                      friendly_name: nil, 
+                      status: nil, 
+                      definition: nil, 
+                      commit_message: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Status' => status,
+                            'Definition' => Twilio.serialize_object(definition),
+                            'CommitMessage' => commit_message,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        flow_validate_instance = FlowValidateInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        FlowValidateInstanceMetadata.new(
+                            @version,
+                            flow_validate_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -82,6 +123,7 @@ module Twilio
                     # @return [FlowValidatePage] FlowValidatePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -101,6 +143,66 @@ module Twilio
                         '<Twilio.Studio.V2.FlowValidatePage>'
                     end
                 end
+
+                class FlowValidatePageMetadata < PageMetadata
+                    attr_reader :flow_validate_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @flow_validate_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @flow_validate_page << FlowValidateListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @flow_validate_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Studio::V2PageMetadata>';
+                    end
+                end
+                class FlowValidateListResponse < InstanceListResource
+
+                    # @param [Array<FlowValidateInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @flow_validate = data_list.map do |data|
+                        FlowValidateInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def flow_validate
+                        @flow_validate
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class FlowValidateInstance < InstanceResource
                     ##
                     # Initialize the FlowValidateInstance
@@ -113,6 +215,7 @@ module Twilio
                     # @return [FlowValidateInstance] FlowValidateInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

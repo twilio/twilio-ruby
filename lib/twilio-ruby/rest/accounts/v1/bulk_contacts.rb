@@ -25,6 +25,7 @@ module Twilio
                     # @return [BulkContactsList] BulkContactsList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Contacts/Bulk"
@@ -55,6 +56,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the BulkContactsInstanceMetadata
+                    # @param [Array[Hash]] items A list of objects where each object represents a contact's details. Each object includes the following fields: `contact_id`, which must be a string representing phone number in [E.164 format](https://www.twilio.com/docs/glossary/what-e164); `correlation_id`, a unique 32-character UUID that maps the response to the original request; `country_iso_code`, a string representing the country using the ISO format (e.g., US for the United States); and `zip_code`, a string representing the postal code.
+                    # @return [BulkContactsInstance] Created BulkContactsInstance
+                    def create_with_metadata(
+                      items: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Items' => Twilio.serialize_list(items) { |e| Twilio.serialize_object(e) },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        bulk_contacts_instance = BulkContactsInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        BulkContactsInstanceMetadata.new(
+                            @version,
+                            bulk_contacts_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -73,6 +105,7 @@ module Twilio
                     # @return [BulkContactsPage] BulkContactsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -92,6 +125,66 @@ module Twilio
                         '<Twilio.Accounts.V1.BulkContactsPage>'
                     end
                 end
+
+                class BulkContactsPageMetadata < PageMetadata
+                    attr_reader :bulk_contacts_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @bulk_contacts_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @bulk_contacts_page << BulkContactsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @bulk_contacts_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Accounts::V1PageMetadata>';
+                    end
+                end
+                class BulkContactsListResponse < InstanceListResource
+
+                    # @param [Array<BulkContactsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @bulk_contacts = data_list.map do |data|
+                        BulkContactsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def bulk_contacts
+                        @bulk_contacts
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class BulkContactsInstance < InstanceResource
                     ##
                     # Initialize the BulkContactsInstance
@@ -104,6 +197,7 @@ module Twilio
                     # @return [BulkContactsInstance] BulkContactsInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

@@ -29,6 +29,7 @@ module Twilio
                     # @return [FunctionVersionContentList] FunctionVersionContentList
                     def initialize(version, service_sid: nil, function_sid: nil, sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { service_sid: service_sid, function_sid: function_sid, sid: sid }
                         
@@ -54,6 +55,7 @@ module Twilio
                     # @return [FunctionVersionContentContext] FunctionVersionContentContext
                     def initialize(version, service_sid, function_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { service_sid: service_sid, function_sid: function_sid, sid: sid,  }
@@ -82,6 +84,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the FunctionVersionContentInstanceMetadata
+                    # @return [FunctionVersionContentInstance] Fetched FunctionVersionContentInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        function_version_content_instance = FunctionVersionContentInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            function_sid: @solution[:function_sid],
+                            sid: @solution[:sid],
+                        )
+                        FunctionVersionContentInstanceMetadata.new(
+                            @version,
+                            function_version_content_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -98,6 +127,53 @@ module Twilio
                     end
                 end
 
+                class FunctionVersionContentInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new FunctionVersionContentInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}FunctionVersionContentInstance] function_version_content_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [FunctionVersionContentInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, function_version_content_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @function_version_content_instance = function_version_content_instance
+                    end
+
+                    def function_version_content
+                        @function_version_content_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.FunctionVersionContentInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class FunctionVersionContentListResponse < InstanceListResource
+                    # @param [Array<FunctionVersionContentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @function_version_content_instance = payload.body[key].map do |data|
+                        FunctionVersionContentInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def function_version_content_instance
+                          @instance
+                      end
+                  end
+
                 class FunctionVersionContentPage < Page
                     ##
                     # Initialize the FunctionVersionContentPage
@@ -107,6 +183,7 @@ module Twilio
                     # @return [FunctionVersionContentPage] FunctionVersionContentPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -126,6 +203,66 @@ module Twilio
                         '<Twilio.Serverless.V1.FunctionVersionContentPage>'
                     end
                 end
+
+                class FunctionVersionContentPageMetadata < PageMetadata
+                    attr_reader :function_version_content_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @function_version_content_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @function_version_content_page << FunctionVersionContentListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @function_version_content_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Serverless::V1PageMetadata>';
+                    end
+                end
+                class FunctionVersionContentListResponse < InstanceListResource
+
+                    # @param [Array<FunctionVersionContentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @function_version_content = data_list.map do |data|
+                        FunctionVersionContentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def function_version_content
+                        @function_version_content
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class FunctionVersionContentInstance < InstanceResource
                     ##
                     # Initialize the FunctionVersionContentInstance
@@ -138,6 +275,7 @@ module Twilio
                     # @return [FunctionVersionContentInstance] FunctionVersionContentInstance
                     def initialize(version, payload , service_sid: nil, function_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

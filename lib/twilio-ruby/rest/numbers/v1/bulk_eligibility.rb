@@ -25,6 +25,7 @@ module Twilio
                     # @return [BulkEligibilityList] BulkEligibilityList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/HostedNumber/Eligibility/Bulk"
@@ -50,6 +51,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the BulkEligibilityInstanceMetadata
+                    # @param [Object] body 
+                    # @return [BulkEligibilityInstance] Created BulkEligibilityInstance
+                    def create_with_metadata(body: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: body.to_json)
+                        bulk_eligibility_instance = BulkEligibilityInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        BulkEligibilityInstanceMetadata.new(
+                            @version,
+                            bulk_eligibility_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -68,6 +95,7 @@ module Twilio
                     # @return [BulkEligibilityContext] BulkEligibilityContext
                     def initialize(version, request_id)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { request_id: request_id,  }
@@ -94,6 +122,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the BulkEligibilityInstanceMetadata
+                    # @return [BulkEligibilityInstance] Fetched BulkEligibilityInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        bulk_eligibility_instance = BulkEligibilityInstance.new(
+                            @version,
+                            response.body,
+                            request_id: @solution[:request_id],
+                        )
+                        BulkEligibilityInstanceMetadata.new(
+                            @version,
+                            bulk_eligibility_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -110,6 +163,53 @@ module Twilio
                     end
                 end
 
+                class BulkEligibilityInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new BulkEligibilityInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}BulkEligibilityInstance] bulk_eligibility_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [BulkEligibilityInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, bulk_eligibility_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @bulk_eligibility_instance = bulk_eligibility_instance
+                    end
+
+                    def bulk_eligibility
+                        @bulk_eligibility_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.BulkEligibilityInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class BulkEligibilityListResponse < InstanceListResource
+                    # @param [Array<BulkEligibilityInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @bulk_eligibility_instance = payload.body[key].map do |data|
+                        BulkEligibilityInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def bulk_eligibility_instance
+                          @instance
+                      end
+                  end
+
                 class BulkEligibilityPage < Page
                     ##
                     # Initialize the BulkEligibilityPage
@@ -119,6 +219,7 @@ module Twilio
                     # @return [BulkEligibilityPage] BulkEligibilityPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -138,6 +239,66 @@ module Twilio
                         '<Twilio.Numbers.V1.BulkEligibilityPage>'
                     end
                 end
+
+                class BulkEligibilityPageMetadata < PageMetadata
+                    attr_reader :bulk_eligibility_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @bulk_eligibility_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @bulk_eligibility_page << BulkEligibilityListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @bulk_eligibility_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V1PageMetadata>';
+                    end
+                end
+                class BulkEligibilityListResponse < InstanceListResource
+
+                    # @param [Array<BulkEligibilityInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @bulk_eligibility = data_list.map do |data|
+                        BulkEligibilityInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def bulk_eligibility
+                        @bulk_eligibility
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class BulkEligibilityInstance < InstanceResource
                     ##
                     # Initialize the BulkEligibilityInstance
@@ -150,6 +311,7 @@ module Twilio
                     # @return [BulkEligibilityInstance] BulkEligibilityInstance
                     def initialize(version, payload , request_id: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

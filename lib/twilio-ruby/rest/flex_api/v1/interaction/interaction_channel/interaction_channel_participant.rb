@@ -28,6 +28,7 @@ module Twilio
                     # @return [InteractionChannelParticipantList] InteractionChannelParticipantList
                     def initialize(version, interaction_sid: nil, channel_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { interaction_sid: interaction_sid, channel_sid: channel_sid }
                         @uri = "/Interactions/#{@solution[:interaction_sid]}/Channels/#{@solution[:channel_sid]}/Participants"
@@ -63,6 +64,45 @@ module Twilio
                             payload,
                             interaction_sid: @solution[:interaction_sid],
                             channel_sid: @solution[:channel_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the InteractionChannelParticipantInstanceMetadata
+                    # @param [Type] type 
+                    # @param [Object] media_properties JSON representing the Media Properties for the new Participant.
+                    # @param [Object] routing_properties Object representing the Routing Properties for the new Participant.
+                    # @return [InteractionChannelParticipantInstance] Created InteractionChannelParticipantInstance
+                    def create_with_metadata(
+                      type: nil, 
+                      media_properties: nil, 
+                      routing_properties: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Type' => type,
+                            'MediaProperties' => Twilio.serialize_object(media_properties),
+                            'RoutingProperties' => Twilio.serialize_object(routing_properties),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        interaction_channel_participant_instance = InteractionChannelParticipantInstance.new(
+                            @version,
+                            response.body,
+                            interaction_sid: @solution[:interaction_sid],
+                            channel_sid: @solution[:channel_sid],
+                        )
+                        InteractionChannelParticipantInstanceMetadata.new(
+                            @version,
+                            interaction_channel_participant_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -106,6 +146,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists InteractionChannelParticipantPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        InteractionChannelParticipantPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields InteractionChannelParticipantInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -126,7 +188,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of InteractionChannelParticipantInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -173,6 +235,7 @@ module Twilio
                     # @return [InteractionChannelParticipantContext] InteractionChannelParticipantContext
                     def initialize(version, interaction_sid, channel_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { interaction_sid: interaction_sid, channel_sid: channel_sid, sid: sid,  }
@@ -208,6 +271,40 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the InteractionChannelParticipantInstanceMetadata
+                    # @param [Status] status 
+                    # @return [InteractionChannelParticipantInstance] Updated InteractionChannelParticipantInstance
+                    def update_with_metadata(
+                      status: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'Status' => status,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        interaction_channel_participant_instance = InteractionChannelParticipantInstance.new(
+                            @version,
+                            response.body,
+                            interaction_sid: @solution[:interaction_sid],
+                            channel_sid: @solution[:channel_sid],
+                            sid: @solution[:sid],
+                        )
+                        InteractionChannelParticipantInstanceMetadata.new(
+                            @version,
+                            interaction_channel_participant_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -224,6 +321,53 @@ module Twilio
                     end
                 end
 
+                class InteractionChannelParticipantInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new InteractionChannelParticipantInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}InteractionChannelParticipantInstance] interaction_channel_participant_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [InteractionChannelParticipantInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, interaction_channel_participant_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @interaction_channel_participant_instance = interaction_channel_participant_instance
+                    end
+
+                    def interaction_channel_participant
+                        @interaction_channel_participant_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.InteractionChannelParticipantInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class InteractionChannelParticipantListResponse < InstanceListResource
+                    # @param [Array<InteractionChannelParticipantInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @interaction_channel_participant_instance = payload.body[key].map do |data|
+                        InteractionChannelParticipantInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def interaction_channel_participant_instance
+                          @instance
+                      end
+                  end
+
                 class InteractionChannelParticipantPage < Page
                     ##
                     # Initialize the InteractionChannelParticipantPage
@@ -233,6 +377,7 @@ module Twilio
                     # @return [InteractionChannelParticipantPage] InteractionChannelParticipantPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -252,6 +397,66 @@ module Twilio
                         '<Twilio.FlexApi.V1.InteractionChannelParticipantPage>'
                     end
                 end
+
+                class InteractionChannelParticipantPageMetadata < PageMetadata
+                    attr_reader :interaction_channel_participant_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @interaction_channel_participant_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @interaction_channel_participant_page << InteractionChannelParticipantListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @interaction_channel_participant_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InteractionChannelParticipantListResponse < InstanceListResource
+
+                    # @param [Array<InteractionChannelParticipantInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @interaction_channel_participant = data_list.map do |data|
+                        InteractionChannelParticipantInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def interaction_channel_participant
+                        @interaction_channel_participant
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class InteractionChannelParticipantInstance < InstanceResource
                     ##
                     # Initialize the InteractionChannelParticipantInstance
@@ -264,6 +469,7 @@ module Twilio
                     # @return [InteractionChannelParticipantInstance] InteractionChannelParticipantInstance
                     def initialize(version, payload , interaction_sid: nil, channel_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

@@ -27,6 +27,7 @@ module Twilio
                     # @return [CustomerProfilesEvaluationsList] CustomerProfilesEvaluationsList
                     def initialize(version, customer_profile_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { customer_profile_sid: customer_profile_sid }
                         @uri = "/CustomerProfiles/#{@solution[:customer_profile_sid]}/Evaluations"
@@ -55,6 +56,38 @@ module Twilio
                             @version,
                             payload,
                             customer_profile_sid: @solution[:customer_profile_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the CustomerProfilesEvaluationsInstanceMetadata
+                    # @param [String] policy_sid The unique string of a policy that is associated to the customer_profile resource.
+                    # @return [CustomerProfilesEvaluationsInstance] Created CustomerProfilesEvaluationsInstance
+                    def create_with_metadata(
+                      policy_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'PolicySid' => policy_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        customer_profiles_evaluations_instance = CustomerProfilesEvaluationsInstance.new(
+                            @version,
+                            response.body,
+                            customer_profile_sid: @solution[:customer_profile_sid],
+                        )
+                        CustomerProfilesEvaluationsInstanceMetadata.new(
+                            @version,
+                            customer_profiles_evaluations_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -98,6 +131,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists CustomerProfilesEvaluationsPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CustomerProfilesEvaluationsPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields CustomerProfilesEvaluationsInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -118,7 +173,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of CustomerProfilesEvaluationsInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -164,6 +219,7 @@ module Twilio
                     # @return [CustomerProfilesEvaluationsContext] CustomerProfilesEvaluationsContext
                     def initialize(version, customer_profile_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { customer_profile_sid: customer_profile_sid, sid: sid,  }
@@ -191,6 +247,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the CustomerProfilesEvaluationsInstanceMetadata
+                    # @return [CustomerProfilesEvaluationsInstance] Fetched CustomerProfilesEvaluationsInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        customer_profiles_evaluations_instance = CustomerProfilesEvaluationsInstance.new(
+                            @version,
+                            response.body,
+                            customer_profile_sid: @solution[:customer_profile_sid],
+                            sid: @solution[:sid],
+                        )
+                        CustomerProfilesEvaluationsInstanceMetadata.new(
+                            @version,
+                            customer_profiles_evaluations_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -207,6 +289,53 @@ module Twilio
                     end
                 end
 
+                class CustomerProfilesEvaluationsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CustomerProfilesEvaluationsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CustomerProfilesEvaluationsInstance] customer_profiles_evaluations_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CustomerProfilesEvaluationsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, customer_profiles_evaluations_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @customer_profiles_evaluations_instance = customer_profiles_evaluations_instance
+                    end
+
+                    def customer_profiles_evaluations
+                        @customer_profiles_evaluations_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CustomerProfilesEvaluationsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CustomerProfilesEvaluationsListResponse < InstanceListResource
+                    # @param [Array<CustomerProfilesEvaluationsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @customer_profiles_evaluations_instance = payload.body[key].map do |data|
+                        CustomerProfilesEvaluationsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def customer_profiles_evaluations_instance
+                          @instance
+                      end
+                  end
+
                 class CustomerProfilesEvaluationsPage < Page
                     ##
                     # Initialize the CustomerProfilesEvaluationsPage
@@ -216,6 +345,7 @@ module Twilio
                     # @return [CustomerProfilesEvaluationsPage] CustomerProfilesEvaluationsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -235,6 +365,66 @@ module Twilio
                         '<Twilio.Trusthub.V1.CustomerProfilesEvaluationsPage>'
                     end
                 end
+
+                class CustomerProfilesEvaluationsPageMetadata < PageMetadata
+                    attr_reader :customer_profiles_evaluations_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @customer_profiles_evaluations_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @customer_profiles_evaluations_page << CustomerProfilesEvaluationsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @customer_profiles_evaluations_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Trusthub::V1PageMetadata>';
+                    end
+                end
+                class CustomerProfilesEvaluationsListResponse < InstanceListResource
+
+                    # @param [Array<CustomerProfilesEvaluationsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @customer_profiles_evaluations = data_list.map do |data|
+                        CustomerProfilesEvaluationsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def customer_profiles_evaluations
+                        @customer_profiles_evaluations
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class CustomerProfilesEvaluationsInstance < InstanceResource
                     ##
                     # Initialize the CustomerProfilesEvaluationsInstance
@@ -247,6 +437,7 @@ module Twilio
                     # @return [CustomerProfilesEvaluationsInstance] CustomerProfilesEvaluationsInstance
                     def initialize(version, payload , customer_profile_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

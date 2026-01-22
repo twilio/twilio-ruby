@@ -25,6 +25,7 @@ module Twilio
                     # @return [DomainConfigMessagingServiceList] DomainConfigMessagingServiceList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -48,6 +49,7 @@ module Twilio
                     # @return [DomainConfigMessagingServiceContext] DomainConfigMessagingServiceContext
                     def initialize(version, messaging_service_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { messaging_service_sid: messaging_service_sid,  }
@@ -74,6 +76,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the DomainConfigMessagingServiceInstanceMetadata
+                    # @return [DomainConfigMessagingServiceInstance] Fetched DomainConfigMessagingServiceInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        domain_config_messaging_service_instance = DomainConfigMessagingServiceInstance.new(
+                            @version,
+                            response.body,
+                            messaging_service_sid: @solution[:messaging_service_sid],
+                        )
+                        DomainConfigMessagingServiceInstanceMetadata.new(
+                            @version,
+                            domain_config_messaging_service_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -90,6 +117,53 @@ module Twilio
                     end
                 end
 
+                class DomainConfigMessagingServiceInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new DomainConfigMessagingServiceInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}DomainConfigMessagingServiceInstance] domain_config_messaging_service_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [DomainConfigMessagingServiceInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, domain_config_messaging_service_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @domain_config_messaging_service_instance = domain_config_messaging_service_instance
+                    end
+
+                    def domain_config_messaging_service
+                        @domain_config_messaging_service_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.DomainConfigMessagingServiceInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class DomainConfigMessagingServiceListResponse < InstanceListResource
+                    # @param [Array<DomainConfigMessagingServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @domain_config_messaging_service_instance = payload.body[key].map do |data|
+                        DomainConfigMessagingServiceInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def domain_config_messaging_service_instance
+                          @instance
+                      end
+                  end
+
                 class DomainConfigMessagingServicePage < Page
                     ##
                     # Initialize the DomainConfigMessagingServicePage
@@ -99,6 +173,7 @@ module Twilio
                     # @return [DomainConfigMessagingServicePage] DomainConfigMessagingServicePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -118,6 +193,66 @@ module Twilio
                         '<Twilio.Messaging.V1.DomainConfigMessagingServicePage>'
                     end
                 end
+
+                class DomainConfigMessagingServicePageMetadata < PageMetadata
+                    attr_reader :domain_config_messaging_service_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @domain_config_messaging_service_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @domain_config_messaging_service_page << DomainConfigMessagingServiceListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @domain_config_messaging_service_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class DomainConfigMessagingServiceListResponse < InstanceListResource
+
+                    # @param [Array<DomainConfigMessagingServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @domain_config_messaging_service = data_list.map do |data|
+                        DomainConfigMessagingServiceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def domain_config_messaging_service
+                        @domain_config_messaging_service
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class DomainConfigMessagingServiceInstance < InstanceResource
                     ##
                     # Initialize the DomainConfigMessagingServiceInstance
@@ -130,6 +265,7 @@ module Twilio
                     # @return [DomainConfigMessagingServiceInstance] DomainConfigMessagingServiceInstance
                     def initialize(version, payload , messaging_service_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

@@ -53,6 +53,7 @@ module Twilio
                     # @return [MessageList] MessageList
                     def initialize(version, id: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { id: id }
                         @uri = "/Assistants/#{@solution[:id]}/Messages"
@@ -79,6 +80,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the MessageInstanceMetadata
+                    # @param [AssistantsV1ServiceAssistantSendMessageRequest] assistants_v1_service_assistant_send_message_request 
+                    # @return [MessageInstance] Created MessageInstance
+                    def create_with_metadata(assistants_v1_service_assistant_send_message_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: assistants_v1_service_assistant_send_message_request.to_json)
+                        message_instance = MessageInstance.new(
+                            @version,
+                            response.body,
+                            id: @solution[:id],
+                        )
+                        MessageInstanceMetadata.new(
+                            @version,
+                            message_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -97,6 +125,7 @@ module Twilio
                     # @return [MessagePage] MessagePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -116,6 +145,66 @@ module Twilio
                         '<Twilio.Assistants.V1.MessagePage>'
                     end
                 end
+
+                class MessagePageMetadata < PageMetadata
+                    attr_reader :message_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @message_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @message_page << MessageListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @message_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Assistants::V1PageMetadata>';
+                    end
+                end
+                class MessageListResponse < InstanceListResource
+
+                    # @param [Array<MessageInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @message = data_list.map do |data|
+                        MessageInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def message
+                        @message
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class MessageInstance < InstanceResource
                     ##
                     # Initialize the MessageInstance
@@ -128,6 +217,7 @@ module Twilio
                     # @return [MessageInstance] MessageInstance
                     def initialize(version, payload , id: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

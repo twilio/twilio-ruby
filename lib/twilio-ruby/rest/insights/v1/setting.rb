@@ -25,6 +25,7 @@ module Twilio
                     # @return [SettingList] SettingList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -47,6 +48,7 @@ module Twilio
                     # @return [SettingContext] SettingContext
                     def initialize(version)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = {  }
@@ -75,6 +77,36 @@ module Twilio
                         SettingInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Fetch the SettingInstanceMetadata
+                    # @param [String] subaccount_sid The unique SID identifier of the Subaccount.
+                    # @return [SettingInstance] Fetched SettingInstance
+                    def fetch_with_metadata(
+                      subaccount_sid: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'SubaccountSid' => subaccount_sid,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        setting_instance = SettingInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        SettingInstanceMetadata.new(
+                            @version,
+                            setting_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -109,6 +141,43 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the SettingInstanceMetadata
+                    # @param [Boolean] advanced_features A boolean flag to enable Advanced Features for Voice Insights.
+                    # @param [Boolean] voice_trace A boolean flag to enable Voice Trace.
+                    # @param [String] subaccount_sid The unique SID identifier of the Subaccount.
+                    # @return [SettingInstance] Updated SettingInstance
+                    def update_with_metadata(
+                      advanced_features: :unset, 
+                      voice_trace: :unset, 
+                      subaccount_sid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'AdvancedFeatures' => advanced_features,
+                            'VoiceTrace' => voice_trace,
+                            'SubaccountSid' => subaccount_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        setting_instance = SettingInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        SettingInstanceMetadata.new(
+                            @version,
+                            setting_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -125,6 +194,53 @@ module Twilio
                     end
                 end
 
+                class SettingInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SettingInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SettingInstance] setting_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SettingInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, setting_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @setting_instance = setting_instance
+                    end
+
+                    def setting
+                        @setting_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SettingInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SettingListResponse < InstanceListResource
+                    # @param [Array<SettingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @setting_instance = payload.body[key].map do |data|
+                        SettingInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def setting_instance
+                          @instance
+                      end
+                  end
+
                 class SettingPage < Page
                     ##
                     # Initialize the SettingPage
@@ -134,6 +250,7 @@ module Twilio
                     # @return [SettingPage] SettingPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -153,6 +270,66 @@ module Twilio
                         '<Twilio.Insights.V1.SettingPage>'
                     end
                 end
+
+                class SettingPageMetadata < PageMetadata
+                    attr_reader :setting_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @setting_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @setting_page << SettingListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @setting_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Insights::V1PageMetadata>';
+                    end
+                end
+                class SettingListResponse < InstanceListResource
+
+                    # @param [Array<SettingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @setting = data_list.map do |data|
+                        SettingInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def setting
+                        @setting
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class SettingInstance < InstanceResource
                     ##
                     # Initialize the SettingInstance
@@ -165,6 +342,7 @@ module Twilio
                     # @return [SettingInstance] SettingInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

@@ -25,6 +25,7 @@ module Twilio
                     # @return [ModuleDataManagementList] ModuleDataManagementList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -48,6 +49,7 @@ module Twilio
                     # @return [ModuleDataManagementContext] ModuleDataManagementContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -71,6 +73,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ModuleDataManagementInstanceMetadata
+                    # @return [ModuleDataManagementInstance] Fetched ModuleDataManagementInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        module_data_management_instance = ModuleDataManagementInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ModuleDataManagementInstanceMetadata.new(
+                            @version,
+                            module_data_management_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -118,6 +145,56 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ModuleDataManagementInstanceMetadata
+                    # @param [String] module_info A JSON object containing essential attributes that define a Listing.
+                    # @param [String] description A JSON object describing the Listing. You can define the main body of the description, highlight key features or aspects of the Listing, and provide code samples for developers if applicable.
+                    # @param [String] documentation A JSON object for providing comprehensive information, instructions, and resources related to the Listing.
+                    # @param [String] policies A JSON object describing the Listing's privacy and legal policies. The maximum file size for Policies is 5MB.
+                    # @param [String] support A JSON object containing information on how Marketplace users can obtain support for the Listing. Use this parameter to provide details such as contact information and support description.
+                    # @param [String] configuration A JSON object for providing Listing-specific configuration. Contains button setup, notification URL, and more.
+                    # @param [String] pricing A JSON object for providing Listing's purchase options.
+                    # @return [ModuleDataManagementInstance] Updated ModuleDataManagementInstance
+                    def update_with_metadata(
+                      module_info: :unset, 
+                      description: :unset, 
+                      documentation: :unset, 
+                      policies: :unset, 
+                      support: :unset, 
+                      configuration: :unset, 
+                      pricing: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'ModuleInfo' => module_info,
+                            'Description' => description,
+                            'Documentation' => documentation,
+                            'Policies' => policies,
+                            'Support' => support,
+                            'Configuration' => configuration,
+                            'Pricing' => pricing,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        module_data_management_instance = ModuleDataManagementInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ModuleDataManagementInstanceMetadata.new(
+                            @version,
+                            module_data_management_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -134,6 +211,53 @@ module Twilio
                     end
                 end
 
+                class ModuleDataManagementInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ModuleDataManagementInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ModuleDataManagementInstance] module_data_management_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ModuleDataManagementInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, module_data_management_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @module_data_management_instance = module_data_management_instance
+                    end
+
+                    def module_data_management
+                        @module_data_management_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ModuleDataManagementInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ModuleDataManagementListResponse < InstanceListResource
+                    # @param [Array<ModuleDataManagementInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @module_data_management_instance = payload.body[key].map do |data|
+                        ModuleDataManagementInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def module_data_management_instance
+                          @instance
+                      end
+                  end
+
                 class ModuleDataManagementPage < Page
                     ##
                     # Initialize the ModuleDataManagementPage
@@ -143,6 +267,7 @@ module Twilio
                     # @return [ModuleDataManagementPage] ModuleDataManagementPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -162,6 +287,66 @@ module Twilio
                         '<Twilio.Marketplace.V1.ModuleDataManagementPage>'
                     end
                 end
+
+                class ModuleDataManagementPageMetadata < PageMetadata
+                    attr_reader :module_data_management_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @module_data_management_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @module_data_management_page << ModuleDataManagementListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @module_data_management_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Marketplace::V1PageMetadata>';
+                    end
+                end
+                class ModuleDataManagementListResponse < InstanceListResource
+
+                    # @param [Array<ModuleDataManagementInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @module_data_management = data_list.map do |data|
+                        ModuleDataManagementInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def module_data_management
+                        @module_data_management
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ModuleDataManagementInstance < InstanceResource
                     ##
                     # Initialize the ModuleDataManagementInstance
@@ -174,6 +359,7 @@ module Twilio
                     # @return [ModuleDataManagementInstance] ModuleDataManagementInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

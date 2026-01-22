@@ -27,6 +27,7 @@ module Twilio
                     # @return [UserList] UserList
                     def initialize(version, chat_service_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { chat_service_sid: chat_service_sid }
                         @uri = "/Services/#{@solution[:chat_service_sid]}/Users"
@@ -66,6 +67,49 @@ module Twilio
                             @version,
                             payload,
                             chat_service_sid: @solution[:chat_service_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the UserInstanceMetadata
+                    # @param [String] identity The application-defined string that uniquely identifies the resource's User within the [Conversation Service](https://www.twilio.com/docs/conversations/api/service-resource). This value is often a username or an email address, and is case-sensitive.
+                    # @param [String] friendly_name The string that you assigned to describe the resource.
+                    # @param [String] attributes The JSON Object string that stores application-specific data. If attributes have not been set, `{}` is returned.
+                    # @param [String] role_sid The SID of a service-level [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to the user.
+                    # @param [ServiceUserEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @return [UserInstance] Created UserInstance
+                    def create_with_metadata(
+                      identity: nil, 
+                      friendly_name: :unset, 
+                      attributes: :unset, 
+                      role_sid: :unset, 
+                      x_twilio_webhook_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Identity' => identity,
+                            'FriendlyName' => friendly_name,
+                            'Attributes' => attributes,
+                            'RoleSid' => role_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        user_instance = UserInstance.new(
+                            @version,
+                            response.body,
+                            chat_service_sid: @solution[:chat_service_sid],
+                        )
+                        UserInstanceMetadata.new(
+                            @version,
+                            user_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -109,6 +153,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists UserPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        UserPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields UserInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -129,7 +195,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of UserInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -175,6 +241,7 @@ module Twilio
                     # @return [UserContext] UserContext
                     def initialize(version, chat_service_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { chat_service_sid: chat_service_sid, sid: sid,  }
@@ -195,7 +262,30 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the UserInstanceMetadata
+                    # @param [ServiceUserEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata(
+                      x_twilio_webhook_enabled: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          user_instance = UserInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          UserInstanceMetadata.new(@version, user_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -215,6 +305,32 @@ module Twilio
                             payload,
                             chat_service_sid: @solution[:chat_service_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the UserInstanceMetadata
+                    # @return [UserInstance] Fetched UserInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        user_instance = UserInstance.new(
+                            @version,
+                            response.body,
+                            chat_service_sid: @solution[:chat_service_sid],
+                            sid: @solution[:sid],
+                        )
+                        UserInstanceMetadata.new(
+                            @version,
+                            user_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -254,6 +370,47 @@ module Twilio
                     end
 
                     ##
+                    # Update the UserInstanceMetadata
+                    # @param [String] friendly_name The string that you assigned to describe the resource.
+                    # @param [String] attributes The JSON Object string that stores application-specific data. If attributes have not been set, `{}` is returned.
+                    # @param [String] role_sid The SID of a service-level [Role](https://www.twilio.com/docs/conversations/api/role-resource) to assign to the user.
+                    # @param [ServiceUserEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
+                    # @return [UserInstance] Updated UserInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      attributes: :unset, 
+                      role_sid: :unset, 
+                      x_twilio_webhook_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Attributes' => attributes,
+                            'RoleSid' => role_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Webhook-Enabled' => x_twilio_webhook_enabled, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        user_instance = UserInstance.new(
+                            @version,
+                            response.body,
+                            chat_service_sid: @solution[:chat_service_sid],
+                            sid: @solution[:sid],
+                        )
+                        UserInstanceMetadata.new(
+                            @version,
+                            user_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the user_conversations
                     # @return [UserConversationList]
                     # @return [UserConversationContext] if sid was passed.
@@ -288,6 +445,53 @@ module Twilio
                     end
                 end
 
+                class UserInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new UserInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}UserInstance] user_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [UserInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, user_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @user_instance = user_instance
+                    end
+
+                    def user
+                        @user_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.UserInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class UserListResponse < InstanceListResource
+                    # @param [Array<UserInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @user_instance = payload.body[key].map do |data|
+                        UserInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def user_instance
+                          @instance
+                      end
+                  end
+
                 class UserPage < Page
                     ##
                     # Initialize the UserPage
@@ -297,6 +501,7 @@ module Twilio
                     # @return [UserPage] UserPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -316,6 +521,66 @@ module Twilio
                         '<Twilio.Conversations.V1.UserPage>'
                     end
                 end
+
+                class UserPageMetadata < PageMetadata
+                    attr_reader :user_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @user_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @user_page << UserListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @user_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Conversations::V1PageMetadata>';
+                    end
+                end
+                class UserListResponse < InstanceListResource
+
+                    # @param [Array<UserInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @user = data_list.map do |data|
+                        UserInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def user
+                        @user
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class UserInstance < InstanceResource
                     ##
                     # Initialize the UserInstance
@@ -328,6 +593,7 @@ module Twilio
                     # @return [UserInstance] UserInstance
                     def initialize(version, payload , chat_service_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

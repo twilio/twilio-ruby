@@ -28,6 +28,7 @@ module Twilio
                     # @return [ReplaceItemsList] ReplaceItemsList
                     def initialize(version, bundle_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { bundle_sid: bundle_sid }
                         @uri = "/RegulatoryCompliance/Bundles/#{@solution[:bundle_sid]}/ReplaceItems"
@@ -59,6 +60,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ReplaceItemsInstanceMetadata
+                    # @param [String] from_bundle_sid The source bundle sid to copy the item assignments from.
+                    # @return [ReplaceItemsInstance] Created ReplaceItemsInstance
+                    def create_with_metadata(
+                      from_bundle_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'FromBundleSid' => from_bundle_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        replace_items_instance = ReplaceItemsInstance.new(
+                            @version,
+                            response.body,
+                            bundle_sid: @solution[:bundle_sid],
+                        )
+                        ReplaceItemsInstanceMetadata.new(
+                            @version,
+                            replace_items_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -77,6 +110,7 @@ module Twilio
                     # @return [ReplaceItemsPage] ReplaceItemsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -96,6 +130,66 @@ module Twilio
                         '<Twilio.Numbers.V2.ReplaceItemsPage>'
                     end
                 end
+
+                class ReplaceItemsPageMetadata < PageMetadata
+                    attr_reader :replace_items_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @replace_items_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @replace_items_page << ReplaceItemsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @replace_items_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V2PageMetadata>';
+                    end
+                end
+                class ReplaceItemsListResponse < InstanceListResource
+
+                    # @param [Array<ReplaceItemsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @replace_items = data_list.map do |data|
+                        ReplaceItemsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def replace_items
+                        @replace_items
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ReplaceItemsInstance < InstanceResource
                     ##
                     # Initialize the ReplaceItemsInstance
@@ -108,6 +202,7 @@ module Twilio
                     # @return [ReplaceItemsInstance] ReplaceItemsInstance
                     def initialize(version, payload , bundle_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

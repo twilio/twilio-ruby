@@ -25,6 +25,7 @@ module Twilio
                     # @return [ApiKeyList] ApiKeyList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -48,6 +49,7 @@ module Twilio
                     # @return [ApiKeyContext] ApiKeyContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -64,7 +66,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ApiKeyInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          apiKey_instance = ApiKeyInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ApiKeyInstanceMetadata.new(@version, apiKey_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -83,6 +105,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ApiKeyInstanceMetadata
+                    # @return [ApiKeyInstance] Fetched ApiKeyInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        api_key_instance = ApiKeyInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ApiKeyInstanceMetadata.new(
+                            @version,
+                            api_key_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -115,6 +162,41 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ApiKeyInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [Object] policy The \\\\`Policy\\\\` object is a collection that specifies the allowed Twilio permissions for the restricted key. For more information on the permissions available with restricted API keys, refer to the [Twilio documentation](https://www.twilio.com/docs/iam/api-keys/restricted-api-keys#permissions-available-with-restricted-api-keys).
+                    # @return [ApiKeyInstance] Updated ApiKeyInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      policy: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Policy' => Twilio.serialize_object(policy),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        api_key_instance = ApiKeyInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ApiKeyInstanceMetadata.new(
+                            @version,
+                            api_key_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -131,6 +213,53 @@ module Twilio
                     end
                 end
 
+                class ApiKeyInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ApiKeyInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ApiKeyInstance] api_key_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ApiKeyInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, api_key_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @api_key_instance = api_key_instance
+                    end
+
+                    def api_key
+                        @api_key_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ApiKeyInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ApiKeyListResponse < InstanceListResource
+                    # @param [Array<ApiKeyInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @api_key_instance = payload.body[key].map do |data|
+                        ApiKeyInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def api_key_instance
+                          @instance
+                      end
+                  end
+
                 class ApiKeyPage < Page
                     ##
                     # Initialize the ApiKeyPage
@@ -140,6 +269,7 @@ module Twilio
                     # @return [ApiKeyPage] ApiKeyPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -159,6 +289,66 @@ module Twilio
                         '<Twilio.Iam.V1.ApiKeyPage>'
                     end
                 end
+
+                class ApiKeyPageMetadata < PageMetadata
+                    attr_reader :api_key_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @api_key_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @api_key_page << ApiKeyListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @api_key_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Iam::V1PageMetadata>';
+                    end
+                end
+                class ApiKeyListResponse < InstanceListResource
+
+                    # @param [Array<ApiKeyInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @api_key = data_list.map do |data|
+                        ApiKeyInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def api_key
+                        @api_key
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ApiKeyInstance < InstanceResource
                     ##
                     # Initialize the ApiKeyInstance
@@ -171,6 +361,7 @@ module Twilio
                     # @return [ApiKeyInstance] ApiKeyInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

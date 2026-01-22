@@ -27,6 +27,7 @@ module Twilio
                     # @return [UsAppToPersonUsecaseList] UsAppToPersonUsecaseList
                     def initialize(version, messaging_service_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { messaging_service_sid: messaging_service_sid }
                         @uri = "/Services/#{@solution[:messaging_service_sid]}/Compliance/Usa2p/Usecases"
@@ -57,6 +58,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the UsAppToPersonUsecaseInstanceMetadata
+                    # @param [String] brand_registration_sid The unique string to identify the A2P brand.
+                    # @return [UsAppToPersonUsecaseInstance] Fetched UsAppToPersonUsecaseInstance
+                    def fetch_with_metadata(
+                      brand_registration_sid: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'BrandRegistrationSid' => brand_registration_sid,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        us_app_to_person_usecase_instance = UsAppToPersonUsecaseInstance.new(
+                            @version,
+                            response.body,
+                            messaging_service_sid: @solution[:messaging_service_sid],
+                        )
+                        UsAppToPersonUsecaseInstanceMetadata.new(
+                            @version,
+                            us_app_to_person_usecase_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -75,6 +107,7 @@ module Twilio
                     # @return [UsAppToPersonUsecasePage] UsAppToPersonUsecasePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -94,6 +127,66 @@ module Twilio
                         '<Twilio.Messaging.V1.UsAppToPersonUsecasePage>'
                     end
                 end
+
+                class UsAppToPersonUsecasePageMetadata < PageMetadata
+                    attr_reader :us_app_to_person_usecase_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @us_app_to_person_usecase_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @us_app_to_person_usecase_page << UsAppToPersonUsecaseListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @us_app_to_person_usecase_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class UsAppToPersonUsecaseListResponse < InstanceListResource
+
+                    # @param [Array<UsAppToPersonUsecaseInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @us_app_to_person_usecase = data_list.map do |data|
+                        UsAppToPersonUsecaseInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def us_app_to_person_usecase
+                        @us_app_to_person_usecase
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class UsAppToPersonUsecaseInstance < InstanceResource
                     ##
                     # Initialize the UsAppToPersonUsecaseInstance
@@ -106,6 +199,7 @@ module Twilio
                     # @return [UsAppToPersonUsecaseInstance] UsAppToPersonUsecaseInstance
                     def initialize(version, payload , messaging_service_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

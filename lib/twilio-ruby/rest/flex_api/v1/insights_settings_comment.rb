@@ -25,6 +25,7 @@ module Twilio
                     # @return [InsightsSettingsCommentList] InsightsSettingsCommentList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Insights/QualityManagement/Settings/CommentTags"
@@ -51,6 +52,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the InsightsSettingsCommentInstanceMetadata
+                    # @param [String] authorization The Authorization HTTP request header
+                    # @return [InsightsSettingsCommentInstance] Fetched InsightsSettingsCommentInstance
+                    def fetch_with_metadata(
+                      authorization: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        insights_settings_comment_instance = InsightsSettingsCommentInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        InsightsSettingsCommentInstanceMetadata.new(
+                            @version,
+                            insights_settings_comment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -69,6 +97,7 @@ module Twilio
                     # @return [InsightsSettingsCommentPage] InsightsSettingsCommentPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -88,6 +117,66 @@ module Twilio
                         '<Twilio.FlexApi.V1.InsightsSettingsCommentPage>'
                     end
                 end
+
+                class InsightsSettingsCommentPageMetadata < PageMetadata
+                    attr_reader :insights_settings_comment_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @insights_settings_comment_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @insights_settings_comment_page << InsightsSettingsCommentListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @insights_settings_comment_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InsightsSettingsCommentListResponse < InstanceListResource
+
+                    # @param [Array<InsightsSettingsCommentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @insights_settings_comment = data_list.map do |data|
+                        InsightsSettingsCommentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def insights_settings_comment
+                        @insights_settings_comment
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class InsightsSettingsCommentInstance < InstanceResource
                     ##
                     # Initialize the InsightsSettingsCommentInstance
@@ -100,6 +189,7 @@ module Twilio
                     # @return [InsightsSettingsCommentInstance] InsightsSettingsCommentInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

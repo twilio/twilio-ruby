@@ -28,6 +28,7 @@ module Twilio
                     # @return [ChallengeList] ChallengeList
                     def initialize(version, service_sid: nil, identity: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { service_sid: service_sid, identity: identity }
                         @uri = "/Services/#{@solution[:service_sid]}/Entities/#{@solution[:identity]}/Challenges"
@@ -72,6 +73,54 @@ module Twilio
                             payload,
                             service_sid: @solution[:service_sid],
                             identity: @solution[:identity],
+                        )
+                    end
+
+                    ##
+                    # Create the ChallengeInstanceMetadata
+                    # @param [String] factor_sid The unique SID identifier of the Factor.
+                    # @param [Time] expiration_date The date-time when this Challenge expires, given in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. The default value is five (5) minutes after Challenge creation. The max value is sixty (60) minutes after creation.
+                    # @param [String] details_message Shown to the user when the push notification arrives. Required when `factor_type` is `push`. Can be up to 256 characters in length
+                    # @param [Array[Hash]] details_fields A list of objects that describe the Fields included in the Challenge. Each object contains the label and value of the field, the label can be up to 36 characters in length and the value can be up to 128 characters in length. Used when `factor_type` is `push`. There can be up to 20 details fields.
+                    # @param [Object] hidden_details Details provided to give context about the Challenge. Not shown to the end user. It must be a stringified JSON with only strings values eg. `{\\\"ip\\\": \\\"172.168.1.234\\\"}`. Can be up to 1024 characters in length
+                    # @param [String] auth_payload Optional payload used to verify the Challenge upon creation. Only used with a Factor of type `totp` to carry the TOTP code that needs to be verified. For `TOTP` this value must be between 3 and 8 characters long.
+                    # @return [ChallengeInstance] Created ChallengeInstance
+                    def create_with_metadata(
+                      factor_sid: nil, 
+                      expiration_date: :unset, 
+                      details_message: :unset, 
+                      details_fields: :unset, 
+                      hidden_details: :unset, 
+                      auth_payload: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FactorSid' => factor_sid,
+                            'ExpirationDate' => Twilio.serialize_iso8601_datetime(expiration_date),
+                            'Details.Message' => details_message,
+                            'Details.Fields' => Twilio.serialize_list(details_fields) { |e| Twilio.serialize_object(e) },
+                            'HiddenDetails' => Twilio.serialize_object(hidden_details),
+                            'AuthPayload' => auth_payload,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        challenge_instance = ChallengeInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            identity: @solution[:identity],
+                        )
+                        ChallengeInstanceMetadata.new(
+                            @version,
+                            challenge_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -127,6 +176,34 @@ module Twilio
                     end
 
                     ##
+                    # Lists ChallengePageMetadata records from the API as a list.
+                      # @param [String] factor_sid The unique SID identifier of the Factor.
+                      # @param [ChallengeStatuses] status The Status of the Challenges to fetch. One of `pending`, `expired`, `approved` or `denied`.
+                      # @param [ListOrders] order The desired sort order of the Challenges list. One of `asc` or `desc` for ascending and descending respectively. Defaults to `asc`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(factor_sid: :unset, status: :unset, order: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'FactorSid' => factor_sid,
+                            'Status' => status,
+                            'Order' => order,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ChallengePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ChallengeInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -150,7 +227,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ChallengeInstance
-                    def page(factor_sid: :unset, status: :unset, order: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(factor_sid: :unset, status: :unset, order: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'FactorSid' => factor_sid,
                             'Status' => status,
@@ -200,6 +277,7 @@ module Twilio
                     # @return [ChallengeContext] ChallengeContext
                     def initialize(version, service_sid, identity, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { service_sid: service_sid, identity: identity, sid: sid,  }
@@ -226,6 +304,33 @@ module Twilio
                             service_sid: @solution[:service_sid],
                             identity: @solution[:identity],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ChallengeInstanceMetadata
+                    # @return [ChallengeInstance] Fetched ChallengeInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        challenge_instance = ChallengeInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            identity: @solution[:identity],
+                            sid: @solution[:sid],
+                        )
+                        ChallengeInstanceMetadata.new(
+                            @version,
+                            challenge_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -261,6 +366,43 @@ module Twilio
                     end
 
                     ##
+                    # Update the ChallengeInstanceMetadata
+                    # @param [String] auth_payload The optional payload needed to verify the Challenge. E.g., a TOTP would use the numeric code. For `TOTP` this value must be between 3 and 8 characters long. For `Push` this value can be up to 5456 characters in length
+                    # @param [Object] metadata Custom metadata associated with the challenge. This is added by the Device/SDK directly to allow for the inclusion of device information. It must be a stringified JSON with only strings values eg. `{\\\"os\\\": \\\"Android\\\"}`. Can be up to 1024 characters in length.
+                    # @return [ChallengeInstance] Updated ChallengeInstance
+                    def update_with_metadata(
+                      auth_payload: :unset, 
+                      metadata: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'AuthPayload' => auth_payload,
+                            'Metadata' => Twilio.serialize_object(metadata),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        challenge_instance = ChallengeInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            identity: @solution[:identity],
+                            sid: @solution[:sid],
+                        )
+                        ChallengeInstanceMetadata.new(
+                            @version,
+                            challenge_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the notifications
                     # @return [NotificationList]
                     # @return [NotificationContext]
@@ -287,6 +429,53 @@ module Twilio
                     end
                 end
 
+                class ChallengeInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ChallengeInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ChallengeInstance] challenge_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ChallengeInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, challenge_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @challenge_instance = challenge_instance
+                    end
+
+                    def challenge
+                        @challenge_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ChallengeInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ChallengeListResponse < InstanceListResource
+                    # @param [Array<ChallengeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @challenge_instance = payload.body[key].map do |data|
+                        ChallengeInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def challenge_instance
+                          @instance
+                      end
+                  end
+
                 class ChallengePage < Page
                     ##
                     # Initialize the ChallengePage
@@ -296,6 +485,7 @@ module Twilio
                     # @return [ChallengePage] ChallengePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -315,6 +505,66 @@ module Twilio
                         '<Twilio.Verify.V2.ChallengePage>'
                     end
                 end
+
+                class ChallengePageMetadata < PageMetadata
+                    attr_reader :challenge_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @challenge_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @challenge_page << ChallengeListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @challenge_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class ChallengeListResponse < InstanceListResource
+
+                    # @param [Array<ChallengeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @challenge = data_list.map do |data|
+                        ChallengeInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def challenge
+                        @challenge
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ChallengeInstance < InstanceResource
                     ##
                     # Initialize the ChallengeInstance
@@ -327,6 +577,7 @@ module Twilio
                     # @return [ChallengeInstance] ChallengeInstance
                     def initialize(version, payload , service_sid: nil, identity: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

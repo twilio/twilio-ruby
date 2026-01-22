@@ -25,6 +25,7 @@ module Twilio
                     # @return [PhoneNumberList] PhoneNumberList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -48,6 +49,7 @@ module Twilio
                     # @return [PhoneNumberContext] PhoneNumberContext
                     def initialize(version, phone_number)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { phone_number: phone_number,  }
@@ -89,6 +91,46 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the PhoneNumberInstanceMetadata
+                    # @param [String] country_code The [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the phone number to fetch. This is used to specify the country when the phone number is provided in a national format.
+                    # @param [Array[String]] type The type of information to return. Can be: `carrier` or `caller-name`. The default is null. To retrieve both types of information, specify this parameter twice; once with `carrier` and once with `caller-name` as the value.
+                    # @param [Array[String]] add_ons The `unique_name` of an Add-on you would like to invoke. Can be the `unique_name` of an Add-on that is installed on your account. You can specify multiple instances of this parameter to invoke multiple Add-ons. For more information about  Add-ons, see the [Add-ons documentation](https://www.twilio.com/docs/add-ons).
+                    # @param [Hash] add_ons_data Data specific to the add-on you would like to invoke. The content and format of this value depends on the add-on.
+                    # @return [PhoneNumberInstance] Fetched PhoneNumberInstance
+                    def fetch_with_metadata(
+                      country_code: :unset, 
+                      type: :unset, 
+                      add_ons: :unset, 
+                      add_ons_data: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'CountryCode' => country_code,
+                            'Type' => Twilio.serialize_list(type) { |e| e },
+                            'AddOns' => Twilio.serialize_list(add_ons) { |e| e },
+                        })
+                        params.merge!(Twilio.prefixed_collapsible_map(add_ons_data, 'AddOns'))
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        phone_number_instance = PhoneNumberInstance.new(
+                            @version,
+                            response.body,
+                            phone_number: @solution[:phone_number],
+                        )
+                        PhoneNumberInstanceMetadata.new(
+                            @version,
+                            phone_number_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -105,6 +147,53 @@ module Twilio
                     end
                 end
 
+                class PhoneNumberInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new PhoneNumberInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}PhoneNumberInstance] phone_number_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [PhoneNumberInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, phone_number_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @phone_number_instance = phone_number_instance
+                    end
+
+                    def phone_number
+                        @phone_number_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.PhoneNumberInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class PhoneNumberListResponse < InstanceListResource
+                    # @param [Array<PhoneNumberInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @phone_number_instance = payload.body[key].map do |data|
+                        PhoneNumberInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def phone_number_instance
+                          @instance
+                      end
+                  end
+
                 class PhoneNumberPage < Page
                     ##
                     # Initialize the PhoneNumberPage
@@ -114,6 +203,7 @@ module Twilio
                     # @return [PhoneNumberPage] PhoneNumberPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -133,6 +223,66 @@ module Twilio
                         '<Twilio.Lookups.V1.PhoneNumberPage>'
                     end
                 end
+
+                class PhoneNumberPageMetadata < PageMetadata
+                    attr_reader :phone_number_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @phone_number_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @phone_number_page << PhoneNumberListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @phone_number_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Lookups::V1PageMetadata>';
+                    end
+                end
+                class PhoneNumberListResponse < InstanceListResource
+
+                    # @param [Array<PhoneNumberInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @phone_number = data_list.map do |data|
+                        PhoneNumberInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def phone_number
+                        @phone_number
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class PhoneNumberInstance < InstanceResource
                     ##
                     # Initialize the PhoneNumberInstance
@@ -145,6 +295,7 @@ module Twilio
                     # @return [PhoneNumberInstance] PhoneNumberInstance
                     def initialize(version, payload , phone_number: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

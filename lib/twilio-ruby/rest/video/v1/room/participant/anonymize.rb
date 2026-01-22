@@ -28,6 +28,7 @@ module Twilio
                     # @return [AnonymizeList] AnonymizeList
                     def initialize(version, room_sid: nil, sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { room_sid: room_sid, sid: sid }
                         
@@ -52,6 +53,7 @@ module Twilio
                     # @return [AnonymizeContext] AnonymizeContext
                     def initialize(version, room_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { room_sid: room_sid, sid: sid,  }
@@ -79,6 +81,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the AnonymizeInstanceMetadata
+                    # @return [AnonymizeInstance] Updated AnonymizeInstance
+                    def update_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, headers: headers)
+                        anonymize_instance = AnonymizeInstance.new(
+                            @version,
+                            response.body,
+                            room_sid: @solution[:room_sid],
+                            sid: @solution[:sid],
+                        )
+                        AnonymizeInstanceMetadata.new(
+                            @version,
+                            anonymize_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -95,6 +123,53 @@ module Twilio
                     end
                 end
 
+                class AnonymizeInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AnonymizeInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AnonymizeInstance] anonymize_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AnonymizeInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, anonymize_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @anonymize_instance = anonymize_instance
+                    end
+
+                    def anonymize
+                        @anonymize_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AnonymizeInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AnonymizeListResponse < InstanceListResource
+                    # @param [Array<AnonymizeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @anonymize_instance = payload.body[key].map do |data|
+                        AnonymizeInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def anonymize_instance
+                          @instance
+                      end
+                  end
+
                 class AnonymizePage < Page
                     ##
                     # Initialize the AnonymizePage
@@ -104,6 +179,7 @@ module Twilio
                     # @return [AnonymizePage] AnonymizePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -123,6 +199,66 @@ module Twilio
                         '<Twilio.Video.V1.AnonymizePage>'
                     end
                 end
+
+                class AnonymizePageMetadata < PageMetadata
+                    attr_reader :anonymize_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @anonymize_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @anonymize_page << AnonymizeListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @anonymize_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Video::V1PageMetadata>';
+                    end
+                end
+                class AnonymizeListResponse < InstanceListResource
+
+                    # @param [Array<AnonymizeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @anonymize = data_list.map do |data|
+                        AnonymizeInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def anonymize
+                        @anonymize
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class AnonymizeInstance < InstanceResource
                     ##
                     # Initialize the AnonymizeInstance
@@ -135,6 +271,7 @@ module Twilio
                     # @return [AnonymizeInstance] AnonymizeInstance
                     def initialize(version, payload , room_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

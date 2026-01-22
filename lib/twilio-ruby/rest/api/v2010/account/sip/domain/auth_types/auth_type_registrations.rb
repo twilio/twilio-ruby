@@ -30,6 +30,7 @@ module Twilio
                     # @return [AuthTypeRegistrationsList] AuthTypeRegistrationsList
                     def initialize(version, account_sid: nil, domain_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { account_sid: account_sid, domain_sid: domain_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/SIP/Domains/#{@solution[:domain_sid]}/Auth/Registrations.json"
@@ -67,6 +68,7 @@ module Twilio
                     # @return [AuthTypeRegistrationsPage] AuthTypeRegistrationsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -86,6 +88,66 @@ module Twilio
                         '<Twilio.Api.V2010.AuthTypeRegistrationsPage>'
                     end
                 end
+
+                class AuthTypeRegistrationsPageMetadata < PageMetadata
+                    attr_reader :auth_type_registrations_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @auth_type_registrations_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @auth_type_registrations_page << AuthTypeRegistrationsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @auth_type_registrations_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class AuthTypeRegistrationsListResponse < InstanceListResource
+
+                    # @param [Array<AuthTypeRegistrationsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @auth_type_registrations = data_list.map do |data|
+                        AuthTypeRegistrationsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def auth_type_registrations
+                        @auth_type_registrations
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class AuthTypeRegistrationsInstance < InstanceResource
                     ##
                     # Initialize the AuthTypeRegistrationsInstance
@@ -98,6 +160,7 @@ module Twilio
                     # @return [AuthTypeRegistrationsInstance] AuthTypeRegistrationsInstance
                     def initialize(version , account_sid: nil, domain_sid: nil)
                         super(version)
+                        
                         
                     end
 

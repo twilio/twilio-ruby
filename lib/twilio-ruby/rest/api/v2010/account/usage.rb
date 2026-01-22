@@ -27,6 +27,7 @@ module Twilio
                     # @return [UsageList] UsageList
                     def initialize(version, account_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Usage.json"
@@ -72,6 +73,7 @@ module Twilio
                     # @return [UsagePage] UsagePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -91,6 +93,66 @@ module Twilio
                         '<Twilio.Api.V2010.UsagePage>'
                     end
                 end
+
+                class UsagePageMetadata < PageMetadata
+                    attr_reader :usage_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @usage_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @usage_page << UsageListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @usage_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class UsageListResponse < InstanceListResource
+
+                    # @param [Array<UsageInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @usage = data_list.map do |data|
+                        UsageInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def usage
+                        @usage
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class UsageInstance < InstanceResource
                     ##
                     # Initialize the UsageInstance
@@ -103,6 +165,7 @@ module Twilio
                     # @return [UsageInstance] UsageInstance
                     def initialize(version , account_sid: nil)
                         super(version)
+                        
                         
                     end
 

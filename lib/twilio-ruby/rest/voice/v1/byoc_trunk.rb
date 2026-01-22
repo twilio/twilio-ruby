@@ -25,6 +25,7 @@ module Twilio
                     # @return [ByocTrunkList] ByocTrunkList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/ByocTrunks"
@@ -82,6 +83,64 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ByocTrunkInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It is not unique and can be up to 255 characters long.
+                    # @param [String] voice_url The URL we should call when the BYOC Trunk receives a call.
+                    # @param [String] voice_method The HTTP method we should use to call `voice_url`. Can be: `GET` or `POST`.
+                    # @param [String] voice_fallback_url The URL that we should call when an error occurs while retrieving or executing the TwiML from `voice_url`.
+                    # @param [String] voice_fallback_method The HTTP method we should use to call `voice_fallback_url`. Can be: `GET` or `POST`.
+                    # @param [String] status_callback_url The URL that we should call to pass status parameters (such as call ended) to your application.
+                    # @param [String] status_callback_method The HTTP method we should use to call `status_callback_url`. Can be: `GET` or `POST`.
+                    # @param [Boolean] cnam_lookup_enabled Whether Caller ID Name (CNAM) lookup is enabled for the trunk. If enabled, all inbound calls to the BYOC Trunk from the United States and Canada automatically perform a CNAM Lookup and display Caller ID data on your phone. See [CNAM Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
+                    # @param [String] connection_policy_sid The SID of the Connection Policy that Twilio will use when routing traffic to your communications infrastructure.
+                    # @param [String] from_domain_sid The SID of the SIP Domain that should be used in the `From` header of originating calls sent to your SIP infrastructure. If your SIP infrastructure allows users to \\\"call back\\\" an incoming call, configure this with a [SIP Domain](https://www.twilio.com/docs/voice/api/sending-sip) to ensure proper routing. If not configured, the from domain will default to \\\"sip.twilio.com\\\".
+                    # @return [ByocTrunkInstance] Created ByocTrunkInstance
+                    def create_with_metadata(
+                      friendly_name: :unset, 
+                      voice_url: :unset, 
+                      voice_method: :unset, 
+                      voice_fallback_url: :unset, 
+                      voice_fallback_method: :unset, 
+                      status_callback_url: :unset, 
+                      status_callback_method: :unset, 
+                      cnam_lookup_enabled: :unset, 
+                      connection_policy_sid: :unset, 
+                      from_domain_sid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'VoiceUrl' => voice_url,
+                            'VoiceMethod' => voice_method,
+                            'VoiceFallbackUrl' => voice_fallback_url,
+                            'VoiceFallbackMethod' => voice_fallback_method,
+                            'StatusCallbackUrl' => status_callback_url,
+                            'StatusCallbackMethod' => status_callback_method,
+                            'CnamLookupEnabled' => cnam_lookup_enabled,
+                            'ConnectionPolicySid' => connection_policy_sid,
+                            'FromDomainSid' => from_domain_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        byoc_trunk_instance = ByocTrunkInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ByocTrunkInstanceMetadata.new(
+                            @version,
+                            byoc_trunk_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ByocTrunkInstance records from the API as a list.
@@ -122,6 +181,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists ByocTrunkPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ByocTrunkPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ByocTrunkInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -142,7 +223,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ByocTrunkInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -187,6 +268,7 @@ module Twilio
                     # @return [ByocTrunkContext] ByocTrunkContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -203,7 +285,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ByocTrunkInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          byocTrunk_instance = ByocTrunkInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ByocTrunkInstanceMetadata.new(@version, byocTrunk_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -222,6 +324,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ByocTrunkInstanceMetadata
+                    # @return [ByocTrunkInstance] Fetched ByocTrunkInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        byoc_trunk_instance = ByocTrunkInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ByocTrunkInstanceMetadata.new(
+                            @version,
+                            byoc_trunk_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -278,6 +405,65 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ByocTrunkInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It is not unique and can be up to 255 characters long.
+                    # @param [String] voice_url The URL we should call when the BYOC Trunk receives a call.
+                    # @param [String] voice_method The HTTP method we should use to call `voice_url`
+                    # @param [String] voice_fallback_url The URL that we should call when an error occurs while retrieving or executing the TwiML requested by `voice_url`.
+                    # @param [String] voice_fallback_method The HTTP method we should use to call `voice_fallback_url`. Can be: `GET` or `POST`.
+                    # @param [String] status_callback_url The URL that we should call to pass status parameters (such as call ended) to your application.
+                    # @param [String] status_callback_method The HTTP method we should use to call `status_callback_url`. Can be: `GET` or `POST`.
+                    # @param [Boolean] cnam_lookup_enabled Whether Caller ID Name (CNAM) lookup is enabled for the trunk. If enabled, all inbound calls to the BYOC Trunk from the United States and Canada automatically perform a CNAM Lookup and display Caller ID data on your phone. See [CNAM Lookups](https://www.twilio.com/docs/sip-trunking#CNAM) for more information.
+                    # @param [String] connection_policy_sid The SID of the Connection Policy that Twilio will use when routing traffic to your communications infrastructure.
+                    # @param [String] from_domain_sid The SID of the SIP Domain that should be used in the `From` header of originating calls sent to your SIP infrastructure. If your SIP infrastructure allows users to \\\"call back\\\" an incoming call, configure this with a [SIP Domain](https://www.twilio.com/docs/voice/api/sending-sip) to ensure proper routing. If not configured, the from domain will default to \\\"sip.twilio.com\\\".
+                    # @return [ByocTrunkInstance] Updated ByocTrunkInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      voice_url: :unset, 
+                      voice_method: :unset, 
+                      voice_fallback_url: :unset, 
+                      voice_fallback_method: :unset, 
+                      status_callback_url: :unset, 
+                      status_callback_method: :unset, 
+                      cnam_lookup_enabled: :unset, 
+                      connection_policy_sid: :unset, 
+                      from_domain_sid: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'VoiceUrl' => voice_url,
+                            'VoiceMethod' => voice_method,
+                            'VoiceFallbackUrl' => voice_fallback_url,
+                            'VoiceFallbackMethod' => voice_fallback_method,
+                            'StatusCallbackUrl' => status_callback_url,
+                            'StatusCallbackMethod' => status_callback_method,
+                            'CnamLookupEnabled' => cnam_lookup_enabled,
+                            'ConnectionPolicySid' => connection_policy_sid,
+                            'FromDomainSid' => from_domain_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        byoc_trunk_instance = ByocTrunkInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ByocTrunkInstanceMetadata.new(
+                            @version,
+                            byoc_trunk_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -294,6 +480,53 @@ module Twilio
                     end
                 end
 
+                class ByocTrunkInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ByocTrunkInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ByocTrunkInstance] byoc_trunk_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ByocTrunkInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, byoc_trunk_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @byoc_trunk_instance = byoc_trunk_instance
+                    end
+
+                    def byoc_trunk
+                        @byoc_trunk_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ByocTrunkInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ByocTrunkListResponse < InstanceListResource
+                    # @param [Array<ByocTrunkInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @byoc_trunk_instance = payload.body[key].map do |data|
+                        ByocTrunkInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def byoc_trunk_instance
+                          @instance
+                      end
+                  end
+
                 class ByocTrunkPage < Page
                     ##
                     # Initialize the ByocTrunkPage
@@ -303,6 +536,7 @@ module Twilio
                     # @return [ByocTrunkPage] ByocTrunkPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -322,6 +556,66 @@ module Twilio
                         '<Twilio.Voice.V1.ByocTrunkPage>'
                     end
                 end
+
+                class ByocTrunkPageMetadata < PageMetadata
+                    attr_reader :byoc_trunk_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @byoc_trunk_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @byoc_trunk_page << ByocTrunkListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @byoc_trunk_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Voice::V1PageMetadata>';
+                    end
+                end
+                class ByocTrunkListResponse < InstanceListResource
+
+                    # @param [Array<ByocTrunkInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @byoc_trunk = data_list.map do |data|
+                        ByocTrunkInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def byoc_trunk
+                        @byoc_trunk
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ByocTrunkInstance < InstanceResource
                     ##
                     # Initialize the ByocTrunkInstance
@@ -334,6 +628,7 @@ module Twilio
                     # @return [ByocTrunkInstance] ByocTrunkInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

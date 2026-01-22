@@ -28,6 +28,7 @@ module Twilio
                     # @return [NewFactorList] NewFactorList
                     def initialize(version, service_sid: nil, identity: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { service_sid: service_sid, identity: identity }
                         @uri = "/Services/#{@solution[:service_sid]}/Entities/#{@solution[:identity]}/Factors"
@@ -99,6 +100,78 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the NewFactorInstanceMetadata
+                    # @param [String] friendly_name The friendly name of this Factor. This can be any string up to 64 characters, meant for humans to distinguish between Factors. For `factor_type` `push`, this could be a device name. For `factor_type` `totp`, this value is used as the “account name” in constructing the `binding.uri` property. At the same time, we recommend avoiding providing PII.
+                    # @param [FactorTypes] factor_type 
+                    # @param [String] binding_alg The algorithm used when `factor_type` is `push`. Algorithm supported: `ES256`
+                    # @param [String] binding_public_key The Ecdsa public key in PKIX, ASN.1 DER format encoded in Base64.  Required when `factor_type` is `push`
+                    # @param [String] config_app_id The ID that uniquely identifies your app in the Google or Apple store, such as `com.example.myapp`. It can be up to 100 characters long.  Required when `factor_type` is `push`.
+                    # @param [NotificationPlatforms] config_notification_platform 
+                    # @param [String] config_notification_token For APN, the device token. For FCM, the registration token. It is used to send the push notifications. Must be between 32 and 255 characters long.  Required when `factor_type` is `push`.
+                    # @param [String] config_sdk_version The Verify Push SDK version used to configure the factor  Required when `factor_type` is `push`
+                    # @param [String] binding_secret The shared secret for TOTP factors encoded in Base32. This can be provided when creating the Factor, otherwise it will be generated.  Used when `factor_type` is `totp`
+                    # @param [String] config_time_step Defines how often, in seconds, are TOTP codes generated. i.e, a new TOTP code is generated every time_step seconds. Must be between 20 and 60 seconds, inclusive. The default value is defined at the service level in the property `totp.time_step`. Defaults to 30 seconds if not configured.  Used when `factor_type` is `totp`
+                    # @param [String] config_skew The number of time-steps, past and future, that are valid for validation of TOTP codes. Must be between 0 and 2, inclusive. The default value is defined at the service level in the property `totp.skew`. If not configured defaults to 1.  Used when `factor_type` is `totp`
+                    # @param [String] config_code_length Number of digits for generated TOTP codes. Must be between 3 and 8, inclusive. The default value is defined at the service level in the property `totp.code_length`. If not configured defaults to 6.  Used when `factor_type` is `totp`
+                    # @param [TotpAlgorithms] config_alg 
+                    # @param [Object] metadata Custom metadata associated with the factor. This is added by the Device/SDK directly to allow for the inclusion of device information. It must be a stringified JSON with only strings values eg. `{\\\"os\\\": \\\"Android\\\"}`. Can be up to 1024 characters in length.
+                    # @return [NewFactorInstance] Created NewFactorInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      factor_type: nil, 
+                      binding_alg: :unset, 
+                      binding_public_key: :unset, 
+                      config_app_id: :unset, 
+                      config_notification_platform: :unset, 
+                      config_notification_token: :unset, 
+                      config_sdk_version: :unset, 
+                      binding_secret: :unset, 
+                      config_time_step: :unset, 
+                      config_skew: :unset, 
+                      config_code_length: :unset, 
+                      config_alg: :unset, 
+                      metadata: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'FactorType' => factor_type,
+                            'Binding.Alg' => binding_alg,
+                            'Binding.PublicKey' => binding_public_key,
+                            'Config.AppId' => config_app_id,
+                            'Config.NotificationPlatform' => config_notification_platform,
+                            'Config.NotificationToken' => config_notification_token,
+                            'Config.SdkVersion' => config_sdk_version,
+                            'Binding.Secret' => binding_secret,
+                            'Config.TimeStep' => config_time_step,
+                            'Config.Skew' => config_skew,
+                            'Config.CodeLength' => config_code_length,
+                            'Config.Alg' => config_alg,
+                            'Metadata' => Twilio.serialize_object(metadata),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        new_factor_instance = NewFactorInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            identity: @solution[:identity],
+                        )
+                        NewFactorInstanceMetadata.new(
+                            @version,
+                            new_factor_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -117,6 +190,7 @@ module Twilio
                     # @return [NewFactorPage] NewFactorPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -136,6 +210,66 @@ module Twilio
                         '<Twilio.Verify.V2.NewFactorPage>'
                     end
                 end
+
+                class NewFactorPageMetadata < PageMetadata
+                    attr_reader :new_factor_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @new_factor_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @new_factor_page << NewFactorListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @new_factor_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class NewFactorListResponse < InstanceListResource
+
+                    # @param [Array<NewFactorInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @new_factor = data_list.map do |data|
+                        NewFactorInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def new_factor
+                        @new_factor
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class NewFactorInstance < InstanceResource
                     ##
                     # Initialize the NewFactorInstance
@@ -148,6 +282,7 @@ module Twilio
                     # @return [NewFactorInstance] NewFactorInstance
                     def initialize(version, payload , service_sid: nil, identity: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

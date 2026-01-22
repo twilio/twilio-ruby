@@ -25,6 +25,7 @@ module Twilio
                     # @return [AddressConfigurationList] AddressConfigurationList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Configuration/Addresses"
@@ -88,6 +89,70 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the AddressConfigurationInstanceMetadata
+                    # @param [Type] type 
+                    # @param [String] address The unique address to be configured. The address can be a whatsapp address or phone number
+                    # @param [String] friendly_name The human-readable name of this configuration, limited to 256 characters. Optional.
+                    # @param [Boolean] auto_creation_enabled Enable/Disable auto-creating conversations for messages to this address
+                    # @param [AutoCreationType] auto_creation_type 
+                    # @param [String] auto_creation_conversation_service_sid Conversation Service for the auto-created conversation. If not set, the conversation is created in the default service.
+                    # @param [String] auto_creation_webhook_url For type `webhook`, the url for the webhook request.
+                    # @param [Method] auto_creation_webhook_method 
+                    # @param [Array[String]] auto_creation_webhook_filters The list of events, firing webhook event for this Conversation. Values can be any of the following: `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`, `onConversationUpdated`, `onConversationStateUpdated`, `onConversationRemoved`, `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`, `onDeliveryUpdated`
+                    # @param [String] auto_creation_studio_flow_sid For type `studio`, the studio flow SID where the webhook should be sent to.
+                    # @param [String] auto_creation_studio_retry_count For type `studio`, number of times to retry the webhook request
+                    # @param [String] address_country An ISO 3166-1 alpha-2n country code which the address belongs to. This is currently only applicable to short code addresses.
+                    # @return [AddressConfigurationInstance] Created AddressConfigurationInstance
+                    def create_with_metadata(
+                      type: nil, 
+                      address: nil, 
+                      friendly_name: :unset, 
+                      auto_creation_enabled: :unset, 
+                      auto_creation_type: :unset, 
+                      auto_creation_conversation_service_sid: :unset, 
+                      auto_creation_webhook_url: :unset, 
+                      auto_creation_webhook_method: :unset, 
+                      auto_creation_webhook_filters: :unset, 
+                      auto_creation_studio_flow_sid: :unset, 
+                      auto_creation_studio_retry_count: :unset, 
+                      address_country: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Type' => type,
+                            'Address' => address,
+                            'FriendlyName' => friendly_name,
+                            'AutoCreation.Enabled' => auto_creation_enabled,
+                            'AutoCreation.Type' => auto_creation_type,
+                            'AutoCreation.ConversationServiceSid' => auto_creation_conversation_service_sid,
+                            'AutoCreation.WebhookUrl' => auto_creation_webhook_url,
+                            'AutoCreation.WebhookMethod' => auto_creation_webhook_method,
+                            'AutoCreation.WebhookFilters' => Twilio.serialize_list(auto_creation_webhook_filters) { |e| e },
+                            'AutoCreation.StudioFlowSid' => auto_creation_studio_flow_sid,
+                            'AutoCreation.StudioRetryCount' => auto_creation_studio_retry_count,
+                            'AddressCountry' => address_country,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        address_configuration_instance = AddressConfigurationInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        AddressConfigurationInstanceMetadata.new(
+                            @version,
+                            address_configuration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists AddressConfigurationInstance records from the API as a list.
@@ -132,6 +197,30 @@ module Twilio
                     end
 
                     ##
+                    # Lists AddressConfigurationPageMetadata records from the API as a list.
+                      # @param [String] type Filter the address configurations by its type. This value can be one of: `whatsapp`, `sms`.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(type: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Type' => type,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        AddressConfigurationPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields AddressConfigurationInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -153,7 +242,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of AddressConfigurationInstance
-                    def page(type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(type: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Type' => type,
                             'PageToken' => page_token,
@@ -199,6 +288,7 @@ module Twilio
                     # @return [AddressConfigurationContext] AddressConfigurationContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -215,7 +305,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the AddressConfigurationInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          addressConfiguration_instance = AddressConfigurationInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          AddressConfigurationInstanceMetadata.new(@version, addressConfiguration_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -234,6 +344,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the AddressConfigurationInstanceMetadata
+                    # @return [AddressConfigurationInstance] Fetched AddressConfigurationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        address_configuration_instance = AddressConfigurationInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        AddressConfigurationInstanceMetadata.new(
+                            @version,
+                            address_configuration_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -287,6 +422,62 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the AddressConfigurationInstanceMetadata
+                    # @param [String] friendly_name The human-readable name of this configuration, limited to 256 characters. Optional.
+                    # @param [Boolean] auto_creation_enabled Enable/Disable auto-creating conversations for messages to this address
+                    # @param [AutoCreationType] auto_creation_type 
+                    # @param [String] auto_creation_conversation_service_sid Conversation Service for the auto-created conversation. If not set, the conversation is created in the default service.
+                    # @param [String] auto_creation_webhook_url For type `webhook`, the url for the webhook request.
+                    # @param [Method] auto_creation_webhook_method 
+                    # @param [Array[String]] auto_creation_webhook_filters The list of events, firing webhook event for this Conversation. Values can be any of the following: `onMessageAdded`, `onMessageUpdated`, `onMessageRemoved`, `onConversationUpdated`, `onConversationStateUpdated`, `onConversationRemoved`, `onParticipantAdded`, `onParticipantUpdated`, `onParticipantRemoved`, `onDeliveryUpdated`
+                    # @param [String] auto_creation_studio_flow_sid For type `studio`, the studio flow SID where the webhook should be sent to.
+                    # @param [String] auto_creation_studio_retry_count For type `studio`, number of times to retry the webhook request
+                    # @return [AddressConfigurationInstance] Updated AddressConfigurationInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      auto_creation_enabled: :unset, 
+                      auto_creation_type: :unset, 
+                      auto_creation_conversation_service_sid: :unset, 
+                      auto_creation_webhook_url: :unset, 
+                      auto_creation_webhook_method: :unset, 
+                      auto_creation_webhook_filters: :unset, 
+                      auto_creation_studio_flow_sid: :unset, 
+                      auto_creation_studio_retry_count: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'AutoCreation.Enabled' => auto_creation_enabled,
+                            'AutoCreation.Type' => auto_creation_type,
+                            'AutoCreation.ConversationServiceSid' => auto_creation_conversation_service_sid,
+                            'AutoCreation.WebhookUrl' => auto_creation_webhook_url,
+                            'AutoCreation.WebhookMethod' => auto_creation_webhook_method,
+                            'AutoCreation.WebhookFilters' => Twilio.serialize_list(auto_creation_webhook_filters) { |e| e },
+                            'AutoCreation.StudioFlowSid' => auto_creation_studio_flow_sid,
+                            'AutoCreation.StudioRetryCount' => auto_creation_studio_retry_count,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        address_configuration_instance = AddressConfigurationInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        AddressConfigurationInstanceMetadata.new(
+                            @version,
+                            address_configuration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -303,6 +494,53 @@ module Twilio
                     end
                 end
 
+                class AddressConfigurationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AddressConfigurationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AddressConfigurationInstance] address_configuration_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AddressConfigurationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, address_configuration_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @address_configuration_instance = address_configuration_instance
+                    end
+
+                    def address_configuration
+                        @address_configuration_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AddressConfigurationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AddressConfigurationListResponse < InstanceListResource
+                    # @param [Array<AddressConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @address_configuration_instance = payload.body[key].map do |data|
+                        AddressConfigurationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def address_configuration_instance
+                          @instance
+                      end
+                  end
+
                 class AddressConfigurationPage < Page
                     ##
                     # Initialize the AddressConfigurationPage
@@ -312,6 +550,7 @@ module Twilio
                     # @return [AddressConfigurationPage] AddressConfigurationPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -331,6 +570,66 @@ module Twilio
                         '<Twilio.Conversations.V1.AddressConfigurationPage>'
                     end
                 end
+
+                class AddressConfigurationPageMetadata < PageMetadata
+                    attr_reader :address_configuration_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @address_configuration_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @address_configuration_page << AddressConfigurationListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @address_configuration_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Conversations::V1PageMetadata>';
+                    end
+                end
+                class AddressConfigurationListResponse < InstanceListResource
+
+                    # @param [Array<AddressConfigurationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @address_configuration = data_list.map do |data|
+                        AddressConfigurationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def address_configuration
+                        @address_configuration
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class AddressConfigurationInstance < InstanceResource
                     ##
                     # Initialize the AddressConfigurationInstance
@@ -343,6 +642,7 @@ module Twilio
                     # @return [AddressConfigurationInstance] AddressConfigurationInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

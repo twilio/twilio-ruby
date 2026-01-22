@@ -27,6 +27,7 @@ module Twilio
                     # @return [BulkCountryUpdateList] BulkCountryUpdateList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/DialingPermissions/BulkCountryUpdates"
@@ -57,6 +58,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the BulkCountryUpdateInstanceMetadata
+                    # @param [String] update_request URL encoded JSON array of update objects. example : `[ { \\\"iso_code\\\": \\\"GB\\\", \\\"low_risk_numbers_enabled\\\": \\\"true\\\", \\\"high_risk_special_numbers_enabled\\\":\\\"true\\\", \\\"high_risk_tollfraud_numbers_enabled\\\": \\\"false\\\" } ]`
+                    # @return [BulkCountryUpdateInstance] Created BulkCountryUpdateInstance
+                    def create_with_metadata(
+                      update_request: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'UpdateRequest' => update_request,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        bulk_country_update_instance = BulkCountryUpdateInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        BulkCountryUpdateInstanceMetadata.new(
+                            @version,
+                            bulk_country_update_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -75,6 +107,7 @@ module Twilio
                     # @return [BulkCountryUpdatePage] BulkCountryUpdatePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -94,6 +127,66 @@ module Twilio
                         '<Twilio.Voice.V1.BulkCountryUpdatePage>'
                     end
                 end
+
+                class BulkCountryUpdatePageMetadata < PageMetadata
+                    attr_reader :bulk_country_update_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @bulk_country_update_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @bulk_country_update_page << BulkCountryUpdateListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @bulk_country_update_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Voice::V1PageMetadata>';
+                    end
+                end
+                class BulkCountryUpdateListResponse < InstanceListResource
+
+                    # @param [Array<BulkCountryUpdateInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @bulk_country_update = data_list.map do |data|
+                        BulkCountryUpdateInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def bulk_country_update
+                        @bulk_country_update
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class BulkCountryUpdateInstance < InstanceResource
                     ##
                     # Initialize the BulkCountryUpdateInstance
@@ -106,6 +199,7 @@ module Twilio
                     # @return [BulkCountryUpdateInstance] BulkCountryUpdateInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

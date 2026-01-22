@@ -27,6 +27,7 @@ module Twilio
                     # @return [CustomerProfilesEntityAssignmentsList] CustomerProfilesEntityAssignmentsList
                     def initialize(version, customer_profile_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { customer_profile_sid: customer_profile_sid }
                         @uri = "/CustomerProfiles/#{@solution[:customer_profile_sid]}/EntityAssignments"
@@ -55,6 +56,38 @@ module Twilio
                             @version,
                             payload,
                             customer_profile_sid: @solution[:customer_profile_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the CustomerProfilesEntityAssignmentsInstanceMetadata
+                    # @param [String] object_sid The SID of an object bag that holds information of the different items.
+                    # @return [CustomerProfilesEntityAssignmentsInstance] Created CustomerProfilesEntityAssignmentsInstance
+                    def create_with_metadata(
+                      object_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'ObjectSid' => object_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        customer_profiles_entity_assignments_instance = CustomerProfilesEntityAssignmentsInstance.new(
+                            @version,
+                            response.body,
+                            customer_profile_sid: @solution[:customer_profile_sid],
+                        )
+                        CustomerProfilesEntityAssignmentsInstanceMetadata.new(
+                            @version,
+                            customer_profiles_entity_assignments_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -102,6 +135,30 @@ module Twilio
                     end
 
                     ##
+                    # Lists CustomerProfilesEntityAssignmentsPageMetadata records from the API as a list.
+                      # @param [String] object_type A string to filter the results by (EndUserType or SupportingDocumentType) machine-name. This is useful when you want to retrieve the entity-assignment of a specific end-user or supporting document.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(object_type: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'ObjectType' => object_type,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CustomerProfilesEntityAssignmentsPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields CustomerProfilesEntityAssignmentsInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -123,7 +180,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of CustomerProfilesEntityAssignmentsInstance
-                    def page(object_type: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(object_type: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'ObjectType' => object_type,
                             'PageToken' => page_token,
@@ -170,6 +227,7 @@ module Twilio
                     # @return [CustomerProfilesEntityAssignmentsContext] CustomerProfilesEntityAssignmentsContext
                     def initialize(version, customer_profile_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { customer_profile_sid: customer_profile_sid, sid: sid,  }
@@ -186,7 +244,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the CustomerProfilesEntityAssignmentsInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          customerProfilesEntityAssignments_instance = CustomerProfilesEntityAssignmentsInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          CustomerProfilesEntityAssignmentsInstanceMetadata.new(@version, customerProfilesEntityAssignments_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -209,6 +287,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the CustomerProfilesEntityAssignmentsInstanceMetadata
+                    # @return [CustomerProfilesEntityAssignmentsInstance] Fetched CustomerProfilesEntityAssignmentsInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        customer_profiles_entity_assignments_instance = CustomerProfilesEntityAssignmentsInstance.new(
+                            @version,
+                            response.body,
+                            customer_profile_sid: @solution[:customer_profile_sid],
+                            sid: @solution[:sid],
+                        )
+                        CustomerProfilesEntityAssignmentsInstanceMetadata.new(
+                            @version,
+                            customer_profiles_entity_assignments_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -225,6 +329,53 @@ module Twilio
                     end
                 end
 
+                class CustomerProfilesEntityAssignmentsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CustomerProfilesEntityAssignmentsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CustomerProfilesEntityAssignmentsInstance] customer_profiles_entity_assignments_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CustomerProfilesEntityAssignmentsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, customer_profiles_entity_assignments_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @customer_profiles_entity_assignments_instance = customer_profiles_entity_assignments_instance
+                    end
+
+                    def customer_profiles_entity_assignments
+                        @customer_profiles_entity_assignments_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CustomerProfilesEntityAssignmentsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CustomerProfilesEntityAssignmentsListResponse < InstanceListResource
+                    # @param [Array<CustomerProfilesEntityAssignmentsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @customer_profiles_entity_assignments_instance = payload.body[key].map do |data|
+                        CustomerProfilesEntityAssignmentsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def customer_profiles_entity_assignments_instance
+                          @instance
+                      end
+                  end
+
                 class CustomerProfilesEntityAssignmentsPage < Page
                     ##
                     # Initialize the CustomerProfilesEntityAssignmentsPage
@@ -234,6 +385,7 @@ module Twilio
                     # @return [CustomerProfilesEntityAssignmentsPage] CustomerProfilesEntityAssignmentsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -253,6 +405,66 @@ module Twilio
                         '<Twilio.Trusthub.V1.CustomerProfilesEntityAssignmentsPage>'
                     end
                 end
+
+                class CustomerProfilesEntityAssignmentsPageMetadata < PageMetadata
+                    attr_reader :customer_profiles_entity_assignments_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @customer_profiles_entity_assignments_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @customer_profiles_entity_assignments_page << CustomerProfilesEntityAssignmentsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @customer_profiles_entity_assignments_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Trusthub::V1PageMetadata>';
+                    end
+                end
+                class CustomerProfilesEntityAssignmentsListResponse < InstanceListResource
+
+                    # @param [Array<CustomerProfilesEntityAssignmentsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @customer_profiles_entity_assignments = data_list.map do |data|
+                        CustomerProfilesEntityAssignmentsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def customer_profiles_entity_assignments
+                        @customer_profiles_entity_assignments
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class CustomerProfilesEntityAssignmentsInstance < InstanceResource
                     ##
                     # Initialize the CustomerProfilesEntityAssignmentsInstance
@@ -265,6 +477,7 @@ module Twilio
                     # @return [CustomerProfilesEntityAssignmentsInstance] CustomerProfilesEntityAssignmentsInstance
                     def initialize(version, payload , customer_profile_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

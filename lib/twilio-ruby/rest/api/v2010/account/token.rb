@@ -27,6 +27,7 @@ module Twilio
                     # @return [TokenList] TokenList
                     def initialize(version, account_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Tokens.json"
@@ -58,6 +59,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the TokenInstanceMetadata
+                    # @param [String] ttl The duration in seconds for which the generated credentials are valid. The default value is 86400 (24 hours).
+                    # @return [TokenInstance] Created TokenInstance
+                    def create_with_metadata(
+                      ttl: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Ttl' => ttl,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        token_instance = TokenInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                        )
+                        TokenInstanceMetadata.new(
+                            @version,
+                            token_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -76,6 +109,7 @@ module Twilio
                     # @return [TokenPage] TokenPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -95,6 +129,66 @@ module Twilio
                         '<Twilio.Api.V2010.TokenPage>'
                     end
                 end
+
+                class TokenPageMetadata < PageMetadata
+                    attr_reader :token_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @token_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @token_page << TokenListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @token_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class TokenListResponse < InstanceListResource
+
+                    # @param [Array<TokenInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @token = data_list.map do |data|
+                        TokenInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def token
+                        @token
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class TokenInstance < InstanceResource
                     ##
                     # Initialize the TokenInstance
@@ -107,6 +201,7 @@ module Twilio
                     # @return [TokenInstance] TokenInstance
                     def initialize(version, payload , account_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

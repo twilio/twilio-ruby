@@ -27,6 +27,7 @@ module Twilio
                     # @return [ApprovalFetchList] ApprovalFetchList
                     def initialize(version, sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { sid: sid }
                         
@@ -50,6 +51,7 @@ module Twilio
                     # @return [ApprovalFetchContext] ApprovalFetchContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -76,6 +78,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the ApprovalFetchInstanceMetadata
+                    # @return [ApprovalFetchInstance] Fetched ApprovalFetchInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        approval_fetch_instance = ApprovalFetchInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ApprovalFetchInstanceMetadata.new(
+                            @version,
+                            approval_fetch_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -92,6 +119,53 @@ module Twilio
                     end
                 end
 
+                class ApprovalFetchInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ApprovalFetchInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ApprovalFetchInstance] approval_fetch_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ApprovalFetchInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, approval_fetch_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @approval_fetch_instance = approval_fetch_instance
+                    end
+
+                    def approval_fetch
+                        @approval_fetch_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ApprovalFetchInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ApprovalFetchListResponse < InstanceListResource
+                    # @param [Array<ApprovalFetchInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @approval_fetch_instance = payload.body[key].map do |data|
+                        ApprovalFetchInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def approval_fetch_instance
+                          @instance
+                      end
+                  end
+
                 class ApprovalFetchPage < Page
                     ##
                     # Initialize the ApprovalFetchPage
@@ -101,6 +175,7 @@ module Twilio
                     # @return [ApprovalFetchPage] ApprovalFetchPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -120,6 +195,66 @@ module Twilio
                         '<Twilio.Content.V1.ApprovalFetchPage>'
                     end
                 end
+
+                class ApprovalFetchPageMetadata < PageMetadata
+                    attr_reader :approval_fetch_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @approval_fetch_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @approval_fetch_page << ApprovalFetchListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @approval_fetch_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Content::V1PageMetadata>';
+                    end
+                end
+                class ApprovalFetchListResponse < InstanceListResource
+
+                    # @param [Array<ApprovalFetchInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @approval_fetch = data_list.map do |data|
+                        ApprovalFetchInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def approval_fetch
+                        @approval_fetch
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ApprovalFetchInstance < InstanceResource
                     ##
                     # Initialize the ApprovalFetchInstance
@@ -132,6 +267,7 @@ module Twilio
                     # @return [ApprovalFetchInstance] ApprovalFetchInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

@@ -25,6 +25,7 @@ module Twilio
                     # @return [ServiceList] ServiceList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Services"
@@ -94,6 +95,76 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ServiceInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [String] apn_credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) to use for APN Bindings.
+                    # @param [String] gcm_credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) to use for GCM Bindings.
+                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/sms/quickstart#messaging-services) to use for SMS Bindings. This parameter must be set in order to send SMS notifications.
+                    # @param [String] facebook_messenger_page_id Deprecated.
+                    # @param [String] default_apn_notification_protocol_version The protocol version to use for sending APNS notifications. Can be overridden on a Binding by Binding basis when creating a [Binding](https://www.twilio.com/docs/notify/api/binding-resource) resource.
+                    # @param [String] default_gcm_notification_protocol_version The protocol version to use for sending GCM notifications. Can be overridden on a Binding by Binding basis when creating a [Binding](https://www.twilio.com/docs/notify/api/binding-resource) resource.
+                    # @param [String] fcm_credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) to use for FCM Bindings.
+                    # @param [String] default_fcm_notification_protocol_version The protocol version to use for sending FCM notifications. Can be overridden on a Binding by Binding basis when creating a [Binding](https://www.twilio.com/docs/notify/api/binding-resource) resource.
+                    # @param [Boolean] log_enabled Whether to log notifications. Can be: `true` or `false` and the default is `true`.
+                    # @param [String] alexa_skill_id Deprecated.
+                    # @param [String] default_alexa_notification_protocol_version Deprecated.
+                    # @param [String] delivery_callback_url URL to send delivery status callback.
+                    # @param [Boolean] delivery_callback_enabled Callback configuration that enables delivery callbacks, default false
+                    # @return [ServiceInstance] Created ServiceInstance
+                    def create_with_metadata(
+                      friendly_name: :unset, 
+                      apn_credential_sid: :unset, 
+                      gcm_credential_sid: :unset, 
+                      messaging_service_sid: :unset, 
+                      facebook_messenger_page_id: :unset, 
+                      default_apn_notification_protocol_version: :unset, 
+                      default_gcm_notification_protocol_version: :unset, 
+                      fcm_credential_sid: :unset, 
+                      default_fcm_notification_protocol_version: :unset, 
+                      log_enabled: :unset, 
+                      alexa_skill_id: :unset, 
+                      default_alexa_notification_protocol_version: :unset, 
+                      delivery_callback_url: :unset, 
+                      delivery_callback_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'ApnCredentialSid' => apn_credential_sid,
+                            'GcmCredentialSid' => gcm_credential_sid,
+                            'MessagingServiceSid' => messaging_service_sid,
+                            'FacebookMessengerPageId' => facebook_messenger_page_id,
+                            'DefaultApnNotificationProtocolVersion' => default_apn_notification_protocol_version,
+                            'DefaultGcmNotificationProtocolVersion' => default_gcm_notification_protocol_version,
+                            'FcmCredentialSid' => fcm_credential_sid,
+                            'DefaultFcmNotificationProtocolVersion' => default_fcm_notification_protocol_version,
+                            'LogEnabled' => log_enabled,
+                            'AlexaSkillId' => alexa_skill_id,
+                            'DefaultAlexaNotificationProtocolVersion' => default_alexa_notification_protocol_version,
+                            'DeliveryCallbackUrl' => delivery_callback_url,
+                            'DeliveryCallbackEnabled' => delivery_callback_enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ServiceInstance records from the API as a list.
@@ -138,6 +209,30 @@ module Twilio
                     end
 
                     ##
+                    # Lists ServicePageMetadata records from the API as a list.
+                      # @param [String] friendly_name The string that identifies the Service resources to read.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(friendly_name: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ServicePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ServiceInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -159,7 +254,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ServiceInstance
-                    def page(friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(friendly_name: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'FriendlyName' => friendly_name,
                             'PageToken' => page_token,
@@ -205,6 +300,7 @@ module Twilio
                     # @return [ServiceContext] ServiceContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -223,7 +319,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ServiceInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          service_instance = ServiceInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ServiceInstanceMetadata.new(@version, service_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -242,6 +358,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ServiceInstanceMetadata
+                    # @return [ServiceInstance] Fetched ServiceInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -311,6 +452,77 @@ module Twilio
                     end
 
                     ##
+                    # Update the ServiceInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @param [String] apn_credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) to use for APN Bindings.
+                    # @param [String] gcm_credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) to use for GCM Bindings.
+                    # @param [String] messaging_service_sid The SID of the [Messaging Service](https://www.twilio.com/docs/sms/quickstart#messaging-services) to use for SMS Bindings. This parameter must be set in order to send SMS notifications.
+                    # @param [String] facebook_messenger_page_id Deprecated.
+                    # @param [String] default_apn_notification_protocol_version The protocol version to use for sending APNS notifications. Can be overridden on a Binding by Binding basis when creating a [Binding](https://www.twilio.com/docs/notify/api/binding-resource) resource.
+                    # @param [String] default_gcm_notification_protocol_version The protocol version to use for sending GCM notifications. Can be overridden on a Binding by Binding basis when creating a [Binding](https://www.twilio.com/docs/notify/api/binding-resource) resource.
+                    # @param [String] fcm_credential_sid The SID of the [Credential](https://www.twilio.com/docs/notify/api/credential-resource) to use for FCM Bindings.
+                    # @param [String] default_fcm_notification_protocol_version The protocol version to use for sending FCM notifications. Can be overridden on a Binding by Binding basis when creating a [Binding](https://www.twilio.com/docs/notify/api/binding-resource) resource.
+                    # @param [Boolean] log_enabled Whether to log notifications. Can be: `true` or `false` and the default is `true`.
+                    # @param [String] alexa_skill_id Deprecated.
+                    # @param [String] default_alexa_notification_protocol_version Deprecated.
+                    # @param [String] delivery_callback_url URL to send delivery status callback.
+                    # @param [Boolean] delivery_callback_enabled Callback configuration that enables delivery callbacks, default false
+                    # @return [ServiceInstance] Updated ServiceInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      apn_credential_sid: :unset, 
+                      gcm_credential_sid: :unset, 
+                      messaging_service_sid: :unset, 
+                      facebook_messenger_page_id: :unset, 
+                      default_apn_notification_protocol_version: :unset, 
+                      default_gcm_notification_protocol_version: :unset, 
+                      fcm_credential_sid: :unset, 
+                      default_fcm_notification_protocol_version: :unset, 
+                      log_enabled: :unset, 
+                      alexa_skill_id: :unset, 
+                      default_alexa_notification_protocol_version: :unset, 
+                      delivery_callback_url: :unset, 
+                      delivery_callback_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'ApnCredentialSid' => apn_credential_sid,
+                            'GcmCredentialSid' => gcm_credential_sid,
+                            'MessagingServiceSid' => messaging_service_sid,
+                            'FacebookMessengerPageId' => facebook_messenger_page_id,
+                            'DefaultApnNotificationProtocolVersion' => default_apn_notification_protocol_version,
+                            'DefaultGcmNotificationProtocolVersion' => default_gcm_notification_protocol_version,
+                            'FcmCredentialSid' => fcm_credential_sid,
+                            'DefaultFcmNotificationProtocolVersion' => default_fcm_notification_protocol_version,
+                            'LogEnabled' => log_enabled,
+                            'AlexaSkillId' => alexa_skill_id,
+                            'DefaultAlexaNotificationProtocolVersion' => default_alexa_notification_protocol_version,
+                            'DeliveryCallbackUrl' => delivery_callback_url,
+                            'DeliveryCallbackEnabled' => delivery_callback_enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        service_instance = ServiceInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ServiceInstanceMetadata.new(
+                            @version,
+                            service_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the notifications
                     # @return [NotificationList]
                     # @return [NotificationContext]
@@ -356,6 +568,53 @@ module Twilio
                     end
                 end
 
+                class ServiceInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ServiceInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ServiceInstance] service_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ServiceInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, service_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @service_instance = service_instance
+                    end
+
+                    def service
+                        @service_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ServiceInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ServiceListResponse < InstanceListResource
+                    # @param [Array<ServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @service_instance = payload.body[key].map do |data|
+                        ServiceInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def service_instance
+                          @instance
+                      end
+                  end
+
                 class ServicePage < Page
                     ##
                     # Initialize the ServicePage
@@ -365,6 +624,7 @@ module Twilio
                     # @return [ServicePage] ServicePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -384,6 +644,66 @@ module Twilio
                         '<Twilio.Notify.V1.ServicePage>'
                     end
                 end
+
+                class ServicePageMetadata < PageMetadata
+                    attr_reader :service_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @service_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @service_page << ServiceListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @service_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Notify::V1PageMetadata>';
+                    end
+                end
+                class ServiceListResponse < InstanceListResource
+
+                    # @param [Array<ServiceInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @service = data_list.map do |data|
+                        ServiceInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def service
+                        @service
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ServiceInstance < InstanceResource
                     ##
                     # Initialize the ServiceInstance
@@ -396,6 +716,7 @@ module Twilio
                     # @return [ServiceInstance] ServiceInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

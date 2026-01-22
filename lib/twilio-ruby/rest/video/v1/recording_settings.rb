@@ -25,6 +25,7 @@ module Twilio
                     # @return [RecordingSettingsList] RecordingSettingsList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -47,6 +48,7 @@ module Twilio
                     # @return [RecordingSettingsContext] RecordingSettingsContext
                     def initialize(version)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = {  }
@@ -95,6 +97,52 @@ module Twilio
                     end
 
                     ##
+                    # Create the RecordingSettingsInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource and be shown to users in the console
+                    # @param [String] aws_credentials_sid The SID of the stored Credential resource.
+                    # @param [String] encryption_key_sid The SID of the Public Key resource to use for encryption.
+                    # @param [String] aws_s3_url The URL of the AWS S3 bucket where the recordings should be stored. We only support DNS-compliant URLs like `https://documentation-example-twilio-bucket/recordings`, where `recordings` is the path in which you want the recordings to be stored. This URL accepts only URI-valid characters, as described in the [RFC 3986](https://tools.ietf.org/html/rfc3986#section-2).
+                    # @param [Boolean] aws_storage_enabled Whether all recordings should be written to the `aws_s3_url`. When `false`, all recordings are stored in our cloud.
+                    # @param [Boolean] encryption_enabled Whether all recordings should be stored in an encrypted form. The default is `false`.
+                    # @return [RecordingSettingsInstance] Created RecordingSettingsInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      aws_credentials_sid: :unset, 
+                      encryption_key_sid: :unset, 
+                      aws_s3_url: :unset, 
+                      aws_storage_enabled: :unset, 
+                      encryption_enabled: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'AwsCredentialsSid' => aws_credentials_sid,
+                            'EncryptionKeySid' => encryption_key_sid,
+                            'AwsS3Url' => aws_s3_url,
+                            'AwsStorageEnabled' => aws_storage_enabled,
+                            'EncryptionEnabled' => encryption_enabled,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        recording_settings_instance = RecordingSettingsInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        RecordingSettingsInstanceMetadata.new(
+                            @version,
+                            recording_settings_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Fetch the RecordingSettingsInstance
                     # @return [RecordingSettingsInstance] Fetched RecordingSettingsInstance
                     def fetch
@@ -109,6 +157,30 @@ module Twilio
                         RecordingSettingsInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Fetch the RecordingSettingsInstanceMetadata
+                    # @return [RecordingSettingsInstance] Fetched RecordingSettingsInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        recording_settings_instance = RecordingSettingsInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        RecordingSettingsInstanceMetadata.new(
+                            @version,
+                            recording_settings_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -128,6 +200,53 @@ module Twilio
                     end
                 end
 
+                class RecordingSettingsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new RecordingSettingsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}RecordingSettingsInstance] recording_settings_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [RecordingSettingsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, recording_settings_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @recording_settings_instance = recording_settings_instance
+                    end
+
+                    def recording_settings
+                        @recording_settings_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.RecordingSettingsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class RecordingSettingsListResponse < InstanceListResource
+                    # @param [Array<RecordingSettingsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @recording_settings_instance = payload.body[key].map do |data|
+                        RecordingSettingsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def recording_settings_instance
+                          @instance
+                      end
+                  end
+
                 class RecordingSettingsPage < Page
                     ##
                     # Initialize the RecordingSettingsPage
@@ -137,6 +256,7 @@ module Twilio
                     # @return [RecordingSettingsPage] RecordingSettingsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -156,6 +276,66 @@ module Twilio
                         '<Twilio.Video.V1.RecordingSettingsPage>'
                     end
                 end
+
+                class RecordingSettingsPageMetadata < PageMetadata
+                    attr_reader :recording_settings_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @recording_settings_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @recording_settings_page << RecordingSettingsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @recording_settings_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Video::V1PageMetadata>';
+                    end
+                end
+                class RecordingSettingsListResponse < InstanceListResource
+
+                    # @param [Array<RecordingSettingsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @recording_settings = data_list.map do |data|
+                        RecordingSettingsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def recording_settings
+                        @recording_settings
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class RecordingSettingsInstance < InstanceResource
                     ##
                     # Initialize the RecordingSettingsInstance
@@ -168,6 +348,7 @@ module Twilio
                     # @return [RecordingSettingsInstance] RecordingSettingsInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

@@ -25,6 +25,7 @@ module Twilio
                     # @return [RequestManagedCertList] RequestManagedCertList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -48,6 +49,7 @@ module Twilio
                     # @return [RequestManagedCertContext] RequestManagedCertContext
                     def initialize(version, domain_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { domain_sid: domain_sid,  }
@@ -74,6 +76,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the RequestManagedCertInstanceMetadata
+                    # @return [RequestManagedCertInstance] Updated RequestManagedCertInstance
+                    def update_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, headers: headers)
+                        request_managed_cert_instance = RequestManagedCertInstance.new(
+                            @version,
+                            response.body,
+                            domain_sid: @solution[:domain_sid],
+                        )
+                        RequestManagedCertInstanceMetadata.new(
+                            @version,
+                            request_managed_cert_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -90,6 +117,53 @@ module Twilio
                     end
                 end
 
+                class RequestManagedCertInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new RequestManagedCertInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}RequestManagedCertInstance] request_managed_cert_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [RequestManagedCertInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, request_managed_cert_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @request_managed_cert_instance = request_managed_cert_instance
+                    end
+
+                    def request_managed_cert
+                        @request_managed_cert_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.RequestManagedCertInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class RequestManagedCertListResponse < InstanceListResource
+                    # @param [Array<RequestManagedCertInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @request_managed_cert_instance = payload.body[key].map do |data|
+                        RequestManagedCertInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def request_managed_cert_instance
+                          @instance
+                      end
+                  end
+
                 class RequestManagedCertPage < Page
                     ##
                     # Initialize the RequestManagedCertPage
@@ -99,6 +173,7 @@ module Twilio
                     # @return [RequestManagedCertPage] RequestManagedCertPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -118,6 +193,66 @@ module Twilio
                         '<Twilio.Messaging.V1.RequestManagedCertPage>'
                     end
                 end
+
+                class RequestManagedCertPageMetadata < PageMetadata
+                    attr_reader :request_managed_cert_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @request_managed_cert_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @request_managed_cert_page << RequestManagedCertListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @request_managed_cert_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class RequestManagedCertListResponse < InstanceListResource
+
+                    # @param [Array<RequestManagedCertInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @request_managed_cert = data_list.map do |data|
+                        RequestManagedCertInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def request_managed_cert
+                        @request_managed_cert
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class RequestManagedCertInstance < InstanceResource
                     ##
                     # Initialize the RequestManagedCertInstance
@@ -130,6 +265,7 @@ module Twilio
                     # @return [RequestManagedCertInstance] RequestManagedCertInstance
                     def initialize(version, payload , domain_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

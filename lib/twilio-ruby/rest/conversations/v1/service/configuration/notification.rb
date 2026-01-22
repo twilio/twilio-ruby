@@ -28,6 +28,7 @@ module Twilio
                     # @return [NotificationList] NotificationList
                     def initialize(version, chat_service_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { chat_service_sid: chat_service_sid }
                         
@@ -51,6 +52,7 @@ module Twilio
                     # @return [NotificationContext] NotificationContext
                     def initialize(version, chat_service_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { chat_service_sid: chat_service_sid,  }
@@ -74,6 +76,31 @@ module Twilio
                             @version,
                             payload,
                             chat_service_sid: @solution[:chat_service_sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the NotificationInstanceMetadata
+                    # @return [NotificationInstance] Fetched NotificationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        notification_instance = NotificationInstance.new(
+                            @version,
+                            response.body,
+                            chat_service_sid: @solution[:chat_service_sid],
+                        )
+                        NotificationInstanceMetadata.new(
+                            @version,
+                            notification_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -139,6 +166,74 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the NotificationInstanceMetadata
+                    # @param [Boolean] log_enabled Weather the notification logging is enabled.
+                    # @param [Boolean] new_message_enabled Whether to send a notification when a new message is added to a conversation. The default is `false`.
+                    # @param [String] new_message_template The template to use to create the notification text displayed when a new message is added to a conversation and `new_message.enabled` is `true`.
+                    # @param [String] new_message_sound The name of the sound to play when a new message is added to a conversation and `new_message.enabled` is `true`.
+                    # @param [Boolean] new_message_badge_count_enabled Whether the new message badge is enabled. The default is `false`.
+                    # @param [Boolean] added_to_conversation_enabled Whether to send a notification when a participant is added to a conversation. The default is `false`.
+                    # @param [String] added_to_conversation_template The template to use to create the notification text displayed when a participant is added to a conversation and `added_to_conversation.enabled` is `true`.
+                    # @param [String] added_to_conversation_sound The name of the sound to play when a participant is added to a conversation and `added_to_conversation.enabled` is `true`.
+                    # @param [Boolean] removed_from_conversation_enabled Whether to send a notification to a user when they are removed from a conversation. The default is `false`.
+                    # @param [String] removed_from_conversation_template The template to use to create the notification text displayed to a user when they are removed from a conversation and `removed_from_conversation.enabled` is `true`.
+                    # @param [String] removed_from_conversation_sound The name of the sound to play to a user when they are removed from a conversation and `removed_from_conversation.enabled` is `true`.
+                    # @param [Boolean] new_message_with_media_enabled Whether to send a notification when a new message with media/file attachments is added to a conversation. The default is `false`.
+                    # @param [String] new_message_with_media_template The template to use to create the notification text displayed when a new message with media/file attachments is added to a conversation and `new_message.attachments.enabled` is `true`.
+                    # @return [NotificationInstance] Updated NotificationInstance
+                    def update_with_metadata(
+                      log_enabled: :unset, 
+                      new_message_enabled: :unset, 
+                      new_message_template: :unset, 
+                      new_message_sound: :unset, 
+                      new_message_badge_count_enabled: :unset, 
+                      added_to_conversation_enabled: :unset, 
+                      added_to_conversation_template: :unset, 
+                      added_to_conversation_sound: :unset, 
+                      removed_from_conversation_enabled: :unset, 
+                      removed_from_conversation_template: :unset, 
+                      removed_from_conversation_sound: :unset, 
+                      new_message_with_media_enabled: :unset, 
+                      new_message_with_media_template: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'LogEnabled' => log_enabled,
+                            'NewMessage.Enabled' => new_message_enabled,
+                            'NewMessage.Template' => new_message_template,
+                            'NewMessage.Sound' => new_message_sound,
+                            'NewMessage.BadgeCountEnabled' => new_message_badge_count_enabled,
+                            'AddedToConversation.Enabled' => added_to_conversation_enabled,
+                            'AddedToConversation.Template' => added_to_conversation_template,
+                            'AddedToConversation.Sound' => added_to_conversation_sound,
+                            'RemovedFromConversation.Enabled' => removed_from_conversation_enabled,
+                            'RemovedFromConversation.Template' => removed_from_conversation_template,
+                            'RemovedFromConversation.Sound' => removed_from_conversation_sound,
+                            'NewMessage.WithMedia.Enabled' => new_message_with_media_enabled,
+                            'NewMessage.WithMedia.Template' => new_message_with_media_template,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        notification_instance = NotificationInstance.new(
+                            @version,
+                            response.body,
+                            chat_service_sid: @solution[:chat_service_sid],
+                        )
+                        NotificationInstanceMetadata.new(
+                            @version,
+                            notification_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -155,6 +250,53 @@ module Twilio
                     end
                 end
 
+                class NotificationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new NotificationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}NotificationInstance] notification_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [NotificationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, notification_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @notification_instance = notification_instance
+                    end
+
+                    def notification
+                        @notification_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.NotificationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class NotificationListResponse < InstanceListResource
+                    # @param [Array<NotificationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @notification_instance = payload.body[key].map do |data|
+                        NotificationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def notification_instance
+                          @instance
+                      end
+                  end
+
                 class NotificationPage < Page
                     ##
                     # Initialize the NotificationPage
@@ -164,6 +306,7 @@ module Twilio
                     # @return [NotificationPage] NotificationPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -183,6 +326,66 @@ module Twilio
                         '<Twilio.Conversations.V1.NotificationPage>'
                     end
                 end
+
+                class NotificationPageMetadata < PageMetadata
+                    attr_reader :notification_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @notification_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @notification_page << NotificationListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @notification_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Conversations::V1PageMetadata>';
+                    end
+                end
+                class NotificationListResponse < InstanceListResource
+
+                    # @param [Array<NotificationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @notification = data_list.map do |data|
+                        NotificationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def notification
+                        @notification
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class NotificationInstance < InstanceResource
                     ##
                     # Initialize the NotificationInstance
@@ -195,6 +398,7 @@ module Twilio
                     # @return [NotificationInstance] NotificationInstance
                     def initialize(version, payload , chat_service_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

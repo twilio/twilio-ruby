@@ -74,6 +74,7 @@ module Twilio
                     # @return [ApplicationList] ApplicationList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/ShortCodes/Applications"
@@ -96,6 +97,32 @@ module Twilio
                         ApplicationInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the ApplicationInstanceMetadata
+                    # @param [CreateShortCodeApplicationRequest] create_short_code_application_request 
+                    # @return [ApplicationInstance] Created ApplicationInstance
+                    def create_with_metadata(create_short_code_application_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: create_short_code_application_request.to_json)
+                        application_instance = ApplicationInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ApplicationInstanceMetadata.new(
+                            @version,
+                            application_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -139,6 +166,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists ApplicationPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ApplicationPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ApplicationInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -159,7 +208,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ApplicationInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -204,6 +253,7 @@ module Twilio
                     # @return [ApplicationContext] ApplicationContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -230,6 +280,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the ApplicationInstanceMetadata
+                    # @return [ApplicationInstance] Fetched ApplicationInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        application_instance = ApplicationInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ApplicationInstanceMetadata.new(
+                            @version,
+                            application_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -246,6 +321,53 @@ module Twilio
                     end
                 end
 
+                class ApplicationInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ApplicationInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ApplicationInstance] application_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ApplicationInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, application_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @application_instance = application_instance
+                    end
+
+                    def application
+                        @application_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ApplicationInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ApplicationListResponse < InstanceListResource
+                    # @param [Array<ApplicationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @application_instance = payload.body[key].map do |data|
+                        ApplicationInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def application_instance
+                          @instance
+                      end
+                  end
+
                 class ApplicationPage < Page
                     ##
                     # Initialize the ApplicationPage
@@ -255,6 +377,7 @@ module Twilio
                     # @return [ApplicationPage] ApplicationPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -274,6 +397,66 @@ module Twilio
                         '<Twilio.Numbers.V2.ApplicationPage>'
                     end
                 end
+
+                class ApplicationPageMetadata < PageMetadata
+                    attr_reader :application_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @application_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @application_page << ApplicationListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @application_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V2PageMetadata>';
+                    end
+                end
+                class ApplicationListResponse < InstanceListResource
+
+                    # @param [Array<ApplicationInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @application = data_list.map do |data|
+                        ApplicationInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def application
+                        @application
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ApplicationInstance < InstanceResource
                     ##
                     # Initialize the ApplicationInstance
@@ -286,6 +469,7 @@ module Twilio
                     # @return [ApplicationInstance] ApplicationInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

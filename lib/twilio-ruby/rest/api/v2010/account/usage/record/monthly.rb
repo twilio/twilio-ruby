@@ -29,6 +29,7 @@ module Twilio
                     # @return [MonthlyList] MonthlyList
                     def initialize(version, account_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Usage/Records/Monthly.json"
@@ -90,6 +91,36 @@ module Twilio
                     end
 
                     ##
+                    # Lists MonthlyPageMetadata records from the API as a list.
+                      # @param [String] category The [usage category](https://www.twilio.com/docs/usage/api/usage-record#usage-categories) of the UsageRecord resources to read. Only UsageRecord resources in the specified category are retrieved.
+                      # @param [Date] start_date Only include usage that has occurred on or after this date. Specify the date in GMT and format as `YYYY-MM-DD`. You can also specify offsets from the current date, such as: `-30days`, which will set the start date to be 30 days before the current date.
+                      # @param [Date] end_date Only include usage that occurred on or before this date. Specify the date in GMT and format as `YYYY-MM-DD`.  You can also specify offsets from the current date, such as: `+30days`, which will set the end date to 30 days from the current date.
+                      # @param [Boolean] include_subaccounts Whether to include usage from the master account and all its subaccounts. Can be: `true` (the default) to include usage from the master account and all subaccounts or `false` to retrieve usage from only the specified account.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(category: :unset, start_date: :unset, end_date: :unset, include_subaccounts: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Category' => category,
+                            'StartDate' =>  Twilio.serialize_iso8601_date(start_date),
+                            'EndDate' =>  Twilio.serialize_iso8601_date(end_date),
+                            'IncludeSubaccounts' => include_subaccounts,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        MonthlyPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields MonthlyInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -114,7 +145,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of MonthlyInstance
-                    def page(category: :unset, start_date: :unset, end_date: :unset, include_subaccounts: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(category: :unset, start_date: :unset, end_date: :unset, include_subaccounts: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Category' => category,
                             'StartDate' =>  Twilio.serialize_iso8601_date(start_date),
@@ -163,6 +194,7 @@ module Twilio
                     # @return [MonthlyPage] MonthlyPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -182,6 +214,66 @@ module Twilio
                         '<Twilio.Api.V2010.MonthlyPage>'
                     end
                 end
+
+                class MonthlyPageMetadata < PageMetadata
+                    attr_reader :monthly_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @monthly_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @monthly_page << MonthlyListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @monthly_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class MonthlyListResponse < InstanceListResource
+
+                    # @param [Array<MonthlyInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @monthly = data_list.map do |data|
+                        MonthlyInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def monthly
+                        @monthly
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class MonthlyInstance < InstanceResource
                     ##
                     # Initialize the MonthlyInstance
@@ -194,6 +286,7 @@ module Twilio
                     # @return [MonthlyInstance] MonthlyInstance
                     def initialize(version, payload , account_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

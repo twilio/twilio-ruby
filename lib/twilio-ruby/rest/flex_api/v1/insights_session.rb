@@ -25,6 +25,7 @@ module Twilio
                     # @return [InsightsSessionList] InsightsSessionList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -47,6 +48,7 @@ module Twilio
                     # @return [InsightsSessionContext] InsightsSessionContext
                     def initialize(version)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = {  }
@@ -75,6 +77,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the InsightsSessionInstanceMetadata
+                    # @param [String] authorization The Authorization HTTP request header
+                    # @return [InsightsSessionInstance] Created InsightsSessionInstance
+                    def create_with_metadata(
+                      authorization: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers)
+                        insights_session_instance = InsightsSessionInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        InsightsSessionInstanceMetadata.new(
+                            @version,
+                            insights_session_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -91,6 +120,53 @@ module Twilio
                     end
                 end
 
+                class InsightsSessionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new InsightsSessionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}InsightsSessionInstance] insights_session_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [InsightsSessionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, insights_session_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @insights_session_instance = insights_session_instance
+                    end
+
+                    def insights_session
+                        @insights_session_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.InsightsSessionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class InsightsSessionListResponse < InstanceListResource
+                    # @param [Array<InsightsSessionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @insights_session_instance = payload.body[key].map do |data|
+                        InsightsSessionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def insights_session_instance
+                          @instance
+                      end
+                  end
+
                 class InsightsSessionPage < Page
                     ##
                     # Initialize the InsightsSessionPage
@@ -100,6 +176,7 @@ module Twilio
                     # @return [InsightsSessionPage] InsightsSessionPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -119,6 +196,66 @@ module Twilio
                         '<Twilio.FlexApi.V1.InsightsSessionPage>'
                     end
                 end
+
+                class InsightsSessionPageMetadata < PageMetadata
+                    attr_reader :insights_session_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @insights_session_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @insights_session_page << InsightsSessionListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @insights_session_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InsightsSessionListResponse < InstanceListResource
+
+                    # @param [Array<InsightsSessionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @insights_session = data_list.map do |data|
+                        InsightsSessionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def insights_session
+                        @insights_session
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class InsightsSessionInstance < InstanceResource
                     ##
                     # Initialize the InsightsSessionInstance
@@ -131,6 +268,7 @@ module Twilio
                     # @return [InsightsSessionInstance] InsightsSessionInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

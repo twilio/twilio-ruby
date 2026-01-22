@@ -25,6 +25,7 @@ module Twilio
                     # @return [AuthorizeList] AuthorizeList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/authorize"
@@ -66,6 +67,48 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the AuthorizeInstanceMetadata
+                    # @param [String] response_type Response Type
+                    # @param [String] client_id The Client Identifier
+                    # @param [String] redirect_uri The url to which response will be redirected to
+                    # @param [String] scope The scope of the access request
+                    # @param [String] state An opaque value which can be used to maintain state between the request and callback
+                    # @return [AuthorizeInstance] Fetched AuthorizeInstance
+                    def fetch_with_metadata(
+                      response_type: :unset, 
+                      client_id: :unset, 
+                      redirect_uri: :unset, 
+                      scope: :unset, 
+                      state: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'ResponseType' => response_type,
+                            'ClientId' => client_id,
+                            'RedirectUri' => redirect_uri,
+                            'Scope' => scope,
+                            'State' => state,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        authorize_instance = AuthorizeInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        AuthorizeInstanceMetadata.new(
+                            @version,
+                            authorize_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -84,6 +127,7 @@ module Twilio
                     # @return [AuthorizePage] AuthorizePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -103,6 +147,66 @@ module Twilio
                         '<Twilio.Oauth.V1.AuthorizePage>'
                     end
                 end
+
+                class AuthorizePageMetadata < PageMetadata
+                    attr_reader :authorize_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @authorize_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @authorize_page << AuthorizeListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @authorize_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Oauth::V1PageMetadata>';
+                    end
+                end
+                class AuthorizeListResponse < InstanceListResource
+
+                    # @param [Array<AuthorizeInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @authorize = data_list.map do |data|
+                        AuthorizeInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def authorize
+                        @authorize
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class AuthorizeInstance < InstanceResource
                     ##
                     # Initialize the AuthorizeInstance
@@ -115,6 +219,7 @@ module Twilio
                     # @return [AuthorizeInstance] AuthorizeInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

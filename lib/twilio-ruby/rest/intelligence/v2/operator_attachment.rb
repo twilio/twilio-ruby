@@ -25,6 +25,7 @@ module Twilio
                     # @return [OperatorAttachmentList] OperatorAttachmentList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -49,6 +50,7 @@ module Twilio
                     # @return [OperatorAttachmentContext] OperatorAttachmentContext
                     def initialize(version, service_sid, operator_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { service_sid: service_sid, operator_sid: operator_sid,  }
@@ -77,6 +79,32 @@ module Twilio
                     end
 
                     ##
+                    # Create the OperatorAttachmentInstanceMetadata
+                    # @return [OperatorAttachmentInstance] Created OperatorAttachmentInstance
+                    def create_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers)
+                        operator_attachment_instance = OperatorAttachmentInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                            operator_sid: @solution[:operator_sid],
+                        )
+                        OperatorAttachmentInstanceMetadata.new(
+                            @version,
+                            operator_attachment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Delete the OperatorAttachmentInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
@@ -85,7 +113,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the OperatorAttachmentInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          operatorAttachment_instance = OperatorAttachmentInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          OperatorAttachmentInstanceMetadata.new(@version, operatorAttachment_instance, response.headers, response.status_code)
                     end
 
 
@@ -104,6 +152,53 @@ module Twilio
                     end
                 end
 
+                class OperatorAttachmentInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new OperatorAttachmentInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}OperatorAttachmentInstance] operator_attachment_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [OperatorAttachmentInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, operator_attachment_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @operator_attachment_instance = operator_attachment_instance
+                    end
+
+                    def operator_attachment
+                        @operator_attachment_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.OperatorAttachmentInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class OperatorAttachmentListResponse < InstanceListResource
+                    # @param [Array<OperatorAttachmentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @operator_attachment_instance = payload.body[key].map do |data|
+                        OperatorAttachmentInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def operator_attachment_instance
+                          @instance
+                      end
+                  end
+
                 class OperatorAttachmentPage < Page
                     ##
                     # Initialize the OperatorAttachmentPage
@@ -113,6 +208,7 @@ module Twilio
                     # @return [OperatorAttachmentPage] OperatorAttachmentPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -132,6 +228,66 @@ module Twilio
                         '<Twilio.Intelligence.V2.OperatorAttachmentPage>'
                     end
                 end
+
+                class OperatorAttachmentPageMetadata < PageMetadata
+                    attr_reader :operator_attachment_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @operator_attachment_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @operator_attachment_page << OperatorAttachmentListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @operator_attachment_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Intelligence::V2PageMetadata>';
+                    end
+                end
+                class OperatorAttachmentListResponse < InstanceListResource
+
+                    # @param [Array<OperatorAttachmentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @operator_attachment = data_list.map do |data|
+                        OperatorAttachmentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def operator_attachment
+                        @operator_attachment
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class OperatorAttachmentInstance < InstanceResource
                     ##
                     # Initialize the OperatorAttachmentInstance
@@ -144,6 +300,7 @@ module Twilio
                     # @return [OperatorAttachmentInstance] OperatorAttachmentInstance
                     def initialize(version, payload , service_sid: nil, operator_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

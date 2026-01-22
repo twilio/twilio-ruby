@@ -25,6 +25,7 @@ module Twilio
                     # @return [AuthorizationDocumentList] AuthorizationDocumentList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/AuthorizationDocuments"
@@ -67,6 +68,52 @@ module Twilio
                         AuthorizationDocumentInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the AuthorizationDocumentInstanceMetadata
+                    # @param [Array[String]] hosted_number_order_sids A list of HostedNumberOrder sids that this AuthorizationDocument will authorize for hosting phone number capabilities on Twilio's platform.
+                    # @param [String] address_sid A 34 character string that uniquely identifies the Address resource that is associated with this AuthorizationDocument.
+                    # @param [String] email Email that this AuthorizationDocument will be sent to for signing.
+                    # @param [String] contact_title The title of the person authorized to sign the Authorization Document for this phone number.
+                    # @param [String] contact_phone_number The contact phone number of the person authorized to sign the Authorization Document.
+                    # @param [Array[String]] cc_emails Email recipients who will be informed when an Authorization Document has been sent and signed.
+                    # @return [AuthorizationDocumentInstance] Created AuthorizationDocumentInstance
+                    def create_with_metadata(
+                      hosted_number_order_sids: nil, 
+                      address_sid: nil, 
+                      email: nil, 
+                      contact_title: nil, 
+                      contact_phone_number: nil, 
+                      cc_emails: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'HostedNumberOrderSids' => Twilio.serialize_list(hosted_number_order_sids) { |e| e },
+                            'AddressSid' => address_sid,
+                            'Email' => email,
+                            'ContactTitle' => contact_title,
+                            'ContactPhoneNumber' => contact_phone_number,
+                            'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        authorization_document_instance = AuthorizationDocumentInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        AuthorizationDocumentInstanceMetadata.new(
+                            @version,
+                            authorization_document_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -118,6 +165,32 @@ module Twilio
                     end
 
                     ##
+                    # Lists AuthorizationDocumentPageMetadata records from the API as a list.
+                      # @param [String] email Email that this AuthorizationDocument will be sent to for signing.
+                      # @param [Status] status Status of an instance resource. It can hold one of the values: 1. opened 2. signing, 3. signed LOA, 4. canceled, 5. failed. See the section entitled [Status Values](https://www.twilio.com/docs/phone-numbers/hosted-numbers/hosted-numbers-api/authorization-document-resource#status-values) for more information on each of these statuses.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(email: :unset, status: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Email' => email,
+                            'Status' => status,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        AuthorizationDocumentPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields AuthorizationDocumentInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -140,7 +213,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of AuthorizationDocumentInstance
-                    def page(email: :unset, status: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(email: :unset, status: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Email' => email,
                             'Status' => status,
@@ -187,6 +260,7 @@ module Twilio
                     # @return [AuthorizationDocumentContext] AuthorizationDocumentContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -211,6 +285,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the AuthorizationDocumentInstanceMetadata
+                    # @return [AuthorizationDocumentInstance] Fetched AuthorizationDocumentInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        authorization_document_instance = AuthorizationDocumentInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        AuthorizationDocumentInstanceMetadata.new(
+                            @version,
+                            authorization_document_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -259,6 +358,56 @@ module Twilio
                     end
 
                     ##
+                    # Update the AuthorizationDocumentInstanceMetadata
+                    # @param [Array[String]] hosted_number_order_sids A list of HostedNumberOrder sids that this AuthorizationDocument will authorize for hosting phone number capabilities on Twilio's platform.
+                    # @param [String] address_sid A 34 character string that uniquely identifies the Address resource that is associated with this AuthorizationDocument.
+                    # @param [String] email Email that this AuthorizationDocument will be sent to for signing.
+                    # @param [Array[String]] cc_emails Email recipients who will be informed when an Authorization Document has been sent and signed
+                    # @param [Status] status 
+                    # @param [String] contact_title The title of the person authorized to sign the Authorization Document for this phone number.
+                    # @param [String] contact_phone_number The contact phone number of the person authorized to sign the Authorization Document.
+                    # @return [AuthorizationDocumentInstance] Updated AuthorizationDocumentInstance
+                    def update_with_metadata(
+                      hosted_number_order_sids: :unset, 
+                      address_sid: :unset, 
+                      email: :unset, 
+                      cc_emails: :unset, 
+                      status: :unset, 
+                      contact_title: :unset, 
+                      contact_phone_number: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'HostedNumberOrderSids' => Twilio.serialize_list(hosted_number_order_sids) { |e| e },
+                            'AddressSid' => address_sid,
+                            'Email' => email,
+                            'CcEmails' => Twilio.serialize_list(cc_emails) { |e| e },
+                            'Status' => status,
+                            'ContactTitle' => contact_title,
+                            'ContactPhoneNumber' => contact_phone_number,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        authorization_document_instance = AuthorizationDocumentInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        AuthorizationDocumentInstanceMetadata.new(
+                            @version,
+                            authorization_document_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the dependent_hosted_number_orders
                     # @return [DependentHostedNumberOrderList]
                     # @return [DependentHostedNumberOrderContext]
@@ -285,6 +434,53 @@ module Twilio
                     end
                 end
 
+                class AuthorizationDocumentInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AuthorizationDocumentInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AuthorizationDocumentInstance] authorization_document_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AuthorizationDocumentInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, authorization_document_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @authorization_document_instance = authorization_document_instance
+                    end
+
+                    def authorization_document
+                        @authorization_document_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AuthorizationDocumentInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AuthorizationDocumentListResponse < InstanceListResource
+                    # @param [Array<AuthorizationDocumentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @authorization_document_instance = payload.body[key].map do |data|
+                        AuthorizationDocumentInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def authorization_document_instance
+                          @instance
+                      end
+                  end
+
                 class AuthorizationDocumentPage < Page
                     ##
                     # Initialize the AuthorizationDocumentPage
@@ -294,6 +490,7 @@ module Twilio
                     # @return [AuthorizationDocumentPage] AuthorizationDocumentPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -313,6 +510,66 @@ module Twilio
                         '<Twilio.Preview.HostedNumbers.AuthorizationDocumentPage>'
                     end
                 end
+
+                class AuthorizationDocumentPageMetadata < PageMetadata
+                    attr_reader :authorization_document_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @authorization_document_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @authorization_document_page << AuthorizationDocumentListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @authorization_document_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Preview::HostedNumbersPageMetadata>';
+                    end
+                end
+                class AuthorizationDocumentListResponse < InstanceListResource
+
+                    # @param [Array<AuthorizationDocumentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @authorization_document = data_list.map do |data|
+                        AuthorizationDocumentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def authorization_document
+                        @authorization_document
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class AuthorizationDocumentInstance < InstanceResource
                     ##
                     # Initialize the AuthorizationDocumentInstance
@@ -325,6 +582,7 @@ module Twilio
                     # @return [AuthorizationDocumentInstance] AuthorizationDocumentInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

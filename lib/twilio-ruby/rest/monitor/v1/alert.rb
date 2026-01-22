@@ -25,6 +25,7 @@ module Twilio
                     # @return [AlertList] AlertList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Alerts"
@@ -82,6 +83,34 @@ module Twilio
                     end
 
                     ##
+                    # Lists AlertPageMetadata records from the API as a list.
+                      # @param [String] log_level Only show alerts for this log-level.  Can be: `error`, `warning`, `notice`, or `debug`.
+                      # @param [Time] start_date Only include alerts that occurred on or after this date and time. Specify the date and time in GMT and format as `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ssZ`. Queries for alerts older than 30 days are not supported.
+                      # @param [Time] end_date Only include alerts that occurred on or before this date and time. Specify the date and time in GMT and format as `YYYY-MM-DD` or `YYYY-MM-DDThh:mm:ssZ`. Queries for alerts older than 30 days are not supported.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(log_level: :unset, start_date: :unset, end_date: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'LogLevel' => log_level,
+                            'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
+                            'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        AlertPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields AlertInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -105,7 +134,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of AlertInstance
-                    def page(log_level: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(log_level: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'LogLevel' => log_level,
                             'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
@@ -153,6 +182,7 @@ module Twilio
                     # @return [AlertContext] AlertContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -179,6 +209,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the AlertInstanceMetadata
+                    # @return [AlertInstance] Fetched AlertInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        alert_instance = AlertInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        AlertInstanceMetadata.new(
+                            @version,
+                            alert_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -195,6 +250,53 @@ module Twilio
                     end
                 end
 
+                class AlertInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AlertInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AlertInstance] alert_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AlertInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, alert_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @alert_instance = alert_instance
+                    end
+
+                    def alert
+                        @alert_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AlertInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AlertListResponse < InstanceListResource
+                    # @param [Array<AlertInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @alert_instance = payload.body[key].map do |data|
+                        AlertInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def alert_instance
+                          @instance
+                      end
+                  end
+
                 class AlertPage < Page
                     ##
                     # Initialize the AlertPage
@@ -204,6 +306,7 @@ module Twilio
                     # @return [AlertPage] AlertPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -223,6 +326,66 @@ module Twilio
                         '<Twilio.Monitor.V1.AlertPage>'
                     end
                 end
+
+                class AlertPageMetadata < PageMetadata
+                    attr_reader :alert_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @alert_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @alert_page << AlertListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @alert_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Monitor::V1PageMetadata>';
+                    end
+                end
+                class AlertListResponse < InstanceListResource
+
+                    # @param [Array<AlertInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @alert = data_list.map do |data|
+                        AlertInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def alert
+                        @alert
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class AlertInstance < InstanceResource
                     ##
                     # Initialize the AlertInstance
@@ -235,6 +398,7 @@ module Twilio
                     # @return [AlertInstance] AlertInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

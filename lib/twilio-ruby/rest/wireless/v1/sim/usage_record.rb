@@ -27,6 +27,7 @@ module Twilio
                     # @return [UsageRecordList] UsageRecordList
                     def initialize(version, sim_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { sim_sid: sim_sid }
                         @uri = "/Sims/#{@solution[:sim_sid]}/UsageRecords"
@@ -84,6 +85,34 @@ module Twilio
                     end
 
                     ##
+                    # Lists UsageRecordPageMetadata records from the API as a list.
+                      # @param [Time] end_ Only include usage that occurred on or before this date, specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html). The default is the current time.
+                      # @param [Time] start Only include usage that has occurred on or after this date, specified in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html). The default is one month before the `end` parameter value.
+                      # @param [Granularity] granularity How to summarize the usage by time. Can be: `daily`, `hourly`, or `all`. The default is `all`. A value of `all` returns one Usage Record that describes the usage for the entire period.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(end_: :unset, start: :unset, granularity: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'End' =>  Twilio.serialize_iso8601_datetime(end_),
+                            'Start' =>  Twilio.serialize_iso8601_datetime(start),
+                            'Granularity' => granularity,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        UsageRecordPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields UsageRecordInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -107,7 +136,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of UsageRecordInstance
-                    def page(end_: :unset, start: :unset, granularity: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(end_: :unset, start: :unset, granularity: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'End' =>  Twilio.serialize_iso8601_datetime(end_),
                             'Start' =>  Twilio.serialize_iso8601_datetime(start),
@@ -155,6 +184,7 @@ module Twilio
                     # @return [UsageRecordPage] UsageRecordPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -174,6 +204,66 @@ module Twilio
                         '<Twilio.Wireless.V1.UsageRecordPage>'
                     end
                 end
+
+                class UsageRecordPageMetadata < PageMetadata
+                    attr_reader :usage_record_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @usage_record_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @usage_record_page << UsageRecordListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @usage_record_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Wireless::V1PageMetadata>';
+                    end
+                end
+                class UsageRecordListResponse < InstanceListResource
+
+                    # @param [Array<UsageRecordInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @usage_record = data_list.map do |data|
+                        UsageRecordInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def usage_record
+                        @usage_record
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class UsageRecordInstance < InstanceResource
                     ##
                     # Initialize the UsageRecordInstance
@@ -186,6 +276,7 @@ module Twilio
                     # @return [UsageRecordInstance] UsageRecordInstance
                     def initialize(version, payload , sim_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

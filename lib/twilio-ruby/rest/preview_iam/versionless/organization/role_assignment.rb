@@ -47,6 +47,7 @@ module Twilio
                     # @return [RoleAssignmentList] RoleAssignmentList
                     def initialize(version, organization_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { organization_sid: organization_sid }
                         @uri = "/#{@solution[:organization_sid]}/RoleAssignments"
@@ -70,6 +71,33 @@ module Twilio
                             @version,
                             payload,
                             organization_sid: @solution[:organization_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the RoleAssignmentInstanceMetadata
+                    # @param [PublicApiCreateRoleAssignmentRequest] public_api_create_role_assignment_request 
+                    # @return [RoleAssignmentInstance] Created RoleAssignmentInstance
+                    def create_with_metadata(public_api_create_role_assignment_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                         headers['Accept'] = '*/*'
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: public_api_create_role_assignment_request.to_json)
+                        role_assignment_instance = RoleAssignmentInstance.new(
+                            @version,
+                            response.body,
+                            organization_sid: @solution[:organization_sid],
+                        )
+                        RoleAssignmentInstanceMetadata.new(
+                            @version,
+                            role_assignment_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -121,6 +149,32 @@ module Twilio
                     end
 
                     ##
+                    # Lists RoleAssignmentPageMetadata records from the API as a list.
+                      # @param [String] identity 
+                      # @param [String] scope 
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(identity: :unset, scope: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Identity' => identity,
+                            'Scope' => scope,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        RoleAssignmentPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields RoleAssignmentInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -143,7 +197,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of RoleAssignmentInstance
-                    def page(identity: :unset, scope: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(identity: :unset, scope: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Identity' => identity,
                             'Scope' => scope,
@@ -191,6 +245,7 @@ module Twilio
                     # @return [RoleAssignmentContext] RoleAssignmentContext
                     def initialize(version, organization_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { organization_sid: organization_sid, sid: sid,  }
@@ -207,7 +262,27 @@ module Twilio
                         
                         
                         headers['Accept'] = '*/*'
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the RoleAssignmentInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        headers['Accept'] = '*/*'
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          roleAssignment_instance = RoleAssignmentInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          RoleAssignmentInstanceMetadata.new(@version, roleAssignment_instance, response.headers, response.status_code)
                     end
 
 
@@ -226,6 +301,53 @@ module Twilio
                     end
                 end
 
+                class RoleAssignmentInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new RoleAssignmentInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}RoleAssignmentInstance] role_assignment_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [RoleAssignmentInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, role_assignment_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @role_assignment_instance = role_assignment_instance
+                    end
+
+                    def role_assignment
+                        @role_assignment_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.RoleAssignmentInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class RoleAssignmentListResponse < InstanceListResource
+                    # @param [Array<RoleAssignmentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @role_assignment_instance = payload.body[key].map do |data|
+                        RoleAssignmentInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def role_assignment_instance
+                          @instance
+                      end
+                  end
+
                 class RoleAssignmentPage < Page
                     ##
                     # Initialize the RoleAssignmentPage
@@ -235,6 +357,7 @@ module Twilio
                     # @return [RoleAssignmentPage] RoleAssignmentPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -254,6 +377,66 @@ module Twilio
                         '<Twilio.PreviewIam.Versionless.RoleAssignmentPage>'
                     end
                 end
+
+                class RoleAssignmentPageMetadata < PageMetadata
+                    attr_reader :role_assignment_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @role_assignment_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @role_assignment_page << RoleAssignmentListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @role_assignment_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::PreviewIam::VersionlessPageMetadata>';
+                    end
+                end
+                class RoleAssignmentListResponse < InstanceListResource
+
+                    # @param [Array<RoleAssignmentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @role_assignment = data_list.map do |data|
+                        RoleAssignmentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def role_assignment
+                        @role_assignment
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class RoleAssignmentInstance < InstanceResource
                     ##
                     # Initialize the RoleAssignmentInstance
@@ -266,6 +449,7 @@ module Twilio
                     # @return [RoleAssignmentInstance] RoleAssignmentInstance
                     def initialize(version, payload , organization_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

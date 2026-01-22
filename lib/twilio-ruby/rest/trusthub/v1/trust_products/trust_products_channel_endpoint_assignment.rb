@@ -27,6 +27,7 @@ module Twilio
                     # @return [TrustProductsChannelEndpointAssignmentList] TrustProductsChannelEndpointAssignmentList
                     def initialize(version, trust_product_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { trust_product_sid: trust_product_sid }
                         @uri = "/TrustProducts/#{@solution[:trust_product_sid]}/ChannelEndpointAssignments"
@@ -58,6 +59,41 @@ module Twilio
                             @version,
                             payload,
                             trust_product_sid: @solution[:trust_product_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the TrustProductsChannelEndpointAssignmentInstanceMetadata
+                    # @param [String] channel_endpoint_type The type of channel endpoint. eg: phone-number
+                    # @param [String] channel_endpoint_sid The SID of an channel endpoint
+                    # @return [TrustProductsChannelEndpointAssignmentInstance] Created TrustProductsChannelEndpointAssignmentInstance
+                    def create_with_metadata(
+                      channel_endpoint_type: nil, 
+                      channel_endpoint_sid: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'ChannelEndpointType' => channel_endpoint_type,
+                            'ChannelEndpointSid' => channel_endpoint_sid,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        trust_products_channel_endpoint_assignment_instance = TrustProductsChannelEndpointAssignmentInstance.new(
+                            @version,
+                            response.body,
+                            trust_product_sid: @solution[:trust_product_sid],
+                        )
+                        TrustProductsChannelEndpointAssignmentInstanceMetadata.new(
+                            @version,
+                            trust_products_channel_endpoint_assignment_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -109,6 +145,32 @@ module Twilio
                     end
 
                     ##
+                    # Lists TrustProductsChannelEndpointAssignmentPageMetadata records from the API as a list.
+                      # @param [String] channel_endpoint_sid The SID of an channel endpoint
+                      # @param [String] channel_endpoint_sids comma separated list of channel endpoint sids
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(channel_endpoint_sid: :unset, channel_endpoint_sids: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'ChannelEndpointSid' => channel_endpoint_sid,
+                            'ChannelEndpointSids' => channel_endpoint_sids,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TrustProductsChannelEndpointAssignmentPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields TrustProductsChannelEndpointAssignmentInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -131,7 +193,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of TrustProductsChannelEndpointAssignmentInstance
-                    def page(channel_endpoint_sid: :unset, channel_endpoint_sids: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(channel_endpoint_sid: :unset, channel_endpoint_sids: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'ChannelEndpointSid' => channel_endpoint_sid,
                             'ChannelEndpointSids' => channel_endpoint_sids,
@@ -179,6 +241,7 @@ module Twilio
                     # @return [TrustProductsChannelEndpointAssignmentContext] TrustProductsChannelEndpointAssignmentContext
                     def initialize(version, trust_product_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { trust_product_sid: trust_product_sid, sid: sid,  }
@@ -195,7 +258,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the TrustProductsChannelEndpointAssignmentInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          trustProductsChannelEndpointAssignment_instance = TrustProductsChannelEndpointAssignmentInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          TrustProductsChannelEndpointAssignmentInstanceMetadata.new(@version, trustProductsChannelEndpointAssignment_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -218,6 +301,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the TrustProductsChannelEndpointAssignmentInstanceMetadata
+                    # @return [TrustProductsChannelEndpointAssignmentInstance] Fetched TrustProductsChannelEndpointAssignmentInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        trust_products_channel_endpoint_assignment_instance = TrustProductsChannelEndpointAssignmentInstance.new(
+                            @version,
+                            response.body,
+                            trust_product_sid: @solution[:trust_product_sid],
+                            sid: @solution[:sid],
+                        )
+                        TrustProductsChannelEndpointAssignmentInstanceMetadata.new(
+                            @version,
+                            trust_products_channel_endpoint_assignment_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -234,6 +343,53 @@ module Twilio
                     end
                 end
 
+                class TrustProductsChannelEndpointAssignmentInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new TrustProductsChannelEndpointAssignmentInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}TrustProductsChannelEndpointAssignmentInstance] trust_products_channel_endpoint_assignment_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [TrustProductsChannelEndpointAssignmentInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, trust_products_channel_endpoint_assignment_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @trust_products_channel_endpoint_assignment_instance = trust_products_channel_endpoint_assignment_instance
+                    end
+
+                    def trust_products_channel_endpoint_assignment
+                        @trust_products_channel_endpoint_assignment_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.TrustProductsChannelEndpointAssignmentInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class TrustProductsChannelEndpointAssignmentListResponse < InstanceListResource
+                    # @param [Array<TrustProductsChannelEndpointAssignmentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @trust_products_channel_endpoint_assignment_instance = payload.body[key].map do |data|
+                        TrustProductsChannelEndpointAssignmentInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def trust_products_channel_endpoint_assignment_instance
+                          @instance
+                      end
+                  end
+
                 class TrustProductsChannelEndpointAssignmentPage < Page
                     ##
                     # Initialize the TrustProductsChannelEndpointAssignmentPage
@@ -243,6 +399,7 @@ module Twilio
                     # @return [TrustProductsChannelEndpointAssignmentPage] TrustProductsChannelEndpointAssignmentPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -262,6 +419,66 @@ module Twilio
                         '<Twilio.Trusthub.V1.TrustProductsChannelEndpointAssignmentPage>'
                     end
                 end
+
+                class TrustProductsChannelEndpointAssignmentPageMetadata < PageMetadata
+                    attr_reader :trust_products_channel_endpoint_assignment_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @trust_products_channel_endpoint_assignment_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @trust_products_channel_endpoint_assignment_page << TrustProductsChannelEndpointAssignmentListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @trust_products_channel_endpoint_assignment_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Trusthub::V1PageMetadata>';
+                    end
+                end
+                class TrustProductsChannelEndpointAssignmentListResponse < InstanceListResource
+
+                    # @param [Array<TrustProductsChannelEndpointAssignmentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @trust_products_channel_endpoint_assignment = data_list.map do |data|
+                        TrustProductsChannelEndpointAssignmentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def trust_products_channel_endpoint_assignment
+                        @trust_products_channel_endpoint_assignment
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class TrustProductsChannelEndpointAssignmentInstance < InstanceResource
                     ##
                     # Initialize the TrustProductsChannelEndpointAssignmentInstance
@@ -274,6 +491,7 @@ module Twilio
                     # @return [TrustProductsChannelEndpointAssignmentInstance] TrustProductsChannelEndpointAssignmentInstance
                     def initialize(version, payload , trust_product_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

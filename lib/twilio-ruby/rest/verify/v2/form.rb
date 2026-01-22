@@ -25,6 +25,7 @@ module Twilio
                     # @return [FormList] FormList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -48,6 +49,7 @@ module Twilio
                     # @return [FormContext] FormContext
                     def initialize(version, form_type)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { form_type: form_type,  }
@@ -74,6 +76,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the FormInstanceMetadata
+                    # @return [FormInstance] Fetched FormInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        form_instance = FormInstance.new(
+                            @version,
+                            response.body,
+                            form_type: @solution[:form_type],
+                        )
+                        FormInstanceMetadata.new(
+                            @version,
+                            form_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -90,6 +117,53 @@ module Twilio
                     end
                 end
 
+                class FormInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new FormInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}FormInstance] form_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [FormInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, form_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @form_instance = form_instance
+                    end
+
+                    def form
+                        @form_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.FormInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class FormListResponse < InstanceListResource
+                    # @param [Array<FormInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @form_instance = payload.body[key].map do |data|
+                        FormInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def form_instance
+                          @instance
+                      end
+                  end
+
                 class FormPage < Page
                     ##
                     # Initialize the FormPage
@@ -99,6 +173,7 @@ module Twilio
                     # @return [FormPage] FormPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -118,6 +193,66 @@ module Twilio
                         '<Twilio.Verify.V2.FormPage>'
                     end
                 end
+
+                class FormPageMetadata < PageMetadata
+                    attr_reader :form_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @form_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @form_page << FormListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @form_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class FormListResponse < InstanceListResource
+
+                    # @param [Array<FormInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @form = data_list.map do |data|
+                        FormInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def form
+                        @form
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class FormInstance < InstanceResource
                     ##
                     # Initialize the FormInstance
@@ -130,6 +265,7 @@ module Twilio
                     # @return [FormInstance] FormInstance
                     def initialize(version, payload , form_type: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

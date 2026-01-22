@@ -27,6 +27,7 @@ module Twilio
                     # @return [UsageList] UsageList
                     def initialize(version, sim_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { sim_sid: sim_sid }
                         
@@ -50,6 +51,7 @@ module Twilio
                     # @return [UsageContext] UsageContext
                     def initialize(version, sim_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sim_sid: sim_sid,  }
@@ -85,6 +87,40 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the UsageInstanceMetadata
+                    # @param [String] end_ 
+                    # @param [String] start 
+                    # @return [UsageInstance] Fetched UsageInstance
+                    def fetch_with_metadata(
+                      end_: :unset, 
+                      start: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'End' => end_,
+                            'Start' => start,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        usage_instance = UsageInstance.new(
+                            @version,
+                            response.body,
+                            sim_sid: @solution[:sim_sid],
+                        )
+                        UsageInstanceMetadata.new(
+                            @version,
+                            usage_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -101,6 +137,53 @@ module Twilio
                     end
                 end
 
+                class UsageInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new UsageInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}UsageInstance] usage_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [UsageInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, usage_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @usage_instance = usage_instance
+                    end
+
+                    def usage
+                        @usage_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.UsageInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class UsageListResponse < InstanceListResource
+                    # @param [Array<UsageInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @usage_instance = payload.body[key].map do |data|
+                        UsageInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def usage_instance
+                          @instance
+                      end
+                  end
+
                 class UsagePage < Page
                     ##
                     # Initialize the UsagePage
@@ -110,6 +193,7 @@ module Twilio
                     # @return [UsagePage] UsagePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -129,6 +213,66 @@ module Twilio
                         '<Twilio.Preview.Wireless.UsagePage>'
                     end
                 end
+
+                class UsagePageMetadata < PageMetadata
+                    attr_reader :usage_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @usage_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @usage_page << UsageListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @usage_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Preview::WirelessPageMetadata>';
+                    end
+                end
+                class UsageListResponse < InstanceListResource
+
+                    # @param [Array<UsageInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @usage = data_list.map do |data|
+                        UsageInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def usage
+                        @usage
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class UsageInstance < InstanceResource
                     ##
                     # Initialize the UsageInstance
@@ -141,6 +285,7 @@ module Twilio
                     # @return [UsageInstance] UsageInstance
                     def initialize(version, payload , sim_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

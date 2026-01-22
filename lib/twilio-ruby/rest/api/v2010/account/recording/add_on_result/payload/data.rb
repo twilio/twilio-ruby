@@ -30,6 +30,7 @@ module Twilio
                     # @return [DataList] DataList
                     def initialize(version, account_sid: nil, reference_sid: nil, add_on_result_sid: nil, payload_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { account_sid: account_sid, reference_sid: reference_sid, add_on_result_sid: add_on_result_sid, payload_sid: payload_sid }
                         
@@ -56,6 +57,7 @@ module Twilio
                     # @return [DataContext] DataContext
                     def initialize(version, account_sid, reference_sid, add_on_result_sid, payload_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { account_sid: account_sid, reference_sid: reference_sid, add_on_result_sid: add_on_result_sid, payload_sid: payload_sid,  }
@@ -85,6 +87,34 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the DataInstanceMetadata
+                    # @return [DataInstance] Fetched DataInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        data_instance = DataInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            reference_sid: @solution[:reference_sid],
+                            add_on_result_sid: @solution[:add_on_result_sid],
+                            payload_sid: @solution[:payload_sid],
+                        )
+                        DataInstanceMetadata.new(
+                            @version,
+                            data_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -101,6 +131,53 @@ module Twilio
                     end
                 end
 
+                class DataInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new DataInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}DataInstance] data_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [DataInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, data_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @data_instance = data_instance
+                    end
+
+                    def data
+                        @data_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.DataInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class DataListResponse < InstanceListResource
+                    # @param [Array<DataInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @data_instance = payload.body[key].map do |data|
+                        DataInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def data_instance
+                          @instance
+                      end
+                  end
+
                 class DataPage < Page
                     ##
                     # Initialize the DataPage
@@ -110,6 +187,7 @@ module Twilio
                     # @return [DataPage] DataPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -129,6 +207,66 @@ module Twilio
                         '<Twilio.Api.V2010.DataPage>'
                     end
                 end
+
+                class DataPageMetadata < PageMetadata
+                    attr_reader :data_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @data_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @data_page << DataListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @data_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class DataListResponse < InstanceListResource
+
+                    # @param [Array<DataInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @data = data_list.map do |data|
+                        DataInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def data
+                        @data
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class DataInstance < InstanceResource
                     ##
                     # Initialize the DataInstance
@@ -141,6 +279,7 @@ module Twilio
                     # @return [DataInstance] DataInstance
                     def initialize(version, payload , account_sid: nil, reference_sid: nil, add_on_result_sid: nil, payload_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

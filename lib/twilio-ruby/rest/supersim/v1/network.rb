@@ -25,6 +25,7 @@ module Twilio
                     # @return [NetworkList] NetworkList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Networks"
@@ -82,6 +83,34 @@ module Twilio
                     end
 
                     ##
+                    # Lists NetworkPageMetadata records from the API as a list.
+                      # @param [String] iso_country The [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Network resources to read.
+                      # @param [String] mcc The 'mobile country code' of a country. Network resources with this `mcc` in their `identifiers` will be read.
+                      # @param [String] mnc The 'mobile network code' of a mobile operator network. Network resources with this `mnc` in their `identifiers` will be read.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(iso_country: :unset, mcc: :unset, mnc: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'IsoCountry' => iso_country,
+                            'Mcc' => mcc,
+                            'Mnc' => mnc,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        NetworkPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields NetworkInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -105,7 +134,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of NetworkInstance
-                    def page(iso_country: :unset, mcc: :unset, mnc: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(iso_country: :unset, mcc: :unset, mnc: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'IsoCountry' => iso_country,
                             'Mcc' => mcc,
@@ -153,6 +182,7 @@ module Twilio
                     # @return [NetworkContext] NetworkContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -179,6 +209,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the NetworkInstanceMetadata
+                    # @return [NetworkInstance] Fetched NetworkInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        network_instance = NetworkInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        NetworkInstanceMetadata.new(
+                            @version,
+                            network_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -195,6 +250,53 @@ module Twilio
                     end
                 end
 
+                class NetworkInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new NetworkInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}NetworkInstance] network_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [NetworkInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, network_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @network_instance = network_instance
+                    end
+
+                    def network
+                        @network_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.NetworkInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class NetworkListResponse < InstanceListResource
+                    # @param [Array<NetworkInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @network_instance = payload.body[key].map do |data|
+                        NetworkInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def network_instance
+                          @instance
+                      end
+                  end
+
                 class NetworkPage < Page
                     ##
                     # Initialize the NetworkPage
@@ -204,6 +306,7 @@ module Twilio
                     # @return [NetworkPage] NetworkPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -223,6 +326,66 @@ module Twilio
                         '<Twilio.Supersim.V1.NetworkPage>'
                     end
                 end
+
+                class NetworkPageMetadata < PageMetadata
+                    attr_reader :network_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @network_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @network_page << NetworkListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @network_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Supersim::V1PageMetadata>';
+                    end
+                end
+                class NetworkListResponse < InstanceListResource
+
+                    # @param [Array<NetworkInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @network = data_list.map do |data|
+                        NetworkInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def network
+                        @network
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class NetworkInstance < InstanceResource
                     ##
                     # Initialize the NetworkInstance
@@ -235,6 +398,7 @@ module Twilio
                     # @return [NetworkInstance] NetworkInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

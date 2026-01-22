@@ -25,6 +25,7 @@ module Twilio
                     # @return [DomainConfigList] DomainConfigList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -48,6 +49,7 @@ module Twilio
                     # @return [DomainConfigContext] DomainConfigContext
                     def initialize(version, domain_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { domain_sid: domain_sid,  }
@@ -71,6 +73,31 @@ module Twilio
                             @version,
                             payload,
                             domain_sid: @solution[:domain_sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the DomainConfigInstanceMetadata
+                    # @return [DomainConfigInstance] Fetched DomainConfigInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        domain_config_instance = DomainConfigInstance.new(
+                            @version,
+                            response.body,
+                            domain_sid: @solution[:domain_sid],
+                        )
+                        DomainConfigInstanceMetadata.new(
+                            @version,
+                            domain_config_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -109,6 +136,47 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the DomainConfigInstanceMetadata
+                    # @param [String] fallback_url Any requests we receive to this domain that do not match an existing shortened message will be redirected to the fallback url. These will likely be either expired messages, random misdirected traffic, or intentional scraping.
+                    # @param [String] callback_url URL to receive click events to your webhook whenever the recipients click on the shortened links
+                    # @param [Boolean] continue_on_failure Boolean field to set customer delivery preference when there is a failure in linkShortening service
+                    # @param [Boolean] disable_https Customer's choice to send links with/without \\\"https://\\\" attached to shortened url. If true, messages will not be sent with https:// at the beginning of the url. If false, messages will be sent with https:// at the beginning of the url. False is the default behavior if it is not specified.
+                    # @return [DomainConfigInstance] Updated DomainConfigInstance
+                    def update_with_metadata(
+                      fallback_url: :unset, 
+                      callback_url: :unset, 
+                      continue_on_failure: :unset, 
+                      disable_https: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FallbackUrl' => fallback_url,
+                            'CallbackUrl' => callback_url,
+                            'ContinueOnFailure' => continue_on_failure,
+                            'DisableHttps' => disable_https,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        domain_config_instance = DomainConfigInstance.new(
+                            @version,
+                            response.body,
+                            domain_sid: @solution[:domain_sid],
+                        )
+                        DomainConfigInstanceMetadata.new(
+                            @version,
+                            domain_config_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -125,6 +193,53 @@ module Twilio
                     end
                 end
 
+                class DomainConfigInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new DomainConfigInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}DomainConfigInstance] domain_config_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [DomainConfigInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, domain_config_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @domain_config_instance = domain_config_instance
+                    end
+
+                    def domain_config
+                        @domain_config_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.DomainConfigInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class DomainConfigListResponse < InstanceListResource
+                    # @param [Array<DomainConfigInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @domain_config_instance = payload.body[key].map do |data|
+                        DomainConfigInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def domain_config_instance
+                          @instance
+                      end
+                  end
+
                 class DomainConfigPage < Page
                     ##
                     # Initialize the DomainConfigPage
@@ -134,6 +249,7 @@ module Twilio
                     # @return [DomainConfigPage] DomainConfigPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -153,6 +269,66 @@ module Twilio
                         '<Twilio.Messaging.V1.DomainConfigPage>'
                     end
                 end
+
+                class DomainConfigPageMetadata < PageMetadata
+                    attr_reader :domain_config_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @domain_config_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @domain_config_page << DomainConfigListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @domain_config_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class DomainConfigListResponse < InstanceListResource
+
+                    # @param [Array<DomainConfigInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @domain_config = data_list.map do |data|
+                        DomainConfigInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def domain_config
+                        @domain_config
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class DomainConfigInstance < InstanceResource
                     ##
                     # Initialize the DomainConfigInstance
@@ -165,6 +341,7 @@ module Twilio
                     # @return [DomainConfigInstance] DomainConfigInstance
                     def initialize(version, payload , domain_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

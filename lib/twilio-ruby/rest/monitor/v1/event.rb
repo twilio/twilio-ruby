@@ -25,6 +25,7 @@ module Twilio
                     # @return [EventList] EventList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Events"
@@ -94,6 +95,40 @@ module Twilio
                     end
 
                     ##
+                    # Lists EventPageMetadata records from the API as a list.
+                      # @param [String] actor_sid Only include events initiated by this Actor. Useful for auditing actions taken by specific users or API credentials.
+                      # @param [String] event_type Only include events of this [Event Type](https://www.twilio.com/docs/usage/monitor-events#event-types).
+                      # @param [String] resource_sid Only include events that refer to this resource. Useful for discovering the history of a specific resource.
+                      # @param [String] source_ip_address Only include events that originated from this IP address. Useful for tracking suspicious activity originating from the API or the Twilio Console.
+                      # @param [Time] start_date Only include events that occurred on or after this date. Specify the date in GMT and [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+                      # @param [Time] end_date Only include events that occurred on or before this date. Specify the date in GMT and [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(actor_sid: :unset, event_type: :unset, resource_sid: :unset, source_ip_address: :unset, start_date: :unset, end_date: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'ActorSid' => actor_sid,
+                            'EventType' => event_type,
+                            'ResourceSid' => resource_sid,
+                            'SourceIpAddress' => source_ip_address,
+                            'StartDate' =>  Twilio.serialize_iso8601_datetime(start_date),
+                            'EndDate' =>  Twilio.serialize_iso8601_datetime(end_date),
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        EventPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields EventInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -120,7 +155,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of EventInstance
-                    def page(actor_sid: :unset, event_type: :unset, resource_sid: :unset, source_ip_address: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(actor_sid: :unset, event_type: :unset, resource_sid: :unset, source_ip_address: :unset, start_date: :unset, end_date: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'ActorSid' => actor_sid,
                             'EventType' => event_type,
@@ -171,6 +206,7 @@ module Twilio
                     # @return [EventContext] EventContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -197,6 +233,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the EventInstanceMetadata
+                    # @return [EventInstance] Fetched EventInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        event_instance = EventInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        EventInstanceMetadata.new(
+                            @version,
+                            event_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -213,6 +274,53 @@ module Twilio
                     end
                 end
 
+                class EventInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new EventInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}EventInstance] event_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [EventInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, event_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @event_instance = event_instance
+                    end
+
+                    def event
+                        @event_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.EventInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class EventListResponse < InstanceListResource
+                    # @param [Array<EventInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @event_instance = payload.body[key].map do |data|
+                        EventInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def event_instance
+                          @instance
+                      end
+                  end
+
                 class EventPage < Page
                     ##
                     # Initialize the EventPage
@@ -222,6 +330,7 @@ module Twilio
                     # @return [EventPage] EventPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -241,6 +350,66 @@ module Twilio
                         '<Twilio.Monitor.V1.EventPage>'
                     end
                 end
+
+                class EventPageMetadata < PageMetadata
+                    attr_reader :event_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @event_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @event_page << EventListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @event_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Monitor::V1PageMetadata>';
+                    end
+                end
+                class EventListResponse < InstanceListResource
+
+                    # @param [Array<EventInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @event = data_list.map do |data|
+                        EventInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def event
+                        @event
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class EventInstance < InstanceResource
                     ##
                     # Initialize the EventInstance
@@ -253,6 +422,7 @@ module Twilio
                     # @return [EventInstance] EventInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

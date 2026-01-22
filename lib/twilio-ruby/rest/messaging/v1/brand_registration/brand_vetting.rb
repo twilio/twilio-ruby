@@ -27,6 +27,7 @@ module Twilio
                     # @return [BrandVettingList] BrandVettingList
                     def initialize(version, brand_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { brand_sid: brand_sid }
                         @uri = "/a2p/BrandRegistrations/#{@solution[:brand_sid]}/Vettings"
@@ -58,6 +59,41 @@ module Twilio
                             @version,
                             payload,
                             brand_sid: @solution[:brand_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the BrandVettingInstanceMetadata
+                    # @param [VettingProvider] vetting_provider 
+                    # @param [String] vetting_id The unique ID of the vetting
+                    # @return [BrandVettingInstance] Created BrandVettingInstance
+                    def create_with_metadata(
+                      vetting_provider: nil, 
+                      vetting_id: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'VettingProvider' => vetting_provider,
+                            'VettingId' => vetting_id,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        brand_vetting_instance = BrandVettingInstance.new(
+                            @version,
+                            response.body,
+                            brand_sid: @solution[:brand_sid],
+                        )
+                        BrandVettingInstanceMetadata.new(
+                            @version,
+                            brand_vetting_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -105,6 +141,30 @@ module Twilio
                     end
 
                     ##
+                    # Lists BrandVettingPageMetadata records from the API as a list.
+                      # @param [VettingProvider] vetting_provider The third-party provider of the vettings to read
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(vetting_provider: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'VettingProvider' => vetting_provider,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        BrandVettingPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields BrandVettingInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -126,7 +186,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of BrandVettingInstance
-                    def page(vetting_provider: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(vetting_provider: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'VettingProvider' => vetting_provider,
                             'PageToken' => page_token,
@@ -173,6 +233,7 @@ module Twilio
                     # @return [BrandVettingContext] BrandVettingContext
                     def initialize(version, brand_sid, brand_vetting_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { brand_sid: brand_sid, brand_vetting_sid: brand_vetting_sid,  }
@@ -200,6 +261,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the BrandVettingInstanceMetadata
+                    # @return [BrandVettingInstance] Fetched BrandVettingInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        brand_vetting_instance = BrandVettingInstance.new(
+                            @version,
+                            response.body,
+                            brand_sid: @solution[:brand_sid],
+                            brand_vetting_sid: @solution[:brand_vetting_sid],
+                        )
+                        BrandVettingInstanceMetadata.new(
+                            @version,
+                            brand_vetting_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -216,6 +303,53 @@ module Twilio
                     end
                 end
 
+                class BrandVettingInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new BrandVettingInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}BrandVettingInstance] brand_vetting_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [BrandVettingInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, brand_vetting_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @brand_vetting_instance = brand_vetting_instance
+                    end
+
+                    def brand_vetting
+                        @brand_vetting_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.BrandVettingInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class BrandVettingListResponse < InstanceListResource
+                    # @param [Array<BrandVettingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @brand_vetting_instance = payload.body[key].map do |data|
+                        BrandVettingInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def brand_vetting_instance
+                          @instance
+                      end
+                  end
+
                 class BrandVettingPage < Page
                     ##
                     # Initialize the BrandVettingPage
@@ -225,6 +359,7 @@ module Twilio
                     # @return [BrandVettingPage] BrandVettingPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -244,6 +379,66 @@ module Twilio
                         '<Twilio.Messaging.V1.BrandVettingPage>'
                     end
                 end
+
+                class BrandVettingPageMetadata < PageMetadata
+                    attr_reader :brand_vetting_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @brand_vetting_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @brand_vetting_page << BrandVettingListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @brand_vetting_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Messaging::V1PageMetadata>';
+                    end
+                end
+                class BrandVettingListResponse < InstanceListResource
+
+                    # @param [Array<BrandVettingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @brand_vetting = data_list.map do |data|
+                        BrandVettingInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def brand_vetting
+                        @brand_vetting
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class BrandVettingInstance < InstanceResource
                     ##
                     # Initialize the BrandVettingInstance
@@ -256,6 +451,7 @@ module Twilio
                     # @return [BrandVettingInstance] BrandVettingInstance
                     def initialize(version, payload , brand_sid: nil, brand_vetting_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

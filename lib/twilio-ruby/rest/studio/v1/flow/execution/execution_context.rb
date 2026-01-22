@@ -28,6 +28,7 @@ module Twilio
                     # @return [ExecutionContextList] ExecutionContextList
                     def initialize(version, flow_sid: nil, execution_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { flow_sid: flow_sid, execution_sid: execution_sid }
                         
@@ -52,6 +53,7 @@ module Twilio
                     # @return [ExecutionContextContext] ExecutionContextContext
                     def initialize(version, flow_sid, execution_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { flow_sid: flow_sid, execution_sid: execution_sid,  }
@@ -79,6 +81,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the ExecutionContextInstanceMetadata
+                    # @return [ExecutionContextInstance] Fetched ExecutionContextInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        execution_context_instance = ExecutionContextInstance.new(
+                            @version,
+                            response.body,
+                            flow_sid: @solution[:flow_sid],
+                            execution_sid: @solution[:execution_sid],
+                        )
+                        ExecutionContextInstanceMetadata.new(
+                            @version,
+                            execution_context_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -95,6 +123,53 @@ module Twilio
                     end
                 end
 
+                class ExecutionContextInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ExecutionContextInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ExecutionContextInstance] execution_context_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ExecutionContextInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, execution_context_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @execution_context_instance = execution_context_instance
+                    end
+
+                    def execution_context
+                        @execution_context_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ExecutionContextInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ExecutionContextListResponse < InstanceListResource
+                    # @param [Array<ExecutionContextInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @execution_context_instance = payload.body[key].map do |data|
+                        ExecutionContextInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def execution_context_instance
+                          @instance
+                      end
+                  end
+
                 class ExecutionContextPage < Page
                     ##
                     # Initialize the ExecutionContextPage
@@ -104,6 +179,7 @@ module Twilio
                     # @return [ExecutionContextPage] ExecutionContextPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -123,6 +199,66 @@ module Twilio
                         '<Twilio.Studio.V1.ExecutionContextPage>'
                     end
                 end
+
+                class ExecutionContextPageMetadata < PageMetadata
+                    attr_reader :execution_context_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @execution_context_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @execution_context_page << ExecutionContextListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @execution_context_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Studio::V1PageMetadata>';
+                    end
+                end
+                class ExecutionContextListResponse < InstanceListResource
+
+                    # @param [Array<ExecutionContextInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @execution_context = data_list.map do |data|
+                        ExecutionContextInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def execution_context
+                        @execution_context
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ExecutionContextInstance < InstanceResource
                     ##
                     # Initialize the ExecutionContextInstance
@@ -135,6 +271,7 @@ module Twilio
                     # @return [ExecutionContextInstance] ExecutionContextInstance
                     def initialize(version, payload , flow_sid: nil, execution_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

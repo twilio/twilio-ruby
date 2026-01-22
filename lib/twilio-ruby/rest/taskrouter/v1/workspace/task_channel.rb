@@ -27,6 +27,7 @@ module Twilio
                     # @return [TaskChannelList] TaskChannelList
                     def initialize(version, workspace_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { workspace_sid: workspace_sid }
                         @uri = "/Workspaces/#{@solution[:workspace_sid]}/TaskChannels"
@@ -61,6 +62,44 @@ module Twilio
                             @version,
                             payload,
                             workspace_sid: @solution[:workspace_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the TaskChannelInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the Task Channel. It can be up to 64 characters long.
+                    # @param [String] unique_name An application-defined string that uniquely identifies the Task Channel, such as `voice` or `sms`.
+                    # @param [Boolean] channel_optimized_routing Whether the Task Channel should prioritize Workers that have been idle. If `true`, Workers that have been idle the longest are prioritized.
+                    # @return [TaskChannelInstance] Created TaskChannelInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      unique_name: nil, 
+                      channel_optimized_routing: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'UniqueName' => unique_name,
+                            'ChannelOptimizedRouting' => channel_optimized_routing,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        task_channel_instance = TaskChannelInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                        )
+                        TaskChannelInstanceMetadata.new(
+                            @version,
+                            task_channel_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -104,6 +143,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists TaskChannelPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TaskChannelPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields TaskChannelInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -124,7 +185,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of TaskChannelInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -170,6 +231,7 @@ module Twilio
                     # @return [TaskChannelContext] TaskChannelContext
                     def initialize(version, workspace_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { workspace_sid: workspace_sid, sid: sid,  }
@@ -186,7 +248,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the TaskChannelInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          taskChannel_instance = TaskChannelInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          TaskChannelInstanceMetadata.new(@version, taskChannel_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -206,6 +288,32 @@ module Twilio
                             payload,
                             workspace_sid: @solution[:workspace_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the TaskChannelInstanceMetadata
+                    # @return [TaskChannelInstance] Fetched TaskChannelInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        task_channel_instance = TaskChannelInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        TaskChannelInstanceMetadata.new(
+                            @version,
+                            task_channel_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -239,6 +347,42 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the TaskChannelInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the Task Channel. It can be up to 64 characters long.
+                    # @param [Boolean] channel_optimized_routing Whether the TaskChannel should prioritize Workers that have been idle. If `true`, Workers that have been idle the longest are prioritized.
+                    # @return [TaskChannelInstance] Updated TaskChannelInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      channel_optimized_routing: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'ChannelOptimizedRouting' => channel_optimized_routing,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        task_channel_instance = TaskChannelInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        TaskChannelInstanceMetadata.new(
+                            @version,
+                            task_channel_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -255,6 +399,53 @@ module Twilio
                     end
                 end
 
+                class TaskChannelInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new TaskChannelInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}TaskChannelInstance] task_channel_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [TaskChannelInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, task_channel_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @task_channel_instance = task_channel_instance
+                    end
+
+                    def task_channel
+                        @task_channel_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.TaskChannelInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class TaskChannelListResponse < InstanceListResource
+                    # @param [Array<TaskChannelInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @task_channel_instance = payload.body[key].map do |data|
+                        TaskChannelInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def task_channel_instance
+                          @instance
+                      end
+                  end
+
                 class TaskChannelPage < Page
                     ##
                     # Initialize the TaskChannelPage
@@ -264,6 +455,7 @@ module Twilio
                     # @return [TaskChannelPage] TaskChannelPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -283,6 +475,66 @@ module Twilio
                         '<Twilio.Taskrouter.V1.TaskChannelPage>'
                     end
                 end
+
+                class TaskChannelPageMetadata < PageMetadata
+                    attr_reader :task_channel_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @task_channel_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @task_channel_page << TaskChannelListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @task_channel_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class TaskChannelListResponse < InstanceListResource
+
+                    # @param [Array<TaskChannelInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @task_channel = data_list.map do |data|
+                        TaskChannelInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def task_channel
+                        @task_channel
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class TaskChannelInstance < InstanceResource
                     ##
                     # Initialize the TaskChannelInstance
@@ -295,6 +547,7 @@ module Twilio
                     # @return [TaskChannelInstance] TaskChannelInstance
                     def initialize(version, payload , workspace_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

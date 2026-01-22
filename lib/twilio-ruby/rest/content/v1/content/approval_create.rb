@@ -44,6 +44,7 @@ module Twilio
                     # @return [ApprovalCreateList] ApprovalCreateList
                     def initialize(version, content_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { content_sid: content_sid }
                         @uri = "/Content/#{@solution[:content_sid]}/ApprovalRequests/whatsapp"
@@ -70,6 +71,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ApprovalCreateInstanceMetadata
+                    # @param [ContentApprovalRequest] content_approval_request 
+                    # @return [ApprovalCreateInstance] Created ApprovalCreateInstance
+                    def create_with_metadata(content_approval_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: content_approval_request.to_json)
+                        approval_create_instance = ApprovalCreateInstance.new(
+                            @version,
+                            response.body,
+                            content_sid: @solution[:content_sid],
+                        )
+                        ApprovalCreateInstanceMetadata.new(
+                            @version,
+                            approval_create_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -88,6 +116,7 @@ module Twilio
                     # @return [ApprovalCreatePage] ApprovalCreatePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -107,6 +136,66 @@ module Twilio
                         '<Twilio.Content.V1.ApprovalCreatePage>'
                     end
                 end
+
+                class ApprovalCreatePageMetadata < PageMetadata
+                    attr_reader :approval_create_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @approval_create_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @approval_create_page << ApprovalCreateListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @approval_create_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Content::V1PageMetadata>';
+                    end
+                end
+                class ApprovalCreateListResponse < InstanceListResource
+
+                    # @param [Array<ApprovalCreateInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @approval_create = data_list.map do |data|
+                        ApprovalCreateInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def approval_create
+                        @approval_create
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ApprovalCreateInstance < InstanceResource
                     ##
                     # Initialize the ApprovalCreateInstance
@@ -119,6 +208,7 @@ module Twilio
                     # @return [ApprovalCreateInstance] ApprovalCreateInstance
                     def initialize(version, payload , content_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

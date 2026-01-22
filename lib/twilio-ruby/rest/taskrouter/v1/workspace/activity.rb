@@ -27,6 +27,7 @@ module Twilio
                     # @return [ActivityList] ActivityList
                     def initialize(version, workspace_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { workspace_sid: workspace_sid }
                         @uri = "/Workspaces/#{@solution[:workspace_sid]}/Activities"
@@ -58,6 +59,41 @@ module Twilio
                             @version,
                             payload,
                             workspace_sid: @solution[:workspace_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the ActivityInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the Activity resource. It can be up to 64 characters long. These names are used to calculate and expose statistics about Workers, and provide visibility into the state of each Worker. Examples of friendly names include: `on-call`, `break`, and `email`.
+                    # @param [Boolean] available Whether the Worker should be eligible to receive a Task when it occupies the Activity. A value of `true`, `1`, or `yes` specifies the Activity is available. All other values specify that it is not. The value cannot be changed after the Activity is created.
+                    # @return [ActivityInstance] Created ActivityInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      available: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Available' => available,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        activity_instance = ActivityInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                        )
+                        ActivityInstanceMetadata.new(
+                            @version,
+                            activity_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -109,6 +145,32 @@ module Twilio
                     end
 
                     ##
+                    # Lists ActivityPageMetadata records from the API as a list.
+                      # @param [String] friendly_name The `friendly_name` of the Activity resources to read.
+                      # @param [String] available Whether return only Activity resources that are available or unavailable. A value of `true` returns only available activities. Values of '1' or `yes` also indicate `true`. All other values represent `false` and return activities that are unavailable.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(friendly_name: :unset, available: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Available' => available,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ActivityPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ActivityInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -131,7 +193,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ActivityInstance
-                    def page(friendly_name: :unset, available: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(friendly_name: :unset, available: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'FriendlyName' => friendly_name,
                             'Available' => available,
@@ -179,6 +241,7 @@ module Twilio
                     # @return [ActivityContext] ActivityContext
                     def initialize(version, workspace_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { workspace_sid: workspace_sid, sid: sid,  }
@@ -195,7 +258,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ActivityInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          activity_instance = ActivityInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ActivityInstanceMetadata.new(@version, activity_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -215,6 +298,32 @@ module Twilio
                             payload,
                             workspace_sid: @solution[:workspace_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ActivityInstanceMetadata
+                    # @return [ActivityInstance] Fetched ActivityInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        activity_instance = ActivityInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        ActivityInstanceMetadata.new(
+                            @version,
+                            activity_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -245,6 +354,39 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the ActivityInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the Activity resource. It can be up to 64 characters long. These names are used to calculate and expose statistics about Workers, and provide visibility into the state of each Worker. Examples of friendly names include: `on-call`, `break`, and `email`.
+                    # @return [ActivityInstance] Updated ActivityInstance
+                    def update_with_metadata(
+                      friendly_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        activity_instance = ActivityInstance.new(
+                            @version,
+                            response.body,
+                            workspace_sid: @solution[:workspace_sid],
+                            sid: @solution[:sid],
+                        )
+                        ActivityInstanceMetadata.new(
+                            @version,
+                            activity_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -261,6 +403,53 @@ module Twilio
                     end
                 end
 
+                class ActivityInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ActivityInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ActivityInstance] activity_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ActivityInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, activity_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @activity_instance = activity_instance
+                    end
+
+                    def activity
+                        @activity_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ActivityInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ActivityListResponse < InstanceListResource
+                    # @param [Array<ActivityInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @activity_instance = payload.body[key].map do |data|
+                        ActivityInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def activity_instance
+                          @instance
+                      end
+                  end
+
                 class ActivityPage < Page
                     ##
                     # Initialize the ActivityPage
@@ -270,6 +459,7 @@ module Twilio
                     # @return [ActivityPage] ActivityPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -289,6 +479,66 @@ module Twilio
                         '<Twilio.Taskrouter.V1.ActivityPage>'
                     end
                 end
+
+                class ActivityPageMetadata < PageMetadata
+                    attr_reader :activity_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @activity_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @activity_page << ActivityListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @activity_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
+                    end
+                end
+                class ActivityListResponse < InstanceListResource
+
+                    # @param [Array<ActivityInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @activity = data_list.map do |data|
+                        ActivityInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def activity
+                        @activity
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ActivityInstance < InstanceResource
                     ##
                     # Initialize the ActivityInstance
@@ -301,6 +551,7 @@ module Twilio
                     # @return [ActivityInstance] ActivityInstance
                     def initialize(version, payload , workspace_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

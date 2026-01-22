@@ -25,6 +25,7 @@ module Twilio
                     # @return [ExportList] ExportList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Exports"
@@ -62,6 +63,7 @@ module Twilio
                     # @return [ExportContext] ExportContext
                     def initialize(version, resource_type)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { resource_type: resource_type,  }
@@ -87,6 +89,31 @@ module Twilio
                             @version,
                             payload,
                             resource_type: @solution[:resource_type],
+                        )
+                    end
+
+                    ##
+                    # Fetch the ExportInstanceMetadata
+                    # @return [ExportInstance] Fetched ExportInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        export_instance = ExportInstance.new(
+                            @version,
+                            response.body,
+                            resource_type: @solution[:resource_type],
+                        )
+                        ExportInstanceMetadata.new(
+                            @version,
+                            export_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -136,6 +163,53 @@ module Twilio
                     end
                 end
 
+                class ExportInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ExportInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ExportInstance] export_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ExportInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, export_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @export_instance = export_instance
+                    end
+
+                    def export
+                        @export_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ExportInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ExportListResponse < InstanceListResource
+                    # @param [Array<ExportInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @export_instance = payload.body[key].map do |data|
+                        ExportInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def export_instance
+                          @instance
+                      end
+                  end
+
                 class ExportPage < Page
                     ##
                     # Initialize the ExportPage
@@ -145,6 +219,7 @@ module Twilio
                     # @return [ExportPage] ExportPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -164,6 +239,66 @@ module Twilio
                         '<Twilio.Bulkexports.V1.ExportPage>'
                     end
                 end
+
+                class ExportPageMetadata < PageMetadata
+                    attr_reader :export_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @export_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @export_page << ExportListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @export_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Bulkexports::V1PageMetadata>';
+                    end
+                end
+                class ExportListResponse < InstanceListResource
+
+                    # @param [Array<ExportInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @export = data_list.map do |data|
+                        ExportInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def export
+                        @export
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ExportInstance < InstanceResource
                     ##
                     # Initialize the ExportInstance
@@ -176,6 +311,7 @@ module Twilio
                     # @return [ExportInstance] ExportInstance
                     def initialize(version, payload , resource_type: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

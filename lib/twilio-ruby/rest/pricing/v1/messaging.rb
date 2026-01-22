@@ -25,6 +25,7 @@ module Twilio
                     # @return [MessagingList] MessagingList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Messaging"
@@ -62,6 +63,7 @@ module Twilio
                     # @return [MessagingPage] MessagingPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -81,6 +83,66 @@ module Twilio
                         '<Twilio.Pricing.V1.MessagingPage>'
                     end
                 end
+
+                class MessagingPageMetadata < PageMetadata
+                    attr_reader :messaging_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @messaging_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @messaging_page << MessagingListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @messaging_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Pricing::V1PageMetadata>';
+                    end
+                end
+                class MessagingListResponse < InstanceListResource
+
+                    # @param [Array<MessagingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @messaging = data_list.map do |data|
+                        MessagingInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def messaging
+                        @messaging
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class MessagingInstance < InstanceResource
                     ##
                     # Initialize the MessagingInstance
@@ -93,6 +155,7 @@ module Twilio
                     # @return [MessagingInstance] MessagingInstance
                     def initialize(version )
                         super(version)
+                        
                         
                     end
 

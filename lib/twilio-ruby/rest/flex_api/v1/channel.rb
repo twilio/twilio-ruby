@@ -25,6 +25,7 @@ module Twilio
                     # @return [ChannelList] ChannelList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Channels"
@@ -82,6 +83,64 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the ChannelInstanceMetadata
+                    # @param [String] flex_flow_sid The SID of the Flex Flow.
+                    # @param [String] identity The `identity` value that uniquely identifies the new resource's chat User.
+                    # @param [String] chat_user_friendly_name The chat participant's friendly name.
+                    # @param [String] chat_friendly_name The chat channel's friendly name.
+                    # @param [String] target The Target Contact Identity, for example the phone number of an SMS.
+                    # @param [String] chat_unique_name The chat channel's unique name.
+                    # @param [String] pre_engagement_data The pre-engagement data.
+                    # @param [String] task_sid The SID of the TaskRouter Task. Only valid when integration type is `task`. `null` for integration types `studio` & `external`
+                    # @param [String] task_attributes The Task attributes to be added for the TaskRouter Task.
+                    # @param [Boolean] long_lived Whether to create the channel as long-lived.
+                    # @return [ChannelInstance] Created ChannelInstance
+                    def create_with_metadata(
+                      flex_flow_sid: nil, 
+                      identity: nil, 
+                      chat_user_friendly_name: nil, 
+                      chat_friendly_name: nil, 
+                      target: :unset, 
+                      chat_unique_name: :unset, 
+                      pre_engagement_data: :unset, 
+                      task_sid: :unset, 
+                      task_attributes: :unset, 
+                      long_lived: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FlexFlowSid' => flex_flow_sid,
+                            'Identity' => identity,
+                            'ChatUserFriendlyName' => chat_user_friendly_name,
+                            'ChatFriendlyName' => chat_friendly_name,
+                            'Target' => target,
+                            'ChatUniqueName' => chat_unique_name,
+                            'PreEngagementData' => pre_engagement_data,
+                            'TaskSid' => task_sid,
+                            'TaskAttributes' => task_attributes,
+                            'LongLived' => long_lived,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        channel_instance = ChannelInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ChannelInstanceMetadata.new(
+                            @version,
+                            channel_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
                     ##
                     # Lists ChannelInstance records from the API as a list.
@@ -122,6 +181,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists ChannelPageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ChannelPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ChannelInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -142,7 +223,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ChannelInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -187,6 +268,7 @@ module Twilio
                     # @return [ChannelContext] ChannelContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -203,7 +285,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the ChannelInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          channel_instance = ChannelInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          ChannelInstanceMetadata.new(@version, channel_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -225,6 +327,31 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the ChannelInstanceMetadata
+                    # @return [ChannelInstance] Fetched ChannelInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        channel_instance = ChannelInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        ChannelInstanceMetadata.new(
+                            @version,
+                            channel_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -241,6 +368,53 @@ module Twilio
                     end
                 end
 
+                class ChannelInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new ChannelInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}ChannelInstance] channel_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [ChannelInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, channel_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @channel_instance = channel_instance
+                    end
+
+                    def channel
+                        @channel_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.ChannelInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class ChannelListResponse < InstanceListResource
+                    # @param [Array<ChannelInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @channel_instance = payload.body[key].map do |data|
+                        ChannelInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def channel_instance
+                          @instance
+                      end
+                  end
+
                 class ChannelPage < Page
                     ##
                     # Initialize the ChannelPage
@@ -250,6 +424,7 @@ module Twilio
                     # @return [ChannelPage] ChannelPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -269,6 +444,66 @@ module Twilio
                         '<Twilio.FlexApi.V1.ChannelPage>'
                     end
                 end
+
+                class ChannelPageMetadata < PageMetadata
+                    attr_reader :channel_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @channel_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @channel_page << ChannelListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @channel_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class ChannelListResponse < InstanceListResource
+
+                    # @param [Array<ChannelInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @channel = data_list.map do |data|
+                        ChannelInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def channel
+                        @channel
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ChannelInstance < InstanceResource
                     ##
                     # Initialize the ChannelInstance
@@ -281,6 +516,7 @@ module Twilio
                     # @return [ChannelInstance] ChannelInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

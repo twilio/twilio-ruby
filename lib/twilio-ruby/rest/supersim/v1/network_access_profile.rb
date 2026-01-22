@@ -25,6 +25,7 @@ module Twilio
                     # @return [NetworkAccessProfileList] NetworkAccessProfileList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/NetworkAccessProfiles"
@@ -55,6 +56,40 @@ module Twilio
                         NetworkAccessProfileInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the NetworkAccessProfileInstanceMetadata
+                    # @param [String] unique_name An application-defined string that uniquely identifies the resource. It can be used in place of the resource's `sid` in the URL to address the resource.
+                    # @param [Array[String]] networks List of Network SIDs that this Network Access Profile will allow connections to.
+                    # @return [NetworkAccessProfileInstance] Created NetworkAccessProfileInstance
+                    def create_with_metadata(
+                      unique_name: :unset, 
+                      networks: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'UniqueName' => unique_name,
+                            'Networks' => Twilio.serialize_list(networks) { |e| e },
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        network_access_profile_instance = NetworkAccessProfileInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        NetworkAccessProfileInstanceMetadata.new(
+                            @version,
+                            network_access_profile_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -98,6 +133,28 @@ module Twilio
                     end
 
                     ##
+                    # Lists NetworkAccessProfilePageMetadata records from the API as a list.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        NetworkAccessProfilePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields NetworkAccessProfileInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -118,7 +175,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of NetworkAccessProfileInstance
-                    def page(page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'PageToken' => page_token,
                             'Page' => page_number,
@@ -163,6 +220,7 @@ module Twilio
                     # @return [NetworkAccessProfileContext] NetworkAccessProfileContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -191,6 +249,31 @@ module Twilio
                     end
 
                     ##
+                    # Fetch the NetworkAccessProfileInstanceMetadata
+                    # @return [NetworkAccessProfileInstance] Fetched NetworkAccessProfileInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        network_access_profile_instance = NetworkAccessProfileInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        NetworkAccessProfileInstanceMetadata.new(
+                            @version,
+                            network_access_profile_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the NetworkAccessProfileInstance
                     # @param [String] unique_name The new unique name of the Network Access Profile.
                     # @return [NetworkAccessProfileInstance] Updated NetworkAccessProfileInstance
@@ -213,6 +296,38 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the NetworkAccessProfileInstanceMetadata
+                    # @param [String] unique_name The new unique name of the Network Access Profile.
+                    # @return [NetworkAccessProfileInstance] Updated NetworkAccessProfileInstance
+                    def update_with_metadata(
+                      unique_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'UniqueName' => unique_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        network_access_profile_instance = NetworkAccessProfileInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        NetworkAccessProfileInstanceMetadata.new(
+                            @version,
+                            network_access_profile_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -251,6 +366,53 @@ module Twilio
                     end
                 end
 
+                class NetworkAccessProfileInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new NetworkAccessProfileInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}NetworkAccessProfileInstance] network_access_profile_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [NetworkAccessProfileInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, network_access_profile_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @network_access_profile_instance = network_access_profile_instance
+                    end
+
+                    def network_access_profile
+                        @network_access_profile_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.NetworkAccessProfileInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class NetworkAccessProfileListResponse < InstanceListResource
+                    # @param [Array<NetworkAccessProfileInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @network_access_profile_instance = payload.body[key].map do |data|
+                        NetworkAccessProfileInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def network_access_profile_instance
+                          @instance
+                      end
+                  end
+
                 class NetworkAccessProfilePage < Page
                     ##
                     # Initialize the NetworkAccessProfilePage
@@ -260,6 +422,7 @@ module Twilio
                     # @return [NetworkAccessProfilePage] NetworkAccessProfilePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -279,6 +442,66 @@ module Twilio
                         '<Twilio.Supersim.V1.NetworkAccessProfilePage>'
                     end
                 end
+
+                class NetworkAccessProfilePageMetadata < PageMetadata
+                    attr_reader :network_access_profile_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @network_access_profile_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @network_access_profile_page << NetworkAccessProfileListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @network_access_profile_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Supersim::V1PageMetadata>';
+                    end
+                end
+                class NetworkAccessProfileListResponse < InstanceListResource
+
+                    # @param [Array<NetworkAccessProfileInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @network_access_profile = data_list.map do |data|
+                        NetworkAccessProfileInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def network_access_profile
+                        @network_access_profile
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class NetworkAccessProfileInstance < InstanceResource
                     ##
                     # Initialize the NetworkAccessProfileInstance
@@ -291,6 +514,7 @@ module Twilio
                     # @return [NetworkAccessProfileInstance] NetworkAccessProfileInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

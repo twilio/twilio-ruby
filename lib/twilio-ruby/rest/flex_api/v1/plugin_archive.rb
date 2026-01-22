@@ -25,6 +25,7 @@ module Twilio
                     # @return [PluginArchiveList] PluginArchiveList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -48,6 +49,7 @@ module Twilio
                     # @return [PluginArchiveContext] PluginArchiveContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -77,6 +79,34 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the PluginArchiveInstanceMetadata
+                    # @param [String] flex_metadata The Flex-Metadata HTTP request header
+                    # @return [PluginArchiveInstance] Updated PluginArchiveInstance
+                    def update_with_metadata(
+                      flex_metadata: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Flex-Metadata' => flex_metadata, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, headers: headers)
+                        plugin_archive_instance = PluginArchiveInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        PluginArchiveInstanceMetadata.new(
+                            @version,
+                            plugin_archive_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -93,6 +123,53 @@ module Twilio
                     end
                 end
 
+                class PluginArchiveInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new PluginArchiveInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}PluginArchiveInstance] plugin_archive_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [PluginArchiveInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, plugin_archive_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @plugin_archive_instance = plugin_archive_instance
+                    end
+
+                    def plugin_archive
+                        @plugin_archive_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.PluginArchiveInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class PluginArchiveListResponse < InstanceListResource
+                    # @param [Array<PluginArchiveInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @plugin_archive_instance = payload.body[key].map do |data|
+                        PluginArchiveInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def plugin_archive_instance
+                          @instance
+                      end
+                  end
+
                 class PluginArchivePage < Page
                     ##
                     # Initialize the PluginArchivePage
@@ -102,6 +179,7 @@ module Twilio
                     # @return [PluginArchivePage] PluginArchivePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -121,6 +199,66 @@ module Twilio
                         '<Twilio.FlexApi.V1.PluginArchivePage>'
                     end
                 end
+
+                class PluginArchivePageMetadata < PageMetadata
+                    attr_reader :plugin_archive_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @plugin_archive_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @plugin_archive_page << PluginArchiveListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @plugin_archive_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class PluginArchiveListResponse < InstanceListResource
+
+                    # @param [Array<PluginArchiveInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @plugin_archive = data_list.map do |data|
+                        PluginArchiveInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def plugin_archive
+                        @plugin_archive
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class PluginArchiveInstance < InstanceResource
                     ##
                     # Initialize the PluginArchiveInstance
@@ -133,6 +271,7 @@ module Twilio
                     # @return [PluginArchiveInstance] PluginArchiveInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

@@ -27,6 +27,7 @@ module Twilio
                     # @return [SipList] SipList
                     def initialize(version, account_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/SIP.json"
@@ -92,6 +93,7 @@ module Twilio
                     # @return [SipPage] SipPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -111,6 +113,66 @@ module Twilio
                         '<Twilio.Api.V2010.SipPage>'
                     end
                 end
+
+                class SipPageMetadata < PageMetadata
+                    attr_reader :sip_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @sip_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @sip_page << SipListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @sip_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class SipListResponse < InstanceListResource
+
+                    # @param [Array<SipInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @sip = data_list.map do |data|
+                        SipInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def sip
+                        @sip
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class SipInstance < InstanceResource
                     ##
                     # Initialize the SipInstance
@@ -123,6 +185,7 @@ module Twilio
                     # @return [SipInstance] SipInstance
                     def initialize(version , account_sid: nil)
                         super(version)
+                        
                         
                     end
 

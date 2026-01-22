@@ -27,6 +27,7 @@ module Twilio
                     # @return [NewSigningKeyList] NewSigningKeyList
                     def initialize(version, account_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/SigningKeys.json"
@@ -58,6 +59,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the NewSigningKeyInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
+                    # @return [NewSigningKeyInstance] Created NewSigningKeyInstance
+                    def create_with_metadata(
+                      friendly_name: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        new_signing_key_instance = NewSigningKeyInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                        )
+                        NewSigningKeyInstanceMetadata.new(
+                            @version,
+                            new_signing_key_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -76,6 +109,7 @@ module Twilio
                     # @return [NewSigningKeyPage] NewSigningKeyPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -95,6 +129,66 @@ module Twilio
                         '<Twilio.Api.V2010.NewSigningKeyPage>'
                     end
                 end
+
+                class NewSigningKeyPageMetadata < PageMetadata
+                    attr_reader :new_signing_key_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @new_signing_key_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @new_signing_key_page << NewSigningKeyListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @new_signing_key_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class NewSigningKeyListResponse < InstanceListResource
+
+                    # @param [Array<NewSigningKeyInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @new_signing_key = data_list.map do |data|
+                        NewSigningKeyInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def new_signing_key
+                        @new_signing_key
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class NewSigningKeyInstance < InstanceResource
                     ##
                     # Initialize the NewSigningKeyInstance
@@ -107,6 +201,7 @@ module Twilio
                     # @return [NewSigningKeyInstance] NewSigningKeyInstance
                     def initialize(version, payload , account_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

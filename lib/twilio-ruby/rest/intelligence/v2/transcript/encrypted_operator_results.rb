@@ -27,6 +27,7 @@ module Twilio
                     # @return [EncryptedOperatorResultsList] EncryptedOperatorResultsList
                     def initialize(version, transcript_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { transcript_sid: transcript_sid }
                         
@@ -50,6 +51,7 @@ module Twilio
                     # @return [EncryptedOperatorResultsContext] EncryptedOperatorResultsContext
                     def initialize(version, transcript_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { transcript_sid: transcript_sid,  }
@@ -82,6 +84,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the EncryptedOperatorResultsInstanceMetadata
+                    # @param [Boolean] redacted Grant access to PII Redacted/Unredacted Operator Results. If redaction is enabled, the default is `true` to access redacted operator results.
+                    # @return [EncryptedOperatorResultsInstance] Fetched EncryptedOperatorResultsInstance
+                    def fetch_with_metadata(
+                      redacted: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'Redacted' => redacted,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        encrypted_operator_results_instance = EncryptedOperatorResultsInstance.new(
+                            @version,
+                            response.body,
+                            transcript_sid: @solution[:transcript_sid],
+                        )
+                        EncryptedOperatorResultsInstanceMetadata.new(
+                            @version,
+                            encrypted_operator_results_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -98,6 +131,53 @@ module Twilio
                     end
                 end
 
+                class EncryptedOperatorResultsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new EncryptedOperatorResultsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}EncryptedOperatorResultsInstance] encrypted_operator_results_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [EncryptedOperatorResultsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, encrypted_operator_results_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @encrypted_operator_results_instance = encrypted_operator_results_instance
+                    end
+
+                    def encrypted_operator_results
+                        @encrypted_operator_results_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.EncryptedOperatorResultsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class EncryptedOperatorResultsListResponse < InstanceListResource
+                    # @param [Array<EncryptedOperatorResultsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @encrypted_operator_results_instance = payload.body[key].map do |data|
+                        EncryptedOperatorResultsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def encrypted_operator_results_instance
+                          @instance
+                      end
+                  end
+
                 class EncryptedOperatorResultsPage < Page
                     ##
                     # Initialize the EncryptedOperatorResultsPage
@@ -107,6 +187,7 @@ module Twilio
                     # @return [EncryptedOperatorResultsPage] EncryptedOperatorResultsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -126,6 +207,66 @@ module Twilio
                         '<Twilio.Intelligence.V2.EncryptedOperatorResultsPage>'
                     end
                 end
+
+                class EncryptedOperatorResultsPageMetadata < PageMetadata
+                    attr_reader :encrypted_operator_results_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @encrypted_operator_results_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @encrypted_operator_results_page << EncryptedOperatorResultsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @encrypted_operator_results_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Intelligence::V2PageMetadata>';
+                    end
+                end
+                class EncryptedOperatorResultsListResponse < InstanceListResource
+
+                    # @param [Array<EncryptedOperatorResultsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @encrypted_operator_results = data_list.map do |data|
+                        EncryptedOperatorResultsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def encrypted_operator_results
+                        @encrypted_operator_results
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class EncryptedOperatorResultsInstance < InstanceResource
                     ##
                     # Initialize the EncryptedOperatorResultsInstance
@@ -138,6 +279,7 @@ module Twilio
                     # @return [EncryptedOperatorResultsInstance] EncryptedOperatorResultsInstance
                     def initialize(version, payload , transcript_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

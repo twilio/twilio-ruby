@@ -27,6 +27,7 @@ module Twilio
                     # @return [SettingsList] SettingsList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -49,6 +50,7 @@ module Twilio
                     # @return [SettingsContext] SettingsContext
                     def initialize(version)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = {  }
@@ -71,6 +73,30 @@ module Twilio
                         SettingsInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Fetch the SettingsInstanceMetadata
+                    # @return [SettingsInstance] Fetched SettingsInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        settings_instance = SettingsInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        SettingsInstanceMetadata.new(
+                            @version,
+                            settings_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -99,6 +125,37 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the SettingsInstanceMetadata
+                    # @param [Boolean] dialing_permissions_inheritance `true` for the sub-account to inherit voice dialing permissions from the Master Project; otherwise `false`.
+                    # @return [SettingsInstance] Updated SettingsInstance
+                    def update_with_metadata(
+                      dialing_permissions_inheritance: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'DialingPermissionsInheritance' => dialing_permissions_inheritance,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        settings_instance = SettingsInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        SettingsInstanceMetadata.new(
+                            @version,
+                            settings_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -115,6 +172,53 @@ module Twilio
                     end
                 end
 
+                class SettingsInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SettingsInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SettingsInstance] settings_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SettingsInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, settings_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @settings_instance = settings_instance
+                    end
+
+                    def settings
+                        @settings_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SettingsInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SettingsListResponse < InstanceListResource
+                    # @param [Array<SettingsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @settings_instance = payload.body[key].map do |data|
+                        SettingsInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def settings_instance
+                          @instance
+                      end
+                  end
+
                 class SettingsPage < Page
                     ##
                     # Initialize the SettingsPage
@@ -124,6 +228,7 @@ module Twilio
                     # @return [SettingsPage] SettingsPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -143,6 +248,66 @@ module Twilio
                         '<Twilio.Voice.V1.SettingsPage>'
                     end
                 end
+
+                class SettingsPageMetadata < PageMetadata
+                    attr_reader :settings_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @settings_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @settings_page << SettingsListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @settings_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Voice::V1PageMetadata>';
+                    end
+                end
+                class SettingsListResponse < InstanceListResource
+
+                    # @param [Array<SettingsInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @settings = data_list.map do |data|
+                        SettingsInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def settings
+                        @settings
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class SettingsInstance < InstanceResource
                     ##
                     # Initialize the SettingsInstance
@@ -155,6 +320,7 @@ module Twilio
                     # @return [SettingsInstance] SettingsInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

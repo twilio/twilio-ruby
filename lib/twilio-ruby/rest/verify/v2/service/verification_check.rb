@@ -27,6 +27,7 @@ module Twilio
                     # @return [VerificationCheckList] VerificationCheckList
                     def initialize(version, service_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { service_sid: service_sid }
                         @uri = "/Services/#{@solution[:service_sid]}/VerificationCheck"
@@ -73,6 +74,53 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the VerificationCheckInstanceMetadata
+                    # @param [String] code The 4-10 character string being verified.
+                    # @param [String] to The phone number or [email](https://www.twilio.com/docs/verify/email) to verify. Either this parameter or the `verification_sid` must be specified. Phone numbers must be in [E.164 format](https://www.twilio.com/docs/glossary/what-e164).
+                    # @param [String] verification_sid A SID that uniquely identifies the Verification Check. Either this parameter or the `to` phone number/[email](https://www.twilio.com/docs/verify/email) must be specified.
+                    # @param [String] amount The amount of the associated PSD2 compliant transaction. Requires the PSD2 Service flag enabled.
+                    # @param [String] payee The payee of the associated PSD2 compliant transaction. Requires the PSD2 Service flag enabled.
+                    # @param [String] sna_client_token A sna client token received in sna url invocation response needs to be passed in Verification Check request and should match to get successful response.
+                    # @return [VerificationCheckInstance] Created VerificationCheckInstance
+                    def create_with_metadata(
+                      code: :unset, 
+                      to: :unset, 
+                      verification_sid: :unset, 
+                      amount: :unset, 
+                      payee: :unset, 
+                      sna_client_token: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Code' => code,
+                            'To' => to,
+                            'VerificationSid' => verification_sid,
+                            'Amount' => amount,
+                            'Payee' => payee,
+                            'SnaClientToken' => sna_client_token,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        verification_check_instance = VerificationCheckInstance.new(
+                            @version,
+                            response.body,
+                            service_sid: @solution[:service_sid],
+                        )
+                        VerificationCheckInstanceMetadata.new(
+                            @version,
+                            verification_check_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -91,6 +139,7 @@ module Twilio
                     # @return [VerificationCheckPage] VerificationCheckPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -110,6 +159,66 @@ module Twilio
                         '<Twilio.Verify.V2.VerificationCheckPage>'
                     end
                 end
+
+                class VerificationCheckPageMetadata < PageMetadata
+                    attr_reader :verification_check_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @verification_check_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @verification_check_page << VerificationCheckListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @verification_check_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class VerificationCheckListResponse < InstanceListResource
+
+                    # @param [Array<VerificationCheckInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @verification_check = data_list.map do |data|
+                        VerificationCheckInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def verification_check
+                        @verification_check
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class VerificationCheckInstance < InstanceResource
                     ##
                     # Initialize the VerificationCheckInstance
@@ -122,6 +231,7 @@ module Twilio
                     # @return [VerificationCheckInstance] VerificationCheckInstance
                     def initialize(version, payload , service_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

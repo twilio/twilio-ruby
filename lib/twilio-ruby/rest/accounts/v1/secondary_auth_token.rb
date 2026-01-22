@@ -25,6 +25,7 @@ module Twilio
                     # @return [SecondaryAuthTokenList] SecondaryAuthTokenList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -47,6 +48,7 @@ module Twilio
                     # @return [SecondaryAuthTokenContext] SecondaryAuthTokenContext
                     def initialize(version)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = {  }
@@ -73,6 +75,30 @@ module Twilio
                     end
 
                     ##
+                    # Create the SecondaryAuthTokenInstanceMetadata
+                    # @return [SecondaryAuthTokenInstance] Created SecondaryAuthTokenInstance
+                    def create_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers)
+                        secondary_auth_token_instance = SecondaryAuthTokenInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        SecondaryAuthTokenInstanceMetadata.new(
+                            @version,
+                            secondary_auth_token_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Delete the SecondaryAuthTokenInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
@@ -81,7 +107,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the SecondaryAuthTokenInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          secondaryAuthToken_instance = SecondaryAuthTokenInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          SecondaryAuthTokenInstanceMetadata.new(@version, secondaryAuthToken_instance, response.headers, response.status_code)
                     end
 
 
@@ -100,6 +146,53 @@ module Twilio
                     end
                 end
 
+                class SecondaryAuthTokenInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new SecondaryAuthTokenInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}SecondaryAuthTokenInstance] secondary_auth_token_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [SecondaryAuthTokenInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, secondary_auth_token_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @secondary_auth_token_instance = secondary_auth_token_instance
+                    end
+
+                    def secondary_auth_token
+                        @secondary_auth_token_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.SecondaryAuthTokenInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class SecondaryAuthTokenListResponse < InstanceListResource
+                    # @param [Array<SecondaryAuthTokenInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @secondary_auth_token_instance = payload.body[key].map do |data|
+                        SecondaryAuthTokenInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def secondary_auth_token_instance
+                          @instance
+                      end
+                  end
+
                 class SecondaryAuthTokenPage < Page
                     ##
                     # Initialize the SecondaryAuthTokenPage
@@ -109,6 +202,7 @@ module Twilio
                     # @return [SecondaryAuthTokenPage] SecondaryAuthTokenPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -128,6 +222,66 @@ module Twilio
                         '<Twilio.Accounts.V1.SecondaryAuthTokenPage>'
                     end
                 end
+
+                class SecondaryAuthTokenPageMetadata < PageMetadata
+                    attr_reader :secondary_auth_token_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @secondary_auth_token_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @secondary_auth_token_page << SecondaryAuthTokenListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @secondary_auth_token_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Accounts::V1PageMetadata>';
+                    end
+                end
+                class SecondaryAuthTokenListResponse < InstanceListResource
+
+                    # @param [Array<SecondaryAuthTokenInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @secondary_auth_token = data_list.map do |data|
+                        SecondaryAuthTokenInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def secondary_auth_token
+                        @secondary_auth_token
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class SecondaryAuthTokenInstance < InstanceResource
                     ##
                     # Initialize the SecondaryAuthTokenInstance
@@ -140,6 +294,7 @@ module Twilio
                     # @return [SecondaryAuthTokenInstance] SecondaryAuthTokenInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

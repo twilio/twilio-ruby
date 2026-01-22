@@ -25,6 +25,7 @@ module Twilio
                     # @return [TemplateList] TemplateList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Templates"
@@ -74,6 +75,30 @@ module Twilio
                     end
 
                     ##
+                    # Lists TemplatePageMetadata records from the API as a list.
+                      # @param [String] friendly_name String filter used to query templates with a given friendly name.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(friendly_name: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TemplatePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields TemplateInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -95,7 +120,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of TemplateInstance
-                    def page(friendly_name: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(friendly_name: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'FriendlyName' => friendly_name,
                             'PageToken' => page_token,
@@ -141,6 +166,7 @@ module Twilio
                     # @return [TemplatePage] TemplatePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -160,6 +186,66 @@ module Twilio
                         '<Twilio.Verify.V2.TemplatePage>'
                     end
                 end
+
+                class TemplatePageMetadata < PageMetadata
+                    attr_reader :template_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @template_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @template_page << TemplateListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @template_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Verify::V2PageMetadata>';
+                    end
+                end
+                class TemplateListResponse < InstanceListResource
+
+                    # @param [Array<TemplateInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @template = data_list.map do |data|
+                        TemplateInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def template
+                        @template
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class TemplateInstance < InstanceResource
                     ##
                     # Initialize the TemplateInstance
@@ -172,6 +258,7 @@ module Twilio
                     # @return [TemplateInstance] TemplateInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

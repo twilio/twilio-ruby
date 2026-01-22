@@ -44,6 +44,7 @@ module Twilio
                     # @return [InstalledAddOnUsageList] InstalledAddOnUsageList
                     def initialize(version, installed_add_on_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { installed_add_on_sid: installed_add_on_sid }
                         @uri = "/InstalledAddOns/#{@solution[:installed_add_on_sid]}/Usage"
@@ -70,6 +71,33 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Create the InstalledAddOnUsageInstanceMetadata
+                    # @param [MarketplaceV1InstalledAddOnInstalledAddOnUsage] marketplace_v1_installed_add_on_installed_add_on_usage 
+                    # @return [InstalledAddOnUsageInstance] Created InstalledAddOnUsageInstance
+                    def create_with_metadata(marketplace_v1_installed_add_on_installed_add_on_usage: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: marketplace_v1_installed_add_on_installed_add_on_usage.to_json)
+                        installed_add_on_usage_instance = InstalledAddOnUsageInstance.new(
+                            @version,
+                            response.body,
+                            installed_add_on_sid: @solution[:installed_add_on_sid],
+                        )
+                        InstalledAddOnUsageInstanceMetadata.new(
+                            @version,
+                            installed_add_on_usage_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -88,6 +116,7 @@ module Twilio
                     # @return [InstalledAddOnUsagePage] InstalledAddOnUsagePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -107,6 +136,66 @@ module Twilio
                         '<Twilio.Marketplace.V1.InstalledAddOnUsagePage>'
                     end
                 end
+
+                class InstalledAddOnUsagePageMetadata < PageMetadata
+                    attr_reader :installed_add_on_usage_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @installed_add_on_usage_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @installed_add_on_usage_page << InstalledAddOnUsageListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @installed_add_on_usage_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Marketplace::V1PageMetadata>';
+                    end
+                end
+                class InstalledAddOnUsageListResponse < InstanceListResource
+
+                    # @param [Array<InstalledAddOnUsageInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @installed_add_on_usage = data_list.map do |data|
+                        InstalledAddOnUsageInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def installed_add_on_usage
+                        @installed_add_on_usage
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class InstalledAddOnUsageInstance < InstanceResource
                     ##
                     # Initialize the InstalledAddOnUsageInstance
@@ -119,6 +208,7 @@ module Twilio
                     # @return [InstalledAddOnUsageInstance] InstalledAddOnUsageInstance
                     def initialize(version, payload , installed_add_on_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

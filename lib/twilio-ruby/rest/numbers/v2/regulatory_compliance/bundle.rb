@@ -27,6 +27,7 @@ module Twilio
                     # @return [BundleList] BundleList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/RegulatoryCompliance/Bundles"
@@ -75,6 +76,58 @@ module Twilio
                         BundleInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the BundleInstanceMetadata
+                    # @param [String] friendly_name The string that you assigned to describe the resource.
+                    # @param [String] email The email address that will receive updates when the Bundle resource changes status.
+                    # @param [String] status_callback The URL we call to inform your application of status changes.
+                    # @param [String] regulation_sid The unique string of a regulation that is associated to the Bundle resource.
+                    # @param [String] iso_country The [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
+                    # @param [EndUserType] end_user_type 
+                    # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll-free`.
+                    # @param [Boolean] is_test Indicates that Bundle is a Test Bundle and will be Auto-Rejected
+                    # @return [BundleInstance] Created BundleInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      email: nil, 
+                      status_callback: :unset, 
+                      regulation_sid: :unset, 
+                      iso_country: :unset, 
+                      end_user_type: :unset, 
+                      number_type: :unset, 
+                      is_test: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Email' => email,
+                            'StatusCallback' => status_callback,
+                            'RegulationSid' => regulation_sid,
+                            'IsoCountry' => iso_country,
+                            'EndUserType' => end_user_type,
+                            'NumberType' => number_type,
+                            'IsTest' => is_test,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        bundle_instance = BundleInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        BundleInstanceMetadata.new(
+                            @version,
+                            bundle_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -162,6 +215,50 @@ module Twilio
                     end
 
                     ##
+                    # Lists BundlePageMetadata records from the API as a list.
+                      # @param [Status] status The verification status of the Bundle resource. Please refer to [Bundle Statuses](https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses) for more details.
+                      # @param [String] friendly_name The string that you assigned to describe the resource. The column can contain 255 variable characters.
+                      # @param [String] regulation_sid The unique string of a [Regulation resource](https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations) that is associated to the Bundle resource.
+                      # @param [String] iso_country The 2-digit [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
+                      # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll-free`.
+                      # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid Bundle until a specified expiration date.
+                      # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
+                      # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
+                      # @param [Time] valid_until_date Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
+                      # @param [Time] valid_until_date_before Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
+                      # @param [Time] valid_until_date_after Date to filter Bundles having their `valid_until_date` before or after the specified date. Can be `ValidUntilDate>=` or `ValidUntilDate<=`. Both can be used in conjunction as well. [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) is the acceptable date format.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Status' => status,
+                            'FriendlyName' => friendly_name,
+                            'RegulationSid' => regulation_sid,
+                            'IsoCountry' => iso_country,
+                            'NumberType' => number_type,
+                            'HasValidUntilDate' => has_valid_until_date,
+                            'SortBy' => sort_by,
+                            'SortDirection' => sort_direction,
+                            'ValidUntilDate' =>  Twilio.serialize_iso8601_datetime(valid_until_date),
+                            'ValidUntilDate<' =>  Twilio.serialize_iso8601_datetime(valid_until_date_before),
+                            'ValidUntilDate>' =>  Twilio.serialize_iso8601_datetime(valid_until_date_after),
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        BundlePageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields BundleInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -193,7 +290,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of BundleInstance
-                    def page(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Status' => status,
                             'FriendlyName' => friendly_name,
@@ -249,6 +346,7 @@ module Twilio
                     # @return [BundleContext] BundleContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -269,7 +367,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the BundleInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          bundle_instance = BundleInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          BundleInstanceMetadata.new(@version, bundle_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -288,6 +406,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the BundleInstanceMetadata
+                    # @return [BundleInstance] Fetched BundleInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        bundle_instance = BundleInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        BundleInstanceMetadata.new(
+                            @version,
+                            bundle_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -323,6 +466,47 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Update the BundleInstanceMetadata
+                    # @param [Status] status 
+                    # @param [String] status_callback The URL we call to inform your application of status changes.
+                    # @param [String] friendly_name The string that you assigned to describe the resource.
+                    # @param [String] email The email address that will receive updates when the Bundle resource changes status.
+                    # @return [BundleInstance] Updated BundleInstance
+                    def update_with_metadata(
+                      status: :unset, 
+                      status_callback: :unset, 
+                      friendly_name: :unset, 
+                      email: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'Status' => status,
+                            'StatusCallback' => status_callback,
+                            'FriendlyName' => friendly_name,
+                            'Email' => email,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        bundle_instance = BundleInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        BundleInstanceMetadata.new(
+                            @version,
+                            bundle_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -402,6 +586,53 @@ module Twilio
                     end
                 end
 
+                class BundleInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new BundleInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}BundleInstance] bundle_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [BundleInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, bundle_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @bundle_instance = bundle_instance
+                    end
+
+                    def bundle
+                        @bundle_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.BundleInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class BundleListResponse < InstanceListResource
+                    # @param [Array<BundleInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @bundle_instance = payload.body[key].map do |data|
+                        BundleInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def bundle_instance
+                          @instance
+                      end
+                  end
+
                 class BundlePage < Page
                     ##
                     # Initialize the BundlePage
@@ -411,6 +642,7 @@ module Twilio
                     # @return [BundlePage] BundlePage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -430,6 +662,66 @@ module Twilio
                         '<Twilio.Numbers.V2.BundlePage>'
                     end
                 end
+
+                class BundlePageMetadata < PageMetadata
+                    attr_reader :bundle_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @bundle_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @bundle_page << BundleListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @bundle_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V2PageMetadata>';
+                    end
+                end
+                class BundleListResponse < InstanceListResource
+
+                    # @param [Array<BundleInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @bundle = data_list.map do |data|
+                        BundleInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def bundle
+                        @bundle
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class BundleInstance < InstanceResource
                     ##
                     # Initialize the BundleInstance
@@ -442,6 +734,7 @@ module Twilio
                     # @return [BundleInstance] BundleInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

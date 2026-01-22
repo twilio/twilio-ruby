@@ -25,6 +25,7 @@ module Twilio
                     # @return [CustomOperatorList] CustomOperatorList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Operators/Custom"
@@ -58,6 +59,43 @@ module Twilio
                         CustomOperatorInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the CustomOperatorInstanceMetadata
+                    # @param [String] friendly_name A human readable description of the new Operator, up to 64 characters.
+                    # @param [String] operator_type Operator Type for this Operator. References an existing Operator Type resource.
+                    # @param [Object] config Operator configuration, following the schema defined by the Operator Type.
+                    # @return [CustomOperatorInstance] Created CustomOperatorInstance
+                    def create_with_metadata(
+                      friendly_name: nil, 
+                      operator_type: nil, 
+                      config: nil
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'OperatorType' => operator_type,
+                            'Config' => Twilio.serialize_object(config),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        custom_operator_instance = CustomOperatorInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        CustomOperatorInstanceMetadata.new(
+                            @version,
+                            custom_operator_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -109,6 +147,32 @@ module Twilio
                     end
 
                     ##
+                    # Lists CustomOperatorPageMetadata records from the API as a list.
+                      # @param [Availability] availability Returns Custom Operators with the provided availability type. Possible values: internal, beta, public, retired.
+                      # @param [String] language_code Returns Custom Operators that support the provided language code.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(availability: :unset, language_code: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Availability' => availability,
+                            'LanguageCode' => language_code,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CustomOperatorPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields CustomOperatorInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -131,7 +195,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of CustomOperatorInstance
-                    def page(availability: :unset, language_code: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(availability: :unset, language_code: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Availability' => availability,
                             'LanguageCode' => language_code,
@@ -178,6 +242,7 @@ module Twilio
                     # @return [CustomOperatorContext] CustomOperatorContext
                     def initialize(version, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { sid: sid,  }
@@ -194,7 +259,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the CustomOperatorInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          customOperator_instance = CustomOperatorInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          CustomOperatorInstanceMetadata.new(@version, customOperator_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -213,6 +298,31 @@ module Twilio
                             @version,
                             payload,
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the CustomOperatorInstanceMetadata
+                    # @return [CustomOperatorInstance] Fetched CustomOperatorInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        custom_operator_instance = CustomOperatorInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        CustomOperatorInstanceMetadata.new(
+                            @version,
+                            custom_operator_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -247,6 +357,43 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the CustomOperatorInstanceMetadata
+                    # @param [String] friendly_name A human-readable name of this resource, up to 64 characters.
+                    # @param [Object] config Operator configuration, following the schema defined by the Operator Type.
+                    # @param [String] if_match The If-Match HTTP request header
+                    # @return [CustomOperatorInstance] Updated CustomOperatorInstance
+                    def update_with_metadata(
+                      friendly_name: nil, 
+                      config: nil, 
+                      if_match: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'Config' => Twilio.serialize_object(config),
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        custom_operator_instance = CustomOperatorInstance.new(
+                            @version,
+                            response.body,
+                            sid: @solution[:sid],
+                        )
+                        CustomOperatorInstanceMetadata.new(
+                            @version,
+                            custom_operator_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -263,6 +410,53 @@ module Twilio
                     end
                 end
 
+                class CustomOperatorInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CustomOperatorInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CustomOperatorInstance] custom_operator_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CustomOperatorInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, custom_operator_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @custom_operator_instance = custom_operator_instance
+                    end
+
+                    def custom_operator
+                        @custom_operator_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CustomOperatorInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CustomOperatorListResponse < InstanceListResource
+                    # @param [Array<CustomOperatorInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @custom_operator_instance = payload.body[key].map do |data|
+                        CustomOperatorInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def custom_operator_instance
+                          @instance
+                      end
+                  end
+
                 class CustomOperatorPage < Page
                     ##
                     # Initialize the CustomOperatorPage
@@ -272,6 +466,7 @@ module Twilio
                     # @return [CustomOperatorPage] CustomOperatorPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -291,6 +486,66 @@ module Twilio
                         '<Twilio.Intelligence.V2.CustomOperatorPage>'
                     end
                 end
+
+                class CustomOperatorPageMetadata < PageMetadata
+                    attr_reader :custom_operator_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @custom_operator_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @custom_operator_page << CustomOperatorListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @custom_operator_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Intelligence::V2PageMetadata>';
+                    end
+                end
+                class CustomOperatorListResponse < InstanceListResource
+
+                    # @param [Array<CustomOperatorInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @custom_operator = data_list.map do |data|
+                        CustomOperatorInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def custom_operator
+                        @custom_operator
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class CustomOperatorInstance < InstanceResource
                     ##
                     # Initialize the CustomOperatorInstance
@@ -303,6 +558,7 @@ module Twilio
                     # @return [CustomOperatorInstance] CustomOperatorInstance
                     def initialize(version, payload , sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

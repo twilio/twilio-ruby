@@ -25,6 +25,7 @@ module Twilio
                     # @return [PortingPortInPhoneNumberList] PortingPortInPhoneNumberList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         
@@ -49,6 +50,7 @@ module Twilio
                     # @return [PortingPortInPhoneNumberContext] PortingPortInPhoneNumberContext
                     def initialize(version, port_in_request_sid, phone_number_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { port_in_request_sid: port_in_request_sid, phone_number_sid: phone_number_sid,  }
@@ -65,7 +67,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the PortingPortInPhoneNumberInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          portingPortInPhoneNumber_instance = PortingPortInPhoneNumberInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          PortingPortInPhoneNumberInstanceMetadata.new(@version, portingPortInPhoneNumber_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -88,6 +110,32 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the PortingPortInPhoneNumberInstanceMetadata
+                    # @return [PortingPortInPhoneNumberInstance] Fetched PortingPortInPhoneNumberInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        porting_port_in_phone_number_instance = PortingPortInPhoneNumberInstance.new(
+                            @version,
+                            response.body,
+                            port_in_request_sid: @solution[:port_in_request_sid],
+                            phone_number_sid: @solution[:phone_number_sid],
+                        )
+                        PortingPortInPhoneNumberInstanceMetadata.new(
+                            @version,
+                            porting_port_in_phone_number_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -104,6 +152,53 @@ module Twilio
                     end
                 end
 
+                class PortingPortInPhoneNumberInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new PortingPortInPhoneNumberInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}PortingPortInPhoneNumberInstance] porting_port_in_phone_number_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [PortingPortInPhoneNumberInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, porting_port_in_phone_number_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @porting_port_in_phone_number_instance = porting_port_in_phone_number_instance
+                    end
+
+                    def porting_port_in_phone_number
+                        @porting_port_in_phone_number_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.PortingPortInPhoneNumberInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class PortingPortInPhoneNumberListResponse < InstanceListResource
+                    # @param [Array<PortingPortInPhoneNumberInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @porting_port_in_phone_number_instance = payload.body[key].map do |data|
+                        PortingPortInPhoneNumberInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def porting_port_in_phone_number_instance
+                          @instance
+                      end
+                  end
+
                 class PortingPortInPhoneNumberPage < Page
                     ##
                     # Initialize the PortingPortInPhoneNumberPage
@@ -113,6 +208,7 @@ module Twilio
                     # @return [PortingPortInPhoneNumberPage] PortingPortInPhoneNumberPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -132,6 +228,66 @@ module Twilio
                         '<Twilio.Numbers.V1.PortingPortInPhoneNumberPage>'
                     end
                 end
+
+                class PortingPortInPhoneNumberPageMetadata < PageMetadata
+                    attr_reader :porting_port_in_phone_number_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @porting_port_in_phone_number_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @porting_port_in_phone_number_page << PortingPortInPhoneNumberListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @porting_port_in_phone_number_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Numbers::V1PageMetadata>';
+                    end
+                end
+                class PortingPortInPhoneNumberListResponse < InstanceListResource
+
+                    # @param [Array<PortingPortInPhoneNumberInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @porting_port_in_phone_number = data_list.map do |data|
+                        PortingPortInPhoneNumberInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def porting_port_in_phone_number
+                        @porting_port_in_phone_number
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class PortingPortInPhoneNumberInstance < InstanceResource
                     ##
                     # Initialize the PortingPortInPhoneNumberInstance
@@ -144,6 +300,7 @@ module Twilio
                     # @return [PortingPortInPhoneNumberInstance] PortingPortInPhoneNumberInstance
                     def initialize(version, payload , port_in_request_sid: nil, phone_number_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

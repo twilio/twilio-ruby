@@ -25,6 +25,7 @@ module Twilio
                     # @return [InsightsQuestionnairesQuestionList] InsightsQuestionnairesQuestionList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Insights/QualityManagement/Questions"
@@ -66,6 +67,51 @@ module Twilio
                         InsightsQuestionnairesQuestionInstance.new(
                             @version,
                             payload,
+                        )
+                    end
+
+                    ##
+                    # Create the InsightsQuestionnairesQuestionInstanceMetadata
+                    # @param [String] category_sid The SID of the category
+                    # @param [String] question The question.
+                    # @param [String] answer_set_id The answer_set for the question.
+                    # @param [Boolean] allow_na The flag to enable for disable NA for answer.
+                    # @param [String] description The description for the question.
+                    # @param [String] authorization The Authorization HTTP request header
+                    # @return [InsightsQuestionnairesQuestionInstance] Created InsightsQuestionnairesQuestionInstance
+                    def create_with_metadata(
+                      category_sid: nil, 
+                      question: nil, 
+                      answer_set_id: nil, 
+                      allow_na: nil, 
+                      description: :unset, 
+                      authorization: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'CategorySid' => category_sid,
+                            'Question' => question,
+                            'AnswerSetId' => answer_set_id,
+                            'AllowNa' => allow_na,
+                            'Description' => description,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        insights_questionnaires_question_instance = InsightsQuestionnairesQuestionInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        InsightsQuestionnairesQuestionInstanceMetadata.new(
+                            @version,
+                            insights_questionnaires_question_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -117,6 +163,33 @@ module Twilio
                     end
 
                     ##
+                    # Lists InsightsQuestionnairesQuestionPageMetadata records from the API as a list.
+                      # @param [String] authorization The Authorization HTTP request header
+                      # @param [Array[String]] category_sid The list of category SIDs
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(authorization: :unset, category_sid: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Authorization' => authorization,
+                            
+                            'CategorySid' =>  Twilio.serialize_list(category_sid) { |e| e },
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        InsightsQuestionnairesQuestionPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields InsightsQuestionnairesQuestionInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -139,7 +212,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of InsightsQuestionnairesQuestionInstance
-                    def page(authorization: :unset, category_sid: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(authorization: :unset, category_sid: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Authorization' => authorization,
                             
@@ -187,6 +260,7 @@ module Twilio
                     # @return [InsightsQuestionnairesQuestionContext] InsightsQuestionnairesQuestionContext
                     def initialize(version, question_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { question_sid: question_sid,  }
@@ -206,7 +280,30 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the InsightsQuestionnairesQuestionInstanceMetadata
+                    # @param [String] authorization The Authorization HTTP request header
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata(
+                      authorization: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          insightsQuestionnairesQuestion_instance = InsightsQuestionnairesQuestionInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          InsightsQuestionnairesQuestionInstanceMetadata.new(@version, insightsQuestionnairesQuestion_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -249,6 +346,52 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Update the InsightsQuestionnairesQuestionInstanceMetadata
+                    # @param [Boolean] allow_na The flag to enable for disable NA for answer.
+                    # @param [String] category_sid The SID of the category
+                    # @param [String] question The question.
+                    # @param [String] description The description for the question.
+                    # @param [String] answer_set_id The answer_set for the question.
+                    # @param [String] authorization The Authorization HTTP request header
+                    # @return [InsightsQuestionnairesQuestionInstance] Updated InsightsQuestionnairesQuestionInstance
+                    def update_with_metadata(
+                      allow_na: nil, 
+                      category_sid: :unset, 
+                      question: :unset, 
+                      description: :unset, 
+                      answer_set_id: :unset, 
+                      authorization: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'AllowNa' => allow_na,
+                            'CategorySid' => category_sid,
+                            'Question' => question,
+                            'Description' => description,
+                            'AnswerSetId' => answer_set_id,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Authorization' => authorization, })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        insights_questionnaires_question_instance = InsightsQuestionnairesQuestionInstance.new(
+                            @version,
+                            response.body,
+                            question_sid: @solution[:question_sid],
+                        )
+                        InsightsQuestionnairesQuestionInstanceMetadata.new(
+                            @version,
+                            insights_questionnaires_question_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -265,6 +408,53 @@ module Twilio
                     end
                 end
 
+                class InsightsQuestionnairesQuestionInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new InsightsQuestionnairesQuestionInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}InsightsQuestionnairesQuestionInstance] insights_questionnaires_question_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [InsightsQuestionnairesQuestionInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, insights_questionnaires_question_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @insights_questionnaires_question_instance = insights_questionnaires_question_instance
+                    end
+
+                    def insights_questionnaires_question
+                        @insights_questionnaires_question_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.InsightsQuestionnairesQuestionInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class InsightsQuestionnairesQuestionListResponse < InstanceListResource
+                    # @param [Array<InsightsQuestionnairesQuestionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @insights_questionnaires_question_instance = payload.body[key].map do |data|
+                        InsightsQuestionnairesQuestionInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def insights_questionnaires_question_instance
+                          @instance
+                      end
+                  end
+
                 class InsightsQuestionnairesQuestionPage < Page
                     ##
                     # Initialize the InsightsQuestionnairesQuestionPage
@@ -274,6 +464,7 @@ module Twilio
                     # @return [InsightsQuestionnairesQuestionPage] InsightsQuestionnairesQuestionPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -293,6 +484,66 @@ module Twilio
                         '<Twilio.FlexApi.V1.InsightsQuestionnairesQuestionPage>'
                     end
                 end
+
+                class InsightsQuestionnairesQuestionPageMetadata < PageMetadata
+                    attr_reader :insights_questionnaires_question_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @insights_questionnaires_question_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @insights_questionnaires_question_page << InsightsQuestionnairesQuestionListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @insights_questionnaires_question_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::FlexApi::V1PageMetadata>';
+                    end
+                end
+                class InsightsQuestionnairesQuestionListResponse < InstanceListResource
+
+                    # @param [Array<InsightsQuestionnairesQuestionInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @insights_questionnaires_question = data_list.map do |data|
+                        InsightsQuestionnairesQuestionInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def insights_questionnaires_question
+                        @insights_questionnaires_question
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class InsightsQuestionnairesQuestionInstance < InstanceResource
                     ##
                     # Initialize the InsightsQuestionnairesQuestionInstance
@@ -305,6 +556,7 @@ module Twilio
                     # @return [InsightsQuestionnairesQuestionInstance] InsightsQuestionnairesQuestionInstance
                     def initialize(version, payload , question_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

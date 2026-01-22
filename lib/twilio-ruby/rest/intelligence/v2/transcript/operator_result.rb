@@ -27,6 +27,7 @@ module Twilio
                     # @return [OperatorResultList] OperatorResultList
                     def initialize(version, transcript_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { transcript_sid: transcript_sid }
                         @uri = "/Transcripts/#{@solution[:transcript_sid]}/OperatorResults"
@@ -76,6 +77,30 @@ module Twilio
                     end
 
                     ##
+                    # Lists OperatorResultPageMetadata records from the API as a list.
+                      # @param [Boolean] redacted Grant access to PII redacted/unredacted Language Understanding operator. If redaction is enabled, the default is True.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(redacted: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'Redacted' => redacted,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        OperatorResultPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields OperatorResultInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -97,7 +122,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of OperatorResultInstance
-                    def page(redacted: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(redacted: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Redacted' => redacted,
                             'PageToken' => page_token,
@@ -144,6 +169,7 @@ module Twilio
                     # @return [OperatorResultContext] OperatorResultContext
                     def initialize(version, transcript_sid, operator_sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { transcript_sid: transcript_sid, operator_sid: operator_sid,  }
@@ -177,6 +203,38 @@ module Twilio
                         )
                     end
 
+                    ##
+                    # Fetch the OperatorResultInstanceMetadata
+                    # @param [Boolean] redacted Grant access to PII redacted/unredacted Language Understanding operator. If redaction is enabled, the default is True.
+                    # @return [OperatorResultInstance] Fetched OperatorResultInstance
+                    def fetch_with_metadata(
+                      redacted: :unset
+                    )
+
+                        params = Twilio::Values.of({
+                            'Redacted' => redacted,
+                        })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        operator_result_instance = OperatorResultInstance.new(
+                            @version,
+                            response.body,
+                            transcript_sid: @solution[:transcript_sid],
+                            operator_sid: @solution[:operator_sid],
+                        )
+                        OperatorResultInstanceMetadata.new(
+                            @version,
+                            operator_result_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
 
                     ##
                     # Provide a user friendly representation
@@ -193,6 +251,53 @@ module Twilio
                     end
                 end
 
+                class OperatorResultInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new OperatorResultInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}OperatorResultInstance] operator_result_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [OperatorResultInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, operator_result_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @operator_result_instance = operator_result_instance
+                    end
+
+                    def operator_result
+                        @operator_result_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.OperatorResultInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class OperatorResultListResponse < InstanceListResource
+                    # @param [Array<OperatorResultInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @operator_result_instance = payload.body[key].map do |data|
+                        OperatorResultInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def operator_result_instance
+                          @instance
+                      end
+                  end
+
                 class OperatorResultPage < Page
                     ##
                     # Initialize the OperatorResultPage
@@ -202,6 +307,7 @@ module Twilio
                     # @return [OperatorResultPage] OperatorResultPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -221,6 +327,66 @@ module Twilio
                         '<Twilio.Intelligence.V2.OperatorResultPage>'
                     end
                 end
+
+                class OperatorResultPageMetadata < PageMetadata
+                    attr_reader :operator_result_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @operator_result_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @operator_result_page << OperatorResultListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @operator_result_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Intelligence::V2PageMetadata>';
+                    end
+                end
+                class OperatorResultListResponse < InstanceListResource
+
+                    # @param [Array<OperatorResultInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @operator_result = data_list.map do |data|
+                        OperatorResultInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def operator_result
+                        @operator_result
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class OperatorResultInstance < InstanceResource
                     ##
                     # Initialize the OperatorResultInstance
@@ -233,6 +399,7 @@ module Twilio
                     # @return [OperatorResultInstance] OperatorResultInstance
                     def initialize(version, payload , transcript_sid: nil, operator_sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

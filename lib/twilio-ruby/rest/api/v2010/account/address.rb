@@ -27,6 +27,7 @@ module Twilio
                     # @return [AddressList] AddressList
                     def initialize(version, account_sid: nil)
                         super(version)
+                        
                         # Path Solution
                         @solution = { account_sid: account_sid }
                         @uri = "/Accounts/#{@solution[:account_sid]}/Addresses.json"
@@ -82,6 +83,65 @@ module Twilio
                             @version,
                             payload,
                             account_sid: @solution[:account_sid],
+                        )
+                    end
+
+                    ##
+                    # Create the AddressInstanceMetadata
+                    # @param [String] customer_name The name to associate with the new address.
+                    # @param [String] street The number and street address of the new address.
+                    # @param [String] city The city of the new address.
+                    # @param [String] region The state or region of the new address.
+                    # @param [String] postal_code The postal code of the new address.
+                    # @param [String] iso_country The ISO country code of the new address.
+                    # @param [String] friendly_name A descriptive string that you create to describe the new address. It can be up to 64 characters long for Regulatory Compliance addresses and 32 characters long for Emergency addresses.
+                    # @param [Boolean] emergency_enabled Whether to enable emergency calling on the new address. Can be: `true` or `false`.
+                    # @param [Boolean] auto_correct_address Whether we should automatically correct the address. Can be: `true` or `false` and the default is `true`. If empty or `true`, we will correct the address you provide if necessary. If `false`, we won't alter the address you provide.
+                    # @param [String] street_secondary The additional number and street address of the address.
+                    # @return [AddressInstance] Created AddressInstance
+                    def create_with_metadata(
+                      customer_name: nil, 
+                      street: nil, 
+                      city: nil, 
+                      region: nil, 
+                      postal_code: nil, 
+                      iso_country: nil, 
+                      friendly_name: :unset, 
+                      emergency_enabled: :unset, 
+                      auto_correct_address: :unset, 
+                      street_secondary: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'CustomerName' => customer_name,
+                            'Street' => street,
+                            'City' => city,
+                            'Region' => region,
+                            'PostalCode' => postal_code,
+                            'IsoCountry' => iso_country,
+                            'FriendlyName' => friendly_name,
+                            'EmergencyEnabled' => emergency_enabled,
+                            'AutoCorrectAddress' => auto_correct_address,
+                            'StreetSecondary' => street_secondary,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
+                        address_instance = AddressInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                        )
+                        AddressInstanceMetadata.new(
+                            @version,
+                            address_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -141,6 +201,36 @@ module Twilio
                     end
 
                     ##
+                    # Lists AddressPageMetadata records from the API as a list.
+                      # @param [String] customer_name The `customer_name` of the Address resources to read.
+                      # @param [String] friendly_name The string that identifies the Address resources to read.
+                      # @param [Boolean] emergency_enabled Whether the address can be associated to a number for emergency calling.
+                      # @param [String] iso_country The ISO country code of the Address resources to read.
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(customer_name: :unset, friendly_name: :unset, emergency_enabled: :unset, iso_country: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'CustomerName' => customer_name,
+                            'FriendlyName' => friendly_name,
+                            'EmergencyEnabled' => emergency_enabled,
+                            'IsoCountry' => iso_country,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        AddressPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields AddressInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -165,7 +255,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of AddressInstance
-                    def page(customer_name: :unset, friendly_name: :unset, emergency_enabled: :unset, iso_country: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(customer_name: :unset, friendly_name: :unset, emergency_enabled: :unset, iso_country: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'CustomerName' => customer_name,
                             'FriendlyName' => friendly_name,
@@ -215,6 +305,7 @@ module Twilio
                     # @return [AddressContext] AddressContext
                     def initialize(version, account_sid, sid)
                         super(version)
+                        
 
                         # Path Solution
                         @solution = { account_sid: account_sid, sid: sid,  }
@@ -232,7 +323,27 @@ module Twilio
                         
                         
                         
+
                         @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the AddressInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          address_instance = AddressInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          AddressInstanceMetadata.new(@version, address_instance, response.headers, response.status_code)
                     end
 
                     ##
@@ -252,6 +363,32 @@ module Twilio
                             payload,
                             account_sid: @solution[:account_sid],
                             sid: @solution[:sid],
+                        )
+                    end
+
+                    ##
+                    # Fetch the AddressInstanceMetadata
+                    # @return [AddressInstance] Fetched AddressInstance
+                    def fetch_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
+                        address_instance = AddressInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        AddressInstanceMetadata.new(
+                            @version,
+                            address_instance,
+                            response.headers,
+                            response.status_code
                         )
                     end
 
@@ -307,6 +444,63 @@ module Twilio
                     end
 
                     ##
+                    # Update the AddressInstanceMetadata
+                    # @param [String] friendly_name A descriptive string that you create to describe the new address. It can be up to 64 characters long for Regulatory Compliance addresses and 32 characters long for Emergency addresses.
+                    # @param [String] customer_name The name to associate with the address.
+                    # @param [String] street The number and street address of the address.
+                    # @param [String] city The city of the address.
+                    # @param [String] region The state or region of the address.
+                    # @param [String] postal_code The postal code of the address.
+                    # @param [Boolean] emergency_enabled Whether to enable emergency calling on the address. Can be: `true` or `false`.
+                    # @param [Boolean] auto_correct_address Whether we should automatically correct the address. Can be: `true` or `false` and the default is `true`. If empty or `true`, we will correct the address you provide if necessary. If `false`, we won't alter the address you provide.
+                    # @param [String] street_secondary The additional number and street address of the address.
+                    # @return [AddressInstance] Updated AddressInstance
+                    def update_with_metadata(
+                      friendly_name: :unset, 
+                      customer_name: :unset, 
+                      street: :unset, 
+                      city: :unset, 
+                      region: :unset, 
+                      postal_code: :unset, 
+                      emergency_enabled: :unset, 
+                      auto_correct_address: :unset, 
+                      street_secondary: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'FriendlyName' => friendly_name,
+                            'CustomerName' => customer_name,
+                            'Street' => street,
+                            'City' => city,
+                            'Region' => region,
+                            'PostalCode' => postal_code,
+                            'EmergencyEnabled' => emergency_enabled,
+                            'AutoCorrectAddress' => auto_correct_address,
+                            'StreetSecondary' => street_secondary,
+                        })
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
+                        address_instance = AddressInstance.new(
+                            @version,
+                            response.body,
+                            account_sid: @solution[:account_sid],
+                            sid: @solution[:sid],
+                        )
+                        AddressInstanceMetadata.new(
+                            @version,
+                            address_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Access the dependent_phone_numbers
                     # @return [DependentPhoneNumberList]
                     # @return [DependentPhoneNumberContext]
@@ -333,6 +527,53 @@ module Twilio
                     end
                 end
 
+                class AddressInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new AddressInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}AddressInstance] address_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [AddressInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, address_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @address_instance = address_instance
+                    end
+
+                    def address
+                        @address_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.AddressInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class AddressListResponse < InstanceListResource
+                    # @param [Array<AddressInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @address_instance = payload.body[key].map do |data|
+                        AddressInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def address_instance
+                          @instance
+                      end
+                  end
+
                 class AddressPage < Page
                     ##
                     # Initialize the AddressPage
@@ -342,6 +583,7 @@ module Twilio
                     # @return [AddressPage] AddressPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -361,6 +603,66 @@ module Twilio
                         '<Twilio.Api.V2010.AddressPage>'
                     end
                 end
+
+                class AddressPageMetadata < PageMetadata
+                    attr_reader :address_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @address_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @address_page << AddressListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @address_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Api::V2010PageMetadata>';
+                    end
+                end
+                class AddressListResponse < InstanceListResource
+
+                    # @param [Array<AddressInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @address = data_list.map do |data|
+                        AddressInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def address
+                        @address
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class AddressInstance < InstanceResource
                     ##
                     # Initialize the AddressInstance
@@ -373,6 +675,7 @@ module Twilio
                     # @return [AddressInstance] AddressInstance
                     def initialize(version, payload , account_sid: nil, sid: nil)
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 

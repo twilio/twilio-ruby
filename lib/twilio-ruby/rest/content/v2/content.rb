@@ -25,6 +25,7 @@ module Twilio
                     # @return [ContentList] ContentList
                     def initialize(version)
                         super(version)
+                        
                         # Path Solution
                         @solution = {  }
                         @uri = "/Content"
@@ -106,6 +107,49 @@ module Twilio
                     end
 
                     ##
+                    # Lists ContentPageMetadata records from the API as a list.
+                      # @param [String] sort_by_date Whether to sort by ascending or descending date updated
+                      # @param [String] sort_by_content_name Whether to sort by ascending or descending content name
+                      # @param [Time] date_created_after Filter by >=[date-time]
+                      # @param [Time] date_created_before Filter by <=[date-time]
+                      # @param [String] content_name Filter by Regex Pattern in content name
+                      # @param [String] content Filter by Regex Pattern in template content
+                      # @param [Array[String]] language Filter by array of valid language(s)
+                      # @param [Array[String]] content_type Filter by array of contentType(s)
+                      # @param [Array[String]] channel_eligibility Filter by array of ChannelEligibility(s), where ChannelEligibility=<channel>:<status>
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(sort_by_date: :unset, sort_by_content_name: :unset, date_created_after: :unset, date_created_before: :unset, content_name: :unset, content: :unset, language: :unset, content_type: :unset, channel_eligibility: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'SortByDate' => sort_by_date,
+                            'SortByContentName' => sort_by_content_name,
+                            'DateCreatedAfter' =>  Twilio.serialize_iso8601_datetime(date_created_after),
+                            'DateCreatedBefore' =>  Twilio.serialize_iso8601_datetime(date_created_before),
+                            'ContentName' => content_name,
+                            'Content' => content,
+                            
+                            'Language' =>  Twilio.serialize_list(language) { |e| e },
+                            
+                            'ContentType' =>  Twilio.serialize_list(content_type) { |e| e },
+                            
+                            'ChannelEligibility' =>  Twilio.serialize_list(channel_eligibility) { |e| e },
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        ContentPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
                     # When passed a block, yields ContentInstance records from the API.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
@@ -135,7 +179,7 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of ContentInstance
-                    def page(sort_by_date: :unset, sort_by_content_name: :unset, date_created_after: :unset, date_created_before: :unset, content_name: :unset, content: :unset, language: :unset, content_type: :unset, channel_eligibility: :unset, page_token: :unset, page_number: :unset, page_size: :unset)
+                    def page(sort_by_date: :unset, sort_by_content_name: :unset, date_created_after: :unset, date_created_before: :unset, content_name: :unset, content: :unset, language: :unset, content_type: :unset, channel_eligibility: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'SortByDate' => sort_by_date,
                             'SortByContentName' => sort_by_content_name,
@@ -192,6 +236,7 @@ module Twilio
                     # @return [ContentPage] ContentPage
                     def initialize(version, response, solution)
                         super(version, response)
+                        
 
                         # Path Solution
                         @solution = solution
@@ -211,6 +256,66 @@ module Twilio
                         '<Twilio.Content.V2.ContentPage>'
                     end
                 end
+
+                class ContentPageMetadata < PageMetadata
+                    attr_reader :content_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @content_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @content_page << ContentListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += @payload.body[key].size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @content_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Content::V2PageMetadata>';
+                    end
+                end
+                class ContentListResponse < InstanceListResource
+
+                    # @param [Array<ContentInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @content = data_list.map do |data|
+                        ContentInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def content
+                        @content
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class ContentInstance < InstanceResource
                     ##
                     # Initialize the ContentInstance
@@ -223,6 +328,7 @@ module Twilio
                     # @return [ContentInstance] ContentInstance
                     def initialize(version, payload )
                         super(version)
+                        
                         
                         # Marshaled Properties
                         @properties = { 
