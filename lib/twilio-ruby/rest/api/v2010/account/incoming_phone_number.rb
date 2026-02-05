@@ -913,6 +913,7 @@ module Twilio
                             'emergency_address_status' => payload['emergency_address_status'],
                             'bundle_sid' => payload['bundle_sid'],
                             'status' => payload['status'],
+                            'type' => payload['type'],
                         }
 
                         # Context
@@ -1133,6 +1134,12 @@ module Twilio
                     # @return [String] 
                     def status
                         @properties['status']
+                    end
+                    
+                    ##
+                    # @return [String] The phone number type.
+                    def type
+                        @properties['type']
                     end
                     
                     ##

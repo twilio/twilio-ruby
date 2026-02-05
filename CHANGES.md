@@ -1,6 +1,28 @@
 twilio-ruby changelog
 =====================
 
+[2026-02-05] Version 7.10.1
+---------------------------
+**Library - Fix**
+- [PR #779](https://github.com/twilio/twilio-ruby/pull/779): Reverse edge processing. Thanks to [@manisha1997](https://github.com/manisha1997)!
+
+**Twiml**
+- Add `recording_configuration` attribute to `<Recording>` noun
+
+**Api**
+- Clarify the behavior of date filters with the Calls API
+- Added Phone Number `type` property to `/IncomingPhoneNumbers` resource
+
+**Memory**
+- ## 2026-01-23
+- No path changes (updated metadata only)
+- ## 2026-01-22
+- No path changes (updated metadata only)
+- ## 2026-01-22
+- **Modified 1 path(s)**:
+- `/v1/Stores/{storeId}/Profiles/{profileId}` (added delete)
+
+
 [2026-01-22] Version 7.10.0
 ---------------------------
 **Library - Feature**

@@ -24,8 +24,9 @@ module Twilio
                     # @param [Version] version Version that contains the resource
                     # @return [HostedNumberOrderList] HostedNumberOrderList
                     def initialize(version)
-                        super(version)
                         
+                        apiV1Version = ApiV1Version.new version.domain, version
+                        super(apiV1Version)
                         # Path Solution
                         @solution = {  }
                         @uri = "/HostedNumbers/HostedNumberOrders"
@@ -192,7 +193,7 @@ module Twilio
                     end
                 end
 
-                class HostedNumberOrderPage < Page
+                class HostedNumberOrderPage < TokenPage
                     ##
                     # Initialize the HostedNumberOrderPage
                     # @param [Version] version Version that contains the resource
@@ -200,8 +201,9 @@ module Twilio
                     # @param [Hash] solution Path solution for the resource
                     # @return [HostedNumberOrderPage] HostedNumberOrderPage
                     def initialize(version, response, solution)
-                        super(version, response)
                         
+                        apiV1Version = ApiV1Version.new version.domain, version
+                        super(apiV1Version, response)
 
                         # Path Solution
                         @solution = solution
@@ -292,8 +294,9 @@ module Twilio
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [HostedNumberOrderInstance] HostedNumberOrderInstance
                     def initialize(version, payload )
-                        super(version)
                         
+                        apiV1Version = ApiV1Version.new version.domain, version
+                        super(apiV1Version)
                         
                         # Marshaled Properties
                         @properties = { 

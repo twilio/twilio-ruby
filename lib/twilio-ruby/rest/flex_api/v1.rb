@@ -24,6 +24,7 @@ module Twilio
                     @assessments = nil
                     @channel = nil
                     @configuration = nil
+                    @create_flex_instance = nil
                     @flex_flow = nil
                     @insights_assessments_comment = nil
                     @insights_conversations = nil
@@ -78,6 +79,11 @@ module Twilio
                 # @return [Twilio::REST::FlexApi::V1::configurationContext]
                 def configuration
                     @configuration ||= ConfigurationContext.new self
+                end
+                ##
+                # @return [Twilio::REST::FlexApi::V1::createFlexInstanceContext]
+                def create_flex_instance
+                    @create_flex_instance ||= CreateFlexInstanceContext.new self
                 end
                 ##
                 # @param [String] sid The SID of the Flex Flow resource to fetch.

@@ -21,9 +21,15 @@ module Twilio
                 def initialize(domain)
                     super
                     @version = 'v2'
+                    @authorize = nil
                     @token = nil
                 end
 
+                ##
+                # @return [Twilio::REST::Oauth::V2::AuthorizeList]
+                def authorize
+                    @authorize ||= AuthorizeList.new self
+                end
                 ##
                 # @return [Twilio::REST::Oauth::V2::TokenList]
                 def token
