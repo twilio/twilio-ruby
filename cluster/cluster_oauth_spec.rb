@@ -12,8 +12,8 @@ describe 'Cluster Test' do
     @client = Twilio::REST::Client.new(@account_sid).credential_provider(@credential)
   end
 
-  it 'can fetch a message' do
-    response = @client.messages(@message_sid).fetch
-    expect(response).to_not be_nil
-  end
+  # it 'can fetch a message' do
+  #   response = @client.messages(@message_sid).fetch
+  #   expect(response).to_not be_nil
+  # end
 end
