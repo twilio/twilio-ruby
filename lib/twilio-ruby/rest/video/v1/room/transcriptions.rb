@@ -276,13 +276,16 @@ module Twilio
                     ##
                     # Update the TranscriptionsInstance
                     # @param [Status] status 
+                    # @param [Object] configuration A collection of properties that describe transcription behaviour.
                     # @return [TranscriptionsInstance] Updated TranscriptionsInstance
                     def update(
-                        status: :unset
+                        status: :unset, 
+                        configuration: :unset
                     )
 
                         data = Twilio::Values.of({
                             'Status' => status,
+                            'Configuration' => Twilio.serialize_object(configuration),
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -303,13 +306,16 @@ module Twilio
                     ##
                     # Update the TranscriptionsInstanceMetadata
                     # @param [Status] status 
+                    # @param [Object] configuration A collection of properties that describe transcription behaviour.
                     # @return [TranscriptionsInstance] Updated TranscriptionsInstance
                     def update_with_metadata(
-                      status: :unset
+                      status: :unset, 
+                      configuration: :unset
                     )
 
                         data = Twilio::Values.of({
                             'Status' => status,
+                            'Configuration' => Twilio.serialize_object(configuration),
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -614,13 +620,16 @@ module Twilio
                     ##
                     # Update the TranscriptionsInstance
                     # @param [Status] status 
+                    # @param [Object] configuration A collection of properties that describe transcription behaviour.
                     # @return [TranscriptionsInstance] Updated TranscriptionsInstance
                     def update(
-                        status: :unset
+                        status: :unset, 
+                        configuration: :unset
                     )
 
                         context.update(
                             status: status, 
+                            configuration: configuration, 
                         )
                     end
 

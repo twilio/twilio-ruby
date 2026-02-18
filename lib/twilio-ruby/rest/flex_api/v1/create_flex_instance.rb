@@ -79,7 +79,7 @@ module Twilio
 
                         # Path Solution
                         @solution = {  }
-                        @uri = "/instances"
+                        @uri = "/Instances"
 
                         
                     end

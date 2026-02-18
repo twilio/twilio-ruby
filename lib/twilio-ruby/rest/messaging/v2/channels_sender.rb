@@ -29,7 +29,7 @@ module Twilio
                             # @param [privacy_url]: [String] The privacy URL of the sender. Must be a publicly accessible HTTP or HTTPS URI associated with the sender. 
                             # @param [terms_of_service_url]: [String] The terms of service URL of the sender.
                             # @param [accent_color]: [String] The color theme of the sender. Must be in hex format and have at least a 4:5:1 contrast ratio against white.
-                            # @param [vertical]: [String] The vertical of the sender. Allowed values are: - `Automotive` - `Beauty, Spa and Salon` - `Clothing and Apparel` - `Education` - `Entertainment` - `Event Planning and Service` - `Finance and Banking` - `Food and Grocery` - `Public Service` - `Hotel and Lodging` - `Medical and Health` - `Non-profit` - `Professional Services` - `Shopping and Retail` - `Travel and Transportation` - `Restaurant` - `Other` 
+                            # @param [vertical]: [String] The vertical of the sender. Allowed values are: - `Alcohol` - `Automotive` - `Beauty, Spa and Salon` - `Clothing and Apparel` - `Education` - `Entertainment` - `Event Planning and Service` - `Finance and Banking` - `Food and Grocery` - `Hotel and Lodging` - `Matrimony Service` - `Medical and Health` - `Non-profit` - `Online Gambling` - `OTC Drugs` - `Other` - `Physical Gambling` - `Professional Services` - `Public Service` - `Restaurant` - `Shopping and Retail` - `Travel and Transportation` 
                             # @param [websites]: [Hash] The websites of the sender.
                             # @param [emails]: [Hash] The emails of the sender.
                             # @param [phone_numbers]: [Hash] The phone numbers of the sender.
@@ -206,7 +206,7 @@ module Twilio
                             # @param [privacy_url]: [String] The privacy URL of the sender. Must be a publicly accessible HTTP or HTTPS URI associated with the sender. 
                             # @param [terms_of_service_url]: [String] The terms of service URL of the sender.
                             # @param [accent_color]: [String] The color theme of the sender. Must be in hex format and have at least a 4:5:1 contrast ratio against white.
-                            # @param [vertical]: [String] The vertical of the sender. Allowed values are: - `Automotive` - `Beauty, Spa and Salon` - `Clothing and Apparel` - `Education` - `Entertainment` - `Event Planning and Service` - `Finance and Banking` - `Food and Grocery` - `Public Service` - `Hotel and Lodging` - `Medical and Health` - `Non-profit` - `Professional Services` - `Shopping and Retail` - `Travel and Transportation` - `Restaurant` - `Other` 
+                            # @param [vertical]: [String] The vertical of the sender. Allowed values are: - `Alcohol` - `Automotive` - `Beauty, Spa and Salon` - `Clothing and Apparel` - `Education` - `Entertainment` - `Event Planning and Service` - `Finance and Banking` - `Food and Grocery` - `Hotel and Lodging` - `Matrimony Service` - `Medical and Health` - `Non-profit` - `Online Gambling` - `OTC Drugs` - `Other` - `Physical Gambling` - `Professional Services` - `Public Service` - `Restaurant` - `Shopping and Retail` - `Travel and Transportation` 
                             # @param [websites]: [Hash] The websites of the sender.
                             # @param [emails]: [Hash] The emails of the sender.
                             # @param [phone_numbers]: [Hash] The phone numbers of the sender.

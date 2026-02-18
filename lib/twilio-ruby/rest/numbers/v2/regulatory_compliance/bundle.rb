@@ -137,10 +137,12 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [Status] status The verification status of the Bundle resource. Please refer to [Bundle Statuses](https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses) for more details.
+                    # @param [String] bundle_sids A comma-separated list of Bundle SIDs to filter the results (maximum 20). Each Bundle SID must match `^BU[0-9a-fA-F]{32}$`.
                     # @param [String] friendly_name The string that you assigned to describe the resource. The column can contain 255 variable characters.
                     # @param [String] regulation_sid The unique string of a [Regulation resource](https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations) that is associated to the Bundle resource.
                     # @param [String] iso_country The 2-digit [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
                     # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll-free`.
+                    # @param [String] end_user_type The end user type of the regulation of the Bundle. Can be `business` or `individual`.
                     # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid Bundle until a specified expiration date.
                     # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
                     # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
@@ -154,13 +156,15 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, limit: nil, page_size: nil)
+                    def list(status: :unset, bundle_sids: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, end_user_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, limit: nil, page_size: nil)
                         self.stream(
                             status: status,
+                            bundle_sids: bundle_sids,
                             friendly_name: friendly_name,
                             regulation_sid: regulation_sid,
                             iso_country: iso_country,
                             number_type: number_type,
+                            end_user_type: end_user_type,
                             has_valid_until_date: has_valid_until_date,
                             sort_by: sort_by,
                             sort_direction: sort_direction,
@@ -177,10 +181,12 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [Status] status The verification status of the Bundle resource. Please refer to [Bundle Statuses](https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses) for more details.
+                    # @param [String] bundle_sids A comma-separated list of Bundle SIDs to filter the results (maximum 20). Each Bundle SID must match `^BU[0-9a-fA-F]{32}$`.
                     # @param [String] friendly_name The string that you assigned to describe the resource. The column can contain 255 variable characters.
                     # @param [String] regulation_sid The unique string of a [Regulation resource](https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations) that is associated to the Bundle resource.
                     # @param [String] iso_country The 2-digit [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
                     # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll-free`.
+                    # @param [String] end_user_type The end user type of the regulation of the Bundle. Can be `business` or `individual`.
                     # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid Bundle until a specified expiration date.
                     # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
                     # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
@@ -194,15 +200,17 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, limit: nil, page_size: nil)
+                    def stream(status: :unset, bundle_sids: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, end_user_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
                             status: status,
+                            bundle_sids: bundle_sids,
                             friendly_name: friendly_name,
                             regulation_sid: regulation_sid,
                             iso_country: iso_country,
                             number_type: number_type,
+                            end_user_type: end_user_type,
                             has_valid_until_date: has_valid_until_date,
                             sort_by: sort_by,
                             sort_direction: sort_direction,
@@ -217,10 +225,12 @@ module Twilio
                     ##
                     # Lists BundlePageMetadata records from the API as a list.
                       # @param [Status] status The verification status of the Bundle resource. Please refer to [Bundle Statuses](https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses) for more details.
+                      # @param [String] bundle_sids A comma-separated list of Bundle SIDs to filter the results (maximum 20). Each Bundle SID must match `^BU[0-9a-fA-F]{32}$`.
                       # @param [String] friendly_name The string that you assigned to describe the resource. The column can contain 255 variable characters.
                       # @param [String] regulation_sid The unique string of a [Regulation resource](https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations) that is associated to the Bundle resource.
                       # @param [String] iso_country The 2-digit [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
                       # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll-free`.
+                      # @param [String] end_user_type The end user type of the regulation of the Bundle. Can be `business` or `individual`.
                       # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid Bundle until a specified expiration date.
                       # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
                       # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
@@ -234,14 +244,16 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list_with_metadata(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, limit: nil, page_size: nil)
+                    def list_with_metadata(status: :unset, bundle_sids: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, end_user_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
                         params = Twilio::Values.of({
                             'Status' => status,
+                            'BundleSids' => bundle_sids,
                             'FriendlyName' => friendly_name,
                             'RegulationSid' => regulation_sid,
                             'IsoCountry' => iso_country,
                             'NumberType' => number_type,
+                            'EndUserType' => end_user_type,
                             'HasValidUntilDate' => has_valid_until_date,
                             'SortBy' => sort_by,
                             'SortDirection' => sort_direction,
@@ -276,10 +288,12 @@ module Twilio
                     # Retrieve a single page of BundleInstance records from the API.
                     # Request is executed immediately.
                     # @param [Status] status The verification status of the Bundle resource. Please refer to [Bundle Statuses](https://www.twilio.com/docs/phone-numbers/regulatory/api/bundles#bundle-statuses) for more details.
+                    # @param [String] bundle_sids A comma-separated list of Bundle SIDs to filter the results (maximum 20). Each Bundle SID must match `^BU[0-9a-fA-F]{32}$`.
                     # @param [String] friendly_name The string that you assigned to describe the resource. The column can contain 255 variable characters.
                     # @param [String] regulation_sid The unique string of a [Regulation resource](https://www.twilio.com/docs/phone-numbers/regulatory/api/regulations) that is associated to the Bundle resource.
                     # @param [String] iso_country The 2-digit [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the Bundle's phone number country ownership request.
                     # @param [String] number_type The type of phone number of the Bundle's ownership request. Can be `local`, `mobile`, `national`, or `toll-free`.
+                    # @param [String] end_user_type The end user type of the regulation of the Bundle. Can be `business` or `individual`.
                     # @param [Boolean] has_valid_until_date Indicates that the Bundle is a valid Bundle until a specified expiration date.
                     # @param [SortBy] sort_by Can be `valid-until` or `date-updated`. Defaults to `date-created`.
                     # @param [SortDirection] sort_direction Default is `DESC`. Can be `ASC` or `DESC`.
@@ -290,13 +304,15 @@ module Twilio
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of BundleInstance
-                    def page(status: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
+                    def page(status: :unset, bundle_sids: :unset, friendly_name: :unset, regulation_sid: :unset, iso_country: :unset, number_type: :unset, end_user_type: :unset, has_valid_until_date: :unset, sort_by: :unset, sort_direction: :unset, valid_until_date: :unset, valid_until_date_before: :unset, valid_until_date_after: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
                             'Status' => status,
+                            'BundleSids' => bundle_sids,
                             'FriendlyName' => friendly_name,
                             'RegulationSid' => regulation_sid,
                             'IsoCountry' => iso_country,
                             'NumberType' => number_type,
+                            'EndUserType' => end_user_type,
                             'HasValidUntilDate' => has_valid_until_date,
                             'SortBy' => sort_by,
                             'SortDirection' => sort_direction,
