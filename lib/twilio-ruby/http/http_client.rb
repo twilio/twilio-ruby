@@ -6,7 +6,7 @@ require 'faraday/middleware'
 module Twilio
   module HTTP
     class Client
-      attr_accessor :adapter
+      attr_accessor :adapter, :adapter_options
       attr_reader :timeout, :last_response, :last_request, :connection
 
       def initialize(proxy_prot = nil, proxy_addr = nil, proxy_port = nil, proxy_user = nil, proxy_pass = nil,
@@ -16,6 +16,13 @@ module Twilio
         @proxy_auth = "#{proxy_user}:#{proxy_pass}@" if proxy_pass && proxy_user
         @timeout = timeout
         @adapter = Faraday.default_adapter
+        if Gem::Version.new(Faraday::VERSION) >= Gem::Version.new('2.1')
+          # for faraday 2.1 and higher
+          @adapter_options = Faraday.default_adapter_options
+        else
+          # for faraday 1.x and 2.0
+          @adapter_options = {}
+        end
         @configure_connection_blocks = []
       end
 
@@ -50,7 +57,7 @@ module Twilio
           f.params = request.params.nil? ? {} : request.params
 
           @configure_connection_blocks.each { |block| block.call(f) }
-          f.adapter @adapter
+          f.adapter @adapter, **@adapter_options
         end
 
         @last_request = request
