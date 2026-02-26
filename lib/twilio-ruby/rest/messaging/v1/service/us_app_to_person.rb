@@ -51,6 +51,8 @@ module Twilio
                     # @param [Boolean] subscriber_opt_in A boolean that specifies whether campaign has Subscriber Optin or not.
                     # @param [Boolean] age_gated A boolean that specifies whether campaign is age gated or not.
                     # @param [Boolean] direct_lending A boolean that specifies whether campaign allows direct lending or not.
+                    # @param [String] privacy_policy_url URL pointing to your privacy policy. 255 character maximum.
+                    # @param [String] terms_and_conditions_url URL pointing to your terms and conditions. 255 character maximum.
                     # @return [UsAppToPersonInstance] Created UsAppToPersonInstance
                     def create(
                         brand_registration_sid: nil, 
@@ -68,7 +70,9 @@ module Twilio
                         help_keywords: :unset, 
                         subscriber_opt_in: :unset, 
                         age_gated: :unset, 
-                        direct_lending: :unset
+                        direct_lending: :unset,
+                        privacy_policy_url: :unset,
+                        terms_and_conditions_url: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -88,6 +92,8 @@ module Twilio
                             'SubscriberOptIn' => subscriber_opt_in,
                             'AgeGated' => age_gated,
                             'DirectLending' => direct_lending,
+                            'PrivacyPolicyUrl' => privacy_policy_url,
+                            'TermsAndConditionsUrl' => terms_and_conditions_url,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -97,6 +103,7 @@ module Twilio
                         
                         
                         payload = @version.create('POST', @uri, data: data, headers: headers)
+
                         UsAppToPersonInstance.new(
                             @version,
                             payload,
@@ -122,6 +129,8 @@ module Twilio
                     # @param [Boolean] subscriber_opt_in A boolean that specifies whether campaign has Subscriber Optin or not.
                     # @param [Boolean] age_gated A boolean that specifies whether campaign is age gated or not.
                     # @param [Boolean] direct_lending A boolean that specifies whether campaign allows direct lending or not.
+                    # @param [String] privacy_policy_url URL pointing to your privacy policy. 255 character maximum.
+                    # @param [String] terms_and_conditions_url URL pointing to your terms and conditions. 255 character maximum.
                     # @return [UsAppToPersonInstance] Created UsAppToPersonInstance
                     def create_with_metadata(
                       brand_registration_sid: nil, 
@@ -139,7 +148,9 @@ module Twilio
                       help_keywords: :unset, 
                       subscriber_opt_in: :unset, 
                       age_gated: :unset, 
-                      direct_lending: :unset
+                      direct_lending: :unset,
+                      privacy_policy_url: :unset,
+                      terms_and_conditions_url: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -159,6 +170,8 @@ module Twilio
                             'SubscriberOptIn' => subscriber_opt_in,
                             'AgeGated' => age_gated,
                             'DirectLending' => direct_lending,
+                            'PrivacyPolicyUrl' => privacy_policy_url,
+                            'TermsAndConditionsUrl' => terms_and_conditions_url,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -776,7 +789,7 @@ module Twilio
                     def direct_lending
                         @properties['direct_lending']
                     end
-                    
+
                     ##
                     # @return [String] Campaign status. Examples: IN_PROGRESS, VERIFIED, FAILED.
                     def campaign_status
