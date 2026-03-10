@@ -50,6 +50,8 @@ module Twilio
                     # @param [String] hints A Phrase contains words and phrase \\\"hints\\\" so that the speech recognition engine is more likely to recognize them.
                     # @param [Boolean] enable_automatic_punctuation The provider will add punctuation to recognition result
                     # @param [String] intelligence_service The SID or unique name of the [Intelligence Service](https://www.twilio.com/docs/conversational-intelligence/api/service-resource) for persisting transcripts and running post-call Language Operators
+                    # @param [String] conversation_configuration The ID of the Conversations Configuration for customizing conversation behavior in Intelligence Service
+                    # @param [String] conversation_id The ID of the Conversation for associating this Transcription with an existing Conversation in Intelligence Service
                     # @param [Boolean] enable_provider_data Whether the callback includes raw provider data.
                     # @return [TranscriptionInstance] Created TranscriptionInstance
                     def create(
@@ -67,6 +69,8 @@ module Twilio
                         hints: :unset, 
                         enable_automatic_punctuation: :unset, 
                         intelligence_service: :unset, 
+                        conversation_configuration: :unset, 
+                        conversation_id: :unset, 
                         enable_provider_data: :unset
                     )
 
@@ -85,6 +89,8 @@ module Twilio
                             'Hints' => hints,
                             'EnableAutomaticPunctuation' => enable_automatic_punctuation,
                             'IntelligenceService' => intelligence_service,
+                            'ConversationConfiguration' => conversation_configuration,
+                            'ConversationId' => conversation_id,
                             'EnableProviderData' => enable_provider_data,
                         })
 
@@ -119,6 +125,8 @@ module Twilio
                     # @param [String] hints A Phrase contains words and phrase \\\"hints\\\" so that the speech recognition engine is more likely to recognize them.
                     # @param [Boolean] enable_automatic_punctuation The provider will add punctuation to recognition result
                     # @param [String] intelligence_service The SID or unique name of the [Intelligence Service](https://www.twilio.com/docs/conversational-intelligence/api/service-resource) for persisting transcripts and running post-call Language Operators
+                    # @param [String] conversation_configuration The ID of the Conversations Configuration for customizing conversation behavior in Intelligence Service
+                    # @param [String] conversation_id The ID of the Conversation for associating this Transcription with an existing Conversation in Intelligence Service
                     # @param [Boolean] enable_provider_data Whether the callback includes raw provider data.
                     # @return [TranscriptionInstance] Created TranscriptionInstance
                     def create_with_metadata(
@@ -136,6 +144,8 @@ module Twilio
                       hints: :unset, 
                       enable_automatic_punctuation: :unset, 
                       intelligence_service: :unset, 
+                      conversation_configuration: :unset, 
+                      conversation_id: :unset, 
                       enable_provider_data: :unset
                     )
 
@@ -154,6 +164,8 @@ module Twilio
                             'Hints' => hints,
                             'EnableAutomaticPunctuation' => enable_automatic_punctuation,
                             'IntelligenceService' => intelligence_service,
+                            'ConversationConfiguration' => conversation_configuration,
+                            'ConversationId' => conversation_id,
                             'EnableProviderData' => enable_provider_data,
                         })
 

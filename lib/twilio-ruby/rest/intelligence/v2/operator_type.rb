@@ -36,6 +36,7 @@ module Twilio
                     # Lists OperatorTypeInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
+                    # @param [String] language_code Returns Operator Types that support the provided language code.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -43,8 +44,9 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(limit: nil, page_size: nil)
+                    def list(language_code: :unset, limit: nil, page_size: nil)
                         self.stream(
+                            language_code: language_code,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -54,6 +56,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
+                    # @param [String] language_code Returns Operator Types that support the provided language code.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -61,10 +64,11 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(limit: nil, page_size: nil)
+                    def stream(language_code: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
+                            language_code: language_code,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -72,6 +76,7 @@ module Twilio
 
                     ##
                     # Lists OperatorTypePageMetadata records from the API as a list.
+                      # @param [String] language_code Returns Operator Types that support the provided language code.
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -79,9 +84,10 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list_with_metadata(limit: nil, page_size: nil)
+                    def list_with_metadata(language_code: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
                         params = Twilio::Values.of({
+                            'LanguageCode' => language_code,
                             
                             'PageSize' => limits[:page_size],
                         });
@@ -109,12 +115,14 @@ module Twilio
                     ##
                     # Retrieve a single page of OperatorTypeInstance records from the API.
                     # Request is executed immediately.
+                    # @param [String] language_code Returns Operator Types that support the provided language code.
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of OperatorTypeInstance
-                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
+                    def page(language_code: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
+                            'LanguageCode' => language_code,
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,

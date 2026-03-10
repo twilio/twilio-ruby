@@ -51,6 +51,9 @@ module Twilio
                     # @param [Boolean] subscriber_opt_in A boolean that specifies whether campaign has Subscriber Optin or not.
                     # @param [Boolean] age_gated A boolean that specifies whether campaign is age gated or not.
                     # @param [Boolean] direct_lending A boolean that specifies whether campaign allows direct lending or not.
+                    # @param [String] privacy_policy_url The URL of the privacy policy for the campaign.
+                    # @param [String] terms_and_conditions_url The URL of the terms and conditions for the campaign.
+                    # @param [String] x_twilio_api_version The version of the Messaging API to use for this request
                     # @return [UsAppToPersonInstance] Created UsAppToPersonInstance
                     def create(
                         brand_registration_sid: nil, 
@@ -68,7 +71,10 @@ module Twilio
                         help_keywords: :unset, 
                         subscriber_opt_in: :unset, 
                         age_gated: :unset, 
-                        direct_lending: :unset
+                        direct_lending: :unset, 
+                        privacy_policy_url: :unset, 
+                        terms_and_conditions_url: :unset, 
+                        x_twilio_api_version: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -88,9 +94,11 @@ module Twilio
                             'SubscriberOptIn' => subscriber_opt_in,
                             'AgeGated' => age_gated,
                             'DirectLending' => direct_lending,
+                            'PrivacyPolicyUrl' => privacy_policy_url,
+                            'TermsAndConditionsUrl' => terms_and_conditions_url,
                         })
 
-                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Api-Version' => x_twilio_api_version, })
                         
                         
                         
@@ -122,6 +130,9 @@ module Twilio
                     # @param [Boolean] subscriber_opt_in A boolean that specifies whether campaign has Subscriber Optin or not.
                     # @param [Boolean] age_gated A boolean that specifies whether campaign is age gated or not.
                     # @param [Boolean] direct_lending A boolean that specifies whether campaign allows direct lending or not.
+                    # @param [String] privacy_policy_url The URL of the privacy policy for the campaign.
+                    # @param [String] terms_and_conditions_url The URL of the terms and conditions for the campaign.
+                    # @param [String] x_twilio_api_version The version of the Messaging API to use for this request
                     # @return [UsAppToPersonInstance] Created UsAppToPersonInstance
                     def create_with_metadata(
                       brand_registration_sid: nil, 
@@ -139,7 +150,10 @@ module Twilio
                       help_keywords: :unset, 
                       subscriber_opt_in: :unset, 
                       age_gated: :unset, 
-                      direct_lending: :unset
+                      direct_lending: :unset, 
+                      privacy_policy_url: :unset, 
+                      terms_and_conditions_url: :unset, 
+                      x_twilio_api_version: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -159,9 +173,11 @@ module Twilio
                             'SubscriberOptIn' => subscriber_opt_in,
                             'AgeGated' => age_gated,
                             'DirectLending' => direct_lending,
+                            'PrivacyPolicyUrl' => privacy_policy_url,
+                            'TermsAndConditionsUrl' => terms_and_conditions_url,
                         })
 
-                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Api-Version' => x_twilio_api_version, })
                         
                         
                         
@@ -186,6 +202,7 @@ module Twilio
                     # Lists UsAppToPersonInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
+                    # @param [String] x_twilio_api_version The version of the Messaging API to use for this request
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -193,8 +210,9 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(limit: nil, page_size: nil)
+                    def list(x_twilio_api_version: :unset, limit: nil, page_size: nil)
                         self.stream(
+                            x_twilio_api_version: x_twilio_api_version,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -204,6 +222,7 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
+                    # @param [String] x_twilio_api_version The version of the Messaging API to use for this request
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -211,10 +230,11 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(limit: nil, page_size: nil)
+                    def stream(x_twilio_api_version: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
+                            x_twilio_api_version: x_twilio_api_version,
                             page_size: limits[:page_size], )
 
                         @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
@@ -222,6 +242,7 @@ module Twilio
 
                     ##
                     # Lists UsAppToPersonPageMetadata records from the API as a list.
+                      # @param [String] x_twilio_api_version The version of the Messaging API to use for this request
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -229,9 +250,10 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list_with_metadata(limit: nil, page_size: nil)
+                    def list_with_metadata(x_twilio_api_version: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
                         params = Twilio::Values.of({
+                            'X-Twilio-Api-Version' => x_twilio_api_version,
                             
                             'PageSize' => limits[:page_size],
                         });
@@ -259,12 +281,14 @@ module Twilio
                     ##
                     # Retrieve a single page of UsAppToPersonInstance records from the API.
                     # Request is executed immediately.
+                    # @param [String] x_twilio_api_version The version of the Messaging API to use for this request
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of UsAppToPersonInstance
-                    def page(page_token: :unset, page_number: :unset,page_size: :unset)
+                    def page(x_twilio_api_version: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
+                            'X-Twilio-Api-Version' => x_twilio_api_version,
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
@@ -351,10 +375,13 @@ module Twilio
 
                     ##
                     # Fetch the UsAppToPersonInstance
+                    # @param [String] x_twilio_api_version The version of the Messaging API to use for this request
                     # @return [UsAppToPersonInstance] Fetched UsAppToPersonInstance
-                    def fetch
+                    def fetch(
+                        x_twilio_api_version: :unset
+                    )
 
-                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Api-Version' => x_twilio_api_version, })
                         
                         
                         
@@ -371,10 +398,13 @@ module Twilio
 
                     ##
                     # Fetch the UsAppToPersonInstanceMetadata
+                    # @param [String] x_twilio_api_version The version of the Messaging API to use for this request
                     # @return [UsAppToPersonInstance] Fetched UsAppToPersonInstance
-                    def fetch_with_metadata
+                    def fetch_with_metadata(
+                      x_twilio_api_version: :unset
+                    )
 
-                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Api-Version' => x_twilio_api_version, })
                         
                         
                         
@@ -404,6 +434,9 @@ module Twilio
                     # @param [String] description A short description of what this SMS campaign does. Min length: 40 characters. Max length: 4096 characters.
                     # @param [Boolean] age_gated A boolean that specifies whether campaign requires age gate for federally legal content.
                     # @param [Boolean] direct_lending A boolean that specifies whether campaign allows direct lending or not.
+                    # @param [String] privacy_policy_url The URL of the privacy policy for the campaign.
+                    # @param [String] terms_and_conditions_url The URL of the terms and conditions for the campaign.
+                    # @param [String] x_twilio_api_version The version of the Messaging API to use for this request
                     # @return [UsAppToPersonInstance] Updated UsAppToPersonInstance
                     def update(
                         has_embedded_links: nil, 
@@ -412,7 +445,10 @@ module Twilio
                         message_flow: nil, 
                         description: nil, 
                         age_gated: nil, 
-                        direct_lending: nil
+                        direct_lending: nil, 
+                        privacy_policy_url: :unset, 
+                        terms_and_conditions_url: :unset, 
+                        x_twilio_api_version: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -423,9 +459,11 @@ module Twilio
                             'Description' => description,
                             'AgeGated' => age_gated,
                             'DirectLending' => direct_lending,
+                            'PrivacyPolicyUrl' => privacy_policy_url,
+                            'TermsAndConditionsUrl' => terms_and_conditions_url,
                         })
 
-                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Api-Version' => x_twilio_api_version, })
                         
                         
                         
@@ -449,6 +487,9 @@ module Twilio
                     # @param [String] description A short description of what this SMS campaign does. Min length: 40 characters. Max length: 4096 characters.
                     # @param [Boolean] age_gated A boolean that specifies whether campaign requires age gate for federally legal content.
                     # @param [Boolean] direct_lending A boolean that specifies whether campaign allows direct lending or not.
+                    # @param [String] privacy_policy_url The URL of the privacy policy for the campaign.
+                    # @param [String] terms_and_conditions_url The URL of the terms and conditions for the campaign.
+                    # @param [String] x_twilio_api_version The version of the Messaging API to use for this request
                     # @return [UsAppToPersonInstance] Updated UsAppToPersonInstance
                     def update_with_metadata(
                       has_embedded_links: nil, 
@@ -457,7 +498,10 @@ module Twilio
                       message_flow: nil, 
                       description: nil, 
                       age_gated: nil, 
-                      direct_lending: nil
+                      direct_lending: nil, 
+                      privacy_policy_url: :unset, 
+                      terms_and_conditions_url: :unset, 
+                      x_twilio_api_version: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -468,9 +512,11 @@ module Twilio
                             'Description' => description,
                             'AgeGated' => age_gated,
                             'DirectLending' => direct_lending,
+                            'PrivacyPolicyUrl' => privacy_policy_url,
+                            'TermsAndConditionsUrl' => terms_and_conditions_url,
                         })
 
-                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'X-Twilio-Api-Version' => x_twilio_api_version, })
                         
                         
                         
@@ -687,6 +733,8 @@ module Twilio
                             'url' => payload['url'],
                             'mock' => payload['mock'],
                             'errors' => payload['errors'],
+                            'privacy_policy_url' => payload['privacy_policy_url'],
+                            'terms_and_conditions_url' => payload['terms_and_conditions_url'],
                         }
 
                         # Context
@@ -874,6 +922,18 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] The URL of the privacy policy for the campaign.
+                    def privacy_policy_url
+                        @properties['privacy_policy_url']
+                    end
+                    
+                    ##
+                    # @return [String] The URL of the terms and conditions for the campaign.
+                    def terms_and_conditions_url
+                        @properties['terms_and_conditions_url']
+                    end
+                    
+                    ##
                     # Delete the UsAppToPersonInstance
                     # @return [Boolean] True if delete succeeds, false otherwise
                     def delete
@@ -883,10 +943,15 @@ module Twilio
 
                     ##
                     # Fetch the UsAppToPersonInstance
+                    # @param [String] x_twilio_api_version The version of the Messaging API to use for this request
                     # @return [UsAppToPersonInstance] Fetched UsAppToPersonInstance
-                    def fetch
+                    def fetch(
+                        x_twilio_api_version: :unset
+                    )
 
-                        context.fetch
+                        context.fetch(
+                            x_twilio_api_version: x_twilio_api_version, 
+                        )
                     end
 
                     ##
@@ -898,6 +963,9 @@ module Twilio
                     # @param [String] description A short description of what this SMS campaign does. Min length: 40 characters. Max length: 4096 characters.
                     # @param [Boolean] age_gated A boolean that specifies whether campaign requires age gate for federally legal content.
                     # @param [Boolean] direct_lending A boolean that specifies whether campaign allows direct lending or not.
+                    # @param [String] privacy_policy_url The URL of the privacy policy for the campaign.
+                    # @param [String] terms_and_conditions_url The URL of the terms and conditions for the campaign.
+                    # @param [String] x_twilio_api_version The version of the Messaging API to use for this request
                     # @return [UsAppToPersonInstance] Updated UsAppToPersonInstance
                     def update(
                         has_embedded_links: nil, 
@@ -906,7 +974,10 @@ module Twilio
                         message_flow: nil, 
                         description: nil, 
                         age_gated: nil, 
-                        direct_lending: nil
+                        direct_lending: nil, 
+                        privacy_policy_url: :unset, 
+                        terms_and_conditions_url: :unset, 
+                        x_twilio_api_version: :unset
                     )
 
                         context.update(
@@ -917,6 +988,9 @@ module Twilio
                             description: description, 
                             age_gated: age_gated, 
                             direct_lending: direct_lending, 
+                            privacy_policy_url: privacy_policy_url, 
+                            terms_and_conditions_url: terms_and_conditions_url, 
+                            x_twilio_api_version: x_twilio_api_version, 
                         )
                     end
 

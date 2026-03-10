@@ -52,6 +52,8 @@ module Twilio
                     # @param [String] timeout The number of seconds that <Pay> should wait for the caller to press a digit between each subsequent digit, after the first one, before moving on to validate the digits captured. The default is `5`, maximum is `600`.
                     # @param [TokenType] token_type 
                     # @param [String] valid_card_types Credit card types separated by space that Pay should accept. The default value is `visa mastercard amex`
+                    # @param [String] require_matching_inputs A comma-separated list of payment information fields that require the caller to enter the same value twice for confirmation. Supported values are `payment-card-number`, `expiration-date`, `security-code`, and `postal-code`.
+                    # @param [String] confirmation Whether to prompt the caller to confirm their payment information before submitting to the payment gateway. If `true`, the caller will hear the last 4 digits of their card or account number and must press 1 to confirm or 2 to cancel. Default is `false`.
                     # @return [PaymentInstance] Created PaymentInstance
                     def create(
                         idempotency_key: nil, 
@@ -69,7 +71,9 @@ module Twilio
                         security_code: :unset, 
                         timeout: :unset, 
                         token_type: :unset, 
-                        valid_card_types: :unset
+                        valid_card_types: :unset, 
+                        require_matching_inputs: :unset, 
+                        confirmation: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -89,6 +93,8 @@ module Twilio
                             'Timeout' => timeout,
                             'TokenType' => token_type,
                             'ValidCardTypes' => valid_card_types,
+                            'RequireMatchingInputs' => require_matching_inputs,
+                            'Confirmation' => confirmation,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -124,6 +130,8 @@ module Twilio
                     # @param [String] timeout The number of seconds that <Pay> should wait for the caller to press a digit between each subsequent digit, after the first one, before moving on to validate the digits captured. The default is `5`, maximum is `600`.
                     # @param [TokenType] token_type 
                     # @param [String] valid_card_types Credit card types separated by space that Pay should accept. The default value is `visa mastercard amex`
+                    # @param [String] require_matching_inputs A comma-separated list of payment information fields that require the caller to enter the same value twice for confirmation. Supported values are `payment-card-number`, `expiration-date`, `security-code`, and `postal-code`.
+                    # @param [String] confirmation Whether to prompt the caller to confirm their payment information before submitting to the payment gateway. If `true`, the caller will hear the last 4 digits of their card or account number and must press 1 to confirm or 2 to cancel. Default is `false`.
                     # @return [PaymentInstance] Created PaymentInstance
                     def create_with_metadata(
                       idempotency_key: nil, 
@@ -141,7 +149,9 @@ module Twilio
                       security_code: :unset, 
                       timeout: :unset, 
                       token_type: :unset, 
-                      valid_card_types: :unset
+                      valid_card_types: :unset, 
+                      require_matching_inputs: :unset, 
+                      confirmation: :unset
                     )
 
                         data = Twilio::Values.of({
@@ -161,6 +171,8 @@ module Twilio
                             'Timeout' => timeout,
                             'TokenType' => token_type,
                             'ValidCardTypes' => valid_card_types,
+                            'RequireMatchingInputs' => require_matching_inputs,
+                            'Confirmation' => confirmation,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
