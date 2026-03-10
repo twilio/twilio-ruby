@@ -1,4 +1,4 @@
-FROM ruby:2.4
+FROM ruby:3.2
 
 RUN mkdir /twilio
 WORKDIR /twilio
