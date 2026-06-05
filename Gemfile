@@ -7,3 +7,4 @@ gem "benchmark"
 gem "ostruct"
 gem "rexml"
 gem "rubocop", "= 1.71.2", require: false
+gem "nokogiri", ">= 1.6", "< 1.17.0"
