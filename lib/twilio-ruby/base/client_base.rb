@@ -11,8 +11,8 @@ module Twilio
       # rubocop:disable Metrics/ParameterLists
       def initialize(username = nil, password = nil, account_sid = nil, region = nil, http_client = nil, logger = nil,
                      user_agent_extensions = nil)
-        @username = username || Twilio.account_sid
-        @password = password || Twilio.auth_token
+        @username = username || Twilio.account_sid || ENV['TWILIO_ACCOUNT_SID']
+        @password = password || Twilio.auth_token || ENV['TWILIO_AUTH_TOKEN']
         @region = region || Twilio.region
         @edge = Twilio.edge
         @account_sid = account_sid || @username
