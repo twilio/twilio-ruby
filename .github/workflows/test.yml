@@ -17,12 +17,12 @@ jobs:
           ecosystem: ruby
       - name: Verify Bundler mirror is configured
         run: |
-          echo "Bundler config:"
-          bundle config mirror.https://rubygems.org/
-          bundle config mirror.https://rubygems.org/ | grep -q "twilio.jfrog.io" \
+          echo "BUNDLE_MIRROR__HTTPS___RUBYGEMS_ORG_=${BUNDLE_MIRROR__HTTPS___RUBYGEMS_ORG_}"
+          echo "${BUNDLE_MIRROR__HTTPS___RUBYGEMS_ORG_}" | grep -q "twilio.jfrog.io" \
             && echo "OK — mirror points to Artifactory" \
             || { echo "FAIL — mirror not set"; exit 1; }
-      - name: Test bundle install through Artifactory
+      - name: Install Ruby and test bundle install
         run: |
+          sudo apt-get update && sudo apt-get install -y ruby bundler
           bundle install --verbose 2>&1 | head -50
           echo "bundle install succeeded"
