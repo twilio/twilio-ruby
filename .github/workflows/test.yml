@@ -11,13 +11,10 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: twilio/sdk-actions/artifactory-oidc@dv/add-ruby-ecosystem
+      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+      - uses: twilio/sdk-actions/artifactory-oidc@8bc3f783cd249ae7c0575d48ef1ac1f5934db63e
         with:
           ecosystem: ruby
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.2"
       - name: Verify Bundler mirror is configured
         run: |
           echo "Bundler config:"
