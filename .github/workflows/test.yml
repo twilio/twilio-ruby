@@ -1,0 +1,28 @@
+name: Test Artifactory OIDC (Ruby)
+on: workflow_dispatch
+
+jobs:
+  test-oidc:
+    runs-on: ubuntu-x64
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: twilio/sdk-actions/artifactory-oidc@dv/add-ruby-ecosystem
+        with:
+          ecosystem: ruby
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+      - name: Verify Bundler mirror is configured
+        run: |
+          echo "Bundler config:"
+          bundle config mirror.https://rubygems.org/
+          bundle config mirror.https://rubygems.org/ | grep -q "twilio.jfrog.io" \
+            && echo "OK — mirror points to Artifactory" \
+            || { echo "FAIL — mirror not set"; exit 1; }
+      - name: Test bundle install through Artifactory
+        run: |
+          bundle install --verbose 2>&1 | head -50
+          echo "bundle install succeeded"
