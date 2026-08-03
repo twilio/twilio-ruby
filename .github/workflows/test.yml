@@ -17,12 +17,13 @@ jobs:
           ecosystem: ruby
       - name: Verify Bundler mirror is configured
         run: |
-          env | grep BUNDLE_MIRROR || true
-          printenv 'BUNDLE_MIRROR__HTTPS://RUBYGEMS__ORG/' | grep -q "twilio.jfrog.io" \
+          cat ~/.bundle/config
+          grep -q "twilio.jfrog.io" ~/.bundle/config \
             && echo "OK — mirror points to Artifactory" \
-            || { echo "FAIL — mirror not set"; exit 1; }
+            || { echo "FAIL — config file not set"; exit 1; }
       - name: Install Ruby and test bundle install
         run: |
+          set -o pipefail
           sudo apt-get update && sudo apt-get install -y ruby bundler
-          bundle install --verbose 2>&1 | head -50
+          bundle install --verbose 2>&1 | head -80
           echo "bundle install succeeded"
