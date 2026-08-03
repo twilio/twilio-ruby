@@ -1,5 +1,8 @@
 name: Test Artifactory OIDC (Ruby)
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    branches: [dv/test-artifactory-oidc]
 
 jobs:
   test-oidc:
