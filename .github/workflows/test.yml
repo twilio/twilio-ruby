@@ -12,13 +12,13 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
-      - uses: twilio/sdk-actions/artifactory-oidc@a535706c0a8af4ea01803d3cbac68c8638b114eb
+      - uses: twilio/sdk-actions/artifactory-oidc@2b747db15b5632bace618884242c85196d517abc
         with:
           ecosystem: ruby
       - name: Verify Bundler mirror is configured
         run: |
-          echo "BUNDLE_MIRROR__HTTPS___RUBYGEMS_ORG_=${BUNDLE_MIRROR__HTTPS___RUBYGEMS_ORG_}"
-          echo "${BUNDLE_MIRROR__HTTPS___RUBYGEMS_ORG_}" | grep -q "twilio.jfrog.io" \
+          env | grep BUNDLE_MIRROR || true
+          printenv 'BUNDLE_MIRROR__HTTPS://RUBYGEMS__ORG/' | grep -q "twilio.jfrog.io" \
             && echo "OK — mirror points to Artifactory" \
             || { echo "FAIL — mirror not set"; exit 1; }
       - name: Install Ruby and test bundle install
