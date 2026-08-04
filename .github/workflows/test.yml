@@ -25,6 +25,8 @@ jobs:
       - name: Install Ruby and test bundle install
         run: |
           set -o pipefail
-          sudo apt-get update && sudo apt-get install -y ruby bundler
+          sudo apt-get update && sudo apt-get install -y ruby ruby-dev build-essential
+          sudo gem install bundler
+          echo "Bundler version: $(bundle --version)"
           bundle install --verbose 2>&1 | head -80
           echo "bundle install succeeded"
