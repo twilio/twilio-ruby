@@ -12,7 +12,7 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
-      - uses: twilio/sdk-actions/artifactory-oidc@4f9ace37b0d2ce40117e0f22d1ae9e90d441cf28
+      - uses: twilio/sdk-actions/artifactory-oidc@115d3e084fb53683b792d2f6713583fd853e7a1e
         with:
           ecosystem: ruby
       - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1
@@ -30,5 +30,5 @@ jobs:
       - name: Test bundle install through Artifactory
         run: |
           set -o pipefail
-          bundle install --verbose 2>&1 | head -80
+          bundle install --full-index --verbose 2>&1 | head -80
           echo "bundle install succeeded"
