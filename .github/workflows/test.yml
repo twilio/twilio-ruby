@@ -34,6 +34,5 @@ jobs:
             || { echo "FAIL — mirror not set"; exit 1; }
       - name: Test bundle install through Artifactory
         run: |
-          set -o pipefail
-          bundle install --verbose 2>&1 | head -80
+          bundle install --verbose
           echo "bundle install succeeded"
