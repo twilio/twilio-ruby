@@ -18,6 +18,7 @@ jobs:
       - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1
         with:
           ruby-version: "3.2"
+          bundler: "latest"
       - name: Set Bundler credentials for Artifactory
         run: |
           bundle config set --global twilio.jfrog.io "$(printenv 'BUNDLE_TWILIO__JFROG__IO')"
@@ -34,11 +35,5 @@ jobs:
       - name: Test bundle install through Artifactory
         run: |
           set -o pipefail
-          # Replace Gemfile source with Artifactory directly (bypass mirror mechanism)
-          ART_URL="$(printenv 'BUNDLE_MIRROR__HTTPS://RUBYGEMS__ORG/')"
-          CRED="$(printenv 'BUNDLE_TWILIO__JFROG__IO')"
-          AUTHED_URL="$(echo "$ART_URL" | sed "s|https://|https://${CRED}@|")"
-          sed -i "s|source 'https://rubygems.org'|source '${AUTHED_URL}'|" Gemfile
-          head -3 Gemfile
           bundle install --verbose 2>&1 | head -80
           echo "bundle install succeeded"
