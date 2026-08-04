@@ -12,7 +12,7 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
-      - uses: twilio/sdk-actions/artifactory-oidc@20746909db91b3fe336c37d3109443d6ce5fdaa0
+      - uses: twilio/sdk-actions/artifactory-oidc@4f9ace37b0d2ce40117e0f22d1ae9e90d441cf28
         with:
           ecosystem: ruby
       - name: Verify Bundler mirror is configured
