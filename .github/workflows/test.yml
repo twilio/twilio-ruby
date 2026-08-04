@@ -12,7 +12,7 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
-      - uses: twilio/sdk-actions/artifactory-oidc@115d3e084fb53683b792d2f6713583fd853e7a1e
+      - uses: twilio/sdk-actions/artifactory-oidc@761ff6d6285b7389fa41a46d516b0827f08790b8
         with:
           ecosystem: ruby
       - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1
