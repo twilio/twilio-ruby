@@ -18,6 +18,10 @@ jobs:
       - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1
         with:
           ruby-version: "3.2"
+      - name: Set Bundler credentials for Artifactory
+        run: |
+          bundle config set --global twilio.jfrog.io "$(printenv 'BUNDLE_TWILIO__JFROG__IO')"
+          bundle config set --global mirror.https://rubygems.org/ "$(printenv 'BUNDLE_MIRROR__HTTPS://RUBYGEMS__ORG/')"
       - name: Verify Bundler mirror is configured
         run: |
           echo "Ruby: $(ruby --version)"
