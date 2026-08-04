@@ -34,5 +34,11 @@ jobs:
       - name: Test bundle install through Artifactory
         run: |
           set -o pipefail
-          bundle install --full-index --verbose 2>&1 | head -80
+          # Replace Gemfile source with Artifactory directly (bypass mirror mechanism)
+          ART_URL="$(printenv 'BUNDLE_MIRROR__HTTPS://RUBYGEMS__ORG/')"
+          CRED="$(printenv 'BUNDLE_TWILIO__JFROG__IO')"
+          AUTHED_URL="$(echo "$ART_URL" | sed "s|https://|https://${CRED}@|")"
+          sed -i "s|source 'https://rubygems.org'|source '${AUTHED_URL}'|" Gemfile
+          head -3 Gemfile
+          bundle install --verbose 2>&1 | head -80
           echo "bundle install succeeded"
