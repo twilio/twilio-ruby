@@ -15,18 +15,19 @@ jobs:
       - uses: twilio/sdk-actions/artifactory-oidc@4f9ace37b0d2ce40117e0f22d1ae9e90d441cf28
         with:
           ecosystem: ruby
+      - uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1 # v1
+        with:
+          ruby-version: "3.2"
       - name: Verify Bundler mirror is configured
         run: |
+          echo "Bundler version: $(bundle --version)"
           env | grep BUNDLE_MIRROR || true
           env | grep BUNDLE_TWILIO || true
           printenv 'BUNDLE_MIRROR__HTTPS://RUBYGEMS__ORG/' | grep -q "twilio.jfrog.io" \
             && echo "OK — mirror points to Artifactory" \
             || { echo "FAIL — mirror not set"; exit 1; }
-      - name: Install Ruby and test bundle install
+      - name: Test bundle install through Artifactory
         run: |
           set -o pipefail
-          sudo apt-get update && sudo apt-get install -y ruby ruby-dev build-essential
-          sudo gem install bundler
-          echo "Bundler version: $(bundle --version)"
           bundle install --verbose 2>&1 | head -80
           echo "bundle install succeeded"
