@@ -20,6 +20,7 @@ jobs:
           ruby-version: "3.2"
       - name: Verify Bundler mirror is configured
         run: |
+          echo "Ruby: $(ruby --version)"
           echo "Bundler version: $(bundle --version)"
           env | grep BUNDLE_MIRROR || true
           env | grep BUNDLE_TWILIO || true
