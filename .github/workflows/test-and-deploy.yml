@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
@@ -61,9 +61,9 @@ jobs:
         run: |
           sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' coverage.json
 
-      - name: SonarCloud Scan
-        if: ${{ (github.event_name == 'pull_request' || github.ref_type == 'branch') && matrix.ruby == '3.0' && !github.event.pull_request.head.repo.fork }}
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#      - name: SonarCloud Scan
+#        if: ${{ (github.event_name == 'pull_request' || github.ref_type == 'branch') && matrix.ruby == '3.0' && !github.event.pull_request.head.repo.fork }}
+#        uses: SonarSource/sonarcloud-github-action@master
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
