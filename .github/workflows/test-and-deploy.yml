@@ -1,13 +1,5 @@
 name: Test and Deploy
 on:
-  push:
-    branches: [ '*' ]
-    tags: [ '*' ]
-  pull_request:
-    branches: [ main ]
-  schedule:
-    # Run automatically at 8AM PST Monday-Friday
-    - cron: '0 15 * * 1-5'
   workflow_dispatch:
 
 jobs:
@@ -75,56 +67,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-  deploy:
-    name: Deploy
-    if: success() && github.ref_type == 'tag'
-    needs: [ test ]
-    runs-on: ubuntu-x64
-    steps:
-      - name: Checkout twilio-ruby
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
-        with:
-          fetch-depth: 0
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@8ade135a41bc03ea155e62e844d188df1ea18608
-        with:
-          ruby-version: 3.2
-          bundler-cache: true
-
-      - run: bundle install
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@8ade135a41bc03ea155e62e844d188df1ea18608
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_AUTH_TOKEN }}
-
-      # The expression strips off the shortest match from the front of the string to yield just the tag name as the output
-      - name: Get tagged version
-        run: echo "GITHUB_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-
-      - name: Create GitHub Release
-        uses: sendgrid/dx-automator/actions/release@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and Push image
-        run: make docker-build && make docker-push
-      - name: Publish to Rubygems
-        env:
-          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_AUTH_TOKEN }}
-        run: |
-          mkdir -p $HOME/.gem
-          touch $HOME/.gem/credentials
-          chmod 0600 $HOME/.gem/credentials
-          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
-          gem update --system
-          gem build *.gemspec
-          gem push *.gem
-
-      - name: Submit metric to Datadog
-        uses: sendgrid/dx-automator/actions/datadog-release-metric@main
-        env:
-          DD_API_KEY: ${{ secrets.DATADOG_API_KEY }}
