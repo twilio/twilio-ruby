@@ -80,7 +80,7 @@ jobs:
     name: Deploy
     if: success() && github.ref_type == 'tag'
     needs: [ test ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-x64
     steps:
       - name: Checkout twilio-ruby
         uses: actions/checkout@v4
