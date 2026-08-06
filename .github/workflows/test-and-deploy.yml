@@ -133,7 +133,7 @@ jobs:
     name: Slack notify on failure
     if: failure() && github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref_type == 'tag')
     needs: [ test, deploy ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-x64
     steps:
       - uses: rtCamp/action-slack-notify@v2
         env:
