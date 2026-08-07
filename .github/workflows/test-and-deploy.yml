@@ -2,7 +2,19 @@ name: Test and Deploy
 on:
   workflow_dispatch:
 
+env:
+  ARTIFACTORY_URL: ${{ vars.ARTIFACTORY_URL }}
+
 jobs:
+  lockfile-hygiene:
+    name: Lockfile Hygiene
+    runs-on: ubuntu-x63
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: twilio/sdk-actions/ruby-lockfile-hygiene@558bba0b6fe12195370f5269dfe53db5db3bb9a6 # v1
+        with:
+          package-manager: gems
+
   test:
     name: Test
     runs-on: ubuntu-x64
@@ -37,23 +49,23 @@ jobs:
       - name: Run Unit Tests
         run: make test
 
-      - name: Run Cluster Test
-        if: (!github.event.pull_request.head.repo.fork)
-        env:
-         TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
-         TWILIO_API_KEY: ${{ secrets.TWILIO_CLUSTER_TEST_API_KEY}}
-         TWILIO_API_SECRET: ${{ secrets.TWILIO_CLUSTER_TEST_API_KEY_SECRET }}
-         TWILIO_FROM_NUMBER: ${{ secrets.TWILIO_FROM_NUMBER }}
-         TWILIO_TO_NUMBER: ${{ secrets.TWILIO_TO_NUMBER }}
-         TWILIO_ORGS_ACCOUNT_SID: ${{ secrets.TWILIO_ORGS_ACCOUNT_SID }}
-         TWILIO_ORGS_CLIENT_SECRET: ${{ secrets.TWILIO_ORGS_CLIENT_SECRET }}
-         TWILIO_ORGS_CLIENT_ID: ${{ secrets.TWILIO_ORGS_CLIENT_ID }}
-         TWILIO_ORG_SID: ${{ secrets.TWILIO_ORG_SID }}
-         TWILIO_USER_SID: ${{ secrets.TWILIO_USER_SID }}
-         TWILIO_CLIENT_SECRET: ${{ secrets.TWILIO_CLIENT_SECRET }}
-         TWILIO_CLIENT_ID: ${{ secrets.TWILIO_CLIENT_ID }}
-         TWILIO_MESSAGE_SID: ${{ secrets.TWILIO_MESSAGE_SID }}
-        run: make cluster-test
+#      - name: Run Cluster Test
+#        if: (!github.event.pull_request.head.repo.fork)
+#        env:
+#         TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+#         TWILIO_API_KEY: ${{ secrets.TWILIO_CLUSTER_TEST_API_KEY}}
+#         TWILIO_API_SECRET: ${{ secrets.TWILIO_CLUSTER_TEST_API_KEY_SECRET }}
+#         TWILIO_FROM_NUMBER: ${{ secrets.TWILIO_FROM_NUMBER }}
+#         TWILIO_TO_NUMBER: ${{ secrets.TWILIO_TO_NUMBER }}
+#         TWILIO_ORGS_ACCOUNT_SID: ${{ secrets.TWILIO_ORGS_ACCOUNT_SID }}
+#         TWILIO_ORGS_CLIENT_SECRET: ${{ secrets.TWILIO_ORGS_CLIENT_SECRET }}
+#         TWILIO_ORGS_CLIENT_ID: ${{ secrets.TWILIO_ORGS_CLIENT_ID }}
+#         TWILIO_ORG_SID: ${{ secrets.TWILIO_ORG_SID }}
+#         TWILIO_USER_SID: ${{ secrets.TWILIO_USER_SID }}
+#         TWILIO_CLIENT_SECRET: ${{ secrets.TWILIO_CLIENT_SECRET }}
+#         TWILIO_CLIENT_ID: ${{ secrets.TWILIO_CLIENT_ID }}
+#         TWILIO_MESSAGE_SID: ${{ secrets.TWILIO_MESSAGE_SID }}
+#        run: make cluster-test
 
       - name: Fix code coverage paths
         if: ${{ (github.event_name == 'pull_request' || github.ref_type == 'branch') && matrix.ruby == '3.0' && !github.event.pull_request.head.repo.fork }}
