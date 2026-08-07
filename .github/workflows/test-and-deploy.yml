@@ -17,6 +17,7 @@ jobs:
 
   test:
     name: Test
+    needs: [ lockfile-hygiene ]
     runs-on: ubuntu-x64
     timeout-minutes: 20
     strategy:
