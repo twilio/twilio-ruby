@@ -12,8 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - uses: twilio/sdk-actions/ruby-lockfile-hygiene@558bba0b6fe12195370f5269dfe53db5db3bb9a6 # v1
-        with:
-          package-manager: gems
 
   test:
     name: Test
@@ -84,3 +82,9 @@ jobs:
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           fetch-depth: 0
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@
+        with:
+          ruby-version: 3.2
+          bundler-cache: true
