@@ -8,7 +8,7 @@ env:
 jobs:
   lockfile-hygiene:
     name: Lockfile Hygiene
-    runs-on: ubuntu-x63
+    runs-on: ubuntu-x64
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - uses: twilio/sdk-actions/ruby-lockfile-hygiene@558bba0b6fe12195370f5269dfe53db5db3bb9a6 # v1
