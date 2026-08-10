@@ -82,6 +82,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Artifactory OIDC Auth
+        uses: twilio/sdk-actions/artifactory-oidc@0375437914d535a5fb178bdbfdb5d51bdde2616e # v1
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
         with:
@@ -92,8 +95,8 @@ jobs:
 #        run: make docker-build && make docker-push
 
       - name: Publish to Rubygems
-        env:
-          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_AUTH_TOKEN }}
+#        env:
+#          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_AUTH_TOKEN }}
         run: |
           mkdir -p $HOME/.gem
           touch $HOME/.gem/credentials
