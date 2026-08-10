@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 20
     strategy:
       matrix:
-        ruby: [ '2.7', '3.0', '3.1', '3.2', '3.3', '3.4']
+        ruby: [ '3.0', '3.1', '3.2', '3.3', '3.4']
     steps:
       - name: Checkout twilio-ruby
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
@@ -87,3 +87,16 @@ jobs:
         with:
           ruby-version: 3.2
           bundler-cache: true
+
+      - name: Build and Push image
+        run: make docker-build && make docker-push
+      - name: Publish to Rubygems
+        env:
+          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_AUTH_TOKEN }}
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+          gem update --system
+          gem build *.gemspec
