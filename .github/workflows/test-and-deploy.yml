@@ -1,5 +1,13 @@
 name: Test and Deploy
 on:
+  push:
+    branches: [ '*' ]
+    tags: [ '*' ]
+    pull_request:
+      branches: [ main ]
+    schedule:
+      # Run automatically at 8AM PST Monday-Friday
+      - cron: '0 15 * * 1-5'
   workflow_dispatch:
 
 env:
@@ -47,23 +55,23 @@ jobs:
       - name: Run Unit Tests
         run: make test
 
-#      - name: Run Cluster Test
-#        if: (!github.event.pull_request.head.repo.fork)
-#        env:
-#         TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
-#         TWILIO_API_KEY: ${{ secrets.TWILIO_CLUSTER_TEST_API_KEY}}
-#         TWILIO_API_SECRET: ${{ secrets.TWILIO_CLUSTER_TEST_API_KEY_SECRET }}
-#         TWILIO_FROM_NUMBER: ${{ secrets.TWILIO_FROM_NUMBER }}
-#         TWILIO_TO_NUMBER: ${{ secrets.TWILIO_TO_NUMBER }}
-#         TWILIO_ORGS_ACCOUNT_SID: ${{ secrets.TWILIO_ORGS_ACCOUNT_SID }}
-#         TWILIO_ORGS_CLIENT_SECRET: ${{ secrets.TWILIO_ORGS_CLIENT_SECRET }}
-#         TWILIO_ORGS_CLIENT_ID: ${{ secrets.TWILIO_ORGS_CLIENT_ID }}
-#         TWILIO_ORG_SID: ${{ secrets.TWILIO_ORG_SID }}
-#         TWILIO_USER_SID: ${{ secrets.TWILIO_USER_SID }}
-#         TWILIO_CLIENT_SECRET: ${{ secrets.TWILIO_CLIENT_SECRET }}
-#         TWILIO_CLIENT_ID: ${{ secrets.TWILIO_CLIENT_ID }}
-#         TWILIO_MESSAGE_SID: ${{ secrets.TWILIO_MESSAGE_SID }}
-#        run: make cluster-test
+      - name: Run Cluster Test
+        if: (!github.event.pull_request.head.repo.fork)
+        env:
+         TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+         TWILIO_API_KEY: ${{ secrets.TWILIO_CLUSTER_TEST_API_KEY}}
+         TWILIO_API_SECRET: ${{ secrets.TWILIO_CLUSTER_TEST_API_KEY_SECRET }}
+         TWILIO_FROM_NUMBER: ${{ secrets.TWILIO_FROM_NUMBER }}
+         TWILIO_TO_NUMBER: ${{ secrets.TWILIO_TO_NUMBER }}
+         TWILIO_ORGS_ACCOUNT_SID: ${{ secrets.TWILIO_ORGS_ACCOUNT_SID }}
+         TWILIO_ORGS_CLIENT_SECRET: ${{ secrets.TWILIO_ORGS_CLIENT_SECRET }}
+         TWILIO_ORGS_CLIENT_ID: ${{ secrets.TWILIO_ORGS_CLIENT_ID }}
+         TWILIO_ORG_SID: ${{ secrets.TWILIO_ORG_SID }}
+         TWILIO_USER_SID: ${{ secrets.TWILIO_USER_SID }}
+         TWILIO_CLIENT_SECRET: ${{ secrets.TWILIO_CLIENT_SECRET }}
+         TWILIO_CLIENT_ID: ${{ secrets.TWILIO_CLIENT_ID }}
+         TWILIO_MESSAGE_SID: ${{ secrets.TWILIO_MESSAGE_SID }}
+        run: make cluster-test
 
       - name: Fix code coverage paths
         if: ${{ (github.event_name == 'pull_request' || github.ref_type == 'branch') && matrix.ruby == '3.0' && !github.event.pull_request.head.repo.fork }}
@@ -72,8 +80,9 @@ jobs:
           sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g' coverage.json
 
 
-  deploy-dry-run:
+  deploy:
     name: deploy
+    if: success() && github.ref_type == 'tag'
     runs-on: ubuntu-x64
     needs: [ test ]
     permissions:
@@ -97,16 +106,10 @@ jobs:
           ruby-version: 3.2
           bundler-cache: true
 
-#      - name: Build and Push image
-#        run: make docker-build && make docker-push
+      - name: Build and Push image
+        run: make docker-build && make docker-push
 
       - name: Publish to Rubygems
-#        env:
-#          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_AUTH_TOKEN }}
         run: |
-          mkdir -p $HOME/.gem
-          touch $HOME/.gem/credentials
-          chmod 0600 $HOME/.gem/credentials
-          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
           gem update --system
           gem build *.gemspec
