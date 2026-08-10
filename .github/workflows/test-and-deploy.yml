@@ -88,8 +88,9 @@ jobs:
           ruby-version: 3.2
           bundler-cache: true
 
-      - name: Build and Push image
-        run: make docker-build && make docker-push
+#      - name: Build and Push image
+#        run: make docker-build && make docker-push
+
       - name: Publish to Rubygems
         env:
           GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_AUTH_TOKEN }}
