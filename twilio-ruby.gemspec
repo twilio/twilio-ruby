@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   # Workaround for RBX <= 2.2.1, should be fixed in next version
   spec.add_dependency('rubysl') if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
 
-  spec.add_development_dependency 'bundler', '>= 1.5', '< 3.0'
+  spec.add_development_dependency 'bundler', '>= 1.5', '< 5.0'
   spec.add_development_dependency 'equivalent-xml', '~> 0.6'
   spec.add_development_dependency 'fakeweb', '~> 1.3'
   spec.add_development_dependency 'rack', '~> 2.0'
