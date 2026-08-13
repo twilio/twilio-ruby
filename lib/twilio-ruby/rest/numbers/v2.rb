@@ -25,6 +25,7 @@ module Twilio
                     @authorization_documents = nil
                     @bulk_hosted_number_orders = nil
                     @bundle_clone = nil
+                    @caller_ids = nil
                     @hosted_number_orders = nil
                     @regulatory_compliance = nil
                 end
@@ -87,6 +88,21 @@ module Twilio
                         @bundle_clone ||= BundleCloneList.new self
                     else
                         BundleCloneContext.new(self, bundle_sid)
+                    end
+                end
+                ##
+                # @param [String] caller_id_sid 
+                # @return [Twilio::REST::Numbers::V2::CallerIdContext] if callerIdSid was passed.
+                # @return [Twilio::REST::Numbers::V2::CallerIdList]
+                def caller_ids(caller_id_sid=:unset)
+                    if caller_id_sid.nil?
+                        raise ArgumentError, 'caller_id_sid cannot be nil'
+                    end
+
+                    if caller_id_sid == :unset
+                        @caller_ids ||= CallerIdList.new self
+                    else
+                        CallerIdContext.new(self, caller_id_sid)
                     end
                 end
                 ##

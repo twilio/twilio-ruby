@@ -255,7 +255,6 @@ module Twilio
                         # Dependents
                         @brand_registration_otps = nil
                         @brand_vettings = nil
-                        @brand_registration2_fa = nil
                     end
                     ##
                     # Fetch the BrandRegistrationInstance
@@ -374,16 +373,6 @@ module Twilio
                         end
 
                      @brand_vettings
-                    end
-                    ##
-                    # Access the brand_registration2_fa
-                    # @return [BrandRegistration2FaList]
-                    # @return [BrandRegistration2FaContext]
-                    def brand_registration2_fa
-                        BrandRegistration2FaContext.new(
-                                @version,
-                                @solution[:sid]
-                                )
                     end
 
                     ##
@@ -746,13 +735,6 @@ module Twilio
                     # @return [brand_vettings] brand_vettings
                     def brand_vettings
                         context.brand_vettings
-                    end
-
-                    ##
-                    # Access the brand_registration2_fa
-                    # @return [brand_registration2_fa] brand_registration2_fa
-                    def brand_registration2_fa
-                        context.brand_registration2_fa
                     end
 
                     ##

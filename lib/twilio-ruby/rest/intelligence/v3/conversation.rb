@@ -38,8 +38,8 @@ module Twilio
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
                     # @param [String] page_token Token for pagination
-                    # @param [Time] created_at_before Filter by Conversations created before this timestamp.
-                    # @param [Time] created_at_after Filter by Conversations created after this timestamp.
+                    # @param [Time] created_at_before Filter by Conversations created before this timestamp. The maximum allowed time range between `createdAtBefore` and `createdAtAfter` is 31 days.
+                    # @param [Time] created_at_after Filter by Conversations created after this timestamp. The maximum allowed time range between `createdAtBefore` and `createdAtAfter` is 31 days.
                     # @param [String] status Filter by Conversation status.
                     # @param [String] channel_id Filters Conversations by the underlying channel resource ID, such as a Call ID or Message ID.
                     # @param [Array[String]] channels Filters Conversations that include one or more of the specified communication channels (`OR` match).
@@ -74,8 +74,8 @@ module Twilio
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
                     # @param [String] page_token Token for pagination
-                    # @param [Time] created_at_before Filter by Conversations created before this timestamp.
-                    # @param [Time] created_at_after Filter by Conversations created after this timestamp.
+                    # @param [Time] created_at_before Filter by Conversations created before this timestamp. The maximum allowed time range between `createdAtBefore` and `createdAtAfter` is 31 days.
+                    # @param [Time] created_at_after Filter by Conversations created after this timestamp. The maximum allowed time range between `createdAtBefore` and `createdAtAfter` is 31 days.
                     # @param [String] status Filter by Conversation status.
                     # @param [String] channel_id Filters Conversations by the underlying channel resource ID, such as a Call ID or Message ID.
                     # @param [Array[String]] channels Filters Conversations that include one or more of the specified communication channels (`OR` match).
@@ -114,8 +114,8 @@ module Twilio
                     ##
                     # Lists ConversationPageMetadata records from the API as a list.
                       # @param [String] page_token Token for pagination
-                      # @param [Time] created_at_before Filter by Conversations created before this timestamp.
-                      # @param [Time] created_at_after Filter by Conversations created after this timestamp.
+                      # @param [Time] created_at_before Filter by Conversations created before this timestamp. The maximum allowed time range between `createdAtBefore` and `createdAtAfter` is 31 days.
+                      # @param [Time] created_at_after Filter by Conversations created after this timestamp. The maximum allowed time range between `createdAtBefore` and `createdAtAfter` is 31 days.
                       # @param [String] status Filter by Conversation status.
                       # @param [String] channel_id Filters Conversations by the underlying channel resource ID, such as a Call ID or Message ID.
                       # @param [Array[String]] channels Filters Conversations that include one or more of the specified communication channels (`OR` match).
@@ -176,8 +176,8 @@ module Twilio
                     # Retrieve a single page of ConversationInstance records from the API.
                     # Request is executed immediately.
                     # @param [String] page_token Token for pagination
-                    # @param [Time] created_at_before Filter by Conversations created before this timestamp.
-                    # @param [Time] created_at_after Filter by Conversations created after this timestamp.
+                    # @param [Time] created_at_before Filter by Conversations created before this timestamp. The maximum allowed time range between `createdAtBefore` and `createdAtAfter` is 31 days.
+                    # @param [Time] created_at_after Filter by Conversations created after this timestamp. The maximum allowed time range between `createdAtBefore` and `createdAtAfter` is 31 days.
                     # @param [String] status Filter by Conversation status.
                     # @param [String] channel_id Filters Conversations by the underlying channel resource ID, such as a Call ID or Message ID.
                     # @param [Array[String]] channels Filters Conversations that include one or more of the specified communication channels (`OR` match).

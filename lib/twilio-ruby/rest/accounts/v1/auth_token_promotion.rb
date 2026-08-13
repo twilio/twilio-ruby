@@ -58,8 +58,15 @@ module Twilio
                     end
                     ##
                     # Update the AuthTokenPromotionInstance
+                    # @param [Boolean] suppress_email_notification Whether to suppress the email notification that Twilio sends to the owners and administrators of the account about this Auth Token change. Defaults to `false`, so Twilio sends the email. Set to `true` when rotating Auth Tokens across many subaccounts.
                     # @return [AuthTokenPromotionInstance] Updated AuthTokenPromotionInstance
-                    def update
+                    def update(
+                      suppress_email_notification: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'SuppressEmailNotification' => suppress_email_notification,
+                        })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
@@ -67,7 +74,7 @@ module Twilio
                         
                         
                         
-                        payload = @version.update('POST', @uri, headers: headers)
+                        payload = @version.update('POST', @uri, data: data, headers: headers)
                         AuthTokenPromotionInstance.new(
                             @version,
                             payload,
@@ -76,8 +83,15 @@ module Twilio
 
                     ##
                     # Update the AuthTokenPromotionInstanceMetadata
+                    # @param [Boolean] suppress_email_notification Whether to suppress the email notification that Twilio sends to the owners and administrators of the account about this Auth Token change. Defaults to `false`, so Twilio sends the email. Set to `true` when rotating Auth Tokens across many subaccounts.
                     # @return [AuthTokenPromotionInstance] Updated AuthTokenPromotionInstance
-                    def update_with_metadata
+                    def update_with_metadata(
+                      suppress_email_notification: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'SuppressEmailNotification' => suppress_email_notification,
+                        })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
@@ -85,7 +99,7 @@ module Twilio
                         
                         
                         
-                        response = @version.update_with_metadata('POST', @uri, headers: headers)
+                        response = @version.update_with_metadata('POST', @uri, data: data, headers: headers)
                         auth_token_promotion_instance = AuthTokenPromotionInstance.new(
                             @version,
                             response.body,
@@ -321,10 +335,15 @@ module Twilio
                     
                     ##
                     # Update the AuthTokenPromotionInstance
+                    # @param [Boolean] suppress_email_notification Whether to suppress the email notification that Twilio sends to the owners and administrators of the account about this Auth Token change. Defaults to `false`, so Twilio sends the email. Set to `true` when rotating Auth Tokens across many subaccounts.
                     # @return [AuthTokenPromotionInstance] Updated AuthTokenPromotionInstance
-                    def update
+                    def update(
+                      suppress_email_notification: :unset
+                    )
 
-                        context.update
+                        context.update(
+                            suppress_email_notification: suppress_email_notification, 
+                        )
                     end
 
                     ##

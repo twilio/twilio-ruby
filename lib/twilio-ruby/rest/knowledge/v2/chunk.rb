@@ -271,6 +271,10 @@ module Twilio
                         @properties = { 
                             'content' => payload['content'],
                             'created_at' => Twilio.deserialize_iso8601_datetime(payload['created_at']),
+                            'chunk_index' => payload['chunk_index'] == nil ? payload['chunk_index'] : payload['chunk_index'].to_i,
+                            'document_title' => payload['document_title'],
+                            'document_url' => payload['document_url'],
+                            'document_number' => payload['document_number'] == nil ? payload['document_number'] : payload['document_number'].to_i,
                         }
                     end
 
@@ -285,6 +289,30 @@ module Twilio
                     # @return [Time] The date and time in GMT when the Chunk was created specified in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
                     def created_at
                         @properties['created_at']
+                    end
+                    
+                    ##
+                    # @return [String] 0-based position of this chunk within its source document for a single ingestion run.
+                    def chunk_index
+                        @properties['chunk_index']
+                    end
+                    
+                    ##
+                    # @return [String] Human-readable title of the source document. Web: HTML <title> from the crawled page. File: filename from Unstructured metadata. Text: knowledge name from the knowledge source.
+                    def document_title
+                        @properties['document_title']
+                    end
+                    
+                    ##
+                    # @return [String] Specific page URL this chunk was crawled from. Web sources only; null for File and Text sources.
+                    def document_url
+                        @properties['document_url']
+                    end
+                    
+                    ##
+                    # @return [String] Physical page number (1-based). PDF sources only; omitted for all other source types.
+                    def document_number
+                        @properties['document_number']
                     end
                     
                     ##

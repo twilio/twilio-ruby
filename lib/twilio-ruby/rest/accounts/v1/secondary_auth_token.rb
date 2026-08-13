@@ -58,8 +58,15 @@ module Twilio
                     end
                     ##
                     # Create the SecondaryAuthTokenInstance
+                    # @param [Boolean] suppress_email_notification Whether to suppress the email notification that Twilio sends to the owners and administrators of the account about this Auth Token change. Defaults to `false`, so Twilio sends the email. Set to `true` when rotating Auth Tokens across many subaccounts.
                     # @return [SecondaryAuthTokenInstance] Created SecondaryAuthTokenInstance
-                    def create
+                    def create(
+                      suppress_email_notification: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'SuppressEmailNotification' => suppress_email_notification,
+                        })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
@@ -67,7 +74,7 @@ module Twilio
                         
                         
                         
-                        payload = @version.create('POST', @uri, headers: headers)
+                        payload = @version.create('POST', @uri, data: data, headers: headers)
                         SecondaryAuthTokenInstance.new(
                             @version,
                             payload,
@@ -76,8 +83,15 @@ module Twilio
 
                     ##
                     # Create the SecondaryAuthTokenInstanceMetadata
+                    # @param [Boolean] suppress_email_notification Whether to suppress the email notification that Twilio sends to the owners and administrators of the account about this Auth Token change. Defaults to `false`, so Twilio sends the email. Set to `true` when rotating Auth Tokens across many subaccounts.
                     # @return [SecondaryAuthTokenInstance] Created SecondaryAuthTokenInstance
-                    def create_with_metadata
+                    def create_with_metadata(
+                      suppress_email_notification: :unset
+                    )
+
+                        data = Twilio::Values.of({
+                            'SuppressEmailNotification' => suppress_email_notification,
+                        })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
@@ -85,7 +99,7 @@ module Twilio
                         
                         
                         
-                        response = @version.create_with_metadata('POST', @uri, headers: headers)
+                        response = @version.create_with_metadata('POST', @uri, data: data, headers: headers)
                         secondary_auth_token_instance = SecondaryAuthTokenInstance.new(
                             @version,
                             response.body,
@@ -100,27 +114,39 @@ module Twilio
 
                     ##
                     # Delete the SecondaryAuthTokenInstance
+                    # @param [Boolean] suppress_email_notification Whether to suppress the email notification that Twilio sends to the owners and administrators of the account about this Auth Token change. Defaults to `false`, so Twilio sends the email. Set to `true` when rotating Auth Tokens across many subaccounts.
                     # @return [Boolean] True if delete succeeds, false otherwise
-                    def delete
+                    def delete(
+                      suppress_email_notification: :unset
+                    )
 
+                        params = Twilio::Values.of({
+                            'SuppressEmailNotification' => suppress_email_notification,
+                        })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
                         
                         
 
-                        @version.delete('DELETE', @uri, headers: headers)
+                        @version.delete('DELETE', @uri, params: params, headers: headers)
                     end
 
                     ##
                     # Delete the SecondaryAuthTokenInstanceMetadata
+                    # @param [Boolean] suppress_email_notification Whether to suppress the email notification that Twilio sends to the owners and administrators of the account about this Auth Token change. Defaults to `false`, so Twilio sends the email. Set to `true` when rotating Auth Tokens across many subaccounts.
                     # @return [Boolean] True if delete succeeds, false otherwise
-                    def delete_with_metadata
+                    def delete_with_metadata(
+                      suppress_email_notification: :unset
+                    )
 
+                        params = Twilio::Values.of({
+                            'SuppressEmailNotification' => suppress_email_notification,
+                        })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
                         
                         
-                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          response = @version.delete_with_metadata('DELETE', @uri, params: params, headers: headers)
                           secondaryAuthToken_instance = SecondaryAuthTokenInstance.new(
                               @version,
                               response.body,
@@ -353,18 +379,28 @@ module Twilio
                     
                     ##
                     # Create the SecondaryAuthTokenInstance
+                    # @param [Boolean] suppress_email_notification Whether to suppress the email notification that Twilio sends to the owners and administrators of the account about this Auth Token change. Defaults to `false`, so Twilio sends the email. Set to `true` when rotating Auth Tokens across many subaccounts.
                     # @return [SecondaryAuthTokenInstance] Created SecondaryAuthTokenInstance
-                    def create
+                    def create(
+                      suppress_email_notification: :unset
+                    )
 
-                        context.create
+                        context.create(
+                            suppress_email_notification: suppress_email_notification, 
+                        )
                     end
 
                     ##
                     # Delete the SecondaryAuthTokenInstance
+                    # @param [Boolean] suppress_email_notification Whether to suppress the email notification that Twilio sends to the owners and administrators of the account about this Auth Token change. Defaults to `false`, so Twilio sends the email. Set to `true` when rotating Auth Tokens across many subaccounts.
                     # @return [Boolean] True if delete succeeds, false otherwise
-                    def delete
+                    def delete(
+                      suppress_email_notification: :unset
+                    )
 
-                        context.delete
+                        context.delete(
+                            suppress_email_notification: suppress_email_notification, 
+                        )
                     end
 
                     ##

@@ -57,13 +57,14 @@ module Twilio
                     class CreateConfigurationRequest
                             # @param [display_name]: [String] A human-readable name for the configuration. Limited to 32 characters.
                             # @param [description]: [String] Human-readable description for the configuration.
-                            # @param [conversation_grouping_type]: [String] The strategy Conversation Orchestrator uses to assign communications to conversations.
+                            # @param [conversation_grouping_type]: [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
                             # @param [memory_store_id]: [String] The memory store ID that Conversation Orchestrator uses for profile resolution.
                             # @param [channel_settings]: [Hash<String, CreateConfigurationRequestChannelSettingsValue>] 
                             # @param [status_callbacks]: [Array<ConfigurationList.CreateConfigurationRequestStatusCallbacks>] A list of webhook configurations.
                             # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
                             # @param [memory_extraction_enabled]: [Boolean] Whether memory extraction is enabled for conversations under this configuration. Defaults to false.
-                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled
+                            # @param [conversations_v1_bridge]: [ConfigurationList.CreateConfigurationRequestConversationsV1Bridge] 
+                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled, :conversations_v1_bridge
                         def initialize(payload)
                                 @display_name = payload["display_name"]
                                 @description = payload["description"]
@@ -73,6 +74,7 @@ module Twilio
                                 @status_callbacks = payload["status_callbacks"]
                                 @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
                                 @memory_extraction_enabled = payload["memory_extraction_enabled"]
+                                @conversations_v1_bridge = payload["conversations_v1_bridge"]
                         end
                         def to_json(options = {})
                         {
@@ -84,6 +86,7 @@ module Twilio
                                 "statusCallbacks": @status_callbacks,
                                 "intelligenceConfigurationIds": @intelligence_configuration_ids,
                                 "memoryExtractionEnabled": @memory_extraction_enabled,
+                                "conversationsV1Bridge": @conversations_v1_bridge,
                         }.to_json(options)
                         end
                     end
@@ -139,6 +142,19 @@ module Twilio
                         end
                     end
 
+                    class CreateConfigurationRequestConversationsV1Bridge
+                            # @param [service_id]: [String] The Conversations V1 Service SID (IS prefix). One configuration per V1 Service SID.
+                        attr_accessor :service_id
+                        def initialize(payload)
+                                @service_id = payload["service_id"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "serviceId": @service_id,
+                        }.to_json(options)
+                        end
+                    end
+
                     class CreateConfigurationRequestStatusCallbacks
                             # @param [url]: [String] The destination URL for webhooks.
                             # @param [method]: [String] The HTTP method used to invoke the webhook URL.
@@ -158,13 +174,14 @@ module Twilio
                     class UpdateConfigurationRequest
                             # @param [display_name]: [String] A human-readable name for the configuration. Limited to 32 characters.
                             # @param [description]: [String] Human-readable description for the configuration.
-                            # @param [conversation_grouping_type]: [String] The strategy Conversation Orchestrator uses to assign communications to conversations.
+                            # @param [conversation_grouping_type]: [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
                             # @param [memory_store_id]: [String] The Memory Store ID for profile resolution.
                             # @param [channel_settings]: [Hash<String, UpdateConfigurationRequestChannelSettingsValue>] 
                             # @param [status_callbacks]: [Array<ConfigurationList.UpdateConfigurationRequestStatusCallbacks>] 
                             # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
                             # @param [memory_extraction_enabled]: [Boolean] Whether memory extraction is enabled for conversations under this configuration. Defaults to false.
-                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled
+                            # @param [conversations_v1_bridge]: [ConfigurationList.CreateConfigurationRequestConversationsV1Bridge] 
+                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled, :conversations_v1_bridge
                         def initialize(payload)
                                 @display_name = payload["display_name"]
                                 @description = payload["description"]
@@ -174,6 +191,7 @@ module Twilio
                                 @status_callbacks = payload["status_callbacks"]
                                 @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
                                 @memory_extraction_enabled = payload["memory_extraction_enabled"]
+                                @conversations_v1_bridge = payload["conversations_v1_bridge"]
                         end
                         def to_json(options = {})
                         {
@@ -185,6 +203,7 @@ module Twilio
                                 "statusCallbacks": @status_callbacks,
                                 "intelligenceConfigurationIds": @intelligence_configuration_ids,
                                 "memoryExtractionEnabled": @memory_extraction_enabled,
+                                "conversationsV1Bridge": @conversations_v1_bridge,
                         }.to_json(options)
                         end
                     end
@@ -295,13 +314,14 @@ module Twilio
                     class CreateConfigurationRequest
                             # @param [display_name]: [String] A human-readable name for the configuration. Limited to 32 characters.
                             # @param [description]: [String] Human-readable description for the configuration.
-                            # @param [conversation_grouping_type]: [String] The strategy Conversation Orchestrator uses to assign communications to conversations.
+                            # @param [conversation_grouping_type]: [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
                             # @param [memory_store_id]: [String] The memory store ID that Conversation Orchestrator uses for profile resolution.
                             # @param [channel_settings]: [Hash<String, CreateConfigurationRequestChannelSettingsValue>] 
                             # @param [status_callbacks]: [Array<ConfigurationList.CreateConfigurationRequestStatusCallbacks>] A list of webhook configurations.
                             # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
                             # @param [memory_extraction_enabled]: [Boolean] Whether memory extraction is enabled for conversations under this configuration. Defaults to false.
-                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled
+                            # @param [conversations_v1_bridge]: [ConfigurationList.CreateConfigurationRequestConversationsV1Bridge] 
+                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled, :conversations_v1_bridge
                         def initialize(payload)
                                 @display_name = payload["display_name"]
                                 @description = payload["description"]
@@ -311,6 +331,7 @@ module Twilio
                                 @status_callbacks = payload["status_callbacks"]
                                 @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
                                 @memory_extraction_enabled = payload["memory_extraction_enabled"]
+                                @conversations_v1_bridge = payload["conversations_v1_bridge"]
                         end
                         def to_json(options = {})
                         {
@@ -322,6 +343,7 @@ module Twilio
                                 "statusCallbacks": @status_callbacks,
                                 "intelligenceConfigurationIds": @intelligence_configuration_ids,
                                 "memoryExtractionEnabled": @memory_extraction_enabled,
+                                "conversationsV1Bridge": @conversations_v1_bridge,
                         }.to_json(options)
                         end
                     end
@@ -377,6 +399,19 @@ module Twilio
                         end
                     end
 
+                    class CreateConfigurationRequestConversationsV1Bridge
+                            # @param [service_id]: [String] The Conversations V1 Service SID (IS prefix). One configuration per V1 Service SID.
+                        attr_accessor :service_id
+                        def initialize(payload)
+                                @service_id = payload["service_id"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "serviceId": @service_id,
+                        }.to_json(options)
+                        end
+                    end
+
                     class CreateConfigurationRequestStatusCallbacks
                             # @param [url]: [String] The destination URL for webhooks.
                             # @param [method]: [String] The HTTP method used to invoke the webhook URL.
@@ -396,13 +431,14 @@ module Twilio
                     class UpdateConfigurationRequest
                             # @param [display_name]: [String] A human-readable name for the configuration. Limited to 32 characters.
                             # @param [description]: [String] Human-readable description for the configuration.
-                            # @param [conversation_grouping_type]: [String] The strategy Conversation Orchestrator uses to assign communications to conversations.
+                            # @param [conversation_grouping_type]: [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
                             # @param [memory_store_id]: [String] The Memory Store ID for profile resolution.
                             # @param [channel_settings]: [Hash<String, UpdateConfigurationRequestChannelSettingsValue>] 
                             # @param [status_callbacks]: [Array<ConfigurationList.UpdateConfigurationRequestStatusCallbacks>] 
                             # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
                             # @param [memory_extraction_enabled]: [Boolean] Whether memory extraction is enabled for conversations under this configuration. Defaults to false.
-                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled
+                            # @param [conversations_v1_bridge]: [ConfigurationList.CreateConfigurationRequestConversationsV1Bridge] 
+                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled, :conversations_v1_bridge
                         def initialize(payload)
                                 @display_name = payload["display_name"]
                                 @description = payload["description"]
@@ -412,6 +448,7 @@ module Twilio
                                 @status_callbacks = payload["status_callbacks"]
                                 @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
                                 @memory_extraction_enabled = payload["memory_extraction_enabled"]
+                                @conversations_v1_bridge = payload["conversations_v1_bridge"]
                         end
                         def to_json(options = {})
                         {
@@ -423,6 +460,7 @@ module Twilio
                                 "statusCallbacks": @status_callbacks,
                                 "intelligenceConfigurationIds": @intelligence_configuration_ids,
                                 "memoryExtractionEnabled": @memory_extraction_enabled,
+                                "conversationsV1Bridge": @conversations_v1_bridge,
                         }.to_json(options)
                         end
                     end
@@ -703,16 +741,16 @@ module Twilio
                     ##
                     # Initialize the ConfigurationContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] sid 
+                    # @param [String] id 
                     # @return [ConfigurationContext] ConfigurationContext
-                    def initialize(version, sid)
+                    def initialize(version, id)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
 
                         # Path Solution
-                        @solution = { sid: sid,  }
-                        @uri = "/ControlPlane/Configurations/#{@solution[:sid]}"
+                        @solution = { id: id,  }
+                        @uri = "/ControlPlane/Configurations/#{@solution[:id]}"
 
                         
                     end
@@ -732,7 +770,7 @@ module Twilio
                         ConfigurationInstance.new(
                           @version,
                           response.body,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                         
                     end
@@ -774,7 +812,7 @@ module Twilio
                         ConfigurationInstance.new(
                             @version,
                             payload,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                     end
 
@@ -793,7 +831,7 @@ module Twilio
                         configuration_instance = ConfigurationInstance.new(
                             @version,
                             response.body,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                         ConfigurationInstanceMetadata.new(
                             @version,
@@ -823,7 +861,7 @@ module Twilio
                         ConfigurationInstance.new(
                             @version,
                             payload,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                     end
 
@@ -847,7 +885,7 @@ module Twilio
                         configuration_instance = ConfigurationInstance.new(
                             @version,
                             response.body,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                         ConfigurationInstanceMetadata.new(
                             @version,
@@ -1020,7 +1058,7 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [ConfigurationInstance] ConfigurationInstance
-                    def initialize(version, payload , sid: nil)
+                    def initialize(version, payload , id: nil)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
@@ -1046,7 +1084,7 @@ module Twilio
 
                         # Context
                         @instance_context = nil
-                        @params = { 'sid' => sid  || @properties['sid']  , }
+                        @params = { 'id' => id  || @properties['id']  , }
                     end
 
                     ##
@@ -1055,7 +1093,7 @@ module Twilio
                     # @return [ConfigurationContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = ConfigurationContext.new(@version , @params['sid'])
+                            @instance_context = ConfigurationContext.new(@version , @params['id'])
                         end
                         @instance_context
                     end
@@ -1091,7 +1129,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
+                    # @return [ConversationsV2ConversationGroupingType] 
                     def conversation_grouping_type
                         @properties['conversation_grouping_type']
                     end

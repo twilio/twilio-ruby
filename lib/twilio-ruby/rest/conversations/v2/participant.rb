@@ -19,30 +19,8 @@ module Twilio
             class V2 < Version
                 class ParticipantList < ListResource
                 
-                    class CreateParticipantInConversationRequest
-                            # @param [name]: [String] 
-                            # @param [type]: [String] 
-                            # @param [profile_id]: [String] 
-                            # @param [addresses]: [Array<ParticipantList.CreateParticipantInConversationRequestAddresses>] 
-                        attr_accessor :name, :type, :profile_id, :addresses
-                        def initialize(payload)
-                                @name = payload["name"]
-                                @type = payload["type"]
-                                @profile_id = payload["profile_id"]
-                                @addresses = payload["addresses"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "name": @name,
-                                "type": @type,
-                                "profileId": @profile_id,
-                                "addresses": @addresses,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class CreateParticipantInConversationRequestAddresses
-                            # @param [channel]: [String] 
+                    class CreateConversationWithConfigRequestParticipantsAddresses
+                            # @param [channel]: [String] Channel type for a Communication address.
                             # @param [address]: [String] 
                             # @param [channel_id]: [String] 
                         attr_accessor :channel, :address, :channel_id
@@ -60,34 +38,11 @@ module Twilio
                         end
                     end
 
-                    class UpdateParticipantInConversationRequest
-                            # @param [name]: [String] 
-                            # @param [type]: [String] 
-                            # @param [profile_id]: [String] 
-                            # @param [addresses]: [Array<ParticipantList.CreateParticipantInConversationRequestAddresses>] 
-                        attr_accessor :name, :type, :profile_id, :addresses
-                        def initialize(payload)
-                                @name = payload["name"]
-                                @type = payload["type"]
-                                @profile_id = payload["profile_id"]
-                                @addresses = payload["addresses"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "name": @name,
-                                "type": @type,
-                                "profileId": @profile_id,
-                                "addresses": @addresses,
-                        }.to_json(options)
-                        end
-                    end
-
-
                     class CreateParticipantInConversationRequest
                             # @param [name]: [String] 
-                            # @param [type]: [String] 
+                            # @param [type]: [String] Type of Participant in the Conversation.
                             # @param [profile_id]: [String] 
-                            # @param [addresses]: [Array<ParticipantList.CreateParticipantInConversationRequestAddresses>] 
+                            # @param [addresses]: [Array<ParticipantList.CreateConversationWithConfigRequestParticipantsAddresses>] 
                         attr_accessor :name, :type, :profile_id, :addresses
                         def initialize(payload)
                                 @name = payload["name"]
@@ -105,8 +60,31 @@ module Twilio
                         end
                     end
 
-                    class CreateParticipantInConversationRequestAddresses
-                            # @param [channel]: [String] 
+                    class UpdateParticipantInConversationRequest
+                            # @param [name]: [String] 
+                            # @param [type]: [String] Type of Participant in the Conversation.
+                            # @param [profile_id]: [String] 
+                            # @param [addresses]: [Array<ParticipantList.CreateConversationWithConfigRequestParticipantsAddresses>] 
+                        attr_accessor :name, :type, :profile_id, :addresses
+                        def initialize(payload)
+                                @name = payload["name"]
+                                @type = payload["type"]
+                                @profile_id = payload["profile_id"]
+                                @addresses = payload["addresses"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "name": @name,
+                                "type": @type,
+                                "profileId": @profile_id,
+                                "addresses": @addresses,
+                        }.to_json(options)
+                        end
+                    end
+
+
+                    class CreateConversationWithConfigRequestParticipantsAddresses
+                            # @param [channel]: [String] Channel type for a Communication address.
                             # @param [address]: [String] 
                             # @param [channel_id]: [String] 
                         attr_accessor :channel, :address, :channel_id
@@ -124,11 +102,33 @@ module Twilio
                         end
                     end
 
+                    class CreateParticipantInConversationRequest
+                            # @param [name]: [String] 
+                            # @param [type]: [String] Type of Participant in the Conversation.
+                            # @param [profile_id]: [String] 
+                            # @param [addresses]: [Array<ParticipantList.CreateConversationWithConfigRequestParticipantsAddresses>] 
+                        attr_accessor :name, :type, :profile_id, :addresses
+                        def initialize(payload)
+                                @name = payload["name"]
+                                @type = payload["type"]
+                                @profile_id = payload["profile_id"]
+                                @addresses = payload["addresses"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "name": @name,
+                                "type": @type,
+                                "profileId": @profile_id,
+                                "addresses": @addresses,
+                        }.to_json(options)
+                        end
+                    end
+
                     class UpdateParticipantInConversationRequest
                             # @param [name]: [String] 
-                            # @param [type]: [String] 
+                            # @param [type]: [String] Type of Participant in the Conversation.
                             # @param [profile_id]: [String] 
-                            # @param [addresses]: [Array<ParticipantList.CreateParticipantInConversationRequestAddresses>] 
+                            # @param [addresses]: [Array<ParticipantList.CreateConversationWithConfigRequestParticipantsAddresses>] 
                         attr_accessor :name, :type, :profile_id, :addresses
                         def initialize(payload)
                                 @name = payload["name"]
@@ -151,13 +151,13 @@ module Twilio
                     # Initialize the ParticipantList
                     # @param [Version] version Version that contains the resource
                     # @return [ParticipantList] ParticipantList
-                    def initialize(version, conversation_sid: nil)
+                    def initialize(version, conversation_id: nil)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
                         # Path Solution
-                        @solution = { conversation_sid: conversation_sid }
-                        @uri = "/Conversations/#{@solution[:conversation_sid]}/Participants"
+                        @solution = { conversation_id: conversation_id }
+                        @uri = "/Conversations/#{@solution[:conversation_id]}/Participants"
                         
                     end
                     ##
@@ -177,7 +177,7 @@ module Twilio
                         ParticipantInstance.new(
                             @version,
                             payload,
-                            conversation_sid: @solution[:conversation_sid],
+                            conversation_id: @solution[:conversation_id],
                         )
                     end
 
@@ -198,7 +198,7 @@ module Twilio
                         participant_instance = ParticipantInstance.new(
                             @version,
                             response.body,
-                            conversation_sid: @solution[:conversation_sid],
+                            conversation_id: @solution[:conversation_id],
                         )
                         ParticipantInstanceMetadata.new(
                             @version,
@@ -343,17 +343,17 @@ module Twilio
                     ##
                     # Initialize the ParticipantContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] conversation_sid 
-                    # @param [String] sid 
+                    # @param [String] conversation_id 
+                    # @param [String] id 
                     # @return [ParticipantContext] ParticipantContext
-                    def initialize(version, conversation_sid, sid)
+                    def initialize(version, conversation_id, id)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
 
                         # Path Solution
-                        @solution = { conversation_sid: conversation_sid, sid: sid,  }
-                        @uri = "/Conversations/#{@solution[:conversation_sid]}/Participants/#{@solution[:sid]}"
+                        @solution = { conversation_id: conversation_id, id: id,  }
+                        @uri = "/Conversations/#{@solution[:conversation_id]}/Participants/#{@solution[:id]}"
 
                         
                     end
@@ -372,8 +372,8 @@ module Twilio
                         ParticipantInstance.new(
                             @version,
                             payload,
-                            conversation_sid: @solution[:conversation_sid],
-                            sid: @solution[:sid],
+                            conversation_id: @solution[:conversation_id],
+                            id: @solution[:id],
                         )
                     end
 
@@ -392,8 +392,8 @@ module Twilio
                         participant_instance = ParticipantInstance.new(
                             @version,
                             response.body,
-                            conversation_sid: @solution[:conversation_sid],
-                            sid: @solution[:sid],
+                            conversation_id: @solution[:conversation_id],
+                            id: @solution[:id],
                         )
                         ParticipantInstanceMetadata.new(
                             @version,
@@ -420,8 +420,8 @@ module Twilio
                         ParticipantInstance.new(
                             @version,
                             payload,
-                            conversation_sid: @solution[:conversation_sid],
-                            sid: @solution[:sid],
+                            conversation_id: @solution[:conversation_id],
+                            id: @solution[:id],
                         )
                     end
 
@@ -442,8 +442,8 @@ module Twilio
                         participant_instance = ParticipantInstance.new(
                             @version,
                             response.body,
-                            conversation_sid: @solution[:conversation_sid],
-                            sid: @solution[:sid],
+                            conversation_id: @solution[:conversation_id],
+                            id: @solution[:id],
                         )
                         ParticipantInstanceMetadata.new(
                             @version,
@@ -537,7 +537,7 @@ module Twilio
                     # @param [Hash] payload Payload response from the API
                     # @return [ParticipantInstance] ParticipantInstance
                     def get_instance(payload)
-                        ParticipantInstance.new(@version, payload, conversation_sid: @solution[:conversation_sid])
+                        ParticipantInstance.new(@version, payload, conversation_id: @solution[:conversation_id])
                     end
 
                     ##
@@ -616,7 +616,7 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [ParticipantInstance] ParticipantInstance
-                    def initialize(version, payload , conversation_sid: nil, sid: nil)
+                    def initialize(version, payload , conversation_id: nil, id: nil)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
@@ -636,7 +636,7 @@ module Twilio
 
                         # Context
                         @instance_context = nil
-                        @params = { 'conversation_sid' => conversation_sid  || @properties['conversation_sid']  ,'sid' => sid  || @properties['sid']  , }
+                        @params = { 'conversation_id' => conversation_id  || @properties['conversation_id']  ,'id' => id  || @properties['id']  , }
                     end
 
                     ##
@@ -645,7 +645,7 @@ module Twilio
                     # @return [ParticipantContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = ParticipantContext.new(@version , @params['conversation_sid'], @params['sid'])
+                            @instance_context = ParticipantContext.new(@version , @params['conversation_id'], @params['id'])
                         end
                         @instance_context
                     end
@@ -675,7 +675,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] Type of Participant in the Conversation.
+                    # @return [ConversationsV2ParticipantType] 
                     def type
                         @properties['type']
                     end

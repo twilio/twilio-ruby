@@ -20,11 +20,11 @@ module Twilio
                 class TypingIndicatorList < ListResource
                 
                     class TypingIndicatorRequest
-                            # @param [channel]: [String] The messaging channel. Must be \"APPLE\".
+                            # @param [channel]: [String] The messaging channel. Must be \"RCS\".
                             # @param [message_id]: [String] The SID of a recent inbound message from the recipient. Must be an SM or MM SID format. 
-                            # @param [from]: [String] The Apple Messages for Business identifier of the sender (business).
-                            # @param [to]: [String] The Apple Messages for Business identifier of the recipient (customer).
-                            # @param [event]: [String] The type of typing event. \"START\" indicates the agent began typing, \"END\" indicates the agent stopped typing. Defaults to \"START\". 
+                            # @param [from]: [String] The RCS agent identifier of the sender (business).
+                            # @param [to]: [String] The RCS recipient identifier in E.164 format prefixed with \"rcs:\".
+                            # @param [event]: [String] The type of typing event. Currently only \"START\" is supported for RCS, indicating the agent began typing. Defaults to \"START\". 
                         attr_accessor :channel, :message_id, :from, :to, :event
                         def initialize(payload)
                                 @channel = payload["channel"]

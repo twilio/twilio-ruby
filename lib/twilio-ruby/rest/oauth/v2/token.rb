@@ -42,6 +42,7 @@ module Twilio
                     # @param [String] audience The targeted audience uri
                     # @param [String] refresh_token JWT token related to refresh access token.
                     # @param [String] scope The scope of token
+                    # @param [String] code_verifier The PKCE code verifier used to generate the code_challenge in the authorization request.
                     # @return [TokenInstance] Created TokenInstance
                     def create(
                       account_sid: :unset, 
@@ -52,7 +53,8 @@ module Twilio
                       redirect_uri: :unset, 
                       audience: :unset, 
                       refresh_token: :unset, 
-                      scope: :unset
+                      scope: :unset, 
+                      code_verifier: :unset
                     )
 
                         params = Twilio::Values.of({
@@ -67,6 +69,7 @@ module Twilio
                             'audience' => audience,
                             'refresh_token' => refresh_token,
                             'scope' => scope,
+                            'code_verifier' => code_verifier,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
@@ -93,6 +96,7 @@ module Twilio
                     # @param [String] audience The targeted audience uri
                     # @param [String] refresh_token JWT token related to refresh access token.
                     # @param [String] scope The scope of token
+                    # @param [String] code_verifier The PKCE code verifier used to generate the code_challenge in the authorization request.
                     # @return [TokenInstance] Created TokenInstance
                     def create_with_metadata(
                       account_sid: :unset, 
@@ -103,7 +107,8 @@ module Twilio
                       redirect_uri: :unset, 
                       audience: :unset, 
                       refresh_token: :unset, 
-                      scope: :unset
+                      scope: :unset, 
+                      code_verifier: :unset
                     )
 
                         params = Twilio::Values.of({
@@ -118,6 +123,7 @@ module Twilio
                             'audience' => audience,
                             'refresh_token' => refresh_token,
                             'scope' => scope,
+                            'code_verifier' => code_verifier,
                         })
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })

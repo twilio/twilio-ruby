@@ -35,7 +35,7 @@ module Twilio
                     # Create the NewApiKeyInstance
                     # @param [String] account_sid The SID of the [Account](https://www.twilio.com/docs/iam/api/account) that created the Payments resource.
                     # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
-                    # @param [Keytype] key_type 
+                    # @param [String] key_type The \\\\`KeyType\\\\` form parameter is used to specify the type of key you want to create.  **Default Behavior**: If \\\\`KeyType\\\\` is not specified, the API will generate a standard key.  **Restricted Key**: If \\\\`KeyType\\\\` is set to \\\\`restricted\\\\`, the API will create a new restricted key. In this case, a policy object is required to define the permissions.
                     # @param [Object] policy The \\\\`Policy\\\\` object is a collection that specifies the allowed Twilio permissions for the restricted key. For more information on the permissions available with restricted API keys, refer to the [Twilio documentation](https://www.twilio.com/docs/iam/api-keys/restricted-api-keys#permissions-available-with-restricted-api-keys).
                     # @return [NewApiKeyInstance] Created NewApiKeyInstance
                     def create(
@@ -69,7 +69,7 @@ module Twilio
                     # Create the NewApiKeyInstanceMetadata
                     # @param [String] account_sid The SID of the [Account](https://www.twilio.com/docs/iam/api/account) that created the Payments resource.
                     # @param [String] friendly_name A descriptive string that you create to describe the resource. It can be up to 64 characters long.
-                    # @param [Keytype] key_type 
+                    # @param [String] key_type The \\\\`KeyType\\\\` form parameter is used to specify the type of key you want to create.  **Default Behavior**: If \\\\`KeyType\\\\` is not specified, the API will generate a standard key.  **Restricted Key**: If \\\\`KeyType\\\\` is set to \\\\`restricted\\\\`, the API will create a new restricted key. In this case, a policy object is required to define the permissions.
                     # @param [Object] policy The \\\\`Policy\\\\` object is a collection that specifies the allowed Twilio permissions for the restricted key. For more information on the permissions available with restricted API keys, refer to the [Twilio documentation](https://www.twilio.com/docs/iam/api-keys/restricted-api-keys#permissions-available-with-restricted-api-keys).
                     # @return [NewApiKeyInstance] Created NewApiKeyInstance
                     def create_with_metadata(

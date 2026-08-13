@@ -43,40 +43,13 @@ module Twilio
                     # Initialize the SearchList
                     # @param [Version] version Version that contains the resource
                     # @return [SearchList] SearchList
-                    def initialize(version)
+                    def initialize(version, kb_id: nil)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
                         # Path Solution
-                        @solution = {  }
-                        
-                        
-                    end
-                
-
-
-                    # Provide a user friendly representation
-                    def to_s
-                        '#<Twilio.Knowledge.V2.SearchList>'
-                    end
-                end
-
-
-                class SearchContext < InstanceContext
-                    ##
-                    # Initialize the SearchContext
-                    # @param [Version] version Version that contains the resource
-                    # @param [String] kb_id A unique Knowledge Base ID using Twilio Type ID (TTID) format
-                    # @return [SearchContext] SearchContext
-                    def initialize(version, kb_id)
-                        
-                        apiV1Version = ApiV1Version.new version.domain, version
-                        super(apiV1Version)
-
-                        # Path Solution
-                        @solution = { kb_id: kb_id,  }
+                        @solution = { kb_id: kb_id }
                         @uri = "/KnowledgeBases/#{@solution[:kb_id]}/Search"
-
                         
                     end
                     ##
@@ -127,68 +100,14 @@ module Twilio
                         )
                     end
 
+                
 
-                    ##
+
                     # Provide a user friendly representation
                     def to_s
-                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Knowledge.V2.SearchContext #{context}>"
-                    end
-
-                    ##
-                    # Provide a detailed, user friendly representation
-                    def inspect
-                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Knowledge.V2.SearchContext #{context}>"
+                        '#<Twilio.Knowledge.V2.SearchList>'
                     end
                 end
-
-                class SearchInstanceMetadata <  InstanceResourceMetadata
-                    ##
-                    # Initializes a new SearchInstanceMetadata.
-                    # @param [Version] version Version that contains the resource
-                    # @param [}SearchInstance] search_instance The instance associated with the metadata.
-                    # @param [Hash] headers Header object with response headers.
-                    # @param [Integer] status_code The HTTP status code of the response.
-                    # @return [SearchInstanceMetadata] The initialized instance with metadata.
-                    def initialize(version, search_instance, headers, status_code)
-                        super(version, headers, status_code)
-                        @search_instance = search_instance
-                    end
-
-                    def search
-                        @search_instance
-                    end
-
-                    def headers
-                        @headers
-                    end
-
-                    def status_code
-                        @status_code
-                    end
-
-                    def to_s
-                      "<Twilio.Api.V2010.SearchInstanceMetadata status=#{@status_code}>"
-                    end
-                end
-
-                class SearchListResponse < InstanceListResource
-                    # @param [Array<SearchInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key)
-                       @search_instance = payload.body[key].map do |data|
-                        SearchInstance.new(version, data)
-                       end
-                       @headers = payload.headers
-                       @status_code = payload.status_code
-                    end
-
-                      def search_instance
-                          @instance
-                      end
-                  end
 
                 class SearchPage < TokenPage
                     ##
@@ -211,7 +130,7 @@ module Twilio
                     # @param [Hash] payload Payload response from the API
                     # @return [SearchInstance] SearchInstance
                     def get_instance(payload)
-                        SearchInstance.new(@version, payload)
+                        SearchInstance.new(@version, payload, kb_id: @solution[:kb_id])
                     end
 
                     ##
@@ -299,22 +218,8 @@ module Twilio
                         @properties = { 
                             'chunks' => payload['chunks'],
                         }
-
-                        # Context
-                        @instance_context = nil
-                        @params = { 'kb_id' => kb_id  || @properties['kb_id']  , }
                     end
 
-                    ##
-                    # Generate an instance context for the instance, the context is capable of
-                    # performing various actions.  All instance actions are proxied to the context
-                    # @return [SearchContext] CallContext for this CallInstance
-                    def context
-                        unless @instance_context
-                            @instance_context = SearchContext.new(@version , @params['kb_id'])
-                        end
-                        @instance_context
-                    end
                     
                     ##
                     # @return [Array<KnowledgeChunkResult>] 
@@ -323,29 +228,15 @@ module Twilio
                     end
                     
                     ##
-                    # Create the SearchInstance
-                    # @param [KnowledgeSearch] knowledge_search 
-                    # @return [SearchInstance] Created SearchInstance
-                    def create(knowledge_search: :unset
-                    )
-
-                        context.create(
-                            knowledge_search: knowledge_search, 
-                        )
-                    end
-
-                    ##
                     # Provide a user friendly representation
                     def to_s
-                        values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Knowledge.V2.SearchInstance #{values}>"
+                        "<Twilio.Knowledge.V2.SearchInstance>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Knowledge.V2.SearchInstance #{values}>"
+                        "<Twilio.Knowledge.V2.SearchInstance>"
                     end
                 end
 

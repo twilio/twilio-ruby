@@ -21,18 +21,62 @@ module Twilio
                 def initialize(domain)
                     super
                     @version = 'v1'
+                    @a2p_brand_registrations = nil
+                    @a2p_brand_registration_embedded_sessions = nil
+                    @a2p_campaign_registrations = nil
+                    @a2p_campaign_registration_embedded_sessions = nil
                     @compliance_inquiries = nil
                     @compliance_registration_inquiries = nil
                     @compliance_tollfree_inquiries = nil
                     @customer_profiles = nil
+                    @customer_profiles_provisional_copy = nil
                     @end_users = nil
                     @end_user_types = nil
                     @policies = nil
                     @supporting_documents = nil
                     @supporting_document_types = nil
                     @trust_products = nil
+                    @trust_products_provisional_copy = nil
                 end
 
+                ##
+                # @return [Twilio::REST::Trusthub::V1::A2PBrandRegistrationList]
+                def a2p_brand_registrations
+                    @a2p_brand_registrations ||= A2PBrandRegistrationList.new self
+                end
+                ##
+                # @param [String] id The unique identifier for the A2P Brand Registration.
+                # @return [Twilio::REST::Trusthub::V1::A2PBrandRegistrationEmbeddedSessionList]
+                def a2p_brand_registration_embedded_sessions(id=:unset)
+                    if id.nil?
+                        raise ArgumentError, 'id cannot be nil'
+                    end
+
+                    if id == :unset
+                        @a2p_brand_registration_embedded_sessions ||= A2PBrandRegistrationEmbeddedSessionList.new self
+                    else
+                        A2PBrandRegistrationEmbeddedSessionList.new(self, id: id)
+                    end
+                end
+                ##
+                # @return [Twilio::REST::Trusthub::V1::A2PCampaignRegistrationList]
+                def a2p_campaign_registrations
+                    @a2p_campaign_registrations ||= A2PCampaignRegistrationList.new self
+                end
+                ##
+                # @param [String] id The unique identifier for the A2P Campaign Registration. This can be either an A2P Campaign Registration ID (formatted `tri1.us1.account.AC.../registration.BU...`) returned from the Initialize Campaign endpoint, or a Messaging Service SID (`MG...`) for campaigns created outside the embeddable.
+                # @return [Twilio::REST::Trusthub::V1::A2PCampaignRegistrationEmbeddedSessionList]
+                def a2p_campaign_registration_embedded_sessions(id=:unset)
+                    if id.nil?
+                        raise ArgumentError, 'id cannot be nil'
+                    end
+
+                    if id == :unset
+                        @a2p_campaign_registration_embedded_sessions ||= A2PCampaignRegistrationEmbeddedSessionList.new self
+                    else
+                        A2PCampaignRegistrationEmbeddedSessionList.new(self, id: id)
+                    end
+                end
                 ##
                 # @param [String] customer_id The unique CustomerId matching the Customer Profile/Compliance Inquiry that should be resumed or resubmitted. This value will have been returned by the initial Compliance Inquiry creation call.
                 # @return [Twilio::REST::Trusthub::V1::ComplianceInquiriesContext] if customerId was passed.
@@ -81,6 +125,21 @@ module Twilio
                         @customer_profiles ||= CustomerProfilesList.new self
                     else
                         CustomerProfilesContext.new(self, sid)
+                    end
+                end
+                ##
+                # @param [String] customer_profile_sid The unique SID identifier of the Customer Profile.
+                # @return [Twilio::REST::Trusthub::V1::CustomerProfilesProvisionalCopyContext] if customerProfileSid was passed.
+                # @return [Twilio::REST::Trusthub::V1::CustomerProfilesProvisionalCopyList]
+                def customer_profiles_provisional_copy(customer_profile_sid=:unset)
+                    if customer_profile_sid.nil?
+                        raise ArgumentError, 'customer_profile_sid cannot be nil'
+                    end
+
+                    if customer_profile_sid == :unset
+                        @customer_profiles_provisional_copy ||= CustomerProfilesProvisionalCopyList.new self
+                    else
+                        CustomerProfilesProvisionalCopyContext.new(self, customer_profile_sid)
                     end
                 end
                 ##
@@ -171,6 +230,21 @@ module Twilio
                         @trust_products ||= TrustProductsList.new self
                     else
                         TrustProductsContext.new(self, sid)
+                    end
+                end
+                ##
+                # @param [String] trust_product_sid The unique SID identifier of the Trust Product.
+                # @return [Twilio::REST::Trusthub::V1::TrustProductsProvisionalCopyContext] if trustProductSid was passed.
+                # @return [Twilio::REST::Trusthub::V1::TrustProductsProvisionalCopyList]
+                def trust_products_provisional_copy(trust_product_sid=:unset)
+                    if trust_product_sid.nil?
+                        raise ArgumentError, 'trust_product_sid cannot be nil'
+                    end
+
+                    if trust_product_sid == :unset
+                        @trust_products_provisional_copy ||= TrustProductsProvisionalCopyList.new self
+                    else
+                        TrustProductsProvisionalCopyContext.new(self, trust_product_sid)
                     end
                 end
                 ##
