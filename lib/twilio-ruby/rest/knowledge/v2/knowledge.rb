@@ -38,6 +38,44 @@ module Twilio
                         end
                     end
 
+                    class KnowledgeErrorGroup
+                            # @param [title]: [String] The error type or reason (e.g., \"404 Not Found\", \"500 Internal Server Error\").
+                            # @param [instances]: [Array<KnowledgeList.KnowledgeErrorInstance>] Array of error instances for this error title. Required when an error group is present.
+                        attr_accessor :title, :instances
+                        def initialize(payload)
+                                @title = payload["title"]
+                                @instances = payload["instances"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "title": @title,
+                                "instances": @instances,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class KnowledgeErrorInstance
+                            # @param [type]: [String] A URI reference identifying the problem type, resolving to human-readable documentation (e.g., https://www.twilio.com/docs/api/errors/420018).
+                            # @param [code]: [String] Twilio-specific numeric error code for programmatic handling.
+                            # @param [instance]: [String] The specific URL or resource that caused the error.
+                            # @param [detail]: [String] Detailed explanation of the error.
+                        attr_accessor :type, :code, :instance, :detail
+                        def initialize(payload)
+                                @type = payload["type"]
+                                @code = payload["code"]
+                                @instance = payload["instance"]
+                                @detail = payload["detail"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "type": @type,
+                                "code": @code,
+                                "instance": @instance,
+                                "detail": @detail,
+                        }.to_json(options)
+                        end
+                    end
+
 
                     ##
                     # Initialize the KnowledgeList

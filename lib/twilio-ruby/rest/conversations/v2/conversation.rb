@@ -20,7 +20,7 @@ module Twilio
                 class ConversationList < ListResource
                 
                     class ConversationsV2Address
-                            # @param [channel]: [String] The channel for Communication.
+                            # @param [channel]: [ConversationsV2Channel] 
                             # @param [address]: [String] The address value formatted according to channel type: - SMS/VOICE: E.164 phone number (such as \"+18005550100\") - WHATSAPP: Phone number with whatsapp prefix (such as \"whatsapp:+18005550100\") - RCS: Sender ID or phone number with rcs prefix (such as \"rcs:brand_acme_agent\" or \"rcs:+18005550100\") - CHAT: Customer-defined string identifier 
                             # @param [channel_id]: [String] Channel-specific ID for correlating Communications.
                         attr_accessor :channel, :address, :channel_id
@@ -131,7 +131,7 @@ module Twilio
                     end
 
                     class CreateConversationWithConfigRequestParticipantsAddresses
-                            # @param [channel]: [String] 
+                            # @param [channel]: [String] Channel type for a Communication address.
                             # @param [address]: [String] 
                             # @param [channel_id]: [String] 
                         attr_accessor :channel, :address, :channel_id
@@ -151,7 +151,7 @@ module Twilio
 
                     class PatchConversationByIdRequest
                             # @param [name]: [String] The name of the Conversation.
-                            # @param [status]: [String] The state of the Conversation.
+                            # @param [status]: [String] Lifecycle status of a Conversation.
                             # @param [configuration]: [ConversationList.PatchConversationByIdRequestConfiguration] 
                         attr_accessor :name, :status, :configuration
                         def initialize(payload)
@@ -183,7 +183,7 @@ module Twilio
 
                     class UpdateConversationByIdRequest
                             # @param [name]: [String] The name of the Conversation.
-                            # @param [status]: [String] The state of the Conversation.
+                            # @param [status]: [String] Lifecycle status of a Conversation.
                         attr_accessor :name, :status
                         def initialize(payload)
                                 @name = payload["name"]
@@ -199,7 +199,7 @@ module Twilio
 
 
                     class ConversationsV2Address
-                            # @param [channel]: [String] The channel for Communication.
+                            # @param [channel]: [ConversationsV2Channel] 
                             # @param [address]: [String] The address value formatted according to channel type: - SMS/VOICE: E.164 phone number (such as \"+18005550100\") - WHATSAPP: Phone number with whatsapp prefix (such as \"whatsapp:+18005550100\") - RCS: Sender ID or phone number with rcs prefix (such as \"rcs:brand_acme_agent\" or \"rcs:+18005550100\") - CHAT: Customer-defined string identifier 
                             # @param [channel_id]: [String] Channel-specific ID for correlating Communications.
                         attr_accessor :channel, :address, :channel_id
@@ -310,7 +310,7 @@ module Twilio
                     end
 
                     class CreateConversationWithConfigRequestParticipantsAddresses
-                            # @param [channel]: [String] 
+                            # @param [channel]: [String] Channel type for a Communication address.
                             # @param [address]: [String] 
                             # @param [channel_id]: [String] 
                         attr_accessor :channel, :address, :channel_id
@@ -330,7 +330,7 @@ module Twilio
 
                     class PatchConversationByIdRequest
                             # @param [name]: [String] The name of the Conversation.
-                            # @param [status]: [String] The state of the Conversation.
+                            # @param [status]: [String] Lifecycle status of a Conversation.
                             # @param [configuration]: [ConversationList.PatchConversationByIdRequestConfiguration] 
                         attr_accessor :name, :status, :configuration
                         def initialize(payload)
@@ -362,7 +362,7 @@ module Twilio
 
                     class UpdateConversationByIdRequest
                             # @param [name]: [String] The name of the Conversation.
-                            # @param [status]: [String] The state of the Conversation.
+                            # @param [status]: [String] Lifecycle status of a Conversation.
                         attr_accessor :name, :status
                         def initialize(payload)
                                 @name = payload["name"]
@@ -378,7 +378,7 @@ module Twilio
 
 
                     class ConversationsV2Address
-                            # @param [channel]: [String] The channel for Communication.
+                            # @param [channel]: [ConversationsV2Channel] 
                             # @param [address]: [String] The address value formatted according to channel type: - SMS/VOICE: E.164 phone number (such as \"+18005550100\") - WHATSAPP: Phone number with whatsapp prefix (such as \"whatsapp:+18005550100\") - RCS: Sender ID or phone number with rcs prefix (such as \"rcs:brand_acme_agent\" or \"rcs:+18005550100\") - CHAT: Customer-defined string identifier 
                             # @param [channel_id]: [String] Channel-specific ID for correlating Communications.
                         attr_accessor :channel, :address, :channel_id
@@ -489,7 +489,7 @@ module Twilio
                     end
 
                     class CreateConversationWithConfigRequestParticipantsAddresses
-                            # @param [channel]: [String] 
+                            # @param [channel]: [String] Channel type for a Communication address.
                             # @param [address]: [String] 
                             # @param [channel_id]: [String] 
                         attr_accessor :channel, :address, :channel_id
@@ -509,7 +509,7 @@ module Twilio
 
                     class PatchConversationByIdRequest
                             # @param [name]: [String] The name of the Conversation.
-                            # @param [status]: [String] The state of the Conversation.
+                            # @param [status]: [String] Lifecycle status of a Conversation.
                             # @param [configuration]: [ConversationList.PatchConversationByIdRequestConfiguration] 
                         attr_accessor :name, :status, :configuration
                         def initialize(payload)
@@ -541,7 +541,7 @@ module Twilio
 
                     class UpdateConversationByIdRequest
                             # @param [name]: [String] The name of the Conversation.
-                            # @param [status]: [String] The state of the Conversation.
+                            # @param [status]: [String] Lifecycle status of a Conversation.
                         attr_accessor :name, :status
                         def initialize(payload)
                                 @name = payload["name"]
@@ -768,16 +768,16 @@ module Twilio
                     ##
                     # Initialize the ConversationContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] sid 
+                    # @param [String] id 
                     # @return [ConversationContext] ConversationContext
-                    def initialize(version, sid)
+                    def initialize(version, id)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
 
                         # Path Solution
-                        @solution = { sid: sid,  }
-                        @uri = "/Conversations/#{@solution[:sid]}"
+                        @solution = { id: id,  }
+                        @uri = "/Conversations/#{@solution[:id]}"
 
                         
                     end
@@ -797,7 +797,7 @@ module Twilio
                         ConversationInstance.new(
                           @version,
                           response.body,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                         
                     end
@@ -839,7 +839,7 @@ module Twilio
                         ConversationInstance.new(
                             @version,
                             payload,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                     end
 
@@ -858,7 +858,7 @@ module Twilio
                         conversation_instance = ConversationInstance.new(
                             @version,
                             response.body,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                         ConversationInstanceMetadata.new(
                             @version,
@@ -885,7 +885,7 @@ module Twilio
                         ConversationInstance.new(
                             @version,
                             payload,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                     end
 
@@ -906,7 +906,7 @@ module Twilio
                         conversation_instance = ConversationInstance.new(
                             @version,
                             response.body,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                         ConversationInstanceMetadata.new(
                             @version,
@@ -933,7 +933,7 @@ module Twilio
                         ConversationInstance.new(
                             @version,
                             payload,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                     end
 
@@ -954,7 +954,7 @@ module Twilio
                         conversation_instance = ConversationInstance.new(
                             @version,
                             response.body,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                         ConversationInstanceMetadata.new(
                             @version,
@@ -1127,7 +1127,7 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [ConversationInstance] ConversationInstance
-                    def initialize(version, payload , sid: nil)
+                    def initialize(version, payload , id: nil)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
@@ -1159,7 +1159,7 @@ module Twilio
 
                         # Context
                         @instance_context = nil
-                        @params = { 'sid' => sid  || @properties['sid']  , }
+                        @params = { 'id' => id  || @properties['id']  , }
                     end
 
                     ##
@@ -1168,7 +1168,7 @@ module Twilio
                     # @return [ConversationContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = ConversationContext.new(@version , @params['sid'])
+                            @instance_context = ConversationContext.new(@version , @params['id'])
                         end
                         @instance_context
                     end
@@ -1192,7 +1192,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] Conversation status.
+                    # @return [ConversationsV2ConversationStatus] 
                     def status
                         @properties['status']
                     end
@@ -1252,7 +1252,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
+                    # @return [ConversationsV2ConversationGroupingType] 
                     def conversation_grouping_type
                         @properties['conversation_grouping_type']
                     end

@@ -32,6 +32,10 @@ module Twilio
                     @porting_webhook_configurations_delete = nil
                     @sender_id_registrations = nil
                     @signing_request_configurations = nil
+                    @sms_verifications = nil
+                    @sms_verification_checks = nil
+                    @voice_verifications = nil
+                    @voice_verification_checks = nil
                     @webhook = nil
                 end
 
@@ -175,6 +179,26 @@ module Twilio
                 # @return [Twilio::REST::Numbers::V1::SigningRequestConfigurationList]
                 def signing_request_configurations
                     @signing_request_configurations ||= SigningRequestConfigurationList.new self
+                end
+                ##
+                # @return [Twilio::REST::Numbers::V1::SmsVerificationList]
+                def sms_verifications
+                    @sms_verifications ||= SmsVerificationList.new self
+                end
+                ##
+                # @return [Twilio::REST::Numbers::V1::SmsVerificationCheckList]
+                def sms_verification_checks
+                    @sms_verification_checks ||= SmsVerificationCheckList.new self
+                end
+                ##
+                # @return [Twilio::REST::Numbers::V1::VoiceVerificationList]
+                def voice_verifications
+                    @voice_verifications ||= VoiceVerificationList.new self
+                end
+                ##
+                # @return [Twilio::REST::Numbers::V1::VoiceVerificationCheckList]
+                def voice_verification_checks
+                    @voice_verification_checks ||= VoiceVerificationCheckList.new self
                 end
                 ##
                 # @return [Twilio::REST::Numbers::V1::WebhookList]

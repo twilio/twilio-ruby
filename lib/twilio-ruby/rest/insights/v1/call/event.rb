@@ -283,6 +283,7 @@ module Twilio
                             'sip_edge' => payload['sip_edge'],
                             'sdk_edge' => payload['sdk_edge'],
                             'client_edge' => payload['client_edge'],
+                            'conversation_relay_data' => payload['conversation_relay_data'],
                         }
                     end
 
@@ -351,6 +352,12 @@ module Twilio
                     # @return [Hash] `object` Represents the Twilio media gateway for Client calls. The events here describe the call lifecycle as reported by Twilio's Voice SDK media gateways. See [Details: Call Summary](https://www.twilio.com/docs/voice/voice-insights/api/call/details-call-summary#edges-and-their-properties) for the object properties.
                     def client_edge
                         @properties['client_edge']
+                    end
+                    
+                    ##
+                    # @return [InsightsV1CallEventConversationRelayData] 
+                    def conversation_relay_data
+                        @properties['conversation_relay_data']
                     end
                     
                     ##

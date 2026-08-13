@@ -27,11 +27,6 @@ module Twilio
                 @api ||= Api.new self
             end
             ##
-            # Access the Assistants Twilio Domain
-            def assistants
-                @assistants ||= Assistants.new self
-            end
-            ##
             # Access the Bulkexports Twilio Domain
             def bulkexports
                 @bulkexports ||= Bulkexports.new self

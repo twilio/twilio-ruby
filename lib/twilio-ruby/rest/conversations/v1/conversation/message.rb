@@ -37,8 +37,8 @@ module Twilio
                     # Create the MessageInstance
                     # @param [String] author The channel specific identifier of the message's author. Defaults to `system`.
                     # @param [String] body The content of the message, can be up to 1,600 characters long.
-                    # @param [Time] date_created The date that this resource was created.
-                    # @param [Time] date_updated The date that this resource was last updated. `null` if the message has not been edited.
+                    # @param [Time] date_created The date that this resource was created. If you set this parameter, Twilio ignores any milliseconds in the timestamp.
+                    # @param [Time] date_updated The date that this resource was last updated. `null` if the message has not been edited. If you set this parameter, Twilio ignores any milliseconds in the timestamp.
                     # @param [String] attributes A string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
                     # @param [String] media_sid The Media SID to be attached to the new Message.
                     # @param [String] content_sid The unique ID of the multi-channel [Rich Content](https://www.twilio.com/docs/content) template, required for template-generated messages.  **Note** that if this field is set, `Body` and `MediaSid` parameters are ignored.
@@ -89,8 +89,8 @@ module Twilio
                     # Create the MessageInstanceMetadata
                     # @param [String] author The channel specific identifier of the message's author. Defaults to `system`.
                     # @param [String] body The content of the message, can be up to 1,600 characters long.
-                    # @param [Time] date_created The date that this resource was created.
-                    # @param [Time] date_updated The date that this resource was last updated. `null` if the message has not been edited.
+                    # @param [Time] date_created The date that this resource was created. If you set this parameter, Twilio ignores any milliseconds in the timestamp.
+                    # @param [Time] date_updated The date that this resource was last updated. `null` if the message has not been edited. If you set this parameter, Twilio ignores any milliseconds in the timestamp.
                     # @param [String] attributes A string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
                     # @param [String] media_sid The Media SID to be attached to the new Message.
                     # @param [String] content_sid The unique ID of the multi-channel [Rich Content](https://www.twilio.com/docs/content) template, required for template-generated messages.  **Note** that if this field is set, `Body` and `MediaSid` parameters are ignored.
@@ -384,8 +384,8 @@ module Twilio
                     # Update the MessageInstance
                     # @param [String] author The channel specific identifier of the message's author. Defaults to `system`.
                     # @param [String] body The content of the message, can be up to 1,600 characters long.
-                    # @param [Time] date_created The date that this resource was created.
-                    # @param [Time] date_updated The date that this resource was last updated. `null` if the message has not been edited.
+                    # @param [Time] date_created The date that this resource was created. If you set this parameter, Twilio ignores any milliseconds in the timestamp.
+                    # @param [Time] date_updated The date that this resource was last updated. `null` if the message has not been edited. If you set this parameter, Twilio ignores any milliseconds in the timestamp.
                     # @param [String] attributes A string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
                     # @param [String] subject The subject of the message, can be up to 256 characters long.
                     # @param [ConversationMessageEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
@@ -428,8 +428,8 @@ module Twilio
                     # Update the MessageInstanceMetadata
                     # @param [String] author The channel specific identifier of the message's author. Defaults to `system`.
                     # @param [String] body The content of the message, can be up to 1,600 characters long.
-                    # @param [Time] date_created The date that this resource was created.
-                    # @param [Time] date_updated The date that this resource was last updated. `null` if the message has not been edited.
+                    # @param [Time] date_created The date that this resource was created. If you set this parameter, Twilio ignores any milliseconds in the timestamp.
+                    # @param [Time] date_updated The date that this resource was last updated. `null` if the message has not been edited. If you set this parameter, Twilio ignores any milliseconds in the timestamp.
                     # @param [String] attributes A string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
                     # @param [String] subject The subject of the message, can be up to 256 characters long.
                     # @param [ConversationMessageEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header
@@ -809,8 +809,8 @@ module Twilio
                     # Update the MessageInstance
                     # @param [String] author The channel specific identifier of the message's author. Defaults to `system`.
                     # @param [String] body The content of the message, can be up to 1,600 characters long.
-                    # @param [Time] date_created The date that this resource was created.
-                    # @param [Time] date_updated The date that this resource was last updated. `null` if the message has not been edited.
+                    # @param [Time] date_created The date that this resource was created. If you set this parameter, Twilio ignores any milliseconds in the timestamp.
+                    # @param [Time] date_updated The date that this resource was last updated. `null` if the message has not been edited. If you set this parameter, Twilio ignores any milliseconds in the timestamp.
                     # @param [String] attributes A string metadata field you can use to store any data you wish. The string value must contain structurally valid JSON if specified.  **Note** that if the attributes are not set \\\"{}\\\" will be returned.
                     # @param [String] subject The subject of the message, can be up to 256 characters long.
                     # @param [ConversationMessageEnumWebhookEnabledType] x_twilio_webhook_enabled The X-Twilio-Webhook-Enabled HTTP request header

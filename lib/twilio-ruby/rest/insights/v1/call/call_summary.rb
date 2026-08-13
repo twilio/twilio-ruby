@@ -306,6 +306,7 @@ module Twilio
                             'properties' => payload['properties'],
                             'trust' => payload['trust'],
                             'annotation' => payload['annotation'],
+                            'agent_session_summaries' => payload['agent_session_summaries'],
                         }
 
                         # Context
@@ -460,6 +461,12 @@ module Twilio
                     # @return [Hash] `object` Programmatically labeled annotations for the Call. Developers can update the Call Summary records with Annotation during or after a Call. Annotations can be updated as long as the Call Summary record is addressable via the API. See [Details: Call Summary](https://www.twilio.com/docs/voice/voice-insights/api/call/details-call-summary#annotation-object) for the object properties.
                     def annotation
                         @properties['annotation']
+                    end
+                    
+                    ##
+                    # @return [Array<CallSummaryAgentSessionSummary>] `object` List of session summaries for conversation relay. See [Details: Call Summary](https://www.twilio.com/docs/voice/voice-insights/api/call/details-call-summary#conversation-relay-object) for the object properties.
+                    def agent_session_summaries
+                        @properties['agent_session_summaries']
                     end
                     
                     ##

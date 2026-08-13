@@ -25,6 +25,7 @@ module Twilio
                     @conversations = nil
                     @operators = nil
                     @operator_results = nil
+                    @rule_executions = nil
                     @versions = nil
                 end
 
@@ -87,6 +88,11 @@ module Twilio
                     else
                         OperatorResultContext.new(self, operator_result_id)
                     end
+                end
+                ##
+                # @return [Twilio::REST::Intelligence::V3::RuleExecutionList]
+                def rule_executions
+                    @rule_executions ||= RuleExecutionList.new self
                 end
                 ##
                 # @param [String] id The unique identifier (TTID) of the Language Operator.

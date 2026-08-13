@@ -52,9 +52,10 @@ module Twilio
       # refer_url:: Webhook that will receive future SIP REFER requests
       # refer_method:: The HTTP method to use for the refer Webhook
       # events:: Subscription to events
+      # passports:: Base64-encoded comma-separated identity passports (e.g. shaken, div)
       # keyword_args:: additional attributes
-      def dial(number: nil, action: nil, method: nil, timeout: nil, hangup_on_star: nil, time_limit: nil, caller_id: nil, record: nil, trim: nil, recording_status_callback: nil, recording_configuration_id: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, answer_on_bridge: nil, ring_tone: nil, recording_track: nil, sequential: nil, refer_url: nil, refer_method: nil, events: nil, **keyword_args)
-        dial = Dial.new(number: number, action: action, method: method, timeout: timeout, hangup_on_star: hangup_on_star, time_limit: time_limit, caller_id: caller_id, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_configuration_id: recording_configuration_id, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, answer_on_bridge: answer_on_bridge, ring_tone: ring_tone, recording_track: recording_track, sequential: sequential, refer_url: refer_url, refer_method: refer_method, events: events, **keyword_args)
+      def dial(number: nil, action: nil, method: nil, timeout: nil, hangup_on_star: nil, time_limit: nil, caller_id: nil, record: nil, trim: nil, recording_status_callback: nil, recording_configuration_id: nil, recording_status_callback_method: nil, recording_status_callback_event: nil, answer_on_bridge: nil, ring_tone: nil, recording_track: nil, sequential: nil, refer_url: nil, refer_method: nil, events: nil, passports: nil, **keyword_args)
+        dial = Dial.new(number: number, action: action, method: method, timeout: timeout, hangup_on_star: hangup_on_star, time_limit: time_limit, caller_id: caller_id, record: record, trim: trim, recording_status_callback: recording_status_callback, recording_configuration_id: recording_configuration_id, recording_status_callback_method: recording_status_callback_method, recording_status_callback_event: recording_status_callback_event, answer_on_bridge: answer_on_bridge, ring_tone: ring_tone, recording_track: recording_track, sequential: sequential, refer_url: refer_url, refer_method: refer_method, events: events, passports: passports, **keyword_args)
 
         yield(dial) if block_given?
         append(dial)
@@ -2120,37 +2121,6 @@ module Twilio
       end
 
       ##
-      # Create a new <Assistant> element
-      # id:: The assistant ID of the AI Assistant
-      # language:: Language to be used for both text-to-speech and transcription
-      # tts_language:: Language to be used for text-to-speech
-      # transcription_language:: Language to be used for transcription
-      # tts_provider:: Provider to be used for text-to-speech
-      # voice:: Voice to be used for text-to-speech
-      # transcription_provider:: Provider to be used for transcription
-      # speech_model:: Speech model to be used for transcription
-      # profanity_filter:: Whether profanities should be filtered out of the speech transcription
-      # dtmf_detection:: Whether DTMF tones should be detected and reported in speech transcription
-      # welcome_greeting:: The sentence to be played automatically when the session is connected
-      # partial_prompts:: Whether partial prompts should be reported to WebSocket server before the caller finishes speaking
-      # welcome_greeting_interruptible:: "Whether and how the input from a caller, such as speaking or DTMF can interrupt the welcome greeting
-      # interruptible:: Whether and how the input from a caller, such as speaking or DTMF can interrupt the play of text-to-speech
-      # preemptible:: Whether subsequent text-to-speech or play media can interrupt the on-going play of text-to-speech or media
-      # hints:: Phrases to help better accuracy in speech recognition of these pharases
-      # intelligence_service:: The Conversational Intelligence Service id or unique name to be used for the session
-      # report_input_during_agent_speech:: Whether prompts should be reported to WebSocket server when text-to-speech playing and interrupt is disabled
-      # elevenlabs_text_normalization:: When using ElevenLabs as TTS provider, this parameter allows you to enable or disable its text normalization feature
-      # interrupt_sensitivity:: Set the sensitivity of the interrupt feature for speech. The value can be low, medium, or high
-      # debug:: Multiple debug options to be used for troubleshooting
-      # keyword_args:: additional attributes
-      def assistant(id: nil, language: nil, tts_language: nil, transcription_language: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, profanity_filter: nil, dtmf_detection: nil, welcome_greeting: nil, partial_prompts: nil, welcome_greeting_interruptible: nil, interruptible: nil, preemptible: nil, hints: nil, intelligence_service: nil, report_input_during_agent_speech: nil, elevenlabs_text_normalization: nil, interrupt_sensitivity: nil, debug: nil, **keyword_args)
-        assistant = Assistant.new(id: id, language: language, tts_language: tts_language, transcription_language: transcription_language, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, profanity_filter: profanity_filter, dtmf_detection: dtmf_detection, welcome_greeting: welcome_greeting, partial_prompts: partial_prompts, welcome_greeting_interruptible: welcome_greeting_interruptible, interruptible: interruptible, preemptible: preemptible, hints: hints, intelligence_service: intelligence_service, report_input_during_agent_speech: report_input_during_agent_speech, elevenlabs_text_normalization: elevenlabs_text_normalization, interrupt_sensitivity: interrupt_sensitivity, debug: debug, **keyword_args)
-
-        yield(assistant) if block_given?
-        append(assistant)
-      end
-
-      ##
       # Create a new <AiSession> element
       # ai_connector:: The unique name or installed add-on sid that identifies the installed addon resource for the AI Connector
       # ai_session_configuration:: The unique name or id of the AiSession Configuration resource.
@@ -2192,11 +2162,11 @@ module Twilio
     end
 
     ##
-    # <Assistant> TwiML Noun
-    class Assistant < TwiML
+    # <ConversationRelay> TwiML Noun
+    class ConversationRelay < TwiML
       def initialize(**keyword_args)
         super(**keyword_args)
-        @name = 'Assistant'
+        @name = 'ConversationRelay'
 
         yield(self) if block_given?
       end
@@ -2231,38 +2201,6 @@ module Twilio
         @name = 'Language'
 
         yield(self) if block_given?
-      end
-    end
-
-    ##
-    # <ConversationRelay> TwiML Noun
-    class ConversationRelay < TwiML
-      def initialize(**keyword_args)
-        super(**keyword_args)
-        @name = 'ConversationRelay'
-
-        yield(self) if block_given?
-      end
-
-      ##
-      # Create a new <Language> element
-      # code:: Language code of this language setting is for
-      # tts_provider:: Provider to be used for text-to-speech of this language
-      # voice:: Voice to be used for text-to-speech of this language
-      # transcription_provider:: Provider to be used for transcription of this language
-      # speech_model:: Speech model to be used for transcription of this language
-      # keyword_args:: additional attributes
-      def language(code: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, **keyword_args)
-        append(Language.new(code: code, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, **keyword_args))
-      end
-
-      ##
-      # Create a new <Parameter> element
-      # name:: The name of the custom parameter
-      # value:: The value of the custom parameter
-      # keyword_args:: additional attributes
-      def parameter(name: nil, value: nil, **keyword_args)
-        append(Parameter.new(name: name, value: value, **keyword_args))
       end
     end
 

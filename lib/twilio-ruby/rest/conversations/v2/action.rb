@@ -44,7 +44,7 @@ module Twilio
                     class ConversationsV2SendMessageParticipant
                             # @param [participant_id]: [String] Participant ID to resolve address from.
                             # @param [address]: [String] Explicit address formatted according to channel type.
-                            # @param [channel]: [String] Channel type for address resolution.
+                            # @param [channel]: [ConversationsV2Channel] 
                         attr_accessor :participant_id, :address, :channel
                         def initialize(payload)
                                 @participant_id = payload["participant_id"]
@@ -443,7 +443,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] Current status of the Action. - PENDING: Action accepted, awaiting downstream confirmation - COMPLETED: Downstream backend confirmed the action - FAILED: Downstream backend reported a failure 
+                    # @return [ConversationsV2ActionStatus] 
                     def status
                         @properties['status']
                     end

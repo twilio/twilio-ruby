@@ -121,12 +121,14 @@ module Twilio
 
                     class MessagingV2ChannelsSenderRequestsCreate
                             # @param [sender_id]: [String] The ID of the sender in `whatsapp:<E.164_PHONE_NUMBER>` format.
+                            # @param [friendly_name]: [String] Optional display label for the sender in the Twilio Console.
                             # @param [configuration]: [ChannelsSenderList.MessagingV2ChannelsSenderConfiguration] 
                             # @param [webhook]: [ChannelsSenderList.MessagingV2ChannelsSenderWebhook] 
                             # @param [profile]: [ChannelsSenderList.MessagingV2ChannelsSenderProfile] 
-                        attr_accessor :sender_id, :configuration, :webhook, :profile
+                        attr_accessor :sender_id, :friendly_name, :configuration, :webhook, :profile
                         def initialize(payload)
                                 @sender_id = payload["sender_id"]
+                                @friendly_name = payload["friendly_name"]
                                 @configuration = payload["configuration"]
                                 @webhook = payload["webhook"]
                                 @profile = payload["profile"]
@@ -134,6 +136,7 @@ module Twilio
                         def to_json(options = {})
                         {
                                 "sender_id": @sender_id,
+                                "friendly_name": @friendly_name,
                                 "configuration": @configuration,
                                 "webhook": @webhook,
                                 "profile": @profile,
@@ -142,17 +145,20 @@ module Twilio
                     end
 
                     class MessagingV2ChannelsSenderRequestsUpdate
+                            # @param [friendly_name]: [String] Optional display label for the sender in the Twilio Console.
                             # @param [configuration]: [ChannelsSenderList.MessagingV2ChannelsSenderConfiguration] 
                             # @param [webhook]: [ChannelsSenderList.MessagingV2ChannelsSenderWebhook] 
                             # @param [profile]: [ChannelsSenderList.MessagingV2ChannelsSenderProfile] 
-                        attr_accessor :configuration, :webhook, :profile
+                        attr_accessor :friendly_name, :configuration, :webhook, :profile
                         def initialize(payload)
+                                @friendly_name = payload["friendly_name"]
                                 @configuration = payload["configuration"]
                                 @webhook = payload["webhook"]
                                 @profile = payload["profile"]
                         end
                         def to_json(options = {})
                         {
+                                "friendly_name": @friendly_name,
                                 "configuration": @configuration,
                                 "webhook": @webhook,
                                 "profile": @profile,
@@ -301,12 +307,14 @@ module Twilio
 
                     class MessagingV2ChannelsSenderRequestsCreate
                             # @param [sender_id]: [String] The ID of the sender in `whatsapp:<E.164_PHONE_NUMBER>` format.
+                            # @param [friendly_name]: [String] Optional display label for the sender in the Twilio Console.
                             # @param [configuration]: [ChannelsSenderList.MessagingV2ChannelsSenderConfiguration] 
                             # @param [webhook]: [ChannelsSenderList.MessagingV2ChannelsSenderWebhook] 
                             # @param [profile]: [ChannelsSenderList.MessagingV2ChannelsSenderProfile] 
-                        attr_accessor :sender_id, :configuration, :webhook, :profile
+                        attr_accessor :sender_id, :friendly_name, :configuration, :webhook, :profile
                         def initialize(payload)
                                 @sender_id = payload["sender_id"]
+                                @friendly_name = payload["friendly_name"]
                                 @configuration = payload["configuration"]
                                 @webhook = payload["webhook"]
                                 @profile = payload["profile"]
@@ -314,6 +322,7 @@ module Twilio
                         def to_json(options = {})
                         {
                                 "sender_id": @sender_id,
+                                "friendly_name": @friendly_name,
                                 "configuration": @configuration,
                                 "webhook": @webhook,
                                 "profile": @profile,
@@ -322,17 +331,20 @@ module Twilio
                     end
 
                     class MessagingV2ChannelsSenderRequestsUpdate
+                            # @param [friendly_name]: [String] Optional display label for the sender in the Twilio Console.
                             # @param [configuration]: [ChannelsSenderList.MessagingV2ChannelsSenderConfiguration] 
                             # @param [webhook]: [ChannelsSenderList.MessagingV2ChannelsSenderWebhook] 
                             # @param [profile]: [ChannelsSenderList.MessagingV2ChannelsSenderProfile] 
-                        attr_accessor :configuration, :webhook, :profile
+                        attr_accessor :friendly_name, :configuration, :webhook, :profile
                         def initialize(payload)
+                                @friendly_name = payload["friendly_name"]
                                 @configuration = payload["configuration"]
                                 @webhook = payload["webhook"]
                                 @profile = payload["profile"]
                         end
                         def to_json(options = {})
                         {
+                                "friendly_name": @friendly_name,
                                 "configuration": @configuration,
                                 "webhook": @webhook,
                                 "profile": @profile,
@@ -883,6 +895,7 @@ module Twilio
                             'sid' => payload['sid'],
                             'status' => payload['status'],
                             'sender_id' => payload['sender_id'],
+                            'friendly_name' => payload['friendly_name'],
                             'configuration' => payload['configuration'],
                             'webhook' => payload['webhook'],
                             'profile' => payload['profile'],
@@ -924,6 +937,12 @@ module Twilio
                     # @return [String] The ID of the sender in `whatsapp:<E.164_PHONE_NUMBER>` format.
                     def sender_id
                         @properties['sender_id']
+                    end
+                    
+                    ##
+                    # @return [String] Optional display label for the sender in the Twilio Console.
+                    def friendly_name
+                        @properties['friendly_name']
                     end
                     
                     ##

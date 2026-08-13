@@ -38,13 +38,17 @@ module Twilio
                     # @param [String] redirect_uri 
                     # @param [String] scope 
                     # @param [String] state 
+                    # @param [String] code_challenge 
+                    # @param [String] code_challenge_method 
                     # @return [AuthorizeInstance] Fetched AuthorizeInstance
                     def fetch(
                       response_type: :unset, 
                       client_id: :unset, 
                       redirect_uri: :unset, 
                       scope: :unset, 
-                      state: :unset
+                      state: :unset, 
+                      code_challenge: :unset, 
+                      code_challenge_method: :unset
                     )
 
                         params = Twilio::Values.of({
@@ -53,6 +57,8 @@ module Twilio
                             'redirect_uri' => redirect_uri,
                             'scope' => scope,
                             'state' => state,
+                            'code_challenge' => code_challenge,
+                            'code_challenge_method' => code_challenge_method,
                         })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
@@ -74,13 +80,17 @@ module Twilio
                     # @param [String] redirect_uri 
                     # @param [String] scope 
                     # @param [String] state 
+                    # @param [String] code_challenge 
+                    # @param [String] code_challenge_method 
                     # @return [AuthorizeInstance] Fetched AuthorizeInstance
                     def fetch_with_metadata(
                       response_type: :unset, 
                       client_id: :unset, 
                       redirect_uri: :unset, 
                       scope: :unset, 
-                      state: :unset
+                      state: :unset, 
+                      code_challenge: :unset, 
+                      code_challenge_method: :unset
                     )
 
                         params = Twilio::Values.of({
@@ -89,6 +99,8 @@ module Twilio
                             'redirect_uri' => redirect_uri,
                             'scope' => scope,
                             'state' => state,
+                            'code_challenge' => code_challenge,
+                            'code_challenge_method' => code_challenge_method,
                         })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         

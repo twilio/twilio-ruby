@@ -56,7 +56,6 @@ module Twilio
                         @uri = "/#{@solution[:organization_sid]}"
 
                         # Dependents
-                        @resource_types = nil
                         @role_assignments = nil
                         @accounts = nil
                         @users = nil
@@ -105,17 +104,6 @@ module Twilio
                         )
                     end
 
-                    ##
-                    # Access the resource_types
-                    # @return [ResourceTypeList]
-                    # @return [ResourceTypeContext]
-                    def resource_types
-                      unless @resource_types
-                        @resource_types = ResourceTypeList.new(
-                                @version, )
-                      end
-                      @resource_types
-                    end
                     ##
                     # Access the role_assignments
                     # @return [RoleAssignmentList]
@@ -362,13 +350,6 @@ module Twilio
                     def fetch
 
                         context.fetch
-                    end
-
-                    ##
-                    # Access the resource_types
-                    # @return [resource_types] resource_types
-                    def resource_types
-                        context.resource_types
                     end
 
                     ##

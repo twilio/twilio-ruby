@@ -46,16 +46,16 @@ module Twilio
                     ##
                     # Initialize the OperationContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] sid 
+                    # @param [String] id 
                     # @return [OperationContext] OperationContext
-                    def initialize(version, sid)
+                    def initialize(version, id)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
 
                         # Path Solution
-                        @solution = { sid: sid,  }
-                        @uri = "/ControlPlane/Operations/#{@solution[:sid]}"
+                        @solution = { id: id,  }
+                        @uri = "/ControlPlane/Operations/#{@solution[:id]}"
 
                         
                     end
@@ -74,7 +74,7 @@ module Twilio
                         OperationInstance.new(
                             @version,
                             payload,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                     end
 
@@ -93,7 +93,7 @@ module Twilio
                         operation_instance = OperationInstance.new(
                             @version,
                             response.body,
-                            sid: @solution[:sid],
+                            id: @solution[:id],
                         )
                         OperationInstanceMetadata.new(
                             @version,
@@ -266,7 +266,7 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [OperationInstance] OperationInstance
-                    def initialize(version, payload , sid: nil)
+                    def initialize(version, payload , id: nil)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
@@ -284,7 +284,7 @@ module Twilio
 
                         # Context
                         @instance_context = nil
-                        @params = { 'sid' => sid  || @properties['sid']  , }
+                        @params = { 'id' => id  || @properties['id']  , }
                     end
 
                     ##
@@ -293,7 +293,7 @@ module Twilio
                     # @return [OperationContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = OperationContext.new(@version , @params['sid'])
+                            @instance_context = OperationContext.new(@version , @params['id'])
                         end
                         @instance_context
                     end
@@ -305,7 +305,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] Current status of the operation.
+                    # @return [ConversationsV2OperationStatusValue] 
                     def status
                         @properties['status']
                     end

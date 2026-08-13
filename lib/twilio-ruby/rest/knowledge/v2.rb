@@ -121,7 +121,6 @@ module Twilio
                 end
                 ##
                 # @param [String] kb_id A unique Knowledge Base ID using Twilio Type ID (TTID) format
-                # @return [Twilio::REST::Knowledge::V2::SearchContext] if kbId was passed.
                 # @return [Twilio::REST::Knowledge::V2::SearchList]
                 def search(kb_id=:unset)
                     if kb_id.nil?
@@ -131,7 +130,7 @@ module Twilio
                     if kb_id == :unset
                         @search ||= SearchList.new self
                     else
-                        SearchContext.new(self, kb_id)
+                        SearchList.new(self, kb_id: kb_id)
                     end
                 end
                 ##

@@ -45,90 +45,90 @@ module Twilio
                     end
                 end
                 ##
-                # @param [String] conversation_sid 
-                # @param [String] sid
-                # @return [Twilio::REST::Conversations::V2::CommunicationContext] if sid was passed.
+                # @param [String] conversation_id 
+                # @param [String] id
+                # @return [Twilio::REST::Conversations::V2::CommunicationContext] if id was passed.
                 # @return [Twilio::REST::Conversations::V2::CommunicationList]
-                def communications(conversation_sid=:unset, sid=:unset)
-                    if conversation_sid.nil?
-                        raise ArgumentError, 'conversation_sid cannot be nil'
+                def communications(conversation_id=:unset, id=:unset)
+                    if conversation_id.nil?
+                        raise ArgumentError, 'conversation_id cannot be nil'
                     end
-                    if sid.nil?
-                        raise ArgumentError, 'sid cannot be nil'
+                    if id.nil?
+                        raise ArgumentError, 'id cannot be nil'
                     end
 
-                    if conversation_sid == :unset && sid == :unset
+                    if conversation_id == :unset && id == :unset
                         @communications ||= CommunicationList.new self
-                    elsif conversation_sid != :unset && sid == :unset
-                        CommunicationList.new(self, conversation_sid: conversation_sid)
+                    elsif conversation_id != :unset && id == :unset
+                        CommunicationList.new(self, conversation_id: conversation_id)
                     else
-                        CommunicationContext.new(self, conversation_sid, sid)
+                        CommunicationContext.new(self, conversation_id, id)
                     end
                 end
                 ##
-                # @param [String] sid 
-                # @return [Twilio::REST::Conversations::V2::ConfigurationContext] if sid was passed.
+                # @param [String] id 
+                # @return [Twilio::REST::Conversations::V2::ConfigurationContext] if id was passed.
                 # @return [Twilio::REST::Conversations::V2::ConfigurationList]
-                def configurations(sid=:unset)
-                    if sid.nil?
-                        raise ArgumentError, 'sid cannot be nil'
+                def configurations(id=:unset)
+                    if id.nil?
+                        raise ArgumentError, 'id cannot be nil'
                     end
 
-                    if sid == :unset
+                    if id == :unset
                         @configurations ||= ConfigurationList.new self
                     else
-                        ConfigurationContext.new(self, sid)
+                        ConfigurationContext.new(self, id)
                     end
                 end
                 ##
-                # @param [String] sid 
-                # @return [Twilio::REST::Conversations::V2::ConversationContext] if sid was passed.
+                # @param [String] id 
+                # @return [Twilio::REST::Conversations::V2::ConversationContext] if id was passed.
                 # @return [Twilio::REST::Conversations::V2::ConversationList]
-                def conversations(sid=:unset)
-                    if sid.nil?
-                        raise ArgumentError, 'sid cannot be nil'
+                def conversations(id=:unset)
+                    if id.nil?
+                        raise ArgumentError, 'id cannot be nil'
                     end
 
-                    if sid == :unset
+                    if id == :unset
                         @conversations ||= ConversationList.new self
                     else
-                        ConversationContext.new(self, sid)
+                        ConversationContext.new(self, id)
                     end
                 end
                 ##
-                # @param [String] sid 
-                # @return [Twilio::REST::Conversations::V2::OperationContext] if sid was passed.
+                # @param [String] id 
+                # @return [Twilio::REST::Conversations::V2::OperationContext] if id was passed.
                 # @return [Twilio::REST::Conversations::V2::OperationList]
-                def operations(sid=:unset)
-                    if sid.nil?
-                        raise ArgumentError, 'sid cannot be nil'
+                def operations(id=:unset)
+                    if id.nil?
+                        raise ArgumentError, 'id cannot be nil'
                     end
 
-                    if sid == :unset
+                    if id == :unset
                         @operations ||= OperationList.new self
                     else
-                        OperationContext.new(self, sid)
+                        OperationContext.new(self, id)
                     end
                 end
                 ##
-                # @param [String] conversation_sid 
-                # @param [String] sid
-                # @return [Twilio::REST::Conversations::V2::ParticipantContext] if sid was passed.
+                # @param [String] conversation_id 
+                # @param [String] id
+                # @return [Twilio::REST::Conversations::V2::ParticipantContext] if id was passed.
                 # @return [Twilio::REST::Conversations::V2::ParticipantList]
-                def participants(conversation_sid=:unset, sid=:unset)
-                    if conversation_sid.nil?
-                        raise ArgumentError, 'conversation_sid cannot be nil'
+                def participants(conversation_id=:unset, id=:unset)
+                    if conversation_id.nil?
+                        raise ArgumentError, 'conversation_id cannot be nil'
                     end
-                    if sid.nil?
-                        raise ArgumentError, 'sid cannot be nil'
+                    if id.nil?
+                        raise ArgumentError, 'id cannot be nil'
                     end
 
-                    if conversation_sid == :unset && sid == :unset
+                    if conversation_id == :unset && id == :unset
                         @participants ||= ParticipantList.new self
-                    elsif conversation_sid != :unset && sid == :unset
-                        ParticipantList.new(self, conversation_sid: conversation_sid)
+                    elsif conversation_id != :unset && id == :unset
+                        ParticipantList.new(self, conversation_id: conversation_id)
                     else
-                        ParticipantContext.new(self, conversation_sid, sid)
+                        ParticipantContext.new(self, conversation_id, id)
                     end
                 end
                 ##

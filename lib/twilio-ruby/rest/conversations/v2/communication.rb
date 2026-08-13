@@ -83,13 +83,15 @@ module Twilio
                             # @param [author]: [CommunicationList.CreateCommunicationInConversationRequestAuthor] 
                             # @param [content]: [CommunicationList.CreateCommunicationInConversationRequestContent] 
                             # @param [channel_id]: [String] 
-                            # @param [recipients]: [Array<CommunicationList.CreateCommunicationInConversationRequestAuthor>] 
-                        attr_accessor :author, :content, :channel_id, :recipients
+                            # @param [recipients]: [Array<CommunicationList.CreateCommunicationInConversationRequestRecipients>] 
+                            # @param [occurred_at]: [Time] Timestamp when this Communication occurred. If omitted, the server uses the current time.
+                        attr_accessor :author, :content, :channel_id, :recipients, :occurred_at
                         def initialize(payload)
                                 @author = payload["author"]
                                 @content = payload["content"]
                                 @channel_id = payload["channel_id"]
                                 @recipients = payload["recipients"]
+                                @occurred_at = payload["occurred_at"]
                         end
                         def to_json(options = {})
                         {
@@ -97,13 +99,14 @@ module Twilio
                                 "content": @content,
                                 "channelId": @channel_id,
                                 "recipients": @recipients,
+                                "occurredAt": @occurred_at,
                         }.to_json(options)
                         end
                     end
 
                     class CreateCommunicationInConversationRequestAuthor
                             # @param [address]: [String] 
-                            # @param [channel]: [String] 
+                            # @param [channel]: [String] Channel type for a Communication address.
                             # @param [participant_id]: [String] 
                         attr_accessor :address, :channel, :participant_id
                         def initialize(payload)
@@ -139,18 +142,37 @@ module Twilio
                         end
                     end
 
+                    class CreateCommunicationInConversationRequestRecipients
+                            # @param [address]: [String] 
+                            # @param [channel]: [String] Channel type for a Communication address.
+                            # @param [participant_id]: [String] 
+                        attr_accessor :address, :channel, :participant_id
+                        def initialize(payload)
+                                @address = payload["address"]
+                                @channel = payload["channel"]
+                                @participant_id = payload["participant_id"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "address": @address,
+                                "channel": @channel,
+                                "participantId": @participant_id,
+                        }.to_json(options)
+                        end
+                    end
+
 
                     ##
                     # Initialize the CommunicationList
                     # @param [Version] version Version that contains the resource
                     # @return [CommunicationList] CommunicationList
-                    def initialize(version, conversation_sid: nil)
+                    def initialize(version, conversation_id: nil)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
                         # Path Solution
-                        @solution = { conversation_sid: conversation_sid }
-                        @uri = "/Conversations/#{@solution[:conversation_sid]}/Communications"
+                        @solution = { conversation_id: conversation_id }
+                        @uri = "/Conversations/#{@solution[:conversation_id]}/Communications"
                         
                     end
                     ##
@@ -170,7 +192,7 @@ module Twilio
                         CommunicationInstance.new(
                             @version,
                             payload,
-                            conversation_sid: @solution[:conversation_sid],
+                            conversation_id: @solution[:conversation_id],
                         )
                     end
 
@@ -191,7 +213,7 @@ module Twilio
                         communication_instance = CommunicationInstance.new(
                             @version,
                             response.body,
-                            conversation_sid: @solution[:conversation_sid],
+                            conversation_id: @solution[:conversation_id],
                         )
                         CommunicationInstanceMetadata.new(
                             @version,
@@ -344,17 +366,17 @@ module Twilio
                     ##
                     # Initialize the CommunicationContext
                     # @param [Version] version Version that contains the resource
-                    # @param [String] conversation_sid 
-                    # @param [String] sid 
+                    # @param [String] conversation_id 
+                    # @param [String] id 
                     # @return [CommunicationContext] CommunicationContext
-                    def initialize(version, conversation_sid, sid)
+                    def initialize(version, conversation_id, id)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
 
                         # Path Solution
-                        @solution = { conversation_sid: conversation_sid, sid: sid,  }
-                        @uri = "/Conversations/#{@solution[:conversation_sid]}/Communications/#{@solution[:sid]}"
+                        @solution = { conversation_id: conversation_id, id: id,  }
+                        @uri = "/Conversations/#{@solution[:conversation_id]}/Communications/#{@solution[:id]}"
 
                         
                     end
@@ -373,8 +395,8 @@ module Twilio
                         CommunicationInstance.new(
                             @version,
                             payload,
-                            conversation_sid: @solution[:conversation_sid],
-                            sid: @solution[:sid],
+                            conversation_id: @solution[:conversation_id],
+                            id: @solution[:id],
                         )
                     end
 
@@ -393,8 +415,8 @@ module Twilio
                         communication_instance = CommunicationInstance.new(
                             @version,
                             response.body,
-                            conversation_sid: @solution[:conversation_sid],
-                            sid: @solution[:sid],
+                            conversation_id: @solution[:conversation_id],
+                            id: @solution[:id],
                         )
                         CommunicationInstanceMetadata.new(
                             @version,
@@ -488,7 +510,7 @@ module Twilio
                     # @param [Hash] payload Payload response from the API
                     # @return [CommunicationInstance] CommunicationInstance
                     def get_instance(payload)
-                        CommunicationInstance.new(@version, payload, conversation_sid: @solution[:conversation_sid])
+                        CommunicationInstance.new(@version, payload, conversation_id: @solution[:conversation_id])
                     end
 
                     ##
@@ -567,7 +589,7 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [CommunicationInstance] CommunicationInstance
-                    def initialize(version, payload , conversation_sid: nil, sid: nil)
+                    def initialize(version, payload , conversation_id: nil, id: nil)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
@@ -589,7 +611,7 @@ module Twilio
 
                         # Context
                         @instance_context = nil
-                        @params = { 'conversation_sid' => conversation_sid  || @properties['conversation_sid']  ,'sid' => sid  || @properties['sid']  , }
+                        @params = { 'conversation_id' => conversation_id  || @properties['conversation_id']  ,'id' => id  || @properties['id']  , }
                     end
 
                     ##
@@ -598,7 +620,7 @@ module Twilio
                     # @return [CommunicationContext] CallContext for this CallInstance
                     def context
                         unless @instance_context
-                            @instance_context = CommunicationContext.new(@version , @params['conversation_sid'], @params['sid'])
+                            @instance_context = CommunicationContext.new(@version , @params['conversation_id'], @params['id'])
                         end
                         @instance_context
                     end

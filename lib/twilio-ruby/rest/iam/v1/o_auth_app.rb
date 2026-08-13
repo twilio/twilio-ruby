@@ -25,15 +25,17 @@ module Twilio
                             # @param [owner_sid]: [String] 
                             # @param [description]: [String] 
                             # @param [client_sid]: [String] 
+                            # @param [token_endpoint_auth_method]: [String] Determines how the client authenticates. Account OAuth apps on v1 only support 'client_secret_basic'. For PKCE (none), use the v2 API.
                             # @param [policy]: [OAuthAppList.IamV1OrganizationVendoroauthappPolicy] 
                             # @param [access_token_ttl]: [String] 
-                        attr_accessor :type, :friendly_name, :owner_sid, :description, :client_sid, :policy, :access_token_ttl
+                        attr_accessor :type, :friendly_name, :owner_sid, :description, :client_sid, :token_endpoint_auth_method, :policy, :access_token_ttl
                         def initialize(payload)
                                 @type = payload["type"]
                                 @friendly_name = payload["friendly_name"]
                                 @owner_sid = payload["owner_sid"]
                                 @description = payload["description"]
                                 @client_sid = payload["client_sid"]
+                                @token_endpoint_auth_method = payload["token_endpoint_auth_method"]
                                 @policy = payload["policy"]
                                 @access_token_ttl = payload["access_token_ttl"]
                         end
@@ -44,6 +46,7 @@ module Twilio
                                 "owner_sid": @owner_sid,
                                 "description": @description,
                                 "client_sid": @client_sid,
+                                "token_endpoint_auth_method": @token_endpoint_auth_method,
                                 "policy": @policy,
                                 "access_token_ttl": @access_token_ttl,
                         }.to_json(options)
@@ -98,15 +101,17 @@ module Twilio
                             # @param [owner_sid]: [String] 
                             # @param [description]: [String] 
                             # @param [client_sid]: [String] 
+                            # @param [token_endpoint_auth_method]: [String] Determines how the client authenticates. Account OAuth apps on v1 only support 'client_secret_basic'. For PKCE (none), use the v2 API.
                             # @param [policy]: [OAuthAppList.IamV1OrganizationVendoroauthappPolicy] 
                             # @param [access_token_ttl]: [String] 
-                        attr_accessor :type, :friendly_name, :owner_sid, :description, :client_sid, :policy, :access_token_ttl
+                        attr_accessor :type, :friendly_name, :owner_sid, :description, :client_sid, :token_endpoint_auth_method, :policy, :access_token_ttl
                         def initialize(payload)
                                 @type = payload["type"]
                                 @friendly_name = payload["friendly_name"]
                                 @owner_sid = payload["owner_sid"]
                                 @description = payload["description"]
                                 @client_sid = payload["client_sid"]
+                                @token_endpoint_auth_method = payload["token_endpoint_auth_method"]
                                 @policy = payload["policy"]
                                 @access_token_ttl = payload["access_token_ttl"]
                         end
@@ -117,6 +122,7 @@ module Twilio
                                 "owner_sid": @owner_sid,
                                 "description": @description,
                                 "client_sid": @client_sid,
+                                "token_endpoint_auth_method": @token_endpoint_auth_method,
                                 "policy": @policy,
                                 "access_token_ttl": @access_token_ttl,
                         }.to_json(options)
@@ -503,6 +509,7 @@ module Twilio
                             'description' => payload['description'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'created_by' => payload['created_by'],
+                            'creator_sid' => payload['creator_sid'],
                             'secret' => payload['secret'],
                             'status' => payload['status'],
                             'policy' => payload['policy'],
@@ -562,6 +569,12 @@ module Twilio
                     # @return [String] 
                     def created_by
                         @properties['created_by']
+                    end
+                    
+                    ##
+                    # @return [String] The unique identifier (SID) of the user who created this OAuth app.
+                    def creator_sid
+                        @properties['creator_sid']
                     end
                     
                     ##

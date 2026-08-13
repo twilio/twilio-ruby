@@ -24,15 +24,18 @@ module Twilio
                     class ContentApprovalRequest
                             # @param [name]: [String] Name of the template.
                             # @param [category]: [String] A WhatsApp recognized template category.
-                        attr_accessor :name, :category
+                            # @param [send_ttl_seconds]: [String] Time-to-live in seconds for attempting to send a message with this Content
+                        attr_accessor :name, :category, :send_ttl_seconds
                         def initialize(payload)
                                 @name = payload["name"]
                                 @category = payload["category"]
+                                @send_ttl_seconds = payload["send_ttl_seconds"]
                         end
                         def to_json(options = {})
                         {
                                 "name": @name,
                                 "category": @category,
+                                "send_ttl_seconds": @send_ttl_seconds,
                         }.to_json(options)
                         end
                     end
@@ -218,6 +221,7 @@ module Twilio
                             'status' => payload['status'],
                             'rejection_reason' => payload['rejection_reason'],
                             'allow_category_change' => payload['allow_category_change'],
+                            'send_ttl_seconds' => payload['send_ttl_seconds'],
                         }
                     end
 
@@ -256,6 +260,12 @@ module Twilio
                     # @return [Boolean] 
                     def allow_category_change
                         @properties['allow_category_change']
+                    end
+                    
+                    ##
+                    # @return [String] Time-to-live in seconds for attempting to send a message with this Content
+                    def send_ttl_seconds
+                        @properties['send_ttl_seconds']
                     end
                     
                     ##
