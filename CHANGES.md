@@ -1,6 +1,49 @@
 twilio-ruby changelog
 =====================
 
+[2026-08-13] Version 7.11.0
+---------------------------
+**Destinations**
+- ## 2026-08-12
+- **Content updates**:
+- Added properties to `DestinationType`: releaseStatus
+- Removed properties from `DestinationType`: maturity
+
+**Memory**
+- No path changes (updated metadata only)
+- `DataMappingType` gains `INGRESS`, `DATASET_CLOUDAPP`, and `DATASET_WAREHOUSE`.
+- `CSV` and `DATASET` remain valid and unchanged; they are deprecated aliases and
+- will be removed in a follow-up change.
+- `DataMappingFromTypes` gains three `oneOf` members and three discriminator keys:
+- `DataMappingFromIngress` (renames `DataMappingFromCSV`),
+- `DataMappingFromCloudAppDataSet` and `DataMappingFromWarehouseDataSet`
+- (both split from `DataMappingFromDataSet`, distinguishing a cloud-app-backed
+- TDI dataset from a warehouse-backed one).
+- Additive and backwards compatible: existing `CSV` and `DATASET` payloads are
+- unaffected.
+
+**Library - Chore**
+- [PR #149](https://github.com/twilio/twilio-oai/pull/149): Update test-and-deploy.yml. Thanks to [@shrutiburman](https://github.com/shrutiburman)!
+- [PR #141](https://github.com/twilio/twilio-oai/pull/141): oas3-valid-schema-example check validation. Thanks to [@shrutiburman](https://github.com/shrutiburman)!
+
+**Library - Fix**
+- [PR #147](https://github.com/twilio/twilio-oai/pull/147): remove Events API from memory V1 specs. Thanks to [@shrutiburman](https://github.com/shrutiburman)!
+- [PR #142](https://github.com/twilio/twilio-oai/pull/142): pin spectral-rulesets to 1.22.2 to fix Node 18 compatibility. Thanks to [@shrutiburman](https://github.com/shrutiburman)!
+
+**Twiml**
+- Remove `<Assistant>` noun from `<Connect>` verb as part of the AI Assistants deprecation **(breaking change)**
+- Add `passports` attribute to `<Dial>` verb for SHAKEN/STIR passport passthrough
+
+**Accounts**
+- Add `SuppressEmailNotification` parameter to the Secondary Auth Token and Auth Token promotion endpoints. Set it to `true` to suppress the email notification sent to account owners and administrators. Defaults to `false`, preserving existing behavior.
+- Add SMS Pumping Protection GET and POST API
+
+**Ai**
+- Removing ai workbench apis
+
+**Api**
+- Add missing `uri` property to the `twiml_session` resource
+
 [2026-05-07] Version 7.10.7
 ---------------------------
 **Conversations**
