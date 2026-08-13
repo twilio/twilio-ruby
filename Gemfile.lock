@@ -23,6 +23,7 @@ GEM
     faraday-net_http (3.4.4)
       net-http (~> 0.5)
     json (2.21.2)
+    json (2.21.2-java)
     jwt (3.2.0)
       base64
     language_server-protocol (3.17.0.6)
@@ -33,6 +34,7 @@ GEM
     nokogiri (1.16.8)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
+    nokogiri (1.16.8-java)
     ostruct (0.6.3)
     parallel (1.28.0)
     parser (3.3.12.0)
@@ -40,6 +42,7 @@ GEM
       racc
     prism (1.9.0)
     racc (1.8.1)
+    racc (1.8.1-java)
     rack (2.2.23)
     rainbow (3.1.1)
     rake (13.4.2)
@@ -81,6 +84,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-25
+  java
   ruby
 
 DEPENDENCIES
@@ -111,17 +115,20 @@ CHECKSUMS
   faraday (2.14.3) sha256=1882247e6766615c8220b4392bf1d27f6ebb63d8e28267587cef1fb0bf37f278
   faraday-net_http (3.4.4) sha256=0e78af151747ed1b00f33e25973b4bc220d7f16c00c39676817c8b12331eb588
   json (2.21.2) sha256=1f1d3b7cf2b3ba1a69beca0bb6db13d5438b80bff3cd54cdaaa620b9b07c1c6a
+  json (2.21.2-java) sha256=f01521cd90639cc26b63040fb00d2b949f18f41ecaab5c82b02fb31d0b8b736c
   jwt (3.2.0) sha256=5419b1fe37b1da0982bd07051f573a8b8789ab724c2aa7e785e4784a3ed217d7
   language_server-protocol (3.17.0.6) sha256=5ef2c0c138f8267e1bc631d3328347d354f96724b0af22f2c79516120443b7f0
   logger (1.4.4) sha256=bffde43956d13e45839797ebc2a26088816309ecaf7398d7188e0914989ca21d
   mini_portile2 (2.8.9) sha256=0cd7c7f824e010c072e33f68bc02d85a00aeb6fce05bb4819c03dfd3c140c289
   net-http (0.9.1) sha256=25ba0b67c63e89df626ed8fac771d0ad24ad151a858af2cc8e6a716ca4336996
   nokogiri (1.16.8) sha256=dece4bf9a663b2d6b6e874716297ad414c95be694656972d54049bd088f752a1
+  nokogiri (1.16.8-java) sha256=8652028e72a38f2221c810550d03c91682b414e06f6271149139a9042cf727e6
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
   parallel (1.28.0) sha256=33e6de1484baf2524792d178b0913fc8eb94c628d6cfe45599ad4458c638c970
   parser (3.3.12.0) sha256=21a6d7f755d5a24dfbdc6e6b772e4e879a52e7631a88bc5a3a134606052c9828
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
+  racc (1.8.1-java) sha256=54f2e6d1e1b91c154013277d986f52a90e5ececbe91465d29172e49342732b98
   rack (2.2.23) sha256=a8fe9d7e07064770b8ec123663fded8a59ef7e2b6db5cda7173d45a5718ab69c
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
   rake (13.4.2) sha256=cb825b2bd5f1f8e91ca37bddb4b9aaf345551b4731da62949be002fa89283701
