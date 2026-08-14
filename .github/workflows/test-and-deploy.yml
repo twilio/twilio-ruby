@@ -84,6 +84,7 @@ jobs:
     name: deploy
     if: success() && github.ref_type == 'tag'
     runs-on: ubuntu-x64
+    environment: production
     needs: [ test ]
     permissions:
       contents: write
@@ -115,6 +116,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to Rubygems
+        uses: rubygems/release-gem@052cc82692552de3ef2b81fd670e41d13cba8092
         run: |
           gem update --system
           gem build *.gemspec
