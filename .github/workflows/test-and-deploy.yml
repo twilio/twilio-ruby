@@ -114,9 +114,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and Push image
-        run: make docker-build && make docker-push
-
       - name: Publish to Rubygems
         run: |
           gem update --system
