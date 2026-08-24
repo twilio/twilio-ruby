@@ -1,6 +1,6 @@
 require 'bundler'
 Bundler.setup
-Bundler::GemHelper.install_tasks
+Bundler::GemHelper.install_tasks(tag_prefix: '')
 
 require 'rspec/core/rake_task'
 desc 'Run all specs'
