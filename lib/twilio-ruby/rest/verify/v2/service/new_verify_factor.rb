@@ -165,65 +165,6 @@ module Twilio
                     end
                 end
 
-                class NewVerifyFactorPageMetadata < PageMetadata
-                    attr_reader :new_verify_factor_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @new_verify_factor_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @new_verify_factor_page << NewVerifyFactorListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @new_verify_factor_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Verify::V2PageMetadata>';
-                    end
-                end
-                class NewVerifyFactorListResponse < InstanceListResource
-
-                    # @param [Array<NewVerifyFactorInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @new_verify_factor = data_list.map do |data|
-                        NewVerifyFactorInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def new_verify_factor
-                        @new_verify_factor
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class NewVerifyFactorInstance < InstanceResource
                     ##
                     # Initialize the NewVerifyFactorInstance

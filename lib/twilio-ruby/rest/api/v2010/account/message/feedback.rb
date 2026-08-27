@@ -133,65 +133,6 @@ module Twilio
                     end
                 end
 
-                class FeedbackPageMetadata < PageMetadata
-                    attr_reader :feedback_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @feedback_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @feedback_page << FeedbackListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @feedback_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Api::V2010PageMetadata>';
-                    end
-                end
-                class FeedbackListResponse < InstanceListResource
-
-                    # @param [Array<FeedbackInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @feedback = data_list.map do |data|
-                        FeedbackInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def feedback
-                        @feedback
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class FeedbackInstance < InstanceResource
                     ##
                     # Initialize the FeedbackInstance

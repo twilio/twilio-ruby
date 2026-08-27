@@ -187,65 +187,6 @@ module Twilio
                     end
                 end
 
-                class IdentityResolutionSettingPageMetadata < PageMetadata
-                    attr_reader :identity_resolution_setting_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @identity_resolution_setting_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @identity_resolution_setting_page << IdentityResolutionSettingListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @identity_resolution_setting_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Memory::V1PageMetadata>';
-                    end
-                end
-                class IdentityResolutionSettingListResponse < InstanceListResource
-
-                    # @param [Array<IdentityResolutionSettingInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @identity_resolution_setting = data_list.map do |data|
-                        IdentityResolutionSettingInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def identity_resolution_setting
-                        @identity_resolution_setting
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class IdentityResolutionSettingInstance < InstanceResource
                     ##
                     # Initialize the IdentityResolutionSettingInstance

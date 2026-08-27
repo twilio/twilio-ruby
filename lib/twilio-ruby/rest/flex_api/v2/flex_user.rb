@@ -269,65 +269,6 @@ module Twilio
                     end
                 end
 
-                class FlexUserPageMetadata < PageMetadata
-                    attr_reader :flex_user_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @flex_user_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @flex_user_page << FlexUserListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @flex_user_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::FlexApi::V2PageMetadata>';
-                    end
-                end
-                class FlexUserListResponse < InstanceListResource
-
-                    # @param [Array<FlexUserInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @flex_user = data_list.map do |data|
-                        FlexUserInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def flex_user
-                        @flex_user
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class FlexUserInstance < InstanceResource
                     ##
                     # Initialize the FlexUserInstance
