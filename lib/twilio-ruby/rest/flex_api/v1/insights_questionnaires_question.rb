@@ -120,8 +120,8 @@ module Twilio
                     # Lists InsightsQuestionnairesQuestionInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Array[String]] category_sid The list of category SIDs
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -129,10 +129,10 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(authorization: :unset, category_sid: :unset, limit: nil, page_size: nil)
+                    def list(category_sid: :unset, authorization: :unset, limit: nil, page_size: nil)
                         self.stream(
-                            authorization: authorization,
                             category_sid: category_sid,
+                            authorization: authorization,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -142,8 +142,8 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Array[String]] category_sid The list of category SIDs
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -151,12 +151,12 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(authorization: :unset, category_sid: :unset, limit: nil, page_size: nil)
+                    def stream(category_sid: :unset, authorization: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
-                            authorization: authorization,
                             category_sid: category_sid,
+                            authorization: authorization,
                             page_size: limits[:page_size], )
 
                         return [].each if page.nil?
@@ -168,8 +168,8 @@ module Twilio
 
                     ##
                     # Lists InsightsQuestionnairesQuestionPageMetadata records from the API as a list.
-                      # @param [String] authorization The Authorization HTTP request header
                       # @param [Array[String]] category_sid The list of category SIDs
+                      # @param [String] authorization The Authorization HTTP request header
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -177,16 +177,15 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list_with_metadata(authorization: :unset, category_sid: :unset, limit: nil, page_size: nil)
+                    def list_with_metadata(category_sid: :unset, authorization: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
                         params = Twilio::Values.of({
-                            'Authorization' => authorization,
                             
                             'CategorySid' =>  Twilio.serialize_list(category_sid) { |e| e },
                             
                             'PageSize' => limits[:page_size],
                         });
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'Authorization' => authorization,  })
 
                         response = @version.page('GET', @uri, params: params, headers: headers)
 
@@ -214,22 +213,21 @@ module Twilio
                     ##
                     # Retrieve a single page of InsightsQuestionnairesQuestionInstance records from the API.
                     # Request is executed immediately.
-                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Array[String]] category_sid The list of category SIDs
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of InsightsQuestionnairesQuestionInstance
-                    def page(authorization: :unset, category_sid: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
+                    def page(category_sid: :unset, authorization: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
-                            'Authorization' => authorization,
                             
                             'CategorySid' =>  Twilio.serialize_list(category_sid) { |e| e },
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'Authorization' => authorization,  })
                         
                         
 

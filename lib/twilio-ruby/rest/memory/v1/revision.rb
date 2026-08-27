@@ -98,11 +98,10 @@ module Twilio
                         limits = @version.read_limits(limit, page_size)
                         params = Twilio::Values.of({
                             'pageToken' => page_token,
-                            'Accept-Encoding' => accept_encoding,
                             
                             'PageSize' => limits[:page_size],
                         });
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'Accept-Encoding' => accept_encoding,  })
 
                         response = @version.page('GET', @uri, params: params, headers: headers)
 
@@ -137,10 +136,9 @@ module Twilio
                     def page(page_token: :unset, accept_encoding: :unset, page_size: :unset)
                         params = Twilio::Values.of({
                             'pageToken' => page_token,
-                            'Accept-Encoding' => accept_encoding,
                                                         'PageSize' => page_size,
                         })
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'Accept-Encoding' => accept_encoding,  })
                         
                         
 

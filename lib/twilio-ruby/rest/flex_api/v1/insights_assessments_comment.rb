@@ -126,9 +126,9 @@ module Twilio
                     # Lists InsightsAssessmentsCommentInstance records from the API as a list.
                     # Unlike stream(), this operation is eager and will load `limit` records into
                     # memory before returning.
-                    # @param [String] authorization The Authorization HTTP request header
                     # @param [String] segment_id The id of the segment.
                     # @param [String] agent_id The id of the agent.
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -136,11 +136,11 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list(authorization: :unset, segment_id: :unset, agent_id: :unset, limit: nil, page_size: nil)
+                    def list(segment_id: :unset, agent_id: :unset, authorization: :unset, limit: nil, page_size: nil)
                         self.stream(
-                            authorization: authorization,
                             segment_id: segment_id,
                             agent_id: agent_id,
+                            authorization: authorization,
                             limit: limit,
                             page_size: page_size
                         ).entries
@@ -150,9 +150,9 @@ module Twilio
                     # Streams Instance records from the API as an Enumerable.
                     # This operation lazily loads records as efficiently as possible until the limit
                     # is reached.
-                    # @param [String] authorization The Authorization HTTP request header
                     # @param [String] segment_id The id of the segment.
                     # @param [String] agent_id The id of the agent.
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -160,13 +160,13 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(authorization: :unset, segment_id: :unset, agent_id: :unset, limit: nil, page_size: nil)
+                    def stream(segment_id: :unset, agent_id: :unset, authorization: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
 
                         page = self.page(
-                            authorization: authorization,
                             segment_id: segment_id,
                             agent_id: agent_id,
+                            authorization: authorization,
                             page_size: limits[:page_size], )
 
                         return [].each if page.nil?
@@ -178,9 +178,9 @@ module Twilio
 
                     ##
                     # Lists InsightsAssessmentsCommentPageMetadata records from the API as a list.
-                      # @param [String] authorization The Authorization HTTP request header
                       # @param [String] segment_id The id of the segment.
                       # @param [String] agent_id The id of the agent.
+                      # @param [String] authorization The Authorization HTTP request header
                     # @param [Integer] limit Upper limit for the number of records to return. stream()
                     #    guarantees to never return more than limit.  Default is no limit
                     # @param [Integer] page_size Number of records to fetch per request, when
@@ -188,16 +188,15 @@ module Twilio
                     #    but a limit is defined, stream() will attempt to read the limit with the most
                     #    efficient page size, i.e. min(limit, 1000)
                     # @return [Array] Array of up to limit results
-                    def list_with_metadata(authorization: :unset, segment_id: :unset, agent_id: :unset, limit: nil, page_size: nil)
+                    def list_with_metadata(segment_id: :unset, agent_id: :unset, authorization: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
                         params = Twilio::Values.of({
-                            'Authorization' => authorization,
                             'SegmentId' => segment_id,
                             'AgentId' => agent_id,
                             
                             'PageSize' => limits[:page_size],
                         });
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'Authorization' => authorization,  })
 
                         response = @version.page('GET', @uri, params: params, headers: headers)
 
@@ -225,23 +224,22 @@ module Twilio
                     ##
                     # Retrieve a single page of InsightsAssessmentsCommentInstance records from the API.
                     # Request is executed immediately.
-                    # @param [String] authorization The Authorization HTTP request header
                     # @param [String] segment_id The id of the segment.
                     # @param [String] agent_id The id of the agent.
+                    # @param [String] authorization The Authorization HTTP request header
                     # @param [String] page_token PageToken provided by the API
                     # @param [Integer] page_number Page Number, this value is simply for client state
                     # @param [Integer] page_size Number of records to return, defaults to 50
                     # @return [Page] Page of InsightsAssessmentsCommentInstance
-                    def page(authorization: :unset, segment_id: :unset, agent_id: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
+                    def page(segment_id: :unset, agent_id: :unset, authorization: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
-                            'Authorization' => authorization,
                             'SegmentId' => segment_id,
                             'AgentId' => agent_id,
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'Authorization' => authorization,  })
                         
                         
 

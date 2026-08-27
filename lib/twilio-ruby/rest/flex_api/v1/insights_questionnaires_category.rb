@@ -151,11 +151,10 @@ module Twilio
                     def list_with_metadata(authorization: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
                         params = Twilio::Values.of({
-                            'Authorization' => authorization,
                             
                             'PageSize' => limits[:page_size],
                         });
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'Authorization' => authorization,  })
 
                         response = @version.page('GET', @uri, params: params, headers: headers)
 
@@ -190,12 +189,11 @@ module Twilio
                     # @return [Page] Page of InsightsQuestionnairesCategoryInstance
                     def page(authorization: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
-                            'Authorization' => authorization,
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'Authorization' => authorization,  })
                         
                         
 
