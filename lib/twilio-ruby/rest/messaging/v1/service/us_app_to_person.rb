@@ -257,11 +257,10 @@ module Twilio
                     def list_with_metadata(x_twilio_api_version: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
                         params = Twilio::Values.of({
-                            'X-Twilio-Api-Version' => x_twilio_api_version,
                             
                             'PageSize' => limits[:page_size],
                         });
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'X-Twilio-Api-Version' => x_twilio_api_version,  })
 
                         response = @version.page('GET', @uri, params: params, headers: headers)
 
@@ -296,12 +295,11 @@ module Twilio
                     # @return [Page] Page of UsAppToPersonInstance
                     def page(x_twilio_api_version: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
-                            'X-Twilio-Api-Version' => x_twilio_api_version,
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'X-Twilio-Api-Version' => x_twilio_api_version,  })
                         
                         
 
