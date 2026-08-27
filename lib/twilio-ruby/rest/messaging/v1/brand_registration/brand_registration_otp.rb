@@ -116,65 +116,6 @@ module Twilio
                     end
                 end
 
-                class BrandRegistrationOtpPageMetadata < PageMetadata
-                    attr_reader :brand_registration_otp_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @brand_registration_otp_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @brand_registration_otp_page << BrandRegistrationOtpListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @brand_registration_otp_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Messaging::V1PageMetadata>';
-                    end
-                end
-                class BrandRegistrationOtpListResponse < InstanceListResource
-
-                    # @param [Array<BrandRegistrationOtpInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @brand_registration_otp = data_list.map do |data|
-                        BrandRegistrationOtpInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def brand_registration_otp
-                        @brand_registration_otp
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class BrandRegistrationOtpInstance < InstanceResource
                     ##
                     # Initialize the BrandRegistrationOtpInstance

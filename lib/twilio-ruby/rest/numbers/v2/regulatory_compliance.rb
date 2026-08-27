@@ -154,65 +154,6 @@ module Twilio
                     end
                 end
 
-                class RegulatoryCompliancePageMetadata < PageMetadata
-                    attr_reader :regulatory_compliance_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @regulatory_compliance_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @regulatory_compliance_page << RegulatoryComplianceListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @regulatory_compliance_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Numbers::V2PageMetadata>';
-                    end
-                end
-                class RegulatoryComplianceListResponse < InstanceListResource
-
-                    # @param [Array<RegulatoryComplianceInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @regulatory_compliance = data_list.map do |data|
-                        RegulatoryComplianceInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def regulatory_compliance
-                        @regulatory_compliance
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class RegulatoryComplianceInstance < InstanceResource
                     ##
                     # Initialize the RegulatoryComplianceInstance

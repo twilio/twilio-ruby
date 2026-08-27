@@ -397,65 +397,6 @@ module Twilio
                     end
                 end
 
-                class PaymentPageMetadata < PageMetadata
-                    attr_reader :payment_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @payment_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @payment_page << PaymentListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @payment_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Api::V2010PageMetadata>';
-                    end
-                end
-                class PaymentListResponse < InstanceListResource
-
-                    # @param [Array<PaymentInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @payment = data_list.map do |data|
-                        PaymentInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def payment
-                        @payment
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class PaymentInstance < InstanceResource
                     ##
                     # Initialize the PaymentInstance

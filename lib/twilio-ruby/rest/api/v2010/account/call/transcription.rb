@@ -379,65 +379,6 @@ module Twilio
                     end
                 end
 
-                class TranscriptionPageMetadata < PageMetadata
-                    attr_reader :transcription_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @transcription_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @transcription_page << TranscriptionListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @transcription_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Api::V2010PageMetadata>';
-                    end
-                end
-                class TranscriptionListResponse < InstanceListResource
-
-                    # @param [Array<TranscriptionInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @transcription = data_list.map do |data|
-                        TranscriptionInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def transcription
-                        @transcription
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class TranscriptionInstance < InstanceResource
                     ##
                     # Initialize the TranscriptionInstance

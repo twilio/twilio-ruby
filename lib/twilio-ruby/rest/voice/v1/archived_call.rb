@@ -183,65 +183,6 @@ module Twilio
                     end
                 end
 
-                class ArchivedCallPageMetadata < PageMetadata
-                    attr_reader :archived_call_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @archived_call_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @archived_call_page << ArchivedCallListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @archived_call_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Voice::V1PageMetadata>';
-                    end
-                end
-                class ArchivedCallListResponse < InstanceListResource
-
-                    # @param [Array<ArchivedCallInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @archived_call = data_list.map do |data|
-                        ArchivedCallInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def archived_call
-                        @archived_call
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class ArchivedCallInstance < InstanceResource
                     ##
                     # Initialize the ArchivedCallInstance
